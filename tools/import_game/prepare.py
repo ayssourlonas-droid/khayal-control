@@ -78,6 +78,9 @@ def parse_repo(url):
     host = (u.netloc or "").lower()
     segs = [s for s in u.path.split("/") if s]
     if host in ("github.com", "www.github.com") and len(segs) >= 2:
+        if len(segs) >= 3 and segs[2] in ("issues", "pull", "pulls", "actions", "discussions", "wiki",
+                                          "releases", "commit", "commits", "compare", "security", "pulse"):
+            return None  # رابط صفحة داخل المستودع (مشكلة/طلب دمج...) وليس رابط اللعبة
         return segs[0], re.sub(r"\.git$", "", segs[1])
     if host.endswith(".github.io"):
         owner = host.split(".")[0]
@@ -132,8 +135,12 @@ def find_webroot(src: Path, override=""):
         d = src / name
         if d.is_dir() and has_index(d):
             return d
-    if has_index(src) and not root_index_needs_build(src):
-        return src
+    if has_index(src):
+        if not root_index_needs_build(src):
+            return src
+        # index.html يشير إلى src/... لكن بلا package.json لا يوجد ما يُبنى: وحدات ES عادية تعمل كما هي
+        if not (src / "package.json").is_file():
+            return src
     return None
 
 
@@ -155,6 +162,9 @@ def build_if_needed(src: Path, override, build_cmd, notes):
         return root
     pkg = src / "package.json"
     if not pkg.is_file():
+        if has_index(src):  # احتياط: لا بناء ولا package.json لكن توجد صفحة
+            notes.append("لا يوجد package.json: نسخ index.html كما هو")
+            return src
         return None
     try:
         data = json.loads(pkg.read_text(encoding="utf-8"))
@@ -162,6 +172,9 @@ def build_if_needed(src: Path, override, build_cmd, notes):
         data = {}
     scripts = data.get("scripts", {}) if isinstance(data, dict) else {}
     if not build_cmd and "build" not in scripts:
+        if has_index(src):  # لا أمر بناء لكن توجد صفحة جاهزة
+            notes.append("لا يوجد أمر build: نسخ index.html كما هو")
+            return src
         return None
     notes.append("لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm")
     if (src / "package-lock.json").is_file():
@@ -809,7 +822,7 @@ def main():
 
     pr = parse_repo(repo_url)
     if not pr:
-        reasons.append("الرابط ليس مستودع GitHub (أو صفحة github.io)")
+        reasons.append("الرابط ليس رابط مستودع لعبة (https://github.com/صاحب/مستودع) ولا صفحة github.io")
         finish("fail")
     owner, repo = pr
     report.update(owner=owner, repo=repo)

@@ -154,6 +154,9 @@ def main():
     host_repo = os.environ["HOST_REPO"]
     host_branch = os.environ.get("HOST_BRANCH") or "main"
     base_url = os.environ["HOST_BASE_URL"].rstrip("/")
+    if not base_url and not os.environ.get("PLAY_URL_TEMPLATE"):
+        # بلا رابط الاستضافة تُكتب مسارات نسبية (/games/x/) لا تعمل في التطبيقين
+        raise SystemExit("HOST_BASE_URL غير مضبوط: أضفه في Settings ← Secrets and variables ← Actions ← Variables")
     data_repo = os.environ.get("DATA_REPO") or "ayssourlonas-droid/khayal-control"
     data_branch = os.environ.get("DATA_BRANCH") or "main"
     # مستودع واحد للاستضافة والبيانات: دفعة (commit) واحدة لكل لعبة = بناء واحد في Cloudflare
