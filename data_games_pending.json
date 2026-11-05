@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "id": 1,
+    "release_year": "2026",
+    "category_tags": [
+      "canvas",
+      "html5",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "Pacman",
+      "title_en": "Pacman",
+      "app_rating": 0.0,
+      "poster_url": "/games/pacman/_cover.png"
+    },
+    "details_scene": {
+      "description": "基于HTML5的吃豆人游戏 - 经典游戏开发样例_Pacman based on HTML5",
+      "background_url": "",
+      "play_url": "/games/pacman/",
+      "developer": "mumuy",
+      "license": "MIT",
+      "source_url": "https://github.com/mumuy/pacman",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas"
+    }
+  }
+]

@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "key": "pacman",
+    "size": 124,
+    "repo": "mumuy/pacman",
+    "id": 1,
+    "slug": "pacman",
+    "title": "Pacman",
+    "developer": "mumuy",
+    "license": "MIT",
+    "source": "https://github.com/mumuy/pacman",
+    "commit": "8a96194f7cf0102db2d7f0e69450166beb1d7116",
+    "date": "2026-11-05",
+    "license_file": "LICENSE"
+  }
+]
