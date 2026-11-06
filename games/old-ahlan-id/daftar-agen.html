@@ -1,0 +1,2284 @@
+<script>/*khayal-iso*/(function(){try{
+var P='khayal:old-ahlan-id:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>---
+title: Agen
+layout: default
+bodyClass: page-team-list
+---
+
+<div class="intro">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>Daftar Agen Ahlan</h1>
+        <p>
+          Produk Ahlan tersedia di agen Ahlan terdekat dari kota Anda.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container pb-6">
+    <table class="table table-sm opening-hours-table">
+        <tr>
+            <th class="day font-weight-bold">WILAYAH</th>
+            <th class="font-weight-bold">NAMA AGEN</th>
+            <th class="font-weight-bold">TELEPON</th>
+            <th class="font-weight-bold">NAMA OLSHOP</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>DKI JAKARTA</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Agen Jakarta Selatan</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Jakarta Selatan</td>
+            <td>Deby Sandra Putri</td>
+            <td>811149712</td>
+            <td>FB : Deby Sandra Putri</td>
+        </tr>
+        <tr>
+            <td>Jakarta Selatan</td>
+            <td>Kartika Putri</td>
+            <td>81316317520</td>
+            <td>IG @enti_room</td>
+        </tr>
+        <tr>
+            <td>Jakarta Selatan</td>
+            <td>Afra Afifah</td>
+            <td>81806394913</td>
+            <td>Fb: www.facebook.com/afraafifah I IG: @bukusunnahanak</td>
+        </tr>
+        <tr>
+            <td>Jakarta Selatan</td>
+            <td>Tri joko</td>
+            <td><a href="https://wa.me/6288295443010" target="_blank">wa.me/6288295443010</a></td>
+            <td>Nama Olshop FB/IG/Lainnya ; risyan shop</td>
+        </tr>      
+        <tr>
+            <td>Jakarta Selatan</td>
+            <td>Nur Arifani Firdaus</td>
+            <td><a href="https://wa.me/62817727745" target="_blank">wa.me/62817727745</a></td>
+            <td>Fb: Nur Arifani F | IG: @zenginshop</td>
+        </tr>      
+        <tr>
+            <td>RESELLER Jakarta Selatan</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Jakarta Selatan</td>
+            <td>Fadhil</td>
+            <td>082333872239</td>
+            <td>ig: elqiyam_shop I nama toko: elqiyam_shop</td>
+        </tr>
+        <tr>
+            <td>Jakarta Selatan</td>
+            <td>Taufani</td>
+            <td>085280010129</td>
+            <td>Nama Olshop FB/IG/Lainnya : @hahagoodie Instagram</td>
+        </tr>
+        <tr>
+            <td>Jakarta Selatan</td>
+            <td>Nur Leli</td>
+            <td>0812-3524-22119</td>
+            <td>FB/Telegram/IG @bookstore.anas</td>
+        </tr>
+        <tr>
+            <td>Agen Jakarta Timur</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Jakarta Timur</td>
+            <td>Yusmayati Noviarini</td>
+            <td>87889899696</td>
+            <td>Olshop: Koalisi Cinta Buku</td>
+        </tr>
+        <tr>
+            <td>Jakarta Timur</td>
+            <td>Asteria Arnitasari</td>
+            <td>81386373433</td>
+            <td>IG: sarahbook.store I FB: sarahbook.store I Shopee: sarahbook.store I Website: sarahbook.store</td>
+        </tr>
+        <tr>
+            <td>Jakarta Timur</td>
+            <td>Ina Rizal</td>
+            <td><a href="https://wa.me/628129379380" target="_blank">wa.me/628129379380</a></td>
+            <td>FB : bukubooks | IG : bukubooks.id</td>
+        </tr>      
+        <tr>
+            <td>Jakarta Timur</td>
+            <td>Mulyadi Putra/ Solusi Muslim Agency</td>
+            <td>0856-8226-176</td>
+            <td>Web: www.jualquran.net</td>
+        </tr>
+        <tr>
+ 
+            <td>RESELLER Jakarta Timur</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Jakarta Timur</td>
+            <td>Astri Rizkia</td>
+            <td><a href="https://wa.me/6285155267630" target="_blank">wa.me/6285155267630</a></td>
+            <td>fb : ARStore | ig: @ar_booksstore I shopee : @ar.silvani</td>
+        </tr>      
+        <tr>
+           <td>Jakarta Timur</td>
+            <td>Oggy Permadi</td>
+            <td><081290331625<td>
+            <td>IG: Pilar.Hijau| Shopee/ Bukalapak/ Tokopedia : Pilarhijau</td>
+        </tr>      
+        <tr>
+           <td>Jakarta Timur</td>
+            <td>Dian</td>
+            <td><08988058709</td>
+            <td>FB/IG/Lainnya : Dian Cahaya</td>
+        </tr>      
+        <tr>
+          <td>Jakarta Timur</td>
+            <td>umm nafisah</td>
+            <td>089636924467</td>
+            <td>FB/IG/Lainnya : @fadiaaah  / yuk titip di umm nafisah (Wagroup reseller)</td>
+        </tr>      
+        <tr>
+
+            <td>AGEN Jakarta Pusat</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Jakarta Pusat</td>
+            <td>Lily Ardas</td>
+            <td>82216156055</td>
+            <td>FB : RadinaBooks I IG : RadinaBooks</td>
+        </tr>
+        <tr>
+           <td>RESELLER Jakarta Pusat</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>Jakarta Pusat</td>
+            <td>Nila</td>
+            <td>0817-9992-507</td>
+            <td>FB/IG/Lainnya: @tokoketjil</td>
+        </tr>
+        <tr>
+            <td>Agen Jakarta Barat</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Jakarta Barat</td>
+            <td>widha ayuningtyas</td>
+            <td>081293984662</td>
+            <td>FB : widha ayuningtyas I IG : widha ayuningtyas</td>
+        </tr>
+        <tr>
+           <td>Jakarta Barat</td>
+            <td>Layla</td>
+            <td>08170032120</td>
+            <td>IG: @abatabyumar</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>BANTEN</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN SERANG/td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Serang</td>
+            <td>Puji Aditia Sulistiani</td>
+            <td><a href="https://wa.me/6281342941161" target="">wa.me/6281342941161</a></td>
+            <td>Fb : Puji Aditia Sulistiani | Ig: @bupu_corner</td>
+        </tr>     
+        <tr>
+            <td>Serang</td>
+            <td>nia</td>
+            <td><a href="https://wa.me/6281310123450" target="">wa.me/6281310123450</a></td>
+            <td>fb : hellotoys.id | ig: hellotoys I nama toko: hello toys</td>
+        </tr>     
+        <tr>
+          <td>RESELLER SERANG/td>
+            <td></td>
+            <td></td>
+            <td></td>
+       </tr>     
+        <tr>
+          <td>Serang</td>
+            <td>esi karwati</td>
+            <td>082219216631</td>
+            <td>FB: umma humaira | IG: rarastore03</td>
+        </tr>     
+        <tr>
+           <td>Serang</td>
+            <td>@naf.books (owner: Shella Ummu Aisyah)</td>
+            <td>085624079907</td>
+            <td>IG @naf.books</td>
+        </tr>     
+        <tr>
+
+            <td>AGEN KOTA TANGERANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Tangerang Kota</td>
+            <td>Fenny Agria</td>
+            <td>85899978565</td>
+            <td>IG: Peradaban membaca</td>
+        </tr>
+        <tr>
+            <td>Tangerang Kota</td>
+            <td>fauziah</td>
+            <td>089516696033</td>
+            <td>fb fauziah umi nauzid |nama toko: pojok buku quw</td>
+        </tr>
+        <tr>
+           <td>Tangerang Kota</td>
+            <td>Noviani Widiyanti/td>
+            <td>81323387334</td>
+            <td>FB/IG Noviani Widiyanti</td>
+        </tr>
+        <tr>
+           <td>Tangerang Kota</td>
+            <td>Diah Alkhastore</td>
+            <td>0852-6985-9999</td>
+            <td>IG / shopee : alkhastore.id | Website : www.alkhastore.com</td>
+        </tr>
+        <tr>
+           <td>RESELLER KOTA TANGERANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>Tangerang Kota</td>
+            <td>Anisa Nurina/td>
+            <td>085707985041</td>
+            <td>@bukucreavida</td>
+       </tr>
+        <tr>
+           <td>Tangerang Kota</td>
+            <td>Larasati/td>
+            <td>081283640560‬</td>
+            <td>IG : @bunayya.co</td>
+       </tr>
+        <tr>
+           <td>RESELLER KABUPATEN TANGERANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td> Kabupaten Tangerang</td>
+            <td>Aisyah Amini/td>
+            <td>0877-2848-4119‬</td>
+            <td>IG : IG : @haurrabooks_store</td>
+       </tr>
+        <tr>
+           <td> Kabupaten Tangerang</td>
+            <td>Jemmy Khaerunnisa Masumah</td>
+            <td>0856-5929-2623‬</td>
+            <td>IG: investbuku|Shopee: Invest Buku Official</td>
+       </tr>
+        <tr>
+          <td> Kabupaten Tangerang</td>
+            <td>Hesti</td>
+            <td>0812-1936-6699</td>
+            <td>FB/IG/Lainnya : Hesti Hoki Jiro / Monggo Tumbas Emas / HokiRo_Fashion</td>
+       </tr>
+        <tr>
+            <td>AGEN TANGERANG SELATAN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Tangerang Selatan</td>
+            <td>Buku Koe</td>
+            <td>89666001405</td>
+            <td>FB : Buku koe I FP : Buku koe I IG: Bukukoe I Shopee @Bukukoe I Tokopedia : @ahlanstore</td>
+        </tr>
+        <tr>
+            <td>Tangerang Selatan</td>
+            <td>Erni Sulistiyawati</td>
+            <td>85813420187</td>
+            <td>FB : Erni Sulistiyawati l Web : BukuAnakHebat.com</td>
+        </tr>
+        <tr>
+            <td>Tangerang Selatan</td>
+            <td>Buku Inspirasiku</td>
+            <td>81310121842</td>
+            <td>www.bukuinspirasiku.com | FP: bukuinspirasiku | IG @bukuinspirasiku</td>
+        </tr>
+        <tr>
+            <td>Tangerang Selatan</td>
+            <td>Dwi Fatahilah Stan</td>
+            <td>081388464510</td>
+            <td>TOKO BUKU FATAHILLAHSTAN</td>
+        </tr>
+        <tr>
+            <td>Bintaro, Tangerang Selatan</td>
+            <td>Citra Laras</td>
+            <td>0877-8874-0022</td>
+            <td>Olshop: TOOKOBOOKN</td>
+        </tr>      
+        <tr>
+            <td>RESELLER TANGERANG SELATAN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Tangerang Selatan</td>
+            <td> Dianita Candra Dewi</td>
+            <td>087927731842</td>
+            <td>Nama Olshop FB/IG/Lainnya : Ruangbukuibu I ig: @ruangbukuibu</td>
+        </tr>
+        <tr>
+            <td>Tangerang Selatan</td>
+            <td>Jani</td>
+            <td>081327483700</td>
+            <td>ig: @jualkomikislami</td>
+        </tr>
+        <tr>
+           <td>Tangerang Selatan</td>
+            <td>Asri Dwi hatmini</td>
+            <td>085729086599 </td>
+            <td>Olshop: Growingtree.book</td>
+        </tr>
+        <tr>
+           <td>Tangerang Selatan</td>
+            <td>Anggia - BAZAF Tangsel</td>
+            <td>08129462579</td>
+            <td>BAZAF Tangsel</td>
+        </tr>
+        <tr>
+            <td>Tangerang Selatan</td>
+            <td>Peni Ustriani</td>
+            <td>0897-8160-937</td>
+            <td>FB/IG/Lainnya IG @mainanedukatifanak, fb : peni ustriani</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+        </tr>        
+      <tr>
+            <<td><h2>SULAWESI</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Makassar</td>
+            <td>Nayati Sirajuddin</td>
+            <td>85254079870</td>
+            <td>FB : Nayati Sirajuddin I FP : Nailah shop I Ig : Nayati Sirajuddin</td>
+        </tr>
+        <tr>
+            <td>Makassar</td>
+            <td>Afriana Lestari Possumah</td>
+            <td>8124145297</td>
+            <td>FB: Afriana Lestari Possumah | IG: alipstore_bookntoys</td>
+        </tr>
+        <tr>
+           <td>Makassar</td>
+            <td>mawarputri</td>
+            <td>08114161986</td>
+            <td>Fb:mawar putri bahrum | IG: mawarputribahrum</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>KALIMANTAN</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Agen BALIKPAPAN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Balikpapan</td>
+            <td>Ratih Probowani Lestari</td>
+            <td>85752221893</td>
+            <td>IG: @kayana_bookstore</td>
+        </tr>
+        <tr>
+            <td>RESELLER  BALIKPAPAN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Balikpapan</td>
+            <td>Eko Sri Oetami</td>
+            <td>081347090826</td>
+            <td>fb : Farah GaleriMuslim | ig: farahgalerimuslim</td>
+        </tr>
+        <tr>
+            <td>Balikpapan</td>
+            <td>Big Borneo Bear</td>
+            <td>08158704715</td>
+            <td>Nama Olshop FB/IG/Lainnya; IG big Borneo bear</td>
+        </tr>
+        <tr>
+           <td>Balikpapan</td>
+            <td>Manda LiterabyID</td>
+            <td>0852-1022-2302</td>
+            <td>FB/IG/Lainnya : LiterabyID</td>
+        </tr>
+        <tr>
+            <td>AGEN KUTAI TIMUR</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Kutai Timur</td>
+            <td>Naila MT</td>
+            <td>8161401237</td>
+            <td>FB: Naila M Tazkiyyah | @nailatazkiyyah</td>
+        </tr>
+        <tr>
+            <td>Kutai Timur</td>
+            <td> Suria Ummu Rumaysha</td>
+            <td>081251000487</td>
+            <td>Nama Olshop FB/IG/Lainnya: @mocokidsstore</td>
+        </tr>
+        <tr>
+            <td>RESELLER KUTAI TIMUR</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Kutai Timur</td>
+            <td>TB. C&C Primamedia</td>
+            <td>081346866866 / 082136025747</td>
+            <td>ig: primamedia.sgt | nama toko: TB. C&C primamedia</td>
+        </tr>
+        <tr>
+            <td>AGEN BANJARBARU</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Banjar Baru</td>
+            <td>Nurul Asmayani</td>
+            <td>081348178127</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>RESELLER BANJAR BARU</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Banjar Baru</td>
+            <td>Sulastri</td>
+            <td>085251093804</td>
+            <td>fb : Lastri Sygma Daya Insani | ig: Haifa_galery | nama toko: Toko Buku Haifa</td>
+        </tr>
+        <tr>
+  <td>Banjar Baru</td>
+            <td>yurnia dewi</td>
+            <td>082154213766</td>
+            <td>Olshop: yurnia.dewi</td>
+        </tr>
+        <tr>
+
+            <td>Agen BONTANG & SAMARINDA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Bontang & Samarinda</td>
+            <td>Ayu Astuti</td>
+            <td>08115456474</td>
+            <td>ig @bukuhaura</td>
+        </tr>
+            <td>RESELLER SAMARINDA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Samarinda</td>
+            <td>Arif Abdurrahman</td>
+            <td>081929022777 </td>
+            <td>fb : bukuislamsamarinda | ig: bukuislamsamarinda |nama toko:Risalah Agency-Buku Islam Samarinda</td>
+         </tr>
+        <tr>
+            <td>Samarinda</td>
+            <td>Sartika Ummu Abdillaah</td>
+            <td> 0895636747925</td>
+            <td>fb : Muwahid Books | ig: muwahid.books/td>
+        </tr>
+        <tr>
+           <td>Samarinda</td>
+            <td>windy</td>
+            <td>08115444385</td>
+            <td>IG: TemanBaca_kinan/td>
+        </tr>
+        <tr>
+
+            <td>AGEN BANJARMASIN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>BANJARMASIN</td>
+            <td>Gallerybukumirza</td>
+            <td><a href="https://wa.me/6285248899665" target="_blank">wa.me/6285248899665</a></td>
+            <td>FB: Erisa Mirzalina Siregar | IG: Gallerybukumirza</td>
+        </tr>           
+        <tr>
+            <td>RESELLER BANJARMASIN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Banjarmasin</td>
+            <td>Gerai Aisha</td>
+            <td><a href="https://wa.me/6285251663663" target="_blank">wa.me/6285251663663</a></td>
+            <td>fb : Gerai Aisha | ig: @gerai_aisha</td>
+        </tr>           
+        <tr>
+            <td>RESELLER PONTIANAK DAN SAMBAS</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Pontianak & Sambas</td>
+            <td>Rissa Nisfurianti</td>
+            <td><a href="https://wa.me/6281256678001" target="_blank">wa.me/6281256678001</a></td>
+            <td>fb : Rissa Nisfurianti | nama toko: Umroh Albayt Kalbar</td>
+        </tr>           
+        <tr>
+            <td>Pontianak</td>
+            <td>Nila Agustina</td>
+            <td>082148994478</td>
+            <td>IG :/zahwacozy_bookcorner/</td>
+        </tr>           
+        <tr>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>Jawa Tengah</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN SEMARANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Semarang</td>
+            <td>Dina Adriana </td>
+            <td>8179518643</td>
+            <td>Rumah Raisha</td>
+        </tr>
+        <tr>
+            <td>Semarang </td>
+            <td>Isna</td>
+            <td>085217347554</td>
+            <td>Olshop : @barr_bookstore</td>
+        </tr>
+        <tr>
+            <td>Semarang </td>
+            <td>Al-Manshuroh Agency</td>
+            <td>089654050767</td>
+            <td>fb : Toko Al Manshuroh |ig: @almanshurohagency |nama toko: Al-Manshuroh Agency </td>
+        </tr>
+        <tr>
+            <td>Semarang </td>
+            <td>Nilda Sahira</td>
+            <td>085842317136</td>
+            <td>Website : <a href="https://nanasbuffetbooks.com" target="_blank">http://nanasbuffetbooks.com</a> | Olshop: Nanas Buffetbooks</td>
+        </tr>
+        <tr>
+            <td>Semarang </td>
+            <td>Risma Nur Aprilyani</td>
+            <td>089654050767</td>
+            <td>ig: @bukumurahanak.id |nama toko: Permata Edukasi</td>
+        </tr>
+        <tr>
+            <td>RESELLER SEMARANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Semarang </td>
+            <td>Intan Ayu</td>
+            <td>085727605445</td>
+            <td>fb : kamaintanayu |Fp : atayabookstore |ig: atayabookstore</td>
+        </tr>
+        <tr>
+            <td>AGEN SURAKARTA/SOLO</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+
+            <td>Surakarta/Solo</td>
+            <td>Rosita Melannisa</td>
+            <td>085600353335</td>
+            <td>FB @briofitashop I IG @briofitashop I Marketplace : @briofitashop</td>
+        </tr>
+        <tr>
+            <td>Surakarta/Solo</td>
+            <td>Toko Buku Arafah</td>
+            <td>0813 2926 7575</td>
+            <td>Olshop: Toko Buku Arafah</td>
+        </tr>
+        <tr>
+            <td>RESELLER SURAKARTA/SOLO</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Surakarta/Solo</td>
+            <td>Ummu Shofia</td>
+            <td>085799523329</td>
+            <td>Nama Olshop IG: aruna.library</td>
+        </tr>
+        <tr>
+            <td>Surakarta/Solo</td>
+            <td>nita prasasti</td>
+            <td>085642272009</td>
+            <td>fb : @galeribukuanakislam | ig: @galeribukuanakislam | Shopee : @ummushofia1</td>
+        </tr>
+        <tr>
+            <td>RESELLER BANYUMAS/PURBALINGGA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Banyumas/purbalingga</td>
+            <td>Riska Nur Sagita </td>
+            <td>085859212600</td>
+            <td>fb : www.facebook.com/khansa.picuk | ig: @buku.abunnada</td>
+        </tr>
+        <tr>
+
+           <td>AGEN PURWOKERTO</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>Purwokerto</td>
+            <td>Nicko / Pustaka Aysha</td>
+            <td>081533223405</td>
+            <td>Olshop: Pustaka Aysha</td>
+        </tr>
+        <tr>
+
+            <td>AGEN KUDUS</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Kudus</td>
+            <td>Pusat Buku Sunnah</td>
+            <td>08982282286</td>
+            <td>http://pusatbukusunnah.com</td>
+        </tr>
+        <tr>
+            <td>RESELLER KUDUS</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Kudus</td>
+            <td> Ainul Nadiroh</td>
+            <td>085727495374</td>
+            <td>fb : ainul nadiroh | ig: Habibah.store_ | nama toko: Habibah.store_</td>
+        </tr>
+        <tr>
+            <td>AGEN SUKOHARJO</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Sukoharjo</td>
+            <td>Lebah Kecil (Nuria Bonita)</td>
+            <td><a href="https://wa.me/62817773368" target="_blank">wa.me/62817773368</a></td>
+            <td>IG &amp; FB: @lebahkecil.id I web: lebahkecil.com</td>
+        </tr>
+        <tr>
+          <td>RESELLER SUKOHARJO</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>Sukoharjo</td>
+            <td>Arie</td>
+            <td><a href="https://wa.me/6281396197507"</a></td>
+            <td>Althafstore</td>
+        </tr>
+        <tr>
+            <td>AGEN PEKALONGAN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Pekalongan</td>
+            <td>Salwa marha Shabrina</td>
+            <td>082225494357</td>
+            <td>fb : salwamarha | ig : marhastore </td>
+        </tr>
+        <tr>
+            <td>AGEN SALATIGA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Salatiga</td>
+            <td>Risa</td>
+            <td>082324650350</td>
+            <td>Olshop: fiidz.store</td>
+        </tr>
+        <tr>
+            <td>RESELLER SRAGEN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>SRAGEN</td>
+            <td>Belda Ardevi</td>
+            <td>082221329351</td>
+            <td>ig: @taawun.books I nama toko: taawun books</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>RESELLER TEGAL</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Tegal</td>
+            <td>Ummu Hamnah Maysuro</td>
+            <td>082123666531</td>
+            <td>Olshop: Qanita Kids Store</td>
+        </tr>
+        <tr>
+
+            <td><h2>JAWA TIMUR</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN SIDOARJO</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Sidoarjo</td>
+            <td>Lidya Anasta Rachman</td>
+            <td>0895396000142</td>
+            <td>Fanpage: Hopalova Kids Store I IG: @hopalovakids I Shopee.co.id/hopalovakids</td>
+        </tr>
+        <tr>
+            <td>Sidoarjo</td>
+            <td>Marinda</td>
+            <td>89676234751</td>
+            <td>IG jendela islam bookstore | www.jendelaislam.com</td>
+        </tr>
+        <tr>
+            <td>Sidoarjo</td>
+            <td>Auladi Bookstore</td>
+            <td>81559960757</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>RESELLER SIDOARJO</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Sidoarjo</td>
+            <td>Wahyu Indayani</td>
+            <td>085703221299</td>
+            <td>Shopee : abdillahstore.id I ig: @ruangbelajarabdillah</td>
+        </tr>
+        <tr>
+            <td>AGEN MOJOKERTO</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Mojokerto </td>
+            <td>Eka Kaeruni </td>
+            <td>81252343277</td>
+            <td>FB : Eka Kaeruni I IG : pustaka_ghinan</td>
+        </tr>
+        <tr>
+            <td>AGEN SURABAYA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Surabaya</td>
+            <td>Paskhia trisniasti</td>
+            <td>81315378938</td>
+            <td>FB : Paskhia Shop Surabaya I IG : @paskhia_shop I Website : www.paskhiashop.com</td>
+        </tr>
+        <tr>
+            <td>Surabaya</td>
+            <td>Devy Oki</td>
+            <td>83856151984</td>
+            <td>IG = @mommykaka I Fb Fanpage = Mommy Kaka I Shopee = Mommy Kaka</td>
+        </tr>
+        <tr>
+            <td>RESELLER SURABAYA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Surabaya</td>
+            <td>fatin raniahthifal adiwijaya </td>
+            <td>085646673784</td>
+            <td>fb : fatin raniahthifal adiwijaya I ig: ummu.abizarf</td>
+        </tr>
+        <tr>
+           <td>Surabaya</td>
+            <td>Nur Safira</td>
+            <td>wa.me/62882009723309</td>
+            <td>IG @ilmseed | Nama Toko: ilmseed</td>
+        </tr>
+        <tr>
+            <td>Surabaya</td>
+            <td>Arin</td>
+            <td>08993316395</td>
+            <td>FB/IG : Littlekids_Bookstore</td>
+        </tr>
+        <tr>
+
+
+            <td>AGEN MALANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Malang</td>
+            <td>Ika Rachmania</td>
+            <td>895630920747</td>
+            <td>FB : Ika Aira Dewanto I IG: aira_ku I Shopee: aira_ku</td>
+        </tr>
+        <tr>
+            <td>Malang</td>
+            <td>zian afiati</td>
+            <td>085646626965</td>
+            <td>fb/ig: zianafiati</td>
+        </tr>
+        <tr>
+            <td>Malang</td>
+            <td>Anisa Nurfitriyah</td>
+            <td>0857 555 22 857 / +62 857-8490-1477</td>
+            <td>IG : @Brilliantbookstore I FB : @BrilliantBookStore</td>
+        </tr>
+        <tr>
+            <td>RESELLER MALANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Malang</td>
+            <td>Riyatul Aviyanti</td>
+            <td>082283040024</td>
+            <td>fb : Aviyanti Ummu Hafshah I ig: alhikmah.bookstor3 I nama toko: alhikmah store</td>
+        </tr>
+        <tr>
+           <td>Malang</td>
+            <td>Yodha Abu Khalid</td>
+            <td>0813-3476-3628</td>
+            <td>@ThullahThayyibin</td>
+        </tr>
+        <tr>
+            <td>RESELLER BANYUWANGI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>BANYUWANGI</td>
+            <td>siska rani yolanda</td>
+            <td>081335700835</td>
+            <td>fb : siska rani yolanda I ig: alfabookid I nama toko : alfabookid</td>
+        </tr>
+        <tr>
+            <td>RESELLER MADIUN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>MADIUN</td>
+            <td>Laela Rosa</td>
+            <td>085643478418</td>
+            <td>fb : Laela Rosa I ig: @laelarosa I nama toko: Ailia's Kitchen and shop</td>
+        </tr>
+        <tr>
+            <td>MADIUN</td>
+            <td>Aritra Yusfiasari</td>
+            <td>0816-4842-939</td>
+            <td>FB/IG/Lainnya @rakbuku_mimailik</td>
+        </tr>
+        <tr>
+          <td>RESELLER JEMBER</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+          <td>JEMBER</td>
+            <td>Rossy Utami</td>
+            <td>0852-3666-6246</td>
+            <td> IG: zaredgalery</td>
+        </tr>
+        <tr>
+            <td>AGEN KEDIRI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>KEDIRI</td>
+            <td>dina lestari</td>
+            <td>081216282217</td>
+            <td>Fb dina lestari setiaji I Ig otentique_shop</td>
+        </tr>
+        <tr>
+           <td>RESELLER KEDIRI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>KEDIRI</td>
+            <td>Lisa Indraswari</td>
+            <td>085760852854</td>
+            <td>@jurnalbunda.id</td>
+        </tr>
+        <tr>
+            <td>RESELLER BOYOLALI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>BOYOLALI</td>
+            <td>Irviana Chalifaful 'Azmi</td>
+            <td>085735104310</td>
+            <td>Nama Olshop FB/IG/Lainnya: @asykafambookstore @irvianazmi</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>YOGYAKARTA</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN YOGYAKARTA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Yogyakarta</td>
+            <td>Agen sarana hidayah</td>
+            <td>817263316</td>
+            <td>www.sarana-hidayah.com </td>
+        </tr>
+        <tr>
+            <td>Yogyakarta</td>
+            <td>Dian Agustiani </td>
+            <td>87738999238</td>
+            <td>FB : facebook.com/dian.agustiani | FP : facebook.com /JogjaFunShop |IG : dian_agustiani_jfs</td>
+        </tr>
+        <tr>
+            <td>Yogyakarta</td>
+            <td>Adi Nugroho</td>
+            <td><a href="https://wa.me/6285786001700" target="_blank">wa.me/6285786001700</a></td>
+            <td>Akhy Agency</td>
+        </tr>      
+        <tr>
+            <td>Yogyakarta</td>
+            <td>Tiwi</td>
+            <td><a href="https://wa.me/6287888464430" target="_blank">wa.me/6287888464430</a></td>
+            <td>Nama Olshop FB/IG/Lainnya : bukuubocah</td>
+        </tr>      
+        <tr>
+            <td>Yogyakarta</td>
+            <td>Aulia Uswatun Hasanah</td>
+            <td><a href="https://wa.me/6281288295268" target="_blank">wa.me/6281288295268</a></td>
+            <td>ig : @aufabookstore I Fp : Aufa Bookstore</td>
+        </tr>      
+        <tr>
+           <td>RESELLER YOGYAKARTA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Yogyakarta</td>
+            <td>Deanova</td>
+            <td><a href="https://wa.me/6281260989755" target="_blank">wa.me/6281260989755</a></td>
+            <td>Nama Olshop FB/IG/Lainnya : Deanova Sembiring</td>
+        </tr>      
+        <tr>
+           <td>Yogyakarta</td>
+            <td>Octaviani Kusumaning</td>
+            <td><a 0812-2684-4880</a></td>
+            <td>FB Pustaka Sawo Kecik Jogja | IG @pustakasawokecik_jogja/td>
+        </tr>      
+        <tr>
+           <td>Yogyakarta & Karanganyar</td>
+            <td>Syarif Mustaqim</td>
+            <td><a href="https://wa.me/6285643266668" target="_blank">wa.me/6285643266668</a></td>
+            <td>fb : bukuanak.id |ig: @bukuanakstore | web : www.bukuanak.id | shopee : bukuanak.id</td>
+        </tr>      
+        <tr>
+           <td>AGEN KABUPATEN SLEMAN/td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Sleman</td>
+            <td>Miftahul Jannah</td>
+            <td>85640105582</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Sleman</td>
+            <td>Putri Nh</td>
+            <td><a href="https://wa.me/6281393309396" target="_blank">wa.me/6281393309396</a></td>
+            <td>FB: Putri Nh |IG: @fata_bookstore | Shopee: @fata_store19</td>
+        </tr>      
+        <tr>
+           <td>Sleman</td>
+            <td>SekolahJadiOrangtua</td>
+            <td>85768468356</td>
+            <td>FP : SekolahJadiOrangtua| IG : @SekolahJadiOrangtua</td>
+        </tr>
+        <tr>
+           <td>AGEN KABUPATEN BANTUL</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>BANTUL</td>
+            <td>Atina Sabila Khadija</td>
+             <td><a href="https://wa.me/6281217279374" target="_blank">wa.me/6281217279374</a></td>
+            <td>ig: @bungkusbukubagus I nama toko: Wonderful Agency</td>
+        </tr>      
+        <tr>
+            <td>Bantul</td>
+            <td>Priyandini Pamaran</td>
+            <td><a href="https://wa.me/6283863098897" target="_blank">wa.me/6283863098897</a></td>
+            <td>fb : Okemuslim |ig: Okemuslim | nama toko: Okemuslim</td>
+        </tr>      
+        <tr>
+           <td>BANTUL</td>
+            <td>Nura Maya Sari</td>
+            <td>085364656859</td>
+            <td>fb : Nura Maya | ig: omahsinau_annur | nama toko: omah sinau annur</td>
+        </tr>      
+        <tr>
+       
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+          <td>GRESIK/td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RESELLER GRESIK</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>GRESIK</td>
+            <td>Athfa.store (Hakiki Rahmasari)</td>
+            <td><0856-5544-7547</td>
+            <td>Nama Olshop IG : Athfa.store | Shopee : Athfa.store</td>
+        </tr>      
+        <tr>
+            <td><h2>SUMATERA BARAT</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN PADANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Padang</td>
+            <td>Aisyah Nahlaty</td>
+            <td>85272727204</td>
+            <td>fb Aisyah Ummu Musa I IG Nahlaty Jati Padang</td>
+        </tr>
+        <tr>
+            <td>RESELLER PADANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Padang</td>
+            <td>sensrinarti</td>
+            <td>082386138513</td>
+            <td>fb : sensrinarti I ig:sensrinarti I nama toko:GhaziaBookStore</td>
+        </tr>
+        <tr>
+            <td>AGEN PAYAKUMBUH</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Payakumbuh</td>
+            <td>Melinda Purnamasari</td>
+            <td>82386613776</td>
+            <td>Melinda Bookstore&amp;Library I http://instagram.com/buku.payakumbuh</td>
+        </tr>
+        <tr>
+            <td>Payakumbuh</td>
+            <td>ZIKRIATIR RIDHA</td>
+            <td>082391625455</td>
+            <td>FB:Habrul Ummah Sahabat Anak Muslim.| IG: Www.instagram.com/habrulummahgcs</td>
+        </tr>
+        <tr>
+            <td>RESELLER BUKITTINGGI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Bukittinggi</td>
+            <td>SITI HAFSHAH SYAHANTI</td>
+            <td>082388377114</td>
+            <td>ig: @simagucibooks  I nama toko: simagucibooks</td>
+        </tr>
+        <tr>
+            <td><h2>SUMATERA UTARA</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>AGEN MEDAN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>MEDAN</td>
+            <td>Evyta</td>
+            <td>83130117884</td>
+            <td>Olshop: IG @promobukudiskon | web promobuku.com | FB facebook.com/evytaar</td>
+        </tr>
+        <tr>
+           <td>MEDAN</td>
+            <td>Deanova</td>
+            <td>081260989755</td>
+            <td>Olshop: Deanova Sembiring</td>
+        </tr>
+        <tr>
+          <td>MEDAN</td>
+            <td>Anggi Alinda</td>
+            <td>0813-2038-7683</td>
+            <td>FB : Samudra Baca/@samudrabaca</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>SUMATERA SELATAN</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN PALEMBANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+          <td>Palembang</td>
+            <td>Sofi Nursafitri</td>
+            <td>081367354303</td>
+            <td>taktukubuku</td>
+        </tr>
+        <tr>
+           <td>Palembang</td>
+            <td>Maya Khoiriyah </td>
+            <td>0878 9753 4111</td>
+            <td>FB : Maya Khoiriyah | IG : @mainankayuku.mk</td>
+        </tr>
+        <tr>
+            <td>RESELLER PALEMBANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Palembang</td>
+            <td>Miatha</td>
+            <td>088274393726</td>
+            <td>ig: @ukhuwahouse</td>
+        </tr>
+        <tr>
+           <td>Palembang</td>
+            <td>Jimmy Tri Padodo</td>
+            <td>08117129394</td>
+            <td>IG: @ahtamidelstore</td>
+        </tr>
+        <tr>
+           <td>Palembang</td>
+            <td>Haka Baryati</td>
+            <td>0853-8363-4949</td>
+            <td>FB/IG/Lainnya=Haka ummu</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>JAWA  BARAT</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN KOTA BOGOR</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Bogor</td>
+            <td>Retnadi Nur’aini</td>
+            <td>87874143729</td>
+            <td>Komunitas HalamanMoeka</td>
+        </tr>
+        <tr>
+            <td>Bogor</td>
+            <td>Monika Suharko</td>
+            <td>08112798965</td>
+            <td>@radinkabooks</td>
+        </tr>
+        <tr>
+            <td>Bogor</td>
+            <td>Eny pujihastuti</td>
+            <td>8129719707</td>
+            <td>IG : kinara_edustore</td>
+        </tr>
+        <tr>
+            <td>Bogor</td>
+            <td>Endang Tri Gandewo</td>
+            <td>+6213187735252</td>
+            <td>Ig: buku_kamu.id</td>
+        </tr>
+        <tr>
+           <td>Bogor</td>
+            <td>Dwi yuliani</td>
+            <td>083827282133</td>
+            <td>fb : @Javabooks_id</td>
+        </tr>
+        <tr>
+<td>AGEN KABUPATEN BOGOR</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Kab. Bogor</td>
+            <td>Nurul Fauziyah Kurniyatun </td>
+            <td>0819-0510-8685/td>
+            <td>Olshop/fb : Nurul Fauziyah Kurniyatun</td>
+        </tr>
+        <tr>
+            <td>RESELLER BOGOR</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>Bogor</td>
+            <td>elwiena</td>
+            <td>087842071909</td>
+            <td>ig: @ziwiru_hijrah | nama toko: Ziwiru</td>
+        </tr>
+        <tr>
+           <td>Bogor</td>
+            <td>Ulie</td>
+            <td>+97430160969</td>
+            <td>Madinah Collection</td>
+        </tr>
+        <tr>
+           <td>Bogor</td>
+            <td>Dina Sabila</td>
+            <td>081218874989</td>
+            <td>IG @dinansa_store</td>
+        </tr>
+        <tr>
+ </tr>
+        <tr>
+           <td>Bogor</td>
+            <td>Syafrina Idha Jumaila</td>
+            <td>081387000297</td>
+            <td>IG : @tokobukunaf</td>
+        </tr>
+        <tr>
+            <td>AGEN DEPOK</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Depok</td>
+            <td>Rahma Ummu Fatih</td>
+            <td><a href="https://wa.me/6285692887243" target="_blank">wa.me/6285692887243</a></td>
+            <td>FP: JAEDU ID | IG: jaedu.id | Web: www.jaedu.id</td>
+        </tr>
+        <tr>
+            <td>Depok</td>
+            <td>Anisah Megawati </td>
+            <td>87883527896</td>
+            <td>IG @gazaziyan_shop I FP GazaZiyan_shop I web : www.gazaziyanshop.com</td>
+        </tr>
+        <tr>
+            <td>Depok</td>
+            <td>Widi Nur</td>
+            <td><a href="https://wa.me/628985000372" target="_blank">wa.me/628985000372</a></td>
+            <td>Web : <a href="https://geraimuslim.id" target="_blank">geraimuslim.id</a> FP : Gerai Muslim | Shopee : gerai.muslim | Toped : GM Store</td>
+        </tr>
+        <tr>
+            <td>Depok</td>
+            <td>Ara Nugrahayu</td>
+            <td>85236987200</td>
+            <td>LINE ID : itsmomdd | IG/FP : asikbacabuku</td>
+        </tr>
+        <tr>
+            <td>Depok</td>
+            <td>Nuris</td>
+            <td><a href="https://wa.me/628563012173" target="_blank">wa.me/628563012173</a></td>
+            <td>Website : <a href="https://www.ghazybookstore.com/" target="_blank">http://www.ghazybookstore.com/</a> | IG : @ghazy_shop | Link wa : bit.ly/GhazyBookStore</td>
+        </tr>
+        <tr>
+            <td>RESELLER DEPOK</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Depok</td>
+            <td>Intan</td>
+            <td><a href="https://wa.me/6281233955448" target="_blank">wa.me/6281233955448</a></td>
+            <td>Nama Olshop FB/IG/Lainnya : Shireen Corner</td>
+        </tr>
+        <tr>
+            <td>Depok</td>
+            <td>Muhammad Sadeli Amli</td>
+            <td><a href="https://wa.me/628118048691" target="_blank">wa.me/628118048691</a></td>
+            <td>Nama Olshop FB/IG/Lainnya : Toko Umar, @toko.umar</td>
+        </tr>
+        <tr> 
+            <td>Depok</td>
+            <td>Wentika Putri KA</td>
+            <td><wa.me/6285753332255</td>
+            <td>www.instagram.com/akikominilibrary | www.shopee.com/onnanoko89</td>
+        </tr>
+        <tr>
+           <td>Depok</td>
+            <td>Intan</td>
+            <td>081326145844</td>
+            <td>IG : @fahamboostore</td>
+        </tr>
+        <tr>
+           <td>Depok</td>
+            <td>hana nadia</td>
+            <td><wa.me/6285753332255</td>
+            <td>www.instagram.com/akikominilibrary | www.shopee.com/onnanoko89</td>
+        </tr>
+        <tr>
+           <td>Depok</td>
+            <td>anindya kirana</td>
+            <td>0813 1040 1226</td>
+            <td>@my.littlemuslim (ig)</td>
+        </tr>
+        <tr>
+           <td>Depok</td>
+            <td>Aneke & Tiara</td>
+            <td>0821-1076-3603</td>
+            <td>FB/IG/Lainnya Muneeb.kids</td>
+        </tr>
+        <tr>
+            <td>AGEN KOTA BEKASI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Novita Anggraeni </td>
+            <td>81212148062</td>
+            <td>IG : octagonbookstore| FP: octagonbookstore|Line : @hlb9743u</td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Niswatul Hasanah</td>
+            <td>81298680688</td>
+            <td>FB : Niswatul Hasanah I FG : Aozora Edu Shop I IG : Zietoys</td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Nenny Rachmawati</td>
+            <td>87862088360</td>
+            <td>Olshop : Awlad Bookstore I @awladbookstore</td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Metia Wibisono</td>
+            <td>89653428672</td>
+            <td>IG : @sahabat_sekolahrumahku</td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Miranti Pratiwi</td>
+            <td>+62 896-1848-8648</td>
+            <td>FB : facebook.com/binafifstore/ I nama toko :Bin Afif Store I IG : @binafifstore</td>
+        </tr>
+        <tr>
+          <td>AGEN KABUPATEN BEKASI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td> Kabupaten Bekasi</td>
+            <td>Sri Eni Purnama Dewi</td>
+            <td>081297341944</td>
+            <td>Rumah Hayza</td>
+        </tr>
+        <tr>
+            <td>RESELLER BEKASI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Fitry</td>
+            <td>089693878561</td>
+            <td>fb : Aishya Fitry | ig: Tsurayya corner</td>
+        </tr>
+        <tr>
+            <td>Bekasi Timur</td>
+            <td> Riesa</td>
+            <td>081385857447</td>
+            <td>fb : qilalula store | ig: qilalula.id</td>
+        </tr>
+        <tr>
+            <td>Bekasi Timur</td>
+            <td>Fella</td>
+            <td>0819-3267-5322</td>
+            <td>FB/IG/Lainnya : IG @felfasbooks</td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Fika Monika</td>
+            <td>08562875247</td>
+            <td>fb : Literasi Muslimah | ig: @literasi_muslimah_id | nama toko: Literasi Muslimah</td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Nina Traniati</td>
+            <td>087788652045</td>
+            <td>ig: Ghuroba.store | nama shopee: ummufatimah__ </td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Siti Nurhasanah</td>
+            <td>081290634842</td>
+            <td>nama toko: @littlebeestore</td>
+        </tr>
+        <tr>
+            <td>Bekasi</td>
+            <td>Nurjanah</td>
+            <td>082114231894</td>
+            <td>fb : Buku Mainan Langit I ig: @bukumainanlangit I nama toko: Buku Mainan Langit</td>
+        </tr>
+        <tr> 
+            <td>Bekasi</td>
+            <td>Tri Sulistianingsih</td>
+            <td>082179704101</td>
+            <td>Nama Olshop FB/IG/Lainnya : shopee : kaffana.shop</td>
+        </tr>
+        <tr> 
+          <td>Bekasi</td>
+            <td> Fika Felina</td>
+            <td>085710308312</td>
+            <td>fb fika felina.| Ig fikafelina</td>
+        </tr>
+        <tr>
+           <td>Bekasi Utara</td>
+            <td>Ruqoyyah (Ruq)/Ummu Aisyah</td>
+            <td>089637771392</td>
+            <td>Fb: Ruq Ummu Aisyah | IG: @WarungAraBookstore</td>
+        </tr>
+        <tr>
+          <td>AGEN CIKARANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Cikarang Barat</td>
+            <td>Roza/Titin</td>
+            <td>081299347845/+62 818-684-030</td>
+            <td>Olshop : laeboo_books_toys</td>
+        </tr>
+        <tr>
+            <td>Cikarang</td>
+            <td>Indah Tri Setyowati</td>
+            <td>82125707201</td>
+            <td>Fb page : Edupedia Store I Fb : edupedia buku mainan I Ig : @edupediastore I Shopee : edupedia.store</td>
+        </tr>
+        <tr>
+            <td>Cikarang Pusat</td>
+            <td>Dyan/lembar_cerita</td>
+            <td>81320468643</td>
+            <td>instagram.com/lembar_cerita I shopee.co.id/dyanindra</td>
+        </tr>
+        <tr>
+           <td>RESELLER CIKARANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+           <td>Cikarang Selatan</td>
+            <td>Sri Wulandari</td>
+            <td>081311078304</td>
+            <td>FB @Ummu Azqireda</td>
+        </tr>
+        <tr>
+            <td>AGEN KARAWANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>Karawang</td>
+            <td>Susilawati</td>
+            <td><a href="https://wa.me/6285624438817" target="_blank">wa.me/6285624438817</a></td>
+            <td>Ig: @buku_cerita_anak_anak | FP: buku_cerita_anak_anak</td>
+        </tr>  
+        <tr>
+            <td>Karawang</td>
+            <td>Fadia Dewanda</td>
+            <td><a href="https://wa.me/6282114698488" target="_blank">wa.me/6282114698488</a></td>
+            <td>Ig: @reading.seed</td>
+        </tr>  
+        <tr>
+            <td>Reseller KARAWANG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>Karawang</td>
+            <td>Ade widuri(ummu hanif)</td>
+            <td>0857-1985-5613</td>
+            <td>fb : ade ummu hanif berkahBooks |nama toko: berkah books store </td>
+        </tr>  
+        <tr>
+            <td>Karawang</td>
+            <td>Aulia</td>
+            <td>08111293999</td>
+            <td>ig: littlekhanza.id</td>
+        </tr>  
+        <tr>
+            <td>Karawang</td>
+            <td>Fauziah</td>
+            <td> 085781440539</td>
+            <td>fb : Maktabah Hanifah | ig: @maktabah_hanifah</td>
+        </tr>  
+        <tr>
+            <td>Karawang/cikampek</td>
+            <td>Siti Maryam</td>
+            <td>089607565938</td>
+            <td>fb : Ummu suhaila Maryam | nama toko: Galeri muslim suhaila</td>
+        </tr>  
+        <tr>
+            <td>Karawang</td>
+            <td>Septiana</td>
+            <td>081542713124</td>
+            <td>ig: @sabiha_id| nama toko: Sabiha Id</td>
+        </tr>  
+        <tr>
+           <td>Karawang</td>
+            <td>Husni Fithri</td>
+            <td>081215948694</td>
+            <td>fb : yabunayya_bookstore| ig: yabunayya_bookstore|nama toko: yabunayya_bookstore </td>
+        </tr>  
+        <tr>
+           <td>Karawang</td>
+            <td>Uun unita</td>
+            <td>085781826666</td>
+            <td>IG: unita_886</td>
+        </tr>  
+        <tr>
+            <td>Agen Cimahi</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>Cimahi</td>
+            <td>Widiasti</td>
+            <td>85624888546</td>
+            <td>IG : Kincabooks | FB : widiasti atmadja</td>
+        </tr>
+        <tr>
+            <td>Cimahi</td>
+            <td>Ika Rokhmatul Aliyah</td>
+            <td>81808054012</td>
+            <td>Mainanterapi. www.mainanterapi.com</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>PURWAKARTA</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RESELLER PURWAKARTA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>PURWAKARTA</td>
+            <td>Salfa</td>
+            <td>082122953453</td>
+            <td>fb : sai muslim famili I ig: @saimuslimfamily I nama toko: Sai Muslim Family</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>Agen Cirebon</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Cirebon</td>
+            <td>Anisah Azkiya</td>
+            <td>85215245823</td>
+            <td>FB Anisah Azkiya</td>
+        </tr>
+        <tr>
+           <td><h2>Reseller Cirebon</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>Cirebon</td>
+            <td>Nadia Sabrina</td>
+            <td>087824452828</td>
+            <td>IG: @lillahbillahthelabel </td>
+        </tr>
+        <tr>
+
+            <td>AGEN KOTA BANDUNG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>Bandung</td>
+            <td>Deasy Zaranya</td>
+            <td>81931260809</td>
+            <td>IG :@bumi.sikecil_bookstore I web : bumisikecil.com </td>
+        </tr>
+        <tr>
+            <td>Bandung</td>
+            <td>Susilawati Nci</td>
+            <td>87885329438</td>
+            <td>Fb : susilawati nci I IG : @buku_anak_ku</td>
+        </tr>
+        <tr>
+            <td>Bandung</td>
+            <td>Nuraida Maghfuri (Furi)</td>
+            <td>82115777308</td>
+            <td>Olshop : kafuyabookshop</td>
+        </tr>
+        <tr>
+            <td>Bandung</td>
+            <td>Zakia Mutmainnah Kadir</td>
+            <td>82218912200</td>
+            <td>FP : TB. Husnul Khuluq I IG @tb.husnulkhuluq</td>
+        </tr>
+        <tr>
+            <td>Bandung</td>
+            <td>Razita Siti Maryam</td>
+            <td>089530269929 </td>
+            <td>FP : Buku Anak Islami & Parenting I IG : @pustakahulwah I WEB : pustakahulwah.com</td>
+        </tr>
+        <tr>
+          
+            <td>AGEN KAB.BANDUNG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>Bandung Barat</td>
+            <td>Tia Astria</td>
+            <td><a href="https://wa.me/628112343466" target="_blank">wa.me/628112343466</a></td>
+            <td>Web: <a href="https://www.azrahstore.com" target="_blank">www.azrahstore.com</a> | IG : @azrahstore | FB : sarah azzam</td>
+        </tr>      
+        <tr>
+            <td>Bandung Utara</td>
+            <td>Poppy</td>
+            <td>0819-0889-1100</td>
+            <td>IG @tokobukupoppy</td>
+        </tr>
+        <tr>
+            <td>Bandung Selatan</td>
+            <td>EKA HAFUZA</td>
+            <td>081321741075</td>
+            <td>IG: etalase.hafuza | nama toko: etalase.hafuza</td>
+        </tr>
+        <tr>
+            <td>RESELLER BANDUNG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>Bandung</td>
+            <td>Syafrian Fikri</td>
+            <td>082320505015</td>
+            <td>fb : syafrian fikri | ig: pustaka.zahira / syafrian | nama toko:Pustaka Zahira</td>
+        </tr>
+        <tr>
+            <td>Bandung</td>
+            <td>Asri</td>
+            <td>082315884896</td>
+            <td>fb : Umi Rabbani | ig:  Taqwa | nama toko: Cinta ilmu</td>
+        </tr>
+        <tr>
+            <td>Bandung</td>
+            <td>Maya Sari</td>
+            <td>0852-6437-2939</td>
+            <td>fb : MSmk.Collection | ig: MSmk.Collection | nama toko:  MSmk Collection</td>
+        </tr>
+        <tr>
+            <td>Bandung</td>
+            <td>Lili</td>
+            <td></td>
+            <td>Nama Olshop IG: Qafqomart</td>
+        </tr>
+        <tr>
+            <td>Bandung</td>
+            <td>Irfan ( Tazkia Salman ITB)</td>
+            <td>WA :0812-2118-475, 0812-1919-4361</td>
+            <td>fb : Toko Buku Tazkia I ig:@tazkiasalman</td>
+        </tr>
+        <tr>
+            <td>Bandung-Sumedangg</td>
+            <td>Dewi IF</td>
+            <td>085222862656</td>
+            <td>Nama Olshop FB/IG/Lainnya: @falahive_ , @daskakaput & @tweedledew </td>
+        </tr>
+        <tr>
+           <td>Bandung</td>
+            <td>Imbang Kartika</td>
+            <td>081220881988</td>
+            <td>@pustakazaini</td>
+        </tr>
+        <tr>
+           <td>Bandung</td>
+            <td>Karina Hakman</td>
+            <td>081224344285</td>
+            <td>Yumary Bookshop (IG yumary.bookshop)</td>
+        </tr>
+        <tr>
+           <td>Bandung</td>
+            <td>Eva Noer Rachman(Ummu Azzam )</td>
+            <td>0813.9494.0528</td>
+            <td>Instagram : Eva Noer Rachman</td>
+        </tr>
+        <tr>
+           <td>Bandung</td>
+            <td>Mariah</td>
+            <td>085793703708</td>
+            <td>FB/IG/Lainnya: instagram @buku.tumee, web: bukutumee.com</td>
+        </tr>
+        <tr>
+            <td>RESELLER TASIKMALAYA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>Tasikmalaya</td>
+            <td>Meta Jahrah</td>
+            <td>082120388511</td>
+            <td>fb : Meta Jahrah | ig: ar_hijabstore | nama toko: AR Hijab Store</td>
+        </tr>
+        <tr>
+            <td>Tasikmalaya</td>
+            <td>furi andanawari</td>
+            <td>081320231054</td>
+            <td>ig: @de.flo.kids</td>
+        </tr>
+        <tr>
+            <td>RESELLER GARUT</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>GARUT</td>
+            <td>Irma Ilmi Salma</td>
+            <td>081320231054</td>
+            <td>Nama Olshop FB/IG/Lainnya : @imamubookstore</td>
+        </tr>
+        <tr>
+            <td>GARUT</td>
+            <td>Hawwaa Sri Wahyuni</td>
+            <td>082118868821</td>
+            <td>Fb : Hawwaa Sri Wahyuni | Fp : Edukasi Anak Ummi| IG : Edukasi Anak Umm</td>
+        </tr>
+        <tr>
+
+            <td>RESELLER KUNINGAN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td>KUNINGAN</td>
+            <td>Adi Bintoro</td>
+            <td>0812.8642.8339</td>
+            <td>Nama Olshop SafanaBook</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>LAMPUNG</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN DAN RESELLER LAMPUNG</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Bandar Lampung</td>
+            <td>ratna rostiawati</td>
+            <td>0895 33777 6459</td>
+            <td>*fb :*ratna junda bukukuseru</td>
+        </tr>
+        <tr>
+            <td>Bandar Lampung</td>
+            <td>Yenny Sofita</td>
+            <td>081333593131</td>
+            <td>fb : Yenny Sofita I ig: @maktabah_umar I nama toko: Maktabah Umar</td>
+        </tr>
+        <tr>
+            <td>Kota Metro</td>
+            <td>Ismi Widiyastanti</td>
+            <td><a href="https://wa.me/6285282929832" target="_blank">wa.me/6285282929832</a></td>
+            <td>IG : Toko_Buukuu</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>ACEH</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN ACEH</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Aceh</td>
+            <td>Izzati safitri </td>
+            <td>82366921828</td>
+            <td>FB : izzati safitri l Grup fb : inokana buku poetanvua</td>
+        </tr>
+        <tr>
+            <td>RESELLER ACEH</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Banda aceh</td>
+            <td>Abu Yazid</td>
+            <td>081280564777</td>
+            <td>Toko : Riyadh store</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ASAHAN</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Kisaran</td>
+            <td>Haslina Riani</td>
+            <td>82267104203</td>
+            <td>Fb Olshop Syar'i Kisaran For kids I IG Gamis Anak Asahan</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>BALI</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RESELLER DENPASAR</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Denpasar</td>
+            <td>Hanan Atqiya</td>
+            <td>081946264814</td>
+            <td>ig: aimanlibrary | nama toko: Aiman Library</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>RIAU</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AGEN RIAU</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RIAU</td>
+            <td>Prastica nellasari</td>
+            <td>85265861533</td>
+            <td>IG ummufatihsstore | Facebook Dan shopee : prasticanellasari</td>
+        </tr>
+        <tr>
+            <td>RESELLER RIAU</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>PEKANBARU</td>
+            <td>Hana Adha Rodhiah</td>
+            <td>085271844524</td>
+            <td>fb : Kedai Hafa I ig: @kedai_hafa</td>
+        </tr>
+        <tr>
+            <td>PEKANBARU</td>
+            <td>echi rati ningrun</td>
+            <td>081272906899</td>
+            <td>echiicod/gie.little.heritage</td>
+        </tr>
+        <tr>
+           <td>PEKANBARU</td>
+            <td>Ana Puspita</td>
+            <td>082174377086</td>
+            <td>Ig : ananawa171 | Fb : Nawa Ummu Abdillah</td>
+        </tr>
+        <tr>
+           <td>PEKANBARU</td>
+            <td>Anom Mutia ( assyauqi_store)</td>
+            <td>081210660514</td>
+            <td>IG @assyauqistore | FB @cirzeassyauqi | shopee @assyauqistore</td>
+        </tr>
+        <tr>
+           <td>PEKANBARU</td>
+            <td>Fatimatus syadiah</td>
+            <td>0813 18728712</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h2>JAMBI</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+          <td>RESELLER JAMBI</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+          <td>JAMBI</td>
+            <td>Yulma Herdalina</td>
+            <td>082279169289</td>
+            <td>IG: ashaabee_store I Shopee:ashaabeestore</td>
+       <tr>
+       </tr>
+            <td><h2>KEP. RIAU</h2></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RESELLER BATAM</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>BATAM</td>
+            <td>Shafiyyah Heni Handayani</td>
+            <td>09153393460</td>
+            <td>fb : Shafiyyah Heni Handayani I ig: @shafiyyahenny I nama toko: Zaahaa Store</td>
+        </tr>
+        <tr>
+          <td>PAPUA</td>
+            <td>Prastica nellasari</td>
+            <td>85265861533</td>
+            <td>IG ummufatihsstore | Facebook Dan shopee : prasticanellasari</td>
+        </tr>
+        <tr>
+            <td>RESELLER PAPUA</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+           <td>PAPUA</td>
+            <td>Diah Wahyuni</td>
+            <td>0852-4474-3128</td>
+            <td>fb : Shafiyyah Heni Handayani I ig: @shafiyyahenny I nama toko: Zaahaa Store</td>
+        </tr>
+        <tr>
+            <td>NUSA TENGGARA BARAT</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RESELLER MATARAM</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>RESELLER MATARAM</td>
+            <td>Iriani Mazidah</td>
+            <td>0877-5620-5000</td>
+            <td>FB/IG/Lainnya : Hamzabooks</td>
+        </tr>
+        <tr>
+    
+       </tr>
+    </table>
+</div>
