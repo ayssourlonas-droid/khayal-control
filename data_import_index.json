@@ -56,5 +56,20 @@
     "date": "2026-11-06",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "pipweb",
+    "size": 75717,
+    "repo": "playpip/pip-web",
+    "id": 5,
+    "slug": "pip-web",
+    "title": "Pip Web",
+    "developer": "playpip",
+    "license": "MIT",
+    "source": "https://github.com/playpip/pip-web",
+    "commit": "461610ff7b9d35b64b81828c4af905ce16f77b03",
+    "date": "2026-11-06",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: 0d12b2cf-6569-4b1e-b9cc-427477309c1b | 11bbefc1-8dc7-4a92-898d-9b3b59b138ca"
   }
 ]

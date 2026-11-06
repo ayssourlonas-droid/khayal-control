@@ -24,5 +24,31 @@
       "type": "web",
       "category": "canvas"
     }
+  },
+  {
+    "id": 5,
+    "release_year": "2026",
+    "category_tags": [
+      "browser-game",
+      "card-game",
+      "game"
+    ],
+    "main_scene": {
+      "title_ar": "Pip Web",
+      "title_en": "Pip Web",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/pip-web/_cover.png"
+    },
+    "details_scene": {
+      "description": "Poker without the casino. Texas Hold'em with friends or against AI. Play money only, no ads.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/pip-web/",
+      "developer": "playpip",
+      "license": "MIT",
+      "source_url": "https://github.com/playpip/pip-web",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-game"
+    }
   }
 ]

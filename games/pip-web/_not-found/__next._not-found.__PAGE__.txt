@@ -1,0 +1,74 @@
+1:"$Sreact.fragment"
+2:"/_next/static/chunks/0dkvcpyfmqxz3.js"
+3:"/_next/static/chunks/2a-y-8c54pjbi.js"
+4:"/_next/static/chunks/1uh452pdnhgd_.js"
+5:"/_next/static/chunks/2mc3jbye7j72z.js"
+6:"/_next/static/chunks/19_qht5a1f1nl.js"
+7:"/_next/static/chunks/0ehvuw_g5srap.js"
+8:"/_next/static/chunks/12yn5htgarig0.js"
+9:"/_next/static/chunks/1-6_kdemuzlsq.js"
+a:"/_next/static/chunks/0y5myk7icax6c.js"
+b:"/_next/static/chunks/116u6es6ljh4g.js"
+c:"TEXT_SCALE_BOOT_SCRIPT"
+d:I[41260,["$2","$3","$4","$5","$6","$7","$8","$9","$a","$b"],"$c"]
+e:I[27188,["$2","$3","$4","$5","$6","$7","$8","$9","$a","$b"],"FeltBackdrop"]
+f:I[20323,["$2","$3","$4","$5","$6","$7","$8","$9","$a","$b"],"InstallBanner"]
+10:"TextScaleProvider"
+11:I[41260,["$2","$3","$4","$5","$6","$7","$8","$9","$a","$b"],"$10"]
+12:"/_next/static/chunks/42onvq6nokjl2.js"
+13:I[39756,["$12"],"default"]
+14:I[37457,["$12"],"default"]
+15:I[83361,["$2","$3","$4","$5","$6","$7","$8","$9","$a","$b"],"AppBoot"]
+16:"SyncConflictDialog"
+17:I[74394,["$2","$3","$4","$5","$6","$7","$8","$9","$a","$b"],"$16"]
+18:I[427,["$2","$3","$4","$5","$6","$7","$8","$9","$a","$b"],"UpdatePrompt"]
+1f:I[97367,["$12"],"OutletBoundary"]
+20:"$Sreact.suspense"
+23:"ViewportBoundary"
+24:I[97367,["$12"],"$23"]
+25:"MetadataBoundary"
+26:I[97367,["$12"],"$25"]
+:HL["/_next/static/chunks/0m4lk93awlr0x.css","style"]
+:HL["/_next/static/chunks/2dia_3ku2qwu4.css","style"]
+1a:X
+1d:X
+1d:C
+1e:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":"$0:t:t:d:r:props:children:1:props:children:props:children:4:props:children:props:notFound:0:1:props:style","children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":"$0:t:t:d:r:props:children:1:props:children:props:children:4:props:children:props:notFound:0:1:props:children:props:children:1:props:style","children":404}],["$","div",null,{"style":"$0:t:t:d:r:props:children:1:props:children:props:children:4:props:children:props:notFound:0:1:props:children:props:children:2:props:style","children":["$","h2",null,{"style":"$0:t:t:d:r:props:children:1:props:children:props:children:4:props:children:props:notFound:0:1:props:children:props:children:2:props:children:props:style","children":"This page could not be found."}]}]]}]}]],null,["$","$L1f",null,{"children":["$","$20",null,{"name":"Next.MetadataOutlet","children":"$@21"}]}]]}],"p":"$@22","v":null,"s":"$1a"}}]]
+1b:[["children",{"s":"/_not-found","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L13",null,{"parallelRouterKey":"children","template":["$","$L14",null,{}]}]]}],"p":"$@1c","v":"$1d","s":"$1a"},"c":"$Q1e"}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0m4lk93awlr0x.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/2dia_3ku2qwu4.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/0dkvcpyfmqxz3.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/2a-y-8c54pjbi.js","async":true}],["$","script","script-2",{"src":"/_next/static/chunks/1uh452pdnhgd_.js","async":true}],["$","script","script-3",{"src":"/_next/static/chunks/2mc3jbye7j72z.js","async":true}],["$","script","script-4",{"src":"/_next/static/chunks/19_qht5a1f1nl.js","async":true}],["$","script","script-5",{"src":"/_next/static/chunks/0ehvuw_g5srap.js","async":true}],["$","script","script-6",{"src":"/_next/static/chunks/12yn5htgarig0.js","async":true}],["$","script","script-7",{"src":"/_next/static/chunks/1-6_kdemuzlsq.js","async":true}],["$","script","script-8",{"src":"/_next/static/chunks/0y5myk7icax6c.js","async":true}],["$","script","script-9",{"src":"/_next/static/chunks/116u6es6ljh4g.js","async":true}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"className":"T19VSG_variable _8Li5zG_variable dark h-full antialiased","style":{"colorScheme":"dark"},"children":["$","body",null,{"className":"text-foreground min-h-full","children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"$d"}}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{if(!sessionStorage.getItem('pip.install.counted')){sessionStorage.setItem('pip.install.counted','1');var v=+(localStorage.getItem('pip.install.visits')||0);localStorage.setItem('pip.install.visits',String(v+1))}}catch(e){}window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__pipInstall=e;window.dispatchEvent(new Event('pip-install-change'))});window.addEventListener('appinstalled',function(){window.__pipInstall=null;window.__pipInstalled=true;window.dispatchEvent(new Event('pip-install-change'))})})()"}}],["$","$Le",null,{}],["$","$Lf",null,{}],["$","$L11",null,{"children":["$","$L13",null,{"parallelRouterKey":"children","template":["$","$L14",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]]}]}],["$","$L15",null,{}],["$","$L17",null,{}],["$","$L18",null,{}],"$undefined"]}]}]]}],"p":"$@19","v":null,"s":"$1a"},"c":"$Q1b"},"h":{"r":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L24",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"}],["$","meta","2",{"name":"theme-color","content":"#0a0a0b"}]]}],["$","$L26",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$20",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Pip — clean poker"}],["$","meta","1",{"name":"description","content":"Casual Texas Hold'em, redesigned. No fake felt, no neon."}],["$","link","2",{"rel":"manifest","href":"/manifest.webmanifest"}],["$","link","3",{"rel":"alternate","type":"application/rss+xml","href":"https://playpip.io/rss.xml"}],["$","meta","4",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","5",{"name":"apple-mobile-web-app-title","content":"pip"}],["$","meta","6",{"name":"apple-mobile-web-app-status-bar-style","content":"black-translucent"}],"$L27","$L28","$L29","$L2a","$L2b","$L2c","$L2d","$L2e","$L2f","$L30","$L31","$L32","$L33","$L34","$L35","$L36","$L37","$L38","$L39","$L3a","$L3b","$L3c","$L3d","$L3e","$L3f"]}]}],null]}],"$L40"]}],"p":"$@41","v":null,"s":"$1a"}},"a":"$@42","u":"$@43","b":"4vV0bw6Vu2iBSOfGP6ZRX"}
+44:I[27201,["$12"],"IconMark"]
+21:null
+27:["$","meta","7",{"property":"og:title","content":"Poker without the casino."}]
+28:["$","meta","8",{"property":"og:description","content":"Real Texas Hold'em vs AI, wrapped in a calm, modern app. Play money, no account needed, open source."}]
+29:["$","meta","9",{"property":"og:url","content":"https://playpip.io"}]
+2a:["$","meta","10",{"property":"og:site_name","content":"Pip"}]
+2b:["$","meta","11",{"property":"og:locale","content":"en_GB"}]
+2c:["$","meta","12",{"property":"og:image","content":"https://playpip.io/opengraph-image?9d72fbce1efa9106"}]
+2d:["$","meta","13",{"property":"og:image:type","content":"image/png"}]
+2e:["$","meta","14",{"property":"og:image:width","content":"1200"}]
+2f:["$","meta","15",{"property":"og:image:height","content":"630"}]
+30:["$","meta","16",{"property":"og:image:alt","content":"Pip — poker without the casino"}]
+31:["$","meta","17",{"property":"og:type","content":"website"}]
+32:["$","meta","18",{"name":"twitter:card","content":"summary_large_image"}]
+33:["$","meta","19",{"name":"twitter:site","content":"@playpipio"}]
+34:["$","meta","20",{"name":"twitter:creator","content":"@playpipio"}]
+35:["$","meta","21",{"name":"twitter:title","content":"Poker without the casino."}]
+36:["$","meta","22",{"name":"twitter:description","content":"Real Texas Hold'em vs AI. Play money, no account needed, open source."}]
+37:["$","meta","23",{"name":"twitter:image","content":"https://playpip.io/opengraph-image?9d72fbce1efa9106"}]
+38:["$","meta","24",{"name":"twitter:image:alt","content":"Pip — poker without the casino"}]
+39:["$","meta","25",{"name":"twitter:image:type","content":"image/png"}]
+3a:["$","meta","26",{"name":"twitter:image:width","content":"1200"}]
+3b:["$","meta","27",{"name":"twitter:image:height","content":"630"}]
+3c:["$","link","28",{"rel":"icon","href":"/favicon.ico?favicon.3lvsbk6gxh7l_.ico","sizes":"32x32","type":"image/x-icon"}]
+3d:["$","link","29",{"rel":"icon","href":"/icon.svg?icon.438-lv8ixhbt4.svg","sizes":"any","type":"image/svg+xml"}]
+3e:["$","link","30",{"rel":"apple-touch-icon","href":"/apple-icon.png?apple-icon.1wdlihzeoc-k_.png","sizes":"180x180","type":"image/png"}]
+3f:["$","$L44","31",{}]
+40:["$","meta",null,{"name":"next-size-adjust","content":""}]
+1a:300
+43:true
+1a:C
+42:0
+1c:"$undefined"
+19:"$undefined"
+41:"$undefined"
+22:"$undefined"
