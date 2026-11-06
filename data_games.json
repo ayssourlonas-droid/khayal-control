@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": 2,
+    "release_year": "2026",
+    "category_tags": [
+      "canvas2d",
+      "city-builder",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "Mykonos Island Voxels",
+      "title_en": "Mykonos Island Voxels",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/mykonos-island-voxels/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A browser-based isometric island builder with the soft, sun-bleached look of Mykonos. Vanilla ES modules, no bundler, mobile-friendly.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/mykonos-island-voxels/",
+      "developer": "boona13",
+      "license": "MIT",
+      "source_url": "https://github.com/boona13/mykonos-island-voxels",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas2d"
+    },
+    "review_note": "أُخفيت يدوياً من تطبيق المتحكم"
+  }
+]
