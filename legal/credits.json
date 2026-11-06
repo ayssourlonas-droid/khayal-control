@@ -12,5 +12,19 @@
     "commit": "8a96194f7cf0102db2d7f0e69450166beb1d7116",
     "date": "2026-11-05",
     "license_file": "LICENSE"
+  },
+  {
+    "key": "mykonosislandvoxels",
+    "size": 81388,
+    "repo": "boona13/mykonos-island-voxels",
+    "id": 2,
+    "slug": "mykonos-island-voxels",
+    "title": "Mykonos Island Voxels",
+    "developer": "boona13",
+    "license": "MIT",
+    "source": "https://github.com/boona13/mykonos-island-voxels",
+    "commit": "ca5faeea84fc7dc8e18a6b8e899f432884dfe831",
+    "date": "2026-11-06",
+    "license_file": "LICENSE"
   }
 ]
