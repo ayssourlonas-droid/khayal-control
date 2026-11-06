@@ -787,10 +787,12 @@ def prune_site(site: Path, work: Path, shot: Path, base: dict, mode: str):
 # ---------- أصل الوسائط (صور/أصوات): إشارات فقط، لا حكم قانوني ----------
 _PROV_KW = re.compile(
     r"(credit|attribution|freesound|kenney|opengameart|pixabay|itch\.io|cc[- ]?by|cc0|creative commons|"
-    r"public domain|royalt|ai[- ]generated|generated (?:by|with|using|for)|midjourney|dall-?e|stable diffusion|chatgpt|"
+    r"public domain|royalt|ai[- ]generated|generated (?:by|with|using) (?:ai|an? ai|midjourney|dall-?e|stable diffusion|chatgpt|gpt)|"
+    r"midjourney|dall-?e|stable diffusion|chatgpt|"
     r"(?:sprites?|sounds?|music|audio|sfx|fonts?) (?:from|by|authored|made|created|released|courtesy)|"
-    r"(?:pngs?|images?|art|asset pack)[^.]{0,40}(?:released under|generated|licensed)|"
+    r"(?:pngs?|images?|art|asset pack)[^.]{0,40}(?:released under|licensed)|"
     r"authored separately|©)", re.I)
+_PROV_MEDIA = re.compile(r"(image|sprite|sound|audio|music|sfx|asset|art\b|artwork|icon|font|texture|tileset|graphic)", re.I)
 _PROV_SOURCE = re.compile(
     r"(freesound|kenney|opengameart|pixabay|itch\.io|cc[- ]?by|cc0|creative commons|public domain|"
     r"licensed under|courtesy|credit|attribution)", re.I)
@@ -805,6 +807,30 @@ _PROV_BRANDS = re.compile(
 _FONT_EXT = {".ttf", ".otf", ".woff", ".woff2"}
 _AUDIO_EXT = {".ogg", ".mp3", ".wav", ".m4a", ".flac", ".opus"}
 _IMG_EXT = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"}
+
+
+_SERVER_DEPS = {"express", "koa", "fastify", "hapi", "@hapi/hapi", "socket.io", "colyseus", "@colyseus/core", "ws",
+                "knex", "mysql", "mysql2", "pg", "mongodb", "mongoose", "sequelize", "typeorm", "prisma", "@prisma/client",
+                "@mikro-orm/core", "nestjs", "@nestjs/core"}
+
+
+def server_side_hints(src: Path):
+    """علامات أن المشروع يحتاج خادماً/قاعدة بيانات (لا يعمل كموقع ثابت)."""
+    hints = []
+    pj = src / "package.json"
+    if pj.is_file():
+        try:
+            data = json.loads(pj.read_text("utf-8", errors="ignore"))
+            deps = {**(data.get("dependencies") or {}), **(data.get("devDependencies") or {})}
+            found = sorted(d for d in deps if d in _SERVER_DEPS)
+            if found:
+                hints.append("اعتمادات خادم: " + "، ".join(found[:5]))
+        except Exception:
+            pass
+    for n in ("Dockerfile", "docker-compose.yml", "docker-compose.yaml", ".env.example", "server.js", "server"):
+        if (src / n).exists():
+            hints.append(n)
+    return hints
 
 
 def scan_provenance(src: Path):
@@ -827,9 +853,8 @@ def scan_provenance(src: Path):
         if _PROV_BRANDS.search(f.stem):
             brands.append(str(rel))
         name = f.name.lower()
-        if len(rel.parts) <= 3 and (
-            name.startswith(("readme", "license", "licence", "credit", "attribution", "notice", "assets", "copying"))
-            or (ext in (".md", ".txt") and len(rel.parts) <= 2)
+        if len(rel.parts) <= 2 and ext in ("", ".md", ".txt", ".rst") and name.startswith(
+            ("readme", "license", "licence", "credit", "attribution", "notice", "assets", "copying", "authors")
         ) and f.stat().st_size < 300_000:
             docs.append(f)
     claims, bad = [], []
@@ -844,8 +869,9 @@ def scan_provenance(src: Path):
                 continue
             if _PROV_BAD.search(t):
                 bad.append(f"{d.name}: {t[:160]}")
-            elif _PROV_KW.search(t) and not t.lower().startswith(_BOILER) and not any(b in t.lower() for b in _BOILER):
-                claims.append(f"{d.name}: {t[:160]}")
+            elif (_PROV_KW.search(t) and (_PROV_MEDIA.search(t) or _PROV_SOURCE.search(t))
+                  and not any(b in t.lower() for b in _BOILER)):
+                claims.append(f"{d.name}: {t[:140]}")
     authors, tagged_audio, tagged_img = set(), 0, 0
     for f in media_audio[:80]:
         try:
@@ -879,7 +905,7 @@ def scan_provenance(src: Path):
         pass
     return {
         "images": len(media_img), "audio": len(media_audio), "fonts": fonts[:6], "prompt_files": prompts[:3],
-        "claims": claims[:12], "restrictive": bad[:6], "brand_names": brands[:8],
+        "claims": claims[:6], "restrictive": bad[:6], "brand_names": brands[:8],
         "tagged_audio": tagged_audio, "tagged_images": tagged_img, "authors": sorted(authors)[:10],
     }
 
@@ -913,6 +939,45 @@ def provenance_lines(pv):
     else:
         pv["summary_ar"] = "مصدر الوسائط غير موثّق من المطوّر"
     return notes, warns
+
+
+_GAME_MARKERS = re.compile(r"(<canvas|getContext\(|requestAnimationFrame|phaser|pixi|three(?:\.module)?\.js|babylon|kaboom|"
+                           r"createjs|melonjs|excalibur|playcanvas|\bgame\b)", re.I)
+
+
+def unbuilt_template(webroot: Path, src: Path):
+    """موقع Jekyll/قالب غير مبني (وسوم Liquid أو front matter): ليس نسخة جاهزة للعرض."""
+    why = []
+    idx = webroot / "index.html"
+    try:
+        head = idx.read_text("utf-8", errors="ignore")[:20000]
+    except Exception:
+        head = ""
+    if head.lstrip().startswith("---"):
+        why.append("index.html يبدأ بـ front matter (---)")
+    if re.search(r"\{\{\s*(site|page|content)\b|\{%\s*(include|for|if|assign)\b", head):
+        why.append("index.html فيه وسوم Liquid ({{ }} أو {% %})")
+    if (src / "_config.yml").is_file() and ((src / "_layouts").is_dir() or (src / "_includes").is_dir()):
+        why.append("مجلدات Jekyll (_layouts/_includes مع _config.yml)")
+    return why
+
+
+def game_signals(site: Path, limit=4_000_000):
+    """هل توجد مؤشرات أن الموقع لعبة؟ (canvas/requestAnimationFrame/مكتبة ألعاب…). للتحذير فقط."""
+    seen = 0
+    for f in site.rglob("*"):
+        if f.suffix.lower() not in (".html", ".js", ".mjs") or not f.is_file():
+            continue
+        try:
+            t = f.read_text("utf-8", errors="ignore")
+        except Exception:
+            continue
+        seen += len(t)
+        if _GAME_MARKERS.search(t):
+            return True
+        if seen > limit:
+            break
+    return False
 
 
 def main():
@@ -983,13 +1048,11 @@ def main():
     sha = run(["git", "rev-parse", "HEAD"], cwd=src).stdout.strip().splitlines()[-1]
     try:
         pv = scan_provenance(src)
-        pn, pw = provenance_lines(pv)
-        notes.extend(pn)
-        warnings.extend(pw)
+        prov_notes, prov_warns = provenance_lines(pv)
         report["provenance"] = pv
     except Exception as e:
         pv = None
-        notes.append(f"تعذّر فحص أصل الوسائط: {e}")
+        prov_notes, prov_warns = [f"تعذّر فحص أصل الوسائط: {e}"], []
     report["commit"] = sha
     report["repo_size_kb"] = int(info.get("size") or 0)
     report["description"] = (info.get("description") or "").strip()
@@ -1005,15 +1068,30 @@ def main():
         reasons.append(f"فشل البناء: {e}")
         finish("fail")
     if not webroot:
-        reasons.append("لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. "
-                       "جرّب إدخال subdir أو build_cmd")
+        sh = server_side_hints(src)
+        if sh:
+            reasons.append("هذا مشروع يحتاج خادماً أو قاعدة بيانات (" + "؛ ".join(sh[:4]) + ") ولا يعمل كموقع ثابت، "
+                           "فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.")
+        else:
+            reasons.append("لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. "
+                           "جرّب إدخال subdir أو build_cmd")
         finish("fail")
+    tmpl = unbuilt_template(webroot, src)
+    if tmpl:
+        reasons.append("هذا موقع/قالب غير مبني (" + "؛ ".join(tmpl) + ") وليس لعبة جاهزة للتشغيل. "
+                       "إن كان لعبة حقاً فاستعمل build_cmd أو subdir يشير إلى نسخة مبنية.")
+        finish("fail")
+    notes.extend(prov_notes)  # ملاحظات أصل الوسائط تظهر فقط للألعاب القابلة للاستيراد
+    warnings.extend(prov_warns)
 
     # 4) تنظيف
     site = out / "site"
     big_warn = None
     copy_site(webroot, site)
     s = sanitize(site)
+    if not game_signals(site):
+        warnings.append("لا توجد مؤشرات أن هذا الموقع لعبة (لا canvas ولا requestAnimationFrame ولا مكتبة ألعاب)؛ "
+                        "راجعه جيداً قبل الاعتماد")
     report["stats"] = {k: s[k] for k in ("files", "total")}
     if s["files"] > MAX_FILES:
         reasons.append(f"عدد الملفات {s['files']} يتجاوز {MAX_FILES}")
