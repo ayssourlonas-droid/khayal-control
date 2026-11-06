@@ -784,6 +784,120 @@ def prune_site(site: Path, work: Path, shot: Path, base: dict, mode: str):
 
 
 # ───────────── الرئيسي ─────────────
+# ---------- أصل الوسائط (صور/أصوات): إشارات فقط، لا حكم قانوني ----------
+_PROV_KW = re.compile(
+    r"(credit|attribution|freesound|kenney|opengameart|pixabay|itch\.io|cc[- ]?by|cc0|creative commons|"
+    r"public domain|royalt|ai[- ]generated|generated (?:by|with|using|for)|midjourney|dall-?e|stable diffusion|chatgpt|"
+    r"(?:sprites?|sounds?|music|audio|sfx|fonts?) (?:from|by|authored|made|created|released|courtesy)|"
+    r"(?:pngs?|images?|art|asset pack)[^.]{0,40}(?:released under|generated|licensed)|"
+    r"authored separately|©)", re.I)
+_PROV_SOURCE = re.compile(
+    r"(freesound|kenney|opengameart|pixabay|itch\.io|cc[- ]?by|cc0|creative commons|public domain|"
+    r"licensed under|courtesy|credit|attribution)", re.I)
+_BOILER = ("permission is hereby", "the above copyright", "copyright (c)", "the software is provided",
+           "authors or copyright holders", "in no event shall", "furnished to do so", "copies or substantial")
+_PROV_BAD = re.compile(
+    r"(non[- ]?commercial|all rights reserved|no commercial|personal use only|not for commercial|"
+    r"do not (?:redistribute|reuse))", re.I)
+_PROV_BRANDS = re.compile(
+    r"(?<![a-z])(mario|pokemon|pok\u00e9mon|nintendo|zelda|sonic|disney|marvel|minecraft|lego|pixar|ghibli|"
+    r"star[ _-]?wars|harry[ _-]?potter|angry[ _-]?birds|fortnite|roblox)(?![a-z])", re.I)
+_AUDIO_EXT = {".ogg", ".mp3", ".wav", ".m4a", ".flac", ".opus"}
+_IMG_EXT = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"}
+
+
+def scan_provenance(src: Path):
+    """يجمع كل ما يُعرف آلياً عن مصدر الصور والأصوات. النتيجة إشارات للمراجعة وليست ضماناً."""
+    skip = {".git", "node_modules", "dist", "build", ".github"}
+    docs, media_audio, media_img, brands = [], [], [], []
+    for f in src.rglob("*"):
+        if not f.is_file() or any(x in skip for x in f.relative_to(src).parts):
+            continue
+        ext = f.suffix.lower()
+        rel = f.relative_to(src)
+        if ext in _AUDIO_EXT:
+            media_audio.append(f)
+        elif ext in _IMG_EXT:
+            media_img.append(f)
+        if _PROV_BRANDS.search(f.stem):
+            brands.append(str(rel))
+        name = f.name.lower()
+        if len(rel.parts) <= 3 and (
+            name.startswith(("readme", "license", "licence", "credit", "attribution", "notice", "assets", "copying"))
+            or (ext in (".md", ".txt") and len(rel.parts) <= 2)
+        ) and f.stat().st_size < 300_000:
+            docs.append(f)
+    claims, bad = [], []
+    for d in docs[:40]:
+        try:
+            lines = d.read_text("utf-8", errors="ignore").splitlines()
+        except Exception:
+            continue
+        for ln in lines:
+            t = ln.strip().lstrip("#>*-| ").strip()
+            if not t or len(t) < 8:
+                continue
+            if _PROV_BAD.search(t):
+                bad.append(f"{d.name}: {t[:160]}")
+            elif _PROV_KW.search(t) and not t.lower().startswith(_BOILER) and not any(b in t.lower() for b in _BOILER):
+                claims.append(f"{d.name}: {t[:160]}")
+    authors, tagged_audio, tagged_img = set(), 0, 0
+    for f in media_audio[:80]:
+        try:
+            r = subprocess.run(["ffprobe", "-v", "quiet", "-show_entries", "format_tags", "-of", "json", str(f)],
+                               capture_output=True, text=True, timeout=20)
+            tags = (json.loads(r.stdout or "{}").get("format") or {}).get("tags") or {}
+            tags = {k.lower(): v for k, v in tags.items()}
+            useful = {k: v for k, v in tags.items() if k in ("artist", "author", "copyright", "comment", "title",
+                                                              "album", "publisher", "composer", "license", "url")}
+            if useful:
+                tagged_audio += 1
+                for k in ("artist", "author", "copyright", "composer", "publisher", "license", "url"):
+                    if useful.get(k):
+                        authors.add(f"{k}={str(useful[k])[:80]}")
+        except Exception:
+            pass
+    try:
+        from PIL import Image
+        for f in media_img[:300]:
+            try:
+                im = Image.open(f)
+                ex = im.getexif()
+                vals = [ex.get(315), ex.get(33432)] + [im.info.get(k) for k in ("Author", "Copyright", "Source")]
+                vals = [str(v)[:80] for v in vals if v and not isinstance(v, bytes)]
+                if vals:
+                    tagged_img += 1
+                    authors.update(vals)
+            except Exception:
+                pass
+    except Exception:
+        pass
+    return {
+        "images": len(media_img), "audio": len(media_audio),
+        "claims": claims[:12], "restrictive": bad[:6], "brand_names": brands[:8],
+        "tagged_audio": tagged_audio, "tagged_images": tagged_img, "authors": sorted(authors)[:10],
+    }
+
+
+def provenance_lines(pv):
+    """(ملاحظات، تحذيرات) بالعربية من نتيجة scan_provenance."""
+    notes, warns = [], []
+    notes.append(f"الوسائط: {pv['images']} صورة و{pv['audio']} صوتاً")
+    for c in pv["claims"]:
+        notes.append(f"تصريح المطوّر عن الوسائط: {c}")
+    if pv["authors"]:
+        notes.append("بيانات داخل الملفات: " + "؛ ".join(pv["authors"]))
+    for b in pv["restrictive"]:
+        warns.append(f"شرط تقييد محتمل في الوثائق: {b}")
+    if pv["brand_names"]:
+        warns.append("أسماء ملفات تشبه علامات تجارية معروفة: " + "، ".join(pv["brand_names"]))
+    if pv["audio"] and not pv["tagged_audio"] and not any(_PROV_SOURCE.search(c) for c in pv["claims"]):
+        warns.append(f"مصدر الأصوات (العدد: {pv["audio"]}) غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق")
+    if pv["images"] and not pv["tagged_images"] and not any(_PROV_SOURCE.search(c) for c in pv["claims"]):
+        warns.append("مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق")
+    return notes, warns
+
+
 def main():
     repo_url = os.environ.get("INPUT_REPO_URL", "").strip()
     subdir = os.environ.get("INPUT_SUBDIR", "").strip().strip("/")
@@ -844,12 +958,21 @@ def main():
         reasons.append(f"الرخصة {spdx} غير مسموحة للاستيراد التلقائي")
     if reasons:
         finish("fail")
-    notes.append("فحص الرخصة يخص الكود فقط؛ راجع حقوق الصور والأصوات يدوياً")
+    notes.append("رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه")
 
     # 2) الجلب
     src = work / "src"
     run(["git", "clone", "--depth", "1", f"https://github.com/{owner}/{repo}.git", str(src)], timeout=600)
     sha = run(["git", "rev-parse", "HEAD"], cwd=src).stdout.strip().splitlines()[-1]
+    try:
+        pv = scan_provenance(src)
+        pn, pw = provenance_lines(pv)
+        notes.extend(pn)
+        warnings.extend(pw)
+        report["provenance"] = pv
+    except Exception as e:
+        pv = None
+        notes.append(f"تعذّر فحص أصل الوسائط: {e}")
     report["commit"] = sha
     report["repo_size_kb"] = int(info.get("size") or 0)
     report["description"] = (info.get("description") or "").strip()
@@ -1013,7 +1136,10 @@ def main():
     report["fixes"] = dict(FIXES)
     (site / "SOURCE.txt").write_text(
         f"Source: https://github.com/{owner}/{repo}\nCommit: {sha}\nLicense: {spdx}\n"
-        f"Imported: {report['date']}\nAutomated changes (see report): {json.dumps(FIXES, ensure_ascii=False)}\n",
+        f"Imported: {report['date']}\nAutomated changes (see report): {json.dumps(FIXES, ensure_ascii=False)}\n"
+        + ("\nMedia provenance (automated signals, not a legal guarantee):\n"
+           + "".join(f"- {x}\n" for x in (pv["claims"] + pv["authors"] + pv["restrictive"]))
+           + f"- images: {pv['images']}, audio: {pv['audio']}, tagged audio: {pv['tagged_audio']}\n" if pv else ""),
         encoding="utf-8")
 
     # 7) الغلاف
