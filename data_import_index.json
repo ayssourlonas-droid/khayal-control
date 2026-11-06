@@ -26,5 +26,20 @@
     "commit": "ca5faeea84fc7dc8e18a6b8e899f432884dfe831",
     "date": "2026-11-06",
     "license_file": "LICENSE"
+  },
+  {
+    "key": "frogger",
+    "size": 64821,
+    "repo": "wstackable/frogger",
+    "id": 3,
+    "slug": "frogger",
+    "title": "Frogger",
+    "developer": "wstackable",
+    "license": "CC0-1.0",
+    "source": "https://github.com/wstackable/frogger",
+    "commit": "6edbcb546298916115ab6a856263c959b0c96ca2",
+    "date": "2026-11-06",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: HANDOFF.md: `MUSIC`, `BONUS`, `HELI`, `ROCKET`, `TWISTS`, `CREDITS`, `VICTORY`** are the | HANDOFF.md: Presentation.** Escape pause menu, victory screen with a credits roll, a"
   }
 ]

@@ -1,0 +1,20 @@
+Source: https://github.com/wstackable/frogger
+Commit: 6edbcb546298916115ab6a856263c959b0c96ca2
+License: CC0-1.0
+Imported: 2026-11-06T10:10:18.595510+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 11, "تحسين وسائط صوت": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- HANDOFF.md: `MUSIC`, `BONUS`, `HELI`, `ROCKET`, `TWISTS`, `CREDITS`, `VICTORY`** are the
+- HANDOFF.md: Presentation.** Escape pause menu, victory screen with a credits roll, a
+- HANDOFF.md: usually means credit required rather than public domain, and this repo is
+- HANDOFF.md: 9. Credits and licensing
+- HANDOFF.md: Code is CC0. The lane and pattern system started from
+- HANDOFF.md: also CC0.
+- HANDOFF.md: which usually means credit required rather than public domain. **This is
+- HANDOFF.md: The credits roll names Kelli and Brady as creative directors, matching the
+- README.md: Credit and licence
+- README.md: released under CC0. Everything else, including all of the pixel art and the
+- README.md: The code is licensed under [CC0 1.0](LICENSE). Do whatever you like with it.
+- LICENSE: CC0 1.0 Universal
+- images: 2, audio: 8, tagged audio: 0
