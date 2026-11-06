@@ -47,7 +47,8 @@ def write_credits(host_dir: Path, index):
             f'<p>المطوّر: <b>{esc("developer")}</b></p>'
             f'<p>الرخصة: <b>{esc("license")}</b>{lic_link}</p>'
             f'<p>المصدر: <a href="{src}" rel="noopener">{src}</a></p>'
-            f'<p class="m">نسخة المصدر: {esc("commit")[:10]} · تاريخ الاستيراد: {esc("date")}</p></section>'
+            + (f'<p class="m">الوسائط (صور/أصوات): {esc("media_note")}</p>' if e.get("media_note") else "")
+            + f'<p class="m">نسخة المصدر: {esc("commit")[:10]} · تاريخ الاستيراد: {esc("date")}</p></section>'
         )
     doc = (
         '<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">'
@@ -295,6 +296,7 @@ def main():
         "slug": slug, "title": meta.get("title_ar") or meta["title_en"], "developer": meta["developer"],
         "license": meta["license"], "source": meta["source_url"], "commit": str(report.get("commit", "")),
         "date": str(report.get("date", ""))[:10], "license_file": lic_file,
+        "media_note": str((report.get("provenance") or {}).get("summary_ar", ""))[:400],
     })
     save(data / INDEX, index)
     push_host(index)  # ملفات اللعبة + صفحة الحقوق (دفعة واحدة مستقلة، أو مع البيانات إن كان المستودع واحداً)

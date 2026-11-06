@@ -802,6 +802,7 @@ _PROV_BAD = re.compile(
 _PROV_BRANDS = re.compile(
     r"(?<![a-z])(mario|pokemon|pok\u00e9mon|nintendo|zelda|sonic|disney|marvel|minecraft|lego|pixar|ghibli|"
     r"star[ _-]?wars|harry[ _-]?potter|angry[ _-]?birds|fortnite|roblox)(?![a-z])", re.I)
+_FONT_EXT = {".ttf", ".otf", ".woff", ".woff2"}
 _AUDIO_EXT = {".ogg", ".mp3", ".wav", ".m4a", ".flac", ".opus"}
 _IMG_EXT = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"}
 
@@ -809,7 +810,7 @@ _IMG_EXT = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"}
 def scan_provenance(src: Path):
     """يجمع كل ما يُعرف آلياً عن مصدر الصور والأصوات. النتيجة إشارات للمراجعة وليست ضماناً."""
     skip = {".git", "node_modules", "dist", "build", ".github"}
-    docs, media_audio, media_img, brands = [], [], [], []
+    docs, media_audio, media_img, brands, fonts, prompts = [], [], [], [], [], []
     for f in src.rglob("*"):
         if not f.is_file() or any(x in skip for x in f.relative_to(src).parts):
             continue
@@ -819,6 +820,10 @@ def scan_provenance(src: Path):
             media_audio.append(f)
         elif ext in _IMG_EXT:
             media_img.append(f)
+        elif ext in _FONT_EXT:
+            fonts.append(str(rel))
+        if "prompt" in f.stem.lower() and ext in (".md", ".txt"):
+            prompts.append(str(rel))
         if _PROV_BRANDS.search(f.stem):
             brands.append(str(rel))
         name = f.name.lower()
@@ -873,7 +878,7 @@ def scan_provenance(src: Path):
     except Exception:
         pass
     return {
-        "images": len(media_img), "audio": len(media_audio),
+        "images": len(media_img), "audio": len(media_audio), "fonts": fonts[:6], "prompt_files": prompts[:3],
         "claims": claims[:12], "restrictive": bad[:6], "brand_names": brands[:8],
         "tagged_audio": tagged_audio, "tagged_images": tagged_img, "authors": sorted(authors)[:10],
     }
@@ -885,6 +890,10 @@ def provenance_lines(pv):
     notes.append(f"الوسائط: {pv['images']} صورة و{pv['audio']} صوتاً")
     for c in pv["claims"]:
         notes.append(f"تصريح المطوّر عن الوسائط: {c}")
+    if pv.get("prompt_files"):
+        notes.append("وجود ملف prompt (" + "، ".join(pv["prompt_files"]) + "): الصور أو الكود على الأرجح مولَّدة بالذكاء الاصطناعي")
+    if pv.get("fonts"):
+        warns.append(f"خطوط مضمّنة ({len(pv['fonts'])}): تأكد من ترخيصها، مثل " + "، ".join(pv["fonts"][:3]))
     if pv["authors"]:
         notes.append("بيانات داخل الملفات: " + "؛ ".join(pv["authors"]))
     for b in pv["restrictive"]:
@@ -895,6 +904,14 @@ def provenance_lines(pv):
         warns.append(f"مصدر الأصوات (العدد: {pv["audio"]}) غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق")
     if pv["images"] and not pv["tagged_images"] and not any(_PROV_SOURCE.search(c) for c in pv["claims"]):
         warns.append("مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق")
+    sourced = any(_PROV_SOURCE.search(c) for c in pv["claims"]) or bool(pv["tagged_audio"] or pv["tagged_images"])
+    pv["documented"] = bool(sourced)
+    if sourced:
+        pv["summary_ar"] = "مصدر الوسائط مذكور من المطوّر: " + " | ".join(pv["claims"][:2] + pv["authors"][:2])
+    elif pv["claims"] or pv.get("prompt_files"):
+        pv["summary_ar"] = "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): " + " | ".join(pv["claims"][:2])
+    else:
+        pv["summary_ar"] = "مصدر الوسائط غير موثّق من المطوّر"
     return notes, warns
 
 
@@ -994,6 +1011,7 @@ def main():
 
     # 4) تنظيف
     site = out / "site"
+    big_warn = None
     copy_site(webroot, site)
     s = sanitize(site)
     report["stats"] = {k: s[k] for k in ("files", "total")}
@@ -1002,7 +1020,8 @@ def main():
     if s["total"] > MAX_TOTAL_FAIL:
         reasons.append(f"الحجم {s['total'] // 1048576}MB كبير جداً")
     elif s["total"] > MAX_TOTAL_WARN:
-        warnings.append(f"الحجم كبير: {s['total'] // 1048576}MB")
+        big_warn = f"الحجم كبير قبل تحسين الوسائط: {s['total'] // 1048576}MB"
+        warnings.append(big_warn)
     if s["big_files"]:
         reasons.append("ملفات تتجاوز 25MB (حد Cloudflare): " + ", ".join(s["big_files"][:5]))
     if s["removed"]:
@@ -1112,6 +1131,9 @@ def main():
                         notes.append(f"تحسين {names[st['kind']]}: {st['converted']} ملفاً، وفّر {st['saved'] // 1024} KB"
                                      + (f"؛ استُعيد {st['restored']} أصلياً تبيّن أن اللعبة تطلبه" if st["restored"] else ""))
                         fixed("تحسين وسائط " + names[st["kind"]], st["converted"])
+                if big_warn and size_after <= MAX_TOTAL_WARN and big_warn in warnings:
+                    warnings.remove(big_warn)  # لم يعد الحجم كبيراً بعد التحسين
+                    notes.append(f"زال تحذير الحجم بعد تحسين الوسائط ({size_after // 1048576}MB)")
                 if size_before > size_after:
                     notes.append(f"حجم اللعبة بعد تحسين الوسائط: {size_before // 1048576}MB ← {size_after // 1048576}MB "
                                  "(الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)")
