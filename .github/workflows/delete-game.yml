@@ -1,0 +1,50 @@
+name: Delete game
+
+# حذف لعبة من جذورها (سجلاتها + ملفاتها + فهرس الاستيراد + صفحة الحقوق).
+# يُشغَّل من تطبيق Game Control (زر السلة) أو يدوياً: Actions ← Delete game ← Run workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      game_id:
+        description: "رقم اللعبة (id) في ملفات البيانات"
+        required: true
+      play_url:
+        description: "رابط تشغيل اللعبة (لاستنتاج مجلدها؛ اختياري)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+# لا يعمل مع استيراد/نشر في الوقت نفسه حتى لا يتعارضا على الدفع
+concurrency:
+  group: repo-write
+  cancel-in-progress: false
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Delete game
+        env:
+          GAME_ID: ${{ inputs.game_id }}
+          PLAY_URL: ${{ inputs.play_url }}
+        run: python3 tools/delete_game.py
+      - name: Commit and push
+        run: |
+          git config user.name "game-importer"
+          git config user.email "game-importer@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "لا تغييرات"; exit 0; fi
+          git commit -m "delete game ${{ inputs.game_id }} (full removal)"
+          for i in 1 2 3 4; do
+            git push && exit 0
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            sleep $((i * 3))
+          done
+          echo "تعذّر الدفع" && exit 1
