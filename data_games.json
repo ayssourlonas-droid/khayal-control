@@ -25,5 +25,31 @@
       "category": "canvas2d"
     },
     "review_note": "أُخفيت يدوياً من تطبيق المتحكم"
+  },
+  {
+    "id": 3,
+    "release_year": "2026",
+    "category_tags": [
+      "arcade",
+      "canvas",
+      "frogger"
+    ],
+    "main_scene": {
+      "title_ar": "Frogger",
+      "title_en": "Frogger",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/frogger/_cover.png"
+    },
+    "details_scene": {
+      "description": "Classic-style Frogger you can customise: swap emoji, drop in your own drawings, or redesign the whole board from one config file.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/frogger/",
+      "developer": "wstackable",
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/wstackable/frogger",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "arcade"
+    }
   }
 ]
