@@ -206,5 +206,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "offroadjsvdemo",
+    "size": 9907,
+    "repo": "tomo0613/offroadJS_v2_demo",
+    "id": 15,
+    "slug": "offroadjs-v2-demo",
+    "title": "offroadJS V2 Demo",
+    "developer": "tomo0613",
+    "license": "GPL-3.0",
+    "source": "https://github.com/tomo0613/offroadJS_v2_demo",
+    "commit": "e1a9ea553c885bf6b0a2b30abc7558d95315c5d0",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
   }
 ]
