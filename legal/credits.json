@@ -176,5 +176,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: ![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg) | README.md: Released under the [CC0-1.0](LICENSE) license — public domain. Do anything you like with it."
+  },
+  {
+    "key": "freirenthefuneral",
+    "size": 28747,
+    "repo": "imshota1009/Freiren-the-Funeral",
+    "id": 13,
+    "slug": "freiren-the-funeral",
+    "title": "Freiren The Funeral",
+    "developer": "imshota1009",
+    "license": "Apache-2.0",
+    "source": "https://github.com/imshota1009/Freiren-the-Funeral",
+    "commit": "913787f3d1c205026161e86822cd81f62a769186",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=エルム凪/EigHt | composer=EigHt"
   }
 ]

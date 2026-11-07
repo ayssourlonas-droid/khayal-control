@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:freiren-the-funeral:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frieren: Beyond Journey's End Online - A Journey Beyond Time</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+
+        <!-- ===== Splash Screen ===== -->
+        <div id="splash-screen" class="screen active">
+            <div class="splash-box">
+                <h1>Frieren: Beyond Journey's End</h1>
+                <p class="subtitle">Online - A Journey Beyond Time -</p>
+                <button id="start-creation-button" class="game-button">Begin Journey</button>
+            </div>
+        </div>
+
+        <!-- ===== Character Creation Screen ===== -->
+        <div id="character-creation-screen" class="screen">
+             <div class="creation-container">
+                 <div class="creation-preview">
+                     <img id="character-image-preview" src="frieren_character.webp" alt="Character Preview">
+                 </div>
+                 <div class="creation-form-container">
+                     <h2>Character Creation</h2>
+                     <div class="creation-form">
+                         <div class="form-group">
+                             <label for="player-name">Name</label>
+                             <input type="text" id="player-name" value="Frieren">
+                         </div>
+                         <div class="form-group">
+                             <p class="race-info">Race: Elf</p>
+                         </div>
+                         <p class="class-info">Class: Mage</p>
+                         <button id="complete-creation-button" class="game-button">Confirm</button>
+                     </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- ===== Main Game Screen (Map) ===== -->
+        <div id="main-game-screen" class="screen">
+            <div id="map-container"></div>
+            <div id="main-ui-container">
+                <div id="player-hud" class="ui-panel">
+                    <div class="panel-decoration top-left"></div>
+                    <div class="panel-decoration top-right"></div>
+                    <h3 id="hud-name"></h3>
+                    <div class="hud-bar-container">
+                        <label>HP: <span id="hp-value"></span></label>
+                        <div class="bar-outer"><div id="hp-bar" class="bar-inner"></div></div>
+                    </div>
+                    <div class="hud-bar-container">
+                        <label>MP: <span id="mp-value"></span></label>
+                        <div class="bar-outer"><div id="mp-bar" class="bar-inner"></div></div>
+                    </div>
+                    <div class="hud-bar-container">
+                        <label>EXP: <span id="exp-value"></span></label>
+                        <div class="bar-outer"><div id="exp-bar" class="bar-inner"></div></div>
+                    </div>
+                    <div class="panel-decoration bottom-left"></div>
+                    <div class="panel-decoration bottom-right"></div>
+                </div>
+                <div id="log-window" class="ui-panel">
+                    <div class="panel-decoration top-left"></div>
+                    <div class="panel-decoration top-right"></div>
+                    <div class="panel-decoration bottom-left"></div>
+                    <div class="panel-decoration bottom-right"></div>
+                </div>
+                <div id="main-menu-buttons">
+                    <button id="status-button" class="game-button">Status</button>
+                    <button id="inventory-button" class="game-button">Inventory</button>
+                    <button id="spellbook-button" class="game-button">Spells</button>
+                    <button id="quest-log-button" class="game-button">Quests</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== Battle Screen ===== -->
+        <div id="battle-screen" class="screen">
+            <div class="battle-container">
+                <div class="battle-arena">
+                    <div id="player-battle-char" class="battle-character">
+                        <img id="player-battle-sprite" src="frieren_battle.webp" alt="Player Character">
+                        <p id="player-battle-name" class="battle-char-name"></p>
+                        <p id="player-battle-hp" class="battle-char-hp"></p>
+                    </div>
+                    <div id="enemy-battle-char" class="battle-character">
+                        <div id="enemy-sprite" class="battle-sprite"></div>
+                        <img id="enemy-sprite-img" class="battle-sprite-img" src="" alt="Enemy Sprite">
+                        <p id="enemy-battle-name" class="battle-char-name"></p>
+                        <p id="enemy-battle-hp" class="battle-char-hp"></p>
+                    </div>
+                </div>
+                <div class="battle-ui">
+                    <div id="battle-log" class="ui-panel"></div>
+                    <div id="battle-actions"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== Town Screen ===== -->
+        <div id="town-screen" class="screen menu-screen">
+            <h2 id="town-name"></h2>
+            <div class="town-facilities">
+                <button id="inn-button" class="game-button">Inn (10G)</button>
+                <button id="shop-button" class="game-button">Weapon Shop</button>
+                <button id="blacksmith-button" class="game-button">Blacksmith</button>
+                <button id="association-button" class="game-button" style="display: none;">Mage Association</button>
+                <button id="town-exit-button" class="game-button">Leave Town</button>
+            </div>
+        </div>
+        
+        <!-- ===== Status, Inventory, etc. Screens ===== -->
+        <div id="status-screen" class="screen menu-screen">
+            <h2>Status</h2>
+            <div id="status-grid"></div>
+            <div class="menu-actions"><button id="status-close-button" class="game-button">Close</button></div>
+        </div>
+        
+        <div id="inventory-screen" class="screen menu-screen">
+            <h2>Inventory</h2>
+            <p id="gold-display"></p>
+            <ul id="inventory-list"></ul>
+            <div class="menu-actions"><button id="inventory-close-button" class="game-button">Close</button></div>
+        </div>
+
+        <div id="spellbook-screen" class="screen menu-screen">
+            <h2>Spellbook</h2>
+            <ul id="spellbook-list"></ul>
+            <div class="menu-actions"><button id="spellbook-close-button" class="game-button">Close</button></div>
+        </div>
+
+        <div id="quest-log-screen" class="screen menu-screen">
+            <h2>Quest Log</h2>
+            <ul id="quest-list"></ul>
+            <div class="menu-actions"><button id="quest-log-close-button" class="game-button">Close</button></div>
+        </div>
+
+        <!-- ===== Magic Association Screen ===== -->
+        <div id="magic-association-screen" class="screen menu-screen">
+            <h2>Continental Magic Association</h2>
+            <div class="dialogue-panel ui-panel">
+                <p id="examiner-dialogue"></p>
+            </div>
+            <div class="menu-actions">
+                <button id="exam-button" class="game-button">Ask about Rank-Up Exam</button>
+                <button id="association-exit-button" class="game-button">Leave Association</button>
+            </div>
+        </div>
+
+        <!-- ===== Modals ===== -->
+        <div id="shop-modal" class="modal">
+            <div class="modal-content ui-panel">
+                <h2>Weapon Shop</h2>
+                <div class="shop-sections">
+                    <div class="shop-buy">
+                        <h3>Buy</h3>
+                        <ul id="shop-buy-list"></ul>
+                    </div>
+                    <div class="shop-sell">
+                        <h3>Sell</h3>
+                        <ul id="shop-sell-list"></ul>
+                    </div>
+                </div>
+                <button id="shop-close-button" class="game-button">Leave Shop</button>
+            </div>
+        </div>
+
+        <div id="blacksmith-modal" class="modal">
+            <div class="modal-content ui-panel">
+                <h2>Blacksmith</h2>
+                <p>Welcome. I can upgrade your staff.</p>
+                <div id="blacksmith-info"></div>
+                <button id="upgrade-button" class="game-button">Upgrade</button>
+                <button id="blacksmith-close-button" class="game-button">Never mind</button>
+            </div>
+        </div>
+        
+        <div id="dialogue-modal" class="modal">
+            <div class="modal-content ui-panel dialogue-panel">
+                <p id="dialogue-text"></p>
+                <button id="dialogue-close-button" class="game-button">Close</button>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Audio Elements -->
+    <audio id="title-bgm" loop><source src="title_bgm.ogg" type="audio/mpeg"></audio>
+    <audio id="map-bgm" loop><source src="map_bgm.ogg" type="audio/mpeg"></audio>
+    <audio id="battle-bgm" loop><source src="battle_bgm.ogg" type="audio/mpeg"></audio>
+    <audio id="boss-bgm" loop><source src="boss_battle_bgm.ogg" type="audio/mpeg"></audio>
+
+    <script src="map-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
