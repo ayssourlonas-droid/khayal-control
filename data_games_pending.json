@@ -336,5 +336,31 @@
       "type": "web",
       "category": "css"
     }
+  },
+  {
+    "id": 19,
+    "release_year": "2026",
+    "category_tags": [
+      "3d-graphics",
+      "coding",
+      "css3"
+    ],
+    "main_scene": {
+      "title_ar": "Game Creator",
+      "title_en": "Game Creator",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/game-creator/_cover.png"
+    },
+    "details_scene": {
+      "description": "A simple app to create 3D games",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/game-creator/",
+      "developer": "htmljsgames",
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/htmljsgames/Game-creator",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "3d-graphics"
+    }
   }
 ]

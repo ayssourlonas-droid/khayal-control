@@ -1,0 +1,14 @@
+Source: https://github.com/htmljsgames/Game-creator
+Commit: 44335219d2d412ff88bb01210e7180dd8bb284d8
+License: CC0-1.0
+Imported: 2026-11-07T21:45:01.604434+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: Creative Commons Legal Code
+- LICENSE: CC0 1.0 Universal
+- LICENSE: CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE
+- LICENSE: ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS
+- LICENSE: INFORMATION ON AN "AS-IS" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES
+- LICENSE: associating CC0 with a Work (the "Affirmer"), to the extent that he or she
+- images: 0, audio: 0, tagged audio: 0

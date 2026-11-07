@@ -1,0 +1,2788 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:game-creator:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Player — Objects & Overlay</title>
+	<style>
+		:root{--bg:#0f1721;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8}
+	html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071022 0%,#071a2a 100%);overflow:hidden}
+	.container{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+		header{padding:12px 16px;display:flex;align-items:center;gap:12px}
+		h1{font-size:18px;margin:0;color:var(--accent)}
+		.toolbar{margin-left:auto;display:flex;gap:8px}
+		button{background:var(--card);border:1px solid rgba(255,255,255,0.04);color:#dff7ff;padding:8px 10px;border-radius:8px;cursor:pointer}
+	main{flex:1;display:flex;gap:12px;padding:12px;min-height:0;box-sizing:border-box}
+		/* game area */
+	.stage{flex:1;background:rgba(255,255,255,0.02);border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+	/* canvas should fill the stage without causing scrollbars */
+	#canvas{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+		.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.01) 1px, transparent 1px);background-size:40px 40px,40px 40px}
+		.obj{position:absolute;width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#041826;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(2,6,23,0.6);transform:translate(-50%,-50%)}
+		/* overlay */
+		.overlay{position:fixed;right:16px;top:16px;width:320px;max-width:calc(100% - 40px);background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));backdrop-filter:blur(6px);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.04)}
+		.overlay h2{margin:0 0 8px 0;font-size:15px;color:var(--accent)}
+		.overlay .meta{font-size:13px;color:var(--muted);margin-bottom:8px}
+		.object-list{display:flex;flex-direction:column;gap:6px;max-height:220px;overflow:auto}
+		.object-row{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.01);cursor:pointer}
+		.object-color{width:32px;height:32px;border-radius:6px;flex:0 0 32px}
+		.muted{color:var(--muted);font-size:13px}
+		#mobileControlsOverlay{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(2,6,23,0.9);color:#e6eef6;padding:16px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);z-index:35;text-align:center;font-size:14px;display:none}
+		#joystickContainer{position:relative;width:120px;height:120px;margin:0 auto;}
+		#joystickBase{position:absolute;width:100%;height:100%;border-radius:50%;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);}
+		#joystickHandle{position:absolute;width:40px;height:40px;border-radius:50%;background:var(--accent);left:50%;top:50%;transform:translate(-50%,-50%);}
+		#mobileInventoryBtn{margin-top:10px;background:var(--card);border:1px solid rgba(255,255,255,0.04);color:#dff7ff;padding:8px 10px;border-radius:8px;cursor:pointer;}
+		footer{padding:8px 16px;font-size:13px;color:var(--muted)}
+		@media (max-width:600px){.overlay{position:fixed;left:8px;right:8px;top:auto;bottom:8px;width:auto}}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>Player — Objects Preview</h1>
+			<div class="toolbar"></div>
+			<div id="selectedInfo" style="display:none;margin-left:12px;color:var(--muted)"></div>
+		</header>
+
+		<main>
+			<section class="stage" id="stage" aria-label="Game stage">
+				<canvas id="canvas" aria-label="3D canvas renderer"></canvas>
+				<div class="grid" aria-hidden="true"></div>
+			</section>
+		</main>
+
+
+
+		<!-- pause menu -->
+		<div id="pauseMenu" style="display:none; position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(2,6,23,0.9);color:#e6eef6;padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);z-index:40;min-width:260px;text-align:center">
+			<h3 style="margin:0 0 8px 0">Paused</h3>
+			<div style="display:flex;gap:8px;justify-content:center;margin-bottom:8px">
+				<button id="pauseInventoryBtn">Inventory</button>
+				<button id="resumeBtn">Resume</button>
+				<button id="saveBtn">Save</button>
+				<button id="exportSaveBtn">Export Save</button>
+				<button id="importBackupBtn">Upload & New</button>
+				<button id="newGameBtn">New Game</button>
+			</div>
+			<div id="pauseInfo" class="muted">Press Esc to resume.</div>
+		</div>
+
+		<!-- hidden file input for importing save backups -->
+		<input id="importSaveFile" type="file" accept="application/json" style="display:none" />
+
+		<!-- end game dialog -->
+		<div id="endGameDialog" style="display:none; position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:linear-gradient(180deg,rgba(6,182,212,0.15),rgba(2,6,23,0.95));color:#e6eef6;padding:24px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);z-index:50;min-width:300px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.6)">
+			<h2 id="endGameTitle" style="margin:0 0 12px 0;font-size:24px;color:var(--accent)">Game Over</h2>
+			<p id="endGameMessage" style="margin:0 0 16px 0;font-size:14px;color:var(--muted)"></p>
+			<button id="endGameNewGameBtn" style="background:var(--accent);color:#041826;font-weight:700;padding:10px 20px">New Game</button>
+		</div>
+
+		<!-- inventory panel (used by pause menu) -->
+		<div id="inventoryPanel" style="display:none; position:fixed;right:18px;top:80px;background:rgba(2,6,23,0.9);color:#e6eef6;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);z-index:45;min-width:220px">
+			<h4 style="margin:0 0 8px 0">Inventory</h4>
+			<div id="inventoryList" style="max-height:300px;overflow:auto"></div>
+			<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+				<button id="putDownBtn">Put Down</button>
+				<button id="closeInventoryBtn">Close</button>
+			</div>
+		</div>
+
+		<!-- mobile controls overlay -->
+		<div id="mobileControlsOverlay">
+			<div id="joystickContainer">
+				<div id="joystickBase"></div>
+				<div id="joystickHandle"></div>
+			</div>
+			<button id="mobileInventoryBtn">Inventory</button>
+		</div>
+
+		<footer>
+			This demo renders an objects array and shows an overlay with details. Open this file in a browser to interact.
+		</footer>
+	</div>
+
+	<script>
+		// Objects now have richer structure:
+		// { id, name, x,y,z (origin), triangles: [{p1:{x,y,z}, p2, p3}], tetrahedrons: [{a,b,c,d}], actions: [{key,name}], flags: isplayer,isworld,iswall }
+
+		// Lightweight classes for game objects and inventory items
+		class GameObject {
+			constructor(data){
+				Object.assign(this, data);
+				this.triangles = this.triangles || [];
+				this.tetrahedrons = this.tetrahedrons || [];
+				this.actions = this.actions || [];
+				this.isplayer = !!this.isplayer;
+				this.isworld = !!this.isworld;
+				this.iswall = !!this.iswall;
+				// runtime/visual fields
+				this.texture = this.texture || null;
+				this._baseTris = this._baseTris || null;
+				this._lidTemplate = this._lidTemplate || null;
+				this._chestDims = this._chestDims || null;
+				this.opened = !!this.opened;
+				this.lidAngle = this.lidAngle || 0;
+				this.lidTarget = this.lidTarget || 0;
+			}
+		}
+
+		class InventoryItem {
+			constructor(id, name, qty = 1, worldClass = null){
+				this.id = id;
+				this.name = name;
+				this.qty = qty;
+				// pointer to the world-class/constructor used when dropping this item
+				this.worldClass = worldClass;
+			}
+		}
+
+		// Abstract tool-like inventory item: register commands and perform them
+		class ToolItem extends InventoryItem {
+			constructor(id, name, qty = 1, worldClass = null){
+				super(id, name, qty, worldClass);
+				// commands: key -> { name, handler }
+				this.commands = {};
+			}
+
+			registerCommand(key, displayName, handler){
+				this.commands[key] = { name: displayName, handler };
+			}
+
+			// perform a command by key; returns true when executed
+			perform(key, target){
+				const cmd = this.commands[key];
+				if(!cmd) return false;
+				try{ cmd.handler.call(this, target); return true; }catch(err){ console.warn('Tool command failed', err); return false; }
+			}
+
+			getAvailableCommands(){
+				return Object.keys(this.commands).map(k=>({ key:k, name:this.commands[k].name }));
+			}
+		}
+
+		let objects = [
+			{
+				id:1,
+				name:'Player',
+				x:300,y:100,z:200,
+				triangles:[],
+				tetrahedrons:[],
+				actions:[],
+				isplayer:true
+			}
+		];
+
+		// Texture loader: attach an Image to object.texture when textureSrc is present
+		function loadTexture(obj, src){
+			const img = new Image();
+			img.crossOrigin = 'anonymous';
+			img.onload = ()=>{ obj.texture = img; renderer && renderer.render(); };
+			img.onerror = ()=>{ console.warn('Failed to load texture', src); };
+			img.src = src;
+			return img;
+		}
+
+		// auto-load textures only when explicitly requested via textureSrc or isSprite flag
+		for(const o of objects){ if(o.textureSrc) loadTexture(o, o.textureSrc); }
+
+		// Convert plain object literals to GameObject instances
+		objects = objects.map(o => new GameObject(o));
+		// ensure each object has a world coordinate (default world 0)
+		for(const o of objects) if(typeof o.world === 'undefined') o.world = 0;
+
+		// WorldObject base class (derives from GameObject)
+		class WorldObject extends GameObject {
+			constructor(data){
+				super(data);
+				this.world = (data && data.world) || 0;
+			}
+		}
+
+		// abstract-ish Tree class derived from WorldObject
+		class Tree extends WorldObject {
+			constructor(data){ super(data); }
+			// spawn a tree at x,z in given world
+			static spawn(x,z, world=0){
+				const id = Date.now() + Math.floor(Math.random()*1000);
+				const t = new WorldObject({ id, name: 'Tree', x:x, y:0, z:z, color:'#8B5A2B', actions:[{key:'q',name:'cut'}], world });
+				// trunk mesh (brown) + canopy mesh (green leaves)
+				buildCylinderMesh(t, 6, 50, 18, '#8B5A2B');
+				buildTreeCanopyMesh(t, 0, 40, 25, '#2d8a2d');
+				objects.push(t);
+				return t;
+			}
+		}
+
+		// Ladder class with detailed wood and moss texture
+		class Ladder extends WorldObject {
+			constructor(data){
+				super(data);
+				this.actions = this.actions || [];
+				// allow both Q (default interact) and C to climb
+				this.actions.push({key:'c', name:'climb'});
+				this.actions.push({key:'q', name:'climb'});
+				this.climbHeight = data && typeof data.climbHeight !== 'undefined' ? data.climbHeight : 60;
+			}
+
+			static buildLadderGeometry(height = 80, width = 24, rungSpacing = 12){
+				// Build detailed ladder mesh in LOCAL coordinates (relative to ladder origin)
+				const triangles = [];
+				const LEFT_X = -width/2;
+				const RIGHT_X = width/2;
+				const railThickness = 4;
+			const rungRadius = 3.5; // Thicker rungs
+			
+			// Left and right vertical rails (solid box geometry)
+			function addBox(x1, y1, z1, x2, y2, z2) {
+				const pts = [
+					{x: x1, y: y1, z: z1}, {x: x2, y: y1, z: z1}, {x: x2, y: y2, z: z1}, {x: x1, y: y2, z: z1},
+					{x: x1, y: y1, z: z2}, {x: x2, y: y1, z: z2}, {x: x2, y: y2, z: z2}, {x: x1, y: y2, z: z2}
+				];
+				// Front, back, top, bottom, left, right faces
+				triangles.push([pts[0], pts[1], pts[2]]); triangles.push([pts[0], pts[2], pts[3]]);
+				triangles.push([pts[4], pts[6], pts[5]]); triangles.push([pts[4], pts[7], pts[6]]);
+				triangles.push([pts[0], pts[4], pts[5]]); triangles.push([pts[0], pts[5], pts[1]]);
+				triangles.push([pts[2], pts[6], pts[7]]); triangles.push([pts[2], pts[7], pts[3]]);
+				triangles.push([pts[0], pts[3], pts[7]]); triangles.push([pts[0], pts[7], pts[4]]);
+				triangles.push([pts[1], pts[5], pts[6]]); triangles.push([pts[1], pts[6], pts[2]]);
+			}
+			
+			// Build solid rails
+			const z_near = -3;
+			const z_far = 3;
+			for(let h = 0; h < height; h += rungSpacing * 2){
+				const h1 = Math.min(h + rungSpacing * 2, height);
+				addBox(LEFT_X, h, z_near, LEFT_X + railThickness, h1, z_far);
+				addBox(RIGHT_X - railThickness, h, z_near, RIGHT_X, h1, z_far);
+			}
+			
+			// Thick cylindrical rungs with polygonal approximation
+			const rungSegments = 8;
+			for(let h = 0; h < height; h += rungSpacing){
+				const rungs = [];
+				for(let s = 0; s < rungSegments; s++){
+					const angle = (s / rungSegments) * Math.PI * 2;
+					rungs.push({
+						x: LEFT_X + railThickness,
+						y: h + Math.cos(angle) * rungRadius,
+						z: Math.sin(angle) * rungRadius
+					});
+				}
+				const rungs2 = [];
+				for(let s = 0; s < rungSegments; s++){
+					const angle = (s / rungSegments) * Math.PI * 2;
+					rungs2.push({
+						x: RIGHT_X - railThickness,
+						y: h + Math.cos(angle) * rungRadius,
+						z: Math.sin(angle) * rungRadius
+					});
+				}
+				// Connect rung segments
+				for(let s = 0; s < rungSegments; s++){
+					const s1 = (s + 1) % rungSegments;
+					triangles.push([rungs[s], rungs[s1], rungs2[s]]);
+					triangles.push([rungs[s1], rungs2[s1], rungs2[s]]);
+				}
+			}
+			
+			// Metal screws at connection points
+			function addScrew(x, y, z, size = 0.8) {
+				const segments = 6;
+				const headTris = [];
+				for(let s = 0; s < segments; s++){
+					const angle = (s / segments) * Math.PI * 2;
+					const x1 = x + Math.cos(angle) * size;
+					const z1 = z + Math.sin(angle) * size;
+					const angle2 = ((s + 1) / segments) * Math.PI * 2;
+					const x2 = x + Math.cos(angle2) * size;
+					const z2 = z + Math.sin(angle2) * size;
+					triangles.push([{x: x1, y: y + size * 0.5, z: z1}, {x: x2, y: y + size * 0.5, z: z2}, {x: x, y: y - size * 0.5, z: z}]);
+				}
+			}
+			
+			// Add screws at rung/rail junctions
+			for(let h = rungSpacing; h < height; h += rungSpacing){
+				addScrew(LEFT_X + railThickness - 1, h, -2.5, 0.6);
+				addScrew(LEFT_X + railThickness - 1, h, 2.5, 0.6);
+				addScrew(RIGHT_X - railThickness + 1, h, -2.5, 0.6);
+				addScrew(RIGHT_X - railThickness + 1, h, 2.5, 0.6);
+			}
+			
+			// Gray side screws aligned with rungs
+			function addSideScrew(x, y, z, size = 0.6) {
+				const segments = 6;
+				for(let s = 0; s < segments; s++){
+					const angle = (s / segments) * Math.PI * 2;
+					const x1 = x + Math.cos(angle) * size;
+					const z1 = z + Math.sin(angle) * size;
+					const angle2 = ((s + 1) / segments) * Math.PI * 2;
+					const x2 = x + Math.cos(angle2) * size;
+					const z2 = z + Math.sin(angle2) * size;
+					const tri = [{x: x1, y: y + size * 0.5, z: z1}, {x: x2, y: y + size * 0.5, z: z2}, {x: x, y: y - size * 0.5, z: z}];
+					tri.color = '#888888'; // gray color for side screws
+					triangles.push(tri);
+				}
+			}
+			
+			// Add gray screws on left and right sides, aligned with rungs
+			for(let h = rungSpacing; h < height; h += rungSpacing){
+				addSideScrew(LEFT_X - 2, h, -3, 0.5);
+				addSideScrew(LEFT_X - 2, h, 3, 0.5);
+				addSideScrew(RIGHT_X + 2, h, -3, 0.5);
+				addSideScrew(RIGHT_X + 2, h, 3, 0.5);
+			}
+			
+			return triangles;
+		}
+
+		static spawn(x,y,z,world=0){
+			const id = Date.now() + Math.floor(Math.random()*1000);
+			const l = new Ladder({ id, name:'Ladder', x:x, y:y, z:z, color:'#6b4423', world, isworld:true, iswall:true });
+			
+			// Build detailed ladder mesh in local coordinates
+			const height = 80;
+			l._baseTris = Ladder.buildLadderGeometry(height);
+			
+			// collision tetrahedron
+				l.tetrahedrons = [ { a:{x:x-6,y:y,z:z-6}, b:{x:x+6,y:y,z:z-6}, c:{x:x+6,y:y+height,z:z+6}, d:{x:x-6,y:y+height,z:z+6} } ];
+				
+				// Create moss and wood aged texture
+				const textureUrl = createLadderTexture();
+				loadTexture(l, textureUrl);
+				
+				objects.push(l); return l;
+			}
+		}
+
+		// helper: build a cylinder mesh (local coords) and store as _baseTris
+		function buildCylinderMesh(obj, radius = 6, height = 40, segments = 12, color = '#888'){
+			const vertsTop = [], vertsBot = [];
+			for(let i=0;i<segments;i++){
+				const a = (i / segments) * Math.PI * 2;
+				const x = Math.cos(a) * radius;
+				const z = Math.sin(a) * radius;
+				vertsBot.push({x:x, y:0, z:z});
+				vertsTop.push({x:x, y:height, z:z});
+			}
+			const tris = [];
+			for(let i=0;i<segments;i++){
+				const ni = (i+1) % segments;
+				// two triangles for the quad between segment i and ni
+				const tri1 = [ vertsBot[i], vertsTop[i], vertsTop[ni] ];
+				tri1.color = color;
+				tris.push(tri1);
+				const tri2 = [ vertsBot[i], vertsTop[ni], vertsBot[ni] ];
+				tri2.color = color;
+				tris.push(tri2);
+			}
+			// optional top cap (fan)
+			const centerTop = {x:0,y:height,z:0};
+			for(let i=0;i<segments;i++){
+				const ni = (i+1)%segments;
+				const tri = [ centerTop, vertsTop[i], vertsTop[ni] ];
+				tri.color = color;
+				tris.push(tri);
+			}
+			obj._baseTris = tris;
+		}
+
+		// helper: build tree canopy (foliage) mesh with green color
+		function buildTreeCanopyMesh(obj, localX, baseY, radius = 25, color = '#2d8a2d'){
+			if(!obj._baseTris) obj._baseTris = [];
+			const tris = obj._baseTris;
+			
+			// create a spherical canopy using icosphere-like triangulation
+			// simple approach: create nested icosahedrons or use quad-to-tri subdivisions
+			// For simplicity, create a series of rings at different heights to approximate foliage
+			
+			const segments = 16; // horizontal segments
+			const heightLayers = 4; // vertical layers for canopy
+			const topHeight = baseY + radius * 1.8;
+			
+			// Create spherical section by layers (from top tapering down)
+			for(let layer = 0; layer < heightLayers; layer++){
+				const layerFraction = layer / heightLayers;
+				const nextLayerFraction = (layer + 1) / heightLayers;
+				
+				// Height of this layer (starts at top, goes down) - REVERSED from before
+				const y1 = topHeight - (radius * layerFraction * 1.5);
+				const y2 = topHeight - (radius * nextLayerFraction * 1.5);
+				
+				// Radius at this layer (smallest at top, widest in middle, tapers at bottom)
+				const r1 = radius * Math.sqrt(layerFraction * (2 - layerFraction));
+				const r2 = radius * Math.sqrt(nextLayerFraction * (2 - nextLayerFraction));
+				
+				// Create vertices for this ring
+				const verts1 = [], verts2 = [];
+				for(let i = 0; i < segments; i++){
+					const angle = (i / segments) * Math.PI * 2;
+					const cos = Math.cos(angle);
+					const sin = Math.sin(angle);
+					verts1.push({x: localX + cos * r1, y: y1, z: sin * r1});
+					verts2.push({x: localX + cos * r2, y: y2, z: sin * r2});
+				}
+				
+				// Create quads and triangles between layers
+				for(let i = 0; i < segments; i++){
+					const ni = (i + 1) % segments;
+					
+					// Two triangles per quad
+					const tri1 = [verts1[i], verts2[i], verts2[ni]];
+					tri1.color = color;
+					tris.push(tri1);
+					
+					const tri2 = [verts1[i], verts2[ni], verts1[ni]];
+					tri2.color = color;
+					tris.push(tri2);
+				}
+			}
+			
+			// Add apex point at the very top
+			const apex = {x: localX, y: topHeight, z: 0};
+			const firstLayerFraction = 0;
+			const firstR = radius * Math.sqrt(firstLayerFraction * (2 - firstLayerFraction));
+			const firstY = topHeight;
+			
+			// Connect apex to first layer
+			for(let i = 0; i < segments; i++){
+				const ni = (i + 1) % segments;
+				const angle1 = (i / segments) * Math.PI * 2;
+				const angle2 = (ni / segments) * Math.PI * 2;
+				const v1 = {x: localX + Math.cos(angle1) * firstR, y: firstY, z: Math.sin(angle1) * firstR};
+				const v2 = {x: localX + Math.cos(angle2) * firstR, y: firstY, z: Math.sin(angle2) * firstR};
+				
+				const tri = [apex, v2, v1];
+				tri.color = color;
+				tris.push(tri);
+			}
+			
+			// Add bottom cap (fan from center point)
+			const lastLayerFraction = 1;
+			const bottomY = topHeight - (radius * lastLayerFraction * 1.5);
+			const bottomCenter = {x: localX, y: bottomY, z: 0};
+			const bottomR = radius * Math.sqrt(lastLayerFraction * (2 - lastLayerFraction));
+			
+			for(let i = 0; i < segments; i++){
+				const ni = (i + 1) % segments;
+				const angle1 = (i / segments) * Math.PI * 2;
+				const angle2 = (ni / segments) * Math.PI * 2;
+				const v1 = {x: localX + Math.cos(angle1) * bottomR, y: bottomY, z: Math.sin(angle1) * bottomR};
+				const v2 = {x: localX + Math.cos(angle2) * bottomR, y: bottomY, z: Math.sin(angle2) * bottomR};
+				
+				const tri = [bottomCenter, v1, v2];
+				tri.color = color;
+				tris.push(tri);
+			}
+		}
+
+		// create simple color texture (data URL) for small sprites/icons
+		function createColorTextureDataURL(color, w=64, h=64){
+			const cnv = document.createElement('canvas'); cnv.width = w; cnv.height = h;
+			const c = cnv.getContext('2d');
+			// background
+			c.fillStyle = '#0b1220'; c.fillRect(0,0,w,h);
+			// colored circle
+			c.beginPath(); c.arc(w/2, h/2, Math.min(w,h)/2 - 6, 0, Math.PI*2);
+			const grad = c.createRadialGradient(w/2 - 8, h/2 - 8, 4, w/2, h/2, Math.min(w,h)/2);
+			grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.25, color); grad.addColorStop(1, shadeColor(color, 0.6));
+			c.fillStyle = grad; c.fill();
+			// subtle border
+			c.lineWidth = 2; c.strokeStyle = 'rgba(0,0,0,0.25)'; c.stroke();
+			return cnv.toDataURL('image/png');
+		}
+
+		// Create aged wood texture with moss, weathering, and screws for ladder
+		function createLadderTexture(w=512, h=512){
+			const cnv = document.createElement('canvas'); cnv.width = w; cnv.height = h;
+			const c = cnv.getContext('2d');
+			
+			// Base wood color (aged wood brown)
+			const baseWoodColor = '#5a3a1f';
+			c.fillStyle = baseWoodColor;
+			c.fillRect(0, 0, w, h);
+			
+			// Wood grain texture using noise
+			const imageData = c.getImageData(0, 0, w, h);
+			const data = imageData.data;
+			
+			// Perlin-like noise for wood grain
+			for(let i = 0; i < w * h; i++){
+				const px = (i % w);
+				const py = Math.floor(i / w);
+				
+				// Create grain pattern using sin/cos waves
+				let grain = 0;
+				grain += Math.sin(px * 0.015 + py * 0.008) * 0.3;
+				grain += Math.sin(py * 0.02 + px * 0.005) * 0.2;
+				grain += Math.sin((px + py) * 0.01) * 0.15;
+				grain = (grain + 0.5) * 0.4;
+				
+				const idx = i * 4;
+				const base = 90 + 58;
+				const r = Math.max(0, Math.min(255, base - grain * 40));
+				const g = Math.max(0, Math.min(255, base - 20 - grain * 60));
+				const b = Math.max(0, Math.min(255, base - 50 - grain * 70));
+				
+				data[idx] = r;     // R
+				data[idx + 1] = g; // G
+				data[idx + 2] = b; // B
+				data[idx + 3] = 255; // A (fully opaque)
+			}
+			c.putImageData(imageData, 0, 0);
+			
+			// Add moss/algae patches (green spots)
+			const mossGrad = c.createRadialGradient(w*0.3, h*0.4, 0, w*0.3, h*0.4, 150);
+			mossGrad.addColorStop(0, 'rgba(92, 140, 80, 0.35)');
+			mossGrad.addColorStop(0.6, 'rgba(70, 110, 60, 0.2)');
+			mossGrad.addColorStop(1, 'rgba(92, 140, 80, 0)');
+			c.fillStyle = mossGrad;
+			c.fillRect(0, 0, w, h);
+			
+			// More moss patches
+			for(let i = 0; i < 5; i++){
+				const mx = Math.random() * w;
+				const my = Math.random() * h;
+				const mr = 40 + Math.random() * 80;
+				const mossGrad2 = c.createRadialGradient(mx, my, 0, mx, my, mr);
+				mossGrad2.addColorStop(0, `rgba(${80+Math.random()*40}, ${120+Math.random()*30}, ${60+Math.random()*20}, 0.25)`);
+				mossGrad2.addColorStop(1, 'rgba(80, 120, 60, 0)');
+				c.fillStyle = mossGrad2;
+				c.beginPath(); c.arc(mx, my, mr, 0, Math.PI*2); c.fill();
+			}
+			
+			// Weathering stains (dark streaks)
+			c.strokeStyle = 'rgba(30, 30, 30, 0.3)';
+			c.lineWidth = 1;
+			for(let i = 0; i < 8; i++){
+				const sx = Math.random() * w;
+				c.beginPath();
+				c.moveTo(sx, 0);
+				for(let y = 0; y < h; y += 20){
+					c.lineTo(sx + Math.sin(y * 0.02) * 8, y);
+				}
+				c.stroke();
+			}
+			
+			// Draw screws as metallic details
+			const screwPositions = [
+				{x: w*0.15, y: h*0.2}, {x: w*0.85, y: h*0.2},
+				{x: w*0.15, y: h*0.5}, {x: w*0.85, y: h*0.5},
+				{x: w*0.15, y: h*0.8}, {x: w*0.85, y: h*0.8},
+				{x: w*0.5, y: h*0.35}, {x: w*0.5, y: h*0.65}
+			];
+			
+			for(const screw of screwPositions){
+				// Screw head shadow (outer dark circle)
+				c.fillStyle = 'rgba(40, 40, 40, 0.6)';
+				c.beginPath(); c.arc(screw.x, screw.y, 10, 0, Math.PI*2); c.fill();
+				
+				// Screw head metal (lighter inner circle)
+				const screwGrad = c.createRadialGradient(screw.x - 2, screw.y - 2, 0, screw.x, screw.y, 8);
+				screwGrad.addColorStop(0, '#d4a574');
+				screwGrad.addColorStop(0.5, '#c49060');
+				screwGrad.addColorStop(1, '#8b6f47');
+				c.fillStyle = screwGrad;
+				c.beginPath(); c.arc(screw.x, screw.y, 7, 0, Math.PI*2); c.fill();
+				
+				// Screw slot
+				c.strokeStyle = 'rgba(60, 60, 60, 0.8)';
+				c.lineWidth = 2;
+				c.beginPath();
+				c.moveTo(screw.x - 3.5, screw.y);
+				c.lineTo(screw.x + 3.5, screw.y);
+				c.stroke();
+				
+				// Rust around screw
+				c.fillStyle = 'rgba(139, 69, 19, 0.2)';
+				c.beginPath(); c.arc(screw.x, screw.y, 12, 0, Math.PI*2); c.fill();
+			}
+			
+			// Rust streaks down from screws
+			c.strokeStyle = 'rgba(139, 69, 19, 0.25)';
+			c.lineWidth = 1;
+			for(const screw of screwPositions){
+				for(let i = 0; i < 3; i++){
+					const offset = (Math.random() - 0.5) * 3;
+					c.beginPath();
+					c.moveTo(screw.x + offset, screw.y + 15);
+					c.lineTo(screw.x + offset + Math.sin(screw.y) * 2, screw.y + 15 + 50 + Math.random() * 30);
+					c.stroke();
+				}
+			}
+			
+			// Age cracks and weathering
+			c.strokeStyle = 'rgba(100, 80, 60, 0.15)';
+			c.lineWidth = 0.5;
+			for(let i = 0; i < 6; i++){
+				c.beginPath();
+				const startX = Math.random() * w;
+				const startY = Math.random() * h;
+				c.moveTo(startX, startY);
+				for(let j = 0; j < 30; j++){
+					const x = startX + Math.cos(Math.random() * Math.PI * 2) * 5;
+					const y = startY + Math.sin(Math.random() * Math.PI * 2) * 3;
+					c.lineTo(x, y);
+				}
+				c.stroke();
+			}
+			
+			return cnv.toDataURL('image/png');
+		}
+
+		// generate cylinder for trees. Do NOT auto-create circular sprite textures for every object
+		for(const obj of objects){
+			if(obj.name && obj.name.toLowerCase().includes('tree')){
+				// create trunk cylinder mesh local to object origin
+				buildCylinderMesh(obj, 6, 40, 18);
+			}
+			// load texture only if explicitly provided (textureSrc) or marked as sprite/icon
+			if(obj.textureSrc && !obj.texture){ loadTexture(obj, obj.textureSrc); }
+			if(obj.isSprite && obj.color && !obj.texture){ const dataUrl = createColorTextureDataURL(obj.color); loadTexture(obj, dataUrl); }
+		}
+
+		// spawn additional trees using Tree1
+
+
+		// Platform class
+		class Platform extends WorldObject {
+			constructor(data){ super(data); }
+			static spawn(x,y,z,world=0, opts = {}){
+				// opts: { sizeX=40, sizeZ=40, thickness=6 }
+				const sizeX = (opts.sizeX !== undefined) ? opts.sizeX : 40;
+				const sizeZ = (opts.sizeZ !== undefined) ? opts.sizeZ : 40;
+				const thickness = (opts.thickness !== undefined) ? opts.thickness : 6;
+				const hx = sizeX/2, hz = sizeZ/2, hy = thickness/2;
+				const id = Date.now() + Math.floor(Math.random()*1000);
+				const p = new Platform({ id, name:'Platform', x:x,y:y,z:z, color:'#64748b', world: world, isworld:true, iswall:true });
+				// build box corners (v0..v7)
+				const v0 = {x:x-hx, y:y-hy, z:z-hz};
+				const v1 = {x:x+hx, y:y-hy, z:z-hz};
+				const v2 = {x:x-hx, y:y-hy, z:z+hz};
+				const v3 = {x:x+hx, y:y-hy, z:z+hz};
+				const v4 = {x:x-hx, y:y+hy, z:z-hz};
+				const v5 = {x:x+hx, y:y+hy, z:z-hz};
+				const v6 = {x:x-hx, y:y+hy, z:z+hz};
+				const v7 = {x:x+hx, y:y+hy, z:z+hz};
+				// decompose box into 5 tetrahedrons
+				p.tetrahedrons = [
+					{a:v0,b:v1,c:v2,d:v4},
+					{a:v1,b:v2,c:v3,d:v7},
+					{a:v1,b:v4,c:v5,d:v7},
+					{a:v2,b:v4,c:v6,d:v7},
+					{a:v1,b:v2,c:v4,d:v7}
+				];
+				objects.push(p); return p;
+			}
+		}
+
+		// Ladder & Platform spawn
+
+
+		// Portal class
+		class Portal extends WorldObject {
+			constructor(data){
+				super(data);
+				this.actions = this.actions || [];
+				this.actions.push({ key:'q', name:'enter' });
+				// optional target: { x,y,z, world }
+				this.target = data && data.target ? data.target : null;
+				this.oneway = !!(data && data.oneway);
+			}
+			enter(){
+				if(this.target){
+					// teleport to explicit target
+					player.world = this.target.world;
+					player.x = this.target.x; player.y = this.target.y || 0; player.z = this.target.z;
+					showPickup('Teleported to world ' + player.world);
+					console.log('Portal teleport to', this.target);
+					return;
+				}
+				// fallback: toggle between worlds as before
+				const targetWorld = (player.world === 0) ? 1 : 0;
+				player.world = targetWorld;
+				if(targetWorld === 1){ player.x = 100; player.z = 100; player.y = 0; }
+				else { player.x = 300; player.z = 200; player.y = 0; }
+				showPickup('Entered world ' + player.world);
+				console.log('Player moved to world', player.world);
+			}
+			static spawn(x,y,z,world=0, opts = {}){
+				// opts: { target: {x,y,z,world}, oneway: bool }
+				const id = Date.now()+Math.floor(Math.random()*1000);
+				const data = Object.assign({ id, name:'Portal', x,y,z, color:'#7c3aed', world }, opts);
+				const p = new Portal(data);
+				p.tetrahedrons = [ { a:{x:x-10,y:y,z:z-10}, b:{x:x+10,y:y,z:z-10}, c:{x:x+10,y:y+60,z:z+10}, d:{x:x-10,y:y+60,z:z+10} } ];
+				objects.push(p);
+				// if a target is provided and portal is not one-way, create a return portal at target location
+				if(p.target && !p.oneway){
+					// create partner portal that points back to this one
+					const t = p.target;
+					const partnerId = Date.now()+Math.floor(Math.random()*1000);
+					const partnerData = { id: partnerId, name:'Portal', x: t.x, y: t.y||0, z: t.z, color:'#7c3aed', world: t.world, target: { x: p.x, y: p.y || 0, z: p.z, world: p.world }, oneway: false };
+					const partner = new Portal(partnerData);
+					partner.tetrahedrons = [ { a:{x:t.x-10,y:t.y||0,z:t.z-10}, b:{x:t.x+10,y:t.y||0,z:t.z-10}, c:{x:t.x+10,y:(t.y||0)+60,z:t.z+10}, d:{x:t.x-10,y:(t.y||0)+60,z:t.z+10} } ];
+					objects.push(partner);
+					// link them (optional convenience)
+					p._partnerId = partner.id; partner._partnerId = p.id;
+				}
+				return p;
+			}
+		}
+
+		// spawn a portal (paired): this portal goes to world 1 at x:100,z:100
+
+
+
+
+		// door class
+		class Door extends WorldObject {
+			constructor(data){
+				super(data);
+				this.open = !!this.open;
+				this.actions = this.actions || [];
+				this.actions.push({ key: 'q', name: 'toggle' });
+				// doors block when closed
+				this.iswall = !this.open;
+				this._angle = this.open ? Math.PI/2 : 0;
+				this._targetAngle = this._angle;
+			}
+			open(){ this._targetAngle = Math.PI * 0.5; this.iswall = false; }
+			close(){ this._targetAngle = 0; this.iswall = true; }
+			toggle(){ if(this._targetAngle > 0.001) this.close(); else this.open(); }
+			update(dt){
+				// animate angle towards target
+				const speed = 3.5; // radians per second
+				const delta = this._targetAngle - this._angle;
+				const step = Math.max(-speed*dt, Math.min(speed*dt, delta));
+				this._angle += step;
+				// when almost closed/open, set iswall appropriately
+				if(Math.abs(this._angle - 0) < 0.001) this.iswall = true;
+				if(Math.abs(this._angle - Math.PI*0.5) < 0.001) this.iswall = false;
+				// if we have baseLocal verts, update tetrahedrons using rotation around left hinge
+				if(this._baseLocal && this._tetIndices){
+					const angle = this._angle;
+					const hingeX = this._hingeX || -this._dims.hx; // local hinge x
+					const cos = Math.cos(angle), sin = Math.sin(angle);
+					this.tetrahedrons = this._tetIndices.map(ti => ({
+						a: this._localToWorldRot(this._baseLocal[ti[0]], hingeX, cos, sin),
+						b: this._localToWorldRot(this._baseLocal[ti[1]], hingeX, cos, sin),
+						c: this._localToWorldRot(this._baseLocal[ti[2]], hingeX, cos, sin),
+						d: this._localToWorldRot(this._baseLocal[ti[3]], hingeX, cos, sin)
+					}));
+				}
+			}
+			_localToWorldRot(v, hingeX, cos, sin){
+				// rotate around local Y axis at x = hingeX
+				const dx = v.x - hingeX;
+				const dz = v.z;
+				const rx = hingeX + (cos * dx - sin * dz);
+				const rz = (sin * dx + cos * dz);
+				return { x: this.x + rx, y: this.y + v.y, z: this.z + rz };
+			}
+			static spawn(x,y,z,world=0){
+				const id = Date.now()+Math.floor(Math.random()*1000);
+				const w = 8, h = 80, d = 40; // thin door
+				const hx = w/2, hy = h/2, hz = d/2;
+				// local vertices centered at door origin
+				const baseLocal = [
+					{x:-hx,y:-0,z:-hz}, {x:+hx,y:-0,z:-hz}, {x:-hx,y:-0,z:+hz}, {x:+hx,y:-0,z:+hz},
+					{x:-hx,y:hy,z:-hz}, {x:+hx,y:hy,z:-hz}, {x:-hx,y:hy,z:+hz}, {x:+hx,y:hy,z:+hz}
+				];
+				// tetra index quads (each entry 4 indices into baseLocal)
+				const tetIdx = [ [0,1,2,4], [1,2,3,7], [1,4,5,7], [2,4,6,7], [1,2,4,7] ];
+				const door = new Door({ id, name:'Door', x,y,z, color:'#8b5a2b', world, isworld:true, iswall:true });
+				door._baseLocal = baseLocal;
+				door._tetIndices = tetIdx;
+				door._dims = {hx,hy,hz};
+				door._hingeX = -hx; // left edge hinge
+				// initialize tetrahedrons
+				door.tetrahedrons = tetIdx.map(ti => ({ a: {x:x+baseLocal[ti[0]].x, y:y+baseLocal[ti[0]].y, z:z+baseLocal[ti[0]].z}, b: {x:x+baseLocal[ti[1]].x, y:y+baseLocal[ti[1]].y, z:z+baseLocal[ti[1]].z}, c: {x:x+baseLocal[ti[2]].x, y:y+baseLocal[ti[2]].y, z:z+baseLocal[ti[2]].z}, d: {x:x+baseLocal[ti[3]].x, y:y+baseLocal[ti[3]].y, z:z+baseLocal[ti[3]].z} }));
+				objects.push(door); return door;
+			}
+		}
+			// Chest class (improved): thickness, lid sides, iron bars, and contents + initialItems support
+			class Chest extends WorldObject {
+				constructor(data){
+					super(data);
+					this.opened = !!this.opened;
+					this.collected = !!this.collected;
+					this.contents = data && data.initialItems ? JSON.parse(JSON.stringify(data.initialItems)) : [];
+					this._buildChestMesh();
+					this.actions = this.actions || [];
+					this.actions.push({ key:'q', name:'open' });
+				}
+
+				_buildChestMesh(){
+					const obj = this;
+					const w = 80, h = 40, d = 60; // width(x), height(y), depth(z)
+					const hw = w/2, hd = d/2;
+					const thickness = 6; // visual thickness for lid/sides
+					const v = {
+						p000: {x:-hw,y:0,z:-hd}, p100:{x:hw,y:0,z:-hd}, p010:{x:-hw,y:h,z:-hd}, p110:{x:hw,y:h,z:-hd},
+						p001:{x:-hw,y:0,z:hd}, p101:{x:hw,y:0,z:hd}, p011:{x:-hw,y:h,z:hd}, p111:{x:hw,y:h,z:hd}
+					};
+					const tris = [];
+					function t(a,b,c){ tris.push([a,b,c]); }
+					// outer shell faces (simple box)
+					t(v.p001,v.p101,v.p111); t(v.p001,v.p111,v.p011); // front
+					t(v.p100,v.p000,v.p010); t(v.p100,v.p010,v.p110); // back
+					t(v.p000,v.p001,v.p011); t(v.p000,v.p011,v.p010); // left
+					t(v.p101,v.p100,v.p110); t(v.p101,v.p110,v.p111); // right
+					t(v.p000,v.p100,v.p101); t(v.p000,v.p101,v.p001); // bottom
+
+					// iron bars across front/top to 'hold' the chest
+					const barY1 = Math.round(h*0.35);
+					const barY2 = Math.round(h*0.65);
+					const barInset = 8;
+					const b1a = {x:-hw+barInset,y:barY1,z:hd+2}, b1b = {x:-hw+barInset,y:barY1-4,z:hd+2}, b1c = {x:hw-barInset,y:barY1-4,z:hd+2}, b1d = {x:hw-barInset,y:barY1,z:hd+2};
+					const b2a = {x:-hw+barInset,y:barY2,z:hd+2}, b2b = {x:-hw+barInset,y:barY2-4,z:hd+2}, b2c = {x:hw-barInset,y:barY2-4,z:hd+2}, b2d = {x:hw-barInset,y:barY2,z:hd+2};
+					t(b1a,b1b,b1c); t(b1a,b1c,b1d);
+					t(b2a,b2b,b2c); t(b2a,b2c,b2d);
+
+					// lid template: approximate curved lid along width with segments and a thickness underside
+					const segments = 9;
+					const lid = { verts: [], indices: [] };
+					for(let i=0;i<segments;i++){
+						const tNorm = i/(segments-1);
+						const x = -hw + tNorm * w;
+						const arc = Math.sin(Math.PI * tNorm) * 20; // lid bulge
+						lid.verts.push({x:x,y:h+arc,z:-hd}); // back outer
+						lid.verts.push({x:x,y:h+arc,z:hd});  // front outer
+						// underside verts to simulate thickness (used when building sides)
+						lid.verts.push({x:x,y:h+arc-thickness,z:-hd}); // back inner
+						lid.verts.push({x:x,y:h+arc-thickness,z:hd});  // front inner
+					}
+					for(let i=0;i<segments-1;i++){
+						const a = i*4, b = i*4+1, c = (i+1)*4, d = (i+1)*4+1;
+						// top surface
+						lid.indices.push([lid.verts[a], lid.verts[b], lid.verts[d]]);
+						lid.indices.push([lid.verts[a], lid.verts[d], lid.verts[c]]);
+						// underside (inner) faces (optional: helps show thickness when lid is open)
+						const ai = i*4+2, bi = i*4+3, ci = (i+1)*4+2, di = (i+1)*4+3;
+						lid.indices.push([lid.verts[ci], lid.verts[di], lid.verts[bi]]);
+						lid.indices.push([lid.verts[ci], lid.verts[bi], lid.verts[ai]]);
+
+						// vertical side faces along front edge (connect outer front to inner front)
+						lid.indices.push([lid.verts[b], lid.verts[d], lid.verts[di]]);
+						lid.indices.push([lid.verts[b], lid.verts[di], lid.verts[bi]]);
+						// vertical side faces along back edge (connect outer back to inner back)
+						lid.indices.push([lid.verts[a], lid.verts[c], lid.verts[ci]]);
+						lid.indices.push([lid.verts[a], lid.verts[ci], lid.verts[ai]]);
+					}
+
+					// small side faces to close the lid ends (first and last segment)
+					const last = (segments-1)*4;
+					// left end
+					lid.indices.push([lid.verts[0], lid.verts[2], lid.verts[3]]);
+					lid.indices.push([lid.verts[0], lid.verts[3], lid.verts[1]]);
+					// right end
+					lid.indices.push([lid.verts[last+0], lid.verts[last+2], lid.verts[last+3]]);
+					lid.indices.push([lid.verts[last+0], lid.verts[last+3], lid.verts[last+1]]);
+
+					obj._baseTris = tris;
+					obj._lidTemplate = lid;
+					obj._chestDims = {w,h,d,hw,hd,thickness};
+					obj.opened = obj.opened || false;
+					obj.lidAngle = obj.lidAngle || 0;
+					obj.lidTarget = obj.lidTarget || 0;
+				}
+
+				open(){
+					if(!this.opened){
+						this.opened = true; this.lidTarget = Math.PI * 0.65;
+						// give sample gold once when first opened (legacy behavior)
+						if(!this.collected){ this.collected = true; const existing = inventory.find(it=>it.id==='gold'); if(existing) existing.qty = (existing.qty||0)+1; else inventory.push(new GoldItem(1, GoldWorld)); showPickup('Picked up Gold'); saveState(); }
+						// show chest GUI via instance method
+						this.showUI();
+					} else {
+						this.opened = false; this.lidTarget = 0; this.hideUI(); saveState();
+					}
+				}
+
+				update(dt){ if(this._lidTemplate){ const speed = 4.0; const delta = this.lidTarget - (this.lidAngle || 0); const maxStep = speed * dt; let step = Math.max(-maxStep, Math.min(maxStep, delta)); this.lidAngle = (this.lidAngle || 0) + step; } }
+
+				static spawn(x,y,z,world=0, initialItems){ const id = Date.now()+Math.floor(Math.random()*1000); const c = new Chest({id,name:'Chest',x,y,z,color:'#8B5A2B',world, initialItems: initialItems || []}); objects.push(c); return c; }
+
+				// UI and chest-content helpers encapsulated on the class
+				_ensurePanel(){
+					let panel = document.getElementById('chestPanel');
+					if(!panel){
+						panel = document.createElement('div'); panel.id = 'chestPanel';
+						panel.style.position = 'fixed'; panel.style.left = '50%'; panel.style.top = '50%'; panel.style.transform = 'translate(-50%,-50%)';
+						panel.style.background = 'rgba(2,6,23,0.95)'; panel.style.color = '#e6eef6'; panel.style.padding = '12px'; panel.style.borderRadius = '10px';
+						panel.style.border = '1px solid rgba(255,255,255,0.06)'; panel.style.zIndex = 90; panel.style.minWidth = '360px';
+						panel.innerHTML = `
+							<div style="display:flex;justify-content:space-between;align-items:center"><strong id="chestTitle">Chest</strong><div><button id="chestCloseBtn">Close</button></div></div>
+							<div style="display:flex;gap:12px;margin-top:8px">
+								<div style="flex:1">
+									<div style="font-size:13px;color:#94a3b8;margin-bottom:6px">Chest Contents</div>
+									<div id="chestContentsList" style="max-height:180px;overflow:auto;padding:6px;background:rgba(255,255,255,0.02);border-radius:6px"></div>
+								</div>
+								<div style="width:220px;flex:0 0 220px">
+									<div style="font-size:13px;color:#94a3b8;margin-bottom:6px">Inventory (click to Put In)</div>
+									<div id="chestInventoryList" style="max-height:240px;overflow:auto;padding:6px;background:rgba(255,255,255,0.02);border-radius:6px"></div>
+								</div>
+							</div>
+						`;
+						document.body.appendChild(panel);
+						// inject lightweight panel styles (only once)
+						if(!document.getElementById('chestPanelStyles')){
+							const s = document.createElement('style'); s.id = 'chestPanelStyles';
+							s.textContent = `
+							#chestPanel { box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+							#chestPanel button { background: linear-gradient(180deg,#0b1220,#081018); border:1px solid rgba(255,255,255,0.06); color:#e6eef6; padding:6px 8px; border-radius:6px; cursor:pointer }
+							#chestPanel button:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+							#chestPanel input[type=number] { background:#07121a; border:1px solid rgba(255,255,255,0.04); color:#e6eef6; padding:4px 6px; border-radius:6px }
+							#chestPanel .muted { color:#94a3b8 }
+							#chestPanel div { font-size:14px }
+							`;
+							document.head.appendChild(s);
+						}
+					}
+					return panel;
+				}
+
+				_renderPanelLists(panel){
+					const chest = panel._chest;
+					const contEl = panel.querySelector('#chestContentsList'); contEl.innerHTML = '';
+					if(!chest.contents || chest.contents.length === 0) contEl.textContent = 'Empty';
+					else{
+						chest.contents.forEach((it, idx)=>{
+							const row = document.createElement('div'); row.style.display='flex'; row.style.justifyContent='space-between'; row.style.padding='6px 4px'; row.style.alignItems='center';
+							const left = document.createElement('div'); left.textContent = it.name;
+							const right = document.createElement('div'); right.style.display='flex'; right.style.gap='6px'; right.style.alignItems='center';
+							const input = document.createElement('input'); input.type='number'; input.min='1'; input.value='1'; input.style.width='56px';
+							const takeBtn = document.createElement('button'); takeBtn.textContent = 'Take';
+							takeBtn.addEventListener('click', ()=>{
+								const q = Math.max(0, Math.min(it.qty||0, parseInt(input.value) || 0));
+								if(q <= 0) return; chest.transferFromChest(idx, q); this._renderPanelLists(panel); renderInventory(); saveState();
+							});
+							right.appendChild(input); right.appendChild(document.createTextNode('x' + (it.qty||1))); right.appendChild(takeBtn);
+							row.appendChild(left); row.appendChild(right); contEl.appendChild(row);
+						});
+					}
+					const invEl = panel.querySelector('#chestInventoryList'); invEl.innerHTML = '';
+					if(inventory.length === 0){ invEl.textContent = 'Inventory empty'; }
+					else{
+						inventory.forEach((it, i)=>{
+							const row = document.createElement('div'); row.style.display='flex'; row.style.justifyContent='space-between'; row.style.padding='6px 4px'; row.style.alignItems='center';
+							const left = document.createElement('div'); left.textContent = it.name;
+							const right = document.createElement('div'); right.style.display='flex'; right.style.gap='6px'; right.style.alignItems='center';
+							const input = document.createElement('input'); input.type='number'; input.min='1'; input.value='1'; input.style.width='56px';
+							const putBtn = document.createElement('button'); putBtn.textContent = 'Put';
+							putBtn.addEventListener('click', ()=>{
+								const q = Math.max(0, Math.min(it.qty||1, parseInt(input.value) || 0));
+								if(q <= 0) return; chest.transferToChest(i, q); this._renderPanelLists(panel); renderInventory(); saveState();
+							});
+							right.appendChild(input); right.appendChild(document.createTextNode('x' + (it.qty||1))); right.appendChild(putBtn);
+							row.appendChild(left); row.appendChild(right); invEl.appendChild(row);
+						});
+					}
+				}
+
+				showUI(){
+					const panel = this._ensurePanel();
+					panel.style.display = '';
+					panel.querySelector('#chestTitle').textContent = `Chest (${this.id})`;
+					panel._chest = this;
+					// ensure close button toggles chest
+					panel.querySelector('#chestCloseBtn').onclick = ()=>{ this.open(); };
+					this._renderPanelLists(panel);
+				}
+
+				hideUI(){ const panel = document.getElementById('chestPanel'); if(panel) panel.style.display = 'none'; }
+
+				transferToChest(inventoryIndex, qty){
+					if(!inventory[inventoryIndex] || qty <= 0) return;
+					const item = inventory[inventoryIndex];
+					item.qty -= qty; if(item.qty <= 0) inventory.splice(inventoryIndex,1);
+					this.contents = this.contents || [];
+					const existing = this.contents.find(c=>c.id === item.id);
+					if(existing) existing.qty = (existing.qty||0) + qty;
+					else this.contents.push({ id: item.id, name: item.name, qty: qty });
+					showPickup(`Put ${qty} x ${item.name} into chest`);
+					saveState(); refresh();
+					const panel = document.getElementById('chestPanel'); if(panel && panel._chest === this) this._renderPanelLists(panel);
+				}
+
+				transferFromChest(chestIndex, qty){
+					if(!this.contents || !this.contents[chestIndex] || qty <= 0) return;
+					const item = this.contents[chestIndex];
+					const takeQty = Math.min(item.qty, qty);
+					const invExisting = inventory.find(i=>i.id === item.id);
+					if(invExisting) invExisting.qty = (invExisting.qty||0) + takeQty;
+					else {
+						// create typed inventory items when possible so they carry world pointers
+						if(item.id === 'gold') inventory.push(new GoldItem(takeQty, GoldWorld));
+						else if(item.id === 'wood') inventory.push(new WoodItem(takeQty, WoodWorld));
+						else if(item.id === 'axe') inventory.push(new AxeItem(takeQty, AxeWorld));
+						else inventory.push({ id: item.id, name: item.name, qty: takeQty });
+					}
+					item.qty -= takeQty; if(item.qty <= 0) this.contents.splice(chestIndex,1);
+					showPickup(`Took ${takeQty} x ${item.name} from chest`);
+					saveState(); refresh();
+					const panel = document.getElementById('chestPanel'); if(panel && panel._chest === this) this._renderPanelLists(panel);
+				}
+			}
+
+		// Inventory-specific item classes
+		class GoldItem extends InventoryItem { constructor(qty=1, worldClass=null){ super('gold','Gold',qty, worldClass); } }
+		class WoodItem extends InventoryItem { constructor(qty=1, worldClass=null){ super('wood','Wood',qty, worldClass); } }
+		class AxeItem extends ToolItem {
+			constructor(qty=1, worldClass=null){
+				super('axe','Axe',qty, worldClass);
+				this.equipable = true;
+				// register a default 'use' command that delegates to the existing Axe tool logic
+				this.registerCommand('use', 'Use Axe', (target) => { Axe.useOn(target); });
+			}
+		}
+
+		// Base class for pickable world items (reduces duplication)
+		class PickableItemWorld extends WorldObject {
+			constructor(data, itemId, itemCtor){
+				super(data);
+				this.actions = this.actions || [];
+				this.actions.push({ key:'q', name:'pickup' });
+				this.itemId = itemId;
+				this.itemCtor = itemCtor || GoldItem;
+				this.displayName = data ? data.name : 'Item';
+			}
+			open(){
+				if(!this.itemCtor) return;
+				const existing = inventory.find(it=>it.id===this.itemId);
+				if(existing) existing.qty = (existing.qty||0)+1;
+				else inventory.push(new this.itemCtor(1, this.constructor));
+				showPickup(`Picked up ${this.displayName}`); saveState();
+				const idx = objects.findIndex(o=>o.id===this.id); if(idx>=0) objects.splice(idx,1); refresh();
+			}
+		}
+
+		// World representations for inventory items
+		class GoldWorld extends PickableItemWorld {
+			constructor(data){ super(data, 'gold', GoldItem); }
+			static spawn(x,y,z,world=0){
+				const id = Date.now()+Math.floor(Math.random()*1000);
+				const g = new GoldWorld({ id, name:'Gold', x,y,z, color:'#ffd700', world, isworld:false, iswall:false });
+				g.tetrahedrons = [ { a:{x:x-6,y:0,z:z-6}, b:{x:x+6,y:0,z:z-6}, c:{x:x+6,y:12,z:z+6}, d:{x:x-6,y:12,z:z+6} } ];
+				objects.push(g); return g;
+			}
+		}
+
+		class WoodWorld extends PickableItemWorld {
+			constructor(data){ super(data, 'wood', WoodItem); }
+			static spawn(x,y,z,world=0){
+				const id = Date.now()+Math.floor(Math.random()*1000);
+				const w = new WoodWorld({ id, name:'Wood', x,y,z, color:'#8B5A2B', world, isworld:false, iswall:false });
+				w.tetrahedrons=[{a:{x:x-6,y:0,z:z-6},b:{x:x+6,y:0,z:z-6},c:{x:x+6,y:12,z:z+6},d:{x:x-6,y:12,z:z+6}}];
+				objects.push(w); return w;
+			}
+		}
+
+		class AxeWorld extends PickableItemWorld {
+			constructor(data){ super(data, 'axe', AxeItem); }
+			static spawn(x,y,z,world=0){
+				const id = Date.now()+Math.floor(Math.random()*1000);
+				const a = new AxeWorld({ id, name:'Axe', x,y,z, color:'#c68642', world, isworld:false, iswall:false });
+				a.tetrahedrons=[{a:{x:x-6,y:0,z:z-6},b:{x:x+6,y:0,z:z-6},c:{x:x+6,y:20,z:z+6},d:{x:x-6,y:20,z:z+6}}];
+				objects.push(a); return a;
+			}
+		}
+
+		// Axe tool logic (encapsulates cutting)
+		class Axe {
+			static useOn(target){
+				if(!target) return;
+				if(target.name && target.name.toLowerCase().includes('tree')){
+					// give wood and remove tree
+					const existing = inventory.find(it=>it.id === 'wood');
+					if(existing) existing.qty = (existing.qty||0) + 1; else inventory.push(new WoodItem(1, WoodWorld));
+					// remove trunk and nearby canopy as before
+					const idx = objects.findIndex(o=>o.id === target.id);
+					if(idx>=0){
+						const trunkObj = objects[idx];
+						objects.splice(idx,1);
+						for(let i=objects.length-1;i>=0;i--){
+							const o = objects[i];
+							if(o.name && o.name.toLowerCase().includes('canopy')){
+								const dx = (o.x||0)-(trunkObj.x||0);
+								const dz = (o.z||0)-(trunkObj.z||0);
+								if(Math.hypot(dx,dz) < 120) objects.splice(i,1);
+							}
+						}
+						showPickup('Cut down tree — got Wood');
+						saveState();
+						refresh();
+					}
+				}
+			}
+		}
+
+		// Car world object: simple driveable box. I: accelerate, K: brake, J/L: steer, O: toggle reverse, Q: enter/exit
+		class Car extends WorldObject {
+			constructor(data){
+				super(data);
+				this.actions = this.actions || [];
+				this.actions.push({ key:'q', name:'enter' });
+				this._driver = null;
+				this._reverse = false;
+				this.speedForward = 0;
+				this.accel = data && data.accel || 420;
+				this.maxSpeed = data && data.maxSpeed || 320;
+				this.steerSpeed = data && data.steerSpeed || 2.8;
+				this.rotY = data && data.rotY || 0;
+				this._dims = data && data._dims || { hx:30, hy:12, hz:18 };
+			}
+
+			open(){
+				// toggle enter/exit
+				if(this._driver){
+					const p = objects.find(o=>o.id === this._driver);
+					if(p){ p._inVehicle = null; const offset = (this._dims.hz || 18) + (p.radius||28) + 6; p.x = this.x - Math.sin(this.rotY) * offset; p.z = this.z - Math.cos(this.rotY) * offset; p.y = this.y; }
+					this._driver = null; showPickup('Exited car');
+					// hide driving overlay when exiting
+					const __el = document.getElementById('driveOverlay'); if(__el){ __el.style.display = 'none'; driveOverlayVisible = false; driveOverlaySeen = true; }
+				} else {
+					this._driver = player.id; player._inVehicle = this.id; player.vel.y = 0; player.onGround = true; showPickup('Entered car');
+					// show driving help overlay when entering
+					const _el = document.getElementById('driveOverlay'); if(_el){ _el.style.display = ''; driveOverlayVisible = true; }
+				}
+				saveState();
+			}
+
+			update(dt){ /* car-specific stepping happens in main physics loop */ }
+
+			static spawn(x,y,z,world=0, opts={}){
+				const id = Date.now()+Math.floor(Math.random()*1000);
+				const car = new Car(Object.assign({ id, name: opts.name || 'Car', x, y, z, color: opts.color || '#1e40af', world, isworld:true, iswall:false }, opts));
+				car.rotY = 0; // initialize rotation
+				const carColor = opts.color || '#1e40af';
+				const hx = (opts.hx || 30), hy = (opts.hy || 15), hz = (opts.hz || 18);
+				car._dims = {hx,hy,hz};
+				
+				// Main body with better proportions — elongated for a car look
+				const baseY = y;
+				const verts = [
+					// Bottom front axle
+					{ x: x-hx*0.9, y: baseY, z: z-hz }, //0 BFL
+					{ x: x+hx*0.9, y: baseY, z: z-hz }, //1 BFR
+					// Bottom rear axle
+					{ x: x-hx*0.9, y: baseY, z: z+hz }, //2 BRL
+					{ x: x+hx*0.9, y: baseY, z: z+hz }, //3 BRR
+					// Main body sides (middle section)
+					{ x: x-hx, y: baseY+hy*0.3, z: z-hz*0.7 }, //4 BML (front left)
+					{ x: x+hx, y: baseY+hy*0.3, z: z-hz*0.7 }, //5 BMR (front right)
+					{ x: x-hx, y: baseY+hy*0.3, z: z+hz*0.7 }, //6 BRL (rear left)
+					{ x: x+hx, y: baseY+hy*0.3, z: z+hz*0.7 }, //7 BRR (rear right)
+					// Cabin top (narrower, elevated)
+					{ x: x-hx*0.6, y: baseY+hy, z: z-hz*0.5 }, //8 CTF (cabin top front left)
+					{ x: x+hx*0.6, y: baseY+hy, z: z-hz*0.5 }, //9 CTF (cabin top front right)
+					{ x: x-hx*0.5, y: baseY+hy, z: z+hz*0.4 }, //10 CTR (cabin top rear left)
+					{ x: x+hx*0.5, y: baseY+hy, z: z+hz*0.4 }, //11 CTR (cabin top rear right)
+					// Roof edge (rounded look)
+					{ x: x-hx*0.65, y: baseY+hy*1.3, z: z-hz*0.3 }, //12 RF (roof front left)
+					{ x: x+hx*0.65, y: baseY+hy*1.3, z: z-hz*0.3 }, //13 RF (roof front right)
+					{ x: x-hx*0.55, y: baseY+hy*1.25, z: z+hz*0.35 }, //14 RR (roof rear left)
+					{ x: x+hx*0.55, y: baseY+hy*1.25, z: z+hz*0.35 }  //15 RR (roof rear right)
+				];
+				
+				// Build triangles for a more car-like shape
+				car._baseTris = [];
+				
+				// === MAIN BODY SIDES ===
+				// Front panel (angled)
+				car._baseTris.push([ verts[0], verts[4], verts[1] ]);
+				car._baseTris.push([ verts[1], verts[4], verts[5] ]);
+				// Rear panel (angled)
+				car._baseTris.push([ verts[2], verts[3], verts[6] ]);
+				car._baseTris.push([ verts[3], verts[7], verts[6] ]);
+				// Left side body
+				car._baseTris.push([ verts[0], verts[2], verts[4] ]);
+				car._baseTris.push([ verts[2], verts[6], verts[4] ]);
+				// Right side body
+				car._baseTris.push([ verts[1], verts[5], verts[3] ]);
+				car._baseTris.push([ verts[3], verts[5], verts[7] ]);
+				// Bottom (floor pan)
+				car._baseTris.push([ verts[0], verts[1], verts[2] ]);
+				car._baseTris.push([ verts[1], verts[3], verts[2] ]);
+				
+				// === CABIN SECTION ===
+				// Front windshield
+				car._baseTris.push([ verts[4], verts[8], verts[5] ]);
+				car._baseTris.push([ verts[5], verts[8], verts[9] ]);
+				// Cabin front top
+				car._baseTris.push([ verts[8], verts[12], verts[9] ]);
+				car._baseTris.push([ verts[9], verts[12], verts[13] ]);
+				// Cabin sides (left)
+				car._baseTris.push([ verts[4], verts[8], verts[10] ]);
+				car._baseTris.push([ verts[4], verts[10], verts[6] ]);
+				// Cabin sides (right)
+				car._baseTris.push([ verts[5], verts[11], verts[9] ]);
+				car._baseTris.push([ verts[7], verts[11], verts[5] ]);
+				// Cabin bottom
+				car._baseTris.push([ verts[4], verts[6], verts[8] ]);
+				car._baseTris.push([ verts[6], verts[10], verts[8] ]);
+				car._baseTris.push([ verts[5], verts[9], verts[7] ]);
+				car._baseTris.push([ verts[7], verts[9], verts[11] ]);
+				
+				// === ROOF ===
+				car._baseTris.push([ verts[8], verts[12], verts[10] ]);
+				car._baseTris.push([ verts[10], verts[12], verts[14] ]);
+				car._baseTris.push([ verts[9], verts[11], verts[13] ]);
+				car._baseTris.push([ verts[11], verts[15], verts[13] ]);
+				car._baseTris.push([ verts[12], verts[13], verts[14] ]);
+				car._baseTris.push([ verts[13], verts[15], verts[14] ]);
+				
+				// === WINDOWS (light blue added as separate visual element) ===
+				const windowColor = '#87ceeb'; // Light blue for windows
+				// Store window triangles separately to render differently
+				car._windowTris = [
+					[ verts[4], verts[8], verts[5] ], // front window
+					[ verts[5], verts[8], verts[9] ],
+					[ verts[4], verts[6], verts[10] ], // side windows
+					[ verts[5], verts[7], verts[11] ]
+				];
+				
+				// === WHEELS ===
+				const wheelRadius = 8;
+				const wheelY = baseY + 2;
+				// Front wheels
+				const wheelFL = { x: x-hx*0.75, y: wheelY, z: z-hz };
+				const wheelFR = { x: x+hx*0.75, y: wheelY, z: z-hz };
+				// Rear wheels
+				const wheelRL = { x: x-hx*0.75, y: wheelY, z: z+hz };
+				const wheelRR = { x: x+hx*0.75, y: wheelY, z: z+hz };
+			
+			// Create 3D wheel geometry (torus-like using rings) in LOCAL coordinates
+			const wheelPositionsLocal = [
+				{x: -hx*0.75, y: 2, z: -hz},  // Front Left
+				{x: hx*0.75, y: 2, z: -hz},   // Front Right
+				{x: -hx*0.75, y: 2, z: hz},   // Rear Left
+				{x: hx*0.75, y: 2, z: hz}     // Rear Right
+			];
+			car._wheelTris = [];
+			for(const wheelCenter of wheelPositionsLocal){
+				const segments = 8;
+				const thickness = 2;
+				const verts = [];
+				// Create two rings (inner and outer) in local coordinates
+				for(let i = 0; i < segments; i++){
+					const angle = (i / segments) * Math.PI * 2;
+					const cos = Math.cos(angle);
+					const sin = Math.sin(angle);
+					// Outer ring
+					verts.push({x: wheelCenter.x + cos*wheelRadius, y: wheelCenter.y + sin*thickness, z: wheelCenter.z});
+					// Inner ring (for torus effect)
+					verts.push({x: wheelCenter.x + cos*(wheelRadius-thickness), y: wheelCenter.y + sin*thickness, z: wheelCenter.z});
+				}
+				// Create triangles between rings
+				for(let i = 0; i < segments; i++){
+					const ni = (i + 1) % segments;
+					const o1 = i * 2;
+					const o2 = ni * 2;
+					const tri1 = [verts[o1], verts[o1+1], verts[o2+1]];
+					const tri2 = [verts[o1], verts[o2+1], verts[o2]];
+					tri1.color = '#1a1a1a';
+					tri2.color = '#1a1a1a';
+					car._wheelTris.push(tri1);
+					car._wheelTris.push(tri2);
+				}
+			}
+				
+				// === TAILLIGHTS (bright red at rear) ===
+				const taillightL = { x: x-hx*0.8, y: baseY+hy*0.2, z: z+hz+2 };
+				const taillightR = { x: x+hx*0.8, y: baseY+hy*0.2, z: z+hz+2 };
+				const tlSize = 4;
+				car._taillights = [
+					[ {x:taillightL.x-tlSize,y:taillightL.y,z:taillightL.z}, {x:taillightL.x+tlSize,y:taillightL.y,z:taillightL.z}, {x:taillightL.x,y:taillightL.y+tlSize,z:taillightL.z} ],
+					[ {x:taillightR.x-tlSize,y:taillightR.y,z:taillightR.z}, {x:taillightR.x,y:taillightR.y+tlSize,z:taillightR.z}, {x:taillightR.x+tlSize,y:taillightR.y,z:taillightR.z} ]
+				];
+				
+				// Create tetrahedrons for collision (simplified 2-3 boxes)
+				const a = {x:x-hx,y:baseY,z:z-hz}, b={x:x+hx,y:baseY,z:z-hz}, c={x:x-hx,y:baseY,z:z+hz}, d={x:x+hx,y:baseY,z:z+hz};
+				const e={x:x-hx,y:baseY+hy,z:z-hz}, f={x:x+hx,y:baseY+hy,z:z-hz}, g={x:x-hx,y:baseY+hy,z:z+hz}, h={x:x+hx,y:baseY+hy,z:z+hz};
+				car.tetrahedrons = [ {a:a,b:b,c:c,d:e}, {a:b,b:d,c:h,d:f}, {a:b,b:f,c:e,d:h}, {a:c,b:e,c:g,d:h}, {a:b,b:c,c:e,d:h} ];
+				
+				car.speedForward = 0; car._reverse = false;
+				objects.push(car);
+				return car;
+			}
+		}
+
+
+		// ensure objects array is available to renderer (it will filter by world)
+
+		// find player reference and set up player physics state
+		let player = objects.find(o=>o.isplayer);
+		if(!player){
+			player = {id:0,name:'Player',x:300,y:100,z:200,triangles:[],tetrahedrons:[],actions:[],isplayer:true};
+			objects.unshift(player);
+		}
+		player.vel = {x:0,y:0,z:0};
+		player.speed = 120; // units per second (walking speed)
+		player.runSpeed = 180; // units per second (running speed with SHIFT)
+		player.radius = 28; // collision radius in world units
+		player.jumpImpulse = 320;
+		player.onGround = false;
+
+		// input state
+		const keysDown = new Set();
+
+		// inventory system
+		let inventoryOpen = false; // toggles inventory panel
+		let inventory = []; // array of items: {id,name,qty}
+		// equipped slot/selection via z,x,c,v,b,n,m keys
+		// equip slots: each entry stores an inventory index (or null)
+		const slotKeys = ['z','x','c','v','b','n','m'];
+		let equippedSlots = new Array(slotKeys.length).fill(null);
+		let selectedSlot = 0; // currently selected equip slot index
+
+		let paused = false;
+
+		let firstFrame = true;
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+
+		// driving controls overlay: hidden by default; shown when entering a car or toggled with 'p'
+		let driveOverlaySeen = false;
+		let driveOverlayVisible = false;
+		(function createDriveOverlay(){
+			const el = document.createElement('div'); el.id = 'driveOverlay';
+			el.style.position = 'fixed'; el.style.right = '18px'; el.style.bottom = '18px'; el.style.zIndex = 60;
+			el.style.background = 'rgba(8,12,20,0.85)'; el.style.color = '#e6eef6'; el.style.padding = '10px 14px';
+			el.style.borderRadius = '8px'; el.style.border = '1px solid rgba(255,255,255,0.06)'; el.style.font = '13px sans-serif';
+			el.style.maxWidth = '260px'; el.style.boxShadow = '0 6px 18px rgba(0,0,0,0.4)';
+			el.innerHTML = '<strong>Driving controls</strong><br>I: accelerate &nbsp; K: brake<br>J/L: steer &nbsp; O: toggle reverse<br>Q: enter / exit<br><small style="opacity:0.8">Press any key to dismiss. Press P to show.</small>';
+			document.body.appendChild(el);
+			// hidden initially
+			driveOverlayVisible = false; el.style.display = 'none';
+		})();
+		// toolbar buttons will be created programmatically; selectedInfo is in header
+		const addBtn = null; // replaced after toolbar creation
+		const clearBtn = null;
+		const centerBtn = null;
+		const selectedInfo = document.getElementById('selectedInfo');
+
+		// add Inventory button to header toolbar
+		(function(){
+			const tb = document.querySelector('.toolbar');
+			if(tb){
+				// Inventory button
+				const inv = document.createElement('button'); inv.id='toolbarInventoryBtn'; inv.textContent='Inventory';
+				inv.addEventListener('click', ()=>{ inventoryOpen = true; document.getElementById('inventoryPanel').style.display=''; renderInventory(); });
+				tb.appendChild(inv);
+				// equip button + display
+				const equipBtn = document.createElement('button'); equipBtn.id = 'equipBtn'; equipBtn.textContent = 'Equip';
+				equipBtn.addEventListener('click', ()=>{
+					// equip the currently selected inventory item into the selected slot
+					const sel = window._selectedInventoryIndex;
+					if(typeof sel === 'number' && inventory[sel]){
+						equippedSlots[selectedSlot] = sel;
+						showPickup('Equipped ' + inventory[sel].name + ' to slot ' + slotKeys[selectedSlot].toUpperCase());
+					} else {
+						// if nothing selected in inventory, toggle unequip for this slot
+						if(equippedSlots[selectedSlot] != null){ equippedSlots[selectedSlot] = null; showPickup('Unequipped slot ' + slotKeys[selectedSlot].toUpperCase()); }
+						else { showPickup('Select an inventory item to equip'); }
+					}
+					updateEquipDisplay();
+				});
+				tb.appendChild(equipBtn);
+				// touch controls button
+				const touchBtn = document.createElement('button'); touchBtn.id = 'touchControlsBtn'; touchBtn.textContent = 'Touch Controls';
+				touchBtn.addEventListener('click', ()=>{
+					const overlay = document.getElementById('mobileControlsOverlay');
+					if(overlay.style.display === 'none' || overlay.style.display === ''){
+						overlay.style.display = 'block';
+					} else {
+						overlay.style.display = 'none';
+					}
+				});
+				tb.appendChild(touchBtn);
+				// add / clear / center buttons moved to toolbar now that overlay is removed
+				const addB = document.createElement('button'); addB.id='addBtn'; addB.textContent='Add Obj'; addB.addEventListener('click', addRandomObject);
+				const clrB = document.createElement('button'); clrB.id='clearBtn'; clrB.textContent='Clear'; clrB.addEventListener('click', clearObjects);
+				const cenB = document.createElement('button'); cenB.id='centerBtn'; cenB.textContent='Center'; cenB.addEventListener('click', centerSelected);
+				tb.appendChild(addB); tb.appendChild(clrB); tb.appendChild(cenB);
+			}
+		})();
+
+		function updateEquipDisplay(){
+			const btn = document.getElementById('equipBtn');
+			if(!btn) return;
+			const slotKey = slotKeys[selectedSlot] ? slotKeys[selectedSlot].toUpperCase() : String(selectedSlot);
+			const eqIdx = equippedSlots[selectedSlot];
+			let name = 'Empty';
+			if(eqIdx != null && inventory[eqIdx]) name = inventory[eqIdx].name || inventory[eqIdx].id;
+			btn.textContent = `Slot ${slotKey}: ${name}`;
+		}
+
+		// Mobile controls setup
+		if (window.innerWidth <= 600 || /Mobi|Android/i.test(navigator.userAgent)) {
+			document.getElementById('mobileControlsOverlay').style.display = 'block';
+		}
+
+		// Joystick variables
+		let joystickActive = false;
+		let joystickCurrentX = 0, joystickCurrentY = 0;
+		const joystickRadius = 50;
+
+		// Joystick elements
+		const joystickContainer = document.getElementById('joystickContainer');
+		const joystickHandle = document.getElementById('joystickHandle');
+
+		// Joystick event listeners
+		joystickContainer.addEventListener('touchstart', (e) => {
+			e.preventDefault();
+			joystickActive = true;
+			joystickCurrentX = 0;
+			joystickCurrentY = 0;
+			updateJoystick();
+		});
+
+		joystickContainer.addEventListener('touchmove', (e) => {
+			if (!joystickActive) return;
+			e.preventDefault();
+			const touch = e.touches[0];
+			const rect = joystickContainer.getBoundingClientRect();
+			let dx = touch.clientX - rect.left - 60;
+			let dy = touch.clientY - rect.top - 60;
+			const dist = Math.sqrt(dx * dx + dy * dy);
+			const running = dist > joystickRadius;
+			if (dist > joystickRadius) {
+				dx = (dx / dist) * joystickRadius;
+				dy = (dy / dist) * joystickRadius;
+			}
+			joystickCurrentX = dx;
+			joystickCurrentY = dy;
+			updateJoystick();
+		});
+
+		joystickContainer.addEventListener('touchend', (e) => {
+			joystickActive = false;
+			joystickCurrentX = 0;
+			joystickCurrentY = 0;
+			updateJoystick();
+		});
+
+		function updateJoystick() {
+			const centerX = 60;
+			const centerY = 60;
+			joystickHandle.style.left = `${centerX + joystickCurrentX - 20}px`;
+			joystickHandle.style.top = `${centerY + joystickCurrentY - 20}px`;
+			joystickHandle.style.transform = 'translate(0,0)';
+			// Update keys
+			const dist = Math.sqrt(joystickCurrentX * joystickCurrentX + joystickCurrentY * joystickCurrentY);
+			const threshold = 10;
+			// Clear previous
+			keysDown.delete('w');
+			keysDown.delete('a');
+			keysDown.delete('s');
+			keysDown.delete('d');
+			keysDown.delete('shift');
+			if (Math.abs(joystickCurrentX) > threshold || Math.abs(joystickCurrentY) > threshold) {
+				if (joystickCurrentY < -threshold) keysDown.add('w');
+				if (joystickCurrentY > threshold) keysDown.add('s');
+				if (joystickCurrentX < -threshold) keysDown.add('a');
+				if (joystickCurrentX > threshold) keysDown.add('d');
+			}
+			if (dist >= joystickRadius - 1) {
+				keysDown.add('shift');
+			}
+		}
+
+		// Mobile inventory button
+		document.getElementById('mobileInventoryBtn').addEventListener('click', () => {
+			inventoryOpen = true;
+			document.getElementById('inventoryPanel').style.display = '';
+			renderInventory();
+		});
+
+		let selectedId = null;
+
+		// Touch look variables
+		let touchLookActive = false;
+		let touchCurrentX, touchCurrentY;
+
+		// (renderer will handle canvas resizing and drawing)
+
+		const Camera = function(){
+			this.x = 0; this.y = 0; this.z = -700; // camera placed behind origin
+			this.rotX = 0; this.rotY = 0; // radians
+			this.fov = 60; // degrees
+			this.focal = 1 / Math.tan((this.fov/2) * Math.PI/180) * 500; // rough focal length
+		}
+
+		Camera.prototype.updateFocal = function(){
+			this.focal = 1 / Math.tan((this.fov/2) * Math.PI/180) * 500;
+		}
+
+		const camera = new Camera();
+
+		// ---------- Renderer: encapsulates canvas-based 3D rendering ----------
+		class Renderer {
+			constructor(canvas, ctx, camera, objects, player){
+				this.canvas = canvas; this.ctx = ctx; this.camera = camera; this.objects = objects; this.player = player;
+				this.dpr = window.devicePixelRatio || 1;
+			}
+
+			resize(){
+				this.dpr = window.devicePixelRatio || 1;
+				this.canvas.width = Math.max(300, stage.clientWidth) * this.dpr;
+				this.canvas.height = Math.max(150, stage.clientHeight) * this.dpr;
+				this.canvas.style.width = stage.clientWidth + 'px';
+				this.canvas.style.height = stage.clientHeight + 'px';
+				this.ctx.setTransform(this.dpr,0,0,this.dpr,0,0);
+			}
+
+			projectPoint(pt){
+				const cx = this.canvas.width/2 / (window.devicePixelRatio||1);
+				const cy = this.canvas.height/2 / (window.devicePixelRatio||1);
+				let x = pt.x - this.camera.x;
+				let y = pt.y - this.camera.y;
+				let z = pt.z - this.camera.z;
+
+				const cosY = Math.cos(this.camera.rotY), sinY = Math.sin(this.camera.rotY);
+				let rx = x * cosY - z * sinY;
+				let rz = x * sinY + z * cosY;
+
+				const cosX = Math.cos(this.camera.rotX), sinX = Math.sin(this.camera.rotX);
+				let ry = y * cosX - rz * sinX;
+				let rlz = y * sinX + rz * cosX;
+
+				if(rlz <= 5) return null;
+				const scale = this.camera.focal / rlz;
+				// flip Y so positive world Y is up on screen
+				return {x: cx + rx * scale, y: cy - ry * scale, scale: scale, z: rlz};
+			}
+
+			// draw a floor grid at y=0
+			drawFloor(){
+				const ctx = this.ctx;
+				ctx.save();
+				ctx.lineWidth = 1;
+				ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+				// grid spacing and extents
+				const spacing = 100;
+				const extent = 2000;
+				for(let z = -extent; z<=extent; z+=spacing){
+					const a = this.projectPoint({x:-extent,y:0,z:z});
+					const b = this.projectPoint({x:extent,y:0,z:z});
+					if(a && b){ ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+				}
+				for(let x = -extent; x<=extent; x+=spacing){
+					const a = this.projectPoint({x:x,y:0,z:-extent});
+					const b = this.projectPoint({x:x,y:0,z:extent});
+					if(a && b){ ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+				}
+				ctx.restore();
+			}
+
+			drawTetrahedrons(){
+				const ctx = this.ctx;
+				for(const obj of this.objects){
+					if(obj.world !== this.player.world) continue;
+					if(!obj.tetrahedrons) continue;
+					for(const tet of obj.tetrahedrons){
+						const faces = [[tet.a,tet.b,tet.c],[tet.a,tet.b,tet.d],[tet.a,tet.c,tet.d],[tet.b,tet.c,tet.d]];
+						for(const face of faces){
+									const pa = this.projectPoint(face[0]);
+									const pb = this.projectPoint(face[1]);
+									const pc = this.projectPoint(face[2]);
+									if(!pa||!pb||!pc) continue;
+								ctx.beginPath(); ctx.moveTo(pa.x,pa.y); ctx.lineTo(pb.x,pb.y); ctx.lineTo(pc.x,pc.y); ctx.closePath();
+								// canopy should be more opaque to avoid holes; trunk can be darker
+								let alpha = 0.12;
+								if(obj.name && obj.name.toLowerCase().includes('canopy')) alpha = 0.6;
+								if(obj.name && obj.name.toLowerCase().includes('trunk')) alpha = 0.9;
+								ctx.fillStyle = hexToRgba(obj.color||'#888', alpha);
+								ctx.fill();
+								ctx.strokeStyle = shadeColor(obj.color||'#888', 0.9); ctx.lineWidth = 1; ctx.stroke();
+						}
+					}
+				}
+			}
+
+			// draw arbitrary triangles from object meshes (triangles are provided in world coords)
+			drawTriangles(){
+				const ctx = this.ctx;
+				const renderList = [];
+				for(const obj of this.objects){
+					if(obj.world !== this.player.world) continue;
+					if(!obj._renderTris) continue;
+					for(const tri of obj._renderTris){
+						// compute average depth for sorting
+						const pa = this.projectPoint(tri[0]);
+						const pb = this.projectPoint(tri[1]);
+						const pc = this.projectPoint(tri[2]);
+						if(!pa||!pb||!pc) continue;
+					renderList.push({obj, tri, pa, pb, pc, depth:(pa.z+pb.z+pc.z)/3, isWindow:false});
+				}
+				// add windows for cars
+				if(obj._windowTris){
+					for(const tri of obj._windowTris){
+						const pa = this.projectPoint(tri[0]);
+						const pb = this.projectPoint(tri[1]);
+						const pc = this.projectPoint(tri[2]);
+						if(!pa||!pb||!pc) continue;
+						renderList.push({obj, tri, pa, pb, pc, depth:(pa.z+pb.z+pc.z)/3, isWindow:true});
+					}
+				}
+				// add headlights for cars
+				if(obj._headlights){
+					for(const tri of obj._headlights){
+						const pa = this.projectPoint(tri[0]);
+						const pb = this.projectPoint(tri[1]);
+						const pc = this.projectPoint(tri[2]);
+						if(!pa||!pb||!pc) continue;
+						renderList.push({obj, tri, pa, pb, pc, depth:(pa.z+pb.z+pc.z)/3, isHeadlight:true});
+					}
+				}
+				// add taillights for cars
+				if(obj._taillights){
+					for(const tri of obj._taillights){
+						const pa = this.projectPoint(tri[0]);
+						const pb = this.projectPoint(tri[1]);
+						const pc = this.projectPoint(tri[2]);
+						if(!pa||!pb||!pc) continue;
+						renderList.push({obj, tri, pa, pb, pc, depth:(pa.z+pb.z+pc.z)/3, isTaillight:true});
+					}
+				}
+			}
+			renderList.sort((a,b)=>b.depth - a.depth);
+			for(const it of renderList){
+				const obj = it.obj; const pa = it.pa, pb = it.pb, pc = it.pc;
+				ctx.beginPath(); ctx.moveTo(pa.x,pa.y); ctx.lineTo(pb.x,pb.y); ctx.lineTo(pc.x,pc.y); ctx.closePath();
+				
+				// determine color based on component type
+				let fillColor, strokeColor;
+				if(it.isWindow){
+					fillColor = hexToRgba('#87ceeb', 0.85); // light blue windows
+					strokeColor = shadeColor('#4a90a4', 0.95);
+				} else if(it.isHeadlight){
+					fillColor = hexToRgba('#ffff99', 0.9); // bright yellow headlights
+					strokeColor = shadeColor('#ffdd00', 0.95);
+				} else if(it.isTaillight){
+					fillColor = hexToRgba('#ff4444', 0.9); // bright red taillights
+					strokeColor = shadeColor('#cc0000', 0.95);
+				} else {
+					fillColor = hexToRgba(obj.color||'#888', 0.95);
+					strokeColor = shadeColor(obj.color||'#444', 0.9);
+				}
+				
+				// Use triangle's color if available, otherwise use object's color
+				if(!it.isWindow && !it.isHeadlight && !it.isTaillight && it.tri.color){
+					fillColor = hexToRgba(it.tri.color, 0.95);
+					strokeColor = shadeColor(it.tri.color, 0.9);
+				}
+				
+				ctx.fillStyle = fillColor;
+				ctx.fill(); ctx.strokeStyle = strokeColor; ctx.lineWidth=1; ctx.stroke();
+			}
+		}
+
+		render(){
+			this.resize(); this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+				// update camera: place inside top-center-front of player (eye position)
+				const eyeHeight = 40; // above player origin
+				const forwardOffset = 30; // in front of player
+				const rot = this.player.rotY || 0;
+				this.camera.x = this.player.x + Math.sin(rot) * forwardOffset;
+				this.camera.z = this.player.z + Math.cos(rot) * forwardOffset;
+				this.camera.y = this.player.y + eyeHeight;
+				// camera orientation follows player view
+				this.camera.rotY = this.player.rotY || 0;
+				this.camera.rotX = this.player.pitch || 0;
+				this.drawFloor(); this.drawTetrahedrons();
+				// update per-object render triangles (e.g., chest lid transform)
+				for(const obj of this.objects){
+					if(obj._baseTris){
+						// build world-space triangles array
+						obj._renderTris = [];
+						// base (translate local corners to world)
+						for(const t of obj._baseTris){
+							const a = {x: obj.x + t[0].x, y: obj.y + t[0].y, z: obj.z + t[0].z};
+							const b = {x: obj.x + t[1].x, y: obj.y + t[1].y, z: obj.z + t[1].z};
+							const c = {x: obj.x + t[2].x, y: obj.y + t[2].y, z: obj.z + t[2].z};
+							const tri = [a,b,c];
+							// preserve triangle color if available
+							if(t.color) tri.color = t.color;
+							obj._renderTris.push(tri);
+						}
+						// wheels: apply rotation and translation
+						if(obj._wheelTris && obj.rotY !== undefined){
+							const cos = Math.cos(obj.rotY);
+							const sin = Math.sin(obj.rotY);
+							for(const t of obj._wheelTris){
+								// rotate each vertex and translate to world position
+								const rotateVert = (v) => {
+									const rx = v.x * cos - v.z * sin;
+									const rz = v.x * sin + v.z * cos;
+									return {x: obj.x + rx, y: obj.y + v.y, z: obj.z + rz};
+								};
+								const a = rotateVert(t[0]);
+								const b = rotateVert(t[1]);
+								const c = rotateVert(t[2]);
+								const tri = [a,b,c];
+								if(t.color) tri.color = t.color;
+								obj._renderTris.push(tri);
+							}
+						}
+						// lid: rotate verts around hinge (back top edge)
+						if(obj._lidTemplate){
+							const lid = obj._lidTemplate; const dims = obj._chestDims;
+							// hinge along the lid edge: use the front/back edge depending on chest orientation
+							// use the front edge (+hd) so the lid rotates visibly upwards from the front edge
+							const hingeY = dims.h; const hingeZ = dims.hd; // local hinge (front edge)
+							const angle = obj.lidAngle || 0;
+							// precompute rotated verts
+							const rotated = [];
+							for(const lv of lid.verts){
+								// rotate point (lv.x, lv.y, lv.z) about axis along x through (y=hingeY, z=hingeZ)
+								const dx = lv.x;
+								const dy = lv.y - hingeY;
+								const dz = lv.z - hingeZ;
+								const cosy = Math.cos(angle), siny = Math.sin(angle);
+								// rotation around local X axis
+								const ry = hingeY + (cosy * dy - siny * dz);
+								const rz = hingeZ + (siny * dy + cosy * dz);
+								rotated.push({x: dx, y: ry, z: rz});
+							}
+							// build triangles from indices using rotated verts
+							for(const tri of lid.indices){
+								// tri entries are vertex objects; need to find index by matching reference - easier: compute using consistent ordering
+								// compute base index by locating tri[0] within lid.verts sequence
+								const i0 = lid.verts.indexOf(tri[0]);
+								const i1 = lid.verts.indexOf(tri[1]);
+								const i2 = lid.verts.indexOf(tri[2]);
+								if(i0<0||i1<0||i2<0) continue;
+								const a = {x: obj.x + rotated[i0].x, y: obj.y + rotated[i0].y, z: obj.z + rotated[i0].z};
+								const b = {x: obj.x + rotated[i1].x, y: obj.y + rotated[i1].y, z: obj.z + rotated[i1].z};
+								const c = {x: obj.x + rotated[i2].x, y: obj.y + rotated[i2].y, z: obj.z + rotated[i2].z};
+								obj._renderTris.push([a,b,c]);
+							}
+						}
+					}
+				}
+				this.drawTriangles();
+
+				// draw crosshair at center
+				const cx = this.canvas.width/2 / (window.devicePixelRatio||1);
+				const cy = this.canvas.height/2 / (window.devicePixelRatio||1);
+				const ctx = this.ctx;
+				ctx.save();
+				ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 1.5;
+				ctx.beginPath(); ctx.moveTo(cx-10,cy); ctx.lineTo(cx+10,cy); ctx.moveTo(cx,cy-10); ctx.lineTo(cx,cy+10); ctx.stroke();
+				ctx.restore();
+
+				// show interact hint if chest is at center
+				const centerObj = this.getObjectInCenter();
+				if(centerObj && centerObj.name && centerObj.name.toLowerCase() === 'chest'){
+					// project object's origin
+					const p = this.projectPoint(centerObj);
+					if(p){
+						ctx.save();
+						ctx.font = '14px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline='bottom';
+						const text = centerObj.opened ? 'Chest opened' : 'Press Q to open';
+						// draw bubble
+						const padding = 8; const metrics = ctx.measureText(text); const tw = metrics.width + padding*2; const th = 28;
+						ctx.fillStyle = 'rgba(2,6,23,0.7)'; ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+						// bubble centered above chest projection
+						ctx.fillRect(p.x - tw/2, p.y - 48 - th, tw, th);
+						ctx.fillStyle = '#e6eef6'; ctx.fillText(text, p.x, p.y - 48 - th/2 + 4);
+						ctx.restore();
+					}
+				}
+			}
+
+			getObjectAtScreen(x,y){
+				// robust hit-test using rendered triangles (tetrahedrons faces + mesh triangles)
+				let best = null; let bestDepth = Infinity;
+				// helper: point-in-triangle 2D (barycentric)
+				function pointInTri(px,py,ax,ay,bx,by,cx,cy){
+					const v0x = cx-ax, v0y = cy-ay; const v1x = bx-ax, v1y = by-ay; const v2x = px-ax, v2y = py-ay;
+					const dot00 = v0x*v0x + v0y*v0y; const dot01 = v0x*v1x + v0y*v1y; const dot02 = v0x*v2x + v0y*v2y;
+					const dot11 = v1x*v1x + v1y*v1y; const dot12 = v1x*v2x + v1y*v2y;
+					const invDenom = 1 / (dot00 * dot11 - dot01 * dot01 + 1e-12);
+					const u = (dot11 * dot02 - dot01 * dot12) * invDenom;
+					const v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+					return (u >= -1e-6) && (v >= -1e-6) && (u + v <= 1+1e-6);
+				}
+
+				for(const o of this.objects){
+					if(o.world !== this.player.world) continue;
+					// check mesh triangles first (obj._renderTris)
+					if(o._renderTris){
+						for(const tri of o._renderTris){
+							const pa = this.projectPoint(tri[0]); const pb = this.projectPoint(tri[1]); const pc = this.projectPoint(tri[2]);
+							if(!pa||!pb||!pc) continue;
+							if(pointInTri(x,y, pa.x,pa.y, pb.x,pb.y, pc.x,pc.y)){
+								const depth = (pa.z + pb.z + pc.z) / 3;
+								if(depth < bestDepth){ bestDepth = depth; best = o; }
+							}
+						}
+					}
+					// check tetrahedron faces
+					if(o.tetrahedrons){
+						for(const tet of o.tetrahedrons){
+							const faces = [[tet.a,tet.b,tet.c],[tet.a,tet.b,tet.d],[tet.a,tet.c,tet.d],[tet.b,tet.c,tet.d]];
+							for(const f of faces){
+								const pa = this.projectPoint(f[0]); const pb = this.projectPoint(f[1]); const pc = this.projectPoint(f[2]);
+								if(!pa||!pb||!pc) continue;
+								if(pointInTri(x,y, pa.x,pa.y, pb.x,pb.y, pc.x,pc.y)){
+									const depth = (pa.z + pb.z + pc.z) / 3;
+									if(depth < bestDepth){ bestDepth = depth; best = o; }
+								}
+							}
+						}
+					}
+				}
+				return best;
+			}
+
+			getObjectInCenter(){
+				const rect = this.canvas.getBoundingClientRect(); const cx = rect.width/2; const cy = rect.height/2;
+				return this.getObjectAtScreen(cx,cy);
+			}
+		}
+
+		const renderer = new Renderer(canvas, ctx, camera, objects, player);
+		// project function is provided by renderer
+
+		// ---------- collision helpers ----------
+		// signed volume of tetrahedron (a,b,c,d)
+		function signedTetraVolume(a,b,c,d){
+			const ax = a.x-d.x, ay = a.y-d.y, az = a.z-d.z;
+			const bx = b.x-d.x, by = b.y-d.y, bz = b.z-d.z;
+			const cx = c.x-d.x, cy = c.y-d.y, cz = c.z-d.z;
+			return (ax * (by*cz - bz*cy) - ay * (bx*cz - bz*cx) + az * (bx*cy - by*cx)) / 6;
+		}
+
+		// compute squared distance from point p to triangle (a,b,c)
+		function pointToTriangleDist2(p,a,b,c){
+			// from Real-Time Collision Detection: find closest point on triangle to p
+			const abx = b.x - a.x, aby = b.y - a.y, abz = b.z - a.z;
+			const acx = c.x - a.x, acy = c.y - a.y, acz = c.z - a.z;
+			const apx = p.x - a.x, apy = p.y - a.y, apz = p.z - a.z;
+
+			const d1 = abx*apx + aby*apy + abz*apz;
+			const d2 = acx*apx + acy*apy + acz*apz;
+			if(d1 <= 0 && d2 <= 0) return apx*apx + apy*apy + apz*apz; // barycentric (1,0,0)
+
+			const bpx = p.x - b.x, bpy = p.y - b.y, bpz = p.z - b.z;
+			const d3 = abx*bpx + aby*bpy + abz*bpz;
+			const d4 = acx*bpx + acy*bpy + acz*bpz;
+			if(d3 >= 0 && d4 <= d3) return bpx*bpx + bpy*bpy + bpz*bpz; // barycentric (0,1,0)
+
+			const vc = d1*d4 - d3*d2;
+			if(vc <= 0 && d1 >= 0 && d3 <= 0){
+				const v = d1 / (d1 - d3);
+				const projx = a.x + v * abx, projy = a.y + v * aby, projz = a.z + v * abz;
+				const dx = p.x - projx, dy = p.y - projy, dz = p.z - projz;
+				return dx*dx + dy*dy + dz*dz;
+			}
+
+			const cpx = p.x - c.x, cpy = p.y - c.y, cpz = p.z - c.z;
+			const d5 = abx*cpx + aby*cpy + abz*cpz;
+			const d6 = acx*cpx + acy*cpy + acz*cpz;
+			if(d6 >= 0 && d5 <= d6) return cpx*cpx + cpy*cpy + cpz*cpz; // barycentric (0,0,1)
+
+			const vb = d5*d2 - d1*d6;
+			if(vb <= 0 && d2 >= 0 && d6 <= 0){
+				const w = d2 / (d2 - d6);
+				const projx = a.x + w * acx, projy = a.y + w * acy, projz = a.z + w * acz;
+				const dx = p.x - projx, dy = p.y - projy, dz = p.z - projz;
+				return dx*dx + dy*dy + dz*dz;
+			}
+
+			const va = d3*d6 - d5*d4;
+			if(va <= 0 && (d4 - d3) >= 0 && (d5 - d6) >= 0){
+				const bcx = c.x - b.x, bcy = c.y - b.y, bcz = c.z - b.z;
+				const d43 = d4 - d3, d56 = d5 - d6;
+				const w = d43 / (d43 + d56);
+				const projx = b.x + w * bcx, projy = b.y + w * bcy, projz = b.z + w * bcz;
+				const dx = p.x - projx, dy = p.y - projy, dz = p.z - projz;
+				return dx*dx + dy*dy + dz*dz;
+			}
+
+			// inside face region. compute distance to plane
+			const normalX = aby*acz - abz*acy;
+			const normalY = abz*acx - abx*acz;
+			const normalZ = abx*acy - aby*acx;
+			const nlen2 = normalX*normalX + normalY*normalY + normalZ*normalZ;
+			if(nlen2 === 0) return apx*apx + apy*apy + apz*apz;
+			const dist = (apx*normalX + apy*normalY + apz*normalZ) / Math.sqrt(nlen2);
+			return dist*dist;
+		}
+
+		function sphereIntersectsTetra(center, radius, tet){
+			// if center inside tetra -> intersect
+			if(pointInTetra(center, tet)) return true;
+			const r2 = radius*radius;
+			// check distance to each triangular face
+			const faces = [[tet.a,tet.b,tet.c],[tet.a,tet.b,tet.d],[tet.a,tet.c,tet.d],[tet.b,tet.c,tet.d]];
+			for(const f of faces){
+				const d2 = pointToTriangleDist2(center, f[0], f[1], f[2]);
+				if(d2 <= r2 + 1e-6) return true;
+			}
+			return false;
+		}
+
+		function pointInTetra(pt, tet){
+			// using barycentric volumes: point is inside if all sub-volumes have same sign and sum equals vol
+			const v = signedTetraVolume(tet.a,tet.b,tet.c,tet.d);
+			const v0 = signedTetraVolume(pt,tet.b,tet.c,tet.d);
+			const v1 = signedTetraVolume(tet.a,pt,tet.c,tet.d);
+			const v2 = signedTetraVolume(tet.a,tet.b,pt,tet.d);
+			const v3 = signedTetraVolume(tet.a,tet.b,tet.c,pt);
+			// allow relative epsilon based on tetra volume magnitude
+			const tol = 1e-4 * Math.max(1, Math.abs(v));
+			const sumDiff = Math.abs(v - (v0+v1+v2+v3));
+			if(sumDiff > tol) return false;
+			// require sub-volumes have same sign (or zero)
+			const signs = [v0, v1, v2, v3].map(x=> Math.sign(x));
+			const allNonNeg = signs.every(s=> s >= 0);
+			const allNonPos = signs.every(s=> s <= 0);
+			return allNonNeg || allNonPos;
+		}
+
+		function isBlockedByWorld(pos){
+			// pos: {x,y,z} center of player sphere
+			for(const obj of objects){
+				if(obj.world !== player.world) continue;
+				if(!(obj.isworld || obj.iswall)) continue;
+				if(!obj.tetrahedrons) continue;
+				for(const tet of obj.tetrahedrons){
+					if(sphereIntersectsTetra(pos, player.radius, tet)) return true;
+				}
+			}
+			return false;
+		}
+
+		// renderStage implementation replaced by renderer.render()
+
+
+
+		// helper: shade a hex color by factor (0..1)
+		function shadeColor(hex, factor){
+			const c = hex.replace('#','');
+			const num = parseInt(c,16);
+			let r = (num >> 16) & 0xff;
+			let g = (num >> 8) & 0xff;
+			let b = num & 0xff;
+			r = Math.round(r * factor); g = Math.round(g * factor); b = Math.round(b * factor);
+			return `rgb(${r},${g},${b})`;
+		}
+
+		function hexToRgba(hex, alpha){
+			const c = hex.replace('#','');
+			const num = parseInt(c,16);
+			let r = (num >> 16) & 0xff;
+			let g = (num >> 8) & 0xff;
+			let b = num & 0xff;
+			return `rgba(${r},${g},${b},${alpha})`;
+		}
+
+		// handle click selection using renderer
+		canvas.addEventListener('click', (ev)=>{
+			const rect = canvas.getBoundingClientRect();
+		 	const x = (ev.clientX - rect.left);
+		 	const y = (ev.clientY - rect.top);
+		 	const obj = renderer.getObjectAtScreen(x,y);
+		 	if(!obj){
+		 		selectedId = null; selectedInfo.textContent = 'No selection'; const ex = document.getElementById('zControl'); if(ex) ex.remove(); renderer.render(); return;
+		 	}
+		 	selectObject(obj.id);
+		});
+
+		// Touch look controls
+		canvas.addEventListener('touchstart', (e) => {
+			if (e.touches.length === 1) {
+				touchLookActive = true;
+				touchCurrentX = e.touches[0].clientX;
+				touchCurrentY = e.touches[0].clientY;
+			}
+		});
+
+		canvas.addEventListener('touchmove', (e) => {
+			if (touchLookActive && e.touches.length === 1) {
+				e.preventDefault();
+				const touch = e.touches[0];
+				const deltaX = touch.clientX - touchCurrentX;
+				const deltaY = touch.clientY - touchCurrentY;
+				const sensitivity = 0.005; // adjust as needed
+				camera.rotY += deltaX * sensitivity;
+				camera.rotX = Math.max(-1.2, Math.min(1.2, camera.rotX + deltaY * sensitivity));
+				touchCurrentX = touch.clientX;
+				touchCurrentY = touch.clientY;
+			}
+		});
+
+		canvas.addEventListener('touchend', (e) => {
+			touchLookActive = false;
+		});
+
+		// pickup toast (temporary overlay when items picked up)
+		function showPickup(text){
+			let el = document.getElementById('pickupToast');
+			if(!el){
+				el = document.createElement('div'); el.id = 'pickupToast';
+				el.style.position = 'fixed'; el.style.left = '50%'; el.style.top = '12%'; el.style.transform = 'translateX(-50%)';
+				el.style.background = 'rgba(2,6,23,0.9)'; el.style.color = '#e6eef6'; el.style.padding = '8px 12px'; el.style.borderRadius = '8px';
+				el.style.border = '1px solid rgba(255,255,255,0.06)'; el.style.zIndex = 60; document.body.appendChild(el);
+			}
+			el.textContent = text; el.style.opacity = '1';
+			clearTimeout(el._timeout);
+			el._timeout = setTimeout(()=>{ el.style.transition='opacity 400ms'; el.style.opacity='0'; }, 2500);
+		}
+
+		// ---------- input and physics loop ----------
+		document.addEventListener('keydown',(e)=>{
+			if(e.repeat) return;
+			const k = e.key.toLowerCase();
+			// Escape toggles pause
+			if(k === 'escape'){
+				paused = !paused;
+				if(paused){ showPauseMenu(); saveState(); }
+				else { hidePauseMenu(); lastFrame = performance.now(); }
+				return;
+			}
+			keysDown.add(k);
+			// dismiss driving overlay on first keypress (unless user pressed 'p' to toggle)
+			const _driveEl = document.getElementById('driveOverlay');
+			// toggle driving overlay with 'p'
+			if(k === 'p'){
+				if(_driveEl){ driveOverlayVisible = !driveOverlayVisible; _driveEl.style.display = driveOverlayVisible ? '' : 'none'; }
+				return;
+			}
+
+			// if player is in a vehicle and they press 'q' while inside, exit immediately
+			if(k === 'q' && player && player._inVehicle){ const car = objects.find(o=>o.id===player._inVehicle); if(car){ car.open(); saveState(); return; } }
+			// if player is in a vehicle and they press 'o' toggle reverse gear
+			if(k === 'o'){
+				if(player && player._inVehicle){ const car = objects.find(o=>o.id===player._inVehicle); if(car){ car._reverse = !car._reverse; showPickup('Reverse ' + (car._reverse ? 'ON' : 'OFF')); } }
+			}
+			// inventory toggle (quick key)
+			if(k === 'e'){
+				inventoryOpen = !inventoryOpen;
+				document.getElementById('inventoryPanel').style.display = inventoryOpen ? '' : 'none';
+				if(inventoryOpen) renderInventory();
+				console.log('Inventory',inventoryOpen);
+			}
+			// interact: if chest is centered, open/close lid on 'q'
+					// slot keys (z/x/c/v/b/n/m) select equip slots and can trigger quick actions
+					if(slotKeys.indexOf(k) >= 0){
+						const s = slotKeys.indexOf(k);
+						selectedSlot = s;
+						updateEquipDisplay();
+					}
+					// quick cut with axe on 'z'
+					if(k === 'z'){
+						const centerObj = typeof getObjectInCenter === 'function' ? getObjectInCenter() : null;
+						const axeInInventory = inventory.find(it=>it.id==='axe');
+						// check equipped in selected slot
+						const eqIdx = equippedSlots[selectedSlot];
+						const hasEquippedAxe = (eqIdx != null && inventory[eqIdx] && inventory[eqIdx].id === 'axe');
+						if(hasEquippedAxe || axeInInventory){ Axe.useOn(centerObj); return; }
+					}
+
+					// bracket navigation: previous/next equipped slot
+					if(k === '[' || k === ']'){
+						const dir = (k === ']') ? 1 : -1;
+						let idx = selectedSlot;
+						for(let i=1;i<=slotKeys.length;i++){
+							const s = (idx + dir * i + slotKeys.length) % slotKeys.length;
+							if(equippedSlots[s] != null){ selectedSlot = s; updateEquipDisplay(); break; }
+						}
+					}
+
+					// pipe/backslash to unequip selected slot
+					if(k === '|' || k === '\\'){
+						if(equippedSlots[selectedSlot] != null){ equippedSlots[selectedSlot] = null; updateEquipDisplay(); showPickup('Unequipped slot ' + slotKeys[selectedSlot].toUpperCase()); }
+					}
+					if(k === 'q'){
+					const obj = typeof getObjectInCenter === 'function' ? getObjectInCenter() : null;
+					if(obj){
+						// prefer object method if available (Chest.open, Portal.enter)
+						if(typeof obj.open === 'function'){
+							obj.open();
+							saveState();
+						} else if(typeof obj.enter === 'function'){
+							obj.enter();
+							saveState();
+						} else {
+							// fallback: mark interaction and call any action matching 'q'
+							obj.interactions = (obj.interactions||0) + 1;
+							if(obj.actions){ for(const a of obj.actions){ if(a.key === 'q'){ performAction(obj,a); } }}
+							console.log('Interacted with',obj.name,obj.interactions);
+						}
+					}
+				}
+			// other object-defined keys (zxc... etc)
+				const center = typeof getObjectInCenter === 'function' ? getObjectInCenter() : null;
+				if(center && center.actions){
+					for(const a of center.actions){
+						if(a.key === k){
+							performAction(center, a);
+						}
+					}
+				}
+		});
+
+		document.addEventListener('keyup',(e)=>{
+			keysDown.delete(e.key.toLowerCase());
+		});
+
+		let lastFrame = performance.now();
+
+		function physicsStep(now){
+			const dt = Math.max(0, Math.min(0.05, (now - lastFrame)/1000));
+			lastFrame = now;
+
+			// if paused, skip physics updates but still render pause menu once
+			if(paused){ if (!firstFrame) loopUser(); renderer.render(); if (firstFrame && !paused) { initUser(); firstFrame = false; } requestAnimationFrame(physicsStep); return; }
+
+			// if climbing animation is active, skip physics updates to allow animation to control position
+			if(player._isClimbing){ if (!firstFrame) loopUser(); renderer.render(); if (firstFrame && !paused) { initUser(); firstFrame = false; } requestAnimationFrame(physicsStep); return; }
+
+			// controls: arrows to look (adjust player rotation), WASD to move relative to player rotation
+			// camera rotation (arrow keys) — camera drives player orientation
+			if(keysDown.has('arrowleft')){ camera.rotY = (camera.rotY || 0) - 2.5 * dt; }
+			if(keysDown.has('arrowright')){ camera.rotY = (camera.rotY || 0) + 2.5 * dt; }
+			if(keysDown.has('arrowdown')){ camera.rotX = Math.max(-1.2,(camera.rotX||0) - 2.5 * dt); }
+			if(keysDown.has('arrowup')){ camera.rotX = Math.min(1.2,(camera.rotX||0) + 2.5 * dt); }
+			// sync player orientation to camera
+			player.rotY = camera.rotY || 0;
+			player.pitch = camera.rotX || 0;
+
+			// if player is mounted in a car, drive the car instead of walking
+			if(player._inVehicle){
+				const car = objects.find(o=>o.id===player._inVehicle);
+				if(!car){ player._inVehicle = null; }
+				else {
+					// Update car tetrahedrons to match current position and rotation
+					if(car._dims){
+						const hx = car._dims.hx, hy = car._dims.hy, hz = car._dims.hz;
+						const cos = Math.cos(car.rotY || 0);
+						const sin = Math.sin(car.rotY || 0);
+						const rotatePoint = (px, pz) => {
+							const rx = px * cos - pz * sin;
+							const rz = px * sin + pz * cos;
+							return {x: car.x + rx, z: car.z + rz};
+						};
+						const a = Object.assign(rotatePoint(-hx, -hz), {y: car.y});
+						const b = Object.assign(rotatePoint(hx, -hz), {y: car.y});
+						const c = Object.assign(rotatePoint(-hx, hz), {y: car.y});
+						const d = Object.assign(rotatePoint(hx, hz), {y: car.y});
+						const e = Object.assign(rotatePoint(-hx, -hz), {y: car.y + hy});
+						const f = Object.assign(rotatePoint(hx, -hz), {y: car.y + hy});
+						const g = Object.assign(rotatePoint(-hx, hz), {y: car.y + hy});
+						const h = Object.assign(rotatePoint(hx, hz), {y: car.y + hy});
+						car.tetrahedrons = [
+							{a:a,b:b,c:c,d:e},
+							{a:b,b:d,c:h,d:f},
+							{a:b,b:f,c:e,d:h},
+							{a:c,b:e,c:g,d:h},
+							{a:b,b:c,c:e,d:h}
+						];
+					}
+					// throttle/brake
+					const maxSpeed = car.maxSpeed || 320; const accel = car.accel || 420;
+					if(keysDown.has('i')) car.speedForward = Math.min(maxSpeed, (car.speedForward||0) + accel * dt);
+					if(keysDown.has('k')) car.speedForward = Math.max(0, (car.speedForward||0) - accel * dt * 1.5);
+					// steering
+					const steerAmt = car.steerSpeed || 2.8;
+					if(keysDown.has('j')) car.rotY -= steerAmt * dt * Math.max(0.1, Math.abs((car.speedForward||0)/maxSpeed));
+					if(keysDown.has('l')) car.rotY += steerAmt * dt * Math.max(0.1, Math.abs((car.speedForward||0)/maxSpeed));
+					// update position with simple forward motion and basic collision test
+					const dir = car._reverse ? -1 : 1;
+					const vx = Math.sin(car.rotY || 0) * (car.speedForward||0) * dt * dir;
+					const vz = Math.cos(car.rotY || 0) * (car.speedForward||0) * dt * dir;
+					const desiredCarPos = { x: car.x + vx, y: car.y, z: car.z + vz };
+					// approximate car radius for collision
+					const savedPlayerRadius = player.radius;
+					player.radius = Math.max(car._dims.hx, car._dims.hz) + 8;
+					let blocked = false;
+					for(const obj of objects){
+						if(obj.id === car.id) continue;
+						if(obj.world !== car.world) continue;
+						if(!(obj.isworld || obj.iswall)) continue;
+						if(!obj.tetrahedrons) continue;
+						for(const tet of obj.tetrahedrons){ if(sphereIntersectsTetra(desiredCarPos, player.radius, tet)){ blocked = true; break; } }
+						if(blocked) break;
+					}
+					if(!blocked){ car.x = desiredCarPos.x; car.z = desiredCarPos.z; }
+					// restore radius
+					player.radius = savedPlayerRadius;
+					// attach player to car
+					player.x = car.x; player.z = car.z; player.y = car.y + 14; player.rotY = car.rotY;
+					if (!firstFrame) loopUser(); renderer.render(); if (firstFrame && !paused) { initUser(); firstFrame = false; } requestAnimationFrame(physicsStep); return;
+				}
+			}
+
+			// movement vector in local space
+			let mvx=0, mvz=0;
+			if(keysDown.has('w')) mvz += 1;
+			if(keysDown.has('s')) mvz -= 1;
+			if(keysDown.has('a')) mvx -= 1;
+			if(keysDown.has('d')) mvx += 1;
+			const len = Math.hypot(mvx,mvz);
+			if(len>0){ mvx/=len; mvz/=len; }
+
+			// movement is relative to camera forward direction projected flat
+			const rot = camera.rotY || 0;
+			const forwardX = Math.sin(rot), forwardZ = Math.cos(rot);
+			const rightX = Math.cos(rot), rightZ = -Math.sin(rot);
+			const worldDX = forwardX * mvz + rightX * mvx;
+			const worldDZ = forwardZ * mvz + rightZ * mvx;
+
+			// desired new position (horizontal) — save previous position for collision resolution
+			const isRunning = keysDown.has('shift');
+			const speed = isRunning ? player.runSpeed : player.speed;
+			const prevPos = { x: player.x, y: player.y, z: player.z };
+			const desired = {x: player.x + worldDX * speed * dt, y: player.y, z: player.z + worldDZ * speed * dt};
+
+			// check horizontal collision by testing player's origin point at desired pos against world/wall tetrahedrons
+			if(!isBlockedByWorld({x:desired.x,y:desired.y,z:desired.z})){
+				player.x = desired.x; player.z = desired.z;
+			}
+
+			// gravity
+			// gravity (positive Y is up). Use negative gravity to pull downwards.
+			const GRAV = -900; // units/s^2 (acceleration)
+			player.vel.y += GRAV * dt; // velocity affected by gravity
+			player.y += player.vel.y * dt; // integrate
+			// ground at y = 0 (player cannot go below 0)
+			if(player.y <= 0){ player.y = 0; player.vel.y = 0; player.onGround = true; }
+			else{ player.onGround = false; }
+
+			// prevent falling/teleporting through walls: if after vertical/horizontal step we intersect world geometry, try resolving
+			if(isBlockedByWorld({x:player.x,y:player.y,z:player.z})){ 
+				// try revert only Y (land on surface)
+				player.y = prevPos.y;
+				if(!isBlockedByWorld({x:player.x,y:player.y,z:player.z})){ player.vel.y = 0; player.onGround = true; }
+				else {
+					// try revert horizontal movement
+					player.x = prevPos.x; player.z = prevPos.z;
+					// if still blocked, revert whole position
+					if(isBlockedByWorld({x:player.x,y:player.y,z:player.z})){ player.x = prevPos.x; player.y = prevPos.y; player.z = prevPos.z; player.vel.y = 0; }
+				}
+			}
+
+			// jump (space): give an upward positive impulse
+			if(keysDown.has(' ' ) || keysDown.has('space') ){
+				if(player.onGround){ player.vel.y = player.jumpImpulse; player.onGround = false; }
+			}
+
+			// per-object updates (allow objects to animate themselves)
+			for(const obj of objects){
+				if(typeof obj.update === 'function'){
+					try{ obj.update(dt); }catch(e){ console.warn('Object update failed', e); }
+				}else if(obj._lidTemplate){
+					// legacy: animate chest lids towards their target angles
+					const speed = 4.0; // radians per second
+					const delta = obj.lidTarget - (obj.lidAngle || 0);
+					const maxStep = speed * dt;
+					let step = Math.max(-maxStep, Math.min(maxStep, delta));
+					obj.lidAngle = (obj.lidAngle || 0) + step;
+				}
+			}
+
+			// update camera and render via renderer
+			if (!firstFrame) loopUser(); renderer.render(); if (firstFrame && !paused) { initUser(); firstFrame = false; }
+			requestAnimationFrame(physicsStep);
+		}
+
+		requestAnimationFrame(physicsStep);
+
+		// helper to get object in center of view via renderer
+		function getObjectInCenter(){
+			if(typeof renderer !== 'undefined') return renderer.getObjectInCenter();
+			return null;
+		}
+
+		// perform object actions (e.g., cut tree)
+		function performAction(obj, action){
+			if(!obj || !action) return;
+			const key = (action.key||'').toLowerCase();
+			const name = (action.name||'').toLowerCase();
+			// cutting is handled by the Axe tool (use the 'z' key when wielding an axe)
+
+			// climb action for Ladder — animate smoothly to nearest platform top
+			if(name === 'climb' || key === 'c'){
+				smoothClimbToNearestPlatform(obj);
+				return;
+			}
+
+			// smooth climb helper
+			function smoothClimbToNearestPlatform(ladderObj){
+				// find nearest platform in same world
+				let nearest = null; let nd = Infinity;
+				for(const o of objects){
+					if(o.world !== ladderObj.world) continue;
+					if(!o.name) continue;
+					if(!o.name.toLowerCase().includes('platform')) continue;
+					const d = Math.hypot((o.x||0) - (ladderObj.x||0), (o.z||0) - (ladderObj.z||0));
+					if(d < nd){ nd = d; nearest = o; }
+				}
+				let targetTop = { x: ladderObj.x, z: ladderObj.z, y: (ladderObj.climbHeight || 60) };
+				if(nearest && nd < 400){
+					// compute platform top Y by using max vertex Y of its tetrahedrons
+					let topY = -Infinity;
+					if(nearest.tetrahedrons){
+						for(const tet of nearest.tetrahedrons){
+							for(const k of ['a','b','c','d']) topY = Math.max(topY, tet[k].y || -Infinity);
+						}
+					}
+					if(!isFinite(topY)) topY = nearest.y || 0;
+					// place player center above platform by player.radius
+					targetTop.x = nearest.x; targetTop.z = nearest.z; targetTop.y = topY + player.radius + 2;
+				}
+				
+				// Two-phase animation: walk to base, then climb
+				const ladderBase = { x: ladderObj.x, y: 5, z: ladderObj.z };
+				const start = { x: player.x, y: player.y, z: player.z };
+				const walkDur = 400; // time to walk to ladder base
+				const climbDur = 400; // time to climb to top
+				const t0 = performance.now(); 
+				player._isClimbing = true; 
+				player.vel.y = 0;
+				
+				function easeInOut(t){ return t<0.5 ? 2*t*t : -1 + (4-2*t)*t; }
+				
+				function step(now){
+					const elapsed = now - t0;
+					
+					if(elapsed < walkDur){
+						// Phase 1: Walk to ladder base
+						const p = elapsed / walkDur;
+						const e = easeInOut(p);
+						player.x = start.x + (ladderBase.x - start.x) * e;
+						player.y = start.y + (ladderBase.y - start.y) * e;
+						player.z = start.z + (ladderBase.z - start.z) * e;
+					} else {
+						// Phase 2: Climb from base to top
+						const p = Math.min(1, (elapsed - walkDur) / climbDur);
+						const e = easeInOut(p);
+						player.x = ladderBase.x + (targetTop.x - ladderBase.x) * e;
+						player.y = ladderBase.y + (targetTop.y - ladderBase.y) * e;
+						player.z = ladderBase.z + (targetTop.z - ladderBase.z) * e;
+						
+						if(p >= 1){
+							// Animation complete
+							player._isClimbing = false; player.vel.y = 0; player.onGround = false;
+							showPickup('Climbed ladder'); saveState(); refresh();
+							return;
+						}
+					}
+					
+					renderer.render();
+					requestAnimationFrame(step);
+				}
+				requestAnimationFrame(step);
+			}
+			// other action hooks can go here
+		}
+
+		// pause menu helpers
+		function showPauseMenu(){
+			document.getElementById('pauseMenu').style.display = '';
+		}
+		function hidePauseMenu(){
+			document.getElementById('pauseMenu').style.display = 'none';
+			document.getElementById('inventoryPanel').style.display = 'none';
+		}
+
+		function renderInventory(){
+			const el = document.getElementById('inventoryList'); el.innerHTML = '';
+			if(inventory.length === 0){ el.textContent = 'Empty'; return; }
+			inventory.forEach((it, i)=>{
+				const row = document.createElement('div'); row.style.display='flex'; row.style.justifyContent='space-between'; row.style.padding='6px 4px'; row.style.cursor='pointer';
+				row.dataset.idx = i;
+				row.innerHTML = `<div>${it.name}</div><div class="muted">x${it.qty||1}</div>`;
+				row.addEventListener('click', ()=>{
+					// highlight selection
+					const prev = document.querySelector('#inventoryList .selected'); if(prev) prev.classList.remove('selected');
+					row.classList.add('selected'); window._selectedInventoryIndex = i;
+				});
+				el.appendChild(row);
+			});
+
+			// add a control to open nearby chest
+			const ctrl = document.createElement('div'); ctrl.style.marginTop='8px'; ctrl.style.display='flex'; ctrl.style.justifyContent='flex-end';
+			const openBtn = document.createElement('button'); openBtn.textContent = 'Open Nearby Chest';
+			openBtn.addEventListener('click', ()=>{
+				// try center object first
+				let chest = renderer.getObjectInCenter();
+				if(!chest || !chest.name || chest.name.toLowerCase()!=='chest'){
+					// find nearest chest within 200 units
+					let nearest = null; let nd = Infinity;
+					for(const o of objects){ if(o.world !== player.world) continue; if(!o.name) continue; if(o.name.toLowerCase() !== 'chest') continue; const d = Math.hypot((o.x||0)-player.x, (o.z||0)-player.z); if(d < nd){ nd = d; nearest = o; } }
+					if(nearest && nd <= 240) chest = nearest;
+				}
+				if(chest && chest.name && chest.name.toLowerCase()==='chest'){ chest.open(); }
+				else showPickup('No chest nearby');
+			});
+			ctrl.appendChild(openBtn); el.parentNode.appendChild(ctrl);
+		}
+
+
+		// save/load state to cookies
+		function saveState(){
+			try{
+				const state = { objects: objects.map(o=>{
+						const base = {id:o.id,x:o.x,y:o.y,z:o.z,opened:o.opened,collected:o.collected, world:o.world};
+						if(o.contents) base.contents = o.contents;
+						return base;
+					}),
+					player:{x:player.x,y:player.y,z:player.z}, inventory, timestamp: Date.now() };
+				document.cookie = 'game_state=' + encodeURIComponent(JSON.stringify(state)) + ';max-age='+(60*60*24*365)+';path=/';
+				console.log('Saved state to cookies');
+			}catch(err){ console.warn('Save failed',err); }
+		}
+
+		function loadState(){
+			try{
+				const match = document.cookie.split('; ').find(c=>c.startsWith('game_state='));
+				if(!match) return;
+				const val = decodeURIComponent(match.split('=')[1]);
+				const state = JSON.parse(val);
+				if(state.player){ player.x = state.player.x; player.y = state.player.y; player.z = state.player.z; }
+					if(state.objects){
+						for(const s of state.objects){ const o = objects.find(x=>x.id===s.id); if(o){ o.x=s.x; o.y=s.y; o.z=s.z; o.opened = !!s.opened; o.collected = !!s.collected; if(o.opened) o.lidTarget = -Math.PI * 0.65; else o.lidTarget = 0; if(typeof s.world !== 'undefined') o.world = s.world; if(s.contents) o.contents = s.contents; }}
+					}
+				if(state.inventory) inventory = state.inventory;
+				console.log('Loaded state from cookies');
+			}catch(err){ console.warn('Load failed',err); }
+		}
+
+		// export/import backup helpers
+		function exportSaveToFile(){
+			try{
+				const state = { objects: objects.map(o=>{
+						const base = {id:o.id,x:o.x,y:o.y,z:o.z,opened:o.opened,collected:o.collected, world:o.world};
+						if(o.contents) base.contents = o.contents;
+						return base;
+					}),
+					player:{x:player.x,y:player.y,z:player.z}, inventory, timestamp: Date.now() };
+				const json = JSON.stringify(state, null, 2);
+				const blob = new Blob([json], {type: 'application/json'});
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = `game_backup_${new Date().toISOString().replace(/[:.]/g,'-')}.json`;
+				document.body.appendChild(a);
+				a.click();
+				a.remove();
+				URL.revokeObjectURL(url);
+				try{ showPickup('Exported backup'); }catch(e){}
+			}catch(err){ console.warn('Export failed', err); alert('Export failed: '+(err && err.message)); }
+		}
+
+		function importBackupFromObject(state){
+			try{
+				if(!state){ alert('Invalid backup file'); return; }
+				if(!confirm('This will clear all current save data and load the uploaded backup. Continue?')) return;
+				// write cookie with imported state
+				document.cookie = 'game_state=' + encodeURIComponent(JSON.stringify(state)) + ';max-age='+(60*60*24*365)+';path=/';
+				// clear in-memory state to be safe
+				inventory = [];
+				clearObjects();
+				// reset player to values from backup (if present)
+				if(state.player){ player.x = state.player.x || 300; player.y = state.player.y || 100; player.z = state.player.z || 200; }
+				player.vel = {x:0,y:0,z:0};
+				try{ showPickup('Backup loaded — reloading'); }catch(e){}
+				setTimeout(()=>{ location.reload(); }, 300);
+			}catch(err){ console.warn('Import failed',err); alert('Import failed: '+(err && err.message)); }
+		}
+
+		// autosave every minute
+		setInterval(()=>{ saveState(); }, 60 * 1000);
+		// load saved state on start (if present)
+		loadState();
+
+		// Spawn initial world objects (moved into a single function)
+		function spawnSampleWorld(){
+			// Trees
+			Tree.spawn(420, 600, 0);
+			Tree.spawn(240, 700, 0);
+			// Ladder + Platform
+			const ladder = Ladder.spawn(200, 0, 520, 0);
+			const platform = Platform.spawn(200, 80, 560, 0);
+			ladder.climbHeight = platform.y + 4;
+			// Portal (paired)
+			Portal.spawn(600,0,520,0, { target: { x:100, y:0, z:100, world:1 } });
+			// Chests
+			Chest.spawn(340,0,480,0);
+			Chest.spawn(480,0,520,0);
+			// Axe in the world
+			AxeWorld.spawn(320,0,460,0);
+			// Car for testing
+			Car.spawn(380,0,500,0, { name: 'Car', color: '#2b6f9b' });
+		}
+
+
+		function renderList(){
+			renderer.render();
+		}
+
+		function selectObject(id){
+			selectedId = id;
+			const obj = objects.find(o=>o.id === id);
+			if(!obj) return;
+			// update overlay info
+			selectedInfo.textContent = `${obj.name} — ${obj.description}`;
+			// add z control when selected
+			renderSelectedZControl(obj);
+			// visual highlight handled by renderer using selectedId
+			// ensure overlay visible
+		}
+
+		// render a Z slider for the selected object inside the overlay
+		function renderSelectedZControl(obj){
+			// simplified: show selected object brief info in the header selectedInfo area
+			if(!selectedInfo) return;
+			selectedInfo.style.display = '';
+			selectedInfo.textContent = `${obj.name} — z:${Math.round(obj.z||0)}`;
+		}
+
+		// helpers
+		function addRandomObject(){
+			const id = Date.now();
+			const x = player.x + (Math.random()-0.5)*400;
+			const y = 0; // place on floor
+			const z = player.z + (Math.random()*800 + 100);
+			const palette = ['#ef4444','#06b6d4','#f97316','#34d399','#a78bfa','#f59e0b'];
+			const color = palette[Math.floor(Math.random()*palette.length)];
+			const obj = {id,name:`Obj${String(id).slice(-4)}`.replace('id','Obj'),x,y,z,triangles:[],tetrahedrons:[],actions:[],isworld:false,iswall:false,color,description:'A randomly created object'};
+			// ensure name exists properly
+			obj.name = 'Obj' + (objects.length+1);
+			objects.push(obj);
+			refresh();
+			selectObject(obj.id);
+		}
+
+		function clearObjects(){
+			// keep player (first object) but clear others
+			objects = objects.filter(o=>o.isplayer);
+			selectedId = null;
+			selectedInfo.textContent = 'No selection';
+			refresh();
+		}
+
+		function endGame(win = false, msg = null){
+			const dialog = document.getElementById('endGameDialog');
+			const title = document.getElementById('endGameTitle');
+			const message = document.getElementById('endGameMessage');
+			
+			// Set title and message
+			title.textContent = win ? 'You Win!' : 'Game Over';
+			title.style.color = win ? '#4ade80' : 'var(--accent)';
+			message.textContent = msg || (win ? 'Congratulations!' : 'Better luck next time.');
+			
+			// Hide pause menu and show dialog
+			document.getElementById('pauseMenu').style.display = 'none';
+			dialog.style.display = 'block';
+			paused = true;
+		}
+
+		function centerSelected(){
+			if(!selectedId) return;
+			const obj = objects.find(o=>o.id===selectedId);
+			if(!obj) return;
+			// move selected object near player (center view)
+			obj.x = player.x;
+			obj.z = player.z + 200;
+			obj.y = 0;
+			refresh();
+			selectObject(obj.id);
+		}
+
+		function refresh(){
+			renderer.render();
+			renderList();
+		}
+
+		// give() function: add items to player inventory by id
+		function give(itemId, qty = 1){
+			if(!itemId || qty <= 0) return false;
+			try{
+				let itemClass = null;
+				let existed = false;
+				
+				// map item ids to their constructors
+				const itemClassMap = {
+					'gold': GoldItem,
+					'wood': WoodItem,
+					'axe': AxeItem
+				};
+				
+				// check if item already exists in inventory
+				const existing = inventory.find(it => it.id === itemId);
+				if(existing){
+					existing.qty = (existing.qty || 1) + qty;
+					existed = true;
+				} else {
+					// create new item instance
+					itemClass = itemClassMap[itemId];
+					if(!itemClass){
+						console.warn('Unknown item id:', itemId);
+						return false;
+					}
+					const newItem = new itemClass(qty);
+					inventory.push(newItem);
+				}
+				
+				// update UI and save
+				if(inventoryOpen) renderInventory();
+				showPickup(`${existed ? '+' : ''}${qty} ${itemId}`);
+				saveState();
+				return true;
+			}catch(err){
+				console.warn('give() failed:', err);
+				return false;
+			}
+		}
+
+		// reset game to start state (commonly used by new game handlers)
+		function resetGameToStart(){
+			document.cookie = 'game_state=;max-age=0;path=/';
+			inventory = [];
+			clearObjects();
+			player.x = 300; player.y = 100; player.z = 200;
+			player.vel = {x:0,y:0,z:0};
+			paused = false;
+			lastFrame = performance.now();
+			refresh();
+		}
+
+		// events
+		// pause menu buttons wiring
+		document.getElementById('resumeBtn').addEventListener('click', ()=>{ paused = false; hidePauseMenu(); lastFrame = performance.now(); });
+		document.getElementById('pauseInventoryBtn').addEventListener('click', ()=>{ inventoryOpen = true; document.getElementById('inventoryPanel').style.display = ''; renderInventory(); });
+		document.getElementById('saveBtn').addEventListener('click', ()=>{ saveState(); });
+		document.getElementById('exportSaveBtn').addEventListener('click', ()=>{ exportSaveToFile(); });
+		document.getElementById('importBackupBtn').addEventListener('click', ()=>{ const f = document.getElementById('importSaveFile'); if(f) f.click(); });
+		// file input handler for importing backup JSON
+		const _importEl = document.getElementById('importSaveFile');
+		if(_importEl){
+			_importEl.addEventListener('change', (ev)=>{
+				const file = ev.target.files && ev.target.files[0];
+				if(!file) return;
+				const reader = new FileReader();
+				reader.onload = ()=>{
+					try{ const state = JSON.parse(reader.result); importBackupFromObject(state); }
+					catch(err){ alert('Failed to parse backup file: ' + (err && err.message)); }
+				};
+				reader.onerror = ()=>{ alert('Failed to read file'); };
+				reader.readAsText(file);
+				// reset to allow selecting same file again
+				ev.target.value = '';
+			});
+		}
+		document.getElementById('newGameBtn').addEventListener('click', ()=>{
+			if(confirm('Clear all save data and start a new game?')){
+				resetGameToStart();
+				hidePauseMenu();
+			}
+		});
+		document.getElementById('closeInventoryBtn').addEventListener('click', ()=>{ inventoryOpen = false; document.getElementById('inventoryPanel').style.display = 'none'; });
+		document.getElementById('endGameNewGameBtn').addEventListener('click', ()=>{
+			resetGameToStart();
+			document.getElementById('endGameDialog').style.display = 'none';
+		});
+		document.getElementById('putDownBtn').addEventListener('click', ()=>{
+			// put down selected inventory item into world in front of player
+			if(!window._selectedInventoryIndex && window._selectedInventoryIndex !== 0) { showPickup('Select an item first'); return; }
+			const idx = window._selectedInventoryIndex;
+			if(!inventory[idx]){ showPickup('No item selected'); return; }
+			const it = inventory[idx];
+			// remove one from inventory
+			it.qty -= 1; if(it.qty <= 0) inventory.splice(idx,1);
+			// spawn a specific world object based on the inventory item type
+			const rot = player.rotY || 0; const fx = Math.sin(rot), fz = Math.cos(rot);
+			const ox = player.x + fx * 60; const oz = player.z + fz * 60; const oy = Math.max(0, player.y);
+			if(it && it.worldClass && typeof it.worldClass.spawn === 'function'){
+				it.worldClass.spawn(ox, oy, oz, player.world);
+			} else if(it.id === 'gold'){
+				GoldWorld.spawn(ox, oy, oz, player.world);
+			}else if(it.id === 'wood'){
+				WoodWorld.spawn(ox, oy, oz, player.world);
+			}else if(it.id === 'axe'){
+				AxeWorld.spawn(ox, oy, oz, player.world);
+			}else{
+				// generic drop fallback
+				const id = Date.now();
+				const drop = { id, name: it.name, x:ox, y:oy, z:oz, triangles:[], tetrahedrons:[{a:{x:ox-6,y:oy,z:oz-6},b:{x:ox+6,y:oy,z:oz-6},c:{x:ox+6,y:oy+12,z:oz+6},d:{x:ox-6,y:oy+12,z:oz+6}}], actions:[], isworld:false, iswall:false, color: '#ccc' };
+				objects.push(drop);
+			}
+			showPickup('Put down ' + it.name);
+			saveState(); renderInventory(); refresh();
+		});
+		// toolbar buttons wired when created in the header IIFE
+
+		// click stage to deselect
+		stage.addEventListener('click', ()=>{
+			selectedId = null;
+			selectedInfo.textContent = 'No selection';
+			const ex = document.getElementById('zControl'); if(ex) ex.remove();
+			renderer.render();
+		});
+
+		// initial render
+		refresh();
+
+		// responsive: re-render on resize to keep positions within bounds
+		window.addEventListener('resize', ()=>{
+			// clamp objects into visible area
+			objects.forEach(o=>{
+				o.x = Math.max(30, Math.min(stage.clientWidth-30, o.x));
+				o.y = Math.max(30, Math.min(stage.clientHeight-30, o.y));
+			});
+			refresh();
+		});
+
+		// === COMPILE/USERCODESTART ===
+
+			function initUser(){
+				// setup code can go here
+				// call spawnWorld to populate the scene if user code is not added
+				spawnSampleWorld();
+			}
+
+			function loopUser(){
+				// custom code can go here
+			}
+
+		// === COMPILE/USERCODEEND ===
+	</script>
+</body>
+</html>

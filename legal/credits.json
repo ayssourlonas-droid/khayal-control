@@ -266,5 +266,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: Creative Commons Legal Code | LICENSE: CC0 1.0 Universal"
+  },
+  {
+    "key": "gamecreator",
+    "size": 647,
+    "repo": "htmljsgames/Game-creator",
+    "id": 19,
+    "slug": "game-creator",
+    "title": "Game Creator",
+    "developer": "htmljsgames",
+    "license": "CC0-1.0",
+    "source": "https://github.com/htmljsgames/Game-creator",
+    "commit": "44335219d2d412ff88bb01210e7180dd8bb284d8",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: Creative Commons Legal Code | LICENSE: CC0 1.0 Universal"
   }
 ]
