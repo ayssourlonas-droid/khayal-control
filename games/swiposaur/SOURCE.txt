@@ -1,7 +1,7 @@
 Source: https://github.com/thesithunyein/swiposaur
 Commit: d60076e9e8b0f7938c44770d20cde7a296c164a3
 License: Apache-2.0
-Imported: 2026-11-07T22:25:45.806438+00:00
+Imported: 2026-11-07T23:34:03.708021+00:00
 Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تحسين وسائط صور": 2, "تحسين وسائط صوت": 1}
 
 Media provenance (automated signals, not a legal guarantee):
