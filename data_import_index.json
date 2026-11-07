@@ -161,5 +161,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "ughguys",
+    "size": 10937,
+    "repo": "atxgreene/Ugh-Guys-",
+    "id": 12,
+    "slug": "ugh-guys",
+    "title": "Ugh Guys",
+    "developer": "atxgreene",
+    "license": "CC0-1.0",
+    "source": "https://github.com/atxgreene/Ugh-Guys-",
+    "commit": "3641c8beeeb258bf20a9df556441f6d5f297ba2e",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: ![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg) | README.md: Released under the [CC0-1.0](LICENSE) license — public domain. Do anything you like with it."
   }
 ]

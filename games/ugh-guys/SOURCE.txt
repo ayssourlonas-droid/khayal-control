@@ -1,0 +1,14 @@
+Source: https://github.com/atxgreene/Ugh-Guys-
+Commit: 3641c8beeeb258bf20a9df556441f6d5f297ba2e
+License: CC0-1.0
+Imported: 2026-11-07T21:17:14.319955+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تحسين وسائط صور": 6}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: ![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)
+- README.md: Released under the [CC0-1.0](LICENSE) license — public domain. Do anything you like with it.
+- LICENSE: Creative Commons Legal Code
+- LICENSE: CC0 1.0 Universal
+- LICENSE: CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE
+- LICENSE: ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS
+- images: 24, audio: 0, tagged audio: 0
