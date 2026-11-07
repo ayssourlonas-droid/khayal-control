@@ -191,5 +191,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=エルム凪/EigHt | composer=EigHt"
+  },
+  {
+    "key": "plinksy",
+    "size": 77,
+    "repo": "Saganaki22/Plinksy",
+    "id": 14,
+    "slug": "plinksy",
+    "title": "Plinksy",
+    "developer": "Saganaki22",
+    "license": "Apache-2.0",
+    "source": "https://github.com/Saganaki22/Plinksy",
+    "commit": "96edb267453f9a80d176e259118f1e4e38d9dbdd",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
