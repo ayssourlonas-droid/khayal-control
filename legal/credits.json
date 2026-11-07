@@ -43,21 +43,6 @@
     "media_note": "مصدر الوسائط مذكور من المطوّر: HANDOFF.md: `MUSIC`, `BONUS`, `HELI`, `ROCKET`, `TWISTS`, `CREDITS`, `VICTORY`** are the | HANDOFF.md: Presentation.** Escape pause menu, victory screen with a credits roll, a"
   },
   {
-    "key": "oldahlanid",
-    "size": 24826,
-    "repo": "ahlanid/old.ahlan.id",
-    "id": 4,
-    "slug": "old-ahlan-id",
-    "title": "Old Ahlan Id",
-    "developer": "ahlanid",
-    "license": "MIT",
-    "source": "https://github.com/ahlanid/old.ahlan.id",
-    "commit": "1e0eeb743c666e8d49a66046f9c2adae530b5949",
-    "date": "2026-11-06",
-    "license_file": "LICENSE",
-    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
-  },
-  {
     "key": "pipweb",
     "size": 75717,
     "repo": "playpip/pip-web",

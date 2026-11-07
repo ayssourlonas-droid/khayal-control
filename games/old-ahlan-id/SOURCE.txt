@@ -1,8 +1,0 @@
-Source: https://github.com/ahlanid/old.ahlan.id
-Commit: 1e0eeb743c666e8d49a66046f9c2adae530b5949
-License: MIT
-Imported: 2026-11-06T10:54:11.849503+00:00
-Automated changes (see report): {"http ← https": 32, "إزالة وسم إعلانات/تتبّع": 4, "عزل تخزين اللعبة": 17, "حذف ملفات غير لازمة": 70}
-
-Media provenance (automated signals, not a legal guarantee):
-- images: 57, audio: 0, tagged audio: 0
