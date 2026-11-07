@@ -296,5 +296,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "moreonhtml",
+    "size": 280,
+    "repo": "BlazeInferno64/More-On-Html",
+    "id": 21,
+    "slug": "more-on-html",
+    "title": "More On Html",
+    "developer": "BlazeInferno64",
+    "license": "GPL-3.0",
+    "source": "https://github.com/BlazeInferno64/More-On-Html",
+    "commit": "10b5899dade0576a6462233597add2af4600997e",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
   }
 ]

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:more-on-html:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Uploaded Files | More on html repo by BlazeInferno64</title>
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/96913755?v=4" type="image/x-icon" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        /*
+        Copyright (c) BlazeInferno64 --> https://github.com/blazeInferno64
+    */
+        @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        *,
+        *::after,
+        *::before {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ff-mono: "Geist Mono", monospace;
+            --ff: "Montserrat", sans-serif;
+            --gradient: repeating-linear-gradient(90deg, rgb(5, 215, 138), 74%, rgb(0, 213, 255));
+            --second-gradient: linear-gradient(90deg, #ff1b6b, 74%, #45caff);
+            --third-gradient: linear-gradient(135deg, #6a5acd, #00bfff);
+            /* Purple bluish gradient */
+            --fourth-gradient: linear-gradient(135deg, #00ff7f, #00bfff);
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            font-family: var(--ff-mono);
+            background: var(--gradient);
+            background-size: 400%;
+            animation: animate 10s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        .main {
+            width: 450px;
+            background: rgba(30, 30, 30);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .6);
+        }
+
+        .main .head {
+            background: #2a292d;
+            width: 100%;
+            padding: .5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .main .head div {
+            display: flex;
+            gap: 5px;
+        }
+
+        .main .head p {
+            font-size: 1.13rem;
+            font-weight: 600;
+            font-family: var(--ff2);
+        }
+
+        .main .head .link {
+            padding: 5px 10px;
+            border-radius: .3rem;
+            cursor: pointer;
+            border: 2px dashed #4b494d;
+        }
+
+        .main .head .link:hover {
+            background: #4b494d;
+        }
+
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .search-bg {
+            user-select: none;
+            width: 100%;
+            padding: .3rem .5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .search-bar {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar .search {
+            font-family: var(--ff-mono);
+            padding: .5rem 1rem;
+            outline: none;
+            border: none;
+            font-size: 1.13rem;
+            background: #ccc;
+            color: #111;
+            border-top-right-radius: .3rem;
+            border-bottom-right-radius: .3rem;
+            transition: all .1s ease-in-out;
+        }
+
+        .search-bar .search:hover {
+            background: hsl(0, 0%, 70%);
+        }
+
+        .search-bar span {
+            background: #bebdbd;
+            color: #111;
+            padding: .5rem 1rem;
+            border-top-left-radius: .3rem;
+            border-bottom-left-radius: .3rem;
+            pointer-events: none;
+        }
+
+        .files-bg {
+            mask-image: linear-gradient(to bottom,
+                    transparent 0%,
+                    black 10%,
+                    black 90%,
+                    transparent 100%);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 15px;
+            padding: 1.5rem .7rem;
+            height: 470px;
+            width: 100%;
+            background: #2a292d;
+            margin-top: 1.5rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+
+            overscroll-behavior-y: contain;
+            scroll-padding-top: 2rem;
+            transform: translateZ(0);
+
+            perspective: 1000px;
+            perspective-origin: center;
+            scroll-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+            view-timeline: --scroll-panel y;
+        }
+
+        .files-bg>* {
+            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+
+            flex-shrink: 0;
+            width: 90%;
+            animation: linear fade-and-scale both;
+            animation-timeline: view();
+            animation-range: entry 0% cover 30%, exit 70% cover 100%;
+        }
+
+        .files-bg>*:active {
+            transform: scale(0.98);
+        }
+
+        .files-bg::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .files-bg::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 10px 0;
+        }
+
+        .files-bg::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s ease;
+        }
+
+        .files-bg::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .file-card {
+            width: 100%;
+            background: #4b494d;
+            display: flex;
+            align-items: start;
+            flex-direction: column;
+            border-radius: .3rem;
+            animation: pop .4s ease-in-out;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .file-card .file-head {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .3rem .5rem;
+            background: hsl(270, 3%, 39%);
+            border-top-left-radius: .3rem;
+            border-top-right-radius: .3rem;
+            font-size: 1.13rem;
+        }
+
+        .file-card .file-body {
+            padding: .5rem 1rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .file-card .file-body ul {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .file-card .file-body ul li {
+            user-select: none;
+            cursor: pointer;
+            border-radius: .4rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .file-card .file-body ul li a {
+            text-decoration: none;
+            color: #111;
+            font-weight: 700;
+            font-size: 1.13rem;
+            display: block;
+            padding: .5rem .7rem;
+        }
+
+        .file-card .file-body ul li:nth-child(1) {
+            background: #27c877;
+            border: 1px solid #1eb368;
+        }
+
+        .file-card .file-body ul li:nth-child(1) a {
+            color: #053b21;
+        }
+
+        .file-card .file-body ul li:nth-child(2) {
+            background: #7363de;
+            border: 1px solid #6a5acd;
+        }
+
+        .file-card .file-body ul li:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .file-card .file-body ul li:active {
+            transform: translateY(0px);
+        }
+
+        .file-card:hover {
+            background: #565458;
+            /* Slightly lighter than your #4b494d */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer {
+            width: 100%;
+            padding: .3rem .5rem;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            height: 170px;
+        }
+
+        .rp {
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            border: 2px dashed #4b494d;
+            padding: .5rem 1rem;
+            font-size: 1.1rem;
+            width: 200px;
+            border-radius: .3rem;
+            cursor: pointer;
+            font-family: var(--ff-mono);
+            background: transparent;
+            color: #00ff7f;
+            margin-bottom: .5rem;
+            transition: all .3s ease-in-out;
+        }
+
+        .rp span {
+            display: inline-block;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all .3s ease-in-out;
+            vertical-align: middle;
+        }
+
+        .rp:hover span {
+            max-width: 30px;
+            opacity: 1;
+            margin-left: 10px;
+        }
+
+        .rp:hover {
+            background: #4b494d;
+            border-color: #4b4b4b;
+        }
+
+        .inverse {
+            animation: anti-pop .4s ease-in-out;
+        }
+
+        #load {
+            font-size: 1.5rem;
+        }
+
+        @keyframes fade-and-scale {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes animate {
+            0% {
+                background-position: 0 0;
+            }
+
+            25% {
+                background-position: 100% 0;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            75% {
+                background-position: 0 100%;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        @keyframes pop {
+            from {
+                scale: 0;
+            }
+
+            to {
+                scale: 1;
+            }
+        }
+
+        @keyframes anti-pop {
+            from {
+                scale: 1;
+            }
+
+            to {
+                scale: 0;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .main {
+                width: 100%;
+            }
+
+            .file-card .file-body ul li a {
+                font-size: .85rem;
+            }
+        }
+    </style>
+    <script defer src="https://kit.fontawesome.com/f3220d5256.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div class="main">
+        <!--Header-->
+        <div class="head">
+            <div>
+                <span class="material-symbols-outlined">
+                    database
+                </span>
+                <p data-text="Search uploaded files here">
+                    Search uploaded files here
+                </p>
+            </div>
+            <a target="_blank" class="link" href="https://github.com/BlazeInferno64/More-On-Html">
+                <i class="fa fa-github"></i>
+            </a>
+        </div>
+        <!--Search Bar-->
+        <div class="search-bg">
+            <div class="search-bar">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+                <input type="text" class="search" placeholder="Type here to search..." />
+            </div>
+        </div>
+        <!--List of files-->
+        <div class="files-bg">
+            <p id="load">
+                Loading files..
+            </p>
+        </div>
+
+        <!--Footer-->
+        <div class="footer">
+            <a target="_blank" href="https://github.com/blazeinferno64/More-On-Html">
+                <button class="rp">
+                    <p>
+                        Repository
+                    </p>
+                    <span class="material-symbols-outlined">
+                        open_in_new
+                    </span>
+                </button>
+            </a>
+            <div>
+                Copyright &copy; 2026-27 <a href="https://github.com/blazeinferno64"> <i class="fa fa-github"></i>
+                    BlazeInferno64</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        const filesBg = document.querySelector(".files-bg");
+        const searchInput = document.querySelector(".search");
+        const REPO_OWNER = 'BlazeInferno64';
+        const REPO_NAME = 'More-On-Html';
+
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const cards = filesBg.querySelectorAll(".file-card");
+
+            cards.forEach(card => {
+                const fileName = card.querySelector(".file-name").textContent.toLowerCase();
+
+                // If the search term is empty OR the filename matches
+                if (searchTerm === "" || fileName.includes(searchTerm)) {
+                    card.style.display = "flex";
+                    card.classList.remove("inverse");
+                } else {
+                    card.classList.add("inverse");
+                    setTimeout(() => {
+                        // Double check it still shouldn't be visible before hiding
+                        if (card.classList.contains("inverse")) {
+                            card.style.display = "none";
+                        }
+                    }, 400);
+                }
+            });
+        }
+
+        async function fetchRepoFiles() {
+            try {
+                const repoResponse = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`);
+                const repoData = await repoResponse.json();
+
+                const lastUpdate = new Date(repoData.pushed_at);
+                const formattedDate = lastUpdate.toLocaleDateString('en-GB');
+
+                const contentsResponse = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`);
+                const data = await contentsResponse.json();
+
+                filesBg.innerHTML = '';
+                const files = data.filter(item => item.type === 'file');
+
+                files.forEach(file => {
+                    const card = document.createElement('div');
+                    card.className = 'file-card';
+
+                    card.innerHTML = `
+                <div class="file-head">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-date">${formattedDate}</div>
+                </div>
+                <div class="file-body">
+                    <ul>
+                        <li>
+                            <a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/main/${file.path}" target="_blank">
+                                <span class="material-symbols-outlined">code_xml</span>
+                                Source code
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://${REPO_OWNER.toLowerCase()}.github.io/${REPO_NAME}/${file.name}" target="_blank">
+                                <span class="material-symbols-outlined">open_in_new</span>
+                                Live demo
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            `;
+                    filesBg.appendChild(card);
+                });
+
+                handleSearch();
+
+            } catch (error) {
+                console.error('Error:', error);
+                filesBg.innerHTML = `<p style="padding: 20px; color: #ff1b6b;">Error loading files.</p>`;
+            }
+        }
+
+        // Fixed search listener - removed the 'length === 0' check so it resets when cleared
+        searchInput.addEventListener("input", () => {
+            handleSearch();
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            searchInput.focus();
+            fetchRepoFiles();
+        });
+    </script>
+</body>
+
+</html>

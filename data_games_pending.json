@@ -388,5 +388,31 @@
       "type": "web",
       "category": "3d-game"
     }
+  },
+  {
+    "id": 21,
+    "release_year": "2026",
+    "category_tags": [
+      "adblock",
+      "bootstrap",
+      "chatgpt"
+    ],
+    "main_scene": {
+      "title_ar": "More On Html",
+      "title_en": "More On Html",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/more-on-html/_cover.png"
+    },
+    "details_scene": {
+      "description": "Learn more about Html through this repository",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/more-on-html/",
+      "developer": "BlazeInferno64",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/BlazeInferno64/More-On-Html",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "adblock"
+    }
   }
 ]
