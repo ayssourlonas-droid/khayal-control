@@ -362,5 +362,31 @@
       "type": "web",
       "category": "3d-graphics"
     }
+  },
+  {
+    "id": 20,
+    "release_year": "2026",
+    "category_tags": [
+      "3d-game",
+      "android",
+      "blockout"
+    ],
+    "main_scene": {
+      "title_ar": "Tetris3d",
+      "title_en": "Tetris3d",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/tetris3d/_cover.png"
+    },
+    "details_scene": {
+      "description": "🎮 3D 俄罗斯方块 — 开源、无广告、零权限、3MB | Open-source 3D Tetris (Blockout) for Web & Android",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/tetris3d/",
+      "developer": "msfefjiang",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/msfefjiang/tetris3d",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "3d-game"
+    }
   }
 ]

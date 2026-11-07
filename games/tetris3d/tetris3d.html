@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:tetris3d:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>3D 俄罗斯方块</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:#080818;font-family:'Segoe UI',Arial,sans-serif;color:#eee;
+  touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+
+#wrap{display:flex;flex-direction:column;height:100%;width:100%}
+
+#hud{display:flex;gap:10px;justify-content:center;padding:6px;flex-shrink:0;z-index:5}
+.hi{background:rgba(15,52,96,.85);border-radius:6px;padding:3px 10px;text-align:center;min-width:50px}
+.hi .lb{font-size:10px;color:#e94560;text-transform:uppercase;letter-spacing:1px}
+.hi .vl{font-size:17px;font-weight:bold}
+
+#game-area{flex:1;position:relative;min-height:0;overflow:hidden}
+#cv{width:100%;height:100%;display:block}
+
+#layer-bar{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:1px;z-index:5;
+  background:rgba(0,0,0,.45);border-radius:6px;padding:4px 5px;
+}
+.lbi{display:flex;align-items:center;gap:3px;padding:1px 2px;border-radius:3px;transition:background .15s}
+.lbi .lbc{width:16px;height:11px;border-radius:2px;border:1px solid rgba(255,255,255,.08);flex-shrink:0;background:transparent}
+.lbi .lbn{font-size:9px;color:#333;min-width:14px;text-align:right}
+.lbi.filled .lbc{border-color:rgba(255,255,255,.5)}
+.lbi.filled .lbn{color:#aaa}
+.lbi.cur{background:rgba(0,238,255,.18)}
+.lbi.cur .lbn{color:#0ef;font-weight:bold}
+
+#ctrl{display:none;flex-shrink:0;padding:4px 6px 8px;gap:4px}
+#ctrl.show{display:flex}
+.cg{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.cr{display:flex;gap:4px;justify-content:center}
+.cb{
+  width:52px;height:46px;border:none;border-radius:8px;font-size:15px;font-weight:bold;color:#fff;
+  background:linear-gradient(145deg,#1a365d,#0f3460);
+  box-shadow:0 3px 5px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;line-height:1;
+}
+.cb:active{transform:scale(.92);box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.cb.ac{background:linear-gradient(145deg,#e94560,#c23152)}
+.cb.drop{width:100%;max-width:220px;height:42px;font-size:18px;margin:0 auto;
+  background:linear-gradient(145deg,#2ecc71,#27ae60)}
+
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;flex-direction:column;
+  justify-content:center;align-items:center;z-index:20;padding:20px}
+.ov h1{font-size:32px;color:#e94560;margin-bottom:10px}
+.ov p{font-size:14px;color:#aaa;text-align:center;line-height:1.7;margin-bottom:16px;max-width:420px}
+.ov .sb{padding:12px 36px;font-size:18px;border:none;border-radius:8px;
+  background:linear-gradient(145deg,#e94560,#c23152);color:#fff;cursor:pointer;font-weight:bold}
+.ov .sb:hover{filter:brightness(1.15)}
+.ov.hide{display:none}
+.kb{display:inline-block;background:#1a365d;padding:1px 6px;border-radius:4px;font-family:monospace;font-size:13px}
+.diff-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.diff-btn{padding:10px 18px;font-size:15px;border:none;border-radius:8px;color:#fff;cursor:pointer;font-weight:bold;min-width:90px;text-align:center}
+.diff-btn:hover{filter:brightness(1.15)}
+.diff-btn.b1{background:linear-gradient(145deg,#2ecc71,#27ae60)}
+.diff-btn.b2{background:linear-gradient(145deg,#e67e22,#d35400)}
+.diff-btn.b3{background:linear-gradient(145deg,#e94560,#c23152)}
+.diff-btn small{display:block;font-size:10px;font-weight:normal;opacity:.7;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="ov" id="ov">
+  <h1 id="ov-t">3D 俄罗斯方块</h1>
+  <p id="ov-m">
+    经典 Blockout 风格 3D 方块消除<br><br>
+    <b>移动：</b><span class="kb">← → ↑ ↓</span><br>
+    <b>旋转Y轴：</b><span class="kb">Q</span> / <span class="kb">A</span>&nbsp;
+    <b>X轴：</b><span class="kb">W</span> / <span class="kb">S</span>&nbsp;
+    <b>Z轴：</b><span class="kb">E</span> / <span class="kb">D</span><br>
+    <b>硬降：</b><span class="kb">空格</span>&nbsp;
+    <b>暂停：</b><span class="kb">P</span> / <span class="kb">Esc</span>
+  </p>
+  <button class="sb" id="sbtn" style="display:none">再来一局</button>
+  <div class="diff-row" id="diff-row">
+    <button class="diff-btn b1" data-diff="basic">基础<small>平面方块</small></button>
+    <button class="diff-btn b2" data-diff="middle">中级<small>+凸起方块</small></button>
+    <button class="diff-btn b3" data-diff="difficult">困难<small>全3D形状</small></button>
+  </div>
+</div>
+
+<div class="ov hide" id="pov">
+  <h1>⏸ 暂停</h1>
+  <p>按 <span class="kb">P</span> / <span class="kb">Esc</span> 或点击按钮继续</p>
+  <button class="sb" id="pbtn">继续游戏</button>
+</div>
+
+<div id="wrap">
+  <div id="hud">
+    <div class="hi"><div class="lb">难度</div><div class="vl" id="df">-</div></div>
+    <div class="hi"><div class="lb">分数</div><div class="vl" id="sc">0</div></div>
+    <div class="hi"><div class="lb">等级</div><div class="vl" id="lv">1</div></div>
+    <div class="hi"><div class="lb">层数</div><div class="vl" id="ln">0</div></div>
+    <div class="hi" id="pause-hi" style="cursor:pointer" title="暂停"><div class="lb">暂停</div><div class="vl">⏸</div></div>
+    <div class="hi"><div class="lb">深度</div><div class="vl" id="dp">-</div></div>
+  </div>
+  <div id="game-area">
+    <canvas id="cv"></canvas>
+    <div id="layer-bar"></div>
+  </div>
+  <div id="ctrl">
+    <div class="cg">
+      <div class="cr"><div style="width:52px"></div><button class="cb" data-a="zu">↑</button></div>
+      <div class="cr">
+        <button class="cb" data-a="xl">←</button>
+        <button class="cb" data-a="zd">↓</button>
+        <button class="cb" data-a="xr">→</button>
+      </div>
+    </div>
+    <div class="cg">
+      <div class="cr">
+        <button class="cb ac" data-a="rx+">X↻</button>
+        <button class="cb ac" data-a="ry+">Y↻</button>
+        <button class="cb ac" data-a="rz+">Z↻</button>
+      </div>
+      <div class="cr">
+        <button class="cb ac" data-a="rx-">X↺</button>
+        <button class="cb ac" data-a="ry-">Y↺</button>
+        <button class="cb ac" data-a="rz-">Z↺</button>
+      </div>
+    </div>
+  </div>
+  <div id="ctrl2" style="display:none;padding:0 6px 6px;justify-content:center">
+    <button class="cb drop" data-a="drop">⤓ 硬降</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ============================================================
+//  CONSTANTS
+// ============================================================
+const WW = 5, WD = 5, WH = 20;
+
+const PDEFS = [
+  {n:'I', b:[[-1,0,0],[0,0,0],[1,0,0],[2,0,0]]},
+  {n:'O', b:[[0,0,0],[1,0,0],[0,0,1],[1,0,1]]},
+  {n:'T', b:[[-1,0,0],[0,0,0],[1,0,0],[0,0,1]]},
+  {n:'S', b:[[0,0,0],[-1,0,0],[0,0,1],[1,0,1]]},
+  {n:'Z', b:[[0,0,0],[1,0,0],[-1,0,1],[0,0,1]]},
+  {n:'L', b:[[-1,0,0],[0,0,0],[1,0,0],[1,0,1]]},
+  {n:'J', b:[[-1,0,0],[0,0,0],[1,0,0],[-1,0,1]]},
+];
+
+// Middle: flat tetromino + 1 extra block off-plane (5 blocks)
+const MIDDLE_EXTRA = [
+  {n:'I+', b:[[-1,0,0],[0,0,0],[1,0,0],[2,0,0],[0,1,0]]},
+  {n:'T+', b:[[-1,0,0],[0,0,0],[1,0,0],[0,0,1],[0,1,0]]},
+  {n:'L+', b:[[-1,0,0],[0,0,0],[1,0,0],[1,0,1],[1,1,1]]},
+  {n:'J+', b:[[-1,0,0],[0,0,0],[1,0,0],[-1,0,1],[-1,1,1]]},
+  {n:'S+', b:[[0,0,0],[-1,0,0],[0,0,1],[1,0,1],[0,1,0]]},
+  {n:'O+', b:[[0,0,0],[1,0,0],[0,0,1],[1,0,1],[0,1,0]]},
+];
+
+// Difficult: true 3D polycubes
+const DIFF_EXTRA = [
+  {n:'R螺', b:[[0,0,0],[1,0,0],[1,0,1],[1,1,1]]},        // right screw
+  {n:'L螺', b:[[0,0,0],[1,0,0],[0,0,1],[0,1,1]]},        // left screw
+  {n:'枝',  b:[[0,0,0],[1,0,0],[0,1,0],[0,0,1]]},         // branch (3 axes)
+  {n:'塔L', b:[[0,0,0],[0,1,0],[0,2,0],[1,0,0]]},         // tower-L
+  {n:'3T',  b:[[0,0,0],[1,0,0],[-1,0,0],[0,1,0],[0,0,1]]},// 3D T
+  {n:'角',  b:[[0,0,0],[1,0,0],[0,1,0],[1,1,1]]},         // 3D corner
+];
+
+const MAX_BLK = 5; // max blocks per piece across all difficulty levels
+let difficulty = 'basic';
+let activePieces = PDEFS;
+
+// Rainbow-based palette: 3 bands × 7 colors (vivid → pastel → dark)
+// Uses teal instead of green for red-green colorblind safety
+// Same hue different brightness = 7 layers apart; rainbow order = intuitive layer distance
+const LAYER_PALETTE = [
+  // 0–6: Vivid rainbow
+  '#DD3333', // 0  Red
+  '#EE8822', // 1  Orange
+  '#EEDD11', // 2  Yellow
+  '#11AA88', // 3  Teal
+  '#2266DD', // 4  Blue
+  '#3333AA', // 5  Indigo
+  '#9933CC', // 6  Violet
+  // 7–13: Pastel rainbow
+  '#FF9999', // 7  Pink
+  '#FFBB77', // 8  Light orange
+  '#FFFF77', // 9  Light yellow
+  '#88DDBB', // 10 Light teal
+  '#99BBFF', // 11 Light blue
+  '#8888CC', // 12 Light indigo
+  '#CC99EE', // 13 Light violet
+  // 14–19: Dark rainbow
+  '#993333', // 14 Dark red
+  '#AA6622', // 15 Dark orange
+  '#AAAA22', // 16 Dark yellow
+  '#227766', // 17 Dark teal
+  '#224499', // 18 Dark blue
+  '#553388', // 19 Dark violet
+];
+function layerColor(y) { return new THREE.Color(LAYER_PALETTE[y % LAYER_PALETTE.length]); }
+
+// Generate patterned canvas texture for each layer
+// 7 patterns cycle: solid, horizontal stripes, vertical stripes, diagonal \, diagonal /, dots, checkerboard
+function createLayerPattern(y) {
+  const S = 32;
+  const cv = document.createElement('canvas'); cv.width = S; cv.height = S;
+  const c = cv.getContext('2d');
+  c.fillStyle = LAYER_PALETTE[y]; c.fillRect(0, 0, S, S);
+  const band = Math.floor(y / 7);
+  const ov = band === 2 ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.35)';
+  c.fillStyle = ov; c.strokeStyle = ov; c.lineWidth = 3;
+  switch (y % 7) {
+    case 0: break; // solid
+    case 1: // horizontal stripes
+      for (let i = 3; i < S; i += 10) c.fillRect(0, i, S, 4); break;
+    case 2: // vertical stripes
+      for (let i = 3; i < S; i += 10) c.fillRect(i, 0, 4, S); break;
+    case 3: // diagonal backslash
+      c.beginPath();
+      for (let i = -S; i < S * 2; i += 10) { c.moveTo(i, 0); c.lineTo(i + S, S); }
+      c.stroke(); break;
+    case 4: // diagonal slash
+      c.beginPath();
+      for (let i = -S; i < S * 2; i += 10) { c.moveTo(i, S); c.lineTo(i + S, 0); }
+      c.stroke(); break;
+    case 5: // dots
+      for (let dx = 7; dx < S; dx += 14)
+        for (let dy = 7; dy < S; dy += 14) { c.beginPath(); c.arc(dx, dy, 4, 0, Math.PI * 2); c.fill(); }
+      break;
+    case 6: // checkerboard
+      for (let dx = 0; dx < S; dx += 8)
+        for (let dy = 0; dy < S; dy += 8)
+          if ((dx / 8 + dy / 8) % 2 === 0) c.fillRect(dx, dy, 8, 8);
+      break;
+  }
+  return cv;
+}
+
+// Pre-build textures and data URLs for all layers
+const LAYER_TEXTURES = [], LAYER_DATA_URLS = [];
+for (let y = 0; y < WH; y++) {
+  const cv = createLayerPattern(y);
+  LAYER_DATA_URLS.push(cv.toDataURL());
+  const tex = new THREE.CanvasTexture(cv);
+  tex.magFilter = THREE.NearestFilter;
+  tex.minFilter = THREE.NearestFilter;
+  LAYER_TEXTURES.push(tex);
+}
+
+// ============================================================
+//  STATE
+// ============================================================
+let well, piece, nextType;
+let score, level, lines;
+let gameOver, started, paused;
+let dropTimer, dropInterval;
+let bag = [];
+let lockDelay = 0, LOCK_MAX = 2000;
+let wellDirty = true;
+let rotAnim = null;
+const ROT_DUR = 500;
+
+// ============================================================
+//  THREE.JS SETUP
+// ============================================================
+const canvas = document.getElementById('cv');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x080818);
+const scene = new THREE.Scene();
+
+// Perspective camera — top-down, ~3x depth ratio
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 200);
+camera.up.set(0, 0, -1);
+camera.position.set(WW / 2, WH * 1.5, WD / 2);
+camera.lookAt(WW / 2, 0, WD / 2);
+
+function setCamera() {
+  const el = document.getElementById('game-area');
+  const w = el.clientWidth, h = el.clientHeight;
+  if (!w || !h) return;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+
+// Camera is fully static — no dynamic tilt
+function updateCameraTilt() {}
+
+// Lighting
+scene.add(new THREE.AmbientLight(0xccccdd, 0.7));
+const dLight = new THREE.DirectionalLight(0xffffff, 0.55);
+dLight.position.set(WW / 2, WH + 20, WD / 2);
+scene.add(dLight);
+scene.add(new THREE.DirectionalLight(0x8899bb, 0.25).translateX(-5).translateY(WH));
+
+// ============================================================
+//  WELL WIREFRAME
+// ============================================================
+(function buildWell() {
+  const pts = [];
+  function ln(a,b,c,d,e,f){ pts.push(a,b,c,d,e,f); }
+  for(let x=0;x<=WW;x++){ ln(x,0,0,x,0,WD); ln(x,WH,0,x,WH,WD); }
+  for(let z=0;z<=WD;z++){ ln(0,0,z,WW,0,z); ln(0,WH,z,WW,WH,z); }
+  ln(0,0,0,0,WH,0); ln(WW,0,0,WW,WH,0);
+  ln(0,0,WD,0,WH,WD); ln(WW,0,WD,WW,WH,WD);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+  scene.add(new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: 0x2a4a7a, transparent: true, opacity: 0.7 })));
+})();
+// Floor
+(function(){
+  const m = new THREE.Mesh(
+    new THREE.PlaneGeometry(WW, WD),
+    new THREE.MeshBasicMaterial({ color: 0x0a1a3a, transparent: true, opacity: 0.7, side: THREE.DoubleSide }));
+  m.rotation.x = -Math.PI / 2; m.position.set(WW / 2, 0, WD / 2);
+  scene.add(m);
+})();
+
+// ============================================================
+//  BLOCK MESH POOLS
+// ============================================================
+const blockGeo = new THREE.BoxGeometry(0.92, 0.92, 0.92);
+const edgeGeo = new THREE.EdgesGeometry(blockGeo);
+
+// Opaque layer materials (with pattern textures)
+const layerMats = [];
+for (let y = 0; y < WH; y++)
+  layerMats.push(new THREE.MeshPhongMaterial({ map: LAYER_TEXTURES[y], shininess: 30 }));
+
+// Falling piece — opaque solid white-cyan so shape is clearly visible
+const pieceMat = new THREE.MeshPhongMaterial({ color: 0x44cc88, transparent: true, opacity: 0.55, shininess: 40, depthWrite: false });
+// Ghost — keep semi-transparent to show landing position without obstructing
+const ghostMat = new THREE.MeshPhongMaterial({ color: 0x44ee88, transparent: true, opacity: 0.25, depthWrite: false });
+
+// Landed blocks pool
+const landedGrp = new THREE.Group(); scene.add(landedGrp);
+const LPOOL = WW * WD * WH;
+const landedPool = [];
+for (let i = 0; i < LPOOL; i++) {
+  const m = new THREE.Mesh(blockGeo, layerMats[0]); m.visible = false;
+  landedGrp.add(m); landedPool.push(m);
+}
+
+// Piece pool (MAX_BLK blocks + edges)
+const pieceGrp = new THREE.Group(); scene.add(pieceGrp);
+const piecePool = [], pieceEdges = [];
+const edgeMat = new THREE.LineBasicMaterial({ color: 0x88ffbb, transparent: true, opacity: 0.9 });
+for (let i = 0; i < MAX_BLK; i++) {
+  const m = new THREE.Mesh(blockGeo, pieceMat); m.visible = false; pieceGrp.add(m); piecePool.push(m);
+  const l = new THREE.LineSegments(edgeGeo, edgeMat); l.visible = false; pieceGrp.add(l); pieceEdges.push(l);
+}
+
+// Ghost pool (MAX_BLK blocks + edges)
+const ghostGrp = new THREE.Group(); scene.add(ghostGrp);
+const ghostPool = [], ghostEdges = [];
+const ghostEdgeMat = new THREE.LineBasicMaterial({ color: 0x44ee88, transparent: true, opacity: 0.6 });
+for (let i = 0; i < MAX_BLK; i++) {
+  const m = new THREE.Mesh(blockGeo, ghostMat); m.visible = false; ghostGrp.add(m); ghostPool.push(m);
+  const l = new THREE.LineSegments(edgeGeo, ghostEdgeMat); l.visible = false; ghostGrp.add(l); ghostEdges.push(l);
+}
+
+// Guide lines: piece → ghost
+const guideLnPos = new Float32Array(MAX_BLK * 6);
+const guideLnGeo = new THREE.BufferGeometry();
+guideLnGeo.setAttribute('position', new THREE.BufferAttribute(guideLnPos, 3));
+const guideLn = new THREE.LineSegments(guideLnGeo,
+  new THREE.LineBasicMaterial({ color: 0x44aacc, transparent: true, opacity: 0.18 }));
+guideLn.visible = false; scene.add(guideLn);
+
+// ============================================================
+//  TOP PROJECTION — always-visible piece footprint at well opening
+//  Shows XZ position + layer-colored squares at y=WH (biggest scale)
+// ============================================================
+const projGeo = new THREE.PlaneGeometry(0.88, 0.88);
+const projEdgeGeo = new THREE.EdgesGeometry(projGeo);
+const projEdges = [];  // transparent outlines only
+const projEdgeMat = new THREE.LineBasicMaterial({ color: 0x88ddff, transparent: true, opacity: 0.7 });
+
+for (let i = 0; i < MAX_BLK; i++) {
+  const l = new THREE.LineSegments(projEdgeGeo, projEdgeMat);
+  l.rotation.x = -Math.PI / 2; l.visible = false;
+  scene.add(l); projEdges.push(l);
+}
+
+// ============================================================
+//  LAYER BAR
+// ============================================================
+function buildLayerBar() {
+  const bar = document.getElementById('layer-bar');
+  bar.innerHTML = '';
+  for (let y = WH - 1; y >= 0; y--) {
+    const row = document.createElement('div');
+    row.className = 'lbi'; row.id = 'lbi-' + y;
+    const cbox = document.createElement('div');
+    cbox.className = 'lbc';
+    cbox.dataset.bg = 'url(' + LAYER_DATA_URLS[y] + ')';
+    const num = document.createElement('div');
+    num.className = 'lbn'; num.textContent = y;
+    row.appendChild(cbox); row.appendChild(num);
+    bar.appendChild(row);
+  }
+}
+function updateLayerBar() {
+  for (let y = 0; y < WH; y++) {
+    const el = document.getElementById('lbi-' + y);
+    if (!el) continue;
+    let has = false;
+    if (well) for (let z = 0; z < WD && !has; z++) for (let x = 0; x < WW && !has; x++) if (well[y][z][x]) has = true;
+    el.classList.toggle('filled', has);
+    el.classList.remove('cur');
+    const cbox = el.querySelector('.lbc');
+    if (has) { cbox.style.background = cbox.dataset.bg; cbox.style.backgroundSize = 'cover'; }
+    else { cbox.style.background = 'transparent'; }
+  }
+  if (piece) {
+    const minY = Math.min(...piece.blocks.map(b => b[1]));
+    const el = document.getElementById('lbi-' + Math.max(0, Math.min(WH - 1, minY)));
+    if (el) el.classList.add('cur');
+  }
+}
+
+// ============================================================
+//  WELL LOGIC
+// ============================================================
+function initWell() {
+  well = [];
+  for (let y = 0; y < WH; y++) { const l = []; for (let z = 0; z < WD; z++) l.push(new Array(WW).fill(0)); well.push(l); }
+}
+function isValid(blocks) {
+  for (const [x, y, z] of blocks) {
+    if (x < 0 || x >= WW || z < 0 || z >= WD || y < 0) return false;
+    if (y < WH && well[y][z][x]) return false;
+  }
+  return true;
+}
+function lockPiece() {
+  let above = true;
+  for (const [x, y, z] of piece.blocks) { if (y >= 0 && y < WH) { well[y][z][x] = 1; above = false; } }
+  if (above) { endGame(); return; }
+  wellDirty = true; clearLayers(); spawnNext();
+}
+function clearLayers() {
+  let cleared = 0;
+  for (let y = 0; y < WH; y++) {
+    let full = true;
+    outer: for (let z = 0; z < WD; z++) for (let x = 0; x < WW; x++) if (!well[y][z][x]) { full = false; break outer; }
+    if (full) {
+      well.splice(y, 1);
+      const e = []; for (let z = 0; z < WD; z++) e.push(new Array(WW).fill(0));
+      well.push(e); cleared++; y--;
+    }
+  }
+  if (cleared) {
+    const pts = [0, 100, 300, 600, 1000, 1500];
+    score += (pts[Math.min(cleared, 5)] || cleared * 300) * level;
+    lines += cleared;
+    level = Math.floor(lines / 8) + 1;
+    dropInterval = Math.max(500, 2800 - (level - 1) * 100);
+    wellDirty = true; updateHUD();
+  }
+}
+
+// ============================================================
+//  PIECE LOGIC
+// ============================================================
+function nextFromBag() {
+  if (!bag.length) {
+    bag = [...Array(activePieces.length).keys()];
+    for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; }
+  }
+  return bag.pop();
+}
+function spawnPiece(type) {
+  const def = activePieces[type].b;
+  let mnx = 99, mxx = -99, mnz = 99, mxz = -99;
+  for (const [x,,z] of def) { mnx = Math.min(mnx, x); mxx = Math.max(mxx, x); mnz = Math.min(mnz, z); mxz = Math.max(mxz, z); }
+  const ox = Math.floor((WW - (mxx - mnx + 1)) / 2) - mnx;
+  const oz = Math.floor((WD - (mxz - mnz + 1)) / 2) - mnz;
+  return { blocks: def.map(([x, y, z]) => [x + ox, y + WH - 1, z + oz]), type };
+}
+function spawnNext() {
+  piece = spawnPiece(nextType); nextType = nextFromBag();
+  lockDelay = 0; rotAnim = null;
+  if (!isValid(piece.blocks)) endGame();
+}
+function rotateBlocks(blocks, axis, dir) {
+  let cx = 0, cy = 0, cz = 0;
+  for (const [x, y, z] of blocks) { cx += x; cy += y; cz += z; }
+  cx /= blocks.length; cy /= blocks.length; cz /= blocks.length;
+  return blocks.map(([x, y, z]) => {
+    let rx = x - cx, ry = y - cy, rz = z - cz, nx, ny, nz;
+    switch (axis) {
+      case 'x': nx = rx; ny = dir * -rz; nz = dir * ry; break;
+      case 'y': nx = dir * rz; ny = ry; nz = dir * -rx; break;
+      case 'z': nx = dir * -ry; ny = dir * rx; nz = rz; break;
+    }
+    return [Math.round(nx + cx), Math.round(ny + cy), Math.round(nz + cz)];
+  });
+}
+function tryRotate(axis, dir) {
+  if (rotAnim) return false;
+  const oldBlocks = piece.blocks.map(b => [...b]);
+  let nb = rotateBlocks(piece.blocks, axis, dir);
+  let mnx = 99, mxx = -99, mnz = 99, mxz = -99;
+  for (const [x,,z] of nb) { mnx = Math.min(mnx, x); mxx = Math.max(mxx, x); mnz = Math.min(mnz, z); mxz = Math.max(mxz, z); }
+  let sx = 0, sz = 0;
+  if (mnx < 0) sx = -mnx; if (mxx >= WW) sx = WW - 1 - mxx;
+  if (mnz < 0) sz = -mnz; if (mxz >= WD) sz = WD - 1 - mxz;
+  if (sx || sz) nb = nb.map(([x, y, z]) => [x + sx, y, z + sz]);
+  for (const [, y] of nb) if (y < 0) return false;
+  if (!isValid(nb)) return false;
+  piece.blocks = nb; lockDelay = 0;
+  const n = oldBlocks.length;
+  let acx = 0, acy = 0, acz = 0;
+  for (const [x, y, z] of oldBlocks) { acx += x; acy += y; acz += z; }
+  rotAnim = { start: performance.now(), dur: ROT_DUR, axis, dir, old: oldBlocks,
+    cent: [acx / n + 0.5, acy / n + 0.5, acz / n + 0.5], newBlocks: nb };
+  return true;
+}
+function tryMove(dx, dz) {
+  const nb = piece.blocks.map(([x, y, z]) => [x + dx, y, z + dz]);
+  if (isValid(nb)) { piece.blocks = nb; lockDelay = 0; return true; } return false;
+}
+function dropOne() {
+  const nb = piece.blocks.map(([x, y, z]) => [x, y - 1, z]);
+  if (isValid(nb)) { piece.blocks = nb; lockDelay = 0; return true; } return false;
+}
+function hardDrop() {
+  let n = 0;
+  while (true) { const nb = piece.blocks.map(([x, y, z]) => [x, y - 1, z]); if (!isValid(nb)) break; piece.blocks = nb; n++; }
+  score += n * 2; rotAnim = null; lockPiece(); updateHUD();
+}
+function ghostBlocks() {
+  let off = 0;
+  while (true) { const nb = piece.blocks.map(([x, y, z]) => [x, y - off - 1, z]); if (!isValid(nb)) break; off++; }
+  return piece.blocks.map(([x, y, z]) => [x, y - off, z]);
+}
+
+// ============================================================
+//  ROTATION ANIMATION
+// ============================================================
+function easeInOutCubic(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
+
+// ============================================================
+//  RENDERING
+// ============================================================
+function renderLanded() {
+  let i = 0;
+  for (let y = 0; y < WH; y++) for (let z = 0; z < WD; z++) for (let x = 0; x < WW; x++)
+    if (well[y][z][x]) { const m = landedPool[i]; m.position.set(x+.5,y+.5,z+.5); m.material = layerMats[y]; m.visible = true; i++; }
+  for (; i < LPOOL; i++) landedPool[i].visible = false;
+}
+
+function hideAll() {
+  pieceGrp.position.set(0,0,0); pieceGrp.rotation.set(0,0,0);
+  for (let i = 0; i < MAX_BLK; i++) {
+    piecePool[i].visible = false; pieceEdges[i].visible = false;
+    ghostPool[i].visible = false; ghostEdges[i].visible = false;
+    projEdges[i].visible = false;
+  }
+  guideLn.visible = false;
+}
+
+function renderPiece() {
+  if (!piece) { hideAll(); return; }
+  const n = piece.blocks.length;
+
+  // Hide unused slots
+  for (let i = n; i < MAX_BLK; i++) {
+    piecePool[i].visible = false; pieceEdges[i].visible = false;
+    ghostPool[i].visible = false; ghostEdges[i].visible = false;
+    projEdges[i].visible = false;
+  }
+
+  // === Piece blocks: rigid-body rotation via group transform ===
+  let animating = false;
+  if (rotAnim) {
+    const elapsed = performance.now() - rotAnim.start;
+    let t = Math.min(elapsed / rotAnim.dur, 1);
+    if (t >= 1) {
+      rotAnim = null; // animation done, fall through to static
+    } else {
+      animating = true;
+      t = easeInOutCubic(t);
+      const angle = t * Math.PI / 2 * rotAnim.dir;
+      const [cx, cy, cz] = rotAnim.cent;
+
+      // Group pivot at centroid; apply rotation to group
+      pieceGrp.position.set(cx, cy, cz);
+      pieceGrp.rotation.set(0, 0, 0);
+      switch (rotAnim.axis) {
+        case 'x': pieceGrp.rotation.x = angle; break;
+        case 'y': pieceGrp.rotation.y = angle; break;
+        case 'z': pieceGrp.rotation.z = angle; break;
+      }
+
+      // Position blocks relative to centroid (old positions)
+      for (let i = 0; i < n; i++) {
+        const [x, y, z] = rotAnim.old[i];
+        const lx = x + 0.5 - cx, ly = y + 0.5 - cy, lz = z + 0.5 - cz;
+        piecePool[i].position.set(lx, ly, lz); piecePool[i].visible = true;
+        pieceEdges[i].position.set(lx, ly, lz); pieceEdges[i].visible = true;
+      }
+    }
+  }
+
+  if (!animating) {
+    // Static: reset group, place blocks at world positions
+    pieceGrp.position.set(0, 0, 0);
+    pieceGrp.rotation.set(0, 0, 0);
+    for (let i = 0; i < n; i++) {
+      const [x, y, z] = piece.blocks[i];
+      piecePool[i].position.set(x+.5, y+.5, z+.5); piecePool[i].visible = true;
+      pieceEdges[i].position.set(x+.5, y+.5, z+.5); pieceEdges[i].visible = true;
+    }
+  }
+
+  // === Ghost (always at final landing position, no rotation) ===
+  const gb = ghostBlocks();
+  for (let i = 0; i < n; i++) {
+    const [x,y,z] = gb[i];
+    ghostPool[i].position.set(x+.5,y+.5,z+.5); ghostPool[i].visible = true;
+    ghostEdges[i].position.set(x+.5,y+.5,z+.5); ghostEdges[i].visible = true;
+  }
+
+  // === Guide lines ===
+  for (let i = 0; i < n; i++) {
+    const [px,py,pz] = piece.blocks[i]; const [gx,gy,gz] = gb[i];
+    guideLnPos[i*6]=px+.5; guideLnPos[i*6+1]=py+.5; guideLnPos[i*6+2]=pz+.5;
+    guideLnPos[i*6+3]=gx+.5; guideLnPos[i*6+4]=gy+.5; guideLnPos[i*6+5]=gz+.5;
+  }
+  for (let i = n * 6; i < MAX_BLK * 6; i++) guideLnPos[i] = 0;
+  guideLnGeo.attributes.position.needsUpdate = true; guideLn.visible = true;
+
+  // === Top projection ===
+  for (let i = 0; i < n; i++) {
+    const [x, , z] = piece.blocks[i];
+    projEdges[i].position.set(x + 0.5, WH + 0.02, z + 0.5);
+    projEdges[i].visible = true;
+  }
+}
+
+// ============================================================
+//  GAME LOOP
+// ============================================================
+let lastTime = 0, animId;
+function loop(t) {
+  animId = requestAnimationFrame(loop);
+  if (gameOver || !started || paused) return;
+  const dt = t - lastTime; lastTime = t;
+  dropTimer += dt;
+  if (dropTimer >= dropInterval) {
+    dropTimer = 0;
+    if (!dropOne()) { lockDelay += dropInterval; if (lockDelay >= LOCK_MAX) { rotAnim = null; lockPiece(); updateHUD(); } }
+  }
+  if (wellDirty) { renderLanded(); wellDirty = false; updateLayerBar(); }
+  renderPiece();
+  updateCameraTilt();
+  if (piece) document.getElementById('dp').textContent = Math.min(...piece.blocks.map(b=>b[1])) + '/' + WH;
+  renderer.render(scene, camera);
+}
+
+// ============================================================
+//  RESIZE
+// ============================================================
+function onResize() {
+  const mob = window.innerWidth <= 700;
+  document.getElementById('ctrl').classList.toggle('show', mob);
+  document.getElementById('ctrl2').style.display = mob ? 'flex' : 'none';
+  const el = document.getElementById('game-area');
+  if (el.clientWidth && el.clientHeight) { renderer.setSize(el.clientWidth, el.clientHeight); setCamera(); }
+}
+window.addEventListener('resize', onResize);
+new ResizeObserver(() => {
+  const el = document.getElementById('game-area');
+  if (el.clientWidth > 0 && el.clientHeight > 0) { renderer.setSize(el.clientWidth, el.clientHeight); setCamera(); }
+}).observe(document.getElementById('game-area'));
+
+// ============================================================
+//  KEYBOARD
+// ============================================================
+document.addEventListener('keydown', e => {
+  if ((e.key === 'p' || e.key === 'P' || e.key === 'Escape') && started && !gameOver) { togglePause(); e.preventDefault(); return; }
+  if (gameOver || !started || paused) return;
+  let ok = true;
+  switch (e.key) {
+    case 'ArrowLeft':  tryMove(-1, 0); break;
+    case 'ArrowRight': tryMove(1, 0); break;
+    case 'ArrowUp':    tryMove(0, -1); break;
+    case 'ArrowDown':  tryMove(0, 1); break;
+    case 'q': case 'Q': tryRotate('y', 1); break;
+    case 'a': case 'A': tryRotate('y', -1); break;
+    case 'w': case 'W': tryRotate('x', 1); break;
+    case 's': case 'S': tryRotate('x', -1); break;
+    case 'e': case 'E': tryRotate('z', 1); break;
+    case 'd': case 'D': tryRotate('z', -1); break;
+    case ' ': hardDrop(); break;
+    default: ok = false;
+  }
+  if (ok) e.preventDefault();
+});
+
+// ============================================================
+//  TOUCH CONTROLS
+// ============================================================
+const actionMap = {
+  'xl':()=>tryMove(-1,0),'xr':()=>tryMove(1,0),
+  'zu':()=>tryMove(0,-1),'zd':()=>tryMove(0,1),
+  'rx+':()=>tryRotate('x',1),'rx-':()=>tryRotate('x',-1),
+  'ry+':()=>tryRotate('y',1),'ry-':()=>tryRotate('y',-1),
+  'rz+':()=>tryRotate('z',1),'rz-':()=>tryRotate('z',-1),
+  'drop':()=>hardDrop(),
+};
+document.querySelectorAll('[data-a]').forEach(btn => {
+  const fn = actionMap[btn.dataset.a]; if (!fn) return;
+  function fire(e){ e.preventDefault(); if(!gameOver&&started&&!paused) fn(); }
+  btn.addEventListener('touchstart', fire, {passive:false});
+  btn.addEventListener('mousedown', fire);
+  if (btn.dataset.a.startsWith('x') || btn.dataset.a.startsWith('z')) {
+    let rt, ri;
+    function go(e){ e.preventDefault(); rt=setTimeout(()=>{ri=setInterval(()=>{if(!gameOver&&started&&!paused) fn();},80);},220); }
+    function stop(){ clearTimeout(rt); clearInterval(ri); }
+    btn.addEventListener('touchstart',go,{passive:false}); btn.addEventListener('touchend',stop); btn.addEventListener('touchcancel',stop);
+    btn.addEventListener('mousedown',go); btn.addEventListener('mouseup',stop); btn.addEventListener('mouseleave',stop);
+  }
+});
+let tx0,tz0,tt0;
+canvas.addEventListener('touchstart',e=>{if(!started||gameOver||paused)return;const t=e.touches[0];tx0=t.clientX;tz0=t.clientY;tt0=Date.now();e.preventDefault();},{passive:false});
+canvas.addEventListener('touchend',e=>{if(!started||gameOver||paused)return;const t=e.changedTouches[0];if(Date.now()-tt0<250&&Math.abs(t.clientX-tx0)<20&&Math.abs(t.clientY-tz0)<20)tryRotate('y',1);e.preventDefault();},{passive:false});
+
+// ============================================================
+//  HUD + PAUSE
+// ============================================================
+function updateHUD(){
+  document.getElementById('df').textContent={basic:'基础',middle:'中级',difficult:'困难'}[difficulty]||'-';
+  document.getElementById('sc').textContent=score;
+  document.getElementById('lv').textContent=level;
+  document.getElementById('ln').textContent=lines;
+}
+const pauseOv=document.getElementById('pov'), pauseBtn=document.getElementById('pbtn');
+function togglePause(){
+  if(gameOver||!started) return;
+  paused=!paused;
+  if(paused) pauseOv.classList.remove('hide');
+  else { pauseOv.classList.add('hide'); lastTime=performance.now(); }
+}
+pauseBtn.addEventListener('click',togglePause);
+pauseBtn.addEventListener('touchend',e=>{e.preventDefault();togglePause();});
+document.getElementById('pause-hi').addEventListener('click',()=>{if(started&&!gameOver) togglePause();});
+
+// ============================================================
+//  GAME FLOW
+// ============================================================
+const overlay=document.getElementById('ov'), ovTitle=document.getElementById('ov-t'), ovMsg=document.getElementById('ov-m'), sBtn=document.getElementById('sbtn');
+
+function startGame(diff){
+  difficulty = diff || 'basic';
+  if (difficulty === 'basic') activePieces = PDEFS;
+  else if (difficulty === 'middle') activePieces = PDEFS.concat(MIDDLE_EXTRA);
+  else activePieces = PDEFS.concat(MIDDLE_EXTRA).concat(DIFF_EXTRA);
+
+  overlay.classList.add('hide'); pauseOv.classList.add('hide');
+  initWell(); bag=[]; rotAnim=null;
+  score=0; level=1; lines=0; paused=false;
+  dropInterval=2800; dropTimer=0; lockDelay=0;
+  gameOver=false; started=true; wellDirty=true;
+  nextType=nextFromBag(); spawnNext();
+  updateHUD(); updateLayerBar();
+  lastTime=performance.now();
+  cancelAnimationFrame(animId); animId=requestAnimationFrame(loop);
+}
+function endGame(){
+  gameOver=true; hideAll(); renderer.render(scene,camera);
+  ovTitle.textContent='游戏结束';
+  const diffName = {basic:'基础',middle:'中级',difficult:'困难'}[difficulty];
+  ovMsg.innerHTML='难度：'+diffName+'<br>最终得分：<b>'+score+'</b><br>等级：'+level+'　消除：'+lines+' 层';
+  sBtn.textContent='再来一局（'+diffName+'）'; sBtn.style.display='';
+  document.getElementById('diff-row').style.display='flex';
+  overlay.classList.remove('hide');
+}
+sBtn.addEventListener('click',()=>startGame(difficulty));
+sBtn.addEventListener('touchend',e=>{e.preventDefault();startGame(difficulty);});
+
+// Difficulty buttons
+document.querySelectorAll('.diff-btn').forEach(btn => {
+  const d = btn.dataset.diff;
+  btn.addEventListener('click', () => startGame(d));
+  btn.addEventListener('touchend', e => { e.preventDefault(); startGame(d); });
+});
+
+// ============================================================
+//  INIT
+// ============================================================
+buildLayerBar();
+setTimeout(onResize, 50);
+animId = requestAnimationFrame(loop);
+</script>
+</body>
+</html>

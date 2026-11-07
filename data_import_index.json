@@ -281,5 +281,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: Creative Commons Legal Code | LICENSE: CC0 1.0 Universal"
+  },
+  {
+    "key": "tetrisd",
+    "size": 3175,
+    "repo": "msfefjiang/tetris3d",
+    "id": 20,
+    "slug": "tetris3d",
+    "title": "Tetris3d",
+    "developer": "msfefjiang",
+    "license": "GPL-3.0",
+    "source": "https://github.com/msfefjiang/tetris3d",
+    "commit": "80c1eb6a03a4aef7fccc874c1321c89152b5361f",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
   }
 ]

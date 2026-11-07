@@ -1,0 +1,19 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <!-- 3D cube icon for Tetris -->
+  <path
+      android:fillColor="#44cc88"
+      android:pathData="M54,24L30,38L30,66L54,80L78,66L78,38Z"/>
+  <path
+      android:fillColor="#2ecc71"
+      android:pathData="M54,24L30,38L54,52L78,38Z"/>
+  <path
+      android:fillColor="#27ae60"
+      android:pathData="M54,52L54,80L78,66L78,38Z"/>
+  <path
+      android:fillColor="#1a8a4a"
+      android:pathData="M30,38L30,66L54,80L54,52Z"/>
+</vector>

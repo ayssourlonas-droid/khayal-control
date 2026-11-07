@@ -1,0 +1,10 @@
+Source: https://github.com/msfefjiang/tetris3d
+Commit: 80c1eb6a03a4aef7fccc874c1321c89152b5361f
+License: GPL-3.0
+Imported: 2026-11-07T21:48:17.523292+00:00
+Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: author attributions in that material or in the Appropriate Legal
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 2, audio: 0, tagged audio: 0
