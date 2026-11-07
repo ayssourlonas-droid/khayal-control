@@ -76,5 +76,31 @@
       "type": "web",
       "category": "canvas"
     }
+  },
+  {
+    "id": 7,
+    "release_year": "2025",
+    "category_tags": [
+      "3d",
+      "3d-engine",
+      "3d-engines"
+    ],
+    "main_scene": {
+      "title_ar": "Tmp3d",
+      "title_en": "Tmp3d",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/tmp3d/_cover.png"
+    },
+    "details_scene": {
+      "description": "A 3-D software renderer written from scratch running in an HTML5 <canvas>",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/tmp3d/",
+      "developer": "emre-aki",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/emre-aki/tmp3d",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "3d"
+    }
   }
 ]

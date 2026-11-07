@@ -86,5 +86,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "tmpd",
+    "size": 6914,
+    "repo": "emre-aki/tmp3d",
+    "id": 7,
+    "slug": "tmp3d",
+    "title": "Tmp3d",
+    "developer": "emre-aki",
+    "license": "GPL-3.0",
+    "source": "https://github.com/emre-aki/tmp3d",
+    "commit": "4954494d1585f4a6c423d16448f7e5b0968eca52",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: <a href=\"https://undefbehav.itch.io/tmp3d\" target=\"_blank\">itch.io</a> | LICENSE: author attributions in that material or in the Appropriate Legal"
   }
 ]

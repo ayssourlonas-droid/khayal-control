@@ -1,0 +1,11 @@
+Source: https://github.com/emre-aki/tmp3d
+Commit: 4954494d1585f4a6c423d16448f7e5b0968eca52
+License: GPL-3.0
+Imported: 2026-11-07T19:41:21.197432+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: <a href="https://undefbehav.itch.io/tmp3d" target="_blank">itch.io</a>
+- LICENSE: author attributions in that material or in the Appropriate Legal
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 280, audio: 0, tagged audio: 0
