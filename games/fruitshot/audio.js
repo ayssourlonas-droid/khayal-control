@@ -1,0 +1,37 @@
+let au = {
+  sh: "shotgun.ogg",
+  bm: "explosion.ogg",
+  ht: "hit.ogg",
+  sc: "toms-screams.ogg",
+  pw: "powerup.ogg",
+  sus: "suspense.ogg"
+}
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+async function load_audio(n) {
+  const r = await fetch(au[n]);
+  let b = await audioCtx.decodeAudioData(await r.arrayBuffer())
+
+  au[n] = _ => {
+    playAudio(b)
+  }
+
+  document.getElementById("loadedaudios").innerText++;
+}
+
+function loadAud() {
+  for (const n of Object.keys(au)) {
+    load_audio(n)
+  }
+}
+
+function playAudio(src) {
+  const source = audioCtx.createBufferSource();
+  source.buffer = src;
+  source.connect(audioCtx.destination);
+  source.start(0);
+}
+
+document.getElementById("availableaudios").innerText = Object.keys(au).length;
+

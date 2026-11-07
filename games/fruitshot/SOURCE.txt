@@ -1,0 +1,13 @@
+Source: https://github.com/Yonle/FruitShot
+Commit: 8f3fdb18cc97fdd605535e9147339e965ffbdbb6
+License: BSD-3-Clause
+Imported: 2026-11-07T21:56:22.510383+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صوت": 6}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: Gun for Lui.wav by martian -- https://freesound.org/s/182271/ -- License: Creative Commons 0
+- README.md: Explosion.mp3 by WaveAdventurer -- https://freesound.org/s/93741/ -- License: Attribution 4.0
+- README.md: Retro video game sfx - Bonus by OwlStorm -- https://freesound.org/s/404770/ -- License: Creative Commons 0
+- README.md: All assets in this repository was being used with **no commercial use** goal.
+- README.md: metal hit low glass bowl 4.mp3 by ascap -- https://freesound.org/s/242380/ -- License: Attribution NonCommercial 4.0
+- images: 0, audio: 6, tagged audio: 0

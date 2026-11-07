@@ -326,5 +326,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "fruitshot",
+    "size": 407,
+    "repo": "Yonle/FruitShot",
+    "id": 23,
+    "slug": "fruitshot",
+    "title": "FruitShot",
+    "developer": "Yonle",
+    "license": "BSD-3-Clause",
+    "source": "https://github.com/Yonle/FruitShot",
+    "commit": "8f3fdb18cc97fdd605535e9147339e965ffbdbb6",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Gun for Lui.wav by martian -- https://freesound.org/s/182271/ -- License: Creative Commons 0 | README.md: Explosion.mp3 by WaveAdventurer -- https://freesound.org/s/93741/ -- License: Attribution 4.0"
   }
 ]
