@@ -1,0 +1,24 @@
+<svg width="1400" height="600" viewBox="0 0 1400 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grass" width="160" height="100" patternUnits="userSpaceOnUse">
+      <rect width="80" height="100" fill="#4ADE80" />
+      <rect x="80" y="0" width="80" height="100" fill="#22C55E" />
+    </pattern>
+    <pattern id="water" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="#0EA5E9" />
+      <path d="M0 50 Q 25 40 50 50 T 100 50" stroke="#BAE6FD" fill="none" opacity="0.5" stroke-width="2" />
+    </pattern>
+  </defs>
+  <rect width="1400" height="600" fill="#166534" />
+  <rect x="340" y="0" width="1100" height="200" fill="url(#grass)" />
+  <rect x="340" y="200" width="1100" height="200" fill="url(#water)" />
+  <rect x="340" y="400" width="1100" height="200" fill="url(#grass)" />
+  
+  <!-- House -->
+  <g transform="translate(120, 150)">
+    <rect x="0" y="50" width="100" height="300" fill="#78350F" stroke="#451A03" stroke-width="4" />
+    <path d="M-10 60 L50 0 L110 60 Z" fill="#991B1B" stroke="#451A03" stroke-width="4" />
+  </g>
+  
+  <line x1="340" y1="0" x2="340" y2="600" stroke="#1E293B" stroke-width="4" stroke-dasharray="10 10" />
+</svg>

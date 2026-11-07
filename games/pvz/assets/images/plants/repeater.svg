@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect x="28" y="32" width="8" height="32" fill="#15803d" />
+  <path d="M32 40 C10 40 10 60 32 60" fill="#166534" />
+  <circle cx="32" cy="24" r="16" fill="#22c55e" />
+  <rect x="36" y="16" width="24" height="16" rx="4" fill="#22c55e" />
+  <ellipse cx="60" cy="24" rx="4" ry="6" fill="#064e3b" />
+  <!-- Angry eyes -->
+  <path d="M30 16 L38 20" stroke="#000000" stroke-width="2" />
+  <circle cx="36" cy="20" r="3" fill="#000000" />
+  <circle cx="38" cy="19" r="1" fill="#ffffff" />
+  <!-- Extra leaves -->
+  <path d="M24 24 L16 16 L20 28 Z" fill="#166534" />
+</svg>

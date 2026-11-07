@@ -1,0 +1,17 @@
+<svg width="64" height="100" viewBox="0 0 64 100" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="60" width="10" height="38" fill="#1e3a8a" />
+  <rect x="34" y="60" width="10" height="38" fill="#1e3a8a" />
+  <rect x="16" y="34" width="32" height="36" fill="#451a03" rx="4" />
+  <path d="M30 34 L34 34 L32 50 Z" fill="#dc2626" />
+  <circle cx="32" cy="22" r="18" fill="#8fbc8f" />
+  <circle cx="26" cy="18" r="4" fill="#ffffff" />
+  <circle cx="38" cy="18" r="4" fill="#ffffff" />
+  <circle cx="26" cy="18" r="2" fill="#000000" />
+  <circle cx="38" cy="18" r="2" fill="#000000" />
+  <ellipse cx="32" cy="30" rx="6" ry="4" fill="#000000" />
+  <!-- Bucket -->
+  <path d="M14 4 L50 4 L46 20 L18 20 Z" fill="#94a3b8" />
+  <ellipse cx="32" cy="4" rx="18" ry="4" fill="#cbd5e1" />
+  <!-- Blood stain on bucket -->
+  <path d="M30 20 L32 10 L34 20 Z" fill="#ef4444" opacity="0.6" />
+</svg>

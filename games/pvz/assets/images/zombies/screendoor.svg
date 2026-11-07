@@ -1,0 +1,17 @@
+<svg width="64" height="100" viewBox="0 0 64 100" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="60" width="10" height="38" fill="#1e3a8a" />
+  <rect x="34" y="60" width="10" height="38" fill="#1e3a8a" />
+  <rect x="16" y="34" width="32" height="36" fill="#451a03" rx="4" />
+  <path d="M30 34 L34 34 L32 50 Z" fill="#dc2626" />
+  <circle cx="32" cy="22" r="18" fill="#8fbc8f" />
+  <circle cx="26" cy="18" r="4" fill="#ffffff" />
+  <circle cx="38" cy="18" r="4" fill="#ffffff" />
+  <circle cx="26" cy="18" r="2" fill="#000000" />
+  <circle cx="38" cy="18" r="2" fill="#000000" />
+  <ellipse cx="32" cy="30" rx="6" ry="4" fill="#000000" />
+  <!-- Screen Door -->
+  <rect x="30" y="10" width="30" height="80" fill="none" stroke="#475569" stroke-width="4" />
+  <!-- Mesh -->
+  <path d="M34 14 L56 14 M34 18 L56 18 M34 22 L56 22 M34 26 L56 26 M34 30 L56 30 M34 34 L56 34 M34 38 L56 38 M34 42 L56 42 M34 46 L56 46 M34 50 L56 50 M34 54 L56 54 M34 58 L56 58 M34 62 L56 62 M34 66 L56 66 M34 70 L56 70 M34 74 L56 74 M34 78 L56 78 M34 82 L56 82 M34 86 L56 86" stroke="#94a3b8" stroke-width="1" />
+  <path d="M36 12 L36 88 M40 12 L40 88 M44 12 L44 88 M48 12 L48 88 M52 12 L52 88" stroke="#94a3b8" stroke-width="1" />
+</svg>

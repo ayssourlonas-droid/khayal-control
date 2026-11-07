@@ -1,0 +1,75 @@
+{
+  "1-1": {
+    "id": "1-1",
+    "name": "僵尸海初体验",
+    "background": "day-grass",
+    "sunReward": 50,
+    "availablePlants": [
+      "sunflower",
+      "peashooter",
+      "wallnut",
+      "cherry_bomb",
+      "snow_pea",
+      "repeater",
+      "chomper"
+    ],
+    "waves": [
+      {
+        "timeBeforeWave": 15000,
+        "zombies": [
+          {
+            "type": "normal",
+            "count": 2,
+            "delay": 5000
+          }
+        ]
+      },
+      {
+        "timeBeforeWave": 20000,
+        "zombies": [
+          {
+            "type": "conehead",
+            "count": 3,
+            "delay": 3000
+          },
+          {
+            "type": "normal",
+            "count": 3,
+            "delay": 2000
+          }
+        ]
+      },
+      {
+        "timeBeforeWave": 25000,
+        "isFlagWave": true,
+        "zombies": [
+          {
+            "type": "newspaper",
+            "count": 2,
+            "delay": 2000
+          },
+          {
+            "type": "pole_vaulting",
+            "count": 2,
+            "delay": 4000
+          },
+          {
+            "type": "buckethead",
+            "count": 2,
+            "delay": 1500
+          },
+          {
+            "type": "normal",
+            "count": 10,
+            "delay": 800
+          },
+          {
+            "type": "conehead",
+            "count": 5,
+            "delay": 1000
+          }
+        ]
+      }
+    ]
+  }
+}

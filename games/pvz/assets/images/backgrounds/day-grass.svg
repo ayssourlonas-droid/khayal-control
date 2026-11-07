@@ -1,0 +1,16 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grass-pattern" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="#4ade80" />
+      <path d="M10 90 Q15 70 20 90" stroke="#166534" stroke-width="2" fill="none" opacity="0.4" />
+      <path d="M50 40 Q55 20 60 40" stroke="#166534" stroke-width="2" fill="none" opacity="0.4" />
+      <path d="M80 80 Q85 60 90 80" stroke="#166534" stroke-width="2" fill="none" opacity="0.4" />
+      <rect x="0" y="0" width="50" height="50" fill="#22c55e" opacity="0.2" />
+      <rect x="50" y="50" width="50" height="50" fill="#22c55e" opacity="0.2" />
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#grass-pattern)" />
+  <!-- House safe zone (left) -->
+  <rect x="0" y="0" width="120" height="600" fill="#0f172a" opacity="0.1" />
+  <path d="M120 0 L120 600" stroke="#1e293b" stroke-width="4" stroke-dasharray="10 10" />
+</svg>

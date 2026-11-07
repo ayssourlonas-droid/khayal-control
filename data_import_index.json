@@ -386,5 +386,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "pvz",
+    "size": 13938,
+    "repo": "evilgaoshu/PvZ",
+    "id": 27,
+    "slug": "pvz",
+    "title": "PvZ",
+    "developer": "evilgaoshu",
+    "license": "Apache-2.0",
+    "source": "https://github.com/evilgaoshu/PvZ",
+    "commit": "db730ab5b6de6656aa518c680677f82080629158",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: CREDITS.md: 游戏资产致谢与版权声明 | Credits & Legal Notice | README.md: 🎮 **[在线试玩](https://evilgaoshu.github.io/PvZ/)** | 📖 **[致谢名单](./CREDITS.md)** | 🛠️ **[关卡编辑器](#-可视化工具)** | artist=Laura Shigihara"
   }
 ]

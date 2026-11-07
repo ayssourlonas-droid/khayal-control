@@ -1,0 +1,19 @@
+<svg width="64" height="100" viewBox="0 0 64 100" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="60" width="10" height="38" fill="#475569" />
+  <rect x="34" y="60" width="10" height="38" fill="#475569" />
+  <rect x="16" y="34" width="32" height="36" fill="#f8fafc" rx="4" />
+  <!-- Suspenders -->
+  <rect x="18" y="34" width="4" height="36" fill="#000000" />
+  <rect x="42" y="34" width="4" height="36" fill="#000000" />
+  <circle cx="32" cy="22" r="18" fill="#8fbc8f" />
+  <circle cx="26" cy="18" r="4" fill="#ffffff" />
+  <circle cx="38" cy="18" r="4" fill="#ffffff" />
+  <circle cx="26" cy="18" r="2" fill="#ef4444" />
+  <circle cx="38" cy="18" r="2" fill="#ef4444" />
+  <ellipse cx="32" cy="30" rx="6" ry="4" fill="#000000" />
+  <!-- Newspaper -->
+  <rect x="10" y="30" width="30" height="40" fill="#e2e8f0" transform="rotate(-15 25 50)" />
+  <line x1="15" y1="35" x2="35" y2="35" stroke="#94a3b8" stroke-width="2" transform="rotate(-15 25 50)" />
+  <line x1="15" y1="45" x2="35" y2="45" stroke="#94a3b8" stroke-width="2" transform="rotate(-15 25 50)" />
+  <line x1="15" y1="55" x2="35" y2="55" stroke="#94a3b8" stroke-width="2" transform="rotate(-15 25 50)" />
+</svg>
