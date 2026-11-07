@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:ludo-game:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Game - By Gautam</title>
+    <style>
+        /* --- Basic Setup & Home Screen --- */
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            flex-direction: column;
+            margin: 0; /* Remove default body margin */
+        }
+
+        #home-screen {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        #home-screen h1 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        #home-screen .options button {
+            display: block;
+            width: 150px;
+            padding: 15px;
+            margin: 15px auto;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.2s ease;
+        }
+
+        #home-screen .options button:hover {
+            background-color: #45a049;
+        }
+
+        #coming-soon-msg {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 20px; /* Reserve space */
+        }
+
+        /* --- Game Elements (Initially Hidden) --- */
+        .game-container {
+            display: none; /* Hide game initially */
+            align-items: flex-start;
+            gap: 30px;
+            margin-top: 20px; /* Add some space when shown */
+        }
+
+        /* --- CSS for Board, Cells, Pawns, Controls (Mostly Same as previous) --- */
+        .board { width: 600px; height: 600px; border: 3px solid black; background-color: #fff; position: relative; display: grid; grid-template-columns: repeat(15, 1fr); grid-template-rows: repeat(15, 1fr); box-shadow: 5px 5px 15px rgba(0,0,0,0.3); }
+        .cell { border: 1px solid #eee; display: flex; justify-content: center; align-items: center; font-size: 10px; position: relative; box-sizing: border-box; }
+        /* Bases */
+        .base { position: relative; }
+        .base.red { grid-area: 1 / 1 / 7 / 7; background-color: #ffcccc; border: 2px solid red; }
+        .base.yellow { grid-area: 1 / 10 / 7 / 16; background-color: #ffffcc; border: 2px solid gold; }
+        .base.green { grid-area: 10 / 1 / 16 / 7; background-color: #ccffcc; border: 2px solid green; }
+        .base.blue { grid-area: 10 / 10 / 16 / 16; background-color: #cceeff; border: 2px solid blue; }
+        .base .inner-base { width: 60%; height: 60%; background-color: rgba(255, 255, 255, 0.7); border-radius: 10px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10%; padding: 10%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-sizing: border-box; }
+        .base .pawn-placeholder { background-color: rgba(0, 0, 0, 0.1); border-radius: 50%; position: relative; display: flex; justify-content: center; align-items: center; }
+        /* Home Center */
+        .home-center { grid-area: 7 / 7 / 10 / 10; background: conic-gradient(red 90deg, gold 90deg 180deg, green 180deg 270deg, blue 270deg 360deg); display: flex; justify-content: center; align-items: center; font-weight: bold; color: white; text-shadow: 1px 1px 2px black; border: 2px solid black; position: relative; }
+        .home-center-pawns { position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 3px; }
+         /* Track and Home Path Cells */
+        .track { background-color: white; }
+        .track.red-start-sq { background-color: #ffdddd; } .track.yellow-start-sq { background-color: #ffffdd; } .track.green-start-sq { background-color: #ddffdd; } .track.blue-start-sq { background-color: #ddeeff; }
+        .home-path { transition: background-color 0.3s ease; }
+        .home-path.red { background-color: red !important; } .home-path.yellow { background-color: gold !important; } .home-path.green { background-color: limegreen !important; } .home-path.blue { background-color: dodgerblue !important; }
+
+        /* Cell Grid Positioning (Same) */
+        [data-cell-id="0"] { grid-area: 7 / 1; } [data-cell-id="1"] { grid-area: 7 / 2; } [data-cell-id="2"] { grid-area: 7 / 3; } [data-cell-id="3"] { grid-area: 7 / 4; } [data-cell-id="4"] { grid-area: 7 / 5; } [data-cell-id="5"] { grid-area: 7 / 6; } [data-cell-id="6"] { grid-area: 6 / 7; } [data-cell-id="7"] { grid-area: 5 / 7; } [data-cell-id="8"] { grid-area: 4 / 7; } [data-cell-id="9"] { grid-area: 3 / 7; } [data-cell-id="10"] { grid-area: 2 / 7; } [data-cell-id="11"] { grid-area: 1 / 7; } [data-cell-id="12"] { grid-area: 1 / 8; } [data-cell-id="13"] { grid-area: 1 / 9; } [data-cell-id="14"] { grid-area: 2 / 9; } [data-cell-id="15"] { grid-area: 3 / 9; } [data-cell-id="16"] { grid-area: 4 / 9; } [data-cell-id="17"] { grid-area: 5 / 9; } [data-cell-id="18"] { grid-area: 6 / 9; } [data-cell-id="19"] { grid-area: 7 / 10; } [data-cell-id="20"] { grid-area: 7 / 11; } [data-cell-id="21"] { grid-area: 7 / 12; } [data-cell-id="22"] { grid-area: 7 / 13; } [data-cell-id="23"] { grid-area: 7 / 14; } [data-cell-id="24"] { grid-area: 7 / 15; } [data-cell-id="25"] { grid-area: 8 / 15; } [data-cell-id="26"] { grid-area: 9 / 15; } [data-cell-id="27"] { grid-area: 9 / 14; } [data-cell-id="28"] { grid-area: 9 / 13; } [data-cell-id="29"] { grid-area: 9 / 12; } [data-cell-id="30"] { grid-area: 9 / 11; } [data-cell-id="31"] { grid-area: 9 / 10; } [data-cell-id="32"] { grid-area: 10 / 9; } [data-cell-id="33"] { grid-area: 11 / 9; } [data-cell-id="34"] { grid-area: 12 / 9; } [data-cell-id="35"] { grid-area: 13 / 9; } [data-cell-id="36"] { grid-area: 14 / 9; } [data-cell-id="37"] { grid-area: 15 / 9; } [data-cell-id="38"] { grid-area: 15 / 8; } [data-cell-id="39"] { grid-area: 15 / 7; } [data-cell-id="40"] { grid-area: 14 / 7; } [data-cell-id="41"] { grid-area: 13 / 7; } [data-cell-id="42"] { grid-area: 12 / 7; } [data-cell-id="43"] { grid-area: 11 / 7; } [data-cell-id="44"] { grid-area: 10 / 7; } [data-cell-id="45"] { grid-area: 9 / 6; } [data-cell-id="46"] { grid-area: 9 / 5; } [data-cell-id="47"] { grid-area: 9 / 4; } [data-cell-id="48"] { grid-area: 9 / 3; } [data-cell-id="49"] { grid-area: 9 / 2; } [data-cell-id="50"] { grid-area: 9 / 1; } [data-cell-id="51"] { grid-area: 8 / 1; }
+        [data-cell-id="R1"] { grid-area: 8 / 2; } [data-cell-id="R2"] { grid-area: 8 / 3; } [data-cell-id="R3"] { grid-area: 8 / 4; } [data-cell-id="R4"] { grid-area: 8 / 5; } [data-cell-id="R5"] { grid-area: 8 / 6; } [data-cell-id="R6"] { grid-area: 8 / 7; } [data-cell-id="Y1"] { grid-area: 2 / 8; } [data-cell-id="Y2"] { grid-area: 3 / 8; } [data-cell-id="Y3"] { grid-area: 4 / 8; } [data-cell-id="Y4"] { grid-area: 5 / 8; } [data-cell-id="Y5"] { grid-area: 6 / 8; } [data-cell-id="Y6"] { grid-area: 7 / 8; } [data-cell-id="B1"] { grid-area: 8 / 14; } [data-cell-id="B2"] { grid-area: 8 / 13; } [data-cell-id="B3"] { grid-area: 8 / 12; } [data-cell-id="B4"] { grid-area: 8 / 11; } [data-cell-id="B5"] { grid-area: 8 / 10; } [data-cell-id="B6"] { grid-area: 8 / 9; } [data-cell-id="G1"] { grid-area: 14 / 8; } [data-cell-id="G2"] { grid-area: 13 / 8; } [data-cell-id="G3"] { grid-area: 12 / 8; } [data-cell-id="G4"] { grid-area: 11 / 8; } [data-cell-id="G5"] { grid-area: 10 / 8; } [data-cell-id="G6"] { grid-area: 9 / 8; }
+
+        /* Pawns, Stacking, Highlighting (Same) */
+        .pawn { width: 70%; height: 70%; border-radius: 50%; border: 1px solid black; position: absolute; box-sizing: border-box; cursor: pointer; transition: all 0.3s ease, transform 0.3s ease; z-index: 10; display: flex; justify-content: center; align-items: center; }
+        .pawn.red { background-color: red; } .pawn.yellow { background-color: gold; } .pawn.green { background-color: limegreen; } .pawn.blue { background-color: dodgerblue; }
+        .pawn.state-yard { width: 60%; height: 60%; opacity: 0.8; cursor: default; }
+        .pawn.state-finished { width: 20px; height: 20px; position: static; margin: 1px; cursor: default; display: inline-block; box-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .stacked-2:nth-of-type(1) { transform: translate(-15%, -15%); } .stacked-2:nth-of-type(2) { transform: translate(15%, 15%); } .stacked-3:nth-of-type(1) { transform: translate(-20%, -10%); } .stacked-3:nth-of-type(2) { transform: translate(20%, -10%); } .stacked-3:nth-of-type(3) { transform: translateY(20%); } .stacked-4:nth-of-type(1) { transform: translate(-20%, -20%); } .stacked-4:nth-of-type(2) { transform: translate(20%, -20%); } .stacked-4:nth-of-type(3) { transform: translate(-20%, 20%); } .stacked-4:nth-of-type(4) { transform: translate(20%, 20%); }
+        .pawn.movable { box-shadow: 0 0 12px 4px yellow; animation: pulse 1s infinite; cursor: pointer; opacity: 1; }
+        @keyframes pulse { 0% { transform: scale(1) translate(var(--tx, 0), var(--ty, 0)); } 50% { transform: scale(1.1) translate(var(--tx, 0), var(--ty, 0)); } 100% { transform: scale(1) translate(var(--tx, 0), var(--ty, 0)); } }
+        .stacked-2.movable:nth-of-type(1) { --tx: -15%; --ty: -15%; } .stacked-2.movable:nth-of-type(2) { --tx: 15%; --ty: 15%; }
+        /* Safe Spot Marker (Same) */
+        .safe-spot::after { content: '★'; position: absolute; color: #999; font-size: 18px; z-index: 0; pointer-events: none; }
+
+        /* Controls, Dice, Button, Message, Player Info CSS (Same) */
+        .controls { text-align: center; padding: 20px; background: white; border-radius: 8px; box-shadow: 3px 3px 10px rgba(0,0,0,0.2); }
+        #dice { width: 60px; height: 60px; border: 2px solid black; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; margin: 15px auto; background-color: white; box-shadow: inset 0 0 10px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
+        .dot { position: absolute; width: 12px; height: 12px; background-color: black; border-radius: 50%; }
+        .dot.p1 { top: 50%; left: 50%; transform: translate(-50%, -50%); } .dot.p2 { top: 25%; left: 25%; transform: translate(-50%, -50%); } .dot.p3 { bottom: 25%; right: 25%; transform: translate(50%, 50%); } .dot.p4 { top: 25%; right: 25%; transform: translate(50%, -50%); } .dot.p5 { bottom: 25%; left: 25%; transform: translate(-50%, 50%); } .dot.p6 { top: 50%; left: 25%; transform: translate(-50%, -50%); } .dot.p7 { top: 50%; right: 25%; transform: translate(50%, -50%); }
+        #roll-dice-btn { padding: 12px 25px; font-size: 16px; cursor: pointer; border: none; background-color: #4CAF50; color: white; border-radius: 5px; transition: background-color 0.2s ease; }
+        #roll-dice-btn:disabled { background-color: #aaa; cursor: not-allowed; } #roll-dice-btn:hover:not(:disabled) { background-color: #45a049; }
+        #message-area { margin-top: 15px; font-size: 16px; font-weight: bold; min-height: 40px; color: #333; }
+        .player-info { padding: 10px 15px; border: 2px solid #ccc; border-radius: 5px; margin-bottom: 10px; transition: all 0.3s ease; }
+        .player-info.active { border-color: black; font-weight: bold; box-shadow: 0 0 10px rgba(0,0,0,0.3); transform: scale(1.05); }
+        .player-info.red { background-color: #ffcccc; border-left: 5px solid red;} .player-info.yellow { background-color: #ffffcc; border-left: 5px solid gold;} .player-info.green { background-color: #ccffcc; border-left: 5px solid green;} .player-info.blue { background-color: #cceeff; border-left: 5px solid blue;}
+    </style>
+</head>
+<body>
+
+    <div id="home-screen">
+        <h1>Developed by Gautam</h1>
+        <div class="options">
+            <button id="btn-2p">2 Player</button>
+            <button id="btn-3p">3 Player</button>
+            <button id="btn-4p">4 Player</button>
+        </div>
+        <p id="coming-soon-msg" style="display: none;">Coming Soon</p>
+    </div>
+
+    <div class="game-container">
+        <div class="board" id="game-board">
+            <!-- HTML for Bases, Home Center -->
+             <div class="cell base red"><div class="inner-base"><div class="pawn-placeholder" data-yard-id="R1"></div><div class="pawn-placeholder" data-yard-id="R2"></div><div class="pawn-placeholder" data-yard-id="R3"></div><div class="pawn-placeholder" data-yard-id="R4"></div></div></div>
+            <div class="cell base yellow"><div class="inner-base"><div class="pawn-placeholder" data-yard-id="Y1"></div><div class="pawn-placeholder" data-yard-id="Y2"></div><div class="pawn-placeholder" data-yard-id="Y3"></div><div class="pawn-placeholder" data-yard-id="Y4"></div></div></div>
+            <div class="cell base green"><div class="inner-base"><div class="pawn-placeholder" data-yard-id="G1"></div><div class="pawn-placeholder" data-yard-id="G2"></div><div class="pawn-placeholder" data-yard-id="G3"></div><div class="pawn-placeholder" data-yard-id="G4"></div></div></div>
+            <div class="cell base blue"><div class="inner-base"><div class="pawn-placeholder" data-yard-id="B1"></div><div class="pawn-placeholder" data-yard-id="B2"></div><div class="pawn-placeholder" data-yard-id="B3"></div><div class="pawn-placeholder" data-yard-id="B4"></div></div></div>
+            <div class="cell home-center">HOME<div class="home-center-pawns" id="home-center-pawns"></div></div>
+            <!-- Cells will be added by JS -->
+        </div>
+
+        <div class="controls">
+            <!-- HTML for Controls -->
+             <h2>Ludo Game</h2> <!-- Title simplified -->
+            <div id="player-info-display"></div>
+            <div id="message-area"></div> <!-- Initial message set by JS -->
+            <div id="dice"></div>
+            <button id="roll-dice-btn">Roll Dice</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Get DOM Elements ---
+        const homeScreen = document.getElementById('home-screen');
+        const gameContainer = document.querySelector('.game-container');
+        const boardElement = document.getElementById('game-board');
+        const diceElement = document.getElementById('dice');
+        const rollButton = document.getElementById('roll-dice-btn');
+        const messageArea = document.getElementById('message-area');
+        const playerInfoContainer = document.getElementById('player-info-display');
+        const homeCenterPawnsContainer = document.getElementById('home-center-pawns');
+        const btn2p = document.getElementById('btn-2p');
+        const btn3p = document.getElementById('btn-3p');
+        const btn4p = document.getElementById('btn-4p');
+        const comingSoonMsg = document.getElementById('coming-soon-msg');
+
+        // --- Game Constants ---
+        const PLAYERS = ['red', 'yellow', 'green', 'blue'];
+        const PAWNS_PER_PLAYER = 4;
+        const TOTAL_TRACK_CELLS = 52;
+        const HOME_PATH_LENGTH = 6;
+        const START_POSITIONS = { red: 0, yellow: 13, green: 39, blue: 26 };
+        const HOME_ENTRIES = { red: 50, yellow: 11, green: 37, blue: 24 };
+        // Safe spots are ONLY the start positions
+        const SAFE_SPOTS = [
+            START_POSITIONS.red, START_POSITIONS.yellow,
+            START_POSITIONS.green, START_POSITIONS.blue
+        ];
+        // Added other traditional safe spots
+        SAFE_SPOTS.push(8, 21, 34, 47); // Add the other 4 safe spots
+        const SIX_BIAS_CHANCE = 0.15; // Slightly increased chance to roll a 6
+        const DICE_ANIMATION_DURATION = 800; // ms for dice rolling animation
+
+        // --- Game State Variables ---
+        let currentPlayerIndex = 0;
+        let diceValue = 0;
+        let pawns = [];
+        let consecutiveSixes = 0;
+        let gameActive = false; // Game inactive initially
+        let waitingForMove = false;
+        let diceRollInterval = null;
+        let diceRollTimeout = null;
+
+        // --- Dice Dot Patterns ---
+        const dicePatterns = {
+            1: ['p1'],
+            2: ['p2', 'p3'],
+            3: ['p2', 'p1', 'p3'],
+            4: ['p2', 'p4', 'p5', 'p3'],
+            5: ['p2', 'p4', 'p1', 'p5', 'p3'],
+            6: ['p2', 'p4', 'p6', 'p7', 'p5', 'p3']
+        };
+
+        // --- Initialization Functions ---
+        function createBoardCells() {
+            // Clear existing track/home cells before creating new ones
+            boardElement.querySelectorAll('.cell.track, .cell.home-path').forEach(cell => cell.remove());
+
+            // Create Track Cells
+            for (let i = 0; i < TOTAL_TRACK_CELLS; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell', 'track');
+                cell.dataset.cellId = i; // Use data attribute for easy selection
+                if (SAFE_SPOTS.includes(i)) {
+                    cell.classList.add('safe-spot');
+                }
+                // Add start square coloring
+                if (i === START_POSITIONS.red) cell.classList.add('red-start-sq');
+                if (i === START_POSITIONS.yellow) cell.classList.add('yellow-start-sq');
+                if (i === START_POSITIONS.green) cell.classList.add('green-start-sq');
+                if (i === START_POSITIONS.blue) cell.classList.add('blue-start-sq');
+                boardElement.appendChild(cell);
+            }
+
+            // Create Home Path Cells
+            PLAYERS.forEach(color => {
+                const prefix = color.charAt(0).toUpperCase();
+                for (let i = 1; i <= HOME_PATH_LENGTH; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell', 'home-path', color);
+                    cell.dataset.cellId = `${prefix}${i}`; // e.g., R1, Y3, G6, B2
+                    boardElement.appendChild(cell);
+                }
+            });
+        }
+
+        function initializePawns() {
+            pawns = [];
+            // Clear existing pawns from board and yard placeholders
+            boardElement.querySelectorAll('.pawn').forEach(p => p.remove());
+            homeCenterPawnsContainer.innerHTML = ''; // Clear finished pawns area
+
+            PLAYERS.forEach((color) => {
+                for (let i = 1; i <= PAWNS_PER_PLAYER; i++) {
+                    const pawnId = `${color.charAt(0).toUpperCase()}${i}`; // e.g., R1, Y2, G3, B4
+                    pawns.push({
+                        id: pawnId,
+                        color: color,
+                        position: 'yard', // Initial position: 'yard', track cell index, home path id ('R1'), or 'home'
+                        state: 'yard' // 'yard', 'track', 'homepath', 'finished'
+                    });
+                    createPawnElement(pawnId, color, 'yard'); // Create and place in yard initially
+                }
+            });
+            updateBoardPositions(); // Place pawns visually in their yards
+        }
+
+        function createPawnElement(pawnId, color, state) {
+            let pawnElement = document.getElementById(pawnId);
+            if (!pawnElement) {
+                pawnElement = document.createElement('div');
+                pawnElement.id = pawnId;
+                pawnElement.classList.add('pawn', color);
+                pawnElement.addEventListener('click', handlePawnClick);
+            }
+            // Reset state classes and apply current state
+            pawnElement.classList.remove('state-yard', 'state-track', 'state-homepath', 'state-finished');
+            pawnElement.classList.add(`state-${state}`);
+            return pawnElement;
+        }
+
+        function setupPlayerInfo() {
+            playerInfoContainer.innerHTML = ''; // Clear previous info
+            PLAYERS.forEach((color, index) => {
+                const infoBox = document.createElement('div');
+                infoBox.id = `info-${color}`;
+                infoBox.classList.add('player-info', color);
+                infoBox.textContent = `${color.charAt(0).toUpperCase() + color.slice(1)} (Home: 0)`;
+                if (index === currentPlayerIndex) {
+                    infoBox.classList.add('active');
+                }
+                playerInfoContainer.appendChild(infoBox);
+            });
+        }
+
+        function displayDice(value) {
+            diceElement.innerHTML = ''; // Clear previous dots/number
+            if (value > 0 && value <= 6 && dicePatterns[value]) {
+                dicePatterns[value].forEach(dotClass => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot', dotClass);
+                    diceElement.appendChild(dot);
+                });
+            } else {
+                diceElement.textContent = '?'; // Show placeholder if value is 0 or invalid
+            }
+        }
+
+
+        // --- Dice Rolling ---
+        function startDiceRollAnimation() {
+            if (!gameActive || diceRollInterval || diceRollTimeout) return; // Prevent multiple rolls
+
+            rollButton.disabled = true;
+            displayMessage(`${getCurrentPlayerColor()} is Rolling...`);
+            waitingForMove = false; // Not waiting for move while rolling
+            document.querySelectorAll('.pawn.movable').forEach(p => p.classList.remove('movable')); // Clear highlights
+
+            // Animation effect
+            diceRollInterval = setInterval(() => {
+                const randomValue = Math.floor(Math.random() * 6) + 1;
+                displayDice(randomValue);
+            }, 80); // Change dice face rapidly
+
+            // Stop animation after duration and determine final value
+            diceRollTimeout = setTimeout(() => {
+                stopDiceRollAnimationAndProceed();
+            }, DICE_ANIMATION_DURATION);
+        }
+
+        function stopDiceRollAnimationAndProceed() {
+            clearInterval(diceRollInterval);
+            clearTimeout(diceRollTimeout);
+            diceRollInterval = null;
+            diceRollTimeout = null;
+
+            // Determine final dice value (with bias for 6)
+            let initialRoll = Math.floor(Math.random() * 6) + 1;
+            diceValue = initialRoll;
+            if (initialRoll < 6 && Math.random() < SIX_BIAS_CHANCE) {
+                 diceValue = 6;
+                 console.log(`Bias Triggered! Initial Roll: ${initialRoll} -> Final: 6`);
+            }
+            displayDice(diceValue);
+            console.log(`${getCurrentPlayerColor()} rolled ${diceValue} (Initial: ${initialRoll})`);
+
+            // Handle consecutive sixes
+            if (diceValue === 6) {
+                consecutiveSixes++;
+            } else {
+                consecutiveSixes = 0;
+            }
+
+            if (consecutiveSixes === 3) {
+                displayMessage(`Rolled ${diceValue}. 3 consecutive 6s! Turn forfeited.`);
+                consecutiveSixes = 0; // Reset counter
+                setTimeout(switchPlayer, 1500); // Wait a bit before switching
+                return; // End turn processing here
+            }
+
+            // Find movable pawns
+            const movablePawnsInfo = getMovablePawns(getCurrentPlayerColor(), diceValue);
+
+            if (movablePawnsInfo.length === 0) {
+                 displayMessage(`Rolled ${diceValue}. No valid moves.`);
+                 // If it wasn't a 6, switch player after a delay
+                 if (diceValue !== 6) {
+                      setTimeout(switchPlayer, 1500);
+                 } else {
+                      // If it was a 6 but no moves (e.g., start blocked), roll again
+                      displayMessage(`Rolled ${diceValue}, no valid moves. Roll again!`);
+                      rollButton.disabled = false; // Allow another roll
+                 }
+            } else {
+                 displayMessage(`Rolled ${diceValue}. Click a highlighted pawn to move.`);
+                 highlightMovablePawns(movablePawnsInfo.map(p => p.id));
+                 waitingForMove = true; // Now waiting for player to click a pawn
+                 // Keep roll button disabled until move is made
+            }
+        }
+
+        // --- Pawn Movement Logic ---
+        function getMovablePawns(color, roll) {
+             const movable = [];
+             const playerPawns = pawns.filter(p => p.color === color && p.state !== 'finished');
+             const startPos = START_POSITIONS[color];
+
+             // 1. Check if can open from yard (needs a 6)
+             if (roll === 6) {
+                 const pawnsInYard = playerPawns.filter(p => p.state === 'yard');
+                 if (pawnsInYard.length > 0) {
+                     // Check if the start position is blocked by TWO of the player's own pawns
+                     const pawnsOnStart = pawns.filter(p => p.position === startPos && p.color === color);
+                     if (pawnsOnStart.length < 2) {
+                          // Can open if start spot has 0 or 1 own pawn
+                          movable.push(...pawnsInYard); // Add all yard pawns as movable
+                     } else {
+                         console.log(`Cannot open: Start position ${startPos} blocked by own pawns.`);
+                     }
+                 }
+             }
+
+             // 2. Check pawns already on the board (track or homepath)
+             const pawnsOnBoard = playerPawns.filter(p => p.state === 'track' || p.state === 'homepath');
+             for (const pawn of pawnsOnBoard) {
+                 if (canMovePawn(pawn, roll)) {
+                     // Avoid adding duplicates if a yard pawn was already added
+                     if (!movable.some(m => m.id === pawn.id)) {
+                          movable.push(pawn);
+                     }
+                 }
+             }
+
+             console.log("Movable Pawns:", movable.map(p=> `${p.id} (${p.state})`));
+             return movable;
+        }
+
+        function canMovePawn(pawn, roll) {
+             if (pawn.state === 'yard' || pawn.state === 'finished') return false; // Cannot move these directly
+
+             const calculateTarget = calculateMoveTarget(pawn, roll);
+             if (!calculateTarget) {
+                  console.log(`Pawn ${pawn.id} cannot make the move (overshoots home).`);
+                  return false; // Cannot move (e.g., overshoots home)
+             }
+
+             const { targetPos, newState } = calculateTarget;
+
+             // Cannot move if target is 'home' (handled by calculateMoveTarget returning null/finished)
+             if (newState === 'finished') return true; // Reaching home is always a valid *end* state
+
+             // Check for blocking pawns at the target destination cell
+             const pawnsOnTarget = pawns.filter(p => p.position === targetPos && p.state !== 'finished');
+
+             // --- Blocking Rules ---
+             // Rule 1: Cannot land on a cell occupied by 2 or more pawns (a "block"), regardless of color.
+             if (pawnsOnTarget.length >= 2) {
+                  console.log(`Move Blocked: Target ${targetPos} has a block (${pawnsOnTarget.length} pawns).`);
+                  return false;
+             }
+
+             // Rule 2: Cannot land on a SAFE SPOT if it's occupied by a single *opponent* pawn.
+             // (Standard Ludo rules vary here; this implementation allows killing on safe spots, so we remove this check)
+             // if (SAFE_SPOTS.includes(targetPos) && pawnsOnTarget.length === 1 && pawnsOnTarget[0].color !== pawn.color) {
+             //     console.log(`Move Blocked: Cannot land on safe spot ${targetPos} occupied by opponent.`);
+             //     return false;
+             // }
+
+             // Rule 3: Cannot land on a non-safe spot if occupied by a single pawn of the *same* color
+             // (This prevents forming a block with your own pieces on a non-safe spot. Adjust if you want to allow this).
+             // Some variations allow this, others don't. Let's ALLOW forming blocks for now.
+             // if (!SAFE_SPOTS.includes(targetPos) && pawnsOnTarget.length === 1 && pawnsOnTarget[0].color === pawn.color) {
+             //     console.log(`Move Blocked: Cannot form a block with own pawn on non-safe spot ${targetPos}.`);
+             //     return false;
+             // }
+
+
+             // If none of the blocking conditions are met, the move is possible.
+             return true;
+        }
+
+
+        function calculateMoveTarget(pawn, roll) {
+            let currentPos = pawn.position;
+            let currentState = pawn.state;
+            let targetPos = currentPos;
+            let newState = currentState;
+            const color = pawn.color;
+
+            if (currentState === 'track') {
+                const homeEntry = HOME_ENTRIES[color];
+                const startPos = START_POSITIONS[color];
+                let stepsToHomeEntry;
+
+                // Calculate steps needed to reach or pass the cell just before home entry
+                if (startPos > homeEntry) { // Wraps around (Green, Blue)
+                    if (currentPos >= startPos || currentPos <= homeEntry) {
+                         // On the path towards home entry after wrapping
+                         stepsToHomeEntry = (homeEntry - currentPos + TOTAL_TRACK_CELLS) % TOTAL_TRACK_CELLS + 1;
+                    } else {
+                         // On the path before start position, can't reach home entry this turn
+                         stepsToHomeEntry = Infinity; // Effectively cannot enter home path yet
+                    }
+                } else { // Does not wrap around (Red, Yellow)
+                    if (currentPos <= homeEntry && currentPos >= startPos) {
+                         // On the path towards home entry
+                         stepsToHomeEntry = homeEntry - currentPos + 1;
+                    } else {
+                         // Not on the direct path to home entry
+                         stepsToHomeEntry = Infinity;
+                    }
+                }
+
+                console.log(`Pawn ${pawn.id} at ${currentPos}, needs ${stepsToHomeEntry} steps to enter home path (Entry: ${homeEntry})`);
+
+                if (roll < stepsToHomeEntry) {
+                    // Stays on the main track
+                    targetPos = (currentPos + roll) % TOTAL_TRACK_CELLS;
+                    newState = 'track';
+                } else {
+                    // Enters or moves within the home path
+                    const stepsIntoHomePath = roll - stepsToHomeEntry + 1;
+                    if (stepsIntoHomePath <= HOME_PATH_LENGTH) {
+                        targetPos = `${color.charAt(0).toUpperCase()}${stepsIntoHomePath}`;
+                        newState = 'homepath';
+                    } else if (stepsIntoHomePath === HOME_PATH_LENGTH + 1) {
+                        // Exact roll to reach home
+                        targetPos = 'home';
+                        newState = 'finished';
+                    } else {
+                        // Overshot home
+                        console.log(`Overshot home: Needed ${stepsToHomeEntry + HOME_PATH_LENGTH} total, rolled ${roll}`);
+                        return null; // Invalid move
+                    }
+                }
+            } else if (currentState === 'homepath') {
+                const currentStep = parseInt(currentPos.substring(1)); // e.g., 'R3' -> 3
+                const targetStep = currentStep + roll;
+
+                if (targetStep <= HOME_PATH_LENGTH) {
+                    targetPos = `${color.charAt(0).toUpperCase()}${targetStep}`;
+                    newState = 'homepath';
+                } else if (targetStep === HOME_PATH_LENGTH + 1) {
+                    // Exact roll to reach home
+                    targetPos = 'home';
+                    newState = 'finished';
+                } else {
+                    // Overshot home
+                    console.log(`Overshot home from path: Needed ${HOME_PATH_LENGTH + 1 - currentStep}, rolled ${roll}`);
+                    return null; // Invalid move
+                }
+            }
+
+            return { targetPos, newState };
+        }
+
+
+        function highlightMovablePawns(pawnIds) {
+             // Clear previous highlights
+             document.querySelectorAll('.pawn.movable').forEach(p => p.classList.remove('movable'));
+             // Highlight new ones
+             pawnIds.forEach(id => {
+                 const pawnElement = document.getElementById(id);
+                 if (pawnElement) {
+                     pawnElement.classList.add('movable');
+                 } else {
+                     console.warn(`Could not find pawn element with ID ${id} to highlight.`);
+                 }
+             });
+        }
+
+        function handlePawnClick(event) {
+             if (!waitingForMove || !gameActive) return; // Only act if waiting for a move
+
+             const pawnElement = event.target.closest('.pawn');
+             if (!pawnElement) return; // Clicked outside a pawn
+
+             const pawnId = pawnElement.id;
+             const pawn = pawns.find(p => p.id === pawnId);
+
+             // Check if the clicked pawn is one of the highlighted movable pawns
+             if (pawn && pawn.color === getCurrentPlayerColor() && pawnElement.classList.contains('movable')) {
+                 // Valid pawn clicked, proceed with the move
+                 movePawn(pawn, diceValue);
+             } else {
+                 // Clicked on a non-movable pawn or opponent's pawn
+                 console.log("Clicked on a non-movable pawn.");
+                 // Optionally provide feedback, e.g., shake the pawn or keep message area updated
+             }
+        }
+
+        function movePawn(pawn, roll) {
+            console.log(`Attempting move: ${pawn.id} (State: ${pawn.state}, Pos: ${pawn.position}), Roll: ${roll}`);
+            waitingForMove = false; // No longer waiting for input for this turn segment
+            rollButton.disabled = true; // Keep button disabled during processing and potential next roll
+            document.querySelectorAll('.pawn.movable').forEach(p => p.classList.remove('movable')); // Clear highlights
+
+            let landedOnOpponent = false;
+            let reachedHome = false;
+            let openedPawn = false;
+            let bonusTurnReason = "";
+
+            // --- Case 1: Opening a pawn from the yard ---
+            if (pawn.state === 'yard' && roll === 6) {
+                 const startPos = START_POSITIONS[pawn.color];
+                 // Double-check if start spot is blocked (should be caught by getMovablePawns, but good defense)
+                 const pawnsOnStart = pawns.filter(p => p.position === startPos && p.color === pawn.color);
+                 if (pawnsOnStart.length >= 2) {
+                      console.error(`Move Error: Cannot open onto blocked start ${startPos}`);
+                      displayMessage(`Cannot open: Start spot blocked. Choose another move if possible.`);
+                      // Re-enable move selection if other options exist
+                      const otherMovables = getMovablePawns(getCurrentPlayerColor(), diceValue).filter(p => p.id !== pawn.id);
+                      if (otherMovables.length > 0) {
+                           waitingForMove = true;
+                           highlightMovablePawns(otherMovables.map(p => p.id));
+                           rollButton.disabled = true; // Keep disabled, waiting for new selection
+                      } else {
+                           // No other moves possible despite rolling 6
+                           displayMessage(`Rolled 6. No valid moves available. Roll again!`);
+                           rollButton.disabled = false; // Allow re-roll
+                      }
+                      return; // Stop this move attempt
+                 }
+
+                 pawn.position = startPos;
+                 pawn.state = 'track';
+                 openedPawn = true;
+                 bonusTurnReason = "Opened Pawn";
+                 console.log(`${pawn.id} opened to start position ${startPos}`);
+
+                 // Check for kill on the start position (will respect SAFE_SPOTS)
+                 landedOnOpponent = checkAndHandleKill(pawn, startPos);
+                 if (landedOnOpponent) bonusTurnReason = "Kill";
+
+
+            }
+            // --- Case 2: Moving a pawn already on the board ---
+            else if (pawn.state === 'track' || pawn.state === 'homepath') {
+                 const moveResult = calculateMoveTarget(pawn, roll);
+                 if (!moveResult) {
+                      // This case should ideally not happen if canMovePawn worked correctly
+                      console.error("Move Error: Invalid move calculation during move execution. Pawn:", pawn, "Roll:", roll);
+                      displayMessage("Error: Invalid move calculation. Turn passed.");
+                      switchPlayer(); // Pass the turn as a fallback
+                      return;
+                 }
+
+                 const { targetPos, newState } = moveResult;
+
+                 // Final check for blocking right before moving (state might have changed due to complex interactions)
+                 const pawnsOnTarget = pawns.filter(p => p.position === targetPos && p.state !== 'finished');
+                 if (pawnsOnTarget.length >= 2) {
+                     console.error(`Move Error: Target ${targetPos} became blocked before move completion.`);
+                      displayMessage(`Cannot land on block at ${targetPos}. Choose another move.`);
+                     // Re-enable move selection for the current player
+                     const movablePawnsInfo = getMovablePawns(getCurrentPlayerColor(), diceValue);
+                     highlightMovablePawns(movablePawnsInfo.map(p => p.id));
+                     waitingForMove = true;
+                     rollButton.disabled = true; // Keep button disabled until a move is made
+                     return; // Stop this move attempt
+                 }
+
+                 // --- If move is valid, update pawn state ---
+                 const oldPosition = pawn.position; // Store old position for visual update
+                 pawn.position = targetPos;
+                 pawn.state = newState;
+
+                 console.log(`${pawn.id} moved from ${oldPosition} to ${targetPos} (New State: ${newState})`);
+
+                 if (newState === 'finished') {
+                     reachedHome = true;
+                     bonusTurnReason = "Reached Home";
+                     console.log(`${pawn.id} reached home!`);
+                 } else {
+                     // Perform kill check only if not finished
+                     // checkAndHandleKill respects SAFE_SPOTS
+                      landedOnOpponent = checkAndHandleKill(pawn, targetPos);
+                      if (landedOnOpponent) bonusTurnReason = "Kill";
+                 }
+            } else {
+                // Should not happen (e.g., trying to move a finished pawn)
+                console.error(`Invalid pawn state for move: ${pawn.state}`);
+                displayMessage("Error: Cannot move pawn in this state.");
+                // Attempt recovery - allow re-roll? Or switch? Let's switch.
+                switchPlayer();
+                return;
+            }
+
+            // --- Post-Move Actions ---
+            updateBoardPositions(); // Update visuals
+
+            // Check for win condition
+            if (checkWinCondition(pawn.color)) {
+                 displayMessage(`${pawn.color.toUpperCase()} WINS THE GAME!`);
+                 gameActive = false;
+                 rollButton.disabled = true;
+                 return; // Game over
+            }
+
+            updatePlayerInfo(); // Update score display
+
+            // Determine if the player gets another turn
+            if (diceValue === 6 || landedOnOpponent || reachedHome) {
+                // If a 6 was rolled, ensure the bonus reason reflects that if nothing else triggered
+                 if (diceValue === 6 && !bonusTurnReason) bonusTurnReason = "Rolled 6";
+
+                 displayMessage(`${getCurrentPlayerColor()} gets another turn! (${bonusTurnReason}). Roll again.`);
+                 // Don't reset consecutive sixes if the bonus turn was FOR a 6
+                 if (diceValue !== 6) consecutiveSixes = 0;
+                 waitingForMove = false; // Ready for next roll
+                 rollButton.disabled = false; // Allow next roll
+            } else {
+                 // No bonus turn conditions met
+                 switchPlayer(); // Pass the turn to the next player
+            }
+        }
+
+        function checkAndHandleKill(landingPawn, targetPos) {
+             let killMade = false;
+             // Find OTHER pawns on the target cell that are NOT finished
+             const pawnsOnTarget = pawns.filter(p =>
+                  p.position === targetPos &&    // Must be on the same cell
+                  p.id !== landingPawn.id &&     // Must not be the pawn that just landed
+                  p.state !== 'finished'         // Must not be a finished pawn
+             );
+
+             // Cannot kill on a safe spot UNLESS it's the player's own start square
+             const isTargetSafe = SAFE_SPOTS.includes(targetPos);
+             const isOwnStart = targetPos === START_POSITIONS[landingPawn.color];
+
+             if (pawnsOnTarget.length === 1) {
+                 const targetPawn = pawnsOnTarget[0];
+                 // Can only kill pawns of a different color
+                 if (targetPawn.color !== landingPawn.color) {
+                     // Check if the kill is allowed based on safe spot rules
+                     if (!isTargetSafe || isOwnStart) { // Kill allowed on non-safe spots OR on own start spot
+                         targetPawn.position = 'yard';
+                         targetPawn.state = 'yard';
+                         console.log(`%cKILL: ${landingPawn.id} (${landingPawn.color}) sent ${targetPawn.id} (${targetPawn.color}) back to yard from ${targetPos}.`, "color: red; font-weight: bold;");
+                         displayMessage(`${landingPawn.color.toUpperCase()} sent ${targetPawn.color}'s pawn home!`);
+                         killMade = true;
+                         // Don't update board here, let movePawn handle it after kill check
+                     } else {
+                         console.log(`Kill prevented: ${targetPawn.id} is on safe spot ${targetPos}.`);
+                     }
+                 } else {
+                     // Landed on own pawn (stacking/forming a block)
+                     console.log(`${landingPawn.id} landed on own pawn ${targetPawn.id} at ${targetPos}.`);
+                     // Note: movePawn already checked if landing on >=2 pawns is allowed.
+                     // If we are here, it means landing on 1 own pawn is allowed.
+                 }
+             } else if (pawnsOnTarget.length > 1) {
+                  // This scenario should have been prevented by the check in movePawn before calling this.
+                  console.error(`Error: checkAndHandleKill called for target ${targetPos} which already has a block (${pawnsOnTarget.map(p=>p.id).join(', ')}). Landing pawn: ${landingPawn.id}`);
+             }
+             // No kill if pawnsOnTarget.length is 0
+
+             return killMade;
+        }
+
+
+        // --- Utility and Update Functions ---
+        function getCellElement(position) {
+            // Handles track indices, home path IDs ('R1'), and the special 'home' for finished
+            if (position === 'home') {
+                return homeCenterPawnsContainer; // Special container for finished pawns
+            }
+            return boardElement.querySelector(`[data-cell-id="${position}"]`);
+        }
+
+        function updateBoardPositions() {
+            // Clear existing pawns from dynamic locations (track, homepath, yard placeholders)
+            // Keep finished pawns in the home center visually until cleared explicitly if needed
+            boardElement.querySelectorAll('.cell.track .pawn, .cell.home-path .pawn, .pawn-placeholder .pawn').forEach(p => p.remove());
+
+            // Remove finished pawns from the central display before redrawing
+             homeCenterPawnsContainer.innerHTML = '';
+
+
+            pawns.forEach(pawn => {
+                const pawnElement = createPawnElement(pawn.id, pawn.color, pawn.state);
+                let targetContainer = null;
+
+                if (pawn.state === 'yard') {
+                     // Find the specific yard placeholder for this pawn
+                     targetContainer = boardElement.querySelector(`[data-yard-id="${pawn.id}"]`);
+                     if (!targetContainer) {
+                           console.error(`Could not find yard placeholder for ${pawn.id}`);
+                           return; // Skip placing this pawn if placeholder missing
+                     }
+                } else if (pawn.state === 'finished') {
+                     targetContainer = homeCenterPawnsContainer;
+                } else { // track or homepath
+                    targetContainer = getCellElement(pawn.position);
+                     if (!targetContainer) {
+                          console.error(`Could not find cell element for position: ${pawn.position} (Pawn: ${pawn.id})`);
+                          return; // Skip placing this pawn if cell missing
+                     }
+                }
+
+                // Append the pawn element to its correct container
+                if (targetContainer) {
+                      targetContainer.appendChild(pawnElement);
+                }
+            });
+
+             // Apply stacking visuals after all pawns are placed in track/homepath cells
+             document.querySelectorAll('.cell.track, .cell.home-path').forEach(cell => {
+                 const pawnsInCell = Array.from(cell.children).filter(el => el.classList.contains('pawn') && !el.classList.contains('state-finished'));
+
+                 // Reset any existing stacking styles first
+                 pawnsInCell.forEach(p => {
+                      p.className = p.className.replace(/ stacked-\d/g, '').trim(); // Remove old stack class
+                      p.style.transform = ''; // Reset transform
+                      // Reset custom properties used by animation if necessary
+                      p.style.removeProperty('--tx');
+                      p.style.removeProperty('--ty');
+                 });
+
+                 if (pawnsInCell.length > 1) {
+                      const stackClass = `stacked-${Math.min(pawnsInCell.length, 4)}`; // Max stacking style for 4
+                      pawnsInCell.forEach((p, index) => {
+                           p.classList.add(stackClass);
+                           // Apply transform for stacking visualization
+                           applyStackingTransform(p, index + 1, pawnsInCell.length);
+                      });
+                 }
+             });
+        }
+
+
+        function applyStackingTransform(element, index, total) {
+             // Simplified stacking: apply transform based on total number, maxing out visual style at 4
+             total = Math.min(total, 4); // Use styling for max 4 even if more are present
+             let tx = '0%', ty = '0%';
+
+             // Apply transforms based on index (1-based) and total
+             if (total === 2) {
+                 tx = (index === 1) ? '-15%' : '15%';
+                 ty = (index === 1) ? '-15%' : '15%';
+             } else if (total === 3) {
+                 if (index === 1) { tx = '-20%'; ty = '-10%'; }
+                 else if (index === 2) { tx = '20%'; ty = '-10%'; }
+                 else { ty = '20%'; } // index 3
+             } else if (total >= 4) { // Handle 4 or more pawns
+                 if (index === 1) { tx = '-20%'; ty = '-20%'; }
+                 else if (index === 2) { tx = '20%'; ty = '-20%'; }
+                 else if (index === 3) { tx = '-20%'; ty = '20%'; }
+                 else { tx = '20%'; ty = '20%'; } // index 4 (and any subsequent pawns overlap 4th)
+             }
+             element.style.transform = `translate(${tx}, ${ty})`;
+
+             // Store transforms in CSS variables if the pawn is also movable (for pulse animation)
+             if (element.classList.contains('movable')) {
+                  element.style.setProperty('--tx', tx);
+                  element.style.setProperty('--ty', ty);
+             }
+        }
+
+        function switchPlayer() {
+            if (!gameActive) return;
+            currentPlayerIndex = (currentPlayerIndex + 1) % PLAYERS.length;
+            consecutiveSixes = 0; // Reset six counter on player switch
+            waitingForMove = false; // Not waiting for move on new turn start
+            rollButton.disabled = false; // Enable roll button for the new player
+            displayDice(0); // Clear the dice display
+            displayMessage(`${getCurrentPlayerColor().toUpperCase()}'s turn. Roll the dice!`);
+            updatePlayerInfoHighlights();
+            document.querySelectorAll('.pawn.movable').forEach(p => p.classList.remove('movable')); // Clear any leftover highlights
+        }
+
+        function getCurrentPlayerColor() {
+            return PLAYERS[currentPlayerIndex];
+        }
+
+        function displayMessage(msg) {
+            messageArea.textContent = msg;
+             // Optionally add classes for message types (e.g., error, success, info)
+        }
+
+        function updatePlayerInfoHighlights() {
+            document.querySelectorAll('.player-info').forEach((infoBox) => {
+                 const color = infoBox.id.split('-')[1]; // Get color from id="info-red"
+                 infoBox.classList.toggle('active', color === getCurrentPlayerColor());
+            });
+        }
+
+        function updatePlayerInfo() {
+            // Update the count of finished pawns for each player
+            PLAYERS.forEach(color => {
+                const pawnsHome = pawns.filter(p => p.color === color && p.state === 'finished').length;
+                const infoBox = document.getElementById(`info-${color}`);
+                if (infoBox) {
+                    infoBox.textContent = `${color.charAt(0).toUpperCase() + color.slice(1)} (Home: ${pawnsHome})`;
+                }
+            });
+        }
+
+        function checkWinCondition(color) {
+            // Check if all pawns of a given color are in the 'finished' state
+            const finishedCount = pawns.filter(p => p.color === color && p.state === 'finished').length;
+            return finishedCount === PAWNS_PER_PLAYER;
+        }
+
+        // --- Game Start Function ---
+        function startGame() {
+            console.log("Starting 4 Player Ludo Game...");
+            homeScreen.style.display = 'none'; // Hide home screen
+            gameContainer.style.display = 'flex'; // Show game container
+
+            gameActive = true; // Activate game logic
+            currentPlayerIndex = 0; // Start with Red (index 0)
+            diceValue = 0;
+            consecutiveSixes = 0;
+            waitingForMove = false;
+
+            // Initialize board elements and game state
+            createBoardCells();
+            initializePawns(); // This now places pawns in the yard visually too
+            setupPlayerInfo();
+            updatePlayerInfoHighlights(); // Highlight the first player
+            displayDice(0); // Show empty dice initially
+            displayMessage(`${getCurrentPlayerColor().toUpperCase()}'s turn. Roll the dice!`);
+            rollButton.disabled = false; // Ensure the roll button is enabled
+        }
+
+        // --- Event Listeners ---
+
+        // Home Screen Buttons
+        btn2p.addEventListener('click', () => {
+            comingSoonMsg.textContent = "2 Player Mode - Coming Soon!";
+            comingSoonMsg.style.display = 'block';
+        });
+
+        btn3p.addEventListener('click', () => {
+            comingSoonMsg.textContent = "3 Player Mode - Coming Soon!";
+            comingSoonMsg.style.display = 'block';
+        });
+
+        btn4p.addEventListener('click', startGame); // Start 4 player game on click
+
+        // Game Controls Button
+        rollButton.addEventListener('click', startDiceRollAnimation);
+
+        // --- Initial Setup ---
+        // No game initialization here. The home screen is shown by default CSS.
+        // Game initialization happens only when startGame() is called by clicking btn4p.
+        console.log("Ludo game script loaded. Home screen active.");
+
+    </script>
+
+</body>
+</html>

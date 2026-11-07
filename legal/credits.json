@@ -461,5 +461,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: Creative Commons Legal Code | LICENSE: CC0 1.0 Universal"
+  },
+  {
+    "key": "ludogame",
+    "size": 20,
+    "repo": "girishlade111/Ludo-Game",
+    "id": 32,
+    "slug": "ludo-game",
+    "title": "Ludo Game",
+    "developer": "girishlade111",
+    "license": "CC0-1.0",
+    "source": "https://github.com/girishlade111/Ludo-Game",
+    "commit": "407a40d49b54af206e16b6ce0d931a69b7ba112e",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: Creative Commons Legal Code | LICENSE: CC0 1.0 Universal"
   }
 ]
