@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:3d-runner-game:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Runner Game - Controlled Lateral Movement, Restart & Sound</title>
+  <style>
+    /* Reset & Fullscreen */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      font-family: Arial, sans-serif;
+    }
+    /* Three.js Canvas */
+    #gameCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    /* SVG overlay for score with animated stroke */
+    #uiOverlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      pointer-events: none;
+    }
+    #scoreText {
+      fill: #ffffff;
+      font-size: 36px;
+      font-family: 'Roboto', sans-serif;
+      stroke: #ff0;
+      stroke-width: 1;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: dash 2s linear infinite;
+      filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+    }
+    @keyframes dash {
+      to { stroke-dashoffset: 0; }
+    }
+    /* Restart Button at top right */
+    #restartButton {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #ff4500;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+      z-index: 10;
+    }
+    /* On-screen Mobile Controls: Centered Left/Right */
+    #moveControls {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      pointer-events: none;
+    }
+    .controlButton {
+      width: 60px;
+      height: 60px;
+      background-color: rgba(255,255,255,0.5);
+      border: 2px solid #000;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 160px;
+      color: #000;
+      font-size: 80px;
+      user-select: none;
+      pointer-events: auto;
+      transition: all 0.3s;
+    }
+    .controlButton:hover {
+      background-color: rgba(255,255,255,0.8);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Three.js Canvas -->
+  <canvas id="gameCanvas"></canvas>
+  <!-- SVG overlay for score -->
+  <svg id="uiOverlay">
+    <text id="scoreText" x="0" y="36">Score: 0</text>
+  </svg>
+  <!-- Restart Button (hidden initially) -->
+  <button id="restartButton">Restart</button>
+  <!-- On-screen Mobile Controls: Only Left & Right in Center -->
+  <div id="moveControls">
+    <div id="btnLeft" class="controlButton">&#8592;</div>
+    <div id="btnRight" class="controlButton">&#8594;</div>
+  </div>
+  
+  <!-- Three.js, GLTFLoader -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>
+  
+  <script>
+    /************** Global Variables **************/
+    let scene, camera, renderer;
+    let player = null, playerBox = new THREE.Box3();
+    let mixer = null, clock = new THREE.Clock();
+    let obstacles = []; // Car obstacles
+    let trees = [];     // Near road trees
+    let forestTrees = []; // Distant forest trees
+    let mountainGroup;  // Group for mountains
+    let score = 0;
+    let isGameOver = false;
+    let lastCarTime = 0, carSpawnInterval = 2000;
+    let lastTreeTime = 0, treeSpawnInterval = 1000; 
+    let lastForestTime = 0, forestSpawnInterval = 3000;
+    let gameSpeed = 1.0; // Car movement speed
+    let moveLeft = false, moveRight = false;
+    let carModel = null;
+    let roadTexture = null;
+    let roadLineGroup;
+    let cloudGroup;
+    let rainParticles;
+    let lightningFlash = false;
+    let directionalLight;
+    
+    // Audio variables
+    let backgroundMusic, collisionSound;
+    
+    // DOM Elements
+    const canvas = document.getElementById('gameCanvas');
+    const scoreText = document.getElementById('scoreText');
+    const restartButton = document.getElementById('restartButton');
+    const btnLeft = document.getElementById('btnLeft');
+    const btnRight = document.getElementById('btnRight');
+    let lastScoreTime = performance.now();
+    
+    /************** Initialize Audio **************/
+    function initAudio() {
+      const listener = new THREE.AudioListener();
+      camera.add(listener);
+      
+      // Background Music
+      backgroundMusic = new THREE.Audio(listener);
+      const audioLoader = new THREE.AudioLoader();
+      audioLoader.load('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', function(buffer) {
+        backgroundMusic.setBuffer(buffer);
+        backgroundMusic.setLoop(true);
+        backgroundMusic.setVolume(0.5);
+        backgroundMusic.play();
+      });
+      
+      // Collision Sound Effect
+      collisionSound = new THREE.Audio(listener);
+      audioLoader.load('https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg', function(buffer) {
+        collisionSound.setBuffer(buffer);
+        collisionSound.setLoop(false);
+        collisionSound.setVolume(1.0);
+      });
+    }
+    
+    /************** Create Road Dashed Lines **************/
+    function createRoadLines() {
+      roadLineGroup = new THREE.Group();
+      for(let z = 0; z < 500; z += 15) {
+        let dashGeo = new THREE.PlaneGeometry(0.3, 7);
+        let dashMat = new THREE.MeshBasicMaterial({color: 0xffffff});
+        let dash = new THREE.Mesh(dashGeo, dashMat);
+        dash.rotation.x = -Math.PI/2;
+        dash.position.set(0, 0.06, z);
+        roadLineGroup.add(dash);
+      }
+      scene.add(roadLineGroup);
+    }
+    
+    /************** Create Road Edge Yellow Lines **************/
+    function createRoadEdgeLines() {
+      const edgeGeo = new THREE.PlaneGeometry(0.2, 500);
+      const edgeMat = new THREE.MeshStandardMaterial({color: 0xffff00});
+      const leftEdge = new THREE.Mesh(edgeGeo, edgeMat);
+      leftEdge.rotation.x = -Math.PI/2;
+      leftEdge.position.set(-4.5, 0.07, 250);
+      scene.add(leftEdge);
+      const rightEdge = new THREE.Mesh(edgeGeo, edgeMat);
+      rightEdge.rotation.x = -Math.PI/2;
+      rightEdge.position.set(4.5, 0.07, 250);
+      scene.add(rightEdge);
+    }
+    
+    /************** Spawn Clouds **************/
+    function createCloud() {
+      const cloudGeo = new THREE.SphereGeometry(Math.random() * 3 + 2, 16, 16);
+      const cloudMat = new THREE.MeshStandardMaterial({color: 0xffffff, transparent: true, opacity: 0.8});
+      const cloud = new THREE.Mesh(cloudGeo, cloudMat);
+      cloud.position.x = Math.random() * 100 - 50;
+      cloud.position.y = Math.random() * 10 + 15;
+      cloud.position.z = Math.random() * 200 - 50;
+      cloud.userData.phase = Math.random() * Math.PI * 2;
+      return cloud;
+    }
+    function spawnClouds() {
+      cloudGroup = new THREE.Group();
+      for (let i = 0; i < 10; i++) {
+        const cloud = createCloud();
+        cloudGroup.add(cloud);
+      }
+      scene.add(cloudGroup);
+    }
+    
+    /************** Rain Particle System **************/
+    function createRain() {
+      const rainGeometry = new THREE.BufferGeometry();
+      const rainCount = 1000;
+      const positions = new Float32Array(rainCount * 3);
+      for (let i = 0; i < rainCount; i++) {
+        positions[i*3] = Math.random() * 50 - 25;
+        positions[i*3+1] = Math.random() * 20 + 10;
+        positions[i*3+2] = Math.random() * 200 - 50;
+      }
+      rainGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const rainMaterial = new THREE.PointsMaterial({
+        color: 0x99ccff,
+        size: 0.1,
+        transparent: true
+      });
+      rainParticles = new THREE.Points(rainGeometry, rainMaterial);
+      scene.add(rainParticles);
+    }
+    
+    /************** Spawn Trees on Near Road **************/
+    function createTree(side) {
+      const tree = new THREE.Group();
+      const trunkGeo = new THREE.CylinderGeometry(0.3, 0.3, 3, 12);
+      const trunkMat = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
+      const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+      trunk.position.y = 1.5;
+      trunk.castShadow = true;
+      tree.add(trunk);
+      const foliageGeo = new THREE.ConeGeometry(1.5, 4, 12);
+      const foliageMat = new THREE.MeshStandardMaterial({ color: 0x228B22 });
+      const foliage = new THREE.Mesh(foliageGeo, foliageMat);
+      foliage.position.y = 4.5;
+      foliage.castShadow = true;
+      tree.add(foliage);
+      tree.position.x = side * (7 + Math.random() * 3);
+      tree.position.z = 100 + Math.random() * 100;
+      return tree;
+    }
+    function spawnTrees() {
+      const treeLeft = createTree(-1);
+      const treeRight = createTree(1);
+      scene.add(treeLeft);
+      scene.add(treeRight);
+      trees.push(treeLeft, treeRight);
+    }
+    
+    /************** Spawn Distant Forest Trees **************/
+    function createForestTree() {
+      const tree = new THREE.Group();
+      const trunkGeo = new THREE.CylinderGeometry(0.4, 0.4, 4, 12);
+      const trunkMat = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
+      const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+      trunk.position.y = 2;
+      trunk.castShadow = true;
+      tree.add(trunk);
+      const foliageGeo = new THREE.ConeGeometry(2, 5, 12);
+      const foliageMat = new THREE.MeshStandardMaterial({ color: 0x2E8B57 });
+      const foliage = new THREE.Mesh(foliageGeo, foliageMat);
+      foliage.position.y = 5;
+      foliage.castShadow = true;
+      tree.add(foliage);
+      tree.position.x = (Math.random() < 0.5 ? -1 : 1) * (8 + Math.random() * 12);
+      tree.position.z = 150 + Math.random() * 150;
+      return tree;
+    }
+    function spawnForestTrees() {
+      const tree1 = createForestTree();
+      const tree2 = createForestTree();
+      scene.add(tree1);
+      scene.add(tree2);
+      forestTrees.push(tree1, tree2);
+    }
+    
+    /************** Create Mountains on Road Sides **************/
+    function createMountains() {
+      mountainGroup = new THREE.Group();
+      for (let i = 0; i < 6; i++) {
+        const radius = Math.random() * 8 + 12;
+        const height = Math.random() * 20 + 30;
+        const mountainGeo = new THREE.ConeGeometry(radius, height, 8);
+        const mountainMat = new THREE.MeshStandardMaterial({
+          color: 0x228B22,
+          roughness: 1.0
+        });
+        const mountain = new THREE.Mesh(mountainGeo, mountainMat);
+        mountain.castShadow = true;
+        // सुनिश्चित करें कि पहाड़ रोड के मध्य में न आएँ: x ≤ -15 या x ≥ 15
+        if (Math.random() < 0.5) {
+          mountain.position.x = -15 - Math.random() * 10;
+        } else {
+          mountain.position.x = 15 + Math.random() * 10;
+        }
+        // पहाड़ों की z-पोजीशन को 350 से 500 के बीच सेट करें
+        mountain.position.z = 350 + Math.random() * 150;
+        mountain.position.y = height / 2 - 1;
+        mountainGroup.add(mountain);
+      }
+      scene.add(mountainGroup);
+    }
+    
+    /************** Initialization **************/
+    function init() {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x87CEEB);
+      scene.fog = new THREE.Fog(0x87CEEB, 50, 500);
+      
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 500);
+      camera.position.set(0, 4, -5);
+      camera.lookAt(0, 0, 250);
+      
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+      scene.add(ambientLight);
+      
+      directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      directionalLight.position.set(10, 20, -10);
+      directionalLight.castShadow = true;
+      directionalLight.shadow.mapSize.width = 1024;
+      directionalLight.shadow.mapSize.height = 1024;
+      directionalLight.shadow.camera.near = 0.5;
+      directionalLight.shadow.camera.far = 50;
+      directionalLight.shadow.camera.left = -20;
+      directionalLight.shadow.camera.right = 20;
+      directionalLight.shadow.camera.top = 20;
+      directionalLight.shadow.camera.bottom = -20;
+      scene.add(directionalLight);
+      
+      const textureLoader = new THREE.TextureLoader();
+      
+      /***** Ground (extended) *****/
+      const grassTexture = textureLoader.load('https://threejs.org/examples/textures/grasslight-big.jpg');
+      grassTexture.wrapS = grassTexture.wrapT = THREE.RepeatWrapping;
+      grassTexture.repeat.set(20, 20);
+      const groundGeometry = new THREE.PlaneGeometry(40, 500);
+      const groundMaterial = new THREE.MeshStandardMaterial({ map: grassTexture });
+      const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+      ground.rotation.x = -Math.PI / 2;
+      ground.receiveShadow = true;
+      ground.position.z = 250;
+      scene.add(ground);
+      
+      /***** Road (extended) with rough texture *****/
+      roadTexture = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/2/25/AsphaltRoad.jpg');
+      roadTexture.wrapS = roadTexture.wrapT = THREE.RepeatWrapping;
+      roadTexture.repeat.set(1, 500/10);
+      const roadGeometry = new THREE.PlaneGeometry(10, 500);
+      const roadMaterial = new THREE.MeshStandardMaterial({ map: roadTexture, color: 0x505050, roughness: 1.0 });
+      const road = new THREE.Mesh(roadGeometry, roadMaterial);
+      road.rotation.x = -Math.PI / 2;
+      road.receiveShadow = true;
+      road.position.set(0, 0.05, 250);
+      scene.add(road);
+      
+      /***** Road Edge Yellow Lines *****/
+      createRoadEdgeLines();
+      
+      /***** Road Dashed Lines *****/
+      createRoadLines();
+      
+      /***** Spawn Clouds *****/
+      spawnClouds();
+      
+      /***** Create Rain & Thunderstorm Effects *****/
+      createRain();
+      
+      /***** Create Mountains on Road Sides *****/
+      createMountains();
+      
+      /***** Load Player (Running Human Model) *****/
+      const gltfLoader = new THREE.GLTFLoader();
+      gltfLoader.load('https://threejs.org/examples/models/gltf/Soldier.glb', function(gltf) {
+        player = gltf.scene;
+        player.scale.set(1.2, 1.2, 1.2);
+        player.rotation.y = Math.PI;
+        // खिलाड़ी को कैमरा के पास लाने के लिए, p.z को कम करके 5 कर दिया गया है
+        player.position.set(0, 0, 5);
+        player.traverse(child => { if(child.isMesh) child.castShadow = true; });
+        scene.add(player);
+        playerBox.setFromObject(player);
+        mixer = new THREE.AnimationMixer(player);
+        const runClip = THREE.AnimationClip.findByName(gltf.animations, 'Run');
+        let action = runClip ? mixer.clipAction(runClip) : mixer.clipAction(gltf.animations[0]);
+        action.play();
+      }, undefined, function(error) {
+        console.error('Error loading player model:', error);
+        const fallbackGeo = new THREE.BoxGeometry(1, 2, 1);
+        const fallbackMat = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+        player = new THREE.Mesh(fallbackGeo, fallbackMat);
+        player.position.set(0, 1, 5);
+        player.castShadow = true;
+        scene.add(player);
+        playerBox.setFromObject(player);
+      });
+      
+      /***** Load Car Model for Obstacles *****/
+      const carLoader = new THREE.GLTFLoader();
+      carLoader.load('https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/CesiumMilkTruck/glTF/CesiumMilkTruck.gltf', function(gltf) {
+        carModel = gltf.scene;
+        carModel.scale.set(0.5, 0.5, 0.5);
+        carModel.traverse(child => { if(child.isMesh) child.castShadow = true; });
+      }, undefined, function(error) {
+        console.error('Error loading car model:', error);
+      });
+      
+      /***** Initialize Audio *****/
+      initAudio();
+      
+      /***** Event Listeners **************/
+      window.addEventListener('resize', onWindowResize, false);
+      window.addEventListener('keydown', onKeyDown, false);
+      window.addEventListener('keyup', onKeyUp, false);
+      
+      btnLeft.addEventListener('touchstart', () => moveLeft = true);
+      btnLeft.addEventListener('touchend', () => moveLeft = false);
+      btnLeft.addEventListener('mousedown', () => moveLeft = true);
+      btnLeft.addEventListener('mouseup', () => moveLeft = false);
+      btnLeft.addEventListener('mouseleave', () => moveLeft = false);
+      
+      btnRight.addEventListener('touchstart', () => moveRight = true);
+      btnRight.addEventListener('touchend', () => moveRight = false);
+      btnRight.addEventListener('mousedown', () => moveRight = true);
+      btnRight.addEventListener('mouseup', () => moveRight = false);
+      btnRight.addEventListener('mouseleave', () => moveRight = false);
+      
+      restartButton.addEventListener('click', restartGame);
+      
+      // Restart game on canvas click if game over
+      canvas.addEventListener('click', function() {
+        if(isGameOver) restartGame();
+      });
+      
+      restartButton.style.display = "none";
+      
+      lastCarTime = performance.now();
+      lastTreeTime = performance.now();
+      lastForestTime = performance.now();
+      lastScoreTime = performance.now();
+      animate();
+    }
+    
+    /************** Window Resize Handler **************/
+    function onWindowResize() {
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    
+    /************** Keyboard Handlers **************/
+    function onKeyDown(event) {
+      if(event.key === "ArrowLeft" || event.key === "a") moveLeft = true;
+      if(event.key === "ArrowRight" || event.key === "d") moveRight = true;
+      if(isGameOver && event.key === "Enter") restartGame();
+    }
+    function onKeyUp(event) {
+      if(event.key === "ArrowLeft" || event.key === "a") moveLeft = false;
+      if(event.key === "ArrowRight" || event.key === "d") moveRight = false;
+    }
+    
+    /************** Spawn a Car Obstacle with Reduced Bounce **************/
+    function spawnCar() {
+      if(!carModel) return;
+      const car = carModel.clone();
+      car.position.x = (Math.random() - 0.5) * 7;
+      car.position.z = 100 + Math.random() * 50;
+      car.rotation.y = Math.PI;
+      car.userData.bounceOffset = Math.random() * Math.PI * 2;
+      scene.add(car);
+      obstacles.push(car);
+    }
+    
+    /************** Main Animation Loop **************/
+    function animate() {
+      if(isGameOver) {
+        renderer.render(scene, camera);
+        return;
+      }
+     requestAnimationFrame(animate);
+      const now = performance.now();
+      const delta = clock.getDelta();
+      if(mixer) mixer.update(delta);
+      
+      if(roadTexture) {
+        roadTexture.offset.y -= gameSpeed * 0.005;
+      }
+      
+      roadLineGroup.children.forEach(dash => {
+        dash.position.z -= gameSpeed;
+        if(dash.position.z < -20) dash.position.z += 500;
+      });
+      
+      cloudGroup.children.forEach(cloud => {
+        cloud.position.x += 0.01;
+        cloud.position.y += 0.005 * Math.sin(now * 0.001 + cloud.userData.phase);
+        if(cloud.position.x > 60) cloud.position.x = -60;
+      });
+      
+      if(rainParticles) {
+        const positions = rainParticles.geometry.attributes.position.array;
+        for(let i = 0; i < positions.length; i += 3) {
+          positions[i+1] -= gameSpeed * 0.2;
+          if(positions[i+1] < 0) positions[i+1] = Math.random() * 20 + 10;
+        }
+        rainParticles.geometry.attributes.position.needsUpdate = true;
+      }
+      
+      if(Math.random() < 0.001 && !lightningFlash) {
+        lightningFlash = true;
+        directionalLight.intensity = 3.0;
+        scene.background.set(0xffffff);
+        setTimeout(() => {
+          directionalLight.intensity = 1.2;
+          scene.background.set(0x87CEEB);
+          lightningFlash = false;
+        }, 100);
+      }
+      
+      if(performance.now() - lastCarTime > carSpawnInterval) {
+        spawnCar();
+        lastCarTime = performance.now();
+      }
+      
+      if(performance.now() - lastTreeTime > treeSpawnInterval) {
+        spawnTrees();
+        lastTreeTime = performance.now();
+      }
+      
+      if(performance.now() - lastForestTime > forestSpawnInterval) {
+        spawnForestTrees();
+        lastForestTime = performance.now();
+      }
+      
+      if(performance.now() - lastScoreTime > 100) {
+        score++;
+        scoreText.textContent = "Score: " + score;
+        lastScoreTime = performance.now();
+      }
+      
+      for(let i = obstacles.length - 1; i >= 0; i--) {
+        const car = obstacles[i];
+        car.position.z -= gameSpeed;
+        car.position.y = Math.sin(now * 0.01 + car.userData.bounceOffset) * 0.05;
+        if(car.position.z < -20) {
+          scene.remove(car);
+          obstacles.splice(i, 1);
+        }
+        if(player) {
+          const carBox = new THREE.Box3().setFromObject(car);
+          playerBox.setFromObject(player);
+          if(playerBox.intersectsBox(carBox)) {
+            // Play collision sound and end game
+            if(collisionSound && collisionSound.isPlaying === false) {
+              collisionSound.play();
+            }
+            endGame();
+          }
+        }
+      }
+      
+      trees.forEach((tree, i) => {
+        tree.position.z -= gameSpeed;
+        if(tree.position.z < -20) {
+          scene.remove(tree);
+          trees.splice(i, 1);
+        }
+      });
+      
+      forestTrees.forEach((tree, i) => {
+        tree.position.z -= gameSpeed * 0.5;
+        if(tree.position.z < -20) {
+          scene.remove(tree);
+          forestTrees.splice(i, 1);
+        }
+      });
+      
+      if(mountainGroup) {
+        mountainGroup.children.forEach(mountain => {
+          mountain.position.z -= gameSpeed * 0.2;
+        });
+      }
+      
+      if(player) {
+        if(moveLeft) player.translateX(-0.1);
+        if(moveRight) player.translateX(0.1);
+        // Clamp player's x-position within road boundaries (-4.5 to 4.5)
+        player.position.x = THREE.MathUtils.clamp(player.position.x, -4.5, 4.5);
+      }
+      
+      renderer.render(scene, camera);
+    }
+    
+    /************** End Game and Show Restart Button **************/
+    function endGame() {
+      isGameOver = true;
+      restartButton.style.display = "block";
+      console.log("Game Over!");
+    }
+    
+    function restartGame() {
+      obstacles.forEach(obj => scene.remove(obj));
+      trees.forEach(obj => scene.remove(obj));
+      forestTrees.forEach(obj => scene.remove(obj));
+      if(mountainGroup) {
+        mountainGroup.children.forEach(m => scene.remove(m));
+        mountainGroup = null;
+      }
+      obstacles = [];
+      trees = [];
+      forestTrees = [];
+      if(player) player.position.set(0, player.position.y, 5);
+      score = 0;
+      scoreText.textContent = "Score: " + score;
+      isGameOver = false;
+      restartButton.style.display = "none";
+      lastCarTime = performance.now();
+      lastTreeTime = performance.now();
+      lastForestTime = performance.now();
+      lastScoreTime = performance.now();
+      createMountains();
+      animate();
+    }
+    
+    // Start the game
+    init();
+  </script>
+</body>
+</html>

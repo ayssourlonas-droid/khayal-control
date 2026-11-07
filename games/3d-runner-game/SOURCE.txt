@@ -1,0 +1,14 @@
+Source: https://github.com/girishlade111/3D-runner-game
+Commit: fed09a4c258dbea3dc734825fcb6c979e13a99de
+License: CC0-1.0
+Imported: 2026-11-07T23:46:34.560678+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: Creative Commons Legal Code
+- LICENSE: CC0 1.0 Universal
+- LICENSE: CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE
+- LICENSE: ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS
+- LICENSE: INFORMATION ON AN "AS-IS" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES
+- LICENSE: associating CC0 with a Work (the "Affirmer"), to the extent that he or she
+- images: 0, audio: 0, tagged audio: 0

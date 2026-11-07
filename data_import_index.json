@@ -446,5 +446,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): "
+  },
+  {
+    "key": "drunnergame",
+    "size": 12,
+    "repo": "girishlade111/3D-runner-game",
+    "id": 31,
+    "slug": "3d-runner-game",
+    "title": "3D Runner Game",
+    "developer": "girishlade111",
+    "license": "CC0-1.0",
+    "source": "https://github.com/girishlade111/3D-runner-game",
+    "commit": "fed09a4c258dbea3dc734825fcb6c979e13a99de",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: Creative Commons Legal Code | LICENSE: CC0 1.0 Universal"
   }
 ]
