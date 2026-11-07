@@ -311,5 +311,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "coredumpgame",
+    "size": 4301,
+    "repo": "AndreaBonn/core-dump-game",
+    "id": 22,
+    "slug": "core-dump-game",
+    "title": "Core Dump Game",
+    "developer": "AndreaBonn",
+    "license": "Apache-2.0",
+    "source": "https://github.com/AndreaBonn/core-dump-game",
+    "commit": "7a4cc3ad24645278727751538e8d759c478bd54f",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
