@@ -71,5 +71,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE.md",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE.md: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "bindingofisaacwebgame",
+    "size": 12552,
+    "repo": "liyupi/binding-of-isaac-webgame",
+    "id": 6,
+    "slug": "binding-of-isaac-webgame",
+    "title": "Binding Of Isaac Webgame",
+    "developer": "liyupi",
+    "license": "MIT",
+    "source": "https://github.com/liyupi/binding-of-isaac-webgame",
+    "commit": "444138dc4e7c865182f7d80ab0201670837f2939",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
