@@ -102,31 +102,5 @@
       "type": "web",
       "category": "1024"
     }
-  },
-  {
-    "id": 9,
-    "release_year": "2026",
-    "category_tags": [
-      "arcade-game",
-      "canvas",
-      "demo"
-    ],
-    "main_scene": {
-      "title_ar": "Drive Mad",
-      "title_en": "Drive Mad",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/drive-mad/_cover.png"
-    },
-    "details_scene": {
-      "description": "High-octane, dependency-free HTML5 arcade racing game (Canvas/WebGL) - keyboard, gamepad, and touch controls.",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/drive-mad/",
-      "developer": "md-abu-kayser",
-      "license": "MIT",
-      "source_url": "https://github.com/md-abu-kayser/drive-mad",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "arcade-game"
-    }
   }
 ]
