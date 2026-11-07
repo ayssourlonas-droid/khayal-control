@@ -41,5 +41,20 @@
     "date": "2026-11-06",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: HANDOFF.md: `MUSIC`, `BONUS`, `HELI`, `ROCKET`, `TWISTS`, `CREDITS`, `VICTORY`** are the | HANDOFF.md: Presentation.** Escape pause menu, victory screen with a credits roll, a"
+  },
+  {
+    "key": "aeroflap",
+    "size": 248,
+    "repo": "vincenzo-afk/AEROFLAP",
+    "id": 4,
+    "slug": "aeroflap",
+    "title": "AEROFLAP",
+    "developer": "vincenzo-afk",
+    "license": "MIT",
+    "source": "https://github.com/vincenzo-afk/AEROFLAP",
+    "commit": "795064ab92b15858f64852d66a10a132763298b7",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: [Acknowledgments](#acknowledgments)           | Project credits                           |"
   }
 ]
