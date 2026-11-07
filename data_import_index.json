@@ -401,5 +401,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: CREDITS.md: 游戏资产致谢与版权声明 | Credits & Legal Notice | README.md: 🎮 **[在线试玩](https://evilgaoshu.github.io/PvZ/)** | 📖 **[致谢名单](./CREDITS.md)** | 🛠️ **[关卡编辑器](#-可视化工具)** | artist=Laura Shigihara"
+  },
+  {
+    "key": "seltos",
+    "size": 128958,
+    "repo": "javafah/seltos",
+    "id": 28,
+    "slug": "seltos",
+    "title": "Seltos",
+    "developer": "javafah",
+    "license": "Apache-2.0",
+    "source": "https://github.com/javafah/seltos",
+    "commit": "83d230d0ff565c7dec80b27fcb3544b6e07aa2f6",
+    "date": "2026-11-07",
+    "license_file": "LICENCE.txt",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENCE.txt: attribution notices from the Source form of the Work, | LICENCE.txt: include a readable copy of the attribution notices contained"
   }
 ]

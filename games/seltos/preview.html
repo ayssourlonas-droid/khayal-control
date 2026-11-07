@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:seltos:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turbo Track Racing</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #14212b;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+h1 { margin: 0; padding: 12px; background: #263b4b; }
+#game {
+  display: block;
+  width: min(100%, 800px);
+  height: auto;
+  margin: auto;
+  background: #559c49;
+}
+#info { padding: 10px; font-size: 18px; }
+button {
+  padding: 12px 20px;
+  margin: 5px;
+  border: 0;
+  border-radius: 8px;
+  background: #ffd447;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+#message { font-size: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>🏁 TURBO TRACK</h1>
+<div id="info">
+  Speed: <span id="speed">0</span> km/h |
+  Distance: <span id="distance">0</span> m |
+  Best: <span id="best">0</span> m
+</div>
+
+<canvas id="game" width="800" height="600"></canvas>
+
+<div>
+  <button id="left">⬅ LEFT</button>
+  <button id="start">START / RESTART</button>
+  <button id="right">RIGHT ➡</button>
+</div>
+<p id="message">Press START to race!</p>
+<p>Keyboard: A / D or ← / → to steer.</p>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+const road = { x: 190, width: 420 };
+const car = { x: 376, y: 470, w: 48, h: 82 };
+
+let keys = {};
+let traffic = [];
+let running = false;
+let speed = 0;
+let distance = 0;
+let roadLine = 0;
+let spawn = 0;
+let lastTime = 0;
+let best = 0;
+
+try {
+  best = Number(localStorage.getItem("turboBest") || 0);
+} catch (e) {}
+
+document.getElementById("best").textContent = best;
+
+function startGame() {
+  traffic = [];
+  speed = 0;
+  distance = 0;
+  roadLine = 0;
+  spawn = 0;
+  car.x = 376;
+  running = true;
+  document.getElementById("message").textContent =
+    "GO! Dodge the traffic! 🏎️";
+}
+
+document.getElementById("start").onclick = startGame;
+
+function drawCar(x, y, w, h, color, player = false) {
+  ctx.fillStyle = "#20252b";
+  ctx.fillRect(x - 3, y + 14, 6, 18);
+  ctx.fillRect(x + w - 3, y + 14, 6, 18);
+  ctx.fillRect(x - 3, y + h - 32, 6, 18);
+  ctx.fillRect(x + w - 3, y + h - 32, 6, 18);
+
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, w, h);
+
+  ctx.fillStyle = "#a8e9ff";
+  ctx.fillRect(x + 7, y + 17, w - 14, 18);
+
+  ctx.fillStyle = "#18303d";
+  ctx.fillRect(x + 8, y + 42, w - 16, 17);
+
+  ctx.fillStyle = "#fff3a1";
+  ctx.fillRect(x + 4, y + 5, 9, 7);
+  ctx.fillRect(x + w - 13, y + 5, 9, 7);
+
+  if (player) {
+    ctx.fillStyle = "white";
+    ctx.fillRect(x + 21, y + 44, 6, 14);
+  }
+}
+
+function drawWorld() {
+  ctx.fillStyle = "#559c49";
+  ctx.fillRect(0, 0, 800, 600);
+
+  // Grass decorations
+  ctx.fillStyle = "#70b75b";
+  for (let y = -40; y < 640; y += 65) {
+    const yy = (y + roadLine * 1.5) % 680;
+    ctx.fillRect(65, yy, 22, 22);
+    ctx.fillRect(710, yy + 25, 22, 22);
+  }
+
+  // Road
+  ctx.fillStyle = "#555b61";
+  ctx.fillRect(road.x, 0, road.width, 600);
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(road.x, 0, 8, 600);
+  ctx.fillRect(road.x + road.width - 8, 0, 8, 600);
+
+  // Lane markings
+  ctx.fillStyle = "#fff3c0";
+  for (let y = -70; y < 650; y += 100) {
+    let yy = (y + roadLine) % 700;
+    ctx.fillRect(road.x + 136, yy, 7, 50);
+    ctx.fillRect(road.x + 277, yy, 7, 50);
+  }
+}
+
+function addTraffic() {
+  const lane = Math.floor(Math.random() * 3);
+  const laneWidth = road.width / 3;
+
+  traffic.push({
+    x: road.x + lane * laneWidth + laneWidth / 2 - 22,
+    y: -100,
+    w: 44,
+    h: 76,
+    color: ["#ff5252", "#ffc247", "#7d91ff", "#f3f3f3"][
+      Math.floor(Math.random() * 4)
+    ],
+    extraSpeed: Math.random() * 1.2 + 0.5
+  });
+}
+
+function crashed(a, b) {
+  return a.x + 7 < b.x + b.w - 6 &&
+         a.x + a.w - 7 > b.x + 6 &&
+         a.y + 10 < b.y + b.h - 8 &&
+         a.y + a.h - 8 > b.y + 8;
+}
+
+function update(dt) {
+  if (!running) return;
+
+  speed = Math.min(180, speed + 0.3 * dt);
+  distance += speed * dt * 0.075;
+  roadLine = (roadLine + speed * 0.65 * dt) % 100;
+  spawn += dt;
+
+  if (spawn > Math.max(25, 72 - speed * 0.22)) {
+    spawn = 0;
+    addTraffic();
+  }
+
+  if (keys.left) car.x -= 5 * dt;
+  if (keys.right) car.x += 5 * dt;
+
+  car.x = Math.max(
+    road.x + 16,
+    Math.min(road.x + road.width - car.w - 16, car.x)
+  );
+
+  for (const t of traffic) {
+    t.y += (2.5 + t.extraSpeed + speed * 0.018) * dt;
+  }
+
+  traffic = traffic.filter(t => t.y < 650);
+
+  for (const t of traffic) {
+    if (crashed(car, t)) {
+      running = false;
+      document.getElementById("message").textContent =
+        "💥 CRASH! Press START / RESTART to try again!";
+
+      if (Math.floor(distance) > best) {
+        best = Math.floor(distance);
+        try {
+          localStorage.setItem("turboBest", best);
+        } catch (e) {}
+      }
+    }
+  }
+}
+
+function draw() {
+  drawWorld();
+
+  for (const t of traffic) {
+    drawCar(t.x, t.y, t.w, t.h, t.color);
+  }
+
+  drawCar(car.x, car.y, car.w, car.h, "#20c7a5", true);
+
+  document.getElementById("speed").textContent = Math.floor(speed);
+  document.getElementById("distance").textContent =
+    Math.floor(distance);
+  document.getElementById("best").textContent = best;
+}
+
+function loop(now) {
+  const dt = lastTime ? Math.min((now - lastTime) / 16.67, 2) : 1;
+  lastTime = now;
+  update(dt);
+  draw();
+  requestAnimationFrame(loop);
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
+    keys.left = true;
+    e.preventDefault();
+  }
+  if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
+    keys.right = true;
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("keyup", e => {
+  if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a")
+    keys.left = false;
+  if (e.key === "ArrowRight" || e.key.toLowerCase() === "d")
+    keys.right = false;
+});
+
+function holdButton(id, key) {
+  const button = document.getElementById(id);
+  button.addEventListener("pointerdown", e => {
+    e.preventDefault();
+    keys[key] = true;
+  });
+  for (const event of ["pointerup", "pointercancel", "pointerleave"]) {
+    button.addEventListener(event, () => keys[key] = false);
+  }
+}
+
+holdButton("left", "left");
+holdButton("right", "right");
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

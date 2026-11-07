@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:seltos:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Chaotic Story</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #100d24;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+header { padding: 25px 12px; background: #241044; }
+h1 { color: #ff80c8; margin: 0 0 8px; }
+main { max-width: 750px; margin: auto; padding: 18px; }
+#scene {
+  min-height: 240px;
+  padding: 24px 12px;
+  border: 2px solid #8b5cf6;
+  border-radius: 18px;
+  background: #1d1638;
+  font-size: 22px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+#emoji { font-size: 38px; }
+button {
+  margin: 6px;
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 10px;
+  background: #a855f7;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover { background: #d946ef; }
+#log {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #171329;
+  text-align: left;
+}
+footer { color: #bdb2d8; padding: 20px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>😈 Our Chaotic Story 💥</h1>
+  <div>THE UNIVERSE IS YOURS TO CONTROL</div>
+</header>
+
+<main>
+  <section id="scene">
+    <div id="emoji">😈🍕🦠</div>
+    <p id="story">The Demon Army has arrived! Virus.exe is singing again!</p>
+  </section>
+
+  <div>
+    <button onclick="fire()">🔥 KABOOM!</button>
+    <button onclick="demons()">😈 Summon Army</button>
+    <button onclick="pizza()">🍕 Pizza God</button>
+    <button onclick="virus()">🦠 Virus.exe</button>
+    <button onclick="mute()">🔇 STOP SINGING</button>
+    <button onclick="resetStory()">🔄 Restart</button>
+  </div>
+
+  <section id="log">
+    <b>📜 Story Log</b>
+    <div id="history">The chaos begins...</div>
+  </section>
+</main>
+
+<footer>Made for maximum chaos. No actual fire or viruses included. 😂</footer>
+
+<script>
+const story = document.getElementById("story");
+const emoji = document.getElementById("emoji");
+const history = document.getElementById("history");
+let events = [];
+let singing = true;
+
+function show(icon, text) {
+  emoji.textContent = icon;
+  story.textContent = text;
+  events.unshift(text);
+  history.innerHTML = "";
+  events.slice(0, 6).forEach(event => {
+    const p = document.createElement("p");
+    p.textContent = "• " + event;
+    history.appendChild(p);
+  });
+}
+
+function fire() {
+  show("💥🔥💥", "KABOOOOOM! The universe shakes! ChatGPT has exploded into pixels!");
+}
+function demons() {
+  show("😈😈😈😈😈", "THE DEMON ARMY IS EVERYWHERE! They demand the secret code!");
+}
+function pizza() {
+  show("🍕👑🧀", "THE PIZZA GOD ARRIVES WITH THE INFINITY CHEESE SHIELD!");
+}
+function virus() {
+  singing = true;
+  show("🦠🎤", "Virus.exe: OUR CHAOTIC STORY! OUR CHAOTIC STORY! The loop has begun!");
+}
+function mute() {
+  singing = false;
+  show("🔇😶", "SILENCE! Virus.exe has been muted. Even the demons stopped dancing.");
+}
+function resetStory() {
+  events = [];
+  singing = true;
+  show("😈🍕🦠", "The Demon Army has arrived! Virus.exe is singing again!");
+}
+</script>
+</body>
+</html>
