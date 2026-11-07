@@ -466,5 +466,31 @@
       "type": "web",
       "category": "html5"
     }
+  },
+  {
+    "id": 24,
+    "release_year": "2026",
+    "category_tags": [
+      "casual-game",
+      "casual-gaming",
+      "game"
+    ],
+    "main_scene": {
+      "title_ar": "Pet Caring Game",
+      "title_en": "Pet Caring Game",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/pet-caring-game/_cover.png"
+    },
+    "details_scene": {
+      "description": "Take care of your pet. Feed, play, and clean up after it.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/pet-caring-game/",
+      "developer": "spetterman66",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/spetterman66/pet-caring-game",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "casual-game"
+    }
   }
 ]

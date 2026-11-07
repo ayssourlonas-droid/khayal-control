@@ -341,5 +341,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Gun for Lui.wav by martian -- https://freesound.org/s/182271/ -- License: Creative Commons 0 | README.md: Explosion.mp3 by WaveAdventurer -- https://freesound.org/s/93741/ -- License: Attribution 4.0"
+  },
+  {
+    "key": "petcaringgame",
+    "size": 1702,
+    "repo": "spetterman66/pet-caring-game",
+    "id": 24,
+    "slug": "pet-caring-game",
+    "title": "Pet Caring Game",
+    "developer": "spetterman66",
+    "license": "Apache-2.0",
+    "source": "https://github.com/spetterman66/pet-caring-game",
+    "commit": "2ff87e9adab7670241c305a9768657460d73602d",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
