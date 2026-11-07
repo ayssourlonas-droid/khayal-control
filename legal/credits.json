@@ -116,5 +116,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "drivemad",
+    "size": 295,
+    "repo": "md-abu-kayser/drive-mad",
+    "id": 9,
+    "slug": "drive-mad",
+    "title": "Drive Mad",
+    "developer": "md-abu-kayser",
+    "license": "MIT",
+    "source": "https://github.com/md-abu-kayser/drive-mad",
+    "commit": "5faa4dfc2301a17409439c074cfef30c2cb4bfee",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

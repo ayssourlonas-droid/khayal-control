@@ -1,0 +1,8 @@
+Source: https://github.com/md-abu-kayser/drive-mad
+Commit: 5faa4dfc2301a17409439c074cfef30c2cb4bfee
+License: MIT
+Imported: 2026-11-07T19:51:10.583895+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 0, audio: 0, tagged audio: 0
