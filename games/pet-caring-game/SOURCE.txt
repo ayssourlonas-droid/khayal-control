@@ -1,7 +1,7 @@
 Source: https://github.com/spetterman66/pet-caring-game
 Commit: 2ff87e9adab7670241c305a9768657460d73602d
 License: Apache-2.0
-Imported: 2026-11-07T22:00:18.210247+00:00
+Imported: 2026-11-07T23:01:45.639717+00:00
 Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تحسين وسائط صور": 7}
 
 Media provenance (automated signals, not a legal guarantee):
