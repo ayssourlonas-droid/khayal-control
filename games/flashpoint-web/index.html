@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:flashpoint-web:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png" />
+    <link rel="apple-touch-icon" href="images/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: blob: http://localhost:* http://127.0.0.1:*;
+        font-src 'self' data:;
+        connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*;
+        frame-src 'self' http://localhost:* http://127.0.0.1:*;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+      "
+    />
+    <title>Flashpoint Archive</title>
+    <!-- Blocking script to prevent FOUC (Flash of Unstyled Content) -->
+    <!-- Applies theme before first paint by reading from localStorage -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('flashpoint-theme-settings');
+          if (stored) {
+            var settings = JSON.parse(stored);
+            var mode = settings.state && settings.state.mode;
+            if (mode === 'dark') {
+              document.documentElement.classList.add('dark');
+            } else if (mode === 'light') {
+              document.documentElement.classList.add('light');
+            } else if (mode === 'system') {
+              var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              document.documentElement.classList.add(prefersDark ? 'dark' : 'light');
+            }
+          } else {
+            // Default to dark mode if no preference set
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          // Fallback to dark mode on error
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="assets/index-Dmf8DDKq.js"></script>
+    <link rel="modulepreload" crossorigin href="assets/utils-DKFzaKPW.js">
+    <link rel="modulepreload" crossorigin href="assets/react-vendor-DZ9stobB.js">
+    <link rel="modulepreload" crossorigin href="assets/react-query-C1Hl396B.js">
+    <link rel="modulepreload" crossorigin href="assets/state-D06rCHUd.js">
+    <link rel="modulepreload" crossorigin href="assets/ui-primitives-DgwlQP9R.js">
+    <link rel="modulepreload" crossorigin href="assets/icons-E6WXyJAu.js">
+    <link rel="stylesheet" crossorigin href="assets/index-DfRzRpvw.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

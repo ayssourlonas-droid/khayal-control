@@ -1,0 +1,1 @@
+import{u as s,c as u}from"./react-query-C1Hl396B.js";import{u as o,l as i}from"./index-Dmf8DDKq.js";function c(){const{register:r}=o(),t=s();return u({mutationFn:e=>r(e),onSuccess:()=>{t.invalidateQueries({queryKey:["setupStatus"]})},onError:e=>{i.error("Registration error:",e)}})}export{c as u};

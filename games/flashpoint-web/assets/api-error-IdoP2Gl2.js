@@ -1,0 +1,1 @@
+function e(s){return typeof s=="object"&&s!==null&&"message"in s&&typeof s.message=="string"&&("statusCode"in s||"code"in s||"response"in s)}function n(s){return e(s)?s.response?.data?.error?.message||s.message||"An error occurred":s instanceof Error?s.message:String(s)}export{n as g,e as i};

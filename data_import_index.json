@@ -146,5 +146,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "flashpointweb",
+    "size": 43547,
+    "repo": "darkraise/flashpoint-web",
+    "id": 11,
+    "slug": "flashpoint-web",
+    "title": "Flashpoint Web",
+    "developer": "darkraise",
+    "license": "GPL-3.0",
+    "source": "https://github.com/darkraise/flashpoint-web",
+    "commit": "c12255c3c6cf69e3c14b498d01339e241fdaee7d",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
   }
 ]
