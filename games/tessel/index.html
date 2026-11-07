@@ -1,0 +1,101 @@
+<!DOCTYPE html><!--
+Tessel - A tile game
+Copyright (c) 2025-2026 Gijs van Tulder
+Source available under a GPL-3.0 license, see
+https://play.tessel.at/source/
+--><html><head><script>/*khayal-iso*/(function(){try{
+var P='khayal:tessel:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="icon.24630b15.png">
+    <link rel="apple-touch-icon" href="icon-180.f9d56b68.png" sizes="180x180">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="viewport" content="user-scalable=no, maximum-scale=1, minimum-scale=1, viewport-fit=cover, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-itunes-app" content="app-id=6754282700">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="canonical" href="https://play.tessel.at/">
+    <meta property="og:title" content="Tessel – A tile game">
+    <meta property="og:description" content="A free online tile game. Place tiles with matching colors to make shapes and fill the board.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://play.tessel.at/">
+    <meta property="og:image" content="https://play.tessel.at/social/tessel-1200x630.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="Screenshots of Tessel – A tile game.">
+    <meta property="og:image" content="https://play.tessel.at/social/tessel-1200x1200.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="Screenshots of Tessel – A tile game.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="play.tessel.at">
+    <meta property="twitter:url" content="https://play.tessel.at/">
+    <meta name="twitter:title" content="Tessel – A tile game">
+    <meta property="twitter:description" content="A free online tile game. Place tiles with matching colors to make shapes and fill the board.">
+    <meta name="twitter:image" content="https://play.tessel.at/social/tessel-1200x630.png">
+    <title>Tessel – A tile game</title>
+    <style>body{background:var(--main-bg-color);margin:0;padding:0}#splash{background:var(--main-bg-color);z-index:1000;opacity:1;justify-content:center;align-items:center;width:100vw;height:100vh;display:flex;position:absolute;top:0;left:0;overflow:hidden}#splash svg{width:100px;height:100px;scale:1}#splash.disappear{opacity:0;transition:opacity .2s .2s}#splash.disappear svg{transition:scale .2s;scale:0}.splash-footer{color:var(--footer-version-color);margin:0;padding:10px;font-family:sans-serif;font-size:12px;position:absolute;bottom:0;left:0}@media screen and (aspect-ratio>=5/3){.splash-footer br{display:none}}.splash-footer,.splash-footer a{color:var(--footer-copyright-color)}.splash-footer a{border-bottom:1px solid;text-decoration:none}.splash-footer{--main-bg-color:#e0dfdc;--footer-copyright-color:#777}body.dark-mode #splash{--main-bg-color:#0d0d0c;--footer-copyright-color:#ccc}body.dark-mode #splash svg{filter:brightness(85%)}</style>
+    <link rel="preload" href="game.7e3d0c37.css" as="style" onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      " crossorigin="anonymous">
+    <link rel="preload" href="Barlow-Regular.3820ee1a.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="Inter-Light.beb1e035.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  </head>
+  <body>
+    <script type="text/javascript">!function(){let e=localStorage.getItem("color-scheme");e||(e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),document.body.classList.toggle("dark-mode","dark"==e)}();</script>
+    <div id="splash">
+      <svg width="100" height="100" viewBox="0 0 1 1">
+        <clipPath id="splashclip">
+          <path d="M.11.03h.78c.04 0 .08.04.08.08v.78C.97.93.93.97.89.97H.11C.07.97.03.93.03.89V.11C.03.07.07.03.11.03Z"></path>
+        </clipPath>
+        <g clip-path="url(#splashclip)">
+          <path fill="#e06300" d="M0 0h1L.833.5H.167Z"></path>
+          <path fill="#0078bb" d="M1 0v1L.5.833V.5Z"></path>
+          <path fill="#00a679" d="M1 1H0L.167.5H.5Z"></path>
+          <path fill="#f2a700" d="M0 1V0l.5.5Z"></path>
+        </g>
+      </svg>
+      <p class="splash-footer">
+        A game by <a href="https://www.vantulder.net/">Gijs van Tulder.</a>
+        <br>
+        View <a href="https://play.tessel.at/source/">source code</a> and
+        <a href="https://play.tessel.at/about/">documentation</a>.
+      </p>
+    </div>
+    <script type="module" src="game.eea72003.js"></script>
+  
+
+</body></html>
