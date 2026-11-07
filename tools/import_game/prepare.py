@@ -234,6 +234,52 @@ def newest_index(src: Path):
     return best
 
 
+_OUT_NAMES = ("dist", "build", "out", "public", "www", "client", "web", "site", "static")
+_REALTIME_DEPS = {"ws", "socket.io", "colyseus", "@colyseus/core", "@colyseus/ws-transport", "uwebsockets.js",
+                  "geckos.io-server", "@geckos.io/server", "peer", "peerjs-server"}
+
+
+def find_built_output(src: Path, since: float):
+    """بعد البناء: يبحث عن أي مجلد فيه index.html جديد (مثل dist/public أو client/dist أو apps/web/dist)."""
+    cands = []
+    for f in src.rglob("index.html"):
+        rel = f.relative_to(src).parts
+        if any(x in ("node_modules", ".git", ".github") for x in rel):
+            continue
+        try:
+            mt = f.stat().st_mtime
+        except OSError:
+            continue
+        if mt < since - 2:
+            continue
+        d = f.parent
+        in_out = any(x in _OUT_NAMES or x.startswith(".output") for x in rel[:-1])
+        if not in_out:
+            continue
+        # نفضّل المجلد الذي يحوي ملفات مبنية (assets أو js) وأقلّها عمقاً
+        has_assets = (d / "assets").is_dir() or any(d.glob("*.js"))
+        cands.append((0 if has_assets else 1, len(rel), -mt, d))
+    cands.sort(key=lambda c: c[:3])
+    return cands[0][3] if cands else None
+
+
+def realtime_server(src: Path):
+    """اعتمادات خادم لحظي (WebSocket/غرف) في package.json الرئيسي أو في server/backend: لعبة جماعية تحتاج خادماً."""
+    found = set()
+    for rel in ("package.json", "server/package.json", "backend/package.json", "apps/server/package.json",
+                "packages/server/package.json"):
+        pj = src / rel
+        if not pj.is_file():
+            continue
+        try:
+            data = json.loads(pj.read_text("utf-8", errors="ignore"))
+        except Exception:
+            continue
+        deps = {**(data.get("dependencies") or {}), **(data.get("devDependencies") or {})}
+        found |= {d for d in deps if d in _REALTIME_DEPS}
+    return sorted(found)
+
+
 def detect_pm(src: Path, data) -> str:
     """مدير الحزم الذي يستعمله المشروع فعلاً: pnpm أو yarn أو npm (الافتراضي)."""
     pmf = str((data or {}).get("packageManager", "")) if isinstance(data, dict) else ""
@@ -280,6 +326,7 @@ def build_if_needed(src: Path, override, build_cmd, notes):
             notes.append("لا يوجد أمر build: نسخ index.html كما هو")
             return src
         return None
+    t_build = time.time()
     pm = detect_pm(src, data)
     notes.append(f"لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ {pm}")
     if pm == "pnpm":
@@ -306,7 +353,9 @@ def build_if_needed(src: Path, override, build_cmd, notes):
         run(build_cmd, cwd=src, timeout=900)  # نص أمر واحد؛ يُنفَّذ عبر الصدفة
     else:
         run(build_default, cwd=src, timeout=900)
-    root = find_webroot(src, override) or newest_index(src)
+    root = find_webroot(src, override) or newest_index(src) or find_built_output(src, t_build)
+    if root and root != src:
+        notes.append(f"مجلد الناتج المبني: {root.relative_to(src)}")
     return root
 
 
@@ -1246,6 +1295,15 @@ def main():
             reasons.append("لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. "
                            "جرّب إدخال subdir أو build_cmd")
         finish("fail")
+    rt = realtime_server(src)
+    if rt:
+        reasons.append("هذه لعبة جماعية تحتاج خادماً لحظياً (" + "، ".join(rt) + ") ولا تعمل كموقع ثابت، "
+                       "فلا يمكن استضافتها على Cloudflare Pages ولا تشغيلها في التطبيق. هذه ليست مشكلة في الاستيراد.")
+        finish("fail")
+    sh_ok = server_side_hints(src)
+    if sh_ok:
+        warnings.append("المستودع يحوي ملفات خادم (" + "؛ ".join(sh_ok[:4]) + ") لكن الواجهة بُنيت كموقع ثابت. "
+                        "قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد")
     tmpl = unbuilt_template(webroot, src)
     if tmpl:
         reasons.append("هذا موقع/قالب غير مبني (" + "؛ ".join(tmpl) + ") وليس لعبة جاهزة للتشغيل. "
