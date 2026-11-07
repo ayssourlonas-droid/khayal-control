@@ -1,0 +1,65 @@
+name: Import queue
+
+# طابور استيراد على خادم GitHub: يشغّل «Import game» لكل رابط واحداً بعد الآخر وينتظر انتهاء كل واحد.
+# يُشغَّل من تطبيق Game Control (استيراد المحدد من تبويب الاكتشاف) أو يدوياً.
+# يعمل حتى لو أُغلق التطبيق. لا يوجد توكن مطلوب: يستعمل توكن GitHub المؤقت للمهمة.
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "روابط مستودعات الألعاب، رابط في كل سطر (حتى 30)"
+        required: true
+      orientation:
+        description: "اتجاه الشاشة"
+        type: choice
+        default: portrait
+        options: [portrait, landscape, both]
+      prune:
+        description: "تقليل الملفات"
+        type: choice
+        default: smart
+        options: [smart, junk, "off"]
+      media:
+        description: "تحسين الوسائط"
+        type: choice
+        default: safe
+        options: [safe, "off"]
+      ai_test:
+        description: "اختبار بالذكاء الاصطناعي"
+        type: choice
+        default: "no"
+        options: ["no", "yes"]
+      ai_steps:
+        description: "عدد خطوات الذكاء الاصطناعي (3-60)"
+        required: false
+        default: "20"
+
+permissions:
+  actions: write
+  contents: read
+
+# طابور واحد في الوقت الواحد
+concurrency:
+  group: import-queue
+  cancel-in-progress: false
+
+jobs:
+  queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run queue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          QUEUE_URLS: ${{ inputs.urls }}
+          ORIENTATION: ${{ inputs.orientation }}
+          PRUNE: ${{ inputs.prune }}
+          MEDIA: ${{ inputs.media }}
+          AI_TEST: ${{ inputs.ai_test }}
+          AI_STEPS: ${{ inputs.ai_steps }}
+        run: python3 tools/import_queue.py

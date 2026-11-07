@@ -34,7 +34,7 @@ jobs:
         env:
           GAME_ID: ${{ inputs.game_id }}
           PLAY_URL: ${{ inputs.play_url }}
-        run: python3 tools/delete_game.py
+        run: python3 "$(ls tools/delete_game.py tools/import_game/delete_game.py 2>/dev/null | head -1)"
       - name: Commit and push
         run: |
           git config user.name "game-importer"
