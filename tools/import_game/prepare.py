@@ -234,6 +234,31 @@ def newest_index(src: Path):
     return best
 
 
+def detect_pm(src: Path, data) -> str:
+    """مدير الحزم الذي يستعمله المشروع فعلاً: pnpm أو yarn أو npm (الافتراضي)."""
+    pmf = str((data or {}).get("packageManager", "")) if isinstance(data, dict) else ""
+    if pmf.startswith("pnpm") or (src / "pnpm-lock.yaml").is_file() or (src / "pnpm-workspace.yaml").is_file():
+        return "pnpm"
+    if pmf.startswith("yarn") or ((src / "yarn.lock").is_file() and not (src / "package-lock.json").is_file()):
+        return "yarn"
+    return "npm"
+
+
+def pnpm_version(src: Path, data) -> str:
+    pmf = str((data or {}).get("packageManager", "")) if isinstance(data, dict) else ""
+    m = re.match(r"pnpm@(\d+(?:\.\d+){0,2})", pmf)
+    if m:
+        return m.group(1)
+    try:
+        lf = (src / "pnpm-lock.yaml").read_text(encoding="utf-8", errors="ignore")[:400]
+        m = re.search(r"lockfileVersion:\s*'?(\d+)", lf)
+        if m:
+            return {"5": "7", "6": "8"}.get(m.group(1), "9")
+    except Exception:
+        pass
+    return "9"
+
+
 def build_if_needed(src: Path, override, build_cmd, notes):
     root = find_webroot(src, override)
     if root:
@@ -255,15 +280,32 @@ def build_if_needed(src: Path, override, build_cmd, notes):
             notes.append("لا يوجد أمر build: نسخ index.html كما هو")
             return src
         return None
-    notes.append("لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm")
-    if (src / "package-lock.json").is_file():
-        run(["npm", "ci", "--no-audit", "--no-fund"], cwd=src, timeout=900)
+    pm = detect_pm(src, data)
+    notes.append(f"لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ {pm}")
+    if pm == "pnpm":
+        ver = pnpm_version(src, data)
+        run(["npm", "install", "-g", f"pnpm@{ver}", "--no-audit", "--no-fund"], timeout=300)
+        try:
+            run(["pnpm", "install", "--frozen-lockfile"], cwd=src, timeout=900)
+        except RuntimeError:
+            run(["pnpm", "install", "--no-frozen-lockfile"], cwd=src, timeout=900)
+        build_default = ["pnpm", "run", "build"]
+    elif pm == "yarn":
+        try:
+            run(["yarn", "install", "--frozen-lockfile"], cwd=src, timeout=900)
+        except RuntimeError:
+            run(["yarn", "install"], cwd=src, timeout=900)
+        build_default = ["yarn", "run", "build"]
     else:
-        run(["npm", "install", "--no-audit", "--no-fund"], cwd=src, timeout=900)
+        if (src / "package-lock.json").is_file():
+            run(["npm", "ci", "--no-audit", "--no-fund"], cwd=src, timeout=900)
+        else:
+            run(["npm", "install", "--no-audit", "--no-fund"], cwd=src, timeout=900)
+        build_default = ["npm", "run", "build"]
     if build_cmd:
         run(build_cmd, cwd=src, timeout=900)  # نص أمر واحد؛ يُنفَّذ عبر الصدفة
     else:
-        run(["npm", "run", "build"], cwd=src, timeout=900)
+        run(build_default, cwd=src, timeout=900)
     root = find_webroot(src, override) or newest_index(src)
     return root
 
