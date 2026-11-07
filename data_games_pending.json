@@ -52,32 +52,6 @@
     }
   },
   {
-    "id": 6,
-    "release_year": "2026",
-    "category_tags": [
-      "canvas",
-      "game",
-      "html5-game"
-    ],
-    "main_scene": {
-      "title_ar": "Binding Of Isaac Webgame",
-      "title_en": "Binding Of Isaac Webgame",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/binding-of-isaac-webgame/_cover.png"
-    },
-    "details_scene": {
-      "description": "《以撒的结合》风格的俯视角肉鸽地牢网页游戏：12 层地牢 / 13 个 Boss / 55 件道具，零依赖零构建，全部美术由 Canvas 2D 代码绘制",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/binding-of-isaac-webgame/",
-      "developer": "liyupi",
-      "license": "MIT",
-      "source_url": "https://github.com/liyupi/binding-of-isaac-webgame",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "canvas"
-    }
-  },
-  {
     "id": 7,
     "release_year": "2025",
     "category_tags": [
