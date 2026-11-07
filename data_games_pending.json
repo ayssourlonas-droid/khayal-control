@@ -492,5 +492,31 @@
       "type": "web",
       "category": "casual-game"
     }
+  },
+  {
+    "id": 25,
+    "release_year": "2026",
+    "category_tags": [
+      "aerodynamics",
+      "aviation",
+      "blade-element-theory"
+    ],
+    "main_scene": {
+      "title_ar": "EC135 FlightDynamics",
+      "title_en": "EC135 FlightDynamics",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/ec135-flightdynamics/_cover.png"
+    },
+    "details_scene": {
+      "description": "Realistic helicopter flight simulator in the browser: learn to hover and fly the EC135 step by step with a tutor and a coach. Blade-element rotor physics, free, nothing to install.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/ec135-flightdynamics/",
+      "developer": "GitCrush",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/GitCrush/EC135-FlightDynamics",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "aerodynamics"
+    }
   }
 ]

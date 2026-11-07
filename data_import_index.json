@@ -356,5 +356,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "ecflightdynamics",
+    "size": 108541,
+    "repo": "GitCrush/EC135-FlightDynamics",
+    "id": 25,
+    "slug": "ec135-flightdynamics",
+    "title": "EC135 FlightDynamics",
+    "developer": "GitCrush",
+    "license": "Apache-2.0",
+    "source": "https://github.com/GitCrush/EC135-FlightDynamics",
+    "commit": "c46473dcce93211bcd3bcea4f904dcf4fc79908f",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
