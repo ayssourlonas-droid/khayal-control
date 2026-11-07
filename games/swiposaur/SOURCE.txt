@@ -1,0 +1,14 @@
+Source: https://github.com/thesithunyein/swiposaur
+Commit: d60076e9e8b0f7938c44770d20cde7a296c164a3
+License: Apache-2.0
+Imported: 2026-11-07T22:25:45.806438+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تحسين وسائط صور": 2, "تحسين وسائط صوت": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- README_SithuNyein_Swiposaur.md: 11. Asset credit summary
+- README_SithuNyein_Swiposaur.md: (Google Fonts, SIL OFL 1.1), plus Aka 08 for the Burmese UI (credited to
+- README_SithuNyein_Swiposaur.md: developer. No AI-generated images, audio or fonts are shipped: all visuals are code-drawn,
+- README.md: Asset credits
+- README.md: No generated assets.** No AI-generated images, 3D models, music or voice appear in the
+- README.md: The Google Fonts families, including Noto Sans Myanmar, are SIL OFL 1.1. Aka 08 is credited to its author in the asset table; the source rep
+- images: 12, audio: 1, tagged audio: 0

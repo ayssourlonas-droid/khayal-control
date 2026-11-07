@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="my">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:swiposaur:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Swiposaur: Tail Frenzy Dino Runner</title>
+    <meta name="description" content="A fast, hilarious 3D dinosaur runner where you swipe, tail-whip prehistoric critters, dodge crazy obstacles, charge the Primal Roar, and escape the enraged stampede!" />
+    <meta property="og:title" content="Swiposaur: Tail Frenzy Dino Runner" />
+    <meta property="og:description" content="A fast, hilarious 3D dinosaur runner where you swipe, tail-whip prehistoric critters, dodge crazy obstacles, charge the Primal Roar, and escape the enraged stampede!" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#181A24" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Swiposaur" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <!-- Tab icon is the game logo itself, cut from the same artwork as the README
+         wordmark. ?v=2 because browsers cache favicons far harder than anything
+         else and will otherwise keep showing the old mark. -->
+    <link rel="icon" href="./favicon.ico?v=2" sizes="16x16 32x32 48x48 64x64" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png?v=2" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./favicon-192.png?v=2" />
+    <!-- Cute Bubbly Arcade & Cartoon Gaming Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800;900&family=Lilita+One&family=Titan+One&family=Sniglet:wght@400;800&family=Press+Start+2P&family=Noto+Sans+Myanmar:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload the Burmese UI face for the script wordmark and localized UI. -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link
+      rel="preload"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/gh/saturngod/myanmar-unicode-fonts@master/docs/Aka/Aka08-Regular.ttf"
+    >
+    <script type="module" crossorigin src="./assets/index-DSBwi3Kx.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D8S9B328.css">
+  </head>
+  <body class="overflow-hidden select-none bg-[#181A24] text-[#FDFBF7] touch-none overscroll-none">
+    <div id="root"></div>
+  </body>
+</html>

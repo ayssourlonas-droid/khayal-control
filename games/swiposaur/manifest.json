@@ -1,0 +1,27 @@
+{
+  "id": "/",
+  "name": "Swiposaur: Tail Frenzy",
+  "short_name": "Swiposaur",
+  "description": "A fast, hilarious 3D voxel dinosaur runner: swipe lanes, tail-whip prehistoric critters, charge the Primal Roar and outrun the stampede.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#181A24",
+  "background_color": "#181A24",
+  "categories": ["games", "arcade", "action"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.webp",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.webp",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

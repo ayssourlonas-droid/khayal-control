@@ -416,5 +416,20 @@
     "date": "2026-11-07",
     "license_file": "LICENCE.txt",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENCE.txt: attribution notices from the Source form of the Work, | LICENCE.txt: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "swiposaur",
+    "size": 23048,
+    "repo": "thesithunyein/swiposaur",
+    "id": 29,
+    "slug": "swiposaur",
+    "title": "Swiposaur",
+    "developer": "thesithunyein",
+    "license": "Apache-2.0",
+    "source": "https://github.com/thesithunyein/swiposaur",
+    "commit": "d60076e9e8b0f7938c44770d20cde7a296c164a3",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README_SithuNyein_Swiposaur.md: 11. Asset credit summary | README_SithuNyein_Swiposaur.md: (Google Fonts, SIL OFL 1.1), plus Aka 08 for the Burmese UI (credited to"
   }
 ]
