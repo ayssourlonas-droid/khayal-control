@@ -371,5 +371,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "eightfrontd",
+    "size": 1256,
+    "repo": "mike007jd/eightfront-3d",
+    "id": 26,
+    "slug": "eightfront-3d",
+    "title": "Eightfront 3d",
+    "developer": "mike007jd",
+    "license": "Apache-2.0",
+    "source": "https://github.com/mike007jd/eightfront-3d",
+    "commit": "3a9776b1088e1c28dae3c206b0b77c5429a2218e",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]

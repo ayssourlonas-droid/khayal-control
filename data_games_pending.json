@@ -518,5 +518,31 @@
       "type": "web",
       "category": "aerodynamics"
     }
+  },
+  {
+    "id": 26,
+    "release_year": "2026",
+    "category_tags": [
+      "html5-game",
+      "javascript",
+      "threejs"
+    ],
+    "main_scene": {
+      "title_ar": "Eightfront 3d",
+      "title_en": "Eightfront 3d",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/eightfront-3d/_cover.png"
+    },
+    "details_scene": {
+      "description": "Offline Three.js eight-stage fan game with original GPU-skinned commandos and local co-op.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/eightfront-3d/",
+      "developer": "mike007jd",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/mike007jd/eightfront-3d",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "html5-game"
+    }
   }
 ]
