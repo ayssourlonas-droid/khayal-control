@@ -102,5 +102,31 @@
       "type": "web",
       "category": "3d"
     }
+  },
+  {
+    "id": 8,
+    "release_year": "2026",
+    "category_tags": [
+      "1024",
+      "canvas",
+      "game"
+    ],
+    "main_scene": {
+      "title_ar": "Maimai Restaurant Huiyan",
+      "title_en": "Maimai Restaurant Huiyan",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/maimai-restaurant-huiyan/_cover.png"
+    },
+    "details_scene": {
+      "description": "麦麦餐厅-慧眼识人 | 麦当劳 2026 年 1024 程序员创意开发大赛参赛项目：基于麦当劳 MCP 真实餐品数据的出餐配餐与优惠推荐练习游戏（单文件 HTML，双击即玩）",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/maimai-restaurant-huiyan/",
+      "developer": "Nothingsssss",
+      "license": "MIT",
+      "source_url": "https://github.com/Nothingsssss/maimai-restaurant-huiyan",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "1024"
+    }
   }
 ]

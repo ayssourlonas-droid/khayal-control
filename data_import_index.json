@@ -101,5 +101,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: <a href=\"https://undefbehav.itch.io/tmp3d\" target=\"_blank\">itch.io</a> | LICENSE: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "maimairestauranthuiyan",
+    "size": 3188,
+    "repo": "Nothingsssss/maimai-restaurant-huiyan",
+    "id": 8,
+    "slug": "maimai-restaurant-huiyan",
+    "title": "Maimai Restaurant Huiyan",
+    "developer": "Nothingsssss",
+    "license": "MIT",
+    "source": "https://github.com/Nothingsssss/maimai-restaurant-huiyan",
+    "commit": "09ba8427a181ca2471209f4a530313b9de2e0a9a",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

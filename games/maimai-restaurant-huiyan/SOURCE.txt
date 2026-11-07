@@ -1,0 +1,8 @@
+Source: https://github.com/Nothingsssss/maimai-restaurant-huiyan
+Commit: 09ba8427a181ca2471209f4a530313b9de2e0a9a
+License: MIT
+Imported: 2026-11-07T19:45:25.652843+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 6, audio: 0, tagged audio: 0
