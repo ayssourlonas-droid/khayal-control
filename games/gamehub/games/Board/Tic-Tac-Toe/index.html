@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:gamehub:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic-Tac-Toe - Classic Strategy Game</title>
+  <meta name="description" content="Play the classic Tic-Tac-Toe game! Challenge a friend or play against AI. Track your wins and become a champion!" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23667eea' width='64' height='64' rx='8'/%3E%3Cpath stroke='white' stroke-width='4' fill='none' d='M16 16 L48 48 M48 16 L16 48'/%3E%3C/svg%3E" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Game Header -->
+  <header class="game-header">
+    <h1 class="game-title">
+      <span class="title-icon">❌⭕</span>
+      Tic-Tac-Toe
+    </h1>
+    <p class="game-subtitle">Connect three in a row to win!</p>
+<!-- Dedicated to my girlfriend -->
+  </header>
+
+  <!-- Game Layout -->
+  <div class="game-layout">
+    <!-- Sidebar - Mode & Stats -->
+    <aside class="sidebar">
+      <!-- Game Mode Selection -->
+      <div class="mode-section">
+        <h3 class="section-title">Game Mode</h3>
+        <div class="mode-buttons">
+          <button class="mode-btn active" data-mode="pvp">
+            <span class="mode-emoji">👥</span>
+            <span class="mode-name">Player vs Player</span>
+          </button>
+          <button class="mode-btn" data-mode="ai">
+            <span class="mode-emoji">🤖</span>
+            <span class="mode-name">Player vs AI</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Statistics -->
+      <div class="stats-section">
+        <h3 class="section-title">Statistics</h3>
+<!-- Developer: SinceraXY - CUPB -->
+        <div class="stat-item">
+          <span class="stat-label" id="xLabel">X Wins</span>
+          <span class="stat-value" id="xWins">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label" id="oLabel">O Wins</span>
+          <span class="stat-value" id="oWins">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Draws</span>
+          <span class="stat-value" id="draws">0</span>
+        </div>
+    <!-- QQ: 2952671670 -->
+        <button class="reset-stats-btn" id="resetStatsBtn" title="Reset all statistics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+<!-- Made with love -->
+
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+          Reset Stats
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Game Area -->
+    <main class="game-main">
+      <!-- Current Player Display -->
+      <div class="player-display">
+        <div class="player-indicator" id="playerIndicator">
+          <span class="current-player-label">Current Turn:</span>
+          <span class="current-player-symbol" id="currentPlayerSymbol">❌</span>
+        </div>
+      </div>
+
+      <!-- Game Board -->
+      <div class="game-board">
+        <div class="board-container" id="board">
+          <div class="cell" data-index="0"></div>
+          <div class="cell" data-index="1"></div>
+          <div class="cell" data-index="2"></div>
+          <div class="cell" data-index="3"></div>
+          <div class="cell" data-index="4"></div>
+          <div class="cell" data-index="5"></div>
+          <div class="cell" data-index="6"></div>
+          <div class="cell" data-index="7"></div>
+          <div class="cell" data-index="8"></div>
+        </div>
+      </div>
+
+      <!-- Game Status -->
+      <div class="game-status" id="gameStatus">
+        Player X's turn
+      </div>
+
+      <!-- Control Buttons -->
+      <div class="control-buttons">
+        <button class="new-game-btn" id="newGameBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+          New Game
+        </button>
+      </div>
+    <!-- SinceraXY @ China University of Petroleum, Beijing -->
+    </main>
+  </div>
+
+  <!-- Victory Modal -->
+  <div class="victory-modal" id="victoryModal">
+    <div class="modal-content">
+      <div class="modal-icon" id="modalIcon">🏆</div>
+      <h2 class="modal-title" id="modalTitle">Player X Wins!</h2>
+      <p class="modal-message" id="modalMessage">Congratulations on your victory!</p>
+      <button class="play-again-btn" id="playAgainBtn">Play Again</button>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>

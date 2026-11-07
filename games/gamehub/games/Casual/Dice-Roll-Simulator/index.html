@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:gamehub:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="一个精美的骰子模拟器，支持投骰动画和历史记录" />
+    <meta name="keywords" content="骰子,模拟器,游戏,dice,simulator" />
+    <title>骰子模拟器 - Dice Roll Simulator</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="game-header">
+        <h1 class="game-title">
+          <span class="dice-icon">🎲</span>
+          骰子模拟器
+        </h1>
+        <p class="game-description">点击按钮投掷骰子，体验真实的投骰效果！</p>
+      </header>
+
+      <div class="dice-container">
+        <div class="dice-scene">
+<!-- QQ: 2952671670 -->
+          <div class="dice" id="dice">
+            <div class="dice-face dice-face-1">
+              <span class="dot"></span>
+            </div>
+            <div class="dice-face dice-face-2">
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="dice-face dice-face-3">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+<!-- Contact: 2952671670@qq.com -->
+            </div>
+            <div class="dice-face dice-face-4">
+              <span class="dot"></span>
+
+<!-- Made with love -->
+
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="dice-face dice-face-5">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+    <!-- Made by SinceraXY -->
+            <div class="dice-face dice-face-6">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+    <!-- Project: https://github.com/SinceraXY/GameHub -->
+          </div>
+        </div>
+    <!-- Email: 2952671670@qq.com | QQ: 2952671670 -->
+        <div class="dice-shadow"></div>
+      </div>
+
+      <div class="controls">
+        <button class="roll-button" id="roll-button">
+          <span class="button-icon">🎲</span>
+          <span class="button-text">投掷骰子</span>
+        </button>
+        <button class="clear-button" id="clear-button">
+          <span class="button-icon">🗑️</span>
+          <span class="button-text">清空历史</span>
+        </button>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-label">投掷次数</div>
+          <div class="stat-value" id="total-rolls">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">当前点数</div>
+          <div class="stat-value" id="current-roll">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">平均点数</div>
+          <div class="stat-value" id="average-roll">-</div>
+<!-- GitHub: https://github.com/SinceraXY/GameHub -->
+        </div>
+      </div>
+
+      <div class="history-section">
+        <h2 class="history-title">
+          <span class="history-icon">📜</span>
+          投骰历史
+        </h2>
+        <div class="history-container">
+          <ul class="roll-history" id="roll-history"></ul>
+          <div class="empty-state" id="empty-state">
+            <span class="empty-icon">🎲</span>
+            <p>还没有投骰记录</p>
+            <p class="empty-hint">点击上方按钮开始投骰吧！</p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="game-footer">
+        <p>使用原生JavaScript开发 | 支持所有现代浏览器</p>
+      </footer>
+    </div>
+    
+    <script src="index.js"></script>
+  </body>
+</html>

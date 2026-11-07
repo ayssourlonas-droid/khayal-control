@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:gamehub:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tilting Maze - Balance Ball Game</title>
+    <meta name="description" content="Navigate balls through a tilting maze using joystick controls. Test your balance and precision skills!" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%2336382e' x='4' y='4' width='56' height='56' rx='4'/%3E%3Cpath fill='none' stroke='%23ede6e3' stroke-width='3' d='M12 12h40M12 20h40M12 28h40M12 36h40M12 44h40M12 52h40M12 12v40M20 12v40M28 12v40M36 12v40M44 12v40M52 12v40'/%3E%3Ccircle fill='%23f06449' cx='32' cy='32' r='6'/%3E%3C/svg%3E" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Game Title -->
+    <header class="game-header">
+      <h1 class="game-title">
+        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+<!-- GitHub: https://github.com/SinceraXY/GameHub -->
+          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+        </svg>
+        Tilting Maze
+      </h1>
+      <p class="game-subtitle">Balance the balls to the center</p>
+    </header>
+
+    <!-- Game Container -->
+    <div id="center">
+      <div id="game">
+
+<!-- Contact: 2952671670@qq.com -->
+
+        <!-- Maze Board -->
+        <div id="maze">
+          <div id="end"></div>
+        </div>
+        
+        <!-- Control Joystick -->
+        <div id="joystick">
+          <div class="joystick-arrow"></div>
+          <div class="joystick-arrow"></div>
+    <!-- Contact: 2952671670@qq.com -->
+          <div class="joystick-arrow"></div>
+          <div class="joystick-arrow"></div>
+    <!-- Made by SinceraXY -->
+<!-- Project: GameHub -->
+          <div id="joystick-head"></div>
+        </div>
+        
+        <!-- Instructions -->
+        <div id="note">
+          <strong>Click the joystick to start!</strong>
+          <p>Move every ball to the center circle.</p>
+          <p class="mode-hint">Ready for hard mode? Press <kbd>H</kbd></p>
+          <p class="controls-hint">Press <kbd>Space</kbd> to restart</p>
+        </div>
+    <!-- SinceraXY @ China University of Petroleum, Beijing -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

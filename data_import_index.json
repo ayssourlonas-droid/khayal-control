@@ -131,5 +131,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "gamehub",
+    "size": 759,
+    "repo": "SinceraXY/GameHub",
+    "id": 10,
+    "slug": "gamehub",
+    "title": "GameHub",
+    "developer": "SinceraXY",
+    "license": "Apache-2.0",
+    "source": "https://github.com/SinceraXY/GameHub",
+    "commit": "fb4ce626757b08aa9d2cfe41969787a2ad88633e",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
