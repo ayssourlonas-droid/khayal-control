@@ -1,0 +1,113 @@
+# Pip
+
+> Texas Hold'em against AI and with friends — no account needed to play, no real
+> money, open source. A calm, anti-casino poker game: play money only, no ads, no
+> pop-ups, no dark patterns. Play in the browser at https://playpip.io, or in the
+> iPhone app at https://apps.apple.com/app/pip-poker/id6819732662.
+
+Single-player Pip runs in your browser, and your profile lives on your device. The
+poker engine is a pure, deterministic, unit-tested TypeScript module, so you can read
+exactly how every hand is shuffled and dealt rather than take our word for it. An
+ordinary hand shuffles with Math.random; the Daily Deal passes a date-derived seed,
+which is what makes one tournament a day identical for everyone in the world and
+checkable against the source.
+
+Multiplayer tables are dealt by our server instead, which sends each player only the
+cards they may see, so nobody can read another player's hand from their browser.
+
+The account is optional. It carries your progress to another device, it is what a
+membership belongs to, and it is what you need to play multiplayer or appear on the
+Pip Rating leaderboard. Without one, the only thing Pip sends us is an anonymous count
+of hands played: it holds no identity for you and stores no row with your name on it.
+
+Privacy: no cookies, no cross-site tracking. An account stores your email and a copy
+of the profile that was already on your device; signing in with Google or Apple adds
+what they send, and a membership adds a record that it is live. The only analytics are
+anonymous and cookieless (Umami); the privacy page lists exactly what is counted.
+
+Membership: £5.99 a month or £49 a year (also $7.99, €6.99 or ¥58 a month), for
+hosting as many multiplayer games as you like, the lessons, every drill, the other
+games and side tables, coaching reports and more. The ladder, the Rail, the Daily and
+the freeroll stay free, and so does joining a friend's room. Chips are never for sale,
+and nothing bought changes what happens once the cards are dealt.
+
+Every link under Pages, Guides and Blog points to the page's raw Markdown mirror, so the
+content can be fetched and parsed directly without HTML rendering.
+
+## Pages
+
+- [Pip — clean poker](https://playpip.io/index.md): Casual Texas Hold'em, redesigned. No fake felt, no neon.
+- [Learn poker](https://playpip.io/learn.md): Learn Texas Hold’em properly: a three-minute interactive tour, plus written guides on hand rankings and the rest. Free, no signup, nothing to install.
+- [The Daily Deal: a free poker tournament every day, the same cards for everyone](https://playpip.io/daily.md): One free Texas Hold’em tournament a day. Everyone who plays gets the same cards, and you can check the deck yourself.
+- [Play poker free, no signup: Texas Hold’em in your browser](https://playpip.io/play-poker-free-no-signup.md): Free Texas Hold’em against AI opponents that play a proper game. No signup, no download, no real money, and the chips are not for sale. Type a name and you are dealt in.
+- [Poker odds calculator - free, no signup](https://playpip.io/poker-odds-calculator.md): Texas Hold’em odds, worked out in your browser. Pick your cards, add a board, choose how many opponents. Free, no signup, no ads, nothing to install.
+- [Blog](https://playpip.io/blog.md): Notes from the Pip table — what shipped, what changed, and the occasional hand worth talking about.
+- [Credits](https://playpip.io/credits.md): The people who build Pip. Open source, so the list writes itself.
+- [Membership](https://playpip.io/membership.md): What the Pip membership includes, what it costs, and how to cancel it. The game itself stays free.
+- [Privacy](https://playpip.io/privacy.md): What Pip collects (almost nothing), where your data lives, and how to delete an account.
+- [Terms](https://playpip.io/terms.md): The short, human rules for using Pip — free, play money, open source.
+- [Support](https://playpip.io/support.md): How to reach us, manage or cancel a membership, move your progress and delete an account.
+
+## Guides
+
+- [Poker hand rankings: what beats what in Texas Hold’em](https://playpip.io/learn/hand-rankings.md): All ten poker hands in order, strongest to weakest, with how ties are settled and how often each one actually turns up. No signup, and you can practise straight away.
+- [How to play Texas Hold’em: the rules, in the order they happen](https://playpip.io/learn/how-to-play-texas-holdem.md): The rules of Texas Hold’em in the order you meet them at a table: the blinds, the four betting rounds, what you can do on your turn, and a full hand played out. No signup, and you can practise straight away.
+- [Poker starting hands: a chart that tells you when, not just what](https://playpip.io/learn/starting-hands.md): All 169 starting hands in one chart, sorted by the earliest position you should open them from. Plus how often each one arrives and what suitedness is actually worth. No signup, and you can practise straight away.
+- [Pot odds: how to work out whether a call makes money](https://playpip.io/learn/pot-odds.md): Pot odds in one formula, with the price every common bet size sets, how many outs each draw really has, and the mistake that makes most pot-odds advice wrong. No signup, and you can practise straight away.
+- [Position in poker: why the button is the best seat at the table](https://playpip.io/learn/position.md): What position means, the six seats in the order they act, and why the same two cards are a fold in one seat and a raise in another. With the numbers behind it. No signup, and you can practise straight away.
+- [Poker bet sizing: how much to bet, and what each size costs you](https://playpip.io/learn/bet-sizing.md): Every bet sets two prices, one for the other player and one for you. The four sizes worth using, what each one charges a draw, and why a pot-sized bluff has to work half the time. No signup, and you can practise straight away.
+- [How often do you flop a set with a pocket pair?](https://playpip.io/learn/how-often-do-you-flop-a-set.md): About 11.8% of the time, or one flop in 8.5. All 19,600 flops a pocket pair can meet, graded, including the 48 that hand you a full house without a card of your rank in them.
+- [Three pair in Texas Hold’em: what happens to the third one](https://playpip.io/learn/three-pair-in-texas-holdem.md): You can hold three pairs and you cannot play them: a hand is five cards, so the top two pairs play and the third is worth a kicker, one time in four. With every rank shape counted and two spots walked through.
+
+## Blog
+
+- [A poker rating that ignores whether you won the hand](https://playpip.io/blog/pip-rating-grades-decisions.md): The Pip Rating grades each call, fold and opening move on the cards you could see, so a bad beat costs nothing. 1,000 gives away 2.5% of what was at stake, and every halving is 350 points. Calling everything and folding everything both rate about 400. What the server checks, and what it cannot.
+- [Set mining needs a deep stack. How long each table gives you one](https://playpip.io/blog/deep-stack-set-mining.md): A pocket pair flops its third card 2,304 times in 19,600, so calling a raise to three big blinds needs about 26 big blinds behind, on both sides, to break even. Pip’s ladder tables keep that for 18 to 20 hands. Deep Stack keeps it for 60 to 84. Counted from each table’s own blinds.
+- [Calling a river bet: when the answer depends on who is betting](https://playpip.io/blog/calling-a-river-bet.md): A bet of half the pot needs you to win one time in four, and a pot-sized bet one in three. Whether your pair does depends on how often they bluff. We dealt 40,000 hands through Pip’s river drill: about one river decision in four is right against one player and wrong against another.
+- [The most you can bet in Pot-Limit Omaha](https://playpip.io/blog/pot-limit-omaha-max-bet.md): You may raise by the size of the pot after you call. At 25 and 50 blinds the first raise is 175, then 600, 2,050 and 7,000, and the fifth is all-in from 200 big blinds. The shortcut players use, why it is out by a blind for the blinds, and the flop.
+- [The house edge in Blackjack when you can only hit or stand](https://playpip.io/blog/blackjack-house-edge-hit-or-stand.md): Pip’s Blackjack has no doubling and no splitting, and each table states its house edge. We played 40 million hands a table to check: one card was right and two said the house took more than it does. The numbers, what each rule is worth, and the whole strategy in a paragraph.
+- [Turn-based poker with friends who are never free at once](https://playpip.io/blog/turn-based-poker-with-friends.md): A slow game on Pip is a private Hold’em table where each move gets 1 to 24 hours, and your clock stops during your quiet hours. Moves set in advance, a replay of what you missed, and a notification when it is your turn. Any free account can host one at a time; friends join free.
+- [How often is there a low in Omaha Hi-Lo?](https://playpip.io/blog/omaha-hi-lo-how-often-a-low.md): Six boards in ten allow a low. One hand makes one a little over a third of the time, and ace-deuce a little under half. Counted over every deal, checked against the evaluator that settles Pip’s Hi-Lo pots, and how the odds change with six hands at the table.
+- [A poker night with friends, online, with nothing to settle up](https://playpip.io/blog/poker-night-with-friends-online.md): One person opens a private room on Pip and sends a link; everyone else joins free with an account. Up to four seats free, up to eight with camera and voice in a member’s room, and chips that are not money. What the host sets, and what happens when somebody gets up.
+- [How often both your cards play in Hold’em](https://playpip.io/blog/how-often-both-your-cards-play.md): We counted all 2,809,475,760 Hold’em deals. Both hole cards make the best five in 1,324,680,512 of them, a little under half. One card does it more often, and in one deal in twenty the board plays. Worked hands, and when two different fives are both right.
+- [Five-Card Draw: what the number of cards gives away](https://playpip.io/blog/five-card-draw-what-a-draw-gives-away.md): In Five-Card Draw the only tell is how many cards somebody asks for. Every one of the 2,598,960 five-card hands, dealt through the rule Pip’s Draw regulars throw by, and what each number means.
+- [Your cards stay on the server](https://playpip.io/blog/your-cards-stay-on-the-server.md): In single-player Pip the whole deck is in your browser. At a multiplayer table that would let anyone read your cards, so our server deals and sends each player only what they may see. The test that checks every step, the one that keeps the AI players honest, and what it does not do.
+- [A beginner beat our hardest table by betting](https://playpip.io/blog/a-beginner-beat-the-main-event.md): The Main Event folded 71% of checked flops to a two-thirds pot bet, where 40% already pays. A player two months into poker found it before we did. What the bots remember now.
+- [Why a flush beats a full house in Short Deck](https://playpip.io/blog/short-deck-flush-beats-full-house.md): Short Deck throws out the deuces through fives, and the hand order moves to match. Every five- and seven-card hand on a thirty-six card deck, counted by the evaluator that settles Pip’s Short Deck pots.
+- [Omaha’s exactly-two rule, in five hands](https://playpip.io/blog/omaha-exactly-two.md): In Pot-Limit Omaha you hold four cards and must play exactly two with three from the board. Five hands where that changes the answer, checked against the evaluator that settles Pip’s Omaha pots, and how big a pot-limit raise can be.
+- [What Google and Apple tell us when you sign in](https://playpip.io/blog/sign-in-with-google-and-apple.md): Pip accounts can now be made with Google or Apple. Both send us your email and an id, Google adds your name and picture, Apple your name once. We never show or use them.
+- [Pot odds when you can’t cover the bet](https://playpip.io/blog/short-stack-pot-odds.md): Facing a bet bigger than your stack, you pay less than the bet and play for less than the pot. Our session review got both halves wrong and called a fold that cost four big blinds a good one. The right sum, worked through one spot.
+- [Deal me in dealt you a menu](https://playpip.io/blog/deal-me-in.md): In September, 68 of the 217 people who made a player on Pip did not play a hand within the hour. The tour was not why. The button that said Deal me in opened the lobby, and now it opens a table.
+- [Pip has a membership now](https://playpip.io/blog/pip-has-a-membership.md): £5.99 a month or £49 a year, for multiplayer, the lessons, the drills and more. The ladder, the Rail, the Daily and the freeroll stay free.
+- [The mock-ups on your landing page are untested claims](https://playpip.io/blog/landing-page-mockups.md): Our home page draws four small pictures of what the game produces. Three were typed out by hand and all three had drifted: a share line missing the address that makes it a loop, a hand permalink six characters long on the card that says there is no server, and an equity read labelled with a phrase the game has never emitted, over a percentage its own caption contradicted. Why the suite stayed green, and the two ways to draw your own output that are true by construction.
+- [Your Cloudflare Pages site is on Google twice](https://playpip.io/blog/cloudflare-pages-dev-duplicate.md): Cloudflare noindexes preview deployments and says nothing about the production pages.dev alias, which serves your whole site on a second host. Ours did, for five weeks, with a correct canonical tag on every page. The two-line rule that fixed it, why it is not a redirect, and the test that stops the same file deindexing the real domain.
+- [A route missing from your sitemap is not noindexed](https://playpip.io/blog/sitemap-is-not-noindex.md): Leaving a URL out of the sitemap instructs nobody. Ours never listed the game, Google indexed it anyway under the home page’s title, and the fix we shipped covered one route and missed thirty-two. What replaced it: every route is published, noindex, or written down with a reason.
+- [How accurate is a poker equity calculator? We checked ours against an answer we could count](https://playpip.io/blog/how-accurate-is-a-poker-equity-calculator.md): Every sampled equity number carries an error bar, and almost nobody prints one or tests it. There is exactly one spot where the true answer is countable. Here is what 100 runs against it say about the band we print.
+- [August: what shipped](https://playpip.io/blog/august-what-shipped.md): Six written guides, a free odds calculator, a drill that marks your answer, a card at the end of a tournament, and the month we measured our own bots and published our own errors.
+- [Five things pokersolver does that its README does not mention](https://playpip.io/blog/pokersolver-undocumented.md): Its cards array can hand you seven cards for a five-card hand, an ace playing low comes back with the value 1, and a royal flush is named “Straight Flush”. Each one with the input that produces it.
+- [Everything we have published that was wrong](https://playpip.io/blog/what-we-got-wrong.md): Every false claim we have shipped: what each one said, how long it served, how we found it, and the test that now fails if it comes back. The newest one is a sentence in this post.
+- [Verify today’s deal yourself](https://playpip.io/blog/verify-todays-deal.md): Everyone playing the Daily gets the same shuffle. Here are the six steps that produce it, a snippet that runs anywhere, and one day’s deck to check yourself against.
+- [Two devices, two chip counts](https://playpip.io/blog/two-devices-two-chip-counts.md): Pip now has an optional account that carries your progress to a second device. The interesting part isn’t the sign-in, it’s what happens when both devices have been played.
+- [Pip, for readers who aren’t people](https://playpip.io/blog/agent-readable.md): Every content page now answers Accept: text/markdown with its plain text version — a free-plan build of what Cloudflare offers as Markdown for Agents, in about ninety lines.
+- [Launch week: what shipped](https://playpip.io/blog/launch-week.md): A new card back, four more hand nicknames, a quicker freeroll, and three strangers in the credits — everything that changed in Pip’s first days in the open.
+- [Pip is live, and it’s open source](https://playpip.io/blog/pip-is-live.md): Single-player Texas Hold’em with no account needed, no ads, and no real money — now live at playpip.io, with the whole codebase in the open.
+
+## Project
+
+- [Source code](https://github.com/playpip/pip-web): The full open-source repo (MIT).
+- [Roadmap](https://github.com/playpip/pip-web/blob/main/ROADMAP.md): Where Pip is going, in the open.
+- [Contributing](https://github.com/playpip/pip-web/blob/main/CONTRIBUTING.md): How to get involved — code or not.
+
+## What it is
+
+- Texas Hold'em against a fixed cast of AI opponents with faces and personalities.
+- A ladder of ten winner-take-all tournaments, from Friends' Garage to The Main Event, plus the Rail (cash tables that never end) and the Daily Deal.
+- Multiplayer with friends: open a private room and send the code, with camera and voice if you want them, or a slow game with an hour to a day for each move. Or quick match at any ladder stake, with AI players in empty seats. With a free account you can join any friend's room, and host one room a day (up to four seats, no camera or voice), one quick match a day and one slow game at a time; members host as many as they like.
+- More games for members: Pot-Limit Omaha, Omaha Hi-Lo, Short Deck and Five-Card Draw, plus side tables (Fast, Heads-Up, Bounty, Deep Stack) and Blackjack.
+- The Pip Rating: a public rating of your decisions at a Hold'em table, not your results, with a live leaderboard. Needs an account to appear on it, and you can hide yourself.
+- Learn poker: a three-minute interactive tour at https://playpip.io/tutorial (app, not prose, so no Markdown mirror), lessons with Webb on a real table (Level 1 free), drills graded by the engine, and the written guides listed above. https://playpip.io/learn indexes them.
+- Daily rewards: chips counted in buy-ins at your table for coming back each day.
+- Play money only. Chips are never for sale, and cosmetics are style, never edge (no pay-to-win).
+- Hand permalinks: share any hand as a URL that replays step by step, with no server or account.
+- Ambient help: live win-% equity, hand strength, plain-English opponent reads.
+- Installable PWA and an iPhone app; light and dark themes; single-player works offline once loaded.
