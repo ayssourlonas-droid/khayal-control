@@ -12,6 +12,7 @@ import shutil
 import subprocess
 import sys
 import threading
+import time
 import urllib.request
 import urllib.error
 from datetime import datetime, timezone
@@ -55,15 +56,93 @@ def log(*a):
     print(*a, flush=True)
 
 
+# ───────────── قياس الزمن ومراقبة التأخر (لمعرفة سبب البطء عند حدوثه) ─────────────
+_T0 = time.time()
+_STAGE = {"name": "بدء", "t": time.time()}
+TIMINGS = []                      # [(مرحلة، ثوانٍ)]
+COUNT = {"commands": 0, "browser_tests": 0}
+LAST_CMD = {"cmd": "", "t": 0.0}
+_WATCHDOG = {"timer": None}
+
+
+def stage(name):
+    """يسجّل نهاية المرحلة السابقة وبداية مرحلة جديدة مع الزمن المنقضي."""
+    now = time.time()
+    if _STAGE["name"]:
+        TIMINGS.append((_STAGE["name"], round(now - _STAGE["t"], 1)))
+    _STAGE.update(name=name, t=now)
+    if name:
+        log(f"⏱ [{int(now - _T0)}ث منذ البدء] المرحلة: {name}")
+
+
+def timings_text():
+    now = time.time()
+    rows = TIMINGS + [(_STAGE["name"], round(now - _STAGE["t"], 1))]
+    return "؛ ".join(f"{n}: {int(t)}ث" for n, t in rows if t >= 1)
+
+
+def _watchdog_fire():
+    """قبل أن يقطع GitHub المهمة (40 دقيقة) نكتب أين كنا بالضبط ثم ننهي بفشل واضح."""
+    now = time.time()
+    cmd = LAST_CMD["cmd"]
+    lines = [
+        "## ⏱ تجاوز المهلة الداخلية",
+        f"مضى {int((now - _T0) / 60)} دقيقة منذ البدء، والمرحلة الجارية: **{_STAGE['name']}** "
+        f"(منذ {int((now - _STAGE['t']) / 60)} دقيقة).",
+        f"آخر أمر: `{cmd[:200]}` (منذ {int(now - LAST_CMD['t'])} ثانية)" if cmd else "لم يُشغَّل أمر خارجي بعد.",
+        f"عدد الأوامر الخارجية: {COUNT['commands']}؛ عدد اختبارات المتصفح: {COUNT['browser_tests']}",
+        "أزمنة المراحل: " + timings_text(),
+        "التفسير المرجّح: بناء npm ثقيل، أو تكرار اختبارات المتصفح أثناء تقليل الملفات/تحسين الوسائط "
+        "(جرّب prune=junk/off أو media=off لهذه اللعبة).",
+    ]
+    txt = "\n".join(lines)
+    print(txt, flush=True)
+    sp = os.environ.get("GITHUB_STEP_SUMMARY")
+    if sp:
+        try:
+            with open(sp, "a", encoding="utf-8") as f:
+                f.write(txt + "\n")
+        except Exception:
+            pass
+    print(f"::error title=تجاوز المهلة الداخلية::المرحلة الجارية: {_STAGE['name']}", flush=True)
+    os._exit(3)
+
+
+def start_watchdog():
+    sec = float(os.environ.get("WATCHDOG_SEC") or float(os.environ.get("WATCHDOG_MIN", "35")) * 60)
+    t = threading.Timer(sec, _watchdog_fire)
+    t.daemon = True
+    t.start()
+    _WATCHDOG["timer"] = t
+
+
+def stop_watchdog():
+    if _WATCHDOG["timer"]:
+        _WATCHDOG["timer"].cancel()
+
+
+def _heartbeat(cmd_text, t0, stop):
+    while not stop.wait(120):
+        log(f"⏳ ما زال يعمل منذ {int(time.time() - t0)}ث: {cmd_text[:80]}  (المرحلة: {_STAGE['name']})")
+
+
 def run(cmd, cwd=None, timeout=900, check=True, env=None):
-    log("$", " ".join(cmd) if isinstance(cmd, list) else cmd)
+    cmd_text = " ".join(cmd) if isinstance(cmd, list) else cmd
+    log("$", cmd_text)
     e = os.environ.copy()
     e["CI"] = "1"
     if env:
         e.update(env)
-    r = subprocess.run(cmd, cwd=cwd, timeout=timeout, env=e, text=True,
-                       shell=isinstance(cmd, str),
-                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    COUNT["commands"] += 1
+    LAST_CMD.update(cmd=cmd_text, t=time.time())
+    hb_stop = threading.Event()
+    threading.Thread(target=_heartbeat, args=(cmd_text, time.time(), hb_stop), daemon=True).start()
+    try:
+        r = subprocess.run(cmd, cwd=cwd, timeout=timeout, env=e, text=True,
+                           shell=isinstance(cmd, str),
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    finally:
+        hb_stop.set()
     tail = (r.stdout or "")[-2500:]
     if tail:
         log(tail)
@@ -424,6 +503,8 @@ def _explore(page, w=412, h=915, seconds=45):
 
 
 def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45):
+    COUNT["browser_tests"] += 1
+    log(f"🌐 اختبار متصفح رقم {COUNT['browser_tests']} (المرحلة: {_STAGE['name']})")
     res = {"ran": False, "console_errors": [], "failed_requests": [], "status_ok": False,
            "blank": False, "external_requests": [], "missing": [], "used": []}
     try:
@@ -833,6 +914,14 @@ def server_side_hints(src: Path):
     return hints
 
 
+_NOISE_VAL = re.compile(r"^(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{16,}|[\W\d_]+)$", re.I)
+
+
+def _meaningful_meta(v):
+    v = str(v).strip()
+    return len(v) >= 3 and not _NOISE_VAL.match(v) and bool(re.search(r"[A-Za-z\u0600-\u06FF]{3,}", v))
+
+
 def scan_provenance(src: Path):
     """يجمع كل ما يُعرف آلياً عن مصدر الصور والأصوات. النتيجة إشارات للمراجعة وليست ضماناً."""
     skip = {".git", "node_modules", "dist", "build", ".github"}
@@ -884,7 +973,7 @@ def scan_provenance(src: Path):
             if useful:
                 tagged_audio += 1
                 for k in ("artist", "author", "copyright", "composer", "publisher", "license", "url"):
-                    if useful.get(k):
+                    if useful.get(k) and _meaningful_meta(useful[k]):
                         authors.add(f"{k}={str(useful[k])[:80]}")
         except Exception:
             pass
@@ -895,7 +984,7 @@ def scan_provenance(src: Path):
                 im = Image.open(f)
                 ex = im.getexif()
                 vals = [ex.get(315), ex.get(33432)] + [im.info.get(k) for k in ("Author", "Copyright", "Source")]
-                vals = [str(v)[:80] for v in vals if v and not isinstance(v, bytes)]
+                vals = [str(v)[:80] for v in vals if v and not isinstance(v, bytes) and _meaningful_meta(v)]
                 if vals:
                     tagged_img += 1
                     authors.update(vals)
@@ -980,7 +1069,36 @@ def game_signals(site: Path, limit=4_000_000):
     return False
 
 
+_BACKEND_MARKERS = [
+    (re.compile(r"NEXT_PUBLIC_SUPABASE_URL|NEXT_PUBLIC_SUPABASE_ANON_KEY|[a-z0-9-]+\.supabase\.co"), "Supabase (حسابات/بيانات)"),
+    (re.compile(r"NEXT_PUBLIC_ROOMS_URL|NEXT_PUBLIC_API_URL|NEXT_PUBLIC_SERVER_URL|VITE_API_URL|VITE_SERVER_URL"), "رابط خادم يُضبط وقت البناء"),
+    (re.compile(r"[a-z0-9-]+\.firebaseio\.com|firebaseapp\.com|[a-z0-9-]+\.convex\.cloud|\.herokuapp\.com"), "خدمة سحابية (Firebase/Convex/Heroku)"),
+    (re.compile(r"new WebSocket\(\s*[\"'`]wss?://(?!localhost|127\.0\.0\.1)"), "WebSocket إلى خادم خارجي"),
+    (re.compile(r"NEXT_PUBLIC_STRIPE|pk_(?:live|test)_[A-Za-z0-9]{10,}"), "مدفوعات Stripe"),
+]
+
+
+def backend_signals(site: Path, limit=6_000_000):
+    """علامات أن اللعبة تعتمد على خادم/حساب خارجي (قد تعلق على شاشة التحميل بلا إعدادات الخادم)."""
+    found, seen = {}, 0
+    for f in site.rglob("*"):
+        if f.suffix.lower() not in (".js", ".mjs", ".html") or not f.is_file():
+            continue
+        try:
+            t = f.read_text("utf-8", errors="ignore")
+        except Exception:
+            continue
+        seen += len(t)
+        for rx, label in _BACKEND_MARKERS:
+            if label not in found and rx.search(t):
+                found[label] = f.name
+        if seen > limit:
+            break
+    return list(found)
+
+
 def main():
+    start_watchdog()
     repo_url = os.environ.get("INPUT_REPO_URL", "").strip()
     subdir = os.environ.get("INPUT_SUBDIR", "").strip().strip("/")
     build_cmd = os.environ.get("INPUT_BUILD_CMD", "").strip()
@@ -1003,6 +1121,13 @@ def main():
     reasons, warnings, notes = [], [], []
 
     def finish(status):
+        stop_watchdog()
+        stage("")  # يغلق المرحلة الأخيرة
+        report["timings"] = [{"stage": n, "seconds": t} for n, t in TIMINGS if n]
+        report["commands"] = COUNT["commands"]
+        report["browser_tests"] = COUNT["browser_tests"]
+        notes.append("الأزمنة: " + "؛ ".join(f"{n}: {int(t)}ث" for n, t in TIMINGS if n and t >= 1)
+                     + f" (أوامر: {COUNT['commands']}، اختبارات متصفح: {COUNT['browser_tests']})")
         report["status"] = status
         report["reasons"] = reasons
         report["warnings"] = warnings
@@ -1023,6 +1148,7 @@ def main():
     owner, repo = pr
     report.update(owner=owner, repo=repo)
 
+    stage("الرخصة")
     # 1) الرخصة
     try:
         info = api(f"/repos/{owner}/{repo}")
@@ -1042,6 +1168,7 @@ def main():
         finish("fail")
     notes.append("رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه")
 
+    stage("جلب المستودع")
     # 2) الجلب
     src = work / "src"
     run(["git", "clone", "--depth", "1", f"https://github.com/{owner}/{repo}.git", str(src)], timeout=600)
@@ -1061,6 +1188,7 @@ def main():
     report["year"] = pushed or str(datetime.now().year)
     report["owner_login"] = (info.get("owner") or {}).get("login", owner)
 
+    stage("البحث/البناء")
     # 3) مجلد الويب
     try:
         webroot = build_if_needed(src, subdir, build_cmd, notes)
@@ -1084,11 +1212,17 @@ def main():
     notes.extend(prov_notes)  # ملاحظات أصل الوسائط تظهر فقط للألعاب القابلة للاستيراد
     warnings.extend(prov_warns)
 
+    stage("تنظيف")
     # 4) تنظيف
     site = out / "site"
     big_warn = None
     copy_site(webroot, site)
     s = sanitize(site)
+    be = backend_signals(site)
+    if be:
+        warnings.append("تعتمد على خدمات خارجية (" + "، ".join(be) + "): على الأرجح لن تعمل كاملة داخل التطبيق "
+                        "(قد تعلق على شاشة التحميل لأن إعدادات الخادم لم تُضبط وقت البناء). جرّبها قبل الاعتماد")
+        report["backend_signals"] = be
     if not game_signals(site):
         warnings.append("لا توجد مؤشرات أن هذا الموقع لعبة (لا canvas ولا requestAnimationFrame ولا مكتبة ألعاب)؛ "
                         "راجعه جيداً قبل الاعتماد")
@@ -1120,6 +1254,7 @@ def main():
     if reasons:
         finish("fail")
 
+    stage("عزل التخزين")
     # 4ب) عزل بيانات اللعبة (localStorage/IndexedDB/Cache) عن بقية الألعاب على نفس النطاق
     try:
         import isolate_storage
@@ -1130,11 +1265,13 @@ def main():
     except Exception as e:
         warnings.append(f"تعذّر عزل التخزين: {str(e)[:100]}")
 
+    stage("ترخيص ومصدر")
     # 5) ترخيص + مصدر داخل مجلد اللعبة
     for fn in os.listdir(src):
         if re.match(r"(?i)^(licen[sc]e|copying|notice)", fn) and (src / fn).is_file():
             shutil.copy2(src / fn, site / fn)
 
+    stage("اختبار المتصفح")
     # 6) اختبار
     shot = out / "_shot.png"
     t = browser_test(site, work, shot, explore=True, seconds=60)
@@ -1165,6 +1302,7 @@ def main():
     if reasons:
         finish("fail")
 
+    stage("تقليل الملفات")
     # 6أ) تقليل الملفات
     files_before = sum(len(f) for _, _, f in os.walk(site))
     if spdx == "GPL-3.0" and prune_mode != "off":
@@ -1187,6 +1325,7 @@ def main():
         else:
             notes.append("تقليل الملفات: لا ملفات يمكن حذفها بأمان")
 
+    stage("تحسين الوسائط")
     # 6أ-2) تحسين الوسائط (صور/صوت/فيديو/خطوط)
     if media_mode != "off" and t["ran"]:
         if spdx == "GPL-3.0":
@@ -1218,6 +1357,7 @@ def main():
             except Exception as e:
                 warnings.append(f"تعذّر تحسين الوسائط: {str(e)[:120]}")
 
+    stage("فحص JavaScript")
     # 6ب) فحص JavaScript (تقرير فقط)
     lint = lint_js(site, work)
     report["lint"] = lint
@@ -1242,6 +1382,7 @@ def main():
            + f"- images: {pv['images']}, audio: {pv['audio']}, tagged audio: {pv['tagged_audio']}\n" if pv else ""),
         encoding="utf-8")
 
+    stage("الغلاف")
     # 7) الغلاف
     cover = pick_cover(site, src)
     cover_name = ""
