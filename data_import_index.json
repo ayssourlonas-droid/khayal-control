@@ -236,5 +236,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "becomethebrainos",
+    "size": 298,
+    "repo": "AxonOS-org/become-the-brain-os",
+    "id": 17,
+    "slug": "become-the-brain-os",
+    "title": "Become The Brain Os",
+    "developer": "AxonOS-org",
+    "license": "Apache-2.0",
+    "source": "https://github.com/AxonOS-org/become-the-brain-os",
+    "commit": "f7df306a492ec5516d6397ce2338fadedb65e0e6",
+    "date": "2026-11-07",
+    "license_file": "LICENSE-APACHE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE-APACHE: attribution notices from the Source form of the Work, | LICENSE-APACHE: include a readable copy of the attribution notices contained"
   }
 ]

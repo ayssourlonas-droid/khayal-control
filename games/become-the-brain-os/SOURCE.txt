@@ -1,0 +1,12 @@
+Source: https://github.com/AxonOS-org/become-the-brain-os
+Commit: f7df306a492ec5516d6397ce2338fadedb65e0e6
+License: Apache-2.0
+Imported: 2026-11-07T21:37:53.356247+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE-APACHE: attribution notices from the Source form of the Work,
+- LICENSE-APACHE: include a readable copy of the attribution notices contained
+- LICENSE-APACHE: do not modify the License. You may add Your own attribution
+- LICENSE-APACHE: that such additional attribution notices cannot be construed
+- images: 0, audio: 0, tagged audio: 0
