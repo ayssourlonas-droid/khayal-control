@@ -1,7 +1,7 @@
 Source: https://github.com/javafah/seltos
 Commit: 83d230d0ff565c7dec80b27fcb3544b6e07aa2f6
 License: Apache-2.0
-Imported: 2026-11-07T22:21:18.388763+00:00
+Imported: 2026-11-07T23:25:49.724376+00:00
 Automated changes (see report): {"عزل تخزين اللعبة": 5, "حذف ملفات غير لازمة": 5}
 
 Media provenance (automated signals, not a legal guarantee):
