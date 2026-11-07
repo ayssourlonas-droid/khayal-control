@@ -251,5 +251,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE-APACHE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE-APACHE: attribution notices from the Source form of the Work, | LICENSE-APACHE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "farmswecha",
+    "size": 10240,
+    "repo": "chaitu43/FarmSwecha",
+    "id": 18,
+    "slug": "farmswecha",
+    "title": "FarmSwecha",
+    "developer": "chaitu43",
+    "license": "CC0-1.0",
+    "source": "https://github.com/chaitu43/FarmSwecha",
+    "commit": "3e38f2405eac0963c32d546ded42e46d3173ccbf",
+    "date": "2026-11-07",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: Creative Commons Legal Code | LICENSE: CC0 1.0 Universal"
   }
 ]

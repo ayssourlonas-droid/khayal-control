@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:farmswecha:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Farming Community | Farm Swecha</title>
+    <meta name="description" content="Join the Farm Swecha community to connect with thousands of farmers, share experiences, and grow together.">
+    <meta name="keywords" content="Farmer Community, Join Farm Swecha, Farmer Registration">
+    <meta property="og:title" content="Join Farming Community | Farm Swecha">
+    <meta property="og:description" content="Join the Farm Swecha community to connect with thousands of farmers, share experiences, and grow together.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body style="background: var(--bg-soft);">
+
+    <nav>
+        <div class="logo"><a href="index.html" style="color: var(--primary-dark);">Farm<span>Swecha</span></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="lessons.html">Lessons</a></li>
+        </ul>
+        <a href="index.html" class="btn btn-outline">Back Home</a>
+    </nav>
+
+    <section style="padding: 120px 10% 60px;">
+        <div
+            style="max-width: 800px; margin: 0 auto; background: white; padding: 4rem; border-radius: 30px; box-shadow: var(--shadow);">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <i class="fas fa-users" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h1>Join Our Community</h1>
+                <p style="color: var(--text-muted);">Connect with thousands of farmers, share experiences, and grow
+                    together.</p>
+            </div>
+
+            <form id="communityForm">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">First Name</label>
+                        <input type="text" placeholder="Rahul"
+                            style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid #ddd; outline: none;"
+                            required>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Last Name</label>
+                        <input type="text" placeholder="Kumar"
+                            style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid #ddd; outline: none;"
+                            required>
+                    </div>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Phone Number</label>
+                    <input type="tel" placeholder="+91 XXXX XXX XXX"
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid #ddd; outline: none;"
+                        required>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">State</label>
+                    <select
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid #ddd; outline: none; background: white;">
+                        <option selected>Andhra Pradesh</option>
+                        <option>Telangana</option>
+                        <option>Karnataka</option>
+                        <option>Maharashtra</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Primary Crop</label>
+                    <input type="text" placeholder="e.g. Rice, Cotton, Turmeric"
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid #ddd; outline: none;"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; font-size: 1.1rem; padding: 1rem;">Register Now</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

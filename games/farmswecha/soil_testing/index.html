@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:farmswecha:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script><meta charset="utf-8">
+	<title>Soil Testing Page</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Stylesheets -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+	</style>
+	<!-- Responsive -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+<body>
+	<div class="row" style="height: 40px;"></div>
+	<div class="container">
+	<center><h1 style="color: #654321;text-decoration: underline;">Soil Testing</h1></center>
+	<div class="row" style="height: 30px;"></div>
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8" style="text-align: center;"><img src="soiltesting1.webp" style="width: 60%;height: 80%;" alt="soil testing"></div>
+			<div class="col-2"></div>
+		    
+		</div>
+		<div class="row">
+			<p>
+				Soil testing is the process of analyzing soil samples to determine their nutrient content, pH level, organic matter content, and other important characteristics.
+		
+			  It is an important tool for farmers, gardeners, and landscapers to help them make informed decisions about what crops or plants to grow and how much fertilizer or other amendments to apply.
+		
+		      Soil testing can also help identify potential problems with soil quality, such as high levels of heavy metals or contaminants, which can affect plant growth and pose a risk to human health if consumed.
+		
+		      By providing information about the specific needs of the soil, soil testing can help reduce the use of fertilizer and other inputs, which can save money and reduce environmental impacts.
+		
+		      Soil testing can be done through a variety of methods, including sending samples to a laboratory for analysis or using a handheld testing kit.
+		
+		      Overall, soil testing is an important practice for anyone who wants to promote healthy plant growth, maximize crop yields, and protect the environment.
+			</p>
+		</div>
+
+<hr>
+	<div class="card" style="background-color: #d9fcd5;border-radius: 20px;border-width: thin;border-color: #46973b;">
+	<div class="card-body">
+		<center><h1 style="color: #000000;">Test Your Soil</h1></center>
+		<div class="row" style="height: 25px;"></div>
+		<div class="row">
+			<div class="col-4">
+				<label for="ph" style="font-weight: bold;">pH:</label>
+			</div>
+			<div class="col-8">
+				<input type="number" style="width: 90%;" class="roundedinput" id="ph" placeholder="Enter pH (1-14) value" size=10 required>
+			</div>
+		</div>
+		<div class="row" style="height: 10px;"></div>
+		<div class="row">
+			<div class="col-4">
+				<label for="nitrogen" style="font-weight: bold;">Nitrogen (mg-N/kg)</label>			
+		    </div>
+			<div class="col-8">
+				<input type="number" style="width: 90%;" class="roundedinput" id="nitrogen" placeholder="Enter nitrogen value" size=10 required>
+			</div>
+	    </div>
+		<div class="row" style="height: 10px;"></div>
+		<div class="row">
+			<div class="col-4">
+				<label for="phosphorus" style="font-weight: bold;">Phosphorus (ppm):</label>			
+		    </div>
+			<div class="col-8">
+				<input type="number" style="width: 90%;" class="roundedinput" id="phosphorus" placeholder="Enter phosphorus value" size=10 required> 
+			</div>
+	    </div>
+		<div class="row" style="height: 10px;"></div>
+		<div class="row">
+			<div class="col-4">
+				<label for="potassium" style="font-weight: bold;">Potassium (mg/kg):</label>			
+		    </div>
+			<div class="col-8">
+				<input type="number" style="width: 90%;" class="roundedinput" id="potassium" placeholder="Enter potassium value" size=10 required>
+			</div>
+	    </div>
+		<div class="row" style="height: 30px;"></div>
+		<div class="row" style="text-align: center;">
+			<div class="col">
+			<button type="button" style="background-color: #46973b;color: white;border-radius: 30px;border:none;width:30%;font-weight: 500;font-size: larger;height: 65px;" onclick="testSoil()">Test Soil</button>
+		</div>
+		</div>
+		
+		<div id="results" style="color:#000000; font-size: x-large;font-weight: bold; text-align: center;text-decoration: underline;"></div>
+	</div>
+	</div>
+
+
+
+	<script src="script.js"></script>
+	<div class="row" style="height: 65px;"></div>
+	<div class="row" style="text-align: center;">
+		<div class="col">
+			<a href="../index.html"><button style="background-color: #cf5b23;color: white;border-radius: 30px;border:none;width:30%;font-weight: 500;font-size: larger;height: 65px;">Go Back!</button></a>
+		</div>
+	
+    </div>
+</div>
+</body>
+</html>

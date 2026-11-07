@@ -310,5 +310,31 @@
       "type": "web",
       "category": "axonos"
     }
+  },
+  {
+    "id": 18,
+    "release_year": "2026",
+    "category_tags": [
+      "css",
+      "game-development",
+      "hacktoberfest"
+    ],
+    "main_scene": {
+      "title_ar": "FarmSwecha",
+      "title_en": "FarmSwecha",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/farmswecha/_cover.png"
+    },
+    "details_scene": {
+      "description": "A website for Farmers to get all the things in one place",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/farmswecha/",
+      "developer": "chaitu43",
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/chaitu43/FarmSwecha",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "css"
+    }
   }
 ]

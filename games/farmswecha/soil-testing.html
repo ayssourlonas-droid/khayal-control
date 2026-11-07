@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:farmswecha:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Testing Service | Farm Swecha</title>
+    <meta name="description" content="Submit your soil samples for detailed nutrients analysis and personalized crop recommendations.">
+    <meta name="keywords" content="Soil Testing, Soil Health, Nutrient Analysis, Crop Recommendation">
+    <meta property="og:title" content="Soil Testing Service | Farm Swecha">
+    <meta property="og:description" content="Submit your soil samples for detailed nutrients analysis and personalized crop recommendations.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body style="background: #fdfdfd;">
+
+    <nav>
+        <div class="logo"><a href="index.html" style="color: var(--primary-dark);">Farm<span>Swecha</span></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="lessons.html">Lessons</a></li>
+        </ul>
+        <a href="index.html" class="btn btn-outline">Back Home</a>
+    </nav>
+
+    <div style="padding: 150px 10% 60px; display: flex; align-items: center; gap: 5rem;">
+        <div style="flex: 1;">
+            <span class="lesson-tag">Scientific Farming</span>
+            <h1 style="font-size: 3.5rem; margin-top: 1.5rem;">Professional Soil Testing</h1>
+            <p style="font-size: 1.2rem; color: var(--text-muted); margin: 1.5rem 0;">Get accurate data about your
+                soil's health and discover the perfect nutrient balance for your crops.</p>
+
+            <ul style="margin: 2rem 0;">
+                <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle"
+                        style="color: var(--primary); margin-right: 0.5rem;"></i> Macro & Micronutrient Analysis</li>
+                <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle"
+                        style="color: var(--primary); margin-right: 0.5rem;"></i> pH Level Identification</li>
+                <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle"
+                        style="color: var(--primary); margin-right: 0.5rem;"></i> Personalized Fertilizer Roadmap</li>
+            </ul>
+        </div>
+        <div style="flex: 1; background: white; padding: 3rem; border-radius: 30px; box-shadow: var(--shadow);">
+            <h3 style="margin-bottom: 2rem;">Request a Collection</h3>
+            <form id="soilForm">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Farm Address</label>
+                    <textarea rows="3" placeholder="Detailed address for sample collection"
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid #ddd; outline: none;"
+                        required></textarea>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Farm Size (Acres)</label>
+                    <input type="number" placeholder="5"
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid #ddd; outline: none;"
+                        required>
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Last Crop Harvested</label>
+                    <input type="text" placeholder="Rice"
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid #ddd; outline: none;"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Schedule
+                    Collection</button>
+            </form>
+        </div>
+    </div>
+
+    <section style="background: var(--bg-soft); padding: 80px 10%;">
+        <h2 style="text-align: center; margin-bottom: 4rem;">How It Works</h2>
+        <div class="features-grid">
+            <div style="text-align: center;">
+                <div
+                    style="width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; font-weight: 800;">
+                    1</div>
+                <h4>Request Call</h4>
+                <p>Fill the form and our expert will call you.</p>
+            </div>
+            <div style="text-align: center;">
+                <div
+                    style="width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; font-weight: 800;">
+                    2</div>
+                <h4>Sample Collection</h4>
+                <p>We collect soil samples directly from your farm.</p>
+            </div>
+            <div style="text-align: center;">
+                <div
+                    style="width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; font-weight: 800;">
+                    3</div>
+                <h4>Digital Report</h4>
+                <p>Receive your detailed soil report on WhatsApp.</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
