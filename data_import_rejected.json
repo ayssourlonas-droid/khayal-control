@@ -25,5 +25,14 @@
     "date": "2026-11-08",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529015228"
+  },
+  {
+    "url": "https://github.com/sumn2u/baghchal",
+    "repo": "sumn2u/baghchal",
+    "reason": "هذه لعبة جماعية تحتاج خادماً لحظياً (socket.io) ولا تعمل كموقع ثابت، فلا يمكن استضافتها على Cloudflare Pages ولا تشغيلها في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "BSD-3-Clause",
+    "date": "2026-11-08",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529119593"
   }
 ]
