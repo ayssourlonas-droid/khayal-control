@@ -1,0 +1,9 @@
+Source: https://github.com/andvolodko/html5-game-editor
+Commit: 56beb193b0c637bf51ae19d9badc3f929c0c794a
+License: MIT
+Imported: 2026-11-08T23:35:57.333334+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: 4. Packaged LibreSprite from `pnpm install` (`apps/project-server/vendor/libresprite`)
+- images: 509, audio: 4, tagged audio: 0

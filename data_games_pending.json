@@ -492,5 +492,31 @@
       "type": "web",
       "category": "guangzhou-metro"
     }
+  },
+  {
+    "id": 35,
+    "release_year": "2026",
+    "category_tags": [
+      "2d",
+      "3d",
+      "editor"
+    ],
+    "main_scene": {
+      "title_ar": "Html5 Game Editor",
+      "title_en": "Html5 Game Editor",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/html5-game-editor/_cover.png"
+    },
+    "details_scene": {
+      "description": "Browser-based HTML5 game editor and runtime: PixiJS 2D, Three.js 3D, React UI, and a TypeScript engine for multiple games",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/html5-game-editor/",
+      "developer": "andvolodko",
+      "license": "MIT",
+      "source_url": "https://github.com/andvolodko/html5-game-editor",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "2d"
+    }
   }
 ]

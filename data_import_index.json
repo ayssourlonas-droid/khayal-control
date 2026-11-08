@@ -506,5 +506,20 @@
     "date": "2026-11-08",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "htmlgameeditor",
+    "size": 17152,
+    "repo": "andvolodko/html5-game-editor",
+    "id": 35,
+    "slug": "html5-game-editor",
+    "title": "Html5 Game Editor",
+    "developer": "andvolodko",
+    "license": "MIT",
+    "source": "https://github.com/andvolodko/html5-game-editor",
+    "commit": "56beb193b0c637bf51ae19d9badc3f929c0c794a",
+    "date": "2026-11-08",
+    "license_file": "LICENSE",
+    "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): README.md: 4. Packaged LibreSprite from `pnpm install` (`apps/project-server/vendor/libresprite`)"
   }
 ]
