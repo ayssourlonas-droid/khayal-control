@@ -124,5 +124,14 @@
     "date": "2026-11-08",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42536146657"
+  },
+  {
+    "url": "https://github.com/tridpt/TwoPlayerGames",
+    "repo": "tridpt/TwoPlayerGames",
+    "reason": "هذه لعبة جماعية تحتاج خادماً لحظياً (ws) ولا تعمل كموقع ثابت، فلا يمكن استضافتها على Cloudflare Pages ولا تشغيلها في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "MIT",
+    "date": "2026-11-08",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42536234899"
   }
 ]
