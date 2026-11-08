@@ -61,5 +61,14 @@
     "date": "2026-11-08",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529474779"
+  },
+  {
+    "url": "https://github.com/wuisabel-gif/backroom_level_0",
+    "repo": "wuisabel-gif/backroom_level_0",
+    "reason": "الحجم 474MB كبير جداً؛ ملفات تتجاوز 25MB (حد Cloudflare): shotgun/Remington_model_M31.glb (35MB), p30l/uploads-files-4189711-HK_P30L_(GLB).glb (58MB), Colt M4/uploads-files-5216919-M4Colt.glb (121MB), Colt M4/TexturesBlender4k/Base_Normal_OpenGL.png (48MB)",
+    "license": "Apache-2.0",
+    "date": "2026-11-08",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529627866"
   }
 ]
