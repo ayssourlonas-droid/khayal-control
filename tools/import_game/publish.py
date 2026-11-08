@@ -203,10 +203,11 @@ def main():
     poster = f"{play_url}{meta['cover_name']}" if meta.get("cover_name") else ""
 
     existing = None
-    for lst in (games, featured, pending):
+    existing_list, existing_file = None, None
+    for lst, lst_file in ((games, GAMES), (featured, FEATURED), (pending, PENDING)):
         for g in lst:
             if str((g.get("details_scene") or {}).get("source_url", "")).rstrip("/") == meta["source_url"].rstrip("/"):
-                existing = g
+                existing, existing_list, existing_file = g, lst, lst_file
     ai = {}
     ai_path = Path(os.environ.get("AI_DIR", str(pkg.parent / "ai"))) / "ai_report.json"
     if ai_path.exists():
@@ -247,9 +248,22 @@ def main():
 
     if existing:
         push_host()
-        if same_repo:
+        # إصلاح الروابط القديمة فقط: ألعاب استُوردت بنسخة قديمة من الأداة سُجّل لها رابط نسبي (/games/x/) لا يعمل في التطبيق.
+        # لا نمسّ أي حقل آخر (الاسم، الوصف، التصنيفات، التقييم) ولا رابط https موجود.
+        fixed = []
+        dsc = existing.setdefault("details_scene", {})
+        msc = existing.setdefault("main_scene", {})
+        if not str(dsc.get("play_url") or "").startswith("https://"):
+            dsc["play_url"] = play_url
+            fixed.append("رابط اللعب")
+        if poster and not str(msc.get("poster_url") or "").startswith("https://"):
+            msc["poster_url"] = poster
+            fixed.append("رابط الغلاف")
+        if fixed:
+            save(data / existing_file, existing_list)
+        if same_repo or fixed:
             commit_push(data, data_branch, f"update game {slug} ({meta['license']}) from {meta['source_url']}")
-        msg = f"اللعبة مسجّلة سابقاً (id={existing.get('id')}); حُدّثت ملفاتها فقط ولم يُغيَّر سجلها."
+        msg = f"اللعبة مسجّلة سابقاً (id={existing.get('id')}); حُدّثت ملفاتها" + (f" وأُصلح في سجلها: {'، '.join(fixed)}." if fixed else " ولم يُغيَّر سجلها.")
         summary(["## تم النشر", msg, f"الرابط: {play_url}"])
         return
 
