@@ -129,5 +129,31 @@
       "type": "web",
       "category": "arcade-game"
     }
+  },
+  {
+    "id": 10,
+    "release_year": "2025",
+    "category_tags": [
+      "browser-games",
+      "css3",
+      "educational"
+    ],
+    "main_scene": {
+      "title_ar": "GameHub",
+      "title_en": "GameHub",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/gamehub/_cover.png"
+    },
+    "details_scene": {
+      "description": "A beautiful and cool HTML5 game collection homepage featuring 42 carefully categorized mini-games.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/gamehub/",
+      "developer": "SinceraXY",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/SinceraXY/GameHub",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-games"
+    }
   }
 ]
