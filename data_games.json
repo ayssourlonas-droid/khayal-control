@@ -181,5 +181,31 @@
       "type": "web",
       "category": "cannonjs"
     }
+  },
+  {
+    "id": 16,
+    "release_year": "2026",
+    "category_tags": [
+      "chess",
+      "educational",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "Static Chess",
+      "title_en": "Static Chess",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/static-chess/_cover.png"
+    },
+    "details_scene": {
+      "description": "A lightweight chess game implemented with pure vanilla HTML, CSS, and JavaScript. Features standard chess rules, special moves (castling, en passant, pawn promotion), move validation, check/checkmate detection, and game state persistence using localStorage. No frameworks, no libraries – just clean, efficient code designed for static web hosting.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/static-chess/",
+      "developer": "TMHSDigital",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/TMHSDigital/Static_Chess",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "chess"
+    }
   }
 ]
