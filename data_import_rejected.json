@@ -70,5 +70,14 @@
     "date": "2026-11-08",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529627866"
+  },
+  {
+    "url": "https://github.com/alexvilelabah/age-of-ai",
+    "repo": "alexvilelabah/age-of-ai",
+    "reason": "هذه لعبة جماعية تحتاج خادماً لحظياً (ws) ولا تعمل كموقع ثابت، فلا يمكن استضافتها على Cloudflare Pages ولا تشغيلها في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "MIT",
+    "date": "2026-11-08",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529818255"
   }
 ]
