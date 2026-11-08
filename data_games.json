@@ -155,5 +155,31 @@
       "type": "web",
       "category": "browser-games"
     }
+  },
+  {
+    "id": 15,
+    "release_year": "2025",
+    "category_tags": [
+      "cannonjs",
+      "game",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "offroadJS V2 Demo",
+      "title_en": "offroadJS V2 Demo",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/offroadjs-v2-demo/_cover.png"
+    },
+    "details_scene": {
+      "description": "offroadJS_v2 test repo",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/offroadjs-v2-demo/",
+      "developer": "tomo0613",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/tomo0613/offroadJS_v2_demo",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "cannonjs"
+    }
   }
 ]
