@@ -7,5 +7,14 @@
     "date": "2026-11-08",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42528810537"
+  },
+  {
+    "url": "https://github.com/damian-pastorini/reldens",
+    "repo": "damian-pastorini/reldens",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (اعتمادات خادم: @colyseus/core؛ server.js) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "MIT",
+    "date": "2026-11-08",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42528914530"
   }
 ]
