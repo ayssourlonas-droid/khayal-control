@@ -122,7 +122,7 @@
             
             <li><a href="#install">طريقة التثبيت</a></li>
         </ul>
-        <a href="https://github.com/ayssourlonas-droid/Khayal.flutter/releases" class="btn-download-nav" target="_blank" rel="noopener">تحميل APK</a>
+        <a id="dl-nav" href="https://github.com/ayssourlonas-droid/Khayal.flutter/releases" class="btn-download-nav" target="_blank" rel="noopener">تحميل APK</a>
     </nav>
 
     <section class="hero" id="hero">
@@ -132,7 +132,7 @@
             <h1>عالمك المفضل من الترفيه</h1>
             <p>مكتبة ألعاب في تطبيق واحد على هاتفك، تبدأ اللعب فيها بضغطة واحدة، بواجهة عربية خفيفة ووضع داكن مريح للعين.</p>
             <div class="hero-btns">
-                <a href="https://github.com/ayssourlonas-droid/Khayal.flutter/releases" class="btn-main" target="_blank" rel="noopener">
+                <a id="dl-main" href="https://github.com/ayssourlonas-droid/Khayal.flutter/releases" class="btn-main" target="_blank" rel="noopener">
                     <span>تحميل التطبيق (APK)</span>
                     <span>⬇️</span>
                 </a>
@@ -173,7 +173,7 @@
             <div class="step-item">
                 <div class="step-number">1</div>
                 <h3>تحميل الملف</h3>
-                <p>اضغط على زر «تحميل APK» ثم نزّل أحدث ملف من صفحة الإصدارات.</p>
+                <p>اضغط على زر «تحميل APK» وسيبدأ تنزيل أحدث إصدار مباشرة.</p>
             </div>
             <div class="step-item">
                 <div class="step-number">2</div>
@@ -194,11 +194,23 @@
     </footer>
 
 <script>
-    // رقم الإصدار يُقرأ من version.json (نفسه الذي يعدّله تطبيق متحكم في «الإصدار وروابط الدعم»)
+    // رقم الإصدار ورابط التحميل يُقرآن من version.json (يعدّلهما زر «اعتماد» في تطبيق المتحكم)
+    var APK_RE = /^https:\/\/github\.com\/ayssourlonas-droid\/Khayal\.flutter\/releases\/(?:download\/[^\/]+|latest\/download)\/[\w.\-]+\.apk$/;
     fetch('version.json', { cache: 'no-store' })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (j) {
-            var v = j && j.latest_version ? String(j.latest_version).trim() : '';
+            if (!j) return;
+            // رابط الملف المباشر: يُقبل فقط إن كان من إصدارات مستودع خيال، وإلا يبقى الزر على صفحة الإصدارات
+            var url = j.download_url ? String(j.download_url).trim() : '';
+            if (APK_RE.test(url)) {
+                ['dl-nav', 'dl-main'].forEach(function (id) {
+                    var a = document.getElementById(id);
+                    a.href = url;
+                    a.removeAttribute('target');
+                    a.removeAttribute('rel');
+                });
+            }
+            var v = j.latest_version ? String(j.latest_version).trim() : '';
             if (!/^[0-9A-Za-z.+\-]{1,20}$/.test(v)) return;
             var el = document.getElementById('ver');
             el.textContent = v;
