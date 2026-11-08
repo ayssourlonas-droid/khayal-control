@@ -551,5 +551,20 @@
     "date": "2026-11-08",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "solitairelib",
+    "size": 2084,
+    "repo": "zzymyn/SolitaireLib",
+    "id": 38,
+    "slug": "solitairelib",
+    "title": "SolitaireLib",
+    "developer": "zzymyn",
+    "license": "MIT",
+    "source": "https://github.com/zzymyn/SolitaireLib",
+    "commit": "6342e1bd60581d5e0a81f9d89c8b834beb753173",
+    "date": "2026-11-08",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Attributions"
   }
 ]
