@@ -544,5 +544,30 @@
       "type": "web",
       "category": "2d"
     }
+  },
+  {
+    "id": 37,
+    "release_year": "2026",
+    "category_tags": [
+      "html5-game",
+      "threejs"
+    ],
+    "main_scene": {
+      "title_ar": "Searchx",
+      "title_en": "Searchx",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/searchx/_cover.png"
+    },
+    "details_scene": {
+      "description": "Html5 3D 小游戏",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/searchx/",
+      "developer": "zhangjikai",
+      "license": "MIT",
+      "source_url": "https://github.com/zhangjikai/searchx",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "html5-game"
+    }
   }
 ]

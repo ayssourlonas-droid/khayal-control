@@ -536,5 +536,20 @@
     "date": "2026-11-08",
     "license_file": "LICENSE",
     "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): README.md: [`plonkjs`](./packages/plonk) | Game music made in code: songs as text, synthesized live with Web Audio, under 4 kB brotli. Standalone; play"
+  },
+  {
+    "key": "searchx",
+    "size": 235,
+    "repo": "zhangjikai/searchx",
+    "id": 37,
+    "slug": "searchx",
+    "title": "Searchx",
+    "developer": "zhangjikai",
+    "license": "MIT",
+    "source": "https://github.com/zhangjikai/searchx",
+    "commit": "cd3a9aebb188197f07c935b2cd93032717cfac16",
+    "date": "2026-11-08",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

@@ -1,0 +1,8 @@
+Source: https://github.com/zhangjikai/searchx
+Commit: cd3a9aebb188197f07c935b2cd93032717cfac16
+License: MIT
+Imported: 2026-11-08T23:50:40.850612+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 5, audio: 0, tagged audio: 0

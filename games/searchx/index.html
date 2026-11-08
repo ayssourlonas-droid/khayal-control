@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head lang="en"><script>/*khayal-iso*/(function(){try{
+var P='khayal:searchx:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <title>Search X</title>
+
+    <meta name="keywords" content="Threejs,html5,game" />
+    <meta name="description" content="html5小游戏，使用threejs框架" />
+
+    <script type="text/javascript" src="libs/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="libs/jquery.confirm/jquery.confirm.js"></script>
+    <script type="text/javascript" src="libs/threejs/three.min.js"></script>
+    <script type="text/javascript" src="libs/threejs/threex.dynamictexture.js"></script>
+    <script type="text/javascript" src="libs/common/hashtable.js"></script>
+
+    <script type="text/javascript" src="js/SearchX.js"></script>
+    <script type="text/javascript" src="js/Pool.js"></script>
+    <script type="text/javascript" src="js/Cube.js"></script>
+    <script type="text/javascript" src="js/PosUtil.js"></script>
+    <script type="text/javascript" src="js/Main.js"></script>
+
+    <link rel="stylesheet" href="libs/jquery.confirm/jquery.confirm.css">
+    <style>
+        body {
+            margin: 0 auto;
+            background: #E8E7E7;
+        }
+
+        div#start {
+            padding: 1em;
+            position: absolute;
+            width: 24em;
+            height: 12em;
+            left: 50%;
+            top: 50%;
+            margin-left: -12em;
+            margin-top: -6em;
+            border: 1px dotted #aaaaaa;
+        }
+
+        div#start p {
+            line-height: 2em;
+        }
+
+        #startGame {
+            text-align: center;
+            margin-top: 2em;
+        }
+
+        #startGame button {
+            font-size: 1em;
+            cursor: hand;
+            cursor: pointer;
+        }
+
+        div#canvasFrame {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        div#tip {
+            width: 100%;
+            min-width: 42em;
+            margin: 0 auto;
+            height: 2.5em;
+            padding-top: 0.3em;
+            background: #004A47;
+            text-align: center;
+            color: #fff;
+        }
+
+        #tip #content {
+            width: 42em;
+            margin: 0 auto;
+        }
+
+        .msg {
+            width: 8em;
+            font-size: 1.2em;
+            float: left;
+            text-align: left;
+            height: 2em;
+            line-height: 2em;
+            color: white;
+            font-family: Verdana, Geneva, sans-serif;
+            /*border-right: 1px dotted white;*/
+            /*padding: 0 20px;*/
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div id="game" >
+    <div id="canvasFrame"></div>
+    <div id="tip">
+        <div id="content">
+            <div class="msg" style="width: 10em">请在上面找出"<span id="target"></span>"</div>
+            <div class="msg">剩余时间：<span id="time"></span></div>
+            <div class="msg" style="width: 7em;">得分：<span id="score"></span></div>
+            <div class="msg" >最高得分：<span id="maxScore"></span></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
