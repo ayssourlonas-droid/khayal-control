@@ -52,5 +52,14 @@
     "date": "2026-11-08",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529378211"
+  },
+  {
+    "url": "https://github.com/Daniele-Cangi/civic-nightmare",
+    "repo": "Daniele-Cangi/civic-nightmare",
+    "reason": "ملفات تتجاوز 25MB (حد Cloudflare): index.wasm (35MB), index.pck (75MB)",
+    "license": "MIT",
+    "date": "2026-11-08",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529474779"
   }
 ]
