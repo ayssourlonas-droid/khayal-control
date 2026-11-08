@@ -34,5 +34,14 @@
     "date": "2026-11-08",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529119593"
+  },
+  {
+    "url": "https://github.com/talkafk/WebBus",
+    "repo": "talkafk/WebBus",
+    "reason": "لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. جرّب إدخال subdir أو build_cmd",
+    "license": "MIT",
+    "date": "2026-11-08",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42529275863"
   }
 ]
