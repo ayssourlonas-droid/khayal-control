@@ -440,31 +440,5 @@
       "type": "web",
       "category": "browser-game"
     }
-  },
-  {
-    "id": 32,
-    "release_year": "2026",
-    "category_tags": [
-      "board-game",
-      "game",
-      "html5-game"
-    ],
-    "main_scene": {
-      "title_ar": "Ludo Game",
-      "title_en": "Ludo Game",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/ludo-game/_cover.png"
-    },
-    "details_scene": {
-      "description": "Ludo Game",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/ludo-game/",
-      "developer": "girishlade111",
-      "license": "CC0-1.0",
-      "source_url": "https://github.com/girishlade111/Ludo-Game",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "board-game"
-    }
   }
 ]
