@@ -521,5 +521,20 @@
     "date": "2026-11-08",
     "license_file": "LICENSE",
     "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): README.md: 4. Packaged LibreSprite from `pnpm install` (`apps/project-server/vendor/libresprite`)"
+  },
+  {
+    "key": "debuff",
+    "size": 7129,
+    "repo": "debuffjp/debuff",
+    "id": 36,
+    "slug": "debuff",
+    "title": "Debuff",
+    "developer": "debuffjp",
+    "license": "MIT",
+    "source": "https://github.com/debuffjp/debuff",
+    "commit": "ce7ab130b0cea88a847205115245b7d60a245e84",
+    "date": "2026-11-08",
+    "license_file": "LICENSE",
+    "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): README.md: [`plonkjs`](./packages/plonk) | Game music made in code: songs as text, synthesized live with Web Audio, under 4 kB brotli. Standalone; play"
   }
 ]

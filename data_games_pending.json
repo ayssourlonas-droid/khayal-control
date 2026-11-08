@@ -518,5 +518,31 @@
       "type": "web",
       "category": "2d"
     }
+  },
+  {
+    "id": 36,
+    "release_year": "2026",
+    "category_tags": [
+      "2d",
+      "ai-agents",
+      "browser-game"
+    ],
+    "main_scene": {
+      "title_ar": "Debuff",
+      "title_en": "Debuff",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/debuff/_cover.png"
+    },
+    "details_scene": {
+      "description": "Open-source framework for 2D browser games. It handles the boring bits so you can get to the fun part sooner.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/debuff/",
+      "developer": "debuffjp",
+      "license": "MIT",
+      "source_url": "https://github.com/debuffjp/debuff",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "2d"
+    }
   }
 ]

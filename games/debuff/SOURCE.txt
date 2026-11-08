@@ -1,0 +1,9 @@
+Source: https://github.com/debuffjp/debuff
+Commit: ce7ab130b0cea88a847205115245b7d60a245e84
+License: MIT
+Imported: 2026-11-08T23:43:36.736746+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: [`plonkjs`](./packages/plonk) | Game music made in code: songs as text, synthesized live with Web Audio, under 4 kB brotli. Standalone; play
+- images: 47, audio: 0, tagged audio: 0

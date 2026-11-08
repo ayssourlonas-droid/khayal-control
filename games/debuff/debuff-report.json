@@ -1,0 +1,110 @@
+{
+  "dir": "/home/runner/work/khayal-control/khayal-control/work/src/templates/squish/dist",
+  "files": [
+    {
+      "path": "assets/canvas2d-Cd8wyeVB.js",
+      "kind": "code",
+      "bytes": 6511,
+      "gzip": 2826,
+      "brotli": 2505,
+      "lazy": true
+    },
+    {
+      "path": "assets/index-BcA88I9D.js",
+      "kind": "code",
+      "bytes": 94523,
+      "gzip": 31953,
+      "brotli": 28158
+    },
+    {
+      "path": "assets/manifest.json",
+      "kind": "asset",
+      "bytes": 35,
+      "gzip": 52,
+      "brotli": 37
+    },
+    {
+      "path": "assets/splash-D4ZtnkP2.js",
+      "kind": "code",
+      "bytes": 2766,
+      "gzip": 1574,
+      "brotli": 1373,
+      "lazy": true
+    },
+    {
+      "path": "index.html",
+      "kind": "html",
+      "bytes": 994,
+      "gzip": 539,
+      "brotli": 373
+    },
+    {
+      "path": "manifest.webmanifest",
+      "kind": "other",
+      "bytes": 172,
+      "gzip": 126,
+      "brotli": 104
+    },
+    {
+      "path": "preview.png",
+      "kind": "asset",
+      "bytes": 29728,
+      "gzip": 28730,
+      "brotli": 29033
+    }
+  ],
+  "totals": {
+    "code": {
+      "bytes": 103800,
+      "gzip": 36353,
+      "brotli": 32036
+    },
+    "html": {
+      "bytes": 994,
+      "gzip": 539,
+      "brotli": 373
+    },
+    "asset": {
+      "bytes": 29763,
+      "gzip": 28782,
+      "brotli": 29070
+    },
+    "map": {
+      "bytes": 0,
+      "gzip": 0,
+      "brotli": 0
+    },
+    "other": {
+      "bytes": 172,
+      "gzip": 126,
+      "brotli": 104
+    }
+  },
+  "initial": {
+    "bytes": 94523,
+    "gzip": 31953,
+    "brotli": 28158
+  },
+  "largestAsset": {
+    "path": "preview.png",
+    "kind": "asset",
+    "bytes": 29728,
+    "gzip": 28730,
+    "brotli": 29033
+  },
+  "leaks": [],
+  "saves": {
+    "saves": [
+      {
+        "key": "debuff-squish",
+        "file": "src/main.ts",
+        "fields": {
+          "best": "number"
+        }
+      }
+    ],
+    "unchecked": [],
+    "issues": [],
+    "accepted": false
+  }
+}
