@@ -259,5 +259,31 @@
       "type": "web",
       "category": "accessibility"
     }
+  },
+  {
+    "id": 23,
+    "release_year": "2025",
+    "category_tags": [
+      "html5",
+      "html5-game",
+      "shooting"
+    ],
+    "main_scene": {
+      "title_ar": "FruitShot",
+      "title_en": "FruitShot",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/fruitshot/_cover.png"
+    },
+    "details_scene": {
+      "description": "HTML5 Fruit shooting game",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/fruitshot/",
+      "developer": "Yonle",
+      "license": "BSD-3-Clause",
+      "source_url": "https://github.com/Yonle/FruitShot",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "html5"
+    }
   }
 ]
