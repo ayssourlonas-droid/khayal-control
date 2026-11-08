@@ -1518,6 +1518,17 @@ def emit_annotations(r):
     """ملاحظات GitHub (تظهر في تطبيق Game Control داخل تفاصيل التشغيل)."""
     notes = r.get("notes") or []
     warns = r.get("warnings") or []
+    reasons_ = r.get("reasons") or []
+    # نتيجة مُهيكلة يقرؤها تطبيق المتحكم ليلوّن الحكم (أحمر/أخضر/برتقالي) ويشرحه بالعربية
+    try:
+        res = {"status": r.get("status"), "repo": r.get("repo_url", ""), "slug": r.get("slug", ""),
+               "license": r.get("license") or "", "warnings": len(warns), "reasons": len(reasons_)}
+        print(f"::notice title=خيال-نتيجة::{_esc(json.dumps(res, ensure_ascii=False))}", flush=True)
+    except Exception:
+        pass
+    if reasons_:
+        body = _esc("\n".join("• " + x for x in reasons_))
+        print(f"::error title=أسباب الفشل::{body}", flush=True)
     if notes:
         body = _esc("\n".join("• " + x for x in notes))
         print(f"::notice title=تقرير الاستيراد ({r.get('status')})::{body}", flush=True)
