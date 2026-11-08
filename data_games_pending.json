@@ -440,5 +440,31 @@
       "type": "web",
       "category": "browser-game"
     }
+  },
+  {
+    "id": 33,
+    "release_year": "2025",
+    "category_tags": [
+      "breakout",
+      "breakout-game",
+      "game"
+    ],
+    "main_scene": {
+      "title_ar": "Breakout Game",
+      "title_en": "Breakout Game",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/breakout-game/_cover.png"
+    },
+    "details_scene": {
+      "description": "A simple breakout game",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/breakout-game/",
+      "developer": "DhanushNehru",
+      "license": "MIT",
+      "source_url": "https://github.com/DhanushNehru/breakout-game",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "breakout"
+    }
   }
 ]

@@ -476,5 +476,20 @@
     "date": "2026-11-07",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: Creative Commons Legal Code | LICENSE: CC0 1.0 Universal"
+  },
+  {
+    "key": "breakoutgame",
+    "size": 2311,
+    "repo": "DhanushNehru/breakout-game",
+    "id": 33,
+    "slug": "breakout-game",
+    "title": "Breakout Game",
+    "developer": "DhanushNehru",
+    "license": "MIT",
+    "source": "https://github.com/DhanushNehru/breakout-game",
+    "commit": "cda2b7799d8bb1a38d14ef2eea3d37d4a58e3879",
+    "date": "2026-11-08",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
