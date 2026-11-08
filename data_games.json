@@ -311,5 +311,31 @@
       "type": "web",
       "category": "executable"
     }
+  },
+  {
+    "id": 29,
+    "release_year": "2026",
+    "category_tags": [
+      "arcade-game",
+      "browser-game",
+      "endless-runner"
+    ],
+    "main_scene": {
+      "title_ar": "Swiposaur",
+      "title_en": "Swiposaur",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/swiposaur/_cover.png"
+    },
+    "details_scene": {
+      "description": "3D voxel dinosaur arcade runner in the browser. Swipe between three lanes, tail-whip critters to refill stamina, and chain the Primal Roar up to 16x. Built with React 19 and Three.js, procedural meshes and synthesized audio, for Digit7 Jam 2026.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/swiposaur/",
+      "developer": "thesithunyein",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/thesithunyein/swiposaur",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "arcade-game"
+    }
   }
 ]
