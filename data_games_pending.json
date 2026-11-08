@@ -312,32 +312,6 @@
     }
   },
   {
-    "id": 22,
-    "release_year": "2026",
-    "category_tags": [
-      "accessibility",
-      "browser-game",
-      "canvas-2d"
-    ],
-    "main_scene": {
-      "title_ar": "Core Dump Game",
-      "title_en": "Core Dump Game",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/core-dump-game/_cover.png"
-    },
-    "details_scene": {
-      "description": "Hacker-themed marble shooter puzzle game: rotate a CPU cursor and clear chains of data packets before they reach /dev/null. Installable offline PWA built with React, TypeScript and Canvas 2D, with an optional online leaderboard.",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/core-dump-game/",
-      "developer": "AndreaBonn",
-      "license": "Apache-2.0",
-      "source_url": "https://github.com/AndreaBonn/core-dump-game",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "accessibility"
-    }
-  },
-  {
     "id": 23,
     "release_year": "2025",
     "category_tags": [
