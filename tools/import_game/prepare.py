@@ -305,6 +305,29 @@ def pnpm_version(src: Path, data) -> str:
     return "9"
 
 
+def try_pages_branch(owner, repo, work: Path, notes):
+    """إن لم توجد نسخة ويب في الفرع الرئيسي: نجرّب فرع gh-pages، وهو النسخة التي نشرها المطوّر على GitHub Pages
+    (شائع لمشاريع Godot/Unity المصدرية). يرجع مجلد الويب أو None."""
+    url = f"https://github.com/{owner}/{repo}.git"
+    try:
+        r = run(["git", "ls-remote", "--heads", url, "gh-pages"], check=False, timeout=120)
+    except Exception:
+        return None
+    if "refs/heads/gh-pages" not in (r.stdout or ""):
+        return None
+    dest = work / "pages"
+    try:
+        run(["git", "clone", "--depth", "1", "-b", "gh-pages", url, str(dest)], timeout=900)
+    except Exception:
+        return None
+    shutil.rmtree(dest / ".git", ignore_errors=True)
+    if not (dest / "index.html").is_file():
+        return None
+    notes.append("لا توجد نسخة ويب في الفرع الرئيسي، فاستُعملت النسخة المنشورة من المطوّر في فرع gh-pages "
+                 "(ليست مبنية من الكود هنا، وقد تكون أقدم أو أحدث منه)")
+    return dest
+
+
 def build_if_needed(src: Path, override, build_cmd, notes):
     root = find_webroot(src, override)
     if root:
@@ -1286,6 +1309,8 @@ def main():
     except Exception as e:
         reasons.append(f"فشل البناء: {e}")
         finish("fail")
+    if not webroot:
+        webroot = try_pages_branch(owner, repo, work, notes)
     if not webroot:
         sh = server_side_hints(src)
         if sh:

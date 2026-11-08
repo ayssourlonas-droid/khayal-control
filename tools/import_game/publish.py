@@ -137,6 +137,29 @@ def save(path: Path, data):
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def drop_rejected(data_dir: Path, source_url: str):
+    """بعد نجاح استيراد لعبة كانت مرفوضة سابقاً: تُحذف من data_import_rejected.json. يرجع True إن تغيّر الملف."""
+    p = data_dir / "data_import_rejected.json"
+    if not p.is_file():
+        return False
+    try:
+        items = json.loads(p.read_text(encoding="utf-8") or "[]")
+    except Exception:
+        return False
+    if not isinstance(items, list):
+        return False
+
+    def n(u):
+        u = str(u or "").strip().lower().rstrip("/")
+        return u[:-4] if u.endswith(".git") else u
+
+    kept = [e for e in items if not (isinstance(e, dict) and n(e.get("url")) == n(source_url))]
+    if len(kept) == len(items):
+        return False
+    save(p, kept)
+    return True
+
+
 def summary(lines):
     txt = "\n".join(lines)
     log(txt)
@@ -261,6 +284,8 @@ def main():
             fixed.append("رابط الغلاف")
         if fixed:
             save(data / existing_file, existing_list)
+        if drop_rejected(data, meta["source_url"]):
+            fixed.append("إزالتها من قائمة المرفوضة")
         if same_repo or fixed:
             commit_push(data, data_branch, f"update game {slug} ({meta['license']}) from {meta['source_url']}")
         msg = f"اللعبة مسجّلة سابقاً (id={existing.get('id')}); حُدّثت ملفاتها" + (f" وأُصلح في سجلها: {'، '.join(fixed)}." if fixed else " ولم يُغيَّر سجلها.")
@@ -313,6 +338,7 @@ def main():
         "media_note": str((report.get("provenance") or {}).get("summary_ar", ""))[:400],
     })
     save(data / INDEX, index)
+    drop_rejected(data, meta["source_url"])
     push_host(index)  # ملفات اللعبة + صفحة الحقوق (دفعة واحدة مستقلة، أو مع البيانات إن كان المستودع واحداً)
     commit_push(data, data_branch, f"add game #{new_id} {meta['title_en']} -> {target_name}")
 
