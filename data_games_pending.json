@@ -466,5 +466,31 @@
       "type": "web",
       "category": "breakout"
     }
+  },
+  {
+    "id": 34,
+    "release_year": "2026",
+    "category_tags": [
+      "guangzhou-metro",
+      "html5-game",
+      "javascript"
+    ],
+    "main_scene": {
+      "title_ar": "Gz Metro Simulator",
+      "title_en": "Gz Metro Simulator",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/gz-metro-simulator/_cover.png"
+    },
+    "details_scene": {
+      "description": "广州地铁报站模拟器，基于纯前端开发，纯网页版免下载，完美适配手机端与电脑端，专为地铁爱好者打造，还原广州地铁列车广播与 LED 显示屏滚动效果！",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/gz-metro-simulator/",
+      "developer": "ZZHTool",
+      "license": "MIT",
+      "source_url": "https://github.com/ZZHTool/gz-metro-simulator",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "guangzhou-metro"
+    }
   }
 ]

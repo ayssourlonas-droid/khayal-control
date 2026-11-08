@@ -491,5 +491,20 @@
     "date": "2026-11-08",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "gzmetrosimulator",
+    "size": 4203,
+    "repo": "ZZHTool/gz-metro-simulator",
+    "id": 34,
+    "slug": "gz-metro-simulator",
+    "title": "Gz Metro Simulator",
+    "developer": "ZZHTool",
+    "license": "MIT",
+    "source": "https://github.com/ZZHTool/gz-metro-simulator",
+    "commit": "9c79dd746e124f2d4369515df95336c2f44fd5f8",
+    "date": "2026-11-08",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:gz-metro-simulator:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州地铁报站模拟器 | Guangzhou Metro Announcement Simulator</title>
+    <meta name="description" content="广州地铁报站模拟器，支持广州地铁各线路报站文字模拟、LED显示屏模拟、动态路线图、运行方向及站点切换，为地铁爱好者提供真实的广州地铁广播体验。">
+    <meta name="keywords" content="广州地铁,地铁,报站,广州地铁报站,地铁模拟,广州地铁模拟器,地铁广播,Metro Simulator,Guangzhou Metro,GZMetro">
+    <meta name="author" content="ZZH">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="广州地铁报站模拟器">
+    <meta property="og:description" content="广州地铁广播模拟器，支持全线路LED报站模拟。">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#005BAC">
+    <meta name="google-site-verification" content="bxVKk7PI8RNuhaSiJKl6OS4bmSGCY_4pBnvje4ySeZE" />
+    <meta name="yandex-verification" content="476a36694c6fb381" />
+    <meta name="baidu-site-verification" content="codeva-683Lk438LW" />
+    <meta name="shenma-site-verification" content="ad33886cca839aa788d42ef25928aa62_1784183977">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="GZMetro.ico" type="image/x-icon">
+</head>
+<body class="no-scroll">
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-content-box">
+            <img src="GZMetro.svg" alt="Guangzhou Metro Logo" class="welcome-logo-center">
+            <div class="welcome-text-animated">
+                <h1 class="welcome-title">广州地铁报站模拟器</h1>
+                <div class="welcome-prompt">点击任意位置进入</div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="portal-view" class="view active">
+            <header>
+                <img src="GZMetro.svg" alt="Guangzhou Metro Logo" class="metro-logo">
+                <h1>广州地铁报站模拟器</h1>
+            </header>
+            <div class="home-intro">
+                <p class="intro-title">
+                    欢迎使用广州地铁报站模拟器
+                </p>
+                <p class="intro-desc">
+                    本站基于纯前端（HTML5 / CSS3 / JavaScript）开发,
+                    专为地铁爱好者打造,
+                    模拟广州地铁列车广播及 LED 显示系统，
+                    支持多条线路、运行方向切换、站点选择及换乘信息显示，
+                    为地铁爱好者提供更加真实的体验。
+                </p>
+                <div class="intro-feature">
+                    <span>🚇 全线路支持</span>
+                    <span>📢 广播模拟</span>
+                    <span>📺 LED显示</span>
+                    <span>🗺️ 动态路线图</span>
+                    <span>📱 手机适配</span>
+                    <span>🛠️ 免下载</span>
+                </div>
+                <div class="intro-actions">
+                    <button id="btn-line-network" class="btn-about">
+                        地铁线网
+                    </button>
+                    <button id="btn-about" class="btn-about">
+                        关于本站
+                    </button>
+                </div>
+            </div>
+            <main>
+                <div class="line-grid" id="line-grid">
+                </div>
+            </main>
+        </div>
+        <div id="about-view" class="view">
+            <header class="main-header">
+                <button id="btn-about-back" class="btn-back">
+                    ⬅ 返回首页
+                </button>
+                <img src="GZMetro.svg" class="metro-logo" alt="Guangzhou Metro Logo">
+                <h1>关于本站</h1>
+            </header>
+            <main>
+                <section class="about-card">
+                    <h2>广州地铁报站模拟器</h2>
+                    <div class="about-status-bar">
+                        <span class="version-tag">v2.1</span>
+                        <span class="status-tag active">运行中</span>
+                        <span class="update-date">最后更新: 2026-11-01</span>
+                    </div>
+                    <div class="about-badges">
+                        <a href="https://github.com/ZZHTool/gz-metro-simulator" target="_blank">
+                            <img src="https://img.shields.io/github/stars/ZZHTool/gz-metro-simulator?style=flat-square&logo=github&color=005BAC" alt="GitHub Stars">
+                        </a>
+                        <a href="https://github.com/ZZHTool/gz-metro-simulator/blob/main/LICENSE" target="_blank">
+                            <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
+                        </a>
+                    </div>
+                    <p>
+                        <strong>广州地铁报站模拟器网页版</strong>（Guangzhou Metro Announcement Simulator Web）是一款由地铁爱好者为广大同好打造的纯前端交互项目。我致力于还原广州地铁列车的车内广播与 LED 走字屏。
+                    </p>
+                    <p>
+                        本模拟器支持<strong>广州地铁1号线、2号线、3号线、5号线、7号线、11号线、13号线、18号线</strong>等各大主力线路的报站模拟。无论您是想体验经典列车的“下一站是...（The next station is...）”粤普英三语广播，还是想模拟车门上方 LED 屏幕的滚动字幕、换乘路线提示，都可以在本站一键体验。
+                    </p>
+                    <p>
+                        相比传统的 Windows 客户端，本站采用纯 HTML5 / CSS3 / JavaScript 技术开发，<strong>完全免下载，无病毒误报，完美自适应手机和电脑端</strong>，随时随地在浏览器中即可畅玩。
+                    </p>
+                    <div class="about-grid">
+                        <div class="about-grid-item">
+                            <h3>⚡ 技术架构</h3>
+                            <ul>
+                                <li><strong>原生 Vanilla JS:</strong> 拒绝繁重框架，极速加载响应</li>
+                                <li><strong>Web Audio API:</strong> 保证音频播控高保真与丝滑衔接</li>
+                                <li><strong>CSS3 动画:</strong> 丝滑模拟 LED 点阵走字效果</li>
+                                <li><strong>自适应布局:</strong> 支持横/竖屏多终端，完美契合手机屏幕</li>
+                            </ul>
+                        </div>
+                        <div class="about-grid-item">
+                            <h3>🎯 核心模拟</h3>
+                            <ul>
+                                <li>✔ 广州地铁所有线路及主题色系统</li>
+                                <li>✔ 下一站粤、普、英三语真实广播</li>
+                                <li>✔ LED 滚动字幕同步动画效果</li>
+                                <li>✔ 动态可点击交互路线图</li>
+                                <li>✔ 环线/支线行驶方向快速切换</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h3 class="section-title">📅 更新日志</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-11-01</span>
+                            <span class="timeline-desc"><strong>v2.1</strong> - 完成3号线机场北-海傍交路音频录入，修复部分站点信息显示错误，优化缓存机制。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-10-25</span>
+                            <span class="timeline-desc"><strong>v2.0</strong> - 增加停止音频功能，优化动态路线图换乘显示，优化部分代码。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-10-24</span>
+                            <span class="timeline-desc"><strong>v1.9</strong> - 完成3号线天河客运站-海傍交路音频录入，优化动态路线图区间定位按钮。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-10-11</span>
+                            <span class="timeline-desc"><strong>v1.8</strong> - 完成2号线广州南站-嘉禾望岗交路音频录入。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-10-07</span>
+                            <span class="timeline-desc"><strong>v1.7</strong> - 完成13号线数据录入，优化动态路线图。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-10-06</span>
+                            <span class="timeline-desc"><strong>v1.6</strong> - 完成7号线数据录入，修复部分站点数据错误及换乘显示错误问题。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-10-04</span>
+                            <span class="timeline-desc"><strong>v1.5</strong> - 优化动态线路图，增加“本站”LED显示。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-09-27</span>
+                            <span class="timeline-desc"><strong>v1.4</strong> - 修复了音频播放、预加载等问题。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-09-13</span>
+                            <span class="timeline-desc"><strong>v1.3</strong> - 修复了移动端缩放问题。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-09-01</span>
+                            <span class="timeline-desc"><strong>v1.2</strong> - 修复音频播放问题，优化动态路线图。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-08-20</span>
+                            <span class="timeline-desc"><strong>v1.1</strong> - 完成5号线、18号线数据录入。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-08-01</span>
+                            <span class="timeline-desc"><strong>v1.0</strong> - 完成1号线数据录入。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-07-17</span>
+                            <span class="timeline-desc"><strong>v0.9</strong> - 项目首个公开测试版本上线。支持 LED 点阵模拟、多线路适配及移动端动态路线图。</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2026-07-01</span>
+                            <span class="timeline-desc"><strong>v0.5</strong> - 完成11号线基础数据录入及广播音频调试。</span>
+                        </div>
+                    </div>
+                    <hr class="about-divider">
+                    <h3>👨‍💻 开发者</h3>
+                    <p>
+                        ZZH （作者邮箱：<a class="email">zzh19526308283@outlook.com</a>）
+                        <a href="https://space.bilibili.com/3546655446010320" target="_blank" title="哔哩哔哩" class="social-link bilibili">
+                            <svg viewBox="0 0 1024 1024" width="18" height="18" aria-hidden="true">
+                                <path fill="currentColor" d="M311.3 162.7l102.7 101.4c7.6 7.5 19.8 7.5 27.3-.1l.1-.1c7.5-7.6 7.5-19.8-.1-27.3L338.7 135.2c-7.6-7.5-19.8-7.5-27.3.1 0 0-.1 0-.1.1-7.5 7.6-7.5 19.8 0 27.3zM712.7 162.7L610 264.1c-7.6 7.5-7.6 19.7 0 27.3 7.5 7.6 19.7 7.6 27.3 0l102.7-101.4c7.6-7.5 7.6-19.7 0-27.3-7.6-7.5-19.8-7.5-27.3 0zM192 288c-53 0-96 43-96 96v384c0 53 43 96 96 96h640c53 0 96-43 96-96V384c0-53-43-96-96-96H192zm0 64h640c17.7 0 32 14.3 32 32v384c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32V384c0-17.7 14.3-32 32-32zm144 128c-26.5 0-48 21.5-48 48s21.5 48 48 48 48-21.5 48-48-21.5-48-48-48zm352 0c-26.5 0-48 21.5-48 48s21.5 48 48 48 48-21.5 48-48-21.5-48-48-48z" />
+                            </svg>
+                            <span>bilibili</span>
+                        </a>
+                        <a href="https://github.com/ZZHTool" target="_blank" title="GitHub" class="social-link github">
+                            <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://gitee.com/zzh0327zzh/gz-metro-simulator" target="_blank" title="Gitee" class="social-link gitee">
+                            <svg viewBox="0 0 1024 1024" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m259.2-569.6H480c-17.6 0-32 14.4-32 32v64c0 17.6 14.4 32 32 32h147.2c17.6 0 32 14.4 32 32v16c0 35.3-28.7 64-64 64H384c-35.3 0-64-28.7-64-64V384c0-35.3 28.7-64 64-64h387.2c17.6 0 32-14.4 32-32v-64c0-17.6-14.4-32-32-32H384c-106 0-192 86-192 192v192c0 106 86 192 192 192h249.6c106 0 192-86 192-192V486.4c0-17.6-14.4-32-32-32z"></path></svg>
+                            <span>Gitee</span>
+                        </a>
+                        <a href="https://x.com/ZZH0327zzh" target="_blank" title="X" class="social-link twitter-x">
+                            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                            <span>X</span>
+                        </a>
+                    </p>
+                    <h3>🤝 参与贡献与致谢</h3>
+                    <p>本站为开源项目，欢迎更多地铁爱好者、前端开发者参与进来！如果您想为本项目<strong>补充缺失的线路数据、完善音频资源</strong>或<strong>修复 Bug</strong>，欢迎前往 GitHub 提交 Pull Request 或 Issue，或通过邮件与作者联系。</p>
+                    <div class="about-actions">
+                        <a href="https://github.com/ZZHTool/gz-metro-simulator" target="_blank" class="btn-github-action">
+                            <svg class="icon-git" viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                            前往 GitHub 参与开发
+                        </a>
+                    </div>
+                    <p class="about-disclaimer">
+                        <strong>免责声明：</strong>本站为个人非商业项目，仅供学习、研究及交流使用，所使用的地铁广播音频为 ZZH 录制，与广州地铁集团有限公司无任何关联。广州地铁名称、标识及相关商标归其权利人所有。
+                    </p>
+                </section>
+            </main>
+        </div>
+        <div id="line-network-view" class="view">
+            <header class="main-header">
+                <button id="btn-line-network-back" class="btn-back">
+                    ⬅ 返回首页
+                </button>
+                <img src="GZMetro.svg" class="metro-logo" alt="Guangzhou Metro Logo">
+                <h1>地铁线网</h1>
+            </header>
+            <main>
+                <section class="about-card line-network-card">
+                    <img class="line-network-image" src="广州地铁线网示意图.webp" alt="广州地铁线网示意图">
+                    <a class="btn-about line-network-download" href="广州地铁线网示意图.webp" download="广州地铁线网示意图.webp">下载原图</a>
+                </section>
+            </main>
+        </div>
+        <footer class="site-footer" style="display: none;">
+            <div class="footer-content">
+                <p>
+                    本站已稳定运行
+                    <b style="color: #00ff88;">
+                        <strong id="stable-days">0</strong>
+                    </b>
+                    天
+                </p>
+                <p class="footer-copyright">
+                    &copy; 2026 <a href="https://zzhtool.github.io" target="_blank">ZZH</a>. All Rights Reserved.
+                </p>
+                <div class="footer-social-links">
+                    <a href="https://space.bilibili.com/3546655446010320" target="_blank" title="哔哩哔哩" class="social-link bilibili">
+                        <svg viewBox="0 0 1024 1024" width="18" height="18" aria-hidden="true">
+                            <path fill="currentColor" d="M311.3 162.7l102.7 101.4c7.6 7.5 19.8 7.5 27.3-.1l.1-.1c7.5-7.6 7.5-19.8-.1-27.3L338.7 135.2c-7.6-7.5-19.8-7.5-27.3.1 0 0-.1 0-.1.1-7.5 7.6-7.5 19.8 0 27.3zM712.7 162.7L610 264.1c-7.6 7.5-7.6 19.7 0 27.3 7.5 7.6 19.7 7.6 27.3 0l102.7-101.4c7.6-7.5 7.6-19.7 0-27.3-7.6-7.5-19.8-7.5-27.3 0zM192 288c-53 0-96 43-96 96v384c0 53 43 96 96 96h640c53 0 96-43 96-96V384c0-53-43-96-96-96H192zm0 64h640c17.7 0 32 14.3 32 32v384c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32V384c0-17.7 14.3-32 32-32zm144 128c-26.5 0-48 21.5-48 48s21.5 48 48 48 48-21.5 48-48-21.5-48-48-48zm352 0c-26.5 0-48 21.5-48 48s21.5 48 48 48 48-21.5 48-48-21.5-48-48-48z" />
+                        </svg>
+                        <span>bilibili</span>
+                    </a>
+                    <a href="https://github.com/ZZHTool/gz-metro-simulator" target="_blank" title="GitHub" class="social-link github">
+                        <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://gitee.com/zzh0327zzh/gz-metro-simulator" target="_blank" title="Gitee" class="social-link gitee">
+                        <svg viewBox="0 0 1024 1024" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m259.2-569.6H480c-17.6 0-32 14.4-32 32v64c0 17.6 14.4 32 32 32h147.2c17.6 0 32 14.4 32 32v16c0 35.3-28.7 64-64 64H384c-35.3 0-64-28.7-64-64V384c0-35.3 28.7-64 64-64h387.2c17.6 0 32-14.4 32-32v-64c0-17.6-14.4-32-32-32H384c-106 0-192 86-192 192v192c0 106 86 192 192 192h249.6c106 0 192-86 192-192V486.4c0-17.6-14.4-32-32-32z"></path></svg>
+                        <span>Gitee</span>
+                    </a>
+                    <a href="https://x.com/ZZH0327zzh" target="_blank" title="X" class="social-link twitter-x">
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                        <span>X</span>
+                    </a>
+                </div>
+                <p>作者邮箱：<i class="email">zzh19526308283@outlook.com</i></p>
+                <p class="footer-disclaimer">
+                    <strong>声明：</strong>本站为个人非商业项目，仅供学习、研究及交流使用,目前只发布官方网页版,从未授权任何第三方打包为APP，所使用的地铁广播音频为ZZH录制，及部分音频来源自网络/<a href="https://space.bilibili.com/9033373" target="_blank">@红茶w</a>，与广州地铁集团有限公司无任何关联。广州地铁名称、标识及相关商标归其权利人所有。如权利人认为本站内容存在侵权，请联系作者处理。
+                </p>
+            </div>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+    <script src="metroData.js"></script>
+</body>

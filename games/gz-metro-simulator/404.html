@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:gz-metro-simulator:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到 | 广州地铁报站模拟器</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        :root {
+            --bg-color: #f5f6fa;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-sub: #7f8c8d;
+            --accent-red: #c0392b;
+            --primary-blue: #007bff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .metro-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .error-code {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--accent-red);
+            line-height: 1;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .error-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .error-desc {
+            font-size: 14px;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+            .action-btn:hover {
+                background-color: #0056b3;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            }
+
+        .countdown-tip {
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="GZMetro.svg" alt="广州地铁" class="metro-icon">
+
+        <div class="error-code">404</div>
+        <h1 class="error-title">前方无站，列车已偏离轨道</h1>
+        <p class="error-desc">
+            抱歉，您访问的线路或页面不存在，请检查地址是否输入正确。
+        </p>
+
+        <a href="#" class="action-btn">返回模拟器首页</a>
+
+        <div class="countdown-tip">
+            <span id="timer">5</span> 秒后将自动返回首页...
+        </div>
+    </div>
+
+    <script>
+        let seconds = 5;
+        const timerEl = document.getElementById('timer');
+
+        const countdown = setInterval(() => {
+            seconds--;
+            if (timerEl) timerEl.textContent = String(seconds);
+
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                window.location.href = '#';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
