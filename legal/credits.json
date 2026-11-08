@@ -566,5 +566,20 @@
     "date": "2026-11-08",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Attributions"
+  },
+  {
+    "key": "zubspace",
+    "size": 14317,
+    "repo": "pkieltyka/zubspace",
+    "id": 39,
+    "slug": "zubspace",
+    "title": "Zubspace",
+    "developer": "pkieltyka",
+    "license": "MIT",
+    "source": "https://github.com/pkieltyka/zubspace",
+    "commit": "245b40be21177fb19b7e743778c3dd5db37fdf3f",
+    "date": "2026-11-08",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: — [Wikipedia, \"SubSpace (video game)\"](https://en.wikipedia.org/wiki/SubSpace_(video_game)), CC BY-SA 4.0 | ASSETS.md: or own any of this material and want it credited or removed, please"
   }
 ]

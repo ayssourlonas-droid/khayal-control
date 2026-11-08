@@ -1,0 +1,10 @@
+Source: https://github.com/pkieltyka/zubspace
+Commit: 245b40be21177fb19b7e743778c3dd5db37fdf3f
+License: MIT
+Imported: 2026-11-08T23:56:29.165498+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 374}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: — [Wikipedia, "SubSpace (video game)"](https://en.wikipedia.org/wiki/SubSpace_(video_game)), CC BY-SA 4.0
+- ASSETS.md: or own any of this material and want it credited or removed, please
+- images: 3, audio: 1, tagged audio: 0

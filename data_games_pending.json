@@ -595,5 +595,30 @@
       "type": "web",
       "category": "card-game"
     }
+  },
+  {
+    "id": 39,
+    "release_year": "2026",
+    "category_tags": [
+      "game",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "Zubspace",
+      "title_en": "Zubspace",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/zubspace/_cover.png"
+    },
+    "details_scene": {
+      "description": "Zubspace: Remake of the classic SubSpace game, in the browser!",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/zubspace/",
+      "developer": "pkieltyka",
+      "license": "MIT",
+      "source_url": "https://github.com/pkieltyka/zubspace",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game"
+    }
   }
 ]
