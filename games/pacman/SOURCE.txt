@@ -1,5 +1,8 @@
 Source: https://github.com/mumuy/pacman
 Commit: 8a96194f7cf0102db2d7f0e69450166beb1d7116
 License: MIT
-Imported: 2026-11-05T11:46:17.655157+00:00
+Imported: 2026-11-08T11:42:11.277004+00:00
 Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط خطوط": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 1, audio: 0, tagged audio: 0
