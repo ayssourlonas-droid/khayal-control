@@ -1031,5 +1031,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "stickmankino",
+    "size": 42603,
+    "repo": "dsauce/stickman-kino",
+    "id": 70,
+    "slug": "stickman-kino",
+    "title": "Stickman Kino",
+    "developer": "dsauce",
+    "license": "MIT",
+    "source": "https://github.com/dsauce/stickman-kino",
+    "commit": "d3d665301c0b62f04c885785e6bd6044de0785c6",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Nothing here generates pixels.** There is no Sora, Veo, Runway or other video model, and no video API or per-video credits. Your coding agen | README.md: Video API or per-video credits | No | Required | No |"
   }
 ]

@@ -1,0 +1,12 @@
+Source: https://github.com/dsauce/stickman-kino
+Commit: d3d665301c0b62f04c885785e6bd6044de0785c6
+License: MIT
+Imported: 2026-11-09T14:59:48.741811+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 22, "تحسين وسائط صور": 6, "تحسين وسائط فيديو": 6}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: Nothing here generates pixels.** There is no Sora, Veo, Runway or other video model, and no video API or per-video credits. Your coding agen
+- README.md: Video API or per-video credits | No | Required | No |
+- README.md: Intros and outros:** 4 of each (countdown, clapperboard, logo, spotlight; call to action, credits, end screen, "made with"), declared in one
+- README.md: [MIT](LICENSE) © [Prerit Ahuja](https://preritahuja.com/). Music and sound effects produced by Stickman Kino are generated from scratch and 
+- images: 29, audio: 0, tagged audio: 0

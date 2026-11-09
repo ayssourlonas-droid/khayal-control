@@ -1322,5 +1322,31 @@
       "type": "web",
       "category": "browser-game"
     }
+  },
+  {
+    "id": 70,
+    "release_year": "2026",
+    "category_tags": [
+      "agent-skills",
+      "ai-agents",
+      "animation"
+    ],
+    "main_scene": {
+      "title_ar": "Stickman Kino",
+      "title_en": "Stickman Kino",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/stickman-kino/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Stickman films, directed by your coding agent, rendered as code. No video-generation model, no video API, renders locally.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/stickman-kino/",
+      "developer": "dsauce",
+      "license": "MIT",
+      "source_url": "https://github.com/dsauce/stickman-kino",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "agent-skills"
+    }
   }
 ]
