@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:bangdream:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>合成邦多利皇帝 · BanG Dream! 棉花娃娃版 · 语音试听版</title>
+    <link rel="stylesheet" href="css/style.css?v=0.4.28" />
+    <style>
+    .try-badge { font-size: 13px; font-weight: 400; color: #9a7a68; margin-left: 10px; }
+  </style>
+</head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-logo">🎸</span>
+          <div class="brand-text">
+            <h1>合成邦多利皇帝<span class="try-badge">语音试听版 · 语音来自「全音频」</span></h1>
+            <p>两只一样的棉花娃娃碰在一起，就会合成更大的棉花娃娃</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <span class="version" id="app-version">v0.4</span>
+          <button class="btn" id="btn-sound" type="button">🔊 音效</button>
+          <button class="btn" id="btn-pause" type="button">⏸ 暂停</button>
+          <button class="btn" id="btn-restart" type="button">↻ 重开</button>
+          <button class="btn btn-primary" id="btn-picker" type="button">🎸 组建乐队</button>
+          <button class="btn" id="btn-qq" type="button">💬 Q裙交流</button>
+          <button
+            class="btn btn-music"
+            id="btn-music"
+            type="button"
+            aria-pressed="false"
+            title="播放/停止背景音乐（朋友的酒 DJ 完整版）"
+          >
+            <img class="btn-music-icon" src="assets/icons/bgm.webp" alt="背景音乐" />
+          </button>
+        </div>
+      </header>
+
+      <!-- 公告：名场面音频还没导入（红字提醒） -->
+      <div class="notice notice-error" id="notice-scene-audio">
+        🔇 <b>公告：「名场面」还没有导入音频。</b>
+        现在把右上角切到「✨ 名场面」档时只有合成音、没有人声台词；
+        等音源补上后会自动接上，不用重新下载游戏。
+      </div>
+
+      <div class="notice" id="storage-warning" hidden>
+        ⚠️ 当前是用 <code>file://</code> 直接打开的，浏览器可能不允许本页保存数据，
+        排行榜成绩和你组建的乐队会记不住。建议双击同目录下的 <b>启动游戏.cmd</b>，用本地服务器打开。
+      </div>
+
+      <div class="notice notice-error" id="boot-error" hidden></div>
+
+      <!--
+        加载页：把当前阵容要用的语音先取下来并解码好，再放你进游戏。
+        这样进游戏后发声就不会「慢半拍 / 偶尔没声音」。
+        （图：桌面 yeah.gif 压缩版，11.8MB → 1.3MB，保留动画）
+      -->
+      <div class="loading-screen" id="loading-screen" hidden>
+        <div class="loading-card">
+          <img
+            class="loading-art"
+            src="assets/loading-poster.webp"
+            data-gif="assets/loading.webp"
+            alt="玩偶们爬上山坡"
+          />
+          <div class="loading-title">🎸 正在加载游戏…</div>
+          <div class="loading-bar"><i id="loading-bar"></i></div>
+          <div class="loading-note" id="loading-note">正在加载游戏</div>
+          <button class="btn loading-skip" id="loading-skip" type="button" hidden>网络较慢？先进入游戏</button>
+          <div class="loading-hint">
+            正在把游戏资源与语音准备好，马上就好。
+            <br />
+            <b>手机端可能加载缓慢，请耐心等待</b>
+          </div>
+        </div>
+      </div>
+
+      <main class="layout">
+        <!-- 左栏：记分显示器 + 预告 + 进化表 -->
+        <aside class="col col-left">
+          <section class="panel score-panel">
+            <div class="panel-head">
+              <span class="panel-title">本局得分</span>
+              <span class="score-delta" id="hud-delta"></span>
+            </div>
+            <div class="score-value" id="hud-score">0</div>
+            <div class="combo" id="hud-combo">
+              <span class="combo-label">连击</span>
+              <b id="hud-combo-count"></b>
+              <span class="combo-mult" id="hud-combo-mult"></span>
+              <i class="combo-bar"><em id="hud-combo-bar"></em></i>
+            </div>
+            <div class="score-grid">
+              <div><span class="k">最高分</span><b id="hud-best">0</b></div>
+              <div><span class="k">合成次数</span><b id="hud-merges">0</b></div>
+              <div><span class="k" id="hud-max-label">最大棉花娃娃</span><b id="hud-maxtier">—</b></div>
+              <div><span class="k">本局用时</span><b id="hud-time">0:00</b></div>
+            </div>
+          </section>
+
+          <section class="panel diff-panel">
+            <div class="panel-head">
+              <span class="panel-title">难度</span>
+              <span class="panel-hint">1 ~ 10 级</span>
+            </div>
+            <div class="diff-row">
+              <button class="btn btn-mini" id="diff-minus" type="button" aria-label="降低难度">−</button>
+              <div class="diff-value">
+                <b id="diff-level">Lv.5</b>
+                <span id="diff-name">熟练</span>
+              </div>
+              <button class="btn btn-mini" id="diff-plus" type="button" aria-label="提高难度">＋</button>
+            </div>
+            <div class="diff-track"><i id="diff-bar" style="width: 50%"></i></div>
+            <p class="diff-hint" id="diff-hint">掉落权重 · 投放间隔 · 危险线</p>
+          </section>
+
+          <section class="panel next-panel">
+            <div class="panel-head"><span class="panel-title">即将投放</span></div>
+            <div class="next-row">
+              <div class="next-box">
+                <span class="next-tag">当前</span>
+                <div class="next-fruit" id="hud-current"></div>
+              </div>
+              <div class="next-box">
+                <span class="next-tag">下一只</span>
+                <div class="next-fruit" id="hud-next"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel chain-panel">
+            <div class="panel-head">
+              <span class="panel-title" id="chain-title">棉花娃娃进化表</span>
+              <span class="panel-hint" id="chain-hint">分数＝合成出该棉花娃娃的得分</span>
+            </div>
+            <ol class="chain" id="chain-list"></ol>
+          </section>
+        </aside>
+
+        <!-- 中间：游戏画面 -->
+        <section class="stage">
+          <div class="board-wrap">
+            <canvas id="stage-canvas" width="480" height="700" aria-label="合成邦多利皇帝游戏画面"></canvas>
+            <div class="overlay" id="overlay" hidden>
+              <div class="overlay-card">
+                <h2 id="overlay-title"></h2>
+                <div class="overlay-body" id="overlay-body"></div>
+                <div class="overlay-actions" id="overlay-actions"></div>
+              </div>
+            </div>
+          </div>
+          <p class="stage-hint">
+            移动鼠标 / 手指瞄准，<kbd>点击</kbd> 或 <kbd>空格</kbd> 投放 · <kbd>←</kbd> <kbd>→</kbd> 微调 ·
+            <kbd>P</kbd> 暂停 · <kbd>R</kbd> 重开 · 左栏可调难度（1~10 级）
+          </p>
+        </section>
+
+        <!-- 右栏：排行榜 -->
+        <aside class="col col-right">
+          <section class="panel board-panel">
+            <div class="panel-head">
+              <span class="panel-title">排行榜</span>
+              <span class="live-dot" id="lb-live">全球</span>
+            </div>
+            <div class="lb-tabs" role="tablist">
+              <button class="lb-tab is-on" id="lb-tab-live" type="button" role="tab">实时 · 最近 20 次</button>
+              <button class="lb-tab" id="lb-tab-top" type="button" role="tab">总榜 · 前 100</button>
+            </div>
+            <div class="lb-player-row">
+              <input id="lb-player" maxlength="12" placeholder="你的名字" value="玩家" />
+              <button class="btn btn-mini" id="lb-refresh" type="button">同步</button>
+              <button class="btn btn-mini btn-ghost" id="lb-clear" type="button">清空</button>
+            </div>
+            <ol class="lb-list" id="lb-list"></ol>
+            <p class="lb-status" id="lb-status"></p>
+            <p class="lb-note" id="lb-note"></p>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <div class="toast-wrap" id="toast-wrap"></div>
+
+    <!-- 玩偶图预加载池：挂在这里的 img 会被页面 load 事件等待，首屏/截图才不会拍到 emoji 兜底外观 -->
+    <div id="asset-pool" hidden aria-hidden="true"></div>
+
+    <script>
+      // 启动阶段如果出错，直接把错误显示在页面上，避免只有一片空白
+      (function () {
+        function report(msg) {
+          var n = document.getElementById('boot-error');
+          if (!n) return;
+          n.hidden = false;
+          n.textContent = '⚠️ 页面出错了：' + msg;
+        }
+        window.addEventListener('error', function (e) {
+          var file = String(e.filename || '').split('/').pop();
+          report((e.message || e.error) + (file ? '（' + file + ':' + e.lineno + '）' : ''));
+        });
+        window.SUIKA_ON_ERROR = function (err, where) {
+          report('游戏事件「' + where + '」处理失败：' + ((err && err.message) || err));
+        };
+      })();
+    </script>
+    <!--
+      语音试听页（由 tools/make-voice-preview.cjs 生成，别手改；改了 index.html 就重跑一次）。
+      和正式页的区别只有两点：语音目录指向 assets/voice/，并且打开音频自检。
+      （双击打开时的内联语音回退已经在 index.html 里统一处理，这里不重复注入。）
+    -->
+    <script>
+      window.SUIKA_AUDIO_BASE = 'assets/voice/';
+      // 试听页打开音频自检：第一次点击会响一声「叮」并报状态
+      window.SUIKA_AUDIO_SELFTEST = true;
+    </script>
+    <script src="vendor/matter.min.js?v=0.4.28"></script>
+    <!--
+      直接双击打开（file://）时浏览器不允许 fetch 本地文件，语音会加载不到；
+      这种情况下补上内联语音数据（assets/voice-inline.js，约 9MB）。
+      走 http 打开（启动游戏.cmd）时不加载它，按需取真实文件。
+    -->
+    <script>
+      if (location.protocol === 'file:') {
+        document.write('<script src="assets/voice-inline.js"><\/script>');
+      }
+    </script>
+    <script src="js/config.js?v=0.4.28"></script>
+    <script src="js/audio.js?v=0.4.28"></script>
+    <script src="js/library.js?v=0.4.28"></script>
+    <script src="js/assets-builtin.js?v=0.4.28"></script>
+    <script src="js/assets.js?v=0.4.28"></script>
+    <script src="js/boards.js?v=0.4.28"></script>
+    <script src="js/transport.js?v=0.4.28"></script>
+    <script src="js/sync.js?v=0.4.28"></script>
+    <script src="js/engine.js?v=0.4.28"></script>
+    <script src="js/render.js?v=0.4.28"></script>
+    <script src="js/ui.js?v=0.4.28"></script>
+    <script src="js/picker.js?v=0.4.28"></script>
+    <script src="js/game.js?v=0.4.28"></script>
+</body>
+</html>

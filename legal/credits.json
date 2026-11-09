@@ -776,5 +776,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "bangdream",
+    "size": 53865,
+    "repo": "Vanilla-IceWagtail/bangdream",
+    "id": 53,
+    "slug": "bangdream",
+    "title": "Bangdream",
+    "developer": "Vanilla-IceWagtail",
+    "license": "BSD-3-Clause",
+    "source": "https://github.com/Vanilla-IceWagtail/bangdream",
+    "commit": "2790c98da164e368699c3694112aaf84519e0a19",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

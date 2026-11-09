@@ -1,0 +1,9 @@
+Source: https://github.com/Vanilla-IceWagtail/bangdream
+Commit: 2790c98da164e368699c3694112aaf84519e0a19
+License: BSD-3-Clause
+Imported: 2026-11-09T09:45:34.344607+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 61, "تحسين وسائط صور": 97, "تحسين وسائط صوت": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: All rights reserved.
+- images: 150, audio: 351, tagged audio: 0
