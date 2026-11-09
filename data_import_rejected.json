@@ -223,5 +223,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42593773725"
+  },
+  {
+    "url": "https://github.com/VibezZzCoder/hangar-fighter",
+    "repo": "VibezZzCoder/hangar-fighter",
+    "reason": "ملفات تتجاوز 25MB (حد Cloudflare): index.html (27MB)",
+    "license": "GPL-3.0",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42593929444"
   }
 ]
