@@ -701,5 +701,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "oinkbuns",
+    "size": 1599,
+    "repo": "verastack-labs/oinkbuns",
+    "id": 48,
+    "slug": "oinkbuns",
+    "title": "Oinkbuns",
+    "developer": "verastack-labs",
+    "license": "Apache-2.0",
+    "source": "https://github.com/verastack-labs/oinkbuns",
+    "commit": "7d8b0d3750f9ef37eb8bed616a8562d1933c1f3e",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]

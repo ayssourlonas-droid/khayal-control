@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:oinkbuns:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"
+    />
+    <meta name="theme-color" content="#fff1d6" />
+    <title>Play Oinkbuns - Bake hot cross buns with Peppa</title>
+    <meta name="description" content="Play Oinkbuns free in your browser: bake, ice and serve hot cross buns with Peppa. Arrow keys and Space, or tap on a phone. No ads, no accounts." />
+    <link rel="canonical" href="https://oinkbuns.verastack.dev/play/" />
+    <link rel="icon" href="art/logo.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Oinkbuns" />
+    <meta property="og:title" content="Play Oinkbuns - Bake hot cross buns with Peppa" />
+    <meta property="og:description" content="A tiny, free kitchen game. Bake, ice and serve hot cross buns with Peppa." />
+    <meta property="og:url" content="https://oinkbuns.verastack.dev/play/" />
+    <meta property="og:image" content="https://oinkbuns.verastack.dev/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://oinkbuns.verastack.dev/og.png" />
+    <style>
+      /* #fff1d6 is the kitchen wall colour. The page behind the canvas shows
+         through as the letterbox bars, so it must match the canvas
+         background set in src/config.ts. */
+      /* svh is the viewport with the browser toolbar showing, so it does not
+         change when Android Chrome hides or shows its address bar while the
+         page is touched. The game area keeps one size, and the spare strip is
+         the same colour as the canvas background. */
+      html,
+      body {
+        margin: 0;
+        height: 100vh;
+        height: 100svh;
+        background: #fff1d6;
+        overflow: hidden;
+        overscroll-behavior: none;
+      }
+      #game {
+        width: 100%;
+        height: 100%;
+      }
+      #game canvas {
+        display: block;
+        /* The custom pink arrow; tip at (3, 3). */
+        cursor: url('assets/art/cursor.svg') 3 3, auto;
+      }
+      /* Spec 5.3: on a phone held upright, ask for landscape. CSS alone, so
+         it appears before any script runs. */
+      #rotate {
+        display: none;
+      }
+      @media (orientation: portrait) and (pointer: coarse) {
+        #rotate {
+          position: fixed;
+          inset: 0;
+          z-index: 10;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          background: #fff1d6;
+          color: #3a2a2a;
+          font: bold 28px 'Fredoka', 'Segoe UI', sans-serif;
+          text-align: center;
+          padding: 24px;
+        }
+        #rotate .phone {
+          width: 60px;
+          height: 100px;
+          border: 6px solid #3a2a2a;
+          border-radius: 12px;
+          animation: turn 1.6s ease-in-out infinite;
+        }
+      }
+      @keyframes turn {
+        0%, 30% { transform: rotate(0deg); }
+        60%, 100% { transform: rotate(-90deg); }
+      }
+      @font-face {
+        font-family: 'Fredoka';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('fonts/Fredoka-400.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Fredoka';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url('fonts/Fredoka-600.woff2') format('woff2');
+      }
+    </style>
+    <script type="module" crossorigin src="play/assets/index-CnfYvHOv.js"></script>
+  <link rel="manifest" href="play/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="play/registerSW.js"></script></head>
+  <body>
+    <div id="game"></div>
+    <noscript>Oinkbuns needs JavaScript to run. It is a free hot cross bun kitchen game; see <a href="#">oinkbuns.verastack.dev</a>.</noscript>
+    <div id="rotate" aria-live="polite">
+      <div class="phone"></div>
+      <p>Turn your phone sideways to play!</p>
+    </div>
+  </body>
+</html>
