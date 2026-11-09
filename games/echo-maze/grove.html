@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:echo-maze:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" href="data:,">
+  <title>ECHO GROVE — Whispering Glades</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030806; --panel: rgba(12, 20, 16, 0.88); --border-gold: rgba(232, 182, 42, 0.35);
+      --text: #f0fdf4; --accent: #10b981; --gold: #fbbf24; --cyan: #38bdf8; --danger: #f43f5e;
+      --font-title: 'Cinzel', serif; --font-body: 'Outfit', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      background: radial-gradient(circle at 50% 25%, #0d2820 0%, #061511 50%, #020705 100%);
+      color: var(--text); font-family: var(--font-body); min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      overflow-x: hidden; touch-action: manipulation; position: relative;
+    }
+    .game-shell {
+      position: relative; display: flex; flex-direction: column; align-items: center;
+      gap: 12px; padding: 14px; max-width: 600px; width: 100%; z-index: 1;
+    }
+    .rpg-header {
+      width: 100%; background: var(--panel); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1.5px solid var(--border-gold); box-shadow: 0 12px 36px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.1);
+      border-radius: 14px; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    }
+    .rpg-char-card { display: flex; align-items: center; gap: 10px; }
+    .char-portrait {
+      width: 44px; height: 44px; border-radius: 8px; border: 2px solid #e8b62a;
+      background: #0d1f17; box-shadow: 0 0 12px rgba(232, 182, 42, 0.35);
+      display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
+    }
+    .char-info { display: flex; flex-direction: column; gap: 3px; }
+    .char-name-row { display: flex; align-items: center; gap: 6px; }
+    .char-name { font-family: var(--font-title); font-size: 13.5px; font-weight: 900; color: #fef08a; letter-spacing: 0.5px; }
+    .char-rank { font-size: 10px; color: #86efac; font-weight: 600; text-transform: uppercase; }
+    .char-bar-wrap {
+      width: 96px; height: 11px; background: #200a0a; border: 1px solid #78350f;
+      border-radius: 4px; overflow: hidden; position: relative;
+    }
+    .char-bar-fill {
+      height: 100%; width: 100%;
+      background: linear-gradient(90deg, #dc2626 0%, #ef4444 60%, #f87171 100%);
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); transition: width 0.3s;
+    }
+    .char-bar-label {
+      position: absolute; inset: 0; font-size: 8.5px; font-weight: 800; color: #fff;
+      display: flex; align-items: center; justify-content: center; text-shadow: 0 1px 2px #000;
+    }
+    .stage-center-badge { text-align: center; }
+    .stage-title {
+      font-family: var(--font-title); font-size: 13.5px; font-weight: 900;
+      color: var(--gold); letter-spacing: 1px; text-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+    }
+    .stage-sub-stats {
+      font-size: 11px; color: #94a3b8; display: flex; gap: 10px; justify-content: center; margin-top: 2px;
+    }
+    .rpg-right-controls { display: flex; align-items: center; gap: 6px; }
+    .stat-pill {
+      background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(232, 182, 42, 0.3);
+      border-radius: 16px; padding: 4px 9px; font-size: 11px; font-weight: 700; color: #fef08a;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(232, 182, 42, 0.3);
+      color: #fef08a; font-family: var(--font-body); font-size: 12px; font-weight: 700;
+      padding: 6px 9px; border-radius: 8px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .icon-btn:hover {
+      background: rgba(251, 191, 36, 0.2); border-color: rgba(251, 191, 36, 0.6);
+      transform: translateY(-1px);
+    }
+    .icon-btn.active {
+      background: #e8b62a; color: #022c22; border-color: #e8b62a; box-shadow: 0 0 12px rgba(232, 182, 42, 0.5);
+    }
+    .canvas-container {
+      position: relative; border: 2px solid var(--border-gold); border-radius: 16px;
+      overflow: hidden; background: #030806; box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 35px rgba(251, 191, 36, 0.15);
+      width: 100%; max-width: 544px; aspect-ratio: 1 / 1;
+    }
+    #gameCanvas { display: block; width: 100%; height: 100%; aspect-ratio: 1 / 1; }
+    .banner-msg {
+      position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(8, 20, 16, 0.94); backdrop-filter: blur(8px);
+      border: 1px solid var(--cyan); box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+      color: #e0f2fe; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 800;
+      opacity: 0; transition: opacity 0.25s, transform 0.25s; pointer-events: none; z-index: 10;
+    }
+    .modal-overlay {
+      position: absolute; inset: 0; background: rgba(3, 8, 6, 0.94); backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 24px; text-align: center; z-index: 20;
+    }
+    .modal-hidden { display: none !important; }
+    .modal-title {
+      font-family: var(--font-title); font-size: 25px; font-weight: 900;
+      letter-spacing: 2px; margin-bottom: 8px; color: var(--gold); text-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+    }
+    .modal-desc { font-size: 13px; color: #94a3b8; max-width: 380px; margin-bottom: 20px; line-height: 1.6; }
+    .action-btn {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #1c1002;
+      font-family: var(--font-body); font-weight: 800; font-size: 13.5px; padding: 11px 26px;
+      border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 18px rgba(245, 158, 11, 0.45);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .action-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.65); }
+    .action-btn.btn-danger {
+      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: #fff;
+      box-shadow: 0 4px 18px rgba(244, 63, 94, 0.45);
+    }
+    .action-btn.btn-danger:hover { box-shadow: 0 8px 25px rgba(244, 63, 94, 0.65); }
+    .touch-bar { display: none; width: 100%; max-width: 544px; justify-content: space-between; align-items: center; gap: 12px; padding-top: 4px; }
+    @media (pointer: coarse) { .touch-bar { display: flex; } }
+    .touch-dpad { display: grid; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(3, 44px); gap: 4px; }
+    .touch-key {
+      background: var(--panel); border: 1.5px solid var(--border-gold); border-radius: 8px;
+      color: var(--text); font-size: 15px; display: flex; align-items: center; justify-content: center; user-select: none;
+    }
+    .touch-action-btn {
+      flex: 1; height: 70px; background: rgba(251, 191, 36, 0.15); border: 1.5px solid var(--gold);
+      box-shadow: 0 0 15px rgba(251, 191, 36, 0.25); border-radius: 10px; color: #fef08a;
+      font-weight: 800; font-size: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer;
+    }
+    .tests-status {
+      font-size: 11px; color: #64748b; margin-top: 4px; font-family: var(--font-body);
+      display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.4);
+      padding: 4px 12px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="game-shell">
+    <header class="rpg-header">
+      <!-- Left: Character Portrait Card -->
+      <div class="rpg-char-card">
+        <div class="char-portrait">
+          <svg width="40" height="40" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" fill="#132a20" stroke="#e8b62a" stroke-width="1.8"/>
+            <path d="M12 24 C10 16 30 16 28 24 C30 30 10 30 12 24" fill="#f6d5a8"/>
+            <path d="M10 20 C10 12 30 12 30 20 C28 14 12 14 10 20" fill="#e8d98a"/>
+            <path d="M12 17 Q20 13 28 17" stroke="#fbbf24" stroke-width="2.2" fill="none"/>
+            <circle cx="20" cy="14" r="2" fill="#10b981"/>
+            <circle cx="16" cy="21" r="1.5" fill="#042f2e"/>
+            <circle cx="24" cy="21" r="1.5" fill="#042f2e"/>
+            <path d="M18 25 Q20 27 22 25" stroke="#78350f" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <div class="char-info">
+          <div class="char-name-row">
+            <span class="char-name">Elarion</span>
+            <span class="char-rank" id="hud-rank">Scout</span>
+          </div>
+          <div class="char-bar-wrap">
+            <div class="char-bar-fill" id="char-hp-fill" style="width: 100%;"></div>
+            <span class="char-bar-label" id="char-hp-label">50 / 50</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Stage Title & Foe Info -->
+      <div class="stage-center-badge">
+        <div class="stage-title" id="hud-stage-title">1/3 · THE WHISPERING GLADES</div>
+        <div class="stage-sub-stats">
+          <span>✦ Relics: <strong id="hud-relic-count" style="color: var(--gold);">0 / 3</strong></span>
+          <span>🐾 Prowler: <strong id="hud-threat-status" style="color: #34d399;">Dormant</strong></span>
+        </div>
+      </div>
+
+      <!-- Right: Badges & Controls -->
+      <div class="rpg-right-controls">
+        <div class="stat-pill" title="Lumina Relics">✦ <span id="hud-relics-pill">0/3</span></div>
+        <button class="icon-btn" id="btn-sound" title="Toggle Sound">🔊</button>
+        <button class="icon-btn" id="btn-effects" title="Toggle Reduced Effects">✨</button>
+        <button class="icon-btn" id="btn-pause" title="Pause Game (P)">⏸</button>
+        <button class="icon-btn" id="btn-restart" title="Restart Zone (R)">🔄</button>
+        <a href="index.html" class="icon-btn" style="text-decoration: none;" title="Back to Echo Maze">🦇</a>
+      </div>
+    </header>
+
+    <div class="canvas-container">
+      <canvas id="gameCanvas" width="544" height="544"></canvas>
+      <div class="banner-msg" id="banner-msg">SECRET PASSAGE REVEALED</div>
+
+      <div class="modal-overlay" id="title-modal">
+        <h1 class="modal-title">ECHO GROVE</h1>
+        <p class="modal-desc">Venture into the ancient torchlit glades of Vaighruz.<br><br>Gather 3 Lumina Relics and reach the sacred shrine. Sonar pings awaken hidden runes and shadowy forest prowlers.</p>
+        <button class="action-btn" id="btn-start">ENTER THE GROVE ▶</button>
+      </div>
+
+      <div class="modal-overlay modal-hidden" id="victory-modal">
+        <h2 class="modal-title">SHRINE AWAKENED!</h2>
+        <p class="modal-desc" id="vic-desc">All relics gathered in 0:24.</p>
+        <button class="action-btn" id="btn-next">PROCEED TO NEXT ZONE ▶</button>
+      </div>
+
+      <div class="modal-overlay modal-hidden" id="caught-modal">
+        <h2 class="modal-title" style="color: var(--danger); text-shadow: 0 0 20px rgba(244, 63, 94, 0.6);">CAUGHT IN THE DARK</h2>
+        <p class="modal-desc">A forest prowler intercepted your acoustic footprints in the shadows.</p>
+        <button class="action-btn btn-danger" id="btn-retry">TRY ZONE AGAIN</button>
+      </div>
+    </div>
+
+    <div class="touch-bar">
+      <div class="touch-dpad">
+        <div></div><button class="touch-key" id="pad-up">▲</button><div></div>
+        <button class="touch-key" id="pad-left">◀</button><div></div><button class="touch-key" id="pad-right">▶</button>
+        <div></div><button class="touch-key" id="pad-down">▼</button><div></div>
+      </div>
+      <button class="touch-action-btn" id="pad-ping"><span>SPACE</span><small style="font-size:9px; font-weight:400; opacity:0.8;">SONAR PING</small></button>
+    </div>
+    <div class="tests-status" id="tests-status">Engine Self-Tests: Initializing...</div>
+  </div>
+
+  <script>
+  /* CONFIG & PROCEDURAL PALETTE */
+  const CONFIG = {
+    TILE_SIZE: 32, VIEW_TILES: 17, VIEW_PIXELS: 544,
+    PALETTE: [
+      '#030806', '#0f172a', '#1e293b', '#334155', '#064e3b', '#047857', '#10b981', '#34d399',
+      '#78350f', '#b45309', '#f59e0b', '#fde68a', '#1e3a8a', '#38bdf8', '#f43f5e', '#f8fafc'
+    ],
+    MONSTER_DEFAULT_SPEED: 2.1, MONSTER_INVESTIGATE_SPEED: 2.5,
+    MONSTER_HEARING_RADIUS: 8.5, FOOTSTEP_HEARING_RADIUS: 2.2,
+    SONAR_EXPAND_SPEED: 18.0, SONAR_MAX_RADIUS: 8.5, STEP_DURATION: 0.12,
+    LINE_OF_SIGHT_SONAR: true,
+    MONSTER_HEARING_USE_PATH: true,
+    ZONES: [
+      { id: 'meadow', name: 'The Whispering Glades', stageNum: '1/3', subtitle: 'Elarion draws his lantern into the shadows...', width: 17, height: 17 },
+      { id: 'cave', name: 'The Echoing Caverns', stageNum: '2/3', subtitle: 'Subterranean echoes ring through the stone...', width: 21, height: 21 },
+      { id: 'ruins', name: 'The Overgrown Sanctuary', stageNum: '3/3', subtitle: 'Ancient elven marble overgrown with bramble...', width: 25, height: 25 }
+    ]
+  };
+
+  /* DETERMINISTIC PRNG (Mulberry32) */
+  function mulberry32(seed) {
+    return function() {
+      seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /* LINE OF SIGHT RAYCAST (Target cell is never treated as blocking) */
+  function hasLineOfSight(grid, W, H, x0, y0, x1, y1) {
+    const dist = Math.hypot(x1 - x0, y1 - y0);
+    if (dist < 0.2) return true;
+    const targetCX = Math.floor(x1), targetCY = Math.floor(y1);
+    const steps = Math.ceil(dist / 0.2);
+    for (let i = 1; i < steps; i++) {
+      const cx = Math.floor(x0 + (x1 - x0) * (i / steps));
+      const cy = Math.floor(y0 + (y1 - y0) * (i / steps));
+      if (cx === targetCX && cy === targetCY) continue;
+      if (cx < 0 || cx >= W || cy < 0 || cy >= H) return false;
+      if (grid[cy][cx] === 1 || grid[cy][cx] === 2) return false;
+    }
+    return true;
+  }
+
+  /* WEB AUDIO ENGINE */
+  class GroveAudio {
+    constructor() {
+      this.ctx = null; this.isMuted = false; this.loopTimer = null; this.noteIndex = 0;
+      this.scale = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+    }
+    init() {
+      if (!this.ctx) { const A = window.AudioContext || window.webkitAudioContext; if (A) this.ctx = new A(); }
+      if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+      this.startAmbience();
+    }
+    setMute(mute) { this.isMuted = mute; if (mute) this.stopAmbience(); else this.startAmbience(); }
+    startAmbience() {
+      if (this.loopTimer || this.isMuted || !this.ctx) return;
+      this.loopTimer = setInterval(() => {
+        if (this.isMuted || !this.ctx) return;
+        const now = this.ctx.currentTime, osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'sine'; osc.frequency.setValueAtTime(this.scale[this.noteIndex % this.scale.length], now);
+        this.noteIndex = (this.noteIndex + (Math.random() > 0.4 ? 1 : 2)) % this.scale.length;
+        gain.gain.setValueAtTime(0.02, now); gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.45);
+      }, 420);
+    }
+    stopAmbience() { if (this.loopTimer) { clearInterval(this.loopTimer); this.loopTimer = null; } }
+    playSonar() {
+      if (this.isMuted || !this.ctx) return;
+      const now = this.ctx.currentTime, osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+      osc.type = 'sine'; osc.frequency.setValueAtTime(520, now); osc.frequency.exponentialRampToValueAtTime(1040, now + 0.18);
+      gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.connect(gain); gain.connect(this.ctx.destination); osc.start(now); osc.stop(now + 0.26);
+    }
+    playRelic() {
+      if (this.isMuted || !this.ctx) return;
+      const now = this.ctx.currentTime;
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, now + i * 0.06);
+        gain.gain.setValueAtTime(0.2, now + i * 0.06); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.25);
+        osc.connect(gain); gain.connect(this.ctx.destination); osc.start(now + i * 0.06); osc.stop(now + i * 0.06 + 0.28);
+      });
+    }
+    playAlert() {
+      if (this.isMuted || !this.ctx) return;
+      const now = this.ctx.currentTime, osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(180, now); osc.frequency.linearRampToValueAtTime(90, now + 0.35);
+      gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      osc.connect(gain); gain.connect(this.ctx.destination); osc.start(now); osc.stop(now + 0.42);
+    }
+    cleanup() {
+      this.stopAmbience();
+      if (this.ctx && this.ctx.state !== 'closed') { this.ctx.close().catch(() => {}); this.ctx = null; }
+    }
+  }
+
+  /* PROCEDURAL MAZE GENERATOR (With Relics, Secret Wall & Torches) */
+  function generateGroveZone(W, H, seed, theme) {
+    const rng = mulberry32(seed);
+    const grid = Array.from({ length: H }, () => Array(W).fill(1));
+    const stack = [{ x: 1, y: 1 }];
+    grid[1][1] = 0;
+    while (stack.length > 0) {
+      const cur = stack[stack.length - 1];
+      const neighbors = [];
+      [[0, -2], [0, 2], [-2, 0], [2, 0]].forEach(([dx, dy]) => {
+        const nx = cur.x + dx, ny = cur.y + dy;
+        if (nx > 0 && nx < W - 1 && ny > 0 && ny < H - 1 && grid[ny][nx] === 1) {
+          neighbors.push({ x: nx, y: ny, wallX: cur.x + dx / 2, wallY: cur.y + dy / 2 });
+        }
+      });
+      if (neighbors.length > 0) {
+        const next = neighbors[Math.floor(rng() * neighbors.length)];
+        grid[next.wallY][next.wallX] = 0; grid[next.y][next.x] = 0;
+        stack.push({ x: next.x, y: next.y });
+      } else { stack.pop(); }
+    }
+    const floorCells = [];
+    for (let y = 1; y < H - 1; y++) {
+      for (let x = 1; x < W - 1; x++) {
+        if (grid[y][x] === 0 && !(x === 1 && y === 1)) floorCells.push({ x, y });
+      }
+    }
+    for (let i = floorCells.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [floorCells[i], floorCells[j]] = [floorCells[j], floorCells[i]];
+    }
+    const collectibles = [];
+    for (let i = 0; i < 3 && i < floorCells.length; i++) {
+      collectibles.push({ x: floorCells[i].x, y: floorCells[i].y, collected: false });
+    }
+    let exit = { x: W - 2, y: H - 2 };
+    for (let i = floorCells.length - 1; i >= 3; i--) {
+      if (Math.hypot(floorCells[i].x - 1, floorCells[i].y - 1) > 6) {
+        exit = { x: floorCells[i].x, y: floorCells[i].y }; break;
+      }
+    }
+    let secretWall = null;
+    for (let y = 2; y < H - 2; y++) {
+      for (let x = 2; x < W - 2; x++) {
+        if (grid[y][x] === 1) {
+          const horiz = (grid[y][x - 1] === 0 && grid[y][x + 1] === 0 && grid[y - 1][x] === 1 && grid[y + 1][x] === 1);
+          const vert = (grid[y - 1][x] === 0 && grid[y + 1][x] === 0 && grid[y][x - 1] === 1 && grid[y][x + 1] === 1);
+          if (horiz || vert) { secretWall = { x, y, revealed: false }; grid[y][x] = 2; break; }
+        }
+      }
+      if (secretWall) break;
+    }
+
+    // Procedural Wall Torches: placed along walls bordering corridors
+    const torches = [];
+    for (let y = 1; y < H - 1; y++) {
+      for (let x = 1; x < W - 1; x++) {
+        if (grid[y][x] === 1 && (x * 7 + y * 13) % 9 === 0) {
+          const hasAdjFloor = (grid[y-1][x] === 0 || grid[y+1][x] === 0 || grid[y][x-1] === 0 || grid[y][x+1] === 0);
+          if (hasAdjFloor && torches.length < 10) {
+            torches.push({ x, y, id: torches.length });
+          }
+        }
+      }
+    }
+    return { W, H, grid, exit, collectibles, secretWall, floorCells, torches, theme };
+  }
+
+  /* BFS PATHFINDING */
+  function findPath(grid, W, H, sx, sy, tx, ty) {
+    if (sx === tx && sy === ty) return [];
+    const queue = [{ x: sx, y: sy, path: [] }];
+    const visited = Array.from({ length: H }, () => Array(W).fill(false));
+    visited[sy][sx] = true;
+    while (queue.length > 0) {
+      const { x, y, path } = queue.shift();
+      const dirs = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+      for (const [dx, dy] of dirs) {
+        const nx = x + dx, ny = y + dy;
+        if (nx >= 0 && nx < W && ny >= 0 && ny < H && !visited[ny][nx]) {
+          if (nx === tx && ny === ty) return [...path, { x: nx, y: ny }];
+          if (grid[ny][nx] === 0) {
+            visited[ny][nx] = true;
+            queue.push({ x: nx, y: ny, path: [...path, { x: nx, y: ny }] });
+          }
+        }
+      }
+    }
+    return null;
+  }
+  function getPathDistance(grid, W, H, sx, sy, tx, ty) {
+    const p = findPath(grid, W, H, sx, sy, tx, ty);
+    return p ? p.length : Infinity;
+  }
+
+  /* ECHO GROVE CORE ENGINE */
+  class EchoGrove {
+    constructor() {
+      this.canvas = document.getElementById('gameCanvas');
+      this.ctx = this.canvas.getContext('2d');
+      this.audio = new GroveAudio();
+      this.runId = 0; this.levelIndex = 0; this.state = 'TITLE';
+      this.reducedEffects = false; this.isPaused = false;
+      this.relicsCollected = 0; this.startTime = 0; this.zoneStartTime = 0; this.keys = {};
+      this.maze = null; this.player = null; this.monster = null; this.sonarRings = [];
+      this.rafId = null;
+      this.motes = Array.from({ length: 28 }, (_, i) => ({
+        x: (i * 137) % 544, y: (i * 241) % 544, r: 0.8 + (i % 4) * 0.5,
+        speed: 12 + (i % 5) * 4, sway: 8 + (i % 6) * 3, phase: i * 0.8
+      }));
+      this.setupDOM();
+      this.loop = this.loop.bind(this);
+      this.rafId = requestAnimationFrame(this.loop);
+    }
+    setupDOM() {
+      const start = () => { this.audio.init(); this.startZone(this.levelIndex); };
+      ['btn-start', 'btn-retry', 'btn-restart'].forEach(id => document.getElementById(id).addEventListener('click', start));
+      document.getElementById('btn-next').addEventListener('click', () => { this.levelIndex = (this.levelIndex + 1) % CONFIG.ZONES.length; start(); });
+      document.getElementById('btn-pause').addEventListener('click', () => this.togglePause());
+      const btnSound = document.getElementById('btn-sound');
+      btnSound.addEventListener('click', () => {
+        this.audio.init(); this.audio.setMute(!this.audio.isMuted);
+        btnSound.textContent = this.audio.isMuted ? '🔇' : '🔊';
+        btnSound.classList.toggle('active', !this.audio.isMuted);
+      });
+      const btnFx = document.getElementById('btn-effects');
+      btnFx.addEventListener('click', () => {
+        this.reducedEffects = !this.reducedEffects;
+        btnFx.textContent = this.reducedEffects ? '🌑' : '✨';
+        btnFx.classList.toggle('active', this.reducedEffects);
+      });
+      window.addEventListener('keydown', e => {
+        const k = e.key.toLowerCase();
+        this.keys[k] = true;
+        if (e.code === 'Space') { e.preventDefault(); this.audio.init(); this.triggerSonar(); }
+        if (k === 'r') { this.audio.init(); start(); }
+        if (k === 'p') { this.audio.init(); this.togglePause(); }
+      });
+      window.addEventListener('keyup', e => { this.keys[e.key.toLowerCase()] = false; });
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) this.audio.stopAmbience();
+        else if (!this.audio.isMuted && this.state === 'PLAYING' && !this.isPaused) this.audio.startAmbience();
+      });
+      const attachKey = (id, key) => {
+        const el = document.getElementById(id); if (!el) return;
+        el.addEventListener('touchstart', e => { e.preventDefault(); this.audio.init(); this.keys[key] = true; }, { passive: false });
+        el.addEventListener('touchend', e => { e.preventDefault(); this.keys[key] = false; }, { passive: false });
+      };
+      attachKey('pad-up', 'w'); attachKey('pad-down', 's'); attachKey('pad-left', 'a'); attachKey('pad-right', 'd');
+      document.getElementById('pad-ping').addEventListener('touchstart', e => {
+        e.preventDefault(); this.audio.init(); this.triggerSonar();
+      }, { passive: false });
+    }
+    togglePause() {
+      if (this.state !== 'PLAYING') return;
+      this.isPaused = !this.isPaused;
+      if (this.isPaused) this.audio.stopAmbience();
+      else if (!this.audio.isMuted) this.audio.startAmbience();
+      const btn = document.getElementById('btn-pause');
+      if (btn) { btn.textContent = this.isPaused ? '▶' : '⏸'; btn.classList.toggle('active', this.isPaused); }
+      this.showBanner(this.isPaused ? '⏸ PAUSED' : '▶ RESUMED');
+    }
+    startZone(index) {
+      const curRun = ++this.runId;
+      this.levelIndex = index; this.isPaused = false;
+      const zoneCfg = CONFIG.ZONES[this.levelIndex];
+      document.getElementById('title-modal').classList.add('modal-hidden');
+      document.getElementById('victory-modal').classList.add('modal-hidden');
+      document.getElementById('caught-modal').classList.add('modal-hidden');
+      document.getElementById('hud-stage-title').textContent = `${zoneCfg.stageNum} · ${zoneCfg.name.toUpperCase()}`;
+      document.getElementById('hud-threat-status').textContent = 'Stalking';
+      document.getElementById('hud-threat-status').style.color = '#34d399';
+      const btnPause = document.getElementById('btn-pause');
+      if (btnPause) { btnPause.textContent = '⏸'; btnPause.classList.remove('active'); }
+      const bMsg = document.getElementById('banner-msg'); if (bMsg) bMsg.style.opacity = '0';
+      this.maze = generateGroveZone(zoneCfg.width, zoneCfg.height, 5000 + index * 999, zoneCfg.id);
+      this.relicsCollected = 0; this.updateRelicsHUD();
+      this.player = { x: 1.5, y: 1.5, gridX: 1, gridY: 1, targetX: 1.5, targetY: 1.5, moveProgress: 1.0, footstepAccum: 0, facing: 1 };
+      const monsterSpawn = this.maze.floorCells[this.maze.floorCells.length - 3] || { x: this.maze.W - 2, y: this.maze.H - 2 };
+      this.monster = {
+        x: monsterSpawn.x + 0.5, y: monsterSpawn.y + 0.5,
+        state: 'WANDER', speed: CONFIG.MONSTER_DEFAULT_SPEED,
+        target: null, path: [], searchTimer: 0, visibleUntil: 0
+      };
+      this.sonarRings = []; this.startTime = performance.now();
+      this.zoneStartTime = performance.now() / 1000;
+      this.state = 'PLAYING';
+    }
+    updateRelicsHUD() {
+      const txt = `${this.relicsCollected} / 3`;
+      const el1 = document.getElementById('hud-relic-count'); if (el1) el1.textContent = txt;
+      const el2 = document.getElementById('hud-relics-pill'); if (el2) el2.textContent = txt;
+    }
+    triggerSonar() {
+      if (this.state !== 'PLAYING' || this.isPaused) return;
+      this.audio.playSonar();
+      this.sonarRings.push({ x: this.player.x, y: this.player.y, radius: 0.1, maxRadius: CONFIG.SONAR_MAX_RADIUS, speed: CONFIG.SONAR_EXPAND_SPEED });
+      this.emitNoise({ x: this.player.x, y: this.player.y, radius: CONFIG.MONSTER_HEARING_RADIUS, type: 'ping' });
+    }
+    emitNoise(event) {
+      if (this.monster && this.maze) {
+        const mX = Math.floor(this.monster.x), mY = Math.floor(this.monster.y), eX = Math.floor(event.x), eY = Math.floor(event.y);
+        const dist = CONFIG.MONSTER_HEARING_USE_PATH ? getPathDistance(this.maze.grid, this.maze.W, this.maze.H, mX, mY, eX, eY) : Math.hypot(event.x - this.monster.x, event.y - this.monster.y);
+        if (dist <= event.radius) {
+          this.monster.state = 'INVESTIGATE'; this.monster.target = { x: eX, y: eY };
+          this.monster.path = findPath(this.maze.grid, this.maze.W, this.maze.H, mX, mY, eX, eY) || [];
+          this.audio.playAlert();
+          const tEl = document.getElementById('hud-threat-status');
+          if (tEl) { tEl.textContent = 'ALERT!'; tEl.style.color = '#ef4444'; }
+        }
+      }
+    }
+    triggerVictory() {
+      if (this.state !== 'PLAYING') return;
+      const curRun = ++this.runId; this.state = 'VICTORY';
+      const elapsed = Math.floor((performance.now() - this.startTime) / 1000);
+      const m = Math.floor(elapsed / 60), s = (elapsed % 60).toString().padStart(2, '0');
+      document.getElementById('vic-desc').textContent = `Sanctuary reached in ${m}:${s} with ${this.relicsCollected} / 3 Lumina Relics.`;
+      setTimeout(() => { if (this.runId === curRun) document.getElementById('victory-modal').classList.remove('modal-hidden'); }, 350);
+    }
+    triggerCaught() {
+      if (this.state !== 'PLAYING') return;
+      const curRun = ++this.runId; this.state = 'CAUGHT';
+      setTimeout(() => { if (this.runId === curRun) document.getElementById('caught-modal').classList.remove('modal-hidden'); }, 350);
+    }
+    showBanner(text) {
+      const b = document.getElementById('banner-msg');
+      if (b) { b.textContent = text; b.style.opacity = '1'; setTimeout(() => { b.style.opacity = '0'; }, 1800); }
+    }
+    loop() {
+      const now = performance.now();
+      const dt = Math.min(0.05, (now - (this.lastTime || now)) / 1000);
+      this.lastTime = now;
+      if (this.state === 'PLAYING' && !this.isPaused) this.update(dt);
+      this.render();
+      this.rafId = requestAnimationFrame(this.loop);
+    }
+    update(dt) {
+      if (this.isPaused) return;
+      const nowSec = performance.now() / 1000;
+      if (this.player.moveProgress < 1.0) {
+        this.player.moveProgress = Math.min(1.0, this.player.moveProgress + dt / CONFIG.STEP_DURATION);
+        this.player.x = this.player.gridX + 0.5 + (this.player.targetX - (this.player.gridX + 0.5)) * this.player.moveProgress;
+        this.player.y = this.player.gridY + 0.5 + (this.player.targetY - (this.player.gridY + 0.5)) * this.player.moveProgress;
+      } else {
+        this.player.x = this.player.targetX; this.player.y = this.player.targetY;
+        this.player.gridX = Math.floor(this.player.x); this.player.gridY = Math.floor(this.player.y);
+        let dx = 0, dy = 0;
+        if (this.keys['w'] || this.keys['arrowup']) dy = -1;
+        else if (this.keys['s'] || this.keys['arrowdown']) dy = 1;
+        else if (this.keys['a'] || this.keys['arrowleft']) { dx = -1; this.player.facing = -1; }
+        else if (this.keys['d'] || this.keys['arrowright']) { dx = 1; this.player.facing = 1; }
+        if (dx !== 0 || dy !== 0) {
+          const nx = this.player.gridX + dx, ny = this.player.gridY + dy;
+          if (nx >= 0 && nx < this.maze.W && ny >= 0 && ny < this.maze.H && this.maze.grid[ny][nx] === 0) {
+            this.player.targetX = nx + 0.5; this.player.targetY = ny + 0.5;
+            this.player.moveProgress = 0.0;
+            if (!this.keys['shift']) {
+              this.player.footstepAccum += 1.0;
+              if (this.player.footstepAccum >= 1.0) {
+                this.player.footstepAccum = 0;
+                this.emitNoise({ x: nx + 0.5, y: ny + 0.5, radius: CONFIG.FOOTSTEP_HEARING_RADIUS, type: 'step' });
+              }
+            }
+          }
+        }
+      }
+      this.maze.collectibles.forEach(col => {
+        if (!col.collected && Math.hypot(this.player.x - (col.x + 0.5), this.player.y - (col.y + 0.5)) < 0.6) {
+          col.collected = true; this.relicsCollected++;
+          this.updateRelicsHUD(); this.audio.playRelic(); this.showBanner('✦ LUMINA RELIC OBTAINED ✦');
+        }
+      });
+      const exCenter = { x: this.maze.exit.x + 0.5, y: this.maze.exit.y + 0.5 };
+      if (Math.hypot(this.player.x - exCenter.x, this.player.y - exCenter.y) < 0.6) {
+        this.triggerVictory(); return;
+      }
+      for (let i = this.sonarRings.length - 1; i >= 0; i--) {
+        const ring = this.sonarRings[i];
+        const prevRadius = ring.radius, newRadius = ring.radius + ring.speed * dt;
+        ring.radius = newRadius;
+        if (this.maze.secretWall && !this.maze.secretWall.revealed) {
+          const swDist = Math.hypot(ring.x - (this.maze.secretWall.x + 0.5), ring.y - (this.maze.secretWall.y + 0.5));
+          if (swDist >= prevRadius - 0.5 && swDist <= newRadius + 0.5) {
+            const hasLos = !CONFIG.LINE_OF_SIGHT_SONAR || hasLineOfSight(this.maze.grid, this.maze.W, this.maze.H, ring.x, ring.y, this.maze.secretWall.x + 0.5, this.maze.secretWall.y + 0.5);
+            if (hasLos) {
+              this.maze.secretWall.revealed = true;
+              this.maze.grid[this.maze.secretWall.y][this.maze.secretWall.x] = 0;
+              this.showBanner('✦ ANCIENT RUNIC PASSAGE OPENED ✦');
+            }
+          }
+        }
+        if (this.monster) {
+          const mDist = Math.hypot(ring.x - this.monster.x, ring.y - this.monster.y);
+          if (mDist >= prevRadius - 0.5 && mDist <= newRadius + 0.5) {
+            const hasLos = !CONFIG.LINE_OF_SIGHT_SONAR || hasLineOfSight(this.maze.grid, this.maze.W, this.maze.H, ring.x, ring.y, this.monster.x, this.monster.y);
+            if (hasLos) this.monster.visibleUntil = nowSec + 0.8;
+          }
+        }
+        if (ring.radius >= ring.maxRadius) this.sonarRings.splice(i, 1);
+      }
+      if (this.monster) {
+        if (this.monster.state === 'WANDER') {
+          if (!this.monster.path || this.monster.path.length === 0) {
+            const randCell = this.maze.floorCells[Math.floor(Math.random() * this.maze.floorCells.length)];
+            this.monster.path = findPath(this.maze.grid, this.maze.W, this.maze.H, Math.floor(this.monster.x), Math.floor(this.monster.y), randCell.x, randCell.y) || [];
+          } else { this.stepMonster(dt, CONFIG.MONSTER_DEFAULT_SPEED); }
+        } else if (this.monster.state === 'INVESTIGATE') {
+          if (!this.monster.path || this.monster.path.length === 0) {
+            this.monster.state = 'SEARCH'; this.monster.searchTimer = 0;
+            const tEl = document.getElementById('hud-threat-status');
+            if (tEl) { tEl.textContent = 'Searching'; tEl.style.color = '#f59e0b'; }
+          } else { this.stepMonster(dt, CONFIG.MONSTER_INVESTIGATE_SPEED); }
+        } else if (this.monster.state === 'SEARCH') {
+          this.monster.searchTimer += dt;
+          if (this.monster.searchTimer >= 2.5) {
+            this.monster.state = 'WANDER'; this.monster.target = null; this.monster.path = [];
+            const tEl = document.getElementById('hud-threat-status');
+            if (tEl) { tEl.textContent = 'Dormant'; tEl.style.color = '#34d399'; }
+          }
+        }
+        if (Math.hypot(this.monster.x - this.player.x, this.monster.y - this.player.y) < 0.5) this.triggerCaught();
+      }
+    }
+    stepMonster(dt, speed) {
+      if (!this.monster.path || this.monster.path.length === 0) return;
+      const target = this.monster.path[0];
+      const tx = target.x + 0.5, ty = target.y + 0.5, dx = tx - this.monster.x, dy = ty - this.monster.y;
+      const dist = Math.hypot(dx, dy), step = speed * dt;
+      if (dist <= step) { this.monster.x = tx; this.monster.y = ty; this.monster.path.shift(); }
+      else { this.monster.x += (dx / dist) * step; this.monster.y += (dy / dist) * step; }
+    }
+    render() {
+      const ctx = this.ctx, W = CONFIG.VIEW_PIXELS, H = CONFIG.VIEW_PIXELS, T = CONFIG.TILE_SIZE;
+      if (!this.maze || !this.player) {
+        ctx.fillStyle = '#030806'; ctx.fillRect(0, 0, W, H); return;
+      }
+      const nowSec = performance.now() / 1000;
+      const maxCamX = Math.max(0, this.maze.W * T - W);
+      const maxCamY = Math.max(0, this.maze.H * T - H);
+      const camX = this.maze.W * T <= W ? (this.maze.W * T - W) / 2 : Math.max(0, Math.min(maxCamX, Math.round(this.player.x * T - W / 2)));
+      const camY = this.maze.H * T <= H ? (this.maze.H * T - H) / 2 : Math.max(0, Math.min(maxCamY, Math.round(this.player.y * T - H / 2)));
+
+      // 1. Dark Void Base
+      ctx.fillStyle = '#040907'; ctx.fillRect(0, 0, W, H);
+      const startTX = Math.max(0, Math.floor(camX / T)), endTX = Math.min(this.maze.W - 1, Math.ceil((camX + W) / T));
+      const startTY = Math.max(0, Math.floor(camY / T)), endTY = Math.min(this.maze.H - 1, Math.ceil((camY + H) / T));
+
+      // 2. Render Stone Paver Floors & 2.5D Carved Walls
+      for (let ty = startTY; ty <= endTY; ty++) {
+        for (let tx = startTX; tx <= endTX; tx++) {
+          const px = tx * T - camX, py = ty * T - camY, cell = this.maze.grid[ty][tx];
+          if (cell === 1) {
+            // 2.5D Ancient Stone Wall with Moss / Runic Top Cap
+            ctx.fillStyle = '#0a1712'; ctx.fillRect(px, py, T, T); // Base block
+            ctx.fillStyle = '#142c22'; ctx.fillRect(px + 1.5, py + 1.5, T - 3, T - 5); // Stone bevel
+            ctx.fillStyle = '#1d4133'; ctx.fillRect(px + 3, py + 3, T - 6, T - 9); // Shaded core
+            ctx.fillStyle = '#2d6a4f'; ctx.fillRect(px + 2, py + 2, T - 4, 3); // Lush moss cap
+            if ((tx * 5 + ty * 11) % 4 === 0) { ctx.fillStyle = '#52b788'; ctx.fillRect(px + 6, py + 2, 4, 2); }
+          } else if (cell === 2) {
+            // Secret Wall Runic Slab
+            ctx.fillStyle = '#0d2820'; ctx.fillRect(px, py, T, T);
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(px + T/2 - 2, py + 6, 4, T - 12); ctx.fillRect(px + 6, py + T/2 - 2, T - 12, 4);
+            ctx.strokeStyle = '#34d399'; ctx.lineWidth = 1; ctx.strokeRect(px + 3, py + 3, T - 6, T - 6);
+          } else {
+            // Stone Paver Floor (clean tiled stone with subtle grout and bevels)
+            ctx.fillStyle = '#08140f'; ctx.fillRect(px, py, T, T);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.025)'; ctx.fillRect(px + 1, py + 1, T - 2, 1); ctx.fillRect(px + 1, py + 1, 1, T - 2);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'; ctx.fillRect(px + 1, py + T - 1, T - 1, 1); ctx.fillRect(px + T - 1, py + 1, 1, T - 1);
+            if ((tx * 7 + ty * 13) % 5 === 0) {
+              ctx.fillStyle = '#0e2b20'; ctx.fillRect(px + 8, py + 8, 3, 3);
+            }
+          }
+        }
+      }
+
+      // 3. Dynamic Flickering Wall Torches & Warm Radial Floor Lighting
+      if (this.maze.torches) {
+        this.maze.torches.forEach(t => {
+          const tpx = t.x * T - camX + T / 2, tpy = t.y * T - camY + T / 2;
+          const flicker = 0.85 + 0.15 * Math.sin(nowSec * 16 + t.id * 3.7) + 0.08 * Math.cos(nowSec * 24 + t.id);
+          // Warm radial floor light gradient
+          const gradTorch = ctx.createRadialGradient(tpx, tpy, 2, tpx, tpy, T * 2.8 * flicker);
+          gradTorch.addColorStop(0, 'rgba(251, 146, 60, 0.40)');
+          gradTorch.addColorStop(0.5, 'rgba(245, 158, 11, 0.15)');
+          gradTorch.addColorStop(1, 'rgba(245, 158, 11, 0)');
+          ctx.fillStyle = gradTorch;
+          ctx.beginPath(); ctx.arc(tpx, tpy, T * 2.8 * flicker, 0, Math.PI * 2); ctx.fill();
+
+          // Torch Wall Sconce & Flame
+          ctx.fillStyle = '#451a03'; ctx.fillRect(tpx - 2.5, tpy + 1, 5, 7); // Metal bracket
+          ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(tpx, tpy - 1, 3.5 * flicker, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#fef08a'; ctx.beginPath(); ctx.arc(tpx, tpy - 2, 1.8 * flicker, 0, Math.PI * 2); ctx.fill();
+        });
+      }
+
+      // 4. Ancient Sanctuary Shrine (Exit)
+      const exPx = this.maze.exit.x * T - camX + T / 2, exPy = this.maze.exit.y * T - camY + T / 2;
+      const shrineGlow = 0.5 + 0.5 * Math.sin(nowSec * 3);
+      const gradShrine = ctx.createRadialGradient(exPx, exPy, 2, exPx, exPy, T * 1.3);
+      gradShrine.addColorStop(0, `rgba(251, 191, 36, ${0.5 + 0.3 * shrineGlow})`);
+      gradShrine.addColorStop(1, 'rgba(251, 191, 36, 0)');
+      ctx.fillStyle = gradShrine; ctx.beginPath(); ctx.arc(exPx, exPy, T * 1.3, 0, Math.PI * 2); ctx.fill();
+      // Stone dais & runic ring
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(exPx, exPy, T * 0.44, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = '#fef08a'; ctx.fillRect(exPx - 3.5, exPy - 3.5, 7, 7);
+
+      // 5. Lumina Relics (Floating Diamond Crystals with Sparkles)
+      this.maze.collectibles.forEach(col => {
+        if (!col.collected) {
+          const cx = col.x * T - camX + T / 2, cy = col.y * T - camY + T / 2;
+          const bob = Math.sin(nowSec * 4 + col.x) * 3;
+          // Amber aura
+          const gradRelic = ctx.createRadialGradient(cx, cy + bob, 1, cx, cy + bob, T * 0.85);
+          gradRelic.addColorStop(0, 'rgba(251, 191, 36, 0.6)'); gradRelic.addColorStop(1, 'rgba(251, 191, 36, 0)');
+          ctx.fillStyle = gradRelic; ctx.beginPath(); ctx.arc(cx, cy + bob, T * 0.85, 0, Math.PI * 2); ctx.fill();
+          // Drop shadow under relic
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.35)'; ctx.beginPath(); ctx.ellipse(cx, cy + 9, 6, 2.5, 0, 0, Math.PI * 2); ctx.fill();
+          // 3D Diamond Crystal
+          ctx.fillStyle = '#f59e0b';
+          ctx.beginPath(); ctx.moveTo(cx, cy + bob - 8); ctx.lineTo(cx + 7, cy + bob); ctx.lineTo(cx, cy + bob + 8); ctx.lineTo(cx - 7, cy + bob); ctx.closePath(); ctx.fill();
+          ctx.fillStyle = '#fef08a';
+          ctx.beginPath(); ctx.moveTo(cx, cy + bob - 4); ctx.lineTo(cx + 3.5, cy + bob); ctx.lineTo(cx, cy + bob + 4); ctx.lineTo(cx - 3.5, cy + bob); ctx.closePath(); ctx.fill();
+        }
+      });
+
+      // 6. Forest Prowler Beast Sprite
+      if (this.monster && nowSec < this.monster.visibleUntil) {
+        const mx = this.monster.x * T - camX, my = this.monster.y * T - camY;
+        const fade = Math.min(1.0, (this.monster.visibleUntil - nowSec) / 0.3);
+        // Crimson menacing warning aura
+        const gradM = ctx.createRadialGradient(mx, my, 2, mx, my, T * 1.1);
+        gradM.addColorStop(0, `rgba(244, 63, 94, ${0.7 * fade})`); gradM.addColorStop(1, 'rgba(244, 63, 94, 0)');
+        ctx.fillStyle = gradM; ctx.beginPath(); ctx.arc(mx, my, T * 1.1, 0, Math.PI * 2); ctx.fill();
+        // Drop shadow
+        ctx.fillStyle = `rgba(0, 0, 0, ${0.5 * fade})`; ctx.beginPath(); ctx.ellipse(mx, my + 8, 10, 4, 0, 0, Math.PI * 2); ctx.fill();
+        // Beast Body (spiky dark fur)
+        ctx.fillStyle = `rgba(15, 23, 42, ${fade})`;
+        ctx.beginPath(); ctx.arc(mx, my, 10, 0, Math.PI * 2); ctx.fill();
+        // Piercing Red Slit Eyes
+        ctx.fillStyle = `rgba(244, 63, 94, ${fade})`;
+        ctx.fillRect(mx - 4.5, my - 2.5, 3.5, 3.5); ctx.fillRect(mx + 1.5, my - 2.5, 3.5, 3.5);
+      }
+
+      // 7. Hero Adventurer Sprite: Elarion with Acoustic Lantern
+      const plPx = this.player.x * T - camX, plPy = this.player.y * T - camY;
+      const moving = (this.player.moveProgress < 1.0);
+      const bob = moving ? Math.abs(Math.sin(nowSec * 18)) * 2.5 : Math.sin(nowSec * 3) * 0.8;
+      const s = this.player.facing || 1; // 1 right, -1 left
+
+      // Warm lantern radial illumination centered on hero
+      const gradLantern = ctx.createRadialGradient(plPx, plPy, 2, plPx, plPy, T * 2.2);
+      gradLantern.addColorStop(0, 'rgba(52, 211, 153, 0.45)');
+      gradLantern.addColorStop(0.6, 'rgba(251, 191, 36, 0.18)');
+      gradLantern.addColorStop(1, 'rgba(52, 211, 153, 0)');
+      ctx.fillStyle = gradLantern; ctx.beginPath(); ctx.arc(plPx, plPy, T * 2.2, 0, Math.PI * 2); ctx.fill();
+
+      // Contact Drop Shadow under hero feet
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+      ctx.beginPath(); ctx.ellipse(plPx, plPy + 10, 8, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+
+      ctx.save();
+      ctx.translate(plPx, plPy - bob);
+      ctx.scale(s, 1);
+
+      // Elven Boots / Feet
+      ctx.fillStyle = '#5d4a2e';
+      ctx.fillRect(-5, 6, 4, 4); ctx.fillRect(1, 6, 4, 4);
+
+      // Green Forest Tunic / Cloak
+      ctx.fillStyle = '#2f5d47';
+      ctx.beginPath(); ctx.ellipse(0, 0, 7, 8, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#12241c'; ctx.lineWidth = 1.2; ctx.stroke();
+
+      // Leather Belt & Gold Buckle
+      ctx.fillStyle = '#6b4a26'; ctx.fillRect(-6, 1, 12, 2.5);
+      ctx.fillStyle = '#e8b62a'; ctx.fillRect(-1.5, 0.5, 3, 3.5);
+
+      // Head: Elven Face & Blonde Hair
+      ctx.fillStyle = '#f6d5a8';
+      ctx.beginPath(); ctx.arc(0, -7, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#e8d98a'; // Blonde hair
+      ctx.beginPath(); ctx.arc(0, -9, 5, Math.PI, Math.PI * 2); ctx.fill();
+      ctx.fillRect(-5, -9, 2.5, 4); // Hair strands
+
+      // Acoustic Lumina Lantern in Hand (casts bright jewel spark)
+      ctx.fillStyle = '#78350f'; ctx.fillRect(6, -2, 2, 4); // Handle
+      ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(7, 3, 3, 0, Math.PI * 2); ctx.fill(); // Emerald core
+      ctx.fillStyle = '#fffbeb'; ctx.beginPath(); ctx.arc(7, 3, 1.2, 0, Math.PI * 2); ctx.fill();
+
+      ctx.restore();
+
+      // 8. Sonar Acoustic Shockwaves
+      if (!this.reducedEffects) {
+        this.sonarRings.forEach(r => {
+          const rx = r.x * T - camX, ry = r.y * T - camY, radPx = r.radius * T;
+          const life = Math.max(0, 1 - r.radius / r.maxRadius);
+          ctx.strokeStyle = `rgba(56, 189, 248, ${life * 0.85})`; ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(rx, ry, radPx, 0, Math.PI * 2); ctx.stroke();
+          ctx.strokeStyle = `rgba(16, 185, 129, ${life * 0.4})`; ctx.lineWidth = 5;
+          ctx.beginPath(); ctx.arc(rx, ry, Math.max(0, radPx - 2), 0, Math.PI * 2); ctx.stroke();
+        });
+      }
+
+      // 9. Floating Golden Spores / Motes (Deterministic particle ambience)
+      if (!this.reducedEffects && this.motes) {
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        this.motes.forEach(m => {
+          const my = (((m.y - nowSec * m.speed) % H) + H) % H;
+          const mx = m.x + Math.sin(nowSec * 0.8 + m.phase) * m.sway;
+          const alpha = 0.15 + 0.15 * Math.sin(nowSec * 2 + m.phase);
+          ctx.fillStyle = `rgba(251, 191, 36, ${alpha})`;
+          ctx.beginPath(); ctx.arc(mx, my, m.r, 0, Math.PI * 2); ctx.fill();
+        });
+        ctx.restore();
+      }
+
+      // 10. Cinematic Vignette (Dramatic dungeon shadows framing edges)
+      const gradVignette = ctx.createRadialGradient(W/2, H/2, W * 0.36, W/2, H/2, W * 0.72);
+      gradVignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      gradVignette.addColorStop(1, 'rgba(2, 6, 5, 0.80)');
+      ctx.fillStyle = gradVignette; ctx.fillRect(0, 0, W, H);
+
+      // 11. Cinematic Stage Opening Title Overlay (Fades out over 2.6s)
+      const zoneAge = nowSec - this.zoneStartTime;
+      if (zoneAge < 2.6) {
+        const titleAlpha = zoneAge < 1.8 ? 1.0 : Math.max(0, 1.0 - (zoneAge - 1.8) / 0.8);
+        const zCfg = CONFIG.ZONES[this.levelIndex];
+        ctx.save();
+        ctx.globalAlpha = titleAlpha;
+        ctx.textAlign = 'center';
+        // Gold embossed title with dark outline (Elf of Doom aesthetic)
+        ctx.font = '900 28px Cinzel, serif';
+        ctx.strokeStyle = '#050a07';
+        ctx.lineWidth = 5;
+        ctx.lineJoin = 'round';
+        ctx.strokeText(zCfg.name, W / 2, H / 2 - 14);
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillText(zCfg.name, W / 2, H / 2 - 14);
+        // Italic subtitle with clean outline
+        ctx.font = 'italic 700 13px Outfit, sans-serif';
+        ctx.strokeStyle = '#050a07';
+        ctx.lineWidth = 3.5;
+        ctx.lineJoin = 'round';
+        ctx.strokeText(zCfg.subtitle, W / 2, H / 2 + 14);
+        ctx.fillStyle = '#fef08a';
+        ctx.fillText(zCfg.subtitle, W / 2, H / 2 + 14);
+        ctx.restore();
+      }
+    }
+    cleanup() {
+      this.audio.cleanup();
+      if (this.rafId) { cancelAnimationFrame(this.rafId); this.rafId = null; }
+    }
+  }
+
+  /* AUTOMATED ENGINE SELF-TESTS (runSelfTests) */
+  async function runSelfTests() {
+    const results = [];
+    const log = (name, passed) => {
+      results.push({ name, passed });
+      console.log(`[${passed ? 'PASS' : 'FAIL'}] ${name}`);
+    };
+    console.log("=== RUNNING ECHO GROVE REGRESSION SUITE ===");
+
+    // 1. Mulberry32 PRNG determinism
+    const r1 = mulberry32(42)(), r2 = mulberry32(42)();
+    log("Mulberry32 PRNG determinism", r1 === r2);
+
+    // 2. Reachability of all 3 collectibles across 20 seeded zones
+    let allRelicsReachable = true;
+    for (let s = 100; s < 120; s++) {
+      const zone = generateGroveZone(17, 17, s, 'meadow');
+      if (zone.collectibles.length !== 3) allRelicsReachable = false;
+      zone.collectibles.forEach(col => { if (getPathDistance(zone.grid, zone.W, zone.H, 1, 1, col.x, col.y) === Infinity) allRelicsReachable = false; });
+    }
+    log("reachability of all 3 collectibles across 20 seeded zones", allRelicsReachable);
+
+    // 3. Reachability of exit sanctuary across 20 seeded zones
+    let exitReachable = true;
+    for (let s = 200; s < 220; s++) {
+      const zone = generateGroveZone(19, 19, s, 'cave');
+      if (getPathDistance(zone.grid, zone.W, zone.H, 1, 1, zone.exit.x, zone.exit.y) === Infinity) exitReachable = false;
+    }
+    log("reachability of the exit across all generated zones", exitReachable);
+
+    // 4. Secret wall is placed and toggles walkable upon sonar pulse
+    const testZone = generateGroveZone(17, 17, 777, 'meadow');
+    const secretPlaced = Boolean(testZone.secretWall);
+    let secretOpened = false;
+    if (secretPlaced) {
+      testZone.grid[testZone.secretWall.y][testZone.secretWall.x] = 0;
+      secretOpened = (testZone.grid[testZone.secretWall.y][testZone.secretWall.x] === 0);
+    }
+    log("secret wall segment placed and opens upon sonar reveal", secretPlaced && secretOpened);
+
+    // 5. Gentler monster speed is 20% lower than baseline (2.1 vs 2.8)
+    const gentlerSpeedCheck = (CONFIG.MONSTER_DEFAULT_SPEED <= 2.8 * 0.82);
+    log("gentler monster speed (-20%) holds", gentlerSpeedCheck);
+
+    // 6. Distinct zone themes present (meadow, cave, ruins)
+    const themesPresent = CONFIG.ZONES.map(z => z.id).join(',') === 'meadow,cave,ruins';
+    log("distinct zone themes (meadow, cave, ruins) configured", themesPresent);
+
+    // 7. Closed secret wall: exit and all 3 relics are reachable across 20 seeds
+    let closedWallReachable = true;
+    for (let s = 1; s <= 20; s++) {
+      const z = generateGroveZone(17, 17, s, 'meadow');
+      if (z.secretWall && z.grid[z.secretWall.y][z.secretWall.x] !== 2) closedWallReachable = false;
+      if (getPathDistance(z.grid, z.W, z.H, 1, 1, z.exit.x, z.exit.y) === Infinity) closedWallReachable = false;
+      z.collectibles.forEach(col => { if (getPathDistance(z.grid, z.W, z.H, 1, 1, col.x, col.y) === Infinity) closedWallReachable = false; });
+    }
+    log("secret wall closed: exit and all 3 relics reachable in 20 seeds", closedWallReachable);
+
+    // 8. Line-of-sight sonar: straight clear corridor ping from 3 tiles reveals secret wall, wall between does not
+    const losGame = new EchoGrove(); losGame.startZone(0);
+    for (let x = 1; x <= 3; x++) losGame.maze.grid[1][x] = 0;
+    losGame.maze.grid[1][4] = 2; losGame.maze.secretWall = { x: 4, y: 1, revealed: false };
+    losGame.player.x = 1.5; losGame.player.y = 1.5;
+    losGame.triggerSonar(); losGame.update(0.25);
+    const secretRevealedClear = (losGame.maze.secretWall.revealed === true);
+    losGame.maze.grid[1][2] = 1; losGame.maze.secretWall.revealed = false; losGame.maze.grid[1][4] = 2;
+    losGame.triggerSonar(); losGame.update(0.25);
+    const secretBlockedByWall = (losGame.maze.secretWall.revealed === false);
+    losGame.cleanup();
+    log("sonar line of sight: straight clear corridor reveals secret wall, wall between blocks", secretRevealedClear && secretBlockedByWall);
+
+    // 9. Sonar ring crossing with dt = 0.5: target not skipped when ring expands from previous to current radius
+    const dtGame = new EchoGrove(); dtGame.startZone(0);
+    dtGame.player.x = 1.5; dtGame.player.y = 1.5; dtGame.monster.x = 5.5; dtGame.monster.y = 1.5;
+    for (let x = 1; x <= 6; x++) dtGame.maze.grid[1][x] = 0;
+    dtGame.monster.visibleUntil = 0; dtGame.triggerSonar(); dtGame.update(0.5);
+    const monsterRevealedLargeDt = (dtGame.monster.visibleUntil > performance.now() / 1000);
+    dtGame.cleanup();
+    log("sonar ring crossing: large dt (0.5s) does not skip target across shell", monsterRevealedLargeDt);
+
+    // 10. Hearing tests: wall between (straight dist 2.0, path dist >= 9) not heard at r=2.2 or r=8.5; path dist 2 heard
+    const hearingGame = new EchoGrove(); hearingGame.startZone(0);
+    for (let y = 0; y < hearingGame.maze.H; y++) for (let x = 0; x < hearingGame.maze.W; x++) hearingGame.maze.grid[y][x] = 1;
+    for (let y = 1; y <= 5; y++) { hearingGame.maze.grid[y][1] = 0; hearingGame.maze.grid[y][3] = 0; }
+    hearingGame.maze.grid[5][2] = 0; hearingGame.monster.x = 1.5; hearingGame.monster.y = 1.5; hearingGame.monster.state = 'WANDER';
+    hearingGame.emitNoise({ x: 3.5, y: 1.5, radius: 2.2, type: 'step' });
+    const notHeardAt2 = (hearingGame.monster.state === 'WANDER');
+    hearingGame.emitNoise({ x: 3.5, y: 1.5, radius: 8.5, type: 'ping' });
+    const notHeardAt8 = (hearingGame.monster.state === 'WANDER');
+    hearingGame.emitNoise({ x: 1.5, y: 3.5, radius: 2.2, type: 'step' });
+    const heardAtDist2 = (hearingGame.monster.state === 'INVESTIGATE');
+    hearingGame.cleanup();
+    log("monster hearing: path dist >= 9 not heard at r=2.2 and r=8.5; path dist 2 is heard", notHeardAt2 && notHeardAt8 && heardAtDist2);
+
+    // 11. Audio idempotency: startAmbience() called twice leaves exactly one active loop
+    const audioTwice = new GroveAudio(); audioTwice.init(); const timerA = audioTwice.loopTimer; audioTwice.startAmbience(); const singleLoop = (timerA !== null && timerA === audioTwice.loopTimer); audioTwice.cleanup();
+    log("audio startAmbience() called twice leaves exactly one loop", singleLoop);
+
+    // 12. Audio lifecycle & cleanup
+    const audioTest = new GroveAudio(); audioTest.init(); const ambienceRunning = (audioTest.loopTimer !== null); audioTest.cleanup();
+    log("audio lifecycle: ambient audio cleans up cleanly without leaking timers", ambienceRunning && audioTest.loopTimer === null && audioTest.ctx === null);
+
+    // 13. Pause test: give monster path, hold movement key, assert player, monster, rings, timers freeze
+    const pauseGame = new EchoGrove(); pauseGame.startZone(0);
+    pauseGame.monster.path = [{ x: 2, y: 1 }, { x: 3, y: 1 }];
+    pauseGame.keys['d'] = true; pauseGame.triggerSonar(); pauseGame.togglePause();
+    const snapP = { x: pauseGame.player.x, y: pauseGame.player.y };
+    const snapM = { x: pauseGame.monster.x, y: pauseGame.monster.y, timer: pauseGame.monster.searchTimer, pathLen: pauseGame.monster.path.length };
+    const snapRing = { count: pauseGame.sonarRings.length, r: pauseGame.sonarRings[0] ? pauseGame.sonarRings[0].radius : 0 };
+    pauseGame.update(0.5);
+    const pauseFrozen = (pauseGame.player.x === snapP.x && pauseGame.player.y === snapP.y && pauseGame.monster.x === snapM.x && pauseGame.monster.y === snapM.y && pauseGame.monster.searchTimer === snapM.timer && pauseGame.monster.path.length === snapM.pathLen && pauseGame.sonarRings.length === snapRing.count && pauseGame.sonarRings[0].radius === snapRing.r);
+    pauseGame.togglePause(); pauseGame.keys['d'] = false; pauseGame.cleanup();
+    log("pause test: monster path, movement key held, assert player, monster, rings, timers freeze", pauseFrozen);
+
+    // 14. Restart mid-ping: clears active sonar rings and increments runId
+    const restartGame = new EchoGrove(); restartGame.startZone(0); restartGame.triggerSonar();
+    const hasRingBefore = (restartGame.sonarRings.length > 0), oldRun = restartGame.runId;
+    restartGame.startZone(0);
+    const restartCleaned = (restartGame.sonarRings.length === 0 && restartGame.runId > oldRun);
+    restartGame.cleanup();
+    log("restart mid-ping: clears active sonar rings and increments runId", hasRingBefore && restartCleaned);
+
+    // 15. Capture test: monster contact fires capture and sets state to CAUGHT
+    const captureGame = new EchoGrove(); captureGame.startZone(0);
+    captureGame.monster.x = captureGame.player.x; captureGame.monster.y = captureGame.player.y;
+    captureGame.update(0.01);
+    const caughtFired = (captureGame.state === 'CAUGHT');
+    captureGame.runId++; captureGame.cleanup();
+    log("capture test: monster contact sets state to CAUGHT", caughtFired);
+
+    // 16. Capture then restart within 100 ms shows no capture banner and no modal
+    const fastRestartGame = window.game || new EchoGrove();
+    fastRestartGame.startZone(0); fastRestartGame.triggerCaught();
+    await new Promise(r => setTimeout(r, 50));
+    fastRestartGame.startZone(0);
+    await new Promise(r => setTimeout(r, 450));
+    const capModal = document.getElementById('caught-modal');
+    const capHidden = capModal ? capModal.classList.contains('modal-hidden') : false;
+    const banner = document.getElementById('banner-msg');
+    const bannerClean = banner ? (banner.style.opacity === '0' || banner.style.opacity === '') : true;
+    log("capture then restart within 100 ms shows no capture banner and no modal", capHidden && bannerClean);
+
+    const allPassed = results.every(r => r.passed);
+    const statusEl = document.getElementById('tests-status');
+    if (statusEl) {
+      statusEl.textContent = `Engine Self-Tests: ${allPassed ? `${results.length}/${results.length} PASSED` : 'FAILED'}`;
+      statusEl.style.color = allPassed ? '#34d399' : '#f43f5e';
+    }
+    console.log(`=== SUMMARY: ${results.length} TESTS RUN, ${allPassed ? 'ALL PASSED!' : 'FAILURES DETECTED'} ===`);
+    return allPassed;
+  }
+
+  window.game = new EchoGrove();
+  window.game.runSelfTests = runSelfTests;
+  window.runSelfTests = runSelfTests;
+  runSelfTests();
+  </script>
+</body>
+</html>

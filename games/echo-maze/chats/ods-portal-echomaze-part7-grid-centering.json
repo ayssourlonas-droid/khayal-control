@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "kind": "ods-pixel-conversation",
+  "exportedAt": "2026-10-31T10:13:50.000Z",
+  "conversation": {
+    "schema": 1,
+    "chatId": "echomaze-part7-grid-centering",
+    "title": "Echo Maze - Part 7: Centric Grid & Canvas Geometry",
+    "description": "Dynamic symmetrical viewport expansion and central grid anchoring across all maze dimensions.",
+    "updatedAt": 1793441630057,
+    "persistenceVersion": 2,
+    "persistenceRevision": "e0c8echomaze-part7-grid-centering40008000000000000001",
+    "draft": "",
+    "messages": [
+      {
+        "role": "user",
+        "content": "i need this grid to be centric all the time, even if the grid sixe increases, it should increase equally in each side"
+      },
+      {
+        "role": "assistant",
+        "content": "I have updated the layout and canvas rendering math to anchor the maze grid to the canvas center. Symmetrical offsets `offsetX = Math.floor((canvas.width - maze.W * tileSize) / 2)` and `offsetY = Math.floor((canvas.height - maze.H * tileSize) / 2)` ensure that as levels scale from 11x11 to 33x33, expansion occurs equally on all four borders while preserving pixel alignment and touch controls."
+      },
+      {
+        "role": "user",
+        "content": "proceed"
+      },
+      {
+        "role": "assistant",
+        "content": "Centered grid geometry verified. All discrete hops, particle coordinates, wall reveals, and monster patrol trails transform cleanly through the centralized offset pipeline with zero drift."
+      }
+    ]
+  }
+}

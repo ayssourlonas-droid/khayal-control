@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "kind": "ods-pixel-conversation",
+  "exportedAt": "2026-10-29T05:45:24.793Z",
+  "conversation": {
+    "schema": 1,
+    "chatId": "echomaze-part5-visual-polish-hints",
+    "updatedAt": 1793252724793,
+    "persistenceVersion": 2,
+    "persistenceRevision": "e0c8echomaze-part5-visual-polish-hints40008000000000000001",
+    "draft": "",
+    "messages": [
+      {
+        "role": "user",
+        "content": "PASS 1 (Acoustic Visual Polish - no rule changes):\n1. Echo rings trail 0.25s behind at 60% radius.\n2. Wall wavefront flash (0.1s) and 6 pooled particles per illuminated wall segment.\n3. Monster silhouette renders for 0.6s only when a sonar ring crosses it with line-of-sight.\n4. Red eyes appear on monsters in INVESTIGATE within 3 tiles, widening deterministically within 2.\n5. State colors: calm cyan, amber investigation, heartbeat-synced red pulse.\n6. Tactical near-miss notices: \"CLOSE.\" when evading within 1.2 tiles, \"LOST IT.\" when search expires within 10 tiles.\n7. Synthesized detected sting sound on investigation trigger; 0.4s screen fade on restart.\n8. Enforce 150-particle ceiling and Reduced Effects toggle suppression.\n9. Add self-tests 25, 26, 27."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented Pass 1 Acoustic Visual Polish:\n- Configured secondary trailing echo rings at 60% radius.\n- Added 0.10s wavefront wall flashes and pooled wall spark particles.\n- Rendered 0.60s monster silhouettes on ring crossing with line-of-sight verification.\n- Added monster glowing red eyes within 3 tiles during investigation.\n- Implemented near-miss detection (\"CLOSE.\" / \"LOST IT.\") and synthesized detected sting audio.\n- Preserved strict 150-particle ceiling. Added self-tests 25, 26, and 27. All 27 self-tests pass."
+      },
+      {
+        "role": "user",
+        "content": "PASS 2 (Progressive Acoustic Hints):\n1. Settings: OFF / SUBTLE / GUIDED saved and validated in SettingsManager.\n2. Lack-of-progress detection: player has not improved best BFS distance to exit by >= 2 tiles within 25s (15s in GUIDED) and has visited >= 12 distinct cells.\n3. Three Hint Tiers:\n   - Tier 1: exit hum +30% volume boost for 8s.\n   - Tier 2: perimeter arc toward exit for 1.5s (no distance reveal).\n   - Tier 3 (GUIDED only): 3 safe path cells illuminated for 1s.\n4. Direction must come from a safe shortest path staying >= 4 tiles from every monster and monster target.\n5. Safety window suppression: no hints while any monster is in INVESTIGATE within 8 path-tiles.\n6. Cooldown 30s, max 3 hints per level.\n7. Straight compass removed; wisps restricted to GUIDED / Assist mode.\n8. Add self-tests 28, 29, 30, 31."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented Pass 2 Progressive Acoustic Hints:\n- Added SettingsManager validation for hint modes (OFF, SUBTLE, GUIDED).\n- Built rolling progress tracker detecting lack of advancement (BFS distance delta < 2 across 25s/15s window).\n- Implemented 3-tier hint escalation with 30s cooldown and 3 hints/level ceiling.\n- Engineered getSafeExitPath ensuring hint routes maintain >= 4 tiles clearance from threats.\n- Added safety window suppression during close-range enemy investigations.\n- Added self-tests 28, 29, 30, and 31. All 31 self-tests pass."
+      }
+    ]
+  }
+}

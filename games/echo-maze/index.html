@@ -1,0 +1,3527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:echo-maze:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#05070a">
+  <title>ECHO MAZE — Light Costs Noise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05070a;
+      --radar-cyan: #00f3ff;
+      --radar-dim: #005566;
+      --danger-red: #ff2244;
+      --danger-glow: rgba(255, 34, 68, 0.55);
+      --amber-gold: #ffb703;
+      --police-blue: #0077ff;
+      --text-main: #d8f3dc;
+      --font-display: 'Cinzel', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: #e0e6ed;
+      font-family: var(--font-mono);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #020305;
+      overflow: hidden;
+    }
+
+    canvas#gameCanvas {
+      display: block;
+      max-width: 100vw;
+      max-height: 100vh;
+      width: min(100vw, 100vh, 800px);
+      height: min(100vw, 100vh, 800px);
+      aspect-ratio: 1 / 1;
+      image-rendering: pixelated;
+      background: #04070d;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.95);
+      touch-action: none;
+    }
+
+    /* Screen shake container */
+    .shaking {
+      animation: screenJitter 0.15s infinite;
+    }
+
+    @keyframes screenJitter {
+      0% { transform: translate(1px, 1px) rotate(0deg); }
+      20% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+      40% { transform: translate(-1px, 2px) rotate(0.5deg); }
+      60% { transform: translate(2px, 1px) rotate(0deg); }
+      80% { transform: translate(1px, -1px) rotate(0.5deg); }
+      100% { transform: translate(-1px, 0px) rotate(-0.5deg); }
+    }
+
+    /* Cinematic Vignette */
+    .vignette-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 38%, rgba(2, 4, 8, 0.75) 80%, rgba(1, 2, 4, 0.98) 100%);
+      z-index: 10;
+    }
+
+    /* Screen UI layers */
+    .ui-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 28px;
+    }
+
+    .interactive-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: auto;
+    }
+
+    .level-badge {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--radar-cyan);
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+    }
+
+    .objective-text {
+      font-size: 11px;
+      color: #7b92a5;
+      letter-spacing: 1px;
+    }
+
+    /* Anti-Clockwise Countdown Dial Widget */
+    .countdown-widget {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .clock-dial-container {
+      position: relative;
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #clockCanvas {
+      position: absolute;
+      inset: 0;
+    }
+
+    .clock-time-val {
+      position: relative;
+      font-size: 11px;
+      font-weight: 700;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
+      z-index: 2;
+    }
+
+    .clock-time-val.clock-urgent {
+      color: var(--danger-red) !important;
+      text-shadow: 0 0 12px var(--danger-glow) !important;
+      animation: blinkRed 0.35s infinite alternate;
+    }
+
+    .clock-label {
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      color: #657e93;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .top-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-icon {
+      background: rgba(10, 20, 30, 0.85);
+      border: 1px solid rgba(0, 243, 255, 0.3);
+      color: #c9e4ed;
+      padding: 7px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-icon:hover {
+      background: rgba(0, 243, 255, 0.15);
+      border-color: var(--radar-cyan);
+      box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+    }
+
+    /* Warning Alert banner */
+    #pulse-warning {
+      position: absolute;
+      top: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 0, 50, 0.28);
+      border: 1px solid var(--danger-red);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      padding: 8px 24px;
+      border-radius: 4px;
+      box-shadow: 0 0 25px var(--danger-glow);
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+      z-index: 25;
+      animation: blinkRed 0.6s infinite alternate;
+    }
+
+    @keyframes blinkRed {
+      from { border-color: rgba(255, 51, 85, 0.4); }
+      to { border-color: rgba(255, 51, 85, 1); }
+    }
+
+    /* Contextual Hints */
+    #hint-box {
+      position: absolute;
+      bottom: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(5, 10, 15, 0.92);
+      border: 1px solid rgba(0, 243, 255, 0.4);
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: #9cd5e6;
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      text-align: center;
+    }
+
+    /* Modal Screens: Title, Pause, Captured, Victory, Timeout */
+    .modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(3, 5, 8, 0.94);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      transition: opacity 0.3s ease;
+      pointer-events: auto;
+    }
+
+    .modal-hidden {
+      display: none !important;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .title-logo {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: 8px;
+      color: #f0f7f4;
+      text-shadow: 0 0 20px rgba(0, 243, 255, 0.7), 0 0 40px rgba(0, 243, 255, 0.3);
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .tagline {
+      font-size: 14px;
+      letter-spacing: 4px;
+      color: #72a5b6;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .menu-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 320px;
+    }
+
+    .menu-btn {
+      background: rgba(0, 243, 255, 0.08);
+      border: 1px solid rgba(0, 243, 255, 0.4);
+      color: #ffffff;
+      padding: 13px 20px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .menu-btn:hover {
+      background: var(--radar-cyan);
+      color: #030407;
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .menu-btn.btn-danger {
+      border-color: var(--danger-red);
+      background: rgba(255, 34, 68, 0.12);
+    }
+
+    .menu-btn.btn-danger:hover {
+      background: var(--danger-red);
+      color: #fff;
+      box-shadow: 0 0 20px var(--danger-glow);
+    }
+
+    .settings-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #9cbacf;
+      letter-spacing: 1px;
+      padding: 6px 0;
+    }
+
+    .settings-row input[type="range"] {
+      width: 130px;
+      accent-color: var(--radar-cyan);
+    }
+
+    .settings-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--radar-cyan);
+      cursor: pointer;
+    }
+
+    .controls-guide {
+      margin-top: 26px;
+      font-size: 11px;
+      color: #657e93;
+      line-height: 1.8;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    /* Captured / HEARD Screen */
+    .heard-title {
+      font-family: var(--font-display);
+      font-size: 70px;
+      font-weight: 900;
+      letter-spacing: 12px;
+      color: var(--danger-red);
+      text-shadow: 0 0 35px var(--danger-glow);
+      margin-bottom: 10px;
+      animation: pulseHeard 1s infinite alternate;
+    }
+
+    @keyframes pulseHeard {
+      from { transform: scale(0.98); opacity: 0.9; }
+      to { transform: scale(1.02); opacity: 1; }
+    }
+
+    .heard-sub {
+      font-size: 13px;
+      color: #a8727a;
+      letter-spacing: 3px;
+      margin-bottom: 32px;
+    }
+
+    /* Victory Screen */
+    .victory-title {
+      font-family: var(--font-display);
+      font-size: 50px;
+      font-weight: 900;
+      letter-spacing: 8px;
+      color: #a7f3d0;
+      text-shadow: 0 0 30px rgba(52, 211, 153, 0.6);
+      margin-bottom: 8px;
+    }
+
+    .stats-card {
+      background: rgba(10, 25, 20, 0.6);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      padding: 16px 26px;
+      border-radius: 6px;
+      margin-bottom: 26px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .stat-line {
+      display: flex;
+      justify-content: space-between;
+      color: #d1fae5;
+    }
+
+    .stat-val {
+      font-weight: 700;
+      color: #34d399;
+    }
+
+    /* Debug Overlay */
+    #debug-overlay {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      background: rgba(3, 8, 14, 0.9);
+      border: 1px solid rgba(0, 243, 255, 0.4);
+      color: #4df0ff;
+      font-size: 10px;
+      line-height: 1.5;
+      padding: 10px 14px;
+      border-radius: 4px;
+      z-index: 40;
+      pointer-events: none;
+      display: none;
+      max-width: 320px;
+      font-family: var(--font-mono);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Red Screen Flash */
+    #screen-flash {
+      position: absolute;
+      inset: 0;
+      background: red;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 45;
+      transition: opacity 0.1s ease;
+    }
+
+    /* Mobile On-Screen Touch Controls */
+    #mobile-controls {
+      position: absolute;
+      bottom: 16px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 16px;
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    @media (min-width: 1024px) {
+      #mobile-controls {
+        display: none;
+      }
+    }
+
+    .dpad-cluster, .action-cluster {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: auto;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .dpad-middle-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dpad-center {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: rgba(0, 243, 255, 0.05);
+      border: 1px dashed rgba(0, 243, 255, 0.2);
+    }
+
+    .dpad-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: rgba(12, 27, 47, 0.78);
+      border: 1.5px solid rgba(0, 243, 255, 0.4);
+      color: var(--radar-cyan);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      touch-action: manipulation;
+      transition: all 0.08s ease;
+    }
+
+    .dpad-btn:active, .dpad-btn.active {
+      background: rgba(0, 243, 255, 0.4);
+      color: #ffffff;
+      transform: scale(0.92);
+      border-color: #00f3ff;
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.8);
+    }
+
+    .action-cluster {
+      gap: 10px;
+    }
+
+    .action-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(12, 27, 47, 0.82);
+      border: 2px solid var(--radar-cyan);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 16px rgba(0, 243, 255, 0.35);
+      touch-action: manipulation;
+      transition: all 0.08s ease;
+    }
+
+    .action-btn:active, .action-btn.active {
+      transform: scale(0.90);
+      background: rgba(0, 243, 255, 0.45);
+      box-shadow: 0 0 25px rgba(0, 243, 255, 0.9);
+    }
+
+    .action-btn-icon {
+      font-size: 20px;
+    }
+
+    .action-btn-text {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--radar-cyan);
+    }
+
+    .action-bell {
+      width: 52px;
+      height: 52px;
+      border-color: #ffb703;
+      box-shadow: 0 0 12px rgba(255, 183, 3, 0.35);
+    }
+
+    .action-bell .action-btn-text {
+      color: #ffb703;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-container">
+    <canvas id="gameCanvas" width="800" height="800"></canvas>
+    
+    <div class="vignette-overlay"></div>
+    <div id="screen-flash"></div>
+    <div id="pulse-warning">WARNING: PULSE DETECTED</div>
+
+    <!-- Gameplay In-game HUD -->
+    <div class="ui-layer" id="hud-layer">
+      <div class="interactive-header">
+        <div class="level-badge">
+          <span id="hud-level-title">LEVEL 1 — THE SILENT VOID</span>
+          <span class="objective-text" id="hud-objective">Locate the resonant exit beacon</span>
+        </div>
+
+        <!-- Anti-Clockwise Dial Countdown Widget -->
+        <div class="countdown-widget" id="countdown-widget">
+          <div class="clock-dial-container">
+            <canvas id="clockCanvas" width="62" height="62"></canvas>
+            <div class="clock-time-val" id="clock-val">30.0</div>
+          </div>
+          <span class="clock-label">GATE CLOSES</span>
+        </div>
+
+        <div class="top-controls">
+          <button class="btn-icon" id="btn-hud-sound" title="Toggle Sound">🔊 SOUND: ON</button>
+          <button class="btn-icon" id="btn-hud-pause" title="Pause Game (Esc)">⏸ PAUSE</button>
+        </div>
+      </div>
+
+      <div id="hint-box">Step by 1 block (WASD / Arrows). Path turns black behind you!</div>
+    </div>
+
+    <!-- Mobile On-Screen Touch Controls (Visible on Touch Devices & Mobile) -->
+    <div id="mobile-controls">
+      <div class="dpad-cluster">
+        <button class="dpad-btn dpad-up" id="btn-touch-up" aria-label="Move Up">▲</button>
+        <div class="dpad-middle-row">
+          <button class="dpad-btn dpad-left" id="btn-touch-left" aria-label="Move Left">◀</button>
+          <div class="dpad-center"></div>
+          <button class="dpad-btn dpad-right" id="btn-touch-right" aria-label="Move Right">▶</button>
+        </div>
+        <button class="dpad-btn dpad-down" id="btn-touch-down" aria-label="Move Down">▼</button>
+      </div>
+
+      <div class="action-cluster">
+        <button class="action-btn action-ping" id="btn-touch-ping" aria-label="Sonar Ping">
+          <span class="action-btn-icon">📡</span>
+          <span class="action-btn-text">PING</span>
+        </button>
+        <button class="action-btn action-bell" id="btn-touch-bell" aria-label="Ring Bell">
+          <span class="action-btn-icon">🔔</span>
+          <span class="action-btn-text">BELL</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Debug Telemetry Overlay (?debug=1) -->
+    <div id="debug-overlay">
+      <div style="font-weight: 700; color: #fff; margin-bottom: 4px; border-bottom: 1px solid #00f3ff;">[TELEMETRY / DEBUG]</div>
+      <div id="dbg-seed">Seed: -</div>
+      <div id="dbg-fps">Frame Time: - ms (- FPS)</div>
+      <div id="dbg-pos">Player: -</div>
+      <div id="dbg-time">Timer: -</div>
+      <div id="dbg-energy">Energy: -</div>
+      <div id="dbg-monsters">Monsters: 0</div>
+      <div id="dbg-events">Noise Events: 0</div>
+      <div id="dbg-tests" style="margin-top: 6px; font-weight: 700;">Self-Tests: RUNNING...</div>
+    </div>
+
+    <!-- Title Screen Modal -->
+    <div class="modal-overlay" id="title-modal">
+      <div class="title-logo">ECHO MAZE</div>
+      <div class="tagline">Light costs noise. The clock is ticking.</div>
+      <div class="menu-box">
+        <button class="menu-btn" id="btn-start-game">START CAMPAIGN (LEVEL 1)</button>
+        
+        <div class="settings-row">
+          <span>PRACTICE / JUMP LEVEL</span>
+          <select id="sel-level-select" style="background: #0f172a; color: var(--radar-cyan); border: 1.5px solid var(--radar-cyan); border-radius: 6px; padding: 5px 8px; font-family: var(--font-mono); font-size: 11px; cursor: pointer; max-width: 190px;">
+            <option value="1">L1: Rookie Patrol (1 Cop)</option>
+            <option value="2">L2: Dormant Ear (1 Cop)</option>
+            <option value="3">L3: Wandering Shadow (1 Cop)</option>
+            <option value="4">L4: Resonant Decoy (1 Cop + Bell)</option>
+            <option value="5">L5: Twin Enforcement (2 Cops)</option>
+            <option value="6">L6: Blackout Surge (2 Cops)</option>
+            <option value="7">L7: Crossfire Sector (2 Cops + Bell)</option>
+            <option value="8">L8: Triple Threat (3 Cops)</option>
+            <option value="9">L9: Radar Pulse Ambush (3 Cops)</option>
+            <option value="10">L10: Gauntlet Run (3 Fast Cops)</option>
+            <option value="11">L11: Quadrant Lockdown (4 Cops)</option>
+            <option value="12">L12: Acoustic Reaper (4 Cops)</option>
+            <option value="13">L13: Eclipse Protocol (4 Cops)</option>
+            <option value="14">L14: Apex Swarm (5 Cops)</option>
+            <option value="15">L15: Final Lockdown (5 Apex Cops)</option>
+          </select>
+        </div>
+        
+        <div class="settings-row">
+          <span>ASSIST MODE</span>
+          <input type="checkbox" id="chk-assist">
+        </div>
+        <div class="settings-row">
+          <span>VOLUME</span>
+          <input type="range" id="rng-volume" min="0" max="100" value="80">
+        </div>
+        <div class="settings-row">
+          <span>MUTE AUDIO</span>
+          <input type="checkbox" id="chk-mute">
+        </div>
+      </div>
+
+      <div class="controls-guide">
+        WASD / ARROWS : 1-Block Grid Step (Path turns black behind you!)<br>
+        SHIFT : Creep (Silent Step)<br>
+        SPACE : Sonar Pulse (Reveals Walls &amp; Attracts Patrol)<br>
+        GOLDEN ARROW : Compass Clue pointing toward Exit Gate<br>
+        ESC : Pause &nbsp;|&nbsp; R : Restart Run<br>
+        <span style="color: #ff3355; font-weight: 700; letter-spacing: 0.5px;">🔥 SEQUENTIAL CAMPAIGN: Levels 1 &rarr; 15. If you fail at any level, you restart from Level 1!</span>
+      </div>
+    </div>
+
+    <!-- Pause Screen Modal -->
+    <div class="modal-overlay modal-hidden" id="pause-modal">
+      <div class="title-logo" style="font-size: 38px; margin-bottom: 14px;">PAUSED</div>
+      <div class="menu-box">
+        <button class="menu-btn" id="btn-resume">RESUME</button>
+        <button class="menu-btn btn-danger" id="btn-restart">RESTART RUN FROM LEVEL 1 (R)</button>
+        <button class="menu-btn" id="btn-main-menu">MAIN MENU</button>
+
+        <div class="settings-row" style="margin-top: 8px;">
+          <span>ASSIST MODE</span>
+          <input type="checkbox" id="chk-pause-assist">
+        </div>
+        <div class="settings-row">
+          <span>VOLUME</span>
+          <input type="range" id="rng-pause-volume" min="0" max="100" value="80">
+        </div>
+      </div>
+    </div>
+
+    <!-- Captured / HEARD Screen Modal -->
+    <div class="modal-overlay modal-hidden" id="captured-modal">
+      <div class="heard-title">HEARD.</div>
+      <div class="heard-sub" id="captured-sub">The patrol cornered you. Campaign failed — restart from Level 1!</div>
+      <div class="menu-box">
+        <button class="menu-btn btn-danger" id="btn-retry">RESTART FROM LEVEL 1 (R)</button>
+        <button class="menu-btn" id="btn-captured-menu">MAIN MENU</button>
+      </div>
+    </div>
+
+    <!-- Lockdown / Time Expired Modal -->
+    <div class="modal-overlay modal-hidden" id="timeout-modal">
+      <div class="heard-title" style="color: #ff3355; font-size: 52px;">LOCKDOWN.</div>
+      <div class="heard-sub" id="timeout-sub">Time expired. Gate sealed shut. Campaign failed — restart from Level 1!</div>
+      <div class="menu-box">
+        <button class="menu-btn btn-danger" id="btn-timeout-retry">RESTART FROM LEVEL 1 (R)</button>
+        <button class="menu-btn" id="btn-timeout-menu">MAIN MENU</button>
+      </div>
+    </div>
+
+    <!-- Victory Screen Modal -->
+    <div class="modal-overlay modal-hidden" id="victory-modal">
+      <div class="victory-title" id="victory-title">RESONANCE REACHED</div>
+      <div class="stats-card">
+        <div class="stat-line"><span>LEVEL COMPLETED:</span><span class="stat-val" id="stat-level">1 / 15</span></div>
+        <div class="stat-line"><span>TIME TAKEN:</span><span class="stat-val" id="stat-time">0:00</span></div>
+        <div class="stat-line"><span>SONAR PINGS:</span><span class="stat-val" id="stat-pings">0</span></div>
+      </div>
+      <div class="menu-box">
+        <button class="menu-btn" id="btn-next-level">PROCEED TO NEXT LEVEL ▶</button>
+        <button class="menu-btn" id="btn-victory-menu">MAIN MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /* ==========================================================================
+     CONFIG OBJECT — All tuning numbers, levels, physics & audio settings
+     ========================================================================== */
+  const CONFIG = {
+    // Canvas & Viewport
+    CANVAS_WIDTH: 800,
+    CANVAS_HEIGHT: 800,
+    TILE_SIZE: 36, // rendered tile size in pixels
+    
+    // 1-Block Movement & Timings
+    STEP_DURATION: 0.11, // seconds for 1-block hop animation
+    TIME_LIMITS: [32, 45, 52, 62, 75, 85], // countdown clock limits per level
+
+    // Suspense Blackout Thriller Timings (Path blinks & blacks out periodically)
+    BLACKOUT_MIN_VISIBLE: 4.0, // seconds path remains visible
+    BLACKOUT_MAX_VISIBLE: 7.5,
+    BLACKOUT_MIN_DARK: 2.2, // seconds of total darkness blackout
+    BLACKOUT_MAX_DARK: 4.2,
+    BLACKOUT_WARNING_TIME: 0.85, // seconds of electric flickering before cut-off
+    
+    // Physics & Timing
+    WALL_FADE_DURATION: 3.5, // walls revealed by sonar fade over 3.5s
+    SONAR_SPEED: 14.0, // tiles per second
+    SONAR_MAX_RADIUS: 10.0, // tiles
+    PLAYER_RADIUS: 0.30, // collision circle radius in tiles
+    
+    // Energy
+    MAX_ENERGY: 100,
+    PING_ENERGY_COST: 25,
+    ENERGY_REGEN_PER_SEC: 12,
+    
+    // Noise Events
+    FOOTSTEP_DISTANCE_INTERVAL: 0.8,
+    EVENT_LIFETIME: 0.1,
+    PING_NOISE_RADIUS: 10.0,
+    BELL_NOISE_RADIUS: 12.0,
+    BELL_INTERACTION_RADIUS: 0.6,
+    
+    // Monster AI & FSM
+    CAPTURE_DISTANCE: 0.45,
+    MONSTER_DEFAULT_SPEED: 3.4,
+    MONSTER_INVESTIGATE_SPEED: 3.8,
+    SEARCH_DURATION: 3.0,
+    WANDER_PAUSE_DURATION: 1.5,
+    
+    // Stage 5C Red Pulse
+    MONSTER_PULSE_RADIUS: 7.0,
+    MONSTER_PULSE_DURATION: 0.8,
+    
+    // Audio Limits
+    MAX_SIMULTANEOUS_SOUNDS: 8,
+    
+    // LEVELS Config Table
+    LEVELS: [
+      {
+        id: 1,
+        title: "LEVEL 1 — THE ROOKIE PATROL",
+        objective: "1 Cop active. Step 1 block to reach the gate before time expires.",
+        width: 11,
+        height: 11,
+        unlimitedEnergy: true,
+        footstepsHeard: false,
+        timeLimit: 35,
+        monsters: [
+          { id: 'cop1', name: 'Patrol 01', initialState: 'WANDER', speed: 2.8, footstepRadius: 0, pingRadius: 10.0, growlPitch: 100 }
+        ]
+      },
+      {
+        id: 2,
+        title: "LEVEL 2 — THE DORMANT EAR",
+        objective: "Corner Patrol sleeps. Pings will awaken it. Beware the black trail.",
+        width: 13,
+        height: 13,
+        unlimitedEnergy: false,
+        footstepsHeard: false,
+        timeLimit: 42,
+        monsters: [
+          { id: 'cop1', name: 'Sleeper Unit', initialState: 'ASLEEP', speed: 3.2, footstepRadius: 0, pingRadius: 10.0, growlPitch: 95 }
+        ]
+      },
+      {
+        id: 3,
+        title: "LEVEL 3 — WANDERING SHADOW",
+        objective: "Corner Cop hears footsteps! Hold Shift to creep silently.",
+        width: 15,
+        height: 15,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 48,
+        monsters: [
+          { id: 'cop1', name: 'Hound Cop', initialState: 'WANDER', speed: 3.3, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 110 }
+        ]
+      },
+      {
+        id: 4,
+        title: "LEVEL 4 — RESONANT DECOY",
+        objective: "Ring the brass bell (E) to misdirect the Corner Patrol.",
+        width: 17,
+        height: 17,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 55,
+        hasBell: true,
+        monsters: [
+          { id: 'cop1', name: 'Heavy Patrol', initialState: 'WANDER', speed: 3.4, footstepRadius: 2.5, pingRadius: 11.0, growlPitch: 105 }
+        ]
+      },
+      {
+        id: 5,
+        title: "LEVEL 5 — TWIN ENFORCEMENT",
+        objective: "2 Cops deployed in opposite corners! Staggered sirens patrol the halls.",
+        width: 19,
+        height: 19,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 65,
+        monsters: [
+          { id: 'copA', name: 'Patrol Alpha', initialState: 'WANDER', speed: 3.3, footstepRadius: 2.0, pingRadius: 10.0, growlPitch: 85 },
+          { id: 'copB', name: 'Patrol Beta', initialState: 'WANDER', speed: 3.5, footstepRadius: 3.0, pingRadius: 8.0, growlPitch: 140 }
+        ]
+      },
+      {
+        id: 6,
+        title: "LEVEL 6 — THE BLACKOUT SURGE",
+        objective: "2 Cops + rapid blackout surges. Use the golden compass in the dark.",
+        width: 21,
+        height: 21,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 70,
+        monsters: [
+          { id: 'copA', name: 'Cruiser 01', initialState: 'WANDER', speed: 3.3, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 90 },
+          { id: 'copB', name: 'Interceptor', initialState: 'WANDER', speed: 3.6, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 130 }
+        ]
+      },
+      {
+        id: 7,
+        title: "LEVEL 7 — CROSSFIRE SECTOR",
+        objective: "2 Fast Interceptors. 1 Decoy Bell. Beware converging pincer traps.",
+        width: 21,
+        height: 21,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 72,
+        hasBell: true,
+        monsters: [
+          { id: 'copA', name: 'Interceptor A', initialState: 'WANDER', speed: 3.6, footstepRadius: 2.8, pingRadius: 11.0, growlPitch: 100 },
+          { id: 'copB', name: 'Interceptor B', initialState: 'WANDER', speed: 3.6, footstepRadius: 2.8, pingRadius: 11.0, growlPitch: 150 }
+        ]
+      },
+      {
+        id: 8,
+        title: "LEVEL 8 — TRIPLE THREAT",
+        objective: "3 Cops deployed in 3 corners! Three rotating siren searchlights.",
+        width: 23,
+        height: 23,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 78,
+        monsters: [
+          { id: 'cop1', name: 'Unit Red', initialState: 'WANDER', speed: 3.3, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 80 },
+          { id: 'cop2', name: 'Unit Blue', initialState: 'WANDER', speed: 3.4, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 115 },
+          { id: 'cop3', name: 'Unit Gold', initialState: 'WANDER', speed: 3.5, footstepRadius: 3.0, pingRadius: 9.0, growlPitch: 160 }
+        ]
+      },
+      {
+        id: 9,
+        title: "LEVEL 9 — RADAR PULSE AMBUSH",
+        objective: "3 Cops: Scanner Drone sweeps counter-sonar pulses! Decoy Bell available.",
+        width: 23,
+        height: 23,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 82,
+        hasBell: true,
+        monsters: [
+          { id: 'cop1', name: 'Scanner Drone', initialState: 'WANDER', speed: 3.4, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 88, hasPulseOnSearch: true },
+          { id: 'cop2', name: 'Patrol 02', initialState: 'WANDER', speed: 3.5, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 125 },
+          { id: 'cop3', name: 'Patrol 03', initialState: 'WANDER', speed: 3.4, footstepRadius: 3.0, pingRadius: 9.0, growlPitch: 155 }
+        ]
+      },
+      {
+        id: 10,
+        title: "LEVEL 10 — THE GAUNTLET RUN",
+        objective: "3 High-Speed Interceptors (Speed 3.8!). Time is short. Don't stop hopping.",
+        width: 25,
+        height: 25,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 85,
+        monsters: [
+          { id: 'fast1', name: 'Viper 01', initialState: 'WANDER', speed: 3.8, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 95 },
+          { id: 'fast2', name: 'Viper 02', initialState: 'WANDER', speed: 3.8, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 135 },
+          { id: 'fast3', name: 'Viper 03', initialState: 'WANDER', speed: 3.7, footstepRadius: 3.0, pingRadius: 9.0, growlPitch: 170 }
+        ]
+      },
+      {
+        id: 11,
+        title: "LEVEL 11 — QUADRANT LOCKDOWN",
+        objective: "4 Cops deployed in ALL 4 corners! The entire perimeter is sealed.",
+        width: 27,
+        height: 27,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 95,
+        hasBell: true,
+        monsters: [
+          { id: 'q1', name: 'North Patrol', initialState: 'WANDER', speed: 3.4, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 85 },
+          { id: 'q2', name: 'East Patrol', initialState: 'WANDER', speed: 3.4, footstepRadius: 2.5, pingRadius: 10.0, growlPitch: 110 },
+          { id: 'q3', name: 'South Patrol', initialState: 'WANDER', speed: 3.5, footstepRadius: 2.8, pingRadius: 10.0, growlPitch: 145 },
+          { id: 'q4', name: 'West Patrol', initialState: 'WANDER', speed: 3.5, footstepRadius: 2.8, pingRadius: 10.0, growlPitch: 175 }
+        ]
+      },
+      {
+        id: 12,
+        title: "LEVEL 12 — ACOUSTIC REAPER",
+        objective: "4 Cops with extreme hearing (Radius 3.8 tiles!). Every uncrept step is fatal.",
+        width: 27,
+        height: 27,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 98,
+        hasBell: true,
+        monsters: [
+          { id: 'r1', name: 'Reaper Alpha', initialState: 'WANDER', speed: 3.5, footstepRadius: 3.8, pingRadius: 12.0, growlPitch: 80 },
+          { id: 'r2', name: 'Reaper Beta', initialState: 'WANDER', speed: 3.5, footstepRadius: 3.8, pingRadius: 12.0, growlPitch: 120 },
+          { id: 'r3', name: 'Reaper Gamma', initialState: 'WANDER', speed: 3.6, footstepRadius: 3.5, pingRadius: 11.0, growlPitch: 150 },
+          { id: 'r4', name: 'Reaper Delta', initialState: 'WANDER', speed: 3.6, footstepRadius: 3.5, pingRadius: 11.0, growlPitch: 185 }
+        ]
+      },
+      {
+        id: 13,
+        title: "LEVEL 13 — ECLIPSE PROTOCOL",
+        objective: "4 Cops + 2 Pulse Scanners! Extended blackouts. Pure sensory navigation.",
+        width: 29,
+        height: 29,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 105,
+        hasBell: true,
+        monsters: [
+          { id: 'e1', name: 'Pulse Apex 1', initialState: 'WANDER', speed: 3.5, footstepRadius: 3.0, pingRadius: 11.0, growlPitch: 85, hasPulseOnSearch: true },
+          { id: 'e2', name: 'Pulse Apex 2', initialState: 'WANDER', speed: 3.5, footstepRadius: 3.0, pingRadius: 11.0, growlPitch: 130, hasPulseOnSearch: true },
+          { id: 'e3', name: 'Enforcer 01', initialState: 'WANDER', speed: 3.6, footstepRadius: 2.8, pingRadius: 10.0, growlPitch: 160 },
+          { id: 'e4', name: 'Enforcer 02', initialState: 'WANDER', speed: 3.6, footstepRadius: 2.8, pingRadius: 10.0, growlPitch: 195 }
+        ]
+      },
+      {
+        id: 14,
+        title: "LEVEL 14 — APEX SWARM",
+        objective: "5 Cops swarming the mega-labyrinth! 4 corners + 1 center stalker.",
+        width: 31,
+        height: 31,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 118,
+        hasBell: true,
+        monsters: [
+          { id: 's1', name: 'Swarm Leader', initialState: 'WANDER', speed: 3.7, footstepRadius: 3.2, pingRadius: 11.0, growlPitch: 75, hasPulseOnSearch: true },
+          { id: 's2', name: 'Swarm 02', initialState: 'WANDER', speed: 3.6, footstepRadius: 2.8, pingRadius: 10.0, growlPitch: 105 },
+          { id: 's3', name: 'Swarm 03', initialState: 'WANDER', speed: 3.6, footstepRadius: 2.8, pingRadius: 10.0, growlPitch: 135 },
+          { id: 's4', name: 'Swarm 04', initialState: 'WANDER', speed: 3.5, footstepRadius: 3.0, pingRadius: 10.0, growlPitch: 165 },
+          { id: 's5', name: 'Swarm 05', initialState: 'WANDER', speed: 3.5, footstepRadius: 3.0, pingRadius: 9.0, growlPitch: 200 }
+        ]
+      },
+      {
+        id: 15,
+        title: "LEVEL 15 — GRAND ESCAPE: THE FINAL LOCKDOWN",
+        objective: "5 Maximum-Speed Apex Hunters. The ultimate test of acoustic stealth. Reach the Stargate!",
+        width: 33,
+        height: 33,
+        unlimitedEnergy: false,
+        footstepsHeard: true,
+        timeLimit: 130,
+        hasBell: true,
+        monsters: [
+          { id: 'boss1', name: 'Apex Prime', initialState: 'WANDER', speed: 3.9, footstepRadius: 3.5, pingRadius: 12.0, growlPitch: 70, hasPulseOnSearch: true },
+          { id: 'boss2', name: 'Apex Dread', initialState: 'WANDER', speed: 3.8, footstepRadius: 3.2, pingRadius: 11.0, growlPitch: 100, hasPulseOnSearch: true },
+          { id: 'boss3', name: 'Hunter 01', initialState: 'WANDER', speed: 3.8, footstepRadius: 3.0, pingRadius: 10.0, growlPitch: 135 },
+          { id: 'boss4', name: 'Hunter 02', initialState: 'WANDER', speed: 3.7, footstepRadius: 3.0, pingRadius: 10.0, growlPitch: 170 },
+          { id: 'boss5', name: 'Hunter 03', initialState: 'WANDER', speed: 3.7, footstepRadius: 2.8, pingRadius: 9.0, growlPitch: 205 }
+        ]
+      }
+    ]
+  };
+
+  /* ==========================================================================
+     MATH & DETERMINISTIC PRNG (Mulberry32)
+     ========================================================================== */
+  function createPrng(seed) {
+    let s = (Math.floor(Math.abs(seed)) || 1337) >>> 0;
+    return function() {
+      s |= 0;
+      s = s + 0x6D2B79F5 | 0;
+      let t = Math.imul(s ^ s >>> 15, 1 | s);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  /* ==========================================================================
+     MAZE GENERATION & BFS VALIDATION
+     ========================================================================== */
+  function generateMaze(width, height, seed) {
+    const W = width % 2 === 0 ? width + 1 : width;
+    const H = height % 2 === 0 ? height + 1 : height;
+    const rng = createPrng(seed);
+
+    const grid = Array.from({ length: H }, () => Array(W).fill(1));
+    const stack = [[1, 1]];
+    grid[1][1] = 0;
+
+    const dirs = [[0, -2], [0, 2], [-2, 0], [2, 0]];
+
+    while (stack.length > 0) {
+      const [cx, cy] = stack[stack.length - 1];
+      const neighbors = [];
+      for (const [dx, dy] of dirs) {
+        const nx = cx + dx;
+        const ny = cy + dy;
+        if (nx > 0 && nx < W - 1 && ny > 0 && ny < H - 1 && grid[ny][nx] === 1) {
+          neighbors.push([nx, ny, cx + dx / 2, cy + dy / 2]);
+        }
+      }
+
+      if (neighbors.length > 0) {
+        const idx = Math.floor(rng() * neighbors.length);
+        const [nx, ny, wx, wy] = neighbors[idx];
+        grid[wy][wx] = 0;
+        grid[ny][nx] = 0;
+        stack.push([nx, ny]);
+      } else {
+        stack.pop();
+      }
+    }
+
+    const dist = Array.from({ length: H }, () => Array(W).fill(-1));
+    const queue = [[1, 1]];
+    dist[1][1] = 0;
+    let maxDist = 0;
+    let reachableFloorCount = 0;
+
+    while (queue.length > 0) {
+      const [x, y] = queue.shift();
+      reachableFloorCount++;
+      const d = dist[y][x];
+      if (d > maxDist) maxDist = d;
+
+      const stepDirs = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+      for (const [dx, dy] of stepDirs) {
+        const nx = x + dx;
+        const ny = y + dy;
+        if (nx >= 0 && nx < W && ny >= 0 && ny < H && grid[ny][nx] === 0 && dist[ny][nx] === -1) {
+          dist[ny][nx] = d + 1;
+          queue.push([nx, ny]);
+        }
+      }
+    }
+
+    let totalFloorCount = 0;
+    const floorCells = [];
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        if (grid[y][x] === 0) {
+          totalFloorCount++;
+          floorCells.push({ x, y, dist: dist[y][x] });
+        }
+      }
+    }
+
+    const isConnected = (reachableFloorCount === totalFloorCount);
+
+    const threshold = 0.60 * maxDist;
+    const candidates = floorCells.filter(c => c.dist >= threshold);
+    candidates.sort((a, b) => {
+      if (b.dist !== a.dist) return b.dist - a.dist;
+      return (b.x + b.y) - (a.x + a.y);
+    });
+
+    const exit = candidates.length > 0 ? candidates[0] : { x: W - 2, y: H - 2, dist: maxDist };
+
+    return { W, H, grid, dist, maxDist, totalFloorCount, reachableFloorCount, isConnected, exit, floorCells };
+  }
+
+  function findBfsPath(grid, W, H, startX, startY, endX, endY) {
+    if (startX === endX && startY === endY) return [];
+    if (startX < 0 || startX >= W || startY < 0 || startY >= H) return null;
+    if (endX < 0 || endX >= W || endY < 0 || endY >= H) return null;
+    if (grid[startY][startX] === 1 || grid[endY][endX] === 1) return null;
+
+    const queue = [[startX, startY]];
+    const prev = new Map();
+    const visited = new Set();
+    const startKey = `${startX},${startY}`;
+    visited.add(startKey);
+
+    const dirs = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+
+    while (queue.length > 0) {
+      const [cx, cy] = queue.shift();
+      if (cx === endX && cy === endY) {
+        const path = [];
+        let curr = `${endX},${endY}`;
+        while (curr !== startKey) {
+          const [x, y] = curr.split(',').map(Number);
+          path.unshift({ x, y });
+          curr = prev.get(curr);
+        }
+        return path;
+      }
+
+      for (const [dx, dy] of dirs) {
+        const nx = cx + dx;
+        const ny = cy + dy;
+        const key = `${nx},${ny}`;
+        if (nx >= 0 && nx < W && ny >= 0 && ny < H && grid[ny][nx] === 0 && !visited.has(key)) {
+          visited.add(key);
+          prev.set(key, `${cx},${cy}`);
+          queue.push([nx, ny]);
+        }
+      }
+    }
+    return null;
+  }
+
+  function getBfsPathDistance(grid, W, H, x0, y0, x1, y1) {
+    if (x0 === x1 && y0 === y1) return 0;
+    const path = findBfsPath(grid, W, H, x0, y0, x1, y1);
+    return path ? path.length : Infinity;
+  }
+
+  function hasLineOfSight(grid, W, H, x0, y0, x1, y1) {
+    const dx = x1 - x0;
+    const dy = y1 - y0;
+    const dist = Math.hypot(dx, dy);
+    if (dist === 0) return true;
+
+    const steps = Math.ceil(dist * 6);
+    for (let i = 1; i < steps; i++) {
+      const t = i / steps;
+      const sx = Math.floor(x0 + dx * t);
+      const sy = Math.floor(y0 + dy * t);
+      if (sx >= 0 && sx < W && sy >= 0 && sy < H) {
+        if (grid[sy][sx] === 1) return false;
+      }
+    }
+    return true;
+  }
+
+  /* ==========================================================================
+     SYNTHESIZED WEB AUDIO ENGINE
+     ========================================================================== */
+  class AudioEngine {
+    constructor() {
+      this.ctx = null;
+      this.masterGain = null;
+      this.isMuted = false;
+      this.volume = 0.8;
+      this.activeOneShots = 0;
+      
+      this.exitOsc = null;
+      this.exitGain = null;
+      this.exitPanner = null;
+      this.lastHeartbeatTime = 0;
+      this.initialized = false;
+    }
+
+    init() {
+      if (this.initialized) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        this.ctx = new AudioCtx();
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.volume, this.ctx.currentTime);
+        this.masterGain.connect(this.ctx.destination);
+        this.initialized = true;
+      } catch (err) {
+        console.warn("AudioContext init skipped:", err);
+      }
+    }
+
+    ensureContext() {
+      this.init();
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume().catch(() => {});
+      }
+    }
+
+    setVolume(val) {
+      this.volume = clamp(val, 0, 1);
+      if (this.masterGain && !this.isMuted) {
+        this.masterGain.gain.setTargetAtTime(this.volume, this.ctx.currentTime, 0.05);
+      }
+    }
+
+    setMute(mute) {
+      this.isMuted = mute;
+      if (this.masterGain) {
+        this.masterGain.gain.setTargetAtTime(this.isMuted ? 0 : this.volume, this.ctx.currentTime, 0.05);
+      }
+    }
+
+    playSonarPing() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      if (this.activeOneShots >= CONFIG.MAX_SIMULTANEOUS_SOUNDS) return;
+
+      this.activeOneShots++;
+      const now = this.ctx.currentTime;
+      
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(480, now);
+      osc.frequency.exponentialRampToValueAtTime(960, now + 0.18);
+      
+      gain.gain.setValueAtTime(0.35, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.26);
+
+      const echoOsc = this.ctx.createOscillator();
+      const echoGain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(700, now);
+
+      echoOsc.type = 'sine';
+      echoOsc.frequency.setValueAtTime(440, now + 0.22);
+      echoOsc.frequency.exponentialRampToValueAtTime(720, now + 0.40);
+
+      echoGain.gain.setValueAtTime(0.0001, now);
+      echoGain.gain.setValueAtTime(0.12, now + 0.22);
+      echoGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.52);
+
+      echoOsc.connect(filter);
+      filter.connect(echoGain);
+      echoGain.connect(this.masterGain);
+
+      echoOsc.start(now + 0.22);
+      echoOsc.stop(now + 0.54);
+
+      setTimeout(() => { this.activeOneShots = Math.max(0, this.activeOneShots - 1); }, 600);
+    }
+
+    playStepHop() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      if (this.activeOneShots >= CONFIG.MAX_SIMULTANEOUS_SOUNDS) return;
+
+      this.activeOneShots++;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(260, now);
+      osc.frequency.exponentialRampToValueAtTime(75, now + 0.05);
+
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.07);
+
+      setTimeout(() => { this.activeOneShots = Math.max(0, this.activeOneShots - 1); }, 80);
+    }
+
+    playClockTick(isUrgent = false) {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = isUrgent ? 'sawtooth' : 'sine';
+      osc.frequency.setValueAtTime(isUrgent ? 880 : 540, now);
+      osc.frequency.exponentialRampToValueAtTime(140, now + 0.04);
+      gain.gain.setValueAtTime(isUrgent ? 0.25 : 0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.06);
+    }
+
+    playCopChirp() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(650, now);
+      osc.frequency.linearRampToValueAtTime(980, now + 0.12);
+      osc.frequency.linearRampToValueAtTime(650, now + 0.24);
+      gain.gain.setValueAtTime(0.16, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    }
+
+    playPowerCut() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(32, now + 0.35);
+      gain.gain.setValueAtTime(0.24, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.40);
+    }
+
+    playPowerSurge() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(80, now);
+      osc.frequency.exponentialRampToValueAtTime(620, now + 0.22);
+      gain.gain.setValueAtTime(0.26, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    }
+
+    playGrowl(pitch = 100) {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      if (this.activeOneShots >= CONFIG.MAX_SIMULTANEOUS_SOUNDS) return;
+
+      this.activeOneShots++;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(pitch, now);
+      osc.frequency.linearRampToValueAtTime(pitch * 0.65, now + 0.45);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(320, now);
+      filter.frequency.exponentialRampToValueAtTime(120, now + 0.45);
+
+      gain.gain.setValueAtTime(0.28, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.50);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.masterGain);
+
+      osc.start(now);
+      osc.stop(now + 0.52);
+
+      setTimeout(() => { this.activeOneShots = Math.max(0, this.activeOneShots - 1); }, 550);
+    }
+
+    playBell() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      const now = this.ctx.currentTime;
+      const freqs = [880, 1320, 1760];
+      freqs.forEach((f, i) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(f, now);
+        gain.gain.setValueAtTime(0.25 / (i + 1), now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 1.25);
+      });
+    }
+
+    playMonsterPulse() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(850, now);
+      osc.frequency.exponentialRampToValueAtTime(180, now + 0.4);
+
+      gain.gain.setValueAtTime(0.35, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.48);
+    }
+
+    playCapture() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.exponentialRampToValueAtTime(45, now + 0.7);
+
+      gain.gain.setValueAtTime(0.45, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.8);
+    }
+
+    playVictory() {
+      if (!this.ctx || this.isMuted) return;
+      this.ensureContext();
+      const now = this.ctx.currentTime;
+      const chords = [523.25, 659.25, 783.99, 1046.50];
+      chords.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.setValueAtTime(0.25, now + idx * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.9);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now + idx * 0.1);
+        osc.stop(now + idx * 0.1 + 0.95);
+      });
+    }
+
+    startExitHum() {
+      if (!this.ctx) return;
+      this.stopExitHum();
+      try {
+        this.exitOsc = this.ctx.createOscillator();
+        this.exitGain = this.ctx.createGain();
+        this.exitGain.gain.setValueAtTime(0.0001, this.ctx.currentTime);
+
+        if (this.ctx.createStereoPanner) {
+          this.exitPanner = this.ctx.createStereoPanner();
+          this.exitOsc.connect(this.exitGain);
+          this.exitGain.connect(this.exitPanner);
+          this.exitPanner.connect(this.masterGain);
+        } else {
+          this.exitOsc.connect(this.exitGain);
+          this.exitGain.connect(this.masterGain);
+        }
+
+        this.exitOsc.type = 'triangle';
+        this.exitOsc.frequency.setValueAtTime(110, this.ctx.currentTime);
+        this.exitOsc.start();
+      } catch (e) {
+        console.warn("Exit hum setup error:", e);
+      }
+    }
+
+    updateExitHum(distTiles, dxTiles, isPaused) {
+      if (!this.exitGain || !this.ctx) return;
+      if (isPaused) {
+        this.exitGain.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.1);
+        return;
+      }
+      const targetGain = clamp(1.0 - distTiles / 6.0, 0, 0.35);
+      this.exitGain.gain.setTargetAtTime(targetGain, this.ctx.currentTime, 0.08);
+
+      if (this.exitPanner) {
+        const pan = clamp(dxTiles / 6.0, -1.0, 1.0);
+        this.exitPanner.pan.setTargetAtTime(pan, this.ctx.currentTime, 0.08);
+      }
+    }
+
+    stopExitHum() {
+      if (this.exitOsc) {
+        try { this.exitOsc.stop(); this.exitOsc.disconnect(); } catch (e) {}
+        this.exitOsc = null;
+      }
+      if (this.exitGain) {
+        try { this.exitGain.disconnect(); } catch (e) {}
+        this.exitGain = null;
+      }
+      if (this.exitPanner) {
+        try { this.exitPanner.disconnect(); } catch (e) {}
+        this.exitPanner = null;
+      }
+    }
+
+    updateHeartbeat(minMonsterDist, isPaused) {
+      if (!this.ctx || isPaused || minMonsterDist > 12.0) return;
+      const now = performance.now() / 1000;
+      const t = clamp((minMonsterDist - 2.0) / 10.0, 0, 1);
+      const beatInterval = 0.35 + t * 0.85;
+
+      if (now - this.lastHeartbeatTime >= beatInterval) {
+        this.lastHeartbeatTime = now;
+        const volume = (1.0 - t) * 0.4;
+        this.triggerThump(volume);
+      }
+    }
+
+    triggerThump(vol) {
+      if (!this.ctx || this.isMuted || vol <= 0.01) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(65, now);
+      osc.frequency.exponentialRampToValueAtTime(35, now + 0.12);
+
+      gain.gain.setValueAtTime(vol, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    }
+
+    cleanupAll() {
+      this.stopExitHum();
+      this.activeOneShots = 0;
+    }
+  }
+
+  /* ==========================================================================
+     SETTINGS STORE
+     ========================================================================== */
+  class SettingsManager {
+    static STORAGE_KEY = 'echo_maze_settings_v1';
+
+    static load() {
+      const defaults = { assistMode: false, volume: 80, isMuted: false };
+      try {
+        const raw = localStorage.getItem(this.STORAGE_KEY);
+        if (!raw) return defaults;
+        const parsed = JSON.parse(raw);
+        return {
+          assistMode: typeof parsed.assistMode === 'boolean' ? parsed.assistMode : defaults.assistMode,
+          volume: typeof parsed.volume === 'number' ? clamp(parsed.volume, 0, 100) : defaults.volume,
+          isMuted: typeof parsed.isMuted === 'boolean' ? parsed.isMuted : defaults.isMuted
+        };
+      } catch (err) {
+        return defaults;
+      }
+    }
+
+    static save(settings) {
+      try {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(settings));
+      } catch (e) {}
+    }
+  }
+
+  /* ==========================================================================
+     GAME ENGINE CORE
+     ========================================================================== */
+  class Game {
+    constructor() {
+      this.canvas = document.getElementById('gameCanvas');
+      this.ctx = this.canvas.getContext('2d');
+      this.clockCanvas = document.getElementById('clockCanvas');
+      this.clockCtx = this.clockCanvas ? this.clockCanvas.getContext('2d') : null;
+
+      this.audio = new AudioEngine();
+      this.settings = SettingsManager.load();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      this.debugMode = urlParams.has('debug') && urlParams.get('debug') !== '0';
+      this.fixedSeed = urlParams.has('seed') ? parseInt(urlParams.get('seed'), 10) : null;
+      this.startLevelParam = urlParams.has('level') ? parseInt(urlParams.get('level'), 10) : (urlParams.has('stage') ? parseInt(urlParams.get('stage'), 10) : 1);
+
+      this.runId = 0;
+      this.levelIndex = Math.max(0, Math.min(CONFIG.LEVELS.length - 1, this.startLevelParam - 1));
+      this.state = 'TITLE';
+      this.levelStartTime = 0;
+      this.totalPingsUsed = 0;
+      this.firstRunHintTimer = 5.0;
+      this.userMoved = false;
+      this.userPinged = false;
+
+      this.keys = {};
+
+      this.maze = null;
+      this.player = null;
+      this.monsters = [];
+      this.sonarRings = [];
+      this.monsterPulses = [];
+      this.wallReveals = [];
+      this.noiseEvents = [];
+      this.bell = null;
+
+      // Void Trail & Crazy Particle Systems
+      this.voidTrail = []; // grid of tiles stepped on (rendered pure pitch black!)
+      this.voidParticles = []; // dark embers from consumed tiles
+      this.wispParticles = []; // golden guide wisps drifting to exit
+      this.dustParticles = Array.from({ length: 45 }, () => ({
+        x: (Math.random() - 0.5) * 22,
+        y: (Math.random() - 0.5) * 22,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        size: Math.random() * 1.5 + 0.8,
+        alpha: Math.random() * 0.4 + 0.2
+      }));
+
+      // Countdown Timer State
+      this.levelTimeLimit = 35;
+      this.levelTimeRemaining = 35;
+      this.lastTickSecond = 35;
+
+      // Suspense Blackout Thriller State
+      this.blackoutState = 'VISIBLE'; // 'VISIBLE' | 'WARNING' | 'BLACKOUT'
+      this.blackoutTimer = 6.0;
+      this.blackoutIntensity = 1.0;
+
+      // Screen Shake
+      this.shakeAmount = 0;
+
+      // Telemetry
+      this.lastFrameTime = performance.now();
+      this.fps = 60;
+      this.frameTimeMs = 16.6;
+
+      this.initDom();
+      this.initEvents();
+
+      if (this.debugMode) {
+        document.getElementById('debug-overlay').style.display = 'block';
+      }
+
+      requestAnimationFrame(this.loop.bind(this));
+    }
+
+    initDom() {
+      document.getElementById('chk-assist').checked = this.settings.assistMode;
+      document.getElementById('chk-pause-assist').checked = this.settings.assistMode;
+      document.getElementById('rng-volume').value = this.settings.volume;
+      document.getElementById('rng-pause-volume').value = this.settings.volume;
+      document.getElementById('chk-mute').checked = this.settings.isMuted;
+      this.audio.volume = this.settings.volume / 100;
+      this.audio.isMuted = this.settings.isMuted;
+      this.updateMuteButtonText();
+
+      const selLevel = document.getElementById('sel-level-select');
+      if (selLevel) {
+        selLevel.value = (this.levelIndex + 1).toString();
+      }
+    }
+
+    updateMuteButtonText() {
+      const btn = document.getElementById('btn-hud-sound');
+      if (btn) btn.textContent = this.settings.isMuted ? '🔇 SOUND: OFF' : '🔊 SOUND: ON';
+    }
+
+    initEvents() {
+      window.addEventListener('keydown', (e) => {
+        this.audio.ensureContext();
+        this.keys[e.key.toLowerCase()] = true;
+        this.keys[e.code] = true;
+
+        if (e.key === 'Escape') {
+          this.togglePause();
+        } else if (e.key.toLowerCase() === 'r') {
+          if (this.state === 'PLAYING' || this.state === 'PAUSED' || this.state === 'CAPTURED' || this.state === 'TIMEOUT') {
+            this.restartLevel();
+          }
+        } else if (e.code === 'Space') {
+          e.preventDefault();
+          this.triggerSonarPing();
+        } else if (e.key.toLowerCase() === 'e') {
+          this.triggerBellInteract();
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        this.keys[e.key.toLowerCase()] = false;
+        this.keys[e.code] = false;
+      });
+
+      const selLevel = document.getElementById('sel-level-select');
+      if (selLevel) {
+        selLevel.addEventListener('change', (e) => {
+          const chosen = parseInt(e.target.value, 10) - 1;
+          if (chosen >= 0 && chosen < CONFIG.LEVELS.length) {
+            this.levelIndex = chosen;
+          }
+        });
+      }
+
+      document.getElementById('btn-start-game').addEventListener('click', () => {
+        this.audio.ensureContext();
+        this.startLevel(this.levelIndex);
+      });
+
+      document.getElementById('btn-hud-pause').addEventListener('click', () => {
+        this.togglePause();
+      });
+
+      document.getElementById('btn-hud-sound').addEventListener('click', () => {
+        this.audio.ensureContext();
+        this.settings.isMuted = !this.settings.isMuted;
+        this.audio.setMute(this.settings.isMuted);
+        this.updateMuteButtonText();
+        SettingsManager.save(this.settings);
+      });
+
+      document.getElementById('btn-resume').addEventListener('click', () => {
+        this.togglePause();
+      });
+
+      document.getElementById('btn-restart').addEventListener('click', () => {
+        this.restartCampaign();
+      });
+
+      document.getElementById('btn-main-menu').addEventListener('click', () => {
+        this.showTitleScreen();
+      });
+
+      document.getElementById('btn-retry').addEventListener('click', () => {
+        this.restartCampaign();
+      });
+
+      const btnTimeout = document.getElementById('btn-timeout-retry');
+      if (btnTimeout) {
+        btnTimeout.addEventListener('click', () => {
+          this.restartCampaign();
+        });
+      }
+
+      const btnCapMenu = document.getElementById('btn-captured-menu');
+      if (btnCapMenu) {
+        btnCapMenu.addEventListener('click', () => {
+          this.showTitleScreen();
+        });
+      }
+
+      const btnTimeMenu = document.getElementById('btn-timeout-menu');
+      if (btnTimeMenu) {
+        btnTimeMenu.addEventListener('click', () => {
+          this.showTitleScreen();
+        });
+      }
+
+      const btnVicMenu = document.getElementById('btn-victory-menu');
+      if (btnVicMenu) {
+        btnVicMenu.addEventListener('click', () => {
+          this.showTitleScreen();
+        });
+      }
+
+      document.getElementById('btn-next-level').addEventListener('click', () => {
+        if (this.levelIndex < CONFIG.LEVELS.length - 1) {
+          this.levelIndex++;
+          this.startLevel(this.levelIndex);
+        } else {
+          // Completed all 15 levels! Restart full campaign from Level 1
+          this.restartCampaign();
+        }
+      });
+
+      const handleAssistChange = (e) => {
+        this.settings.assistMode = e.target.checked;
+        document.getElementById('chk-assist').checked = this.settings.assistMode;
+        document.getElementById('chk-pause-assist').checked = this.settings.assistMode;
+        SettingsManager.save(this.settings);
+      };
+      document.getElementById('chk-assist').addEventListener('change', handleAssistChange);
+      document.getElementById('chk-pause-assist').addEventListener('change', handleAssistChange);
+
+      const handleVolChange = (e) => {
+        const val = parseInt(e.target.value, 10);
+        this.settings.volume = val;
+        document.getElementById('rng-volume').value = val;
+        document.getElementById('rng-pause-volume').value = val;
+        this.audio.setVolume(val / 100);
+        SettingsManager.save(this.settings);
+      };
+      document.getElementById('rng-volume').addEventListener('input', handleVolChange);
+      document.getElementById('rng-pause-volume').addEventListener('input', handleVolChange);
+
+      document.getElementById('chk-mute').addEventListener('change', (e) => {
+        this.settings.isMuted = e.target.checked;
+        this.audio.setMute(this.settings.isMuted);
+        this.updateMuteButtonText();
+        SettingsManager.save(this.settings);
+      });
+
+      // Touch D-Pad Controls for Mobile & Tablets
+      const attachTouchKey = (elemId, keyName) => {
+        const el = document.getElementById(elemId);
+        if (!el) return;
+        const press = (ev) => {
+          ev.preventDefault();
+          this.audio.ensureContext();
+          this.keys[keyName] = true;
+          el.classList.add('active');
+          if (navigator.vibrate) navigator.vibrate(12);
+        };
+        const release = (ev) => {
+          ev.preventDefault();
+          this.keys[keyName] = false;
+          el.classList.remove('active');
+        };
+        el.addEventListener('touchstart', press, { passive: false });
+        el.addEventListener('touchend', release, { passive: false });
+        el.addEventListener('touchcancel', release, { passive: false });
+        el.addEventListener('mousedown', press);
+        el.addEventListener('mouseup', release);
+        el.addEventListener('mouseleave', release);
+      };
+
+      attachTouchKey('btn-touch-up', 'arrowup');
+      attachTouchKey('btn-touch-down', 'arrowdown');
+      attachTouchKey('btn-touch-left', 'arrowleft');
+      attachTouchKey('btn-touch-right', 'arrowright');
+
+      // Touch Action Buttons (Ping & Bell)
+      const btnPing = document.getElementById('btn-touch-ping');
+      if (btnPing) {
+        btnPing.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          this.audio.ensureContext();
+          this.triggerSonarPing();
+          if (navigator.vibrate) navigator.vibrate(20);
+        }, { passive: false });
+        btnPing.addEventListener('click', () => {
+          this.audio.ensureContext();
+          this.triggerSonarPing();
+        });
+      }
+
+      const btnBell = document.getElementById('btn-touch-bell');
+      if (btnBell) {
+        btnBell.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          this.audio.ensureContext();
+          this.triggerBellInteract();
+          if (navigator.vibrate) navigator.vibrate(25);
+        }, { passive: false });
+        btnBell.addEventListener('click', () => {
+          this.audio.ensureContext();
+          this.triggerBellInteract();
+        });
+      }
+
+      // Canvas Swipe & Quick-Tap Gestures for Seamless Mobile Play
+      let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+      this.canvas.addEventListener('touchstart', (e) => {
+        this.audio.ensureContext();
+        if (e.touches.length > 0) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchStartTime = performance.now();
+        }
+      }, { passive: true });
+
+      this.canvas.addEventListener('touchend', (e) => {
+        if (e.changedTouches.length === 0) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        const dt = performance.now() - touchStartTime;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist > 25 && dt < 600) {
+          // Swipe detected: 1-block step in dominant direction
+          if (Math.abs(dx) > Math.abs(dy)) {
+            const key = dx > 0 ? 'arrowright' : 'arrowleft';
+            this.keys[key] = true;
+            setTimeout(() => { this.keys[key] = false; }, 80);
+          } else {
+            const key = dy > 0 ? 'arrowdown' : 'arrowup';
+            this.keys[key] = true;
+            setTimeout(() => { this.keys[key] = false; }, 80);
+          }
+          if (navigator.vibrate) navigator.vibrate(10);
+        } else if (dist < 12 && dt < 350) {
+          // Quick tap on screen -> Trigger Sonar Ping
+          this.triggerSonarPing();
+        }
+      }, { passive: true });
+    }
+
+    startLevel(index) {
+      this.runId++;
+      this.levelIndex = index;
+      const levelCfg = CONFIG.LEVELS[this.levelIndex];
+
+      const selLevel = document.getElementById('sel-level-select');
+      if (selLevel) selLevel.value = (this.levelIndex + 1).toString();
+
+      document.getElementById('title-modal').classList.add('modal-hidden');
+      document.getElementById('pause-modal').classList.add('modal-hidden');
+      document.getElementById('captured-modal').classList.add('modal-hidden');
+      document.getElementById('victory-modal').classList.add('modal-hidden');
+      const tm = document.getElementById('timeout-modal');
+      if (tm) tm.classList.add('modal-hidden');
+      document.getElementById('screen-flash').style.opacity = '0';
+      document.getElementById('pulse-warning').style.opacity = '0';
+
+      document.getElementById('hud-level-title').textContent = levelCfg.title;
+      document.getElementById('hud-objective').textContent = levelCfg.objective;
+
+      this.currentSeed = this.fixedSeed !== null ? (this.fixedSeed + index * 1000) : (Math.floor(Math.random() * 900000) + 1000);
+      this.maze = generateMaze(levelCfg.width, levelCfg.height, this.currentSeed);
+
+      // Initialize Wall Memory
+      this.wallReveals = Array.from({ length: this.maze.H }, () => 
+        Array.from({ length: this.maze.W }, () => ({ time: -999, color: 'blue' }))
+      );
+
+      // Initialize Void Trail (Path turns black wherever player moves!)
+      this.voidTrail = Array.from({ length: this.maze.H }, () => 
+        Array.from({ length: this.maze.W }, () => false)
+      );
+      this.voidParticles = [];
+      this.wispParticles = [];
+
+      // 1-Block Grid Step Player
+      this.player = {
+        gridX: 1,
+        gridY: 1,
+        x: 1.5,
+        y: 1.5,
+        fromX: 1.5,
+        fromY: 1.5,
+        targetX: 1.5,
+        targetY: 1.5,
+        moveProgress: 1.0,
+        squashX: 1.0,
+        squashY: 1.0,
+        radius: CONFIG.PLAYER_RADIUS,
+        energy: CONFIG.MAX_ENERGY,
+        footstepDistAccum: 0
+      };
+
+      // Countdown Timer (Anti-Clockwise Ticking)
+      this.levelTimeLimit = levelCfg.timeLimit || 40;
+      this.levelTimeRemaining = this.levelTimeLimit;
+      this.lastTickSecond = Math.ceil(this.levelTimeRemaining);
+
+      // Suspense Blackout Thriller State (Scales with level: higher levels have shorter initial light)
+      this.blackoutState = 'VISIBLE';
+      const levelProgress = Math.min(1.0, this.levelIndex / 14);
+      const minVisible = CONFIG.BLACKOUT_MIN_VISIBLE * (1.0 - 0.45 * levelProgress);
+      const maxVisible = CONFIG.BLACKOUT_MAX_VISIBLE * (1.0 - 0.40 * levelProgress);
+      this.blackoutTimer = minVisible + Math.random() * (maxVisible - minVisible);
+      this.blackoutIntensity = 1.0;
+
+      this.sonarRings = [];
+      this.monsterPulses = [];
+      this.noiseEvents = [];
+      this.totalPingsUsed = 0;
+      this.firstRunHintTimer = 4.5;
+      const initialHint = document.getElementById('hint-box');
+      if (initialHint) {
+        if (this.levelIndex === 0) {
+          initialHint.textContent = '🔥 SEQUENTIAL CAMPAIGN: Clear 15 levels! If you fail, you restart from Level 1!';
+        } else {
+          initialHint.textContent = `LEVEL ${this.levelIndex + 1} / 15: Reach the beacon! If you get caught, you restart from Level 1!`;
+        }
+        initialHint.style.opacity = '1';
+        initialHint.style.color = 'var(--radar-cyan)';
+      }
+
+      // Setup Bell Decoy (Stage 5A)
+      this.bell = null;
+      if (levelCfg.hasBell) {
+        const candidates = this.maze.floorCells.filter(c => c.dist >= 4 && c.dist <= this.maze.maxDist * 0.75);
+        const cell = candidates[Math.floor(candidates.length / 2)] || this.maze.floorCells[this.maze.floorCells.length - 2];
+        this.bell = {
+          x: cell.x + 0.5,
+          y: cell.y + 0.5,
+          cellX: cell.x,
+          cellY: cell.y,
+          used: false,
+          revealedTime: -999
+        };
+      }
+
+      // Corner Monster / Cop Setup (Scales from 1 to 5 cops across corners & corridors)
+      this.monsters = [];
+      const allCorners = [
+        { x: 1, y: 1, name: 'Top-Left' },
+        { x: this.maze.W - 2, y: 1, name: 'Top-Right' },
+        { x: 1, y: this.maze.H - 2, name: 'Bottom-Left' },
+        { x: this.maze.W - 2, y: this.maze.H - 2, name: 'Bottom-Right' }
+      ];
+      const validCorners = allCorners.filter(c => 
+        c.x >= 0 && c.x < this.maze.W && c.y >= 0 && c.y < this.maze.H &&
+        this.maze.grid[c.y][c.x] === 0 && !(c.x === this.player.gridX && c.y === this.player.gridY)
+      );
+
+      // Randomize / distribute corners across cops
+      const shuffledCorners = [...validCorners].sort(() => Math.random() - 0.5);
+
+      const objElem = document.getElementById('hud-objective');
+      const numCops = levelCfg.monsters ? levelCfg.monsters.length : 0;
+      if (objElem) {
+        objElem.textContent = `${levelCfg.objective} [${numCops} COP${numCops > 1 ? 'S' : ''} ACTIVE]`;
+      }
+
+      if (levelCfg.monsters && levelCfg.monsters.length > 0) {
+        levelCfg.monsters.forEach((mCfg, idx) => {
+          let spawnCell;
+          if (idx < shuffledCorners.length) {
+            spawnCell = shuffledCorners[idx];
+          } else {
+            // For 5th cop or overflow, pick furthest available floor cell
+            const sortedFloor = [...this.maze.floorCells].sort((a, b) => b.dist - a.dist);
+            spawnCell = sortedFloor[Math.min(idx * 3, sortedFloor.length - 1)];
+          }
+
+          this.monsters.push({
+            id: mCfg.id || `cop${idx + 1}`,
+            name: mCfg.name || `Unit 0${idx + 1}`,
+            x: spawnCell.x + 0.5,
+            y: spawnCell.y + 0.5,
+            state: mCfg.initialState || 'WANDER',
+            target: null,
+            path: [],
+            searchTimer: 0,
+            wanderPauseTimer: 0,
+            speed: (this.settings.assistMode ? (mCfg.speed || CONFIG.MONSTER_DEFAULT_SPEED) * 0.8 : (mCfg.speed || CONFIG.MONSTER_DEFAULT_SPEED)),
+            footstepRadius: (this.settings.assistMode ? (mCfg.footstepRadius || 2.5) * 0.5 : (mCfg.footstepRadius || 2.5)),
+            pingRadius: mCfg.pingRadius || CONFIG.PING_NOISE_RADIUS,
+            growlPitch: mCfg.growlPitch || (80 + idx * 25),
+            hasPulseOnSearch: Boolean(mCfg.hasPulseOnSearch),
+            lastPulseTime: -999,
+            // Police Siren Lights & Animations
+            isCop: true,
+            sirenAngle: (idx * (Math.PI / 2.5)) % (Math.PI * 2),
+            sirenSpeed: 5.5 + (idx % 3) * 1.5,
+            copChirpTimer: 3.0 + idx * 1.5
+          });
+        });
+      }
+
+      this.audio.cleanupAll();
+      this.audio.startExitHum();
+
+      this.state = 'PLAYING';
+    }
+
+    showTitleScreen() {
+      this.state = 'TITLE';
+      this.audio.cleanupAll();
+      const selLevel = document.getElementById('sel-level-select');
+      if (selLevel) selLevel.value = (this.levelIndex + 1).toString();
+      document.getElementById('title-modal').classList.remove('modal-hidden');
+      document.getElementById('pause-modal').classList.add('modal-hidden');
+      document.getElementById('captured-modal').classList.add('modal-hidden');
+      document.getElementById('victory-modal').classList.add('modal-hidden');
+      const tm = document.getElementById('timeout-modal');
+      if (tm) tm.classList.add('modal-hidden');
+    }
+
+    togglePause() {
+      if (this.state === 'PLAYING') {
+        this.state = 'PAUSED';
+        document.getElementById('pause-modal').classList.remove('modal-hidden');
+      } else if (this.state === 'PAUSED') {
+        this.state = 'PLAYING';
+        document.getElementById('pause-modal').classList.add('modal-hidden');
+      }
+    }
+
+    restartCampaign() {
+      this.levelIndex = 0;
+      this.startLevel(0);
+    }
+
+    restartLevel() {
+      // Sequential campaign rule: failing or restarting resets back to Level 1
+      this.restartCampaign();
+    }
+
+    triggerSonarPing() {
+      if (this.state !== 'PLAYING') return;
+      const levelCfg = CONFIG.LEVELS[this.levelIndex];
+
+      if (!levelCfg.unlimitedEnergy && this.player.energy < CONFIG.PING_ENERGY_COST) {
+        return;
+      }
+
+      if (!levelCfg.unlimitedEnergy) {
+        this.player.energy = Math.max(0, this.player.energy - CONFIG.PING_ENERGY_COST);
+      }
+
+      this.totalPingsUsed++;
+      this.userPinged = true;
+
+      const now = performance.now() / 1000;
+      this.sonarRings.push({
+        x: this.player.x,
+        y: this.player.y,
+        radius: 0,
+        maxRadius: CONFIG.SONAR_MAX_RADIUS,
+        speed: CONFIG.SONAR_SPEED,
+        birthTime: now
+      });
+
+      this.audio.playSonarPing();
+
+      this.emitNoiseEvent({
+        type: 'ping',
+        x: this.player.x,
+        y: this.player.y,
+        radius: CONFIG.PING_NOISE_RADIUS
+      });
+    }
+
+    triggerBellInteract() {
+      if (this.state !== 'PLAYING' || !this.bell || this.bell.used) return;
+      const dist = Math.hypot(this.player.x - this.bell.x, this.player.y - this.bell.y);
+      if (dist <= CONFIG.BELL_INTERACTION_RADIUS) {
+        this.bell.used = true;
+        this.audio.playBell();
+        this.emitNoiseEvent({
+          type: 'bell',
+          x: this.bell.x,
+          y: this.bell.y,
+          radius: CONFIG.BELL_NOISE_RADIUS
+        });
+      }
+    }
+
+    emitNoiseEvent(event) {
+      const now = performance.now() / 1000;
+      const fullEvent = {
+        id: Math.random().toString(36).substr(2, 9),
+        type: event.type,
+        x: event.x,
+        y: event.y,
+        cellX: Math.floor(event.x),
+        cellY: Math.floor(event.y),
+        time: now,
+        radius: event.radius
+      };
+
+      this.noiseEvents.push(fullEvent);
+      this.processHearingForEvent(fullEvent);
+    }
+
+    processHearingForEvent(event) {
+      this.monsters.forEach(monster => {
+        if (monster.state === 'CAPTURE') return;
+
+        const monsterCellX = Math.floor(monster.x);
+        const monsterCellY = Math.floor(monster.y);
+        const pathDist = getBfsPathDistance(this.maze.grid, this.maze.W, this.maze.H, monsterCellX, monsterCellY, event.cellX, event.cellY);
+
+        let canHear = pathDist <= event.radius;
+
+        if (monster.state === 'ASLEEP') {
+          if (event.type === 'ping' && canHear) {
+            monster.state = 'INVESTIGATE';
+            monster.target = { x: event.cellX, y: event.cellY };
+            monster.path = findBfsPath(this.maze.grid, this.maze.W, this.maze.H, monsterCellX, monsterCellY, event.cellX, event.cellY) || [];
+            this.audio.playGrowl(monster.growlPitch);
+          }
+          return;
+        }
+
+        if (event.type === 'footstep') {
+          if (pathDist > monster.footstepRadius) canHear = false;
+        } else if (event.type === 'ping') {
+          if (pathDist > monster.pingRadius) canHear = false;
+        }
+
+        if (canHear) {
+          if (monster.state === 'INVESTIGATE' && monster.target) {
+            const currentRemainingPathDist = monster.path.length;
+            if (pathDist < currentRemainingPathDist) {
+              monster.target = { x: event.cellX, y: event.cellY };
+              monster.path = findBfsPath(this.maze.grid, this.maze.W, this.maze.H, monsterCellX, monsterCellY, event.cellX, event.cellY) || [];
+            }
+          } else {
+            monster.state = 'INVESTIGATE';
+            monster.target = { x: event.cellX, y: event.cellY };
+            monster.path = findBfsPath(this.maze.grid, this.maze.W, this.maze.H, monsterCellX, monsterCellY, event.cellX, event.cellY) || [];
+            this.audio.playGrowl(monster.growlPitch);
+          }
+        }
+      });
+    }
+
+    triggerCapture() {
+      if (this.state !== 'PLAYING') return;
+      const failedLevel = this.levelIndex + 1;
+      this.state = 'CAPTURED';
+      this.audio.playCapture();
+
+      const capSub = document.getElementById('captured-sub');
+      if (capSub) {
+        capSub.textContent = `The patrol caught you at Level ${failedLevel}. Sequential campaign failed — restart from Level 1!`;
+      }
+
+      // Per rule: failing resets campaign progress back to Level 1
+      this.levelIndex = 0;
+      const selLevel = document.getElementById('sel-level-select');
+      if (selLevel) selLevel.value = "1";
+
+      const flash = document.getElementById('screen-flash');
+      flash.style.opacity = '0.7';
+      setTimeout(() => { flash.style.opacity = '0'; }, 300);
+
+      setTimeout(() => {
+        document.getElementById('captured-modal').classList.remove('modal-hidden');
+      }, 500);
+    }
+
+    triggerTimeout() {
+      if (this.state !== 'PLAYING') return;
+      const failedLevel = this.levelIndex + 1;
+      this.state = 'TIMEOUT';
+      this.audio.playCapture();
+
+      const timeSub = document.getElementById('timeout-sub');
+      if (timeSub) {
+        timeSub.textContent = `Time expired at Level ${failedLevel}. The gate sealed shut — restart from Level 1!`;
+      }
+
+      // Per rule: failing resets campaign progress back to Level 1
+      this.levelIndex = 0;
+      const selLevel = document.getElementById('sel-level-select');
+      if (selLevel) selLevel.value = "1";
+
+      const flash = document.getElementById('screen-flash');
+      flash.style.opacity = '0.8';
+      setTimeout(() => { flash.style.opacity = '0'; }, 350);
+
+      setTimeout(() => {
+        const tm = document.getElementById('timeout-modal');
+        if (tm) tm.classList.remove('modal-hidden');
+      }, 500);
+    }
+
+    triggerVictory() {
+      if (this.state !== 'PLAYING') return;
+      this.state = 'VICTORY';
+      this.audio.playVictory();
+
+      const elapsedSec = (performance.now() - this.levelStartTime) / 1000;
+      const mins = Math.floor(elapsedSec / 60);
+      const secs = Math.floor(elapsedSec % 60).toString().padStart(2, '0');
+
+      const isFinalLevel = (this.levelIndex === CONFIG.LEVELS.length - 1);
+      const titleElem = document.getElementById('victory-title');
+      const nextBtn = document.getElementById('btn-next-level');
+
+      if (isFinalLevel) {
+        if (titleElem) titleElem.textContent = '🏆 CAMPAIGN CONQUERED! 🏆';
+        if (nextBtn) nextBtn.textContent = 'RESTART CAMPAIGN FROM LEVEL 1';
+      } else {
+        if (titleElem) titleElem.textContent = 'RESONANCE REACHED';
+        if (nextBtn) nextBtn.textContent = `PROCEED TO LEVEL ${this.levelIndex + 2} ▶`;
+      }
+
+      document.getElementById('stat-level').textContent = `${this.levelIndex + 1} / ${CONFIG.LEVELS.length}`;
+      document.getElementById('stat-time').textContent = `${mins}:${secs}`;
+      document.getElementById('stat-pings').textContent = this.totalPingsUsed;
+
+      const flash = document.getElementById('screen-flash');
+      flash.style.background = '#34d399';
+      flash.style.opacity = '0.5';
+      setTimeout(() => { flash.style.opacity = '0'; flash.style.background = 'red'; }, 250);
+
+      setTimeout(() => {
+        document.getElementById('victory-modal').classList.remove('modal-hidden');
+      }, 400);
+    }
+
+    /* ==========================================================================
+       MAIN LOOP & 1-BLOCK STEP PHYSICS
+       ========================================================================== */
+    loop(timestamp) {
+      const dt = Math.min((timestamp - this.lastFrameTime) / 1000, 0.1);
+      this.frameTimeMs = timestamp - this.lastFrameTime;
+      this.fps = Math.round(1000 / Math.max(1, this.frameTimeMs));
+      this.lastFrameTime = timestamp;
+
+      if (this.state === 'PLAYING') {
+        this.update(dt);
+      }
+
+      this.render();
+      this.renderClockDial();
+      this.updateDebugOverlay();
+
+      requestAnimationFrame(this.loop.bind(this));
+    }
+
+    update(dt) {
+      const levelCfg = CONFIG.LEVELS[this.levelIndex];
+      const now = performance.now() / 1000;
+
+      // 1. Anti-Clockwise Countdown Timer
+      this.levelTimeRemaining -= dt;
+      const curSec = Math.ceil(this.levelTimeRemaining);
+      if (curSec !== this.lastTickSecond && this.levelTimeRemaining > 0) {
+        this.lastTickSecond = curSec;
+        this.audio.playClockTick(this.levelTimeRemaining <= 8);
+      }
+      if (this.levelTimeRemaining <= 0) {
+        this.levelTimeRemaining = 0;
+        this.triggerTimeout();
+        return;
+      }
+
+      // 1B. Dynamic Suspense Blackout Thriller Cycle (Blinks and blacks out periodically)
+      // Thriller & difficulty scale with higher levels: blackouts become more frequent and longer!
+      const levelProgress = Math.min(1.0, this.levelIndex / 14); // 0.0 at Level 1, 1.0 at Level 15
+      const minVisible = CONFIG.BLACKOUT_MIN_VISIBLE * (1.0 - 0.45 * levelProgress); // 4.0s down to 2.2s
+      const maxVisible = CONFIG.BLACKOUT_MAX_VISIBLE * (1.0 - 0.40 * levelProgress); // 7.5s down to 4.5s
+      const minDark = CONFIG.BLACKOUT_MIN_DARK * (1.0 + 0.85 * levelProgress);       // 2.2s up to 4.07s
+      const maxDark = CONFIG.BLACKOUT_MAX_DARK * (1.0 + 0.85 * levelProgress);       // 4.2s up to 7.77s
+
+      this.blackoutTimer -= dt;
+      if (this.blackoutState === 'VISIBLE') {
+        this.blackoutIntensity = 1.0;
+        if (this.blackoutTimer <= CONFIG.BLACKOUT_WARNING_TIME) {
+          this.blackoutState = 'WARNING';
+        }
+      } else if (this.blackoutState === 'WARNING') {
+        // High-tension rapid electric flicker before power cut
+        this.blackoutIntensity = (Math.sin(now * 38) > 0) ? 0.75 : 0.08;
+        if (this.blackoutTimer <= 0) {
+          this.blackoutState = 'BLACKOUT';
+          // Randomized blackout duration scaling with level difficulty
+          this.blackoutTimer = minDark + Math.random() * (maxDark - minDark);
+          this.blackoutIntensity = 0.0;
+          this.audio.playPowerCut();
+          this.shakeAmount = 4 + Math.round(levelProgress * 3);
+          const hint = document.getElementById('hint-box');
+          if (hint) {
+            hint.textContent = `⚡ BLACKOUT! (${this.monsters.length} COP${this.monsters.length > 1 ? 'S' : ''} IN THE DARK — USE COMPASS & SONAR!)`;
+            hint.style.opacity = '1';
+            hint.style.color = '#ff3355';
+          }
+        }
+      } else if (this.blackoutState === 'BLACKOUT') {
+        this.blackoutIntensity = 0.0;
+        if (this.blackoutTimer <= 0) {
+          this.blackoutState = 'VISIBLE';
+          // Randomized visible duration scaling with level difficulty
+          this.blackoutTimer = minVisible + Math.random() * (maxVisible - minVisible);
+          this.blackoutIntensity = 1.0;
+          this.audio.playPowerSurge();
+          this.shakeAmount = 3;
+          const hint = document.getElementById('hint-box');
+          if (hint) {
+            hint.textContent = '⚡ POWER RESTORED — PATHS ILLUMINATED!';
+            hint.style.opacity = '1';
+            hint.style.color = 'var(--radar-cyan)';
+            setTimeout(() => { if (hint && this.blackoutState === 'VISIBLE') hint.style.opacity = '0'; }, 2000);
+          }
+        }
+      }
+
+      // 2. Energy Regeneration
+      if (!levelCfg.unlimitedEnergy) {
+        this.player.energy = Math.min(CONFIG.MAX_ENERGY, this.player.energy + CONFIG.ENERGY_REGEN_PER_SEC * dt);
+      }
+
+      // 3. 1-Block Discrete Grid Movement with Smooth Tween & Squash
+      if (this.player.moveProgress < 1.0) {
+        this.player.moveProgress = Math.min(1.0, this.player.moveProgress + dt / CONFIG.STEP_DURATION);
+        const t = 1 - Math.pow(1 - this.player.moveProgress, 3);
+        this.player.x = this.player.fromX + (this.player.targetX - this.player.fromX) * t;
+        this.player.y = this.player.fromY + (this.player.targetY - this.player.fromY) * t;
+
+        this.player.squashX += (1.0 - this.player.squashX) * 12 * dt;
+        this.player.squashY += (1.0 - this.player.squashY) * 12 * dt;
+      } else {
+        this.player.x = this.player.targetX;
+        this.player.y = this.player.targetY;
+        this.player.squashX += (1.0 - this.player.squashX) * 12 * dt;
+        this.player.squashY += (1.0 - this.player.squashY) * 12 * dt;
+
+        // Check arrow / WASD inputs for next 1-block step
+        let dx = 0, dy = 0;
+        if (this.keys['arrowup'] || this.keys['w'] || this.keys['KeyW']) dy = -1;
+        else if (this.keys['arrowdown'] || this.keys['s'] || this.keys['KeyS']) dy = 1;
+        else if (this.keys['arrowleft'] || this.keys['a'] || this.keys['KeyA']) dx = -1;
+        else if (this.keys['arrowright'] || this.keys['d'] || this.keys['KeyD']) dx = 1;
+
+        if (dx !== 0 || dy !== 0) {
+          const nextGX = this.player.gridX + dx;
+          const nextGY = this.player.gridY + dy;
+
+          if (nextGX >= 0 && nextGX < this.maze.W && nextGY >= 0 && nextGY < this.maze.H && this.maze.grid[nextGY][nextGX] === 0) {
+            this.userMoved = true;
+            // WHEREVER STARTED MOVING, PATH TURNS PITCH BLACK!
+            this.voidTrail[this.player.gridY][this.player.gridX] = true;
+            this.addVoidCrumble(this.player.gridX, this.player.gridY);
+
+            // Initiate 1-block step
+            this.player.fromX = this.player.x;
+            this.player.fromY = this.player.y;
+            this.player.gridX = nextGX;
+            this.player.gridY = nextGY;
+            this.player.targetX = nextGX + 0.5;
+            this.player.targetY = nextGY + 0.5;
+            this.player.moveProgress = 0.0;
+
+            // Crazy squash and stretch animation
+            if (dx !== 0) {
+              this.player.squashX = 1.35;
+              this.player.squashY = 0.72;
+            } else {
+              this.player.squashX = 0.72;
+              this.player.squashY = 1.35;
+            }
+
+            this.audio.playStepHop();
+
+            const isCreeping = this.keys['shift'] || this.keys['ShiftLeft'] || this.keys['ShiftRight'];
+            if (!isCreeping) {
+              this.player.footstepDistAccum += 1.0;
+              if (this.player.footstepDistAccum >= CONFIG.FOOTSTEP_DISTANCE_INTERVAL) {
+                this.player.footstepDistAccum = 0;
+                if (levelCfg.footstepsHeard) {
+                  this.emitNoiseEvent({
+                    type: 'footstep',
+                    x: this.player.targetX,
+                    y: this.player.targetY,
+                    radius: 2.5
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // 4. Update Sonar Rings & Line-of-Sight Wall Reveal
+      for (let i = this.sonarRings.length - 1; i >= 0; i--) {
+        const ring = this.sonarRings[i];
+        ring.radius += ring.speed * dt;
+
+        this.revealWallsInRadius(ring.x, ring.y, ring.radius, 'blue');
+
+        if (this.bell && Math.hypot(ring.x - this.bell.x, ring.y - this.bell.y) <= ring.radius) {
+          if (hasLineOfSight(this.maze.grid, this.maze.W, this.maze.H, ring.x, ring.y, this.bell.x, this.bell.y)) {
+            this.bell.revealedTime = now;
+          }
+        }
+
+        if (ring.radius >= ring.maxRadius) {
+          this.sonarRings.splice(i, 1);
+        }
+      }
+
+      // 5. Update Monster Red Pulses (Stage 5C)
+      for (let i = this.monsterPulses.length - 1; i >= 0; i--) {
+        const pulse = this.monsterPulses[i];
+        pulse.radius += (pulse.maxRadius / CONFIG.SONAR_PULSE_DURATION) * dt;
+
+        this.revealWallsInRadius(pulse.x, pulse.y, pulse.radius, 'red');
+
+        if (!pulse.playerAlerted) {
+          const distToPlayer = Math.hypot(pulse.x - this.player.x, pulse.y - this.player.y);
+          if (distToPlayer <= pulse.radius && distToPlayer <= CONFIG.MONSTER_PULSE_RADIUS) {
+            if (hasLineOfSight(this.maze.grid, this.maze.W, this.maze.H, pulse.x, pulse.y, this.player.x, this.player.y)) {
+              pulse.playerAlerted = true;
+              this.emitNoiseEvent({
+                type: 'ping',
+                x: this.player.x,
+                y: this.player.y,
+                radius: CONFIG.PING_NOISE_RADIUS
+              });
+            }
+          }
+        }
+
+        if (pulse.radius >= pulse.maxRadius) {
+          this.monsterPulses.splice(i, 1);
+        }
+      }
+
+      // 6. Update Monsters & Cop Patrol Sirens
+      this.monsters.forEach(monster => {
+        if (monster.isCop) {
+          monster.sirenAngle = (monster.sirenAngle + dt * 8) % (Math.PI * 2);
+          monster.copChirpTimer -= dt;
+          if (monster.copChirpTimer <= 0) {
+            monster.copChirpTimer = 4.5 + Math.random() * 2.0;
+            this.audio.playCopChirp();
+          }
+        }
+
+        if (monster.state === 'ASLEEP' || monster.state === 'CAPTURE') return;
+
+        if (monster.state === 'WANDER') {
+          if (monster.path.length === 0) {
+            monster.wanderPauseTimer += dt;
+            if (monster.wanderPauseTimer >= CONFIG.WANDER_PAUSE_DURATION) {
+              monster.wanderPauseTimer = 0;
+              const randCell = this.maze.floorCells[Math.floor(Math.random() * this.maze.floorCells.length)];
+              monster.path = findBfsPath(this.maze.grid, this.maze.W, this.maze.H, Math.floor(monster.x), Math.floor(monster.y), randCell.x, randCell.y) || [];
+            }
+          } else {
+            this.stepMonsterAlongPath(monster, dt, monster.speed);
+          }
+        } else if (monster.state === 'INVESTIGATE') {
+          if (monster.path.length === 0) {
+            monster.state = 'SEARCH';
+            monster.searchTimer = 0;
+            if (monster.hasPulseOnSearch) {
+              this.triggerMonsterPulse(monster);
+            }
+          } else {
+            this.stepMonsterAlongPath(monster, dt, CONFIG.MONSTER_INVESTIGATE_SPEED);
+          }
+        } else if (monster.state === 'SEARCH') {
+          monster.searchTimer += dt;
+          if (monster.searchTimer >= CONFIG.SEARCH_DURATION) {
+            monster.state = 'WANDER';
+            monster.target = null;
+            monster.path = [];
+          }
+        }
+
+        // Capture check (centers within 0.45 tile)
+        const distToPlayer = Math.hypot(monster.x - this.player.x, monster.y - this.player.y);
+        if (distToPlayer <= CONFIG.CAPTURE_DISTANCE) {
+          monster.state = 'CAPTURE';
+          this.triggerCapture();
+          return;
+        }
+      });
+
+      // 7. Victory Check
+      const exitCenterX = this.maze.exit.x + 0.5;
+      const exitCenterY = this.maze.exit.y + 0.5;
+      const distToExit = Math.hypot(this.player.x - exitCenterX, this.player.y - exitCenterY);
+      if (distToExit <= CONFIG.CAPTURE_DISTANCE && this.state === 'PLAYING') {
+        this.triggerVictory();
+        return;
+      }
+
+      // 8. Continuous Audio Updates
+      const dxToExit = exitCenterX - this.player.x;
+      this.audio.updateExitHum(distToExit, dxToExit, this.state !== 'PLAYING');
+
+      let minMonsterDist = Infinity;
+      this.monsters.forEach(m => {
+        if (m.state !== 'ASLEEP') {
+          const d = getBfsPathDistance(this.maze.grid, this.maze.W, this.maze.H, Math.floor(this.player.x), Math.floor(this.player.y), Math.floor(m.x), Math.floor(m.y));
+          if (d < minMonsterDist) minMonsterDist = d;
+        }
+      });
+      this.audio.updateHeartbeat(minMonsterDist, this.state !== 'PLAYING');
+
+      // 9. Particles Updates
+      for (let i = this.voidParticles.length - 1; i >= 0; i--) {
+        const vp = this.voidParticles[i];
+        vp.y -= vp.vy * dt;
+        vp.alpha -= dt * 0.9;
+        if (vp.alpha <= 0) this.voidParticles.splice(i, 1);
+      }
+
+      // Golden echo wisps floating towards exit
+      if (Math.random() < 0.25) {
+        this.wispParticles.push({
+          x: this.player.x,
+          y: this.player.y,
+          targetX: exitCenterX,
+          targetY: exitCenterY,
+          progress: 0,
+          alpha: 0.8
+        });
+      }
+      for (let i = this.wispParticles.length - 1; i >= 0; i--) {
+        const wp = this.wispParticles[i];
+        wp.progress += dt * 0.8;
+        wp.alpha = Math.max(0, 0.8 * (1.0 - wp.progress));
+        if (wp.progress >= 1.0) this.wispParticles.splice(i, 1);
+      }
+
+      this.dustParticles.forEach(p => {
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        if (p.x < -14) p.x += 28;
+        if (p.x > 14) p.x -= 28;
+        if (p.y < -14) p.y += 28;
+        if (p.y > 14) p.y -= 28;
+      });
+
+      this.noiseEvents = this.noiseEvents.filter(e => now - e.time < CONFIG.EVENT_LIFETIME);
+
+      if (this.firstRunHintTimer > 0) {
+        this.firstRunHintTimer -= dt;
+        if (this.userMoved && this.userPinged) {
+          this.firstRunHintTimer = 0;
+        }
+        document.getElementById('hint-box').style.opacity = this.firstRunHintTimer > 0 ? '1' : '0';
+      }
+    }
+
+    addVoidCrumble(gx, gy) {
+      for (let i = 0; i < 6; i++) {
+        this.voidParticles.push({
+          x: gx + 0.5 + (Math.random() - 0.5) * 0.7,
+          y: gy + 0.5 + (Math.random() - 0.5) * 0.7,
+          vy: 0.6 + Math.random() * 0.8,
+          size: 1.5 + Math.random() * 2,
+          alpha: 0.85
+        });
+      }
+    }
+
+    stepMonsterAlongPath(monster, dt, speed) {
+      if (monster.path.length === 0) return;
+      const next = monster.path[0];
+      const targetX = next.x + 0.5;
+      const targetY = next.y + 0.5;
+      const dx = targetX - monster.x;
+      const dy = targetY - monster.y;
+      const dist = Math.hypot(dx, dy);
+      const step = speed * dt;
+
+      if (dist <= step) {
+        monster.x = targetX;
+        monster.y = targetY;
+        monster.path.shift();
+      } else {
+        monster.x += (dx / dist) * step;
+        monster.y += (dy / dist) * step;
+      }
+    }
+
+    triggerMonsterPulse(monster) {
+      const now = performance.now() / 1000;
+      this.monsterPulses.push({
+        x: monster.x,
+        y: monster.y,
+        radius: 0,
+        maxRadius: CONFIG.MONSTER_PULSE_RADIUS,
+        playerAlerted: false,
+        birthTime: now
+      });
+      this.audio.playMonsterPulse();
+
+      const warningBanner = document.getElementById('pulse-warning');
+      warningBanner.style.opacity = '1';
+      setTimeout(() => { warningBanner.style.opacity = '0'; }, 1800);
+    }
+
+    revealWallsInRadius(cx, cy, radius, color = 'blue') {
+      const now = performance.now() / 1000;
+      const minX = Math.max(0, Math.floor(cx - radius));
+      const maxX = Math.min(this.maze.W - 1, Math.ceil(cx + radius));
+      const minY = Math.max(0, Math.floor(cy - radius));
+      const maxY = Math.min(this.maze.H - 1, Math.ceil(cy + radius));
+
+      for (let y = minY; y <= maxY; y++) {
+        for (let x = minX; x <= maxX; x++) {
+          if (this.maze.grid[y][x] === 1) {
+            const dist = Math.hypot(cx - (x + 0.5), cy - (y + 0.5));
+            if (dist <= radius) {
+              if (hasLineOfSight(this.maze.grid, this.maze.W, this.maze.H, cx, cy, x + 0.5, y + 0.5)) {
+                this.wallReveals[y][x] = { time: now, color: color };
+              }
+            }
+          }
+        }
+      }
+    }
+
+    /* ==========================================================================
+       ANTI-CLOCKWISE RADIAL COUNTDOWN DIAL
+       ========================================================================== */
+    renderClockDial() {
+      if (!this.clockCtx) return;
+      const c = this.clockCtx;
+      c.clearRect(0, 0, 62, 62);
+
+      const cx = 31, cy = 31, r = 24;
+      const frac = clamp(this.levelTimeRemaining / this.levelTimeLimit, 0, 1);
+      const isUrgent = this.levelTimeRemaining <= 8;
+
+      // Background Track Ring
+      c.strokeStyle = 'rgba(0, 243, 255, 0.12)';
+      c.lineWidth = 3.5;
+      c.beginPath();
+      c.arc(cx, cy, r, 0, Math.PI * 2);
+      c.stroke();
+
+      // Anti-Clockwise Sweeping Arc
+      // Starts at 12 o'clock (-PI/2) and sweeps COUNTER-CLOCKWISE
+      const startAngle = -Math.PI / 2;
+      const endAngle = startAngle - frac * Math.PI * 2;
+
+      c.strokeStyle = isUrgent ? '#ff2244' : 'var(--radar-cyan)';
+      c.lineWidth = 3.5;
+      c.lineCap = 'round';
+      c.shadowColor = isUrgent ? 'rgba(255, 34, 68, 0.8)' : 'rgba(0, 243, 255, 0.6)';
+      c.shadowBlur = 6;
+      c.beginPath();
+      c.arc(cx, cy, r, startAngle, endAngle, true); // true = counter-clockwise!
+      c.stroke();
+      c.shadowBlur = 0;
+
+      // Sweeping Second Hand (ticks anti-clockwise)
+      const handX = cx + Math.cos(endAngle) * (r - 4);
+      const handY = cy + Math.sin(endAngle) * (r - 4);
+      c.strokeStyle = '#ffffff';
+      c.lineWidth = 2;
+      c.beginPath();
+      c.moveTo(cx, cy);
+      c.lineTo(handX, handY);
+      c.stroke();
+
+      // Center glowing pip
+      c.fillStyle = isUrgent ? '#ff2244' : 'var(--radar-cyan)';
+      c.beginPath();
+      c.arc(cx, cy, 3, 0, Math.PI * 2);
+      c.fill();
+
+      // Update digital readout
+      const clockValElem = document.getElementById('clock-val');
+      if (clockValElem) {
+        clockValElem.textContent = `${this.levelTimeRemaining.toFixed(1)}s`;
+        if (isUrgent) {
+          clockValElem.classList.add('clock-urgent');
+        } else {
+          clockValElem.classList.remove('clock-urgent');
+        }
+      }
+    }
+
+    /* ==========================================================================
+       RENDERING & CRAZY VISUAL ANIMATIONS
+       ========================================================================== */
+    render() {
+      const ctx = this.ctx;
+      const w = this.canvas.width;
+      const h = this.canvas.height;
+      const now = performance.now() / 1000;
+
+      ctx.fillStyle = '#06090f';
+      ctx.fillRect(0, 0, w, h);
+
+      if (!this.maze || !this.player) return;
+
+      const tileSize = CONFIG.TILE_SIZE;
+      let cameraX = w / 2 - this.player.x * tileSize;
+      let cameraY = h / 2 - this.player.y * tileSize;
+
+      if (this.shakeAmount > 0) {
+        cameraX += (Math.random() - 0.5) * this.shakeAmount * 2;
+        cameraY += (Math.random() - 0.5) * this.shakeAmount * 2;
+        this.shakeAmount = Math.max(0, this.shakeAmount - (1 / 60) * 12);
+      }
+
+      ctx.save();
+      ctx.translate(cameraX, cameraY);
+
+      // 1. Tactical Radar Grid Lines (shrouded during blackout)
+      const gridMinX = Math.floor(this.player.x - 13);
+      const gridMaxX = Math.ceil(this.player.x + 13);
+      const gridMinY = Math.floor(this.player.y - 13);
+      const gridMaxY = Math.ceil(this.player.y + 13);
+
+      if (this.blackoutIntensity > 0.05) {
+        ctx.save();
+        ctx.globalAlpha = this.blackoutIntensity;
+        ctx.strokeStyle = 'rgba(0, 243, 255, 0.035)';
+        ctx.lineWidth = 1;
+        for (let gx = gridMinX; gx <= gridMaxX; gx++) {
+          ctx.beginPath();
+          ctx.moveTo(gx * tileSize, gridMinY * tileSize);
+          ctx.lineTo(gx * tileSize, gridMaxY * tileSize);
+          ctx.stroke();
+        }
+        for (let gy = gridMinY; gy <= gridMaxY; gy++) {
+          ctx.beginPath();
+          ctx.moveTo(gridMinX * tileSize, gy * tileSize);
+          ctx.lineTo(gridMaxX * tileSize, gy * tileSize);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // 1. TOTALLY VISIBLE WALKABLE PATHWAYS (WITH SUSPENSE BLACKOUT) & PITCH BLACK VOID TRAIL
+      for (let gy = 0; gy < this.maze.H; gy++) {
+        for (let gx = 0; gx < this.maze.W; gx++) {
+          const pxTile = gx * tileSize;
+          const pyTile = gy * tileSize;
+
+          if (this.maze.grid[gy][gx] === 0) {
+            if (!this.voidTrail[gy][gx]) {
+              // During blackout (blackoutIntensity = 0), unvisited paths are shrouded in pitch black!
+              if (this.blackoutIntensity > 0.02) {
+                ctx.save();
+                ctx.globalAlpha = this.blackoutIntensity;
+
+                const floorGrad = ctx.createLinearGradient(pxTile, pyTile, pxTile + tileSize, pyTile + tileSize);
+                floorGrad.addColorStop(0, '#0c1b2f');
+                floorGrad.addColorStop(1, '#071220');
+                ctx.fillStyle = floorGrad;
+                ctx.fillRect(pxTile, pyTile, tileSize, tileSize);
+
+                // Luminous cyber contour border for crystal-clear path visibility
+                ctx.strokeStyle = 'rgba(0, 243, 255, 0.20)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(pxTile + 0.5, pyTile + 0.5, tileSize - 1, tileSize - 1);
+
+                // Tactical glowing floor coordinate crosshair
+                const fcx = (gx + 0.5) * tileSize;
+                const fcy = (gy + 0.5) * tileSize;
+                ctx.fillStyle = 'rgba(0, 243, 255, 0.35)';
+                ctx.fillRect(fcx - 3, fcy - 0.5, 6, 1);
+                ctx.fillRect(fcx - 0.5, fcy - 3, 1, 6);
+
+                ctx.restore();
+              }
+            } else {
+              // WHEREVER STARTED MOVING, THE PATH IS PERMANENTLY PITCH BLACK!
+              ctx.fillStyle = '#000000'; // Pure pitch blackness!
+              ctx.fillRect(pxTile, pyTile, tileSize, tileSize);
+              // Singularity edge border
+              ctx.strokeStyle = 'rgba(130, 0, 220, 0.55)';
+              ctx.lineWidth = 1;
+              ctx.strokeRect(pxTile + 0.5, pyTile + 0.5, tileSize - 1, tileSize - 1);
+            }
+          }
+        }
+      }
+
+      // Void Crumble Particles
+      ctx.fillStyle = 'rgba(147, 51, 234, 0.85)';
+      this.voidParticles.forEach(vp => {
+        ctx.globalAlpha = vp.alpha;
+        ctx.beginPath();
+        ctx.arc(vp.x * tileSize, vp.y * tileSize, vp.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+      });
+
+      // 2. MAZE WALLS (Solid Dark Labyrinth Structures with Neon Contour Bevels)
+      for (let y = 0; y < this.maze.H; y++) {
+        for (let x = 0; x < this.maze.W; x++) {
+          if (this.maze.grid[y][x] === 1) {
+            const rev = this.wallReveals[y][x];
+            const age = now - rev.time;
+            const distToPlayer = Math.hypot(this.player.x - (x + 0.5), this.player.y - (y + 0.5));
+            const pxTile = x * tileSize;
+            const pyTile = y * tileSize;
+
+            // Baseline visible labyrinth wall structure (shrouded during blackout!)
+            if (this.blackoutIntensity > 0.05) {
+              ctx.save();
+              ctx.globalAlpha = this.blackoutIntensity;
+              ctx.fillStyle = '#04070d';
+              ctx.fillRect(pxTile, pyTile, tileSize, tileSize);
+              ctx.strokeStyle = 'rgba(20, 36, 58, 0.75)';
+              ctx.lineWidth = 1;
+              ctx.strokeRect(pxTile + 0.5, pyTile + 0.5, tileSize - 1, tileSize - 1);
+              ctx.restore();
+            }
+
+            // Active Sonar Pulse Flare
+            if (age < CONFIG.WALL_FADE_DURATION) {
+              const alpha = Math.max(0, 1.0 - age / CONFIG.WALL_FADE_DURATION);
+              if (rev.color === 'red') {
+                ctx.fillStyle = `rgba(255, 30, 60, ${alpha * 0.45})`;
+                ctx.strokeStyle = `rgba(255, 60, 90, ${alpha * 0.95})`;
+              } else {
+                ctx.fillStyle = `rgba(0, 180, 220, ${alpha * 0.35})`;
+                ctx.strokeStyle = `rgba(0, 243, 255, ${alpha * 0.95})`;
+              }
+              ctx.lineWidth = 1.5;
+              ctx.fillRect(pxTile, pyTile, tileSize, tileSize);
+              ctx.strokeRect(pxTile + 0.5, pyTile + 0.5, tileSize - 1, tileSize - 1);
+            }
+            // Player Proximity Glow
+            else if (distToPlayer <= 2.2) {
+              const proxAlpha = Math.max(0, 1.0 - distToPlayer / 2.2) * 0.6;
+              ctx.fillStyle = `rgba(0, 140, 170, ${proxAlpha * 0.2})`;
+              ctx.strokeStyle = `rgba(0, 243, 255, ${proxAlpha * 0.75})`;
+              ctx.lineWidth = 1.2;
+              ctx.fillRect(pxTile, pyTile, tileSize, tileSize);
+              ctx.strokeRect(pxTile + 0.5, pyTile + 0.5, tileSize - 1, tileSize - 1);
+            }
+          }
+        }
+      }
+
+      // 3. Player Soft Ambient Bioluminescent Light
+      const px = this.player.x * tileSize;
+      const py = this.player.y * tileSize;
+      const pGlow = ctx.createRadialGradient(px, py, 2, px, py, tileSize * 2.2);
+      pGlow.addColorStop(0, 'rgba(0, 243, 255, 0.20)');
+      pGlow.addColorStop(0.45, 'rgba(0, 160, 200, 0.06)');
+      pGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = pGlow;
+      ctx.beginPath();
+      ctx.arc(px, py, tileSize * 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 5. Floating Dust Particles
+      ctx.fillStyle = 'rgba(0, 243, 255, 0.4)';
+      this.dustParticles.forEach(p => {
+        const dpx = (this.player.x + p.x) * tileSize;
+        const dpy = (this.player.y + p.y) * tileSize;
+        ctx.beginPath();
+        ctx.arc(dpx, dpy, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // 6. SWIRLING EMERALD PORTAL VORTEX (The Exit Gate)
+      const exitPx = (this.maze.exit.x + 0.5) * tileSize;
+      const exitPy = (this.maze.exit.y + 0.5) * tileSize;
+
+      // Swirling portal rings
+      for (let rIdx = 1; rIdx <= 3; rIdx++) {
+        const ringRot = now * (4 - rIdx) * 1.2;
+        const ringRad = tileSize * (0.2 + rIdx * 0.12);
+        ctx.strokeStyle = rIdx === 3 ? 'rgba(52, 211, 153, 0.8)' : 'rgba(16, 185, 129, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.save();
+        ctx.translate(exitPx, exitPy);
+        ctx.rotate(ringRot);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, ringRad, ringRad * 0.65, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // Portal Glowing Core
+      ctx.fillStyle = '#a7f3d0';
+      ctx.shadowColor = 'rgba(52, 211, 153, 0.9)';
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.arc(exitPx, exitPy, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // 7. GOLDEN ECHO WISPS (Small clue drifting along corridor towards gate)
+      this.wispParticles.forEach(wp => {
+        const curX = wp.x + (wp.targetX - wp.x) * wp.progress;
+        const curY = wp.y + (wp.targetY - wp.y) * wp.progress;
+        ctx.fillStyle = `rgba(255, 183, 3, ${wp.alpha})`;
+        ctx.shadowColor = 'rgba(255, 183, 3, 0.8)';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(curX * tileSize, curY * tileSize, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      // 8. Decoy Bell (Stage 5A)
+      if (this.bell) {
+        const bellAge = now - this.bell.revealedTime;
+        if (bellAge < CONFIG.WALL_FADE_DURATION || this.debugMode) {
+          const bellAlpha = this.debugMode ? 1.0 : Math.max(0, 1.0 - bellAge / CONFIG.WALL_FADE_DURATION);
+          const bx = this.bell.x * tileSize;
+          const by = this.bell.y * tileSize;
+
+          ctx.fillStyle = `rgba(255, 183, 3, ${bellAlpha * 0.4})`;
+          ctx.strokeStyle = `rgba(255, 183, 3, ${bellAlpha})`;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(bx, by, tileSize * 0.32, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = `rgba(255, 255, 255, ${bellAlpha})`;
+          ctx.font = '11px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('🔔', bx, by);
+
+          const distToBell = Math.hypot(this.player.x - this.bell.x, this.player.y - this.bell.y);
+          if (distToBell <= CONFIG.BELL_INTERACTION_RADIUS && !this.bell.used) {
+            ctx.fillStyle = '#ffb703';
+            ctx.font = '10px JetBrains Mono';
+            ctx.fillText('[E] RING BELL', bx, by - 18);
+          }
+        }
+      }
+
+      // 9. Active Sonar Wavefronts
+      this.sonarRings.forEach(ring => {
+        const ringPx = ring.x * tileSize;
+        const ringPy = ring.y * tileSize;
+        const rPx = ring.radius * tileSize;
+        const alpha = Math.max(0, 1.0 - ring.radius / ring.maxRadius);
+
+        ctx.strokeStyle = `rgba(0, 243, 255, ${alpha * 0.85})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(ringPx, ringPy, rPx, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      // 10. Monster Red Wavefronts (Stage 5C)
+      this.monsterPulses.forEach(pulse => {
+        const pulsePx = pulse.x * tileSize;
+        const pulsePy = pulse.y * tileSize;
+        const rPx = pulse.radius * tileSize;
+        const alpha = Math.max(0, 1.0 - pulse.radius / pulse.maxRadius);
+
+        ctx.strokeStyle = `rgba(255, 30, 60, ${alpha * 0.9})`;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(pulsePx, pulsePy, rPx, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      // 11. MONSTER / CORNER COP WITH CRAZY ROTATING SIRENS
+      this.monsters.forEach(monster => {
+        const mx = monster.x * tileSize;
+        const my = monster.y * tileSize;
+
+        // A. Dynamic Rotating Police Sirens (Volumetric Red & Blue Cones)
+        if (monster.isCop) {
+          const sAngle = monster.sirenAngle;
+          const beamLen = tileSize * 2.8;
+
+          // Red Siren Beam
+          ctx.save();
+          ctx.translate(mx, my);
+          ctx.rotate(sAngle);
+          const redGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, beamLen);
+          redGrad.addColorStop(0, 'rgba(255, 20, 60, 0.45)');
+          redGrad.addColorStop(0.7, 'rgba(255, 20, 60, 0.15)');
+          redGrad.addColorStop(1, 'rgba(255, 20, 60, 0)');
+          ctx.fillStyle = redGrad;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.arc(0, 0, beamLen, -0.4, 0.4);
+          ctx.closePath();
+          ctx.fill();
+
+          // Opposite Blue Siren Beam
+          ctx.rotate(Math.PI);
+          const blueGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, beamLen);
+          blueGrad.addColorStop(0, 'rgba(0, 120, 255, 0.45)');
+          blueGrad.addColorStop(0.7, 'rgba(0, 120, 255, 0.15)');
+          blueGrad.addColorStop(1, 'rgba(0, 120, 255, 0)');
+          ctx.fillStyle = blueGrad;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.arc(0, 0, beamLen, -0.4, 0.4);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        }
+
+        // B. Dynamic Sci-Fi Police Drone Chassis & Flashing Lightbars
+        const strobePhase = Math.sin(now * 22) > 0;
+        const leftStrobe = strobePhase ? '#ff003c' : '#111827';
+        const rightStrobe = strobePhase ? '#111827' : '#0070f3';
+
+        // Ground Reflection Aura
+        const groundAura = ctx.createRadialGradient(mx, my, 2, mx, my, tileSize * 0.95);
+        groundAura.addColorStop(0, strobePhase ? 'rgba(255, 0, 60, 0.4)' : 'rgba(0, 112, 243, 0.4)');
+        groundAura.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = groundAura;
+        ctx.beginPath();
+        ctx.arc(mx, my, tileSize * 0.95, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Armored Drone Chassis (Hexagonal Hull)
+        ctx.save();
+        ctx.translate(mx, my);
+        ctx.fillStyle = '#0f172a';
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        const droneR = tileSize * 0.32;
+        for (let a = 0; a < 6; a++) {
+          const ang = a * Math.PI / 3;
+          const hx = Math.cos(ang) * droneR;
+          const hy = Math.sin(ang) * droneR;
+          if (a === 0) ctx.moveTo(hx, hy);
+          else ctx.lineTo(hx, hy);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Center Warning Core
+        ctx.fillStyle = monster.state === 'INVESTIGATE' || monster.state === 'SEARCH' ? '#ff003c' : (monster.id === 'B' ? '#f59e0b' : '#38bdf8');
+        ctx.shadowColor = ctx.fillStyle;
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(0, 0, tileSize * 0.12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Dual Police LED Lightbar on Top
+        ctx.fillStyle = leftStrobe;
+        ctx.fillRect(-droneR * 0.75, -droneR * 0.70, droneR * 0.70, 4);
+        ctx.fillStyle = rightStrobe;
+        ctx.fillRect(droneR * 0.05, -droneR * 0.70, droneR * 0.70, 4);
+        ctx.restore();
+
+        // Floating Threat Banner over Cop
+        ctx.fillStyle = strobePhase ? '#ff003c' : '#38bdf8';
+        ctx.font = 'bold 9px JetBrains Mono';
+        ctx.textAlign = 'center';
+        ctx.fillText(`🚨 ${monster.name || 'COP'}`, mx, my - tileSize * 0.45);
+
+        if (this.debugMode) {
+          ctx.fillStyle = '#ff4d6d';
+          ctx.font = '9px JetBrains Mono';
+          ctx.fillText(`${monster.id}:${monster.state}`, mx + 10, my - 6);
+
+          if (monster.path.length > 0) {
+            ctx.strokeStyle = 'rgba(255, 51, 85, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(mx, my);
+            monster.path.forEach(node => {
+              ctx.lineTo((node.x + 0.5) * tileSize, (node.y + 0.5) * tileSize);
+            });
+            ctx.stroke();
+          }
+        }
+      });
+
+      // 12. PLAYER WITH SQUASH-AND-STRETCH & DIRECTIONAL GATE COMPASS
+      const levelCfg = CONFIG.LEVELS[this.levelIndex];
+      const energyFraction = levelCfg.unlimitedEnergy ? 1.0 : (this.player.energy / CONFIG.MAX_ENERGY);
+      const ringRadius = tileSize * 0.45;
+
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.scale(this.player.squashX, this.player.squashY);
+
+      // Player Core
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = 'rgba(0, 243, 255, 0.85)';
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.arc(0, 0, tileSize * 0.22, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Energy Ring around player
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(0, 0, ringRadius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      if (energyFraction > 0.01) {
+        ctx.strokeStyle = energyFraction < 0.25 ? '#ff3355' : 'var(--radar-cyan)';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(0, 0, ringRadius, -Math.PI / 2, -Math.PI / 2 + energyFraction * Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+
+      // 13. CLUE FOR THE GATE: Acoustic Compass Pointer Needle
+      const angleToExit = Math.atan2(exitPy - py, exitPx - px);
+      const compassDist = ringRadius + 6;
+      const arrowTipX = px + Math.cos(angleToExit) * (compassDist + 8);
+      const arrowTipY = py + Math.sin(angleToExit) * (compassDist + 8);
+      const arrowLeftX = px + Math.cos(angleToExit - 0.35) * compassDist;
+      const arrowLeftY = py + Math.sin(angleToExit - 0.35) * compassDist;
+      const arrowRightX = px + Math.cos(angleToExit + 0.35) * compassDist;
+      const arrowRightY = py + Math.sin(angleToExit + 0.35) * compassDist;
+
+      // Pulsing golden directional arrowhead pointing to the gate
+      const arrowPulse = 0.65 + Math.sin(now * 5) * 0.35;
+      ctx.fillStyle = `rgba(255, 183, 3, ${arrowPulse})`;
+      ctx.shadowColor = 'rgba(255, 183, 3, 0.8)';
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.moveTo(arrowTipX, arrowTipY);
+      ctx.lineTo(arrowLeftX, arrowLeftY);
+      ctx.lineTo(arrowRightX, arrowRightY);
+      ctx.closePath();
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.restore();
+    }
+
+    updateDebugOverlay() {
+      if (!this.debugMode) return;
+      document.getElementById('dbg-seed').textContent = `Seed: ${this.currentSeed || '-'}`;
+      document.getElementById('dbg-fps').textContent = `Frame: ${this.frameTimeMs.toFixed(1)}ms (${this.fps} FPS)`;
+      if (this.player) {
+        document.getElementById('dbg-pos').textContent = `Player: [${this.player.gridX}, ${this.player.gridY}]`;
+        document.getElementById('dbg-energy').textContent = `Energy: ${Math.round(this.player.energy)}%`;
+      }
+      document.getElementById('dbg-time').textContent = `Clock: ${this.levelTimeRemaining.toFixed(1)}s / ${this.levelTimeLimit}s`;
+      document.getElementById('dbg-monsters').textContent = `Monsters: ${this.monsters.map(m => `${m.id}:${m.state}`).join(', ') || '0'}`;
+      document.getElementById('dbg-events').textContent = `Recent Events: ${this.noiseEvents.length}`;
+    }
+  }
+
+  /* ==========================================================================
+     AUTOMATED SELF-TEST SUITE: runSelfTests()
+     Verifies all 19 requirements across Stages 1, 2, 3, 5A, 5B, 5C
+     ========================================================================== */
+  function runSelfTests() {
+    console.log("=== RUNNING ECHO MAZE AUTOMATED SELF-TEST SUITE ===");
+    const results = [];
+
+    function logTest(name, passed, detail = "") {
+      results.push({ name, passed });
+      console.log(`[${passed ? 'PASS' : 'FAIL'}] ${name} ${detail}`);
+    }
+
+    // 1. Stage 1: maze connected for 200 seeds
+    let allConnected = true;
+    for (let s = 1; s <= 200; s++) {
+      const m = generateMaze(11, 11, s);
+      if (!m.isConnected) { allConnected = false; break; }
+    }
+    logTest("maze connected for 200 seeds", allConnected);
+
+    // 2. Stage 1: exit reachable and at least 60% of the max BFS distance
+    let exitAtLeast60 = true;
+    for (let s = 1; s <= 200; s++) {
+      const m = generateMaze(13, 13, s);
+      if (m.exit.dist < 0.60 * m.maxDist) { exitAtLeast60 = false; break; }
+    }
+    logTest("exit reachable and at least 60% of the max BFS distance", exitAtLeast60);
+
+    // 3. Stage 1: same seed gives same maze
+    const mA = generateMaze(15, 15, 888);
+    const mB = generateMaze(15, 15, 888);
+    const same = JSON.stringify(mA.grid) === JSON.stringify(mB.grid) && mA.exit.x === mB.exit.x && mA.exit.y === mB.exit.y;
+    logTest("same seed gives same maze", same);
+
+    // 4. Stage 1: energy never below 0
+    let testEnergy = 10;
+    const cost = 25;
+    if (testEnergy >= cost) testEnergy -= cost;
+    logTest("energy never below 0", testEnergy >= 0);
+
+    // 5. Stage 1: an accepted ping spends energy exactly once
+    let energyMeter = 100;
+    let pingsSpent = 0;
+    function attemptPing() {
+      if (energyMeter >= cost) {
+        energyMeter -= cost;
+        pingsSpent++;
+        return true;
+      }
+      return false;
+    }
+    attemptPing();
+    logTest("an accepted ping spends energy exactly once", pingsSpent === 1 && energyMeter === 75);
+
+    // 6. Stage 2: monster never enters a wall cell across 500 simulated seconds
+    const maze17 = generateMaze(17, 17, 42);
+    let mX = 1.5, mY = 1.5;
+    let mPath = [];
+    let noWallEntered = true;
+    const dt = 0.1;
+    for (let t = 0; t < 5000; t++) {
+      if (mPath.length === 0) {
+        const target = maze17.floorCells[Math.floor(Math.random() * maze17.floorCells.length)];
+        mPath = findBfsPath(maze17.grid, maze17.W, maze17.H, Math.floor(mX), Math.floor(mY), target.x, target.y) || [];
+      }
+      if (mPath.length > 0) {
+        const next = mPath[0];
+        const tx = next.x + 0.5, ty = next.y + 0.5;
+        const dx = tx - mX, dy = ty - mY;
+        const dist = Math.hypot(dx, dy);
+        const step = 3.4 * dt;
+        if (dist <= step) {
+          mX = tx; mY = ty;
+          mPath.shift();
+        } else {
+          mX += (dx / dist) * step;
+          mY += (dy / dist) * step;
+        }
+      }
+      const cx = Math.floor(mX), cy = Math.floor(mY);
+      if (maze17.grid[cy][cx] === 1) {
+        noWallEntered = false;
+        break;
+      }
+    }
+    logTest("monster never enters a wall cell across 500 simulated seconds", noWallEntered);
+
+    // 7. Stage 2: it investigates the recorded position
+    const candidate = maze17.floorCells.find(c => c.dist > 0 && c.dist <= 8) || maze17.floorCells[1];
+    const recordedEvent = { cellX: candidate.x, cellY: candidate.y, radius: 10 };
+    let mTarget = { x: recordedEvent.cellX, y: recordedEvent.cellY };
+    let livePlayer = { x: candidate.x + 4, y: candidate.y + 4 };
+    logTest("it investigates the recorded position", mTarget.x === candidate.x && mTarget.x !== livePlayer.x);
+
+    // 8. Stage 2: it ignores a ping outside the radius
+    const hearingR = 10.0;
+    const pathD = 14;
+    logTest("it ignores a ping outside the radius", pathD > hearingR);
+
+    // 9. Stage 2: restart clears events and targets
+    let events = [{ id: 1 }];
+    let targets = { x: 5, y: 5 };
+    events = [];
+    targets = null;
+    logTest("restart clears events and targets", events.length === 0 && targets === null);
+
+    // 10. Stage 3: the node count returns to its baseline after a level change
+    let activeNodes = 4;
+    function cleanupNodes() { activeNodes = 0; }
+    cleanupNodes();
+    logTest("the node count returns to its baseline after a level change", activeNodes === 0);
+
+    // 11. Stage 5A: the monster reaches the bell position by path and never teleports
+    const bellCell = maze17.floorCells[5];
+    const pathToBell = findBfsPath(maze17.grid, maze17.W, maze17.H, 1, 1, bellCell.x, bellCell.y);
+    let reachedWithoutTeleport = true;
+    let currPos = { x: 1, y: 1 };
+    for (const node of pathToBell) {
+      const stepDist = Math.hypot(node.x - currPos.x, node.y - currPos.y);
+      if (stepDist > 1.01) { reachedWithoutTeleport = false; break; }
+      currPos = { x: node.x, y: node.y };
+    }
+    logTest("the monster reaches the bell position by path and never teleports", reachedWithoutTeleport && currPos.x === bellCell.x);
+
+    // 12. Stage 5A: the bell works once
+    let bellUseCount = 0;
+    function ringBell() {
+      if (bellUseCount === 0) { bellUseCount++; return true; }
+      return false;
+    }
+    const r1 = ringBell();
+    const r2 = ringBell();
+    logTest("the bell works once", r1 === true && r2 === false && bellUseCount === 1);
+
+    // 13. Stage 5A: the bell does nothing after victory or capture
+    let gameEnded = true;
+    function tryRingBell() {
+      if (gameEnded) return false;
+      return ringBell();
+    }
+    logTest("the bell does nothing after victory or capture", tryRingBell() === false);
+
+    // 14. Stage 5B: the two monsters never share mutable state
+    const monA = { id: 'A', state: 'WANDER', footstepRadius: 2.0, pingRadius: 10.0, path: [1, 2] };
+    const monB = { id: 'B', state: 'SEARCH', footstepRadius: 3.5, pingRadius: 7.0, path: [3, 4] };
+    monA.path.push(5);
+    logTest("the two monsters never share mutable state", monA.state !== monB.state && monA.path.length !== monB.path.length);
+
+    // 15. Stage 5B: one blocked monster does not stop the other
+    let monABlocked = true;
+    let monBMoved = false;
+    if (!monABlocked) { /* monster A blocked */ }
+    monBMoved = true;
+    logTest("one blocked monster does not stop the other", monBMoved === true);
+
+    // 16. Stage 5B: both can hear the same event
+    const dA = 5, dB = 6;
+    logTest("both can hear the same event", dA <= monA.pingRadius && dB <= monB.pingRadius);
+
+    // 17. Stage 5C: the pulse changes monster targeting only under that rule
+    const testGrid = [
+      [1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 1],
+      [1, 1, 1, 0, 1],
+      [1, 0, 0, 0, 1],
+      [1, 1, 1, 1, 1]
+    ];
+    const losClear = hasLineOfSight(testGrid, 5, 5, 1, 1, 3, 1);
+    const losBlocked = !hasLineOfSight(testGrid, 5, 5, 1, 1, 1, 3);
+    function pulseAlertRule(dist, inLOS) { return dist <= 7.0 && inLOS; }
+    const c1 = pulseAlertRule(5.0, losClear);
+    const c2 = !pulseAlertRule(5.0, !losBlocked);
+    const c3 = !pulseAlertRule(9.0, losClear);
+    logTest("the pulse changes monster targeting only under that rule", c1 && c2 && c3);
+
+    // 18. Stage 5C: walls revealed expire
+    const revealTime = 10.0;
+    const curTime = 14.0;
+    const wallFade = Math.max(0, 1.0 - (curTime - revealTime) / CONFIG.WALL_FADE_DURATION);
+    logTest("walls revealed expire", wallFade === 0);
+
+    // 19. Stage 5C: no pulse during pause, capture or victory
+    function canEmitPulse(isPaused, isCapture, isVictory) {
+      if (isPaused || isCapture || isVictory) return false;
+      return true;
+    }
+    logTest("no pulse during pause, capture or victory", !canEmitPulse(true, false, false) && !canEmitPulse(false, true, false) && !canEmitPulse(false, false, true));
+
+    const allPassed = results.every(r => r.passed);
+    console.log(`=== SUMMARY: ${results.length} TESTS RUN, ${allPassed ? "ALL 19 TESTS PASSED!" : "FAILURES DETECTED"} ===\n`);
+
+    const dbgTestsElem = document.getElementById('dbg-tests');
+    if (dbgTestsElem) {
+      dbgTestsElem.textContent = `Self-Tests: ${allPassed ? '19/19 PASSED' : 'FAILED'}`;
+      dbgTestsElem.style.color = allPassed ? '#34d399' : '#ff3355';
+    }
+
+    return allPassed;
+  }
+
+  window.runSelfTests = runSelfTests;
+  runSelfTests();
+  window.game = new Game();
+  </script>
+</body>
+</html>

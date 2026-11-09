@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "kind": "ods-pixel-conversation",
+  "exportedAt": "2026-10-29T05:45:24.783Z",
+  "conversation": {
+    "schema": 1,
+    "chatId": "echomaze-part1-architecture",
+    "updatedAt": 1793252724790,
+    "persistenceVersion": 2,
+    "persistenceRevision": "e0c8echomaze-part1-architecture40008000000000000001",
+    "draft": "",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to build a browser game called ECHO MAZE for the ODS Weekly Dev Jam. The tagline is \"Light costs noise.\" The concept is a tactical acoustic-stealth thriller where the player navigates dark mazes, uses sonar to understand the environment, manages limited energy, and avoids sound-sensitive enemies. Build this in a single index.html file using vanilla HTML5, CSS, Canvas and Web Audio API. Zero external engines or audio files."
+      },
+      {
+        "role": "assistant",
+        "content": "Understood. Initializing ECHO MAZE project architecture as a single vanilla `index.html` with Canvas and Web Audio API. Setting up HTML structure, Canvas element, and clean separation of simulation and rendering loops with zero external engine dependencies."
+      },
+      {
+        "role": "user",
+        "content": "Put all gameplay tuning numbers in a single CONFIG object at the top of the JavaScript: tile sizes, movement speeds, sonar ranges, wall reveal duration, energy costs, monster speeds, hearing radii, capture distances, and audio limits. Use a separate LEVELS table for level-specific properties. No scattered magic numbers."
+      },
+      {
+        "role": "assistant",
+        "content": "Defined central `CONFIG` object with all constants: tile sizing, speeds, sonar durations, monster attributes, energy costs, and audio limits. Structured `LEVELS` lookup table for per-level properties. Magic numbers eliminated."
+      },
+      {
+        "role": "user",
+        "content": "Implement deterministic procedural maze generation using a seeded random algorithm (Mulberry32 PRNG) so identical seeds always produce identical mazes. Support ?seed=N in the URL for repeatable runs."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented Mulberry32 deterministic PRNG with seed support. Configured URL parameter `?seed=N` to allow reproducible maze layouts across runs."
+      },
+      {
+        "role": "user",
+        "content": "Use Breadth-First Search (BFS) to validate that every floor cell in the maze is reachable from the start (1, 1). Ensure the exit portal is placed on a reachable cell at least 60% of the maximum BFS distance from the start."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented Breadth-First Search (BFS) reachability validation from starting position (1,1). Configured exit portal placement to guarantee >= 60% of the maximum BFS path distance across the generated labyrinth."
+      },
+      {
+        "role": "user",
+        "content": "Implement player movement driven by delta time with wall sliding and reliable bounding-box collision detection so movement speed is silky smooth and frame-rate independent across 60Hz, 120Hz, and mobile displays."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented delta-time driven player movement with wall sliding and reliable axis-aligned bounding-box collision detection. Movement speed is smooth and frame-rate independent across displays."
+      },
+      {
+        "role": "user",
+        "content": "When the player presses Space, emit expanding sonar rings from their center. Walls within the pulse radius should be revealed only if there is an unblocked line of sight from the player. Revealed walls must fade smoothly over 3.5 seconds without permanently unveiling the maze."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented expanding line-of-sight sonar rings on Space keypress. Added raycasting line-of-sight check so only unblocked walls within the pulse radius are illuminated. Revealed walls fade smoothly over 3.5 seconds."
+      },
+      {
+        "role": "user",
+        "content": "Add an energy meter (max 100). Each accepted sonar ping costs 25 energy, regenerating at 12 energy/sec. Energy must never fall below zero. Render an energy arc ring around the player with a clear depleted indicator when energy is insufficient. Level 1 must have unlimited energy."
+      },
+      {
+        "role": "assistant",
+        "content": "Added energy meter (capacity 100) with 25 energy cost per accepted sonar ping and 12 energy/sec regeneration rate. Rendered energy arc ring around the player with depleted visual feedback. Level 1 set to unlimited energy."
+      },
+      {
+        "role": "user",
+        "content": "Implement a central noise-event bus where each event contains { id, type, x, y, time, radius }. Accepted pings emit exactly one event with radius 10. Process each event once and expire it after 0.1 seconds. Visual effects and UI must never generate accidental noise events."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented central noise-event bus ({ id, type, x, y, time, radius }). Accepted pings emit an acoustic event with radius 10, processed once and expiring after 0.1s. Visual effects and UI elements emit zero noise events."
+      },
+      {
+        "role": "user",
+        "content": "Footstep noise events must be generated strictly from actual movement distance (one event per 0.8 tiles traversed), never per animation frame. When the player holds Shift (Creep mode) or is stationary, zero footsteps must be emitted."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented distance-accumulating footstep noise emission (one event per 0.8 tiles traversed). When holding Shift (Creep mode) or standing still, zero footstep events are generated."
+      },
+      {
+        "role": "user",
+        "content": "Wire game lifecycle states: Escape toggles pause/resume (freezing delta-time and timers), R restarts the run, and stepping onto the exit cell triggers the victory state with a celebratory visual flash."
+      },
+      {
+        "role": "assistant",
+        "content": "Wired game lifecycle states: Escape key toggles pause/resume (freezing simulation delta-time and active timers), R restarts the level, and exit portal contact triggers victory state with celebratory resonance flash."
+      },
+      {
+        "role": "user",
+        "content": "Create the Listener monster AI driven by an explicit finite-state machine: WANDER, INVESTIGATE, SEARCH, and CAPTURE. The monster must move along grid corridors using delta time and search for 3 seconds before resuming wandering."
+      },
+      {
+        "role": "assistant",
+        "content": "Created the Listener monster AI with an explicit finite-state machine: WANDER, INVESTIGATE, SEARCH, and CAPTURE. Monster moves along corridors via delta-time and searches for 3 seconds before resuming patrol."
+      },
+      {
+        "role": "user",
+        "content": "The monster must hear a noise event only when the BFS path distance through the maze is less than or equal to its configured hearing radius. Straight-line euclidean distance through walls must never be used."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented BFS maze path-distance hearing check. Monsters hear noise events only if the path distance through corridors is within the event radius. Straight-line euclidean shortcuts through walls are rejected."
+      },
+      {
+        "role": "user",
+        "content": "When a monster hears a sound, it must record the exact grid cell of the noise event and investigate that static location. It must NEVER track the player's live position or cheat through the dark."
+      },
+      {
+        "role": "assistant",
+        "content": "Configured monster acoustic targeting to record the static grid cell of the noise event and pathfind directly to it. Monster never cheats or tracks the player's live position in the dark."
+      },
+      {
+        "role": "user",
+        "content": "If the monster is already investigating a sound and hears a new valid event, replace its target only if the new sound is closer by remaining BFS path distance. Recalculate BFS paths only when the target changes, never on every frame."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented closer-sound target replacement: a new noise event replaces an active investigation target only if its BFS path distance is shorter. Throttled BFS recalculations to target transitions only."
+      },
+      {
+        "role": "user",
+        "content": "If an acoustic event occurs in an unreachable cell, route the monster to the closest reachable cell and search there. The monster must never teleport, clip into walls, or pass through impassable tiles."
+      },
+      {
+        "role": "assistant",
+        "content": "Handled unreachable noise events by routing the monster to the nearest reachable cell. Bounded corridor collision checks ensure the monster never teleports, clips through walls, or leaves the maze."
+      },
+      {
+        "role": "user",
+        "content": "Capture occurs when player and monster centers are within 0.45 tiles. On capture, freeze simulation, trigger screen shake and red flash, display HEARD. with a Retry button. Ensure Capture and Victory are mutually exclusive—the first event wins."
+      },
+      {
+        "role": "assistant",
+        "content": "Implemented capture condition when player and monster centers are within 0.45 tiles. Freezes simulation, triggers screen shake, red flash, and displays 'HEARD.' with Retry button. Added mutual exclusion flag between Capture and Victory."
+      },
+      {
+        "role": "user",
+        "content": "Configure campaign progression. Level transitions must cleanly flush active sonar rings, wall reveals, noise events, monster paths, targets, and audio nodes. Use a unique run ID so lingering callbacks from old levels are ignored."
+      },
+      {
+        "role": "assistant",
+        "content": "Architected campaign progression system. Level transitions flush active sonar rings, wall reveals, noise events, monster paths, and audio nodes. Attached a unique run ID to discard stale async callbacks."
+      },
+      {
+        "role": "user",
+        "content": "Configure Level 1: 9x9 maze, zero monsters, unlimited sonar energy. Serves as the introductory stealth tutorial."
+      },
+      {
+        "role": "assistant",
+        "content": "Configured Level 1: 9x9 maze, zero monsters, unlimited sonar energy. Acts as introductory stealth navigation tutorial."
+      },
+      {
+        "role": "user",
+        "content": "Configure Level 2: 13x13 maze with one sleeping Listener in the center. The sleeper stays dormant during wandering and wakes up only when an expanding sonar ping reaches its hearing threshold."
+      },
+      {
+        "role": "assistant",
+        "content": "Configured Level 2: 13x13 maze with one sleeping Listener in the center. Remains dormant until an expanding sonar ping reaches its hearing threshold."
+      }
+    ]
+  }
+}

@@ -731,5 +731,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: ├── LICENSE / NOTICE           # Apache 2.0 + attribution and disclaimer | LICENSE: attribution notices from the Source form of the Work,"
+  },
+  {
+    "key": "echomaze",
+    "size": 535,
+    "repo": "vaibhavsrv/echo-maze",
+    "id": 50,
+    "slug": "echo-maze",
+    "title": "Echo Maze",
+    "developer": "vaibhavsrv",
+    "license": "Apache-2.0",
+    "source": "https://github.com/vaibhavsrv/echo-maze",
+    "commit": "2a1ff8e14a6c6dbacb10ba37bd52223033ef7942",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]

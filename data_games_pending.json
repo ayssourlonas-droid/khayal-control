@@ -880,5 +880,31 @@
       "type": "web",
       "category": "apache2"
     }
+  },
+  {
+    "id": 50,
+    "release_year": "2026",
+    "category_tags": [
+      "devjam",
+      "html5-game",
+      "ods"
+    ],
+    "main_scene": {
+      "title_ar": "Echo Maze",
+      "title_en": "Echo Maze",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/echo-maze/_cover.png"
+    },
+    "details_scene": {
+      "description": "Echo Maze - ODS Weekly Dev Jam Submission",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/echo-maze/",
+      "developer": "vaibhavsrv",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/vaibhavsrv/echo-maze",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "devjam"
+    }
   }
 ]
