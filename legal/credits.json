@@ -1016,5 +1016,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "snakegame",
+    "size": 85,
+    "repo": "ramazancetinkaya/snake-game",
+    "id": 69,
+    "slug": "snake-game",
+    "title": "Snake Game",
+    "developer": "ramazancetinkaya",
+    "license": "MIT",
+    "source": "https://github.com/ramazancetinkaya/snake-game",
+    "commit": "28f268259d5110105c5a1ef8c074dd3d28d8fc41",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

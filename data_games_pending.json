@@ -1296,5 +1296,31 @@
       "type": "web",
       "category": "box2d"
     }
+  },
+  {
+    "id": 69,
+    "release_year": "2026",
+    "category_tags": [
+      "browser-game",
+      "css",
+      "fully-responsive"
+    ],
+    "main_scene": {
+      "title_ar": "Snake Game",
+      "title_en": "Snake Game",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/snake-game/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A sleek, masterfully crafted revival of the legendary arcade experience, engineered for pure nostalgia and modern web performance.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/snake-game/",
+      "developer": "ramazancetinkaya",
+      "license": "MIT",
+      "source_url": "https://github.com/ramazancetinkaya/snake-game",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-game"
+    }
   }
 ]

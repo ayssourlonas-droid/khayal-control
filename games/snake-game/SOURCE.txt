@@ -1,0 +1,8 @@
+Source: https://github.com/ramazancetinkaya/snake-game
+Commit: 28f268259d5110105c5a1ef8c074dd3d28d8fc41
+License: MIT
+Imported: 2026-11-09T12:10:57.331875+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 0, audio: 0, tagged audio: 0
