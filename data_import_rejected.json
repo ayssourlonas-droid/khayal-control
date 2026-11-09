@@ -286,5 +286,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42597331340"
+  },
+  {
+    "url": "https://github.com/richie-rich90454/tschirlau-game",
+    "repo": "richie-rich90454/tschirlau-game",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 127)",
+    "license": "GPL-3.0",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42597918309"
   }
 ]
