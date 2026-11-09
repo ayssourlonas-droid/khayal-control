@@ -628,5 +628,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42641739855"
+  },
+  {
+    "url": "https://github.com/The777Bot/Super_Stickmen",
+    "repo": "The777Bot/Super_Stickmen",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42642007085"
   }
 ]
