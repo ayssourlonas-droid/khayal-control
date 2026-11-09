@@ -206,9 +206,11 @@ VENDOR_RE = re.compile(
     r"tweenjs|soundjs|preloadjs|box2d|matter|cannon|gsap|zepto|underscore|backbone|moment|konva|fabric|kaboom|"
     r"excalibur|melon|crafty|enchant|cocos|emscripten|unity|godot)", re.I)
 LINT_RULES = {
-    "no-dupe-keys": "error", "no-func-assign": "error", "no-dupe-args": "error",
+    "no-func-assign": "error", "no-dupe-args": "error",
     "no-const-assign": "error", "no-import-assign": "error", "valid-typeof": "error",
-    "use-isnan": "error", "no-unsafe-negation": "error", "no-dupe-else-if": "error",
+    "use-isnan": "error", "no-unsafe-negation": "error",
+    # أسلوبية/غير مؤثرة غالباً على التشغيل (مفتاح مكرر: الأخير يغلب ولا ينهار الكود): ملاحظات لا تحذيرات
+    "no-dupe-keys": "warn", "no-dupe-else-if": "warn",
     "no-unreachable": "warn", "no-self-assign": "warn",
 }
 

@@ -117,6 +117,14 @@ def scan_suspicious(site: Path):
     return res
 
 
+# معرّفات فضاءات الأسماء (xmlns في SVG/XML) تبدو كروابط لكنها ليست طلبات شبكة ولا مواقع تُزار
+NAMESPACE_HOSTS = {
+    "www.w3.org", "w3.org", "purl.org", "xml.org", "www.opengis.net", "ns.adobe.com", "schemas.microsoft.com",
+    "schemas.openxmlformats.org", "www.inkscape.org", "inkscape.sourceforge.net", "sodipodi.sourceforge.net",
+    "web.resource.org", "creativecommons.org", "www.sitemaps.org", "www.rdfs.org", "xmlns.com",
+}
+
+
 def sanitize(site: Path):
     removed, rewritten, tracker_hits, ext_hosts = [], [], set(), set()
     files = 0
@@ -140,7 +148,7 @@ def sanitize(site: Path):
                     if tr in txt:
                         tracker_hits.add(f"{tr} في {p.relative_to(site)}")
                 for h in re.findall(r"https?://([a-z0-9.-]+)", txt):
-                    if h not in SAFE_CDNS and "." in h:
+                    if h not in SAFE_CDNS and h not in NAMESPACE_HOSTS and "." in h:
                         ext_hosts.add(h)
     return {
         "files": files, "total": total, "big_files": big,

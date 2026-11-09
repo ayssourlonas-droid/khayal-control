@@ -334,9 +334,35 @@ def main():
     elif lint["errors"]:
         warnings.append(f"ESLint: {lint['errors']} أخطاء برمجية في {lint['checked']} ملفات، أولها: {lint['samples'][0]}")
     elif lint["ran"]:
-        notes.append(f"ESLint: لا أخطاء في {lint['checked']} ملفات")
+        if lint["warnings"]:
+            notes.append(f"ESLint: {lint['warnings']} ملاحظات خفيفة في {lint['checked']} ملفات (مفاتيح مكررة أو شيفرة لا تُنفَّذ)؛ لا تمنع اللعب غالباً")
+        else:
+            notes.append(f"ESLint: لا أخطاء في {lint['checked']} ملفات")
     if lint["skipped"]:
         notes.append(f"{lint['skipped']} ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص")
+
+    stage("تنظيف الكود")
+    # 6ج) تنظيف الكود: تصغير JS/CSS بلا تغيير الأسماء (esbuild) مع تراجع تلقائي إن ساء الاختبار
+    clean_mode = os.environ.get("INPUT_CLEAN", "safe").strip().lower()
+    if clean_mode != "off" and t["ran"]:
+        if spdx in COPYLEFT:
+            notes.append(f"رخصة {spdx}: لم يُنظَّف الكود (يجب إتاحة المصدر كما هو)")
+        else:
+            try:
+                import clean_code
+                cr = clean_code.clean_site(site, work, shot, t)
+                report["clean"] = cr
+                if cr.get("error"):
+                    warnings.append(cr["error"])
+                elif cr["rolled_back"]:
+                    warnings.append("تنظيف الكود سبّب أخطاء في الاختبار فتم التراجع عنه (بقي الكود كما هو)")
+                elif cr["files"]:
+                    how = "فراغات وبنية الكود" if cr["mode"] == "full" else "فراغات فقط"
+                    notes.append(f"تنظيف الكود ({how}): {cr['files']} ملفاً، {cr['before'] // 1024}KB ← {cr['after'] // 1024}KB "
+                                 "(الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)")
+                    fixed("تنظيف الكود", cr["files"])
+            except Exception as e:
+                warnings.append(f"تعذّر تنظيف الكود: {str(e)[:120]}")
 
     # سجل التعديلات التلقائية
     for k, v in FIXES.items():
