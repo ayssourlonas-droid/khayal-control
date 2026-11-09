@@ -1,0 +1,10 @@
+Source: https://github.com/jonniv900-ui/flowforgeweb
+Commit: 2d4915637fc4832ab816738792e9985625aa51ef
+License: GPL-3.0
+Imported: 2026-11-09T10:11:25.352685+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 15}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: author attributions in that material or in the Appropriate Legal
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 28, audio: 0, tagged audio: 0

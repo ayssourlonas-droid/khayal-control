@@ -1,0 +1,140 @@
+{
+  "name": "Lista de Tarefas",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "628d40e8-0315-4557-8f47-4fc9e52091b7",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "2f40e15e-98ba-46d6-b99f-a9c60e08ace9",
+          "kind": "heading",
+          "name": "todoTitle",
+          "text": "Lista de Tarefas",
+          "x": 20,
+          "y": 72,
+          "width": "336px",
+          "height": "48px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "5bfb3704-df75-4031-aa43-ed7a45017a59",
+          "kind": "input",
+          "name": "todoInput",
+          "text": "Nova tarefa...",
+          "x": 20,
+          "y": 132,
+          "width": "252px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "keydown": "var $=function(i){return document.getElementById(i)};if(!window.ffTodo){var T=window.ffTodo={items:[],filter:'Todas',id:0};try{T.items=JSON.parse(localStorage.getItem('ffTodoV1')||'[]')}catch(e){}T.id=T.items.reduce(function(m,t){return Math.max(m,t.id)},0);T.save=function(){try{localStorage.setItem('ffTodoV1',JSON.stringify(T.items))}catch(e){}};T.render=function(){var box=$('todoList');box.innerHTML='';var vis=T.items.filter(function(t){return T.filter==='Todas'||(T.filter==='Pendentes'?!t.done:t.done)});vis.forEach(function(t){var r=document.createElement('div');r.className='todo-row';r.dataset.id=t.id;r.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #e5e7eb';var c=document.createElement('input');c.type='checkbox';c.checked=t.done;c.setAttribute('aria-label','Concluir');c.onchange=function(){t.done=c.checked;T.save();T.render()};var s=document.createElement('span');s.textContent=t.text;s.style.cssText='flex:1;'+(t.done?'text-decoration:line-through;color:#9ca3af':'');var x=document.createElement('button');x.textContent='✕';x.title='Remover';x.className='todo-del';x.style.cssText='border:0;background:transparent;color:#ef4444;cursor:pointer;font-size:16px';x.onclick=function(){T.items=T.items.filter(function(i){return i!==t});T.save();T.render()};r.append(c,s,x);box.appendChild(r)});if(!vis.length){var e=document.createElement('div');e.textContent=T.items.length?'Nada neste filtro.':'Nenhuma tarefa. Adicione a primeira!';e.style.cssText='padding:14px;color:#9ca3af;text-align:center';box.appendChild(e)}var left=T.items.filter(function(t){return!t.done}).length;$('todoCount').textContent=left===1?'1 tarefa pendente':left+' tarefas pendentes'};T.add=function(){var f=$('todoInput'),v=f.value.trim();if(!v){$('todoCount').textContent='Digite uma tarefa';return}T.items.push({id:++T.id,text:v,done:false});f.value='';T.save();T.render();f.focus()};T.render()}if(event.key==='Enter'){window.ffTodo.add()}"
+          }
+        },
+        {
+          "id": "a3af4605-80ce-4c57-a5fd-dbf828f5d0fe",
+          "kind": "button",
+          "name": "todoAdd",
+          "text": "Adicionar",
+          "x": 282,
+          "y": 132,
+          "width": "84px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffTodo){var T=window.ffTodo={items:[],filter:'Todas',id:0};try{T.items=JSON.parse(localStorage.getItem('ffTodoV1')||'[]')}catch(e){}T.id=T.items.reduce(function(m,t){return Math.max(m,t.id)},0);T.save=function(){try{localStorage.setItem('ffTodoV1',JSON.stringify(T.items))}catch(e){}};T.render=function(){var box=$('todoList');box.innerHTML='';var vis=T.items.filter(function(t){return T.filter==='Todas'||(T.filter==='Pendentes'?!t.done:t.done)});vis.forEach(function(t){var r=document.createElement('div');r.className='todo-row';r.dataset.id=t.id;r.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #e5e7eb';var c=document.createElement('input');c.type='checkbox';c.checked=t.done;c.setAttribute('aria-label','Concluir');c.onchange=function(){t.done=c.checked;T.save();T.render()};var s=document.createElement('span');s.textContent=t.text;s.style.cssText='flex:1;'+(t.done?'text-decoration:line-through;color:#9ca3af':'');var x=document.createElement('button');x.textContent='✕';x.title='Remover';x.className='todo-del';x.style.cssText='border:0;background:transparent;color:#ef4444;cursor:pointer;font-size:16px';x.onclick=function(){T.items=T.items.filter(function(i){return i!==t});T.save();T.render()};r.append(c,s,x);box.appendChild(r)});if(!vis.length){var e=document.createElement('div');e.textContent=T.items.length?'Nada neste filtro.':'Nenhuma tarefa. Adicione a primeira!';e.style.cssText='padding:14px;color:#9ca3af;text-align:center';box.appendChild(e)}var left=T.items.filter(function(t){return!t.done}).length;$('todoCount').textContent=left===1?'1 tarefa pendente':left+' tarefas pendentes'};T.add=function(){var f=$('todoInput'),v=f.value.trim();if(!v){$('todoCount').textContent='Digite uma tarefa';return}T.items.push({id:++T.id,text:v,done:false});f.value='';T.save();T.render();f.focus()};T.render()}window.ffTodo.add();"
+          }
+        },
+        {
+          "id": "b72bb963-e71b-4965-91c7-c32a246441f5",
+          "kind": "select",
+          "name": "todoFilter",
+          "text": "Filtro",
+          "x": 20,
+          "y": 188,
+          "width": "134px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "var $=function(i){return document.getElementById(i)};if(!window.ffTodo){var T=window.ffTodo={items:[],filter:'Todas',id:0};try{T.items=JSON.parse(localStorage.getItem('ffTodoV1')||'[]')}catch(e){}T.id=T.items.reduce(function(m,t){return Math.max(m,t.id)},0);T.save=function(){try{localStorage.setItem('ffTodoV1',JSON.stringify(T.items))}catch(e){}};T.render=function(){var box=$('todoList');box.innerHTML='';var vis=T.items.filter(function(t){return T.filter==='Todas'||(T.filter==='Pendentes'?!t.done:t.done)});vis.forEach(function(t){var r=document.createElement('div');r.className='todo-row';r.dataset.id=t.id;r.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #e5e7eb';var c=document.createElement('input');c.type='checkbox';c.checked=t.done;c.setAttribute('aria-label','Concluir');c.onchange=function(){t.done=c.checked;T.save();T.render()};var s=document.createElement('span');s.textContent=t.text;s.style.cssText='flex:1;'+(t.done?'text-decoration:line-through;color:#9ca3af':'');var x=document.createElement('button');x.textContent='✕';x.title='Remover';x.className='todo-del';x.style.cssText='border:0;background:transparent;color:#ef4444;cursor:pointer;font-size:16px';x.onclick=function(){T.items=T.items.filter(function(i){return i!==t});T.save();T.render()};r.append(c,s,x);box.appendChild(r)});if(!vis.length){var e=document.createElement('div');e.textContent=T.items.length?'Nada neste filtro.':'Nenhuma tarefa. Adicione a primeira!';e.style.cssText='padding:14px;color:#9ca3af;text-align:center';box.appendChild(e)}var left=T.items.filter(function(t){return!t.done}).length;$('todoCount').textContent=left===1?'1 tarefa pendente':left+' tarefas pendentes'};T.add=function(){var f=$('todoInput'),v=f.value.trim();if(!v){$('todoCount').textContent='Digite uma tarefa';return}T.items.push({id:++T.id,text:v,done:false});f.value='';T.save();T.render();f.focus()};T.render()}window.ffTodo.filter=event.target.value;window.ffTodo.render();"
+          },
+          "items": [
+            "Todas",
+            "Pendentes",
+            "Concluídas"
+          ]
+        },
+        {
+          "id": "fd92fcd6-913f-4a74-91fb-7537a58af2dc",
+          "kind": "label",
+          "name": "todoCount",
+          "text": "0 tarefas pendentes",
+          "x": 168,
+          "y": 192,
+          "width": "198px",
+          "height": "32px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "bc76cf07-cbf0-48d3-85cd-48b8f48df51e",
+          "kind": "section",
+          "name": "todoList",
+          "text": "",
+          "x": 20,
+          "y": 240,
+          "width": "346px",
+          "height": "300px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "d9defcb6-7a12-4276-abc0-efb7c4b671bf",
+          "kind": "button",
+          "name": "todoClear",
+          "text": "Limpar concluídas",
+          "x": 20,
+          "y": 554,
+          "width": "151px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffTodo){var T=window.ffTodo={items:[],filter:'Todas',id:0};try{T.items=JSON.parse(localStorage.getItem('ffTodoV1')||'[]')}catch(e){}T.id=T.items.reduce(function(m,t){return Math.max(m,t.id)},0);T.save=function(){try{localStorage.setItem('ffTodoV1',JSON.stringify(T.items))}catch(e){}};T.render=function(){var box=$('todoList');box.innerHTML='';var vis=T.items.filter(function(t){return T.filter==='Todas'||(T.filter==='Pendentes'?!t.done:t.done)});vis.forEach(function(t){var r=document.createElement('div');r.className='todo-row';r.dataset.id=t.id;r.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #e5e7eb';var c=document.createElement('input');c.type='checkbox';c.checked=t.done;c.setAttribute('aria-label','Concluir');c.onchange=function(){t.done=c.checked;T.save();T.render()};var s=document.createElement('span');s.textContent=t.text;s.style.cssText='flex:1;'+(t.done?'text-decoration:line-through;color:#9ca3af':'');var x=document.createElement('button');x.textContent='✕';x.title='Remover';x.className='todo-del';x.style.cssText='border:0;background:transparent;color:#ef4444;cursor:pointer;font-size:16px';x.onclick=function(){T.items=T.items.filter(function(i){return i!==t});T.save();T.render()};r.append(c,s,x);box.appendChild(r)});if(!vis.length){var e=document.createElement('div');e.textContent=T.items.length?'Nada neste filtro.':'Nenhuma tarefa. Adicione a primeira!';e.style.cssText='padding:14px;color:#9ca3af;text-align:center';box.appendChild(e)}var left=T.items.filter(function(t){return!t.done}).length;$('todoCount').textContent=left===1?'1 tarefa pendente':left+' tarefas pendentes'};T.add=function(){var f=$('todoInput'),v=f.value.trim();if(!v){$('todoCount').textContent='Digite uma tarefa';return}T.items.push({id:++T.id,text:v,done:false});f.value='';T.save();T.render();f.focus()};T.render()}var T=window.ffTodo;T.items=T.items.filter(function(t){return!t.done});T.save();T.render();"
+          }
+        },
+        {
+          "id": "e31e662c-b50a-499f-a06e-ecd8ef6b24ae",
+          "kind": "label",
+          "name": "todoHint",
+          "text": "As tarefas ficam salvas neste navegador.",
+          "x": 181,
+          "y": 560,
+          "width": "185px",
+          "height": "32px",
+          "bg": "transparent",
+          "color": "#6b7280",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffTodo){var T=window.ffTodo={items:[],filter:'Todas',id:0};try{T.items=JSON.parse(localStorage.getItem('ffTodoV1')||'[]')}catch(e){}T.id=T.items.reduce(function(m,t){return Math.max(m,t.id)},0);T.save=function(){try{localStorage.setItem('ffTodoV1',JSON.stringify(T.items))}catch(e){}};T.render=function(){var box=$('todoList');box.innerHTML='';var vis=T.items.filter(function(t){return T.filter==='Todas'||(T.filter==='Pendentes'?!t.done:t.done)});vis.forEach(function(t){var r=document.createElement('div');r.className='todo-row';r.dataset.id=t.id;r.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #e5e7eb';var c=document.createElement('input');c.type='checkbox';c.checked=t.done;c.setAttribute('aria-label','Concluir');c.onchange=function(){t.done=c.checked;T.save();T.render()};var s=document.createElement('span');s.textContent=t.text;s.style.cssText='flex:1;'+(t.done?'text-decoration:line-through;color:#9ca3af':'');var x=document.createElement('button');x.textContent='✕';x.title='Remover';x.className='todo-del';x.style.cssText='border:0;background:transparent;color:#ef4444;cursor:pointer;font-size:16px';x.onclick=function(){T.items=T.items.filter(function(i){return i!==t});T.save();T.render()};r.append(c,s,x);box.appendChild(r)});if(!vis.length){var e=document.createElement('div');e.textContent=T.items.length?'Nada neste filtro.':'Nenhuma tarefa. Adicione a primeira!';e.style.cssText='padding:14px;color:#9ca3af;text-align:center';box.appendChild(e)}var left=T.items.filter(function(t){return!t.done}).length;$('todoCount').textContent=left===1?'1 tarefa pendente':left+' tarefas pendentes'};T.add=function(){var f=$('todoInput'),v=f.value.trim();if(!v){$('todoCount').textContent='Digite uma tarefa';return}T.items.push({id:++T.id,text:v,done:false});f.value='';T.save();T.render();f.focus()};T.render()}",
+        "onshow": ""
+      }
+    }
+  ]
+}

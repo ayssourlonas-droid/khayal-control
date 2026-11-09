@@ -1,0 +1,140 @@
+{
+  "name": "Pong vs IA",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "853c3750-d259-4f29-b451-52de257cbd9e",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "e82bcd36-d889-45c4-b123-cabb7e9d2b86",
+          "kind": "heading",
+          "name": "pongTitle",
+          "text": "Pong",
+          "x": 145,
+          "y": 20,
+          "width": "100px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "1a1b70bf-e95f-4f8b-a690-d84ea7311141",
+          "kind": "label",
+          "name": "pongStatus",
+          "text": "Clique em Iniciar",
+          "x": 85,
+          "y": 65,
+          "width": "220px",
+          "height": "32px",
+          "bg": "#f1f5f9",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "4866df9c-71a5-457f-b334-ef15833c6eff",
+          "kind": "textarea",
+          "name": "pongBoard",
+          "text": "",
+          "x": 35,
+          "y": 115,
+          "width": "320px",
+          "height": "235px",
+          "bg": "#020617",
+          "color": "#fff",
+          "events": {}
+        },
+        {
+          "id": "ab5d02a3-78d6-4a8a-b512-c667c7b7ccb2",
+          "kind": "button",
+          "name": "pongUp",
+          "text": "▲",
+          "x": 55,
+          "y": 380,
+          "width": "80px",
+          "height": "48px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "if(window.ffPong)Sons.play('tick');if(window.ffPong)window.ffPong.p=Math.max(1,window.ffPong.p-2)"
+          }
+        },
+        {
+          "id": "e57de262-b5ce-429b-867e-3ee8fa75a46a",
+          "kind": "button",
+          "name": "pongDown",
+          "text": "▼",
+          "x": 145,
+          "y": 380,
+          "width": "80px",
+          "height": "48px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "if(window.ffPong)Sons.play('tick');if(window.ffPong)window.ffPong.p=Math.min(9,window.ffPong.p+2)"
+          }
+        },
+        {
+          "id": "d8d9af38-9ccc-4ab2-89aa-8ba99942552e",
+          "kind": "button",
+          "name": "pongStart",
+          "text": "Iniciar",
+          "x": 235,
+          "y": 380,
+          "width": "100px",
+          "height": "48px",
+          "bg": "#2563eb",
+          "color": "#fff",
+          "events": {
+            "click": "Sons.play('start');clearInterval(window.ffPongTimer);window.ffPong={x:8,y:5,dx:1,dy:1,p:4,cpu:4,score:0};const b=document.getElementById('pongBoard'),st=document.getElementById('pongStatus');function draw(){let q=window.ffPong,c=Math.round(q.cpu),g=Array.from({length:11},()=>Array(18).fill(' '));for(let k=-1;k<=1;k++){if(q.p+k>=0&&q.p+k<11)g[q.p+k][0]='█';if(c+k>=0&&c+k<11)g[c+k][17]='█'}g[q.y][q.x]='●';b.textContent=g.map(r=>r.join('')).join('\\n');st.textContent='Rebatidas: '+q.score}function tick(){let q=window.ffPong;q.cpu+=Math.sign(q.y-q.cpu)*.45;q.cpu=Math.max(1,Math.min(9,q.cpu));let nx=q.x+q.dx,ny=q.y+q.dy;if(ny<=0||ny>=10){q.dy*=-1;Sons.play('blip');ny=q.y+q.dy}if(nx<=0){if(Math.abs(q.y-q.p)<=2){q.dx=1;q.score++;nx=1;Sons.play('pop');}else{Sons.play('lose');return end()}}if(nx>=17){if(Math.abs(q.y-q.cpu)<=2){q.dx=-1;q.score++;nx=16;Sons.play('blip');}else{Sons.play('win');return end()}}q.x=nx;q.y=ny;draw()}function end(){clearInterval(window.ffPongTimer);st.textContent='Fim — '+window.ffPong.score+' rebatidas'}draw();window.ffPongTimer=setInterval(tick,100);"
+          }
+        },
+        {
+          "id": "9f5debe7-0b57-4b1e-a049-258c7227ad22",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 24,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "5baa8dd8-2f05-44be-bf86-56f70114c22b",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 440,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

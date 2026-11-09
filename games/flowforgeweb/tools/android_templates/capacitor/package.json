@@ -1,0 +1,22 @@
+{
+  "name": "@@SLUG@@",
+  "version": "@@VERSION_NAME@@",
+  "private": true,
+  "description": "@@APP_NAME_JSON@@ — gerado pelo FlowForge WebStudio",
+  "scripts": {
+    "android:setup": "cap add android && node scripts/prepare-android.js && cap sync android",
+    "android:apk": "npm run android:setup && cd android && ./gradlew assembleDebug",
+    "android:open": "cap open android",
+    "android:sync": "node scripts/prepare-android.js && cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

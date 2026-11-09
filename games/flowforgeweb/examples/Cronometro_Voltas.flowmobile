@@ -1,0 +1,121 @@
+{
+  "name": "Cronômetro com Voltas",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "8a0a4aba-286d-4b31-8e29-484444344428",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "2c1ee8ab-a933-4334-b50c-074606d7a6af",
+          "kind": "heading",
+          "name": "swTitle",
+          "text": "Cronômetro",
+          "x": 20,
+          "y": 72,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "8a8264a4-971b-4cc1-9ec4-b1542b66057a",
+          "kind": "label",
+          "name": "swTime",
+          "text": "00:00.00",
+          "x": 20,
+          "y": 126,
+          "width": "353px",
+          "height": "90px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "bb6c00b8-c0a9-426d-96b3-8e837c0e4d33",
+          "kind": "button",
+          "name": "swStart",
+          "text": "Iniciar",
+          "x": 20,
+          "y": 232,
+          "width": "168px",
+          "height": "52px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffSw){var W=window.ffSw={t0:0,acc:0,run:false,h:null,laps:[]};W.now=function(){return W.acc+(W.run?performance.now()-W.t0:0)};\nW.fmt=function(ms){var c=Math.floor(ms/10)%100,s=Math.floor(ms/1000)%60,m=Math.floor(ms/60000);return(m<10?'0':'')+m+':'+(s<10?'0':'')+s+'.'+(c<10?'0':'')+c};\nW.draw=function(){var e=$('swTime');e.textContent=W.fmt(W.now());e.style.cssText+=';font-size:58px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums';$('swStart').textContent=W.run?'Pausar':(W.acc>0?'Continuar':'Iniciar');$('swLap').disabled=!W.run;$('swReset').disabled=W.run||W.acc===0;\n var best=Infinity,worst=-1,bi=-1,wi=-1;W.laps.forEach(function(l,i){if(l<best){best=l;bi=i}if(l>worst){worst=l;wi=i}});\n var lines=W.laps.map(function(l,i){var tag=W.laps.length>2?(i===bi?'  ▲ melhor':(i===wi?'  ▼ pior':'')):'';return 'Volta '+(i+1)+'   '+W.fmt(l)+tag}).reverse();\n $('swLaps').value=lines.join('\\n');$('swInfo').textContent=W.laps.length?('Voltas: '+W.laps.length+' • melhor '+W.fmt(best)+' • média '+W.fmt(W.laps.reduce(function(a,b){return a+b},0)/W.laps.length)):'Toque em Iniciar e depois em Volta.'};\nW.toggle=function(){if(W.run){W.acc=W.now();W.run=false;clearInterval(W.h);W.h=null}else{W.t0=performance.now();W.run=true;W.h=setInterval(W.draw,30)}W.draw()};\nW.lap=function(){if(!W.run)return;var total=W.now(),prev=W.laps.reduce(function(a,b){return a+b},0);W.laps.push(total-prev);W.draw()};\nW.reset=function(){W.run=false;clearInterval(W.h);W.h=null;W.acc=0;W.laps=[];W.draw()};W.draw()}window.ffSw.toggle();"
+          }
+        },
+        {
+          "id": "d7e4e422-2b56-4432-a00c-4bda60b1e706",
+          "kind": "button",
+          "name": "swLap",
+          "text": "Volta",
+          "x": 205,
+          "y": 232,
+          "width": "168px",
+          "height": "52px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffSw){var W=window.ffSw={t0:0,acc:0,run:false,h:null,laps:[]};W.now=function(){return W.acc+(W.run?performance.now()-W.t0:0)};\nW.fmt=function(ms){var c=Math.floor(ms/10)%100,s=Math.floor(ms/1000)%60,m=Math.floor(ms/60000);return(m<10?'0':'')+m+':'+(s<10?'0':'')+s+'.'+(c<10?'0':'')+c};\nW.draw=function(){var e=$('swTime');e.textContent=W.fmt(W.now());e.style.cssText+=';font-size:58px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums';$('swStart').textContent=W.run?'Pausar':(W.acc>0?'Continuar':'Iniciar');$('swLap').disabled=!W.run;$('swReset').disabled=W.run||W.acc===0;\n var best=Infinity,worst=-1,bi=-1,wi=-1;W.laps.forEach(function(l,i){if(l<best){best=l;bi=i}if(l>worst){worst=l;wi=i}});\n var lines=W.laps.map(function(l,i){var tag=W.laps.length>2?(i===bi?'  ▲ melhor':(i===wi?'  ▼ pior':'')):'';return 'Volta '+(i+1)+'   '+W.fmt(l)+tag}).reverse();\n $('swLaps').value=lines.join('\\n');$('swInfo').textContent=W.laps.length?('Voltas: '+W.laps.length+' • melhor '+W.fmt(best)+' • média '+W.fmt(W.laps.reduce(function(a,b){return a+b},0)/W.laps.length)):'Toque em Iniciar e depois em Volta.'};\nW.toggle=function(){if(W.run){W.acc=W.now();W.run=false;clearInterval(W.h);W.h=null}else{W.t0=performance.now();W.run=true;W.h=setInterval(W.draw,30)}W.draw()};\nW.lap=function(){if(!W.run)return;var total=W.now(),prev=W.laps.reduce(function(a,b){return a+b},0);W.laps.push(total-prev);W.draw()};\nW.reset=function(){W.run=false;clearInterval(W.h);W.h=null;W.acc=0;W.laps=[];W.draw()};W.draw()}window.ffSw.lap();"
+          }
+        },
+        {
+          "id": "2be7a30d-0cd5-497b-8deb-aa050e1d6c20",
+          "kind": "button",
+          "name": "swReset",
+          "text": "Zerar",
+          "x": 20,
+          "y": 296,
+          "width": "353px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffSw){var W=window.ffSw={t0:0,acc:0,run:false,h:null,laps:[]};W.now=function(){return W.acc+(W.run?performance.now()-W.t0:0)};\nW.fmt=function(ms){var c=Math.floor(ms/10)%100,s=Math.floor(ms/1000)%60,m=Math.floor(ms/60000);return(m<10?'0':'')+m+':'+(s<10?'0':'')+s+'.'+(c<10?'0':'')+c};\nW.draw=function(){var e=$('swTime');e.textContent=W.fmt(W.now());e.style.cssText+=';font-size:58px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums';$('swStart').textContent=W.run?'Pausar':(W.acc>0?'Continuar':'Iniciar');$('swLap').disabled=!W.run;$('swReset').disabled=W.run||W.acc===0;\n var best=Infinity,worst=-1,bi=-1,wi=-1;W.laps.forEach(function(l,i){if(l<best){best=l;bi=i}if(l>worst){worst=l;wi=i}});\n var lines=W.laps.map(function(l,i){var tag=W.laps.length>2?(i===bi?'  ▲ melhor':(i===wi?'  ▼ pior':'')):'';return 'Volta '+(i+1)+'   '+W.fmt(l)+tag}).reverse();\n $('swLaps').value=lines.join('\\n');$('swInfo').textContent=W.laps.length?('Voltas: '+W.laps.length+' • melhor '+W.fmt(best)+' • média '+W.fmt(W.laps.reduce(function(a,b){return a+b},0)/W.laps.length)):'Toque em Iniciar e depois em Volta.'};\nW.toggle=function(){if(W.run){W.acc=W.now();W.run=false;clearInterval(W.h);W.h=null}else{W.t0=performance.now();W.run=true;W.h=setInterval(W.draw,30)}W.draw()};\nW.lap=function(){if(!W.run)return;var total=W.now(),prev=W.laps.reduce(function(a,b){return a+b},0);W.laps.push(total-prev);W.draw()};\nW.reset=function(){W.run=false;clearInterval(W.h);W.h=null;W.acc=0;W.laps=[];W.draw()};W.draw()}window.ffSw.reset();"
+          }
+        },
+        {
+          "id": "ec2e9605-5e1f-473a-b174-49333687c044",
+          "kind": "label",
+          "name": "swInfo",
+          "text": "Toque em Iniciar e depois em Volta.",
+          "x": 20,
+          "y": 352,
+          "width": "353px",
+          "height": "30px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "ec9b31af-64ca-42a3-b11f-254b20b915d5",
+          "kind": "textarea",
+          "name": "swLaps",
+          "text": "",
+          "x": 20,
+          "y": 388,
+          "width": "353px",
+          "height": "230px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "readOnly": true
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffSw){var W=window.ffSw={t0:0,acc:0,run:false,h:null,laps:[]};W.now=function(){return W.acc+(W.run?performance.now()-W.t0:0)};\nW.fmt=function(ms){var c=Math.floor(ms/10)%100,s=Math.floor(ms/1000)%60,m=Math.floor(ms/60000);return(m<10?'0':'')+m+':'+(s<10?'0':'')+s+'.'+(c<10?'0':'')+c};\nW.draw=function(){var e=$('swTime');e.textContent=W.fmt(W.now());e.style.cssText+=';font-size:58px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums';$('swStart').textContent=W.run?'Pausar':(W.acc>0?'Continuar':'Iniciar');$('swLap').disabled=!W.run;$('swReset').disabled=W.run||W.acc===0;\n var best=Infinity,worst=-1,bi=-1,wi=-1;W.laps.forEach(function(l,i){if(l<best){best=l;bi=i}if(l>worst){worst=l;wi=i}});\n var lines=W.laps.map(function(l,i){var tag=W.laps.length>2?(i===bi?'  ▲ melhor':(i===wi?'  ▼ pior':'')):'';return 'Volta '+(i+1)+'   '+W.fmt(l)+tag}).reverse();\n $('swLaps').value=lines.join('\\n');$('swInfo').textContent=W.laps.length?('Voltas: '+W.laps.length+' • melhor '+W.fmt(best)+' • média '+W.fmt(W.laps.reduce(function(a,b){return a+b},0)/W.laps.length)):'Toque em Iniciar e depois em Volta.'};\nW.toggle=function(){if(W.run){W.acc=W.now();W.run=false;clearInterval(W.h);W.h=null}else{W.t0=performance.now();W.run=true;W.h=setInterval(W.draw,30)}W.draw()};\nW.lap=function(){if(!W.run)return;var total=W.now(),prev=W.laps.reduce(function(a,b){return a+b},0);W.laps.push(total-prev);W.draw()};\nW.reset=function(){W.run=false;clearInterval(W.h);W.h=null;W.acc=0;W.laps=[];W.draw()};W.draw()}",
+        "onshow": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "name": "Cadastro de Usuário",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "bootstrap",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "63878e47-8570-42c0-a62f-f5784f735d7d",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "f1446235-143d-47c2-a98e-1e6fcec0b7fa",
+          "kind": "heading",
+          "name": "h1",
+          "text": "Cadastro de Usuário",
+          "x": 24,
+          "y": 20,
+          "width": "340px",
+          "height": "52px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// h1\n"
+          }
+        },
+        {
+          "id": "e00eab17-1dbb-4320-a221-76418d0f4de4",
+          "kind": "input",
+          "name": "nome1",
+          "text": "Nome completo",
+          "x": 24,
+          "y": 90,
+          "width": "350px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "input": "// nome1\n"
+          }
+        },
+        {
+          "id": "ae1bc79e-325f-4d03-941c-0a7daec91650",
+          "kind": "input",
+          "name": "email1",
+          "text": "E-mail",
+          "x": 24,
+          "y": 145,
+          "width": "350px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "input": "// email1\n"
+          }
+        },
+        {
+          "id": "8cf3bd9a-e58f-4e7e-9598-e5db1ae30f63",
+          "kind": "date",
+          "name": "data1",
+          "text": "",
+          "x": 24,
+          "y": 200,
+          "width": "200px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "// data1\n"
+          }
+        },
+        {
+          "id": "995989a5-40d1-4c11-8195-b6fed6f29d2e",
+          "kind": "checkbox",
+          "name": "termos1",
+          "text": "Aceito os termos",
+          "x": 24,
+          "y": 255,
+          "width": "220px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "// termos1\n"
+          }
+        },
+        {
+          "id": "c6da4197-5137-45ec-8b20-7b87c548bd05",
+          "kind": "button",
+          "name": "salvar1",
+          "text": "Cadastrar",
+          "x": 24,
+          "y": 315,
+          "width": "180px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "if(!nome1.value || !email1.value){ status1.textContent=\"Preencha nome e e-mail\"; return; }\nif(!termos1.checked){ status1.textContent=\"Aceite os termos\"; return; }\nstatus1.textContent=\"Cadastro concluído: \" + nome1.value;"
+          }
+        },
+        {
+          "id": "2a8d02d6-cd75-4d0e-ae6c-9a71cb985b21",
+          "kind": "statuscard",
+          "name": "status1",
+          "text": "Aguardando cadastro",
+          "x": 24,
+          "y": 380,
+          "width": "400px",
+          "height": "90px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// status1\n"
+          },
+          "value": ""
+        }
+      ]
+    }
+  ]
+}

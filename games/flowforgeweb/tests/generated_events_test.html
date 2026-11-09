@@ -1,0 +1,118 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>FlowForge generated events regression</title>
+<style>
+  body{font:13px/1.5 ui-monospace,Consolas,monospace;margin:12px;background:#111;color:#ddd}
+  .pass{color:#4ade80}.fail{color:#f87171;font-weight:700}
+  iframe{position:absolute;left:-9999px;top:0;width:1700px;height:900px;border:0}
+  #summary{margin:10px 0;font-weight:700}
+</style>
+<h3>FlowForge – eventos load/error no HTML gerado (iframe sem erro)</h3>
+<p>Abra por um servidor local: <code>python -m http.server</code> na raiz do projeto e visite <code>/tests/generated_events_test.html</code>.</p>
+<div id="summary">Executando…</div>
+<pre id="out"></pre>
+<iframe id="app" src="../index.html"></iframe>
+<iframe id="run" style="left:-9999px"></iframe>
+<script>
+const out=document.getElementById('out'),summary=document.getElementById('summary');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const escHtml=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let passed=0,failed=0;
+function check(name,cond,detail){
+  if(cond){passed++;out.insertAdjacentHTML('beforeend','<span class="pass">PASS</span> '+escHtml(name)+'\n');}
+  else{failed++;out.insertAdjacentHTML('beforeend','<span class="fail">FAIL</span> '+escHtml(name)+(detail!==undefined?'  → '+escHtml(JSON.stringify(detail)):'')+'\n');}
+}
+async function run(){
+  const f=document.getElementById('app');
+  await new Promise(r=>f.addEventListener('load',r,{once:true}));
+  await sleep(600);
+  let W,D;
+  try{W=f.contentWindow;D=f.contentDocument;D.body;}catch(e){
+    summary.textContent='Sem acesso ao app: abra por http://, não por file://';document.body.dataset.test='FAIL';return;
+  }
+  const $=s=>D.querySelector(s);
+  const closeDialogs=()=>D.querySelectorAll('dialog[open]').forEach(x=>x.close());
+  async function createProject(type){
+    $('[data-new='+type+']').click();await sleep(250);
+    if($('#siteWizardDlg')?.open)$('#wizCreate').click();
+    await sleep(450);closeDialogs();
+  }
+  await createProject('app');
+
+  /* iframe (about:blank), image and a button, each with its own event handler */
+  W.eval(`addItem('iframe');addItem('image');addItem('button');
+    const it=ffItems();
+    const ifr=it.find(i=>i.kind==='iframe'),img=it.find(i=>i.kind==='image'),btn=it.find(i=>i.kind==='button');
+    ifr.events={load:'window.__iframeLoads=(window.__iframeLoads||0)+1;'};
+    img.src='data:image/png;base64,INVALID';img.events={load:'window.__imgLoad=1;',error:'window.__imgError=(window.__imgError||0)+1;'};
+    btn.events={click:'window.__clicks=(window.__clicks||0)+1;'};
+    render()`);
+  const plCode='window.__plStr="a$&b$\'c$`d";';
+  W.eval('ffEnsurePages()[0].events={onload:'+JSON.stringify(plCode)+',onshow:""}');
+  const html=W.generated();
+
+  /* ---------- the generated markup ---------- */
+  check('load do iframe é protegido (typeof … === function)',html.includes(`onload="typeof iframe1_load==='function'&&iframe1_load(event)"`),(html.match(/<iframe[^>]*>/)||[''])[0].slice(0,200));
+  check('load/error da imagem também são protegidos',html.includes(`typeof image1_load==='function'&&image1_load(event)`)&&html.includes(`typeof image1_error==='function'&&image1_error(event)`));
+  check('não sobra nenhum onload="…_load(event)" sem proteção',!/onload="[A-Za-z0-9_]+_load\(event\)"/.test(html));
+  check('eventos comuns continuam inline e sem mudança (click)',html.includes(`onclick="button1_click(event)"`));
+  check('o corpo dos eventos continua no código gerado',html.includes('async function iframe1_load(event)')&&html.includes('async function image1_error(event)'));
+
+  /* ---------- run it for real: no ReferenceError while the page loads ---------- */
+  const probe='<script>window.__errs=[];addEventListener("error",e=>__errs.push(String(e.message)))<\/script>';
+  const runner=document.getElementById('run');
+  runner.srcdoc=html.replace('<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:flowforgeweb:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>','<head>'+probe);
+  await new Promise(r=>runner.addEventListener('load',r,{once:true}));
+  await sleep(900);
+  const RW=runner.contentWindow;
+  check('abrir o HTML gerado não dispara "… is not defined"',RW.__errs.length===0,RW.__errs);
+  check('código do OnLoad da página com $&, $\' e $` chega intacto (replace seguro)',RW.__plStr==='a$&b$\'c$`d',RW.__plStr);
+  check('onerror da imagem inválida não quebra a página',!RW.__errs.some(m=>/image1_error|not defined/.test(m)),RW.__errs);
+
+  /* the handlers still work once they exist */
+  RW.document.getElementById('iframe1').srcdoc='<p>carregado</p>';
+  await sleep(500);
+  check('depois de carregado, o load do iframe executa o handler do usuário',(RW.__iframeLoads||0)>=1,RW.__iframeLoads);
+  RW.document.getElementById('button1').click();
+  check('click do botão continua executando o handler',RW.__clicks===1,RW.__clicks);
+  RW.document.getElementById('image1').dispatchEvent(new RW.Event('error'));
+  check('error da imagem executa o handler quando disparado depois do carregamento',(RW.__imgError||0)>=1,RW.__imgError);
+  check('nenhum erro novo depois dessas ações',RW.__errs.length===0,RW.__errs);
+
+  summary.textContent=failed?`${failed} falha(s), ${passed} ok`:`Tudo certo: ${passed} verificações`;
+  summary.className=failed?'fail':'pass';
+  document.body.dataset.test=failed?'FAIL':'PASS';
+}
+run().catch(e=>{out.insertAdjacentHTML('beforeend','<span class="fail">ERRO</span> '+escHtml(e.message)+'\n');summary.textContent='Erro no teste';document.body.dataset.test='FAIL';});
+</script>

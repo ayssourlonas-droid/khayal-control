@@ -1,0 +1,180 @@
+{
+  "name": "Laboratório do Depurador",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "ffe206dc-ef9f-4990-b900-40bd665c11e8",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "5d242bc2-d83d-4fd0-b974-d3f64722d10b",
+          "kind": "heading",
+          "name": "dbTitle",
+          "text": "Laboratório do Depurador",
+          "x": 20,
+          "y": 68,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "56cb4cc0-c2d4-419c-a04f-9bcd9ba92fa5",
+          "kind": "label",
+          "name": "dbHelp",
+          "text": "Abra o app pelo botão Debug do IDE e use os botões abaixo. Veja o resultado nas abas Console, Erros, Eventos, Variáveis e Rede.",
+          "x": 20,
+          "y": 116,
+          "width": "353px",
+          "height": "64px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "cd989b50-bca0-47ff-aed0-94aaf6c5d5ba",
+          "kind": "button",
+          "name": "dbLog",
+          "text": "console.log",
+          "x": 20,
+          "y": 192,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffDemo){window.ffDemo={n:0};}window.ffDemo.n++;console.log('Clique número',window.ffDemo.n,{ok:true,lista:[1,2,3]});$('dbOut').textContent='Registrado no Console (variável ffDemo.n = '+window.ffDemo.n+')';"
+          }
+        },
+        {
+          "id": "502e517f-1c24-4120-81fb-9cc037ca758b",
+          "kind": "button",
+          "name": "dbWarn",
+          "text": "console.warn",
+          "x": 205,
+          "y": 192,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffDemo){window.ffDemo={n:0};}console.warn('Atenção: isto é um aviso');$('dbOut').textContent='Aviso enviado ao Console';"
+          }
+        },
+        {
+          "id": "abddac56-3717-4a76-a4d1-0a978f6cdf05",
+          "kind": "button",
+          "name": "dbErr",
+          "text": "Gerar erro",
+          "x": 20,
+          "y": 244,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#dc2626",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffDemo){window.ffDemo={n:0};}$('dbOut').textContent='Vai falhar…';funcaoQueNaoExiste();"
+          }
+        },
+        {
+          "id": "99ced1a6-386f-41d7-a198-99803026ba5e",
+          "kind": "button",
+          "name": "dbPromise",
+          "text": "Promise rejeitada",
+          "x": 205,
+          "y": 244,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffDemo){window.ffDemo={n:0};}Promise.reject(new Error('Falha assíncrona de exemplo'));$('dbOut').textContent='Promise rejeitada enviada';"
+          }
+        },
+        {
+          "id": "cd43826a-257a-45ce-b51a-974e3e8b372d",
+          "kind": "button",
+          "name": "dbNet",
+          "text": "Requisição (fetch)",
+          "x": 20,
+          "y": 296,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffDemo){window.ffDemo={n:0};}$('dbOut').textContent='Buscando…';fetch('dados-que-nao-existem.json').then(function(r){$('dbOut').textContent='Status '+r.status}).catch(function(e){$('dbOut').textContent='Falhou: '+e.message});"
+          }
+        },
+        {
+          "id": "38bc6288-8e6e-4640-9e12-37393f648b22",
+          "kind": "button",
+          "name": "dbVar",
+          "text": "Criar variáveis",
+          "x": 205,
+          "y": 296,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffDemo){window.ffDemo={n:0};}window.usuario={nome:'Ana',nivel:3};window.pontos=(window.pontos||0)+10;window.ativo=true;$('dbOut').textContent='Veja a aba Variáveis (pontos = '+window.pontos+')';"
+          }
+        },
+        {
+          "id": "e31cc215-eace-4040-ab53-6da5007b8d64",
+          "kind": "input",
+          "name": "dbInput",
+          "text": "Digite algo (gera eventos input/change)",
+          "x": 20,
+          "y": 350,
+          "width": "353px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "input": "var $=function(i){return document.getElementById(i)};if(!window.ffDemo){window.ffDemo={n:0};}window.ultimoTexto=event.target.value;"
+          }
+        },
+        {
+          "id": "9c1a7e5c-66e5-41b1-87dc-85112d78a9a7",
+          "kind": "label",
+          "name": "dbOut",
+          "text": "Aguardando…",
+          "x": 20,
+          "y": 404,
+          "width": "353px",
+          "height": "60px",
+          "bg": "#f1f5f9",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "268871e0-9bc0-4a88-93ed-3ab170e639f2",
+          "kind": "label",
+          "name": "dbTip",
+          "text": "Dica: na aba Console digite uma expressão, por exemplo  pontos * 2  ou  ffDemo.n  e tecle Enter.",
+          "x": 20,
+          "y": 476,
+          "width": "353px",
+          "height": "64px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffDemo){window.ffDemo={n:0};}console.info('App carregado');console.warn('Exemplo: aviso no onload');",
+        "onshow": ""
+      }
+    }
+  ]
+}

@@ -1088,5 +1088,31 @@
       "type": "web",
       "category": "android-game"
     }
+  },
+  {
+    "id": 58,
+    "release_year": "2026",
+    "category_tags": [
+      "app",
+      "appbuilder",
+      "blockprogramming"
+    ],
+    "main_scene": {
+      "title_ar": "Flowforgeweb",
+      "title_en": "Flowforgeweb",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/flowforgeweb/_cover.png"
+    },
+    "details_scene": {
+      "description": "a html5 app builder",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/flowforgeweb/",
+      "developer": "jonniv900-ui",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/jonniv900-ui/flowforgeweb",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "app"
+    }
   }
 ]

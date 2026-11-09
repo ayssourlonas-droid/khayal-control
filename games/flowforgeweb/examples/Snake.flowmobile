@@ -1,0 +1,170 @@
+{
+  "name": "Snake",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "cf631d05-a2b7-42de-a7b4-fe29318fbfe5",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "540027b9-9e76-408f-aee3-df6b2f5da016",
+          "kind": "heading",
+          "name": "snakeTitle",
+          "text": "Snake",
+          "x": 145,
+          "y": 18,
+          "width": "100px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "4d016c65-56cd-4415-8a7f-1b2d88d00f8a",
+          "kind": "label",
+          "name": "snakeStatus",
+          "text": "Clique em Iniciar",
+          "x": 90,
+          "y": 60,
+          "width": "210px",
+          "height": "32px",
+          "bg": "#f1f5f9",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "3925ac00-1aaf-4764-b0f9-d0492ae848ca",
+          "kind": "textarea",
+          "name": "snakeBoard",
+          "text": "",
+          "x": 20,
+          "y": 105,
+          "width": "350px",
+          "height": "245px",
+          "bg": "#0f172a",
+          "color": "#86efac",
+          "events": {}
+        },
+        {
+          "id": "2ec61ab3-e4cd-4020-9126-7a55a774e68a",
+          "kind": "button",
+          "name": "snakeUp",
+          "text": "↑",
+          "x": 165,
+          "y": 365,
+          "width": "60px",
+          "height": "45px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "if(window.ffSnake){Sons.play('tick');let d=window.ffSnake.dir;if(!(0===-d[0]&&-1===-d[1]))window.ffSnake.dir=[0,-1]}"
+          }
+        },
+        {
+          "id": "ab3f86fd-3821-4aee-a7ef-be5c5b80755b",
+          "kind": "button",
+          "name": "snakeLeft",
+          "text": "←",
+          "x": 95,
+          "y": 415,
+          "width": "60px",
+          "height": "45px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "if(window.ffSnake){Sons.play('tick');let d=window.ffSnake.dir;if(!(-1===-d[0]&&0===-d[1]))window.ffSnake.dir=[-1,0]}"
+          }
+        },
+        {
+          "id": "3a83dcd6-9d56-4b0c-bfc9-dadee3c2c00a",
+          "kind": "button",
+          "name": "snakeDown",
+          "text": "↓",
+          "x": 165,
+          "y": 415,
+          "width": "60px",
+          "height": "45px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "if(window.ffSnake){Sons.play('tick');let d=window.ffSnake.dir;if(!(0===-d[0]&&1===-d[1]))window.ffSnake.dir=[0,1]}"
+          }
+        },
+        {
+          "id": "3cdd280a-d908-43db-8e43-332725893485",
+          "kind": "button",
+          "name": "snakeRight",
+          "text": "→",
+          "x": 235,
+          "y": 415,
+          "width": "60px",
+          "height": "45px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "if(window.ffSnake){Sons.play('tick');let d=window.ffSnake.dir;if(!(1===-d[0]&&0===-d[1]))window.ffSnake.dir=[1,0]}"
+          }
+        },
+        {
+          "id": "827eb03c-0008-43e4-974f-fcfc2631777d",
+          "kind": "button",
+          "name": "snakeStart",
+          "text": "Iniciar / Reiniciar",
+          "x": 105,
+          "y": 475,
+          "width": "180px",
+          "height": "44px",
+          "bg": "#16a34a",
+          "color": "#fff",
+          "events": {
+            "click": "Sons.play('start');clearInterval(window.ffSnakeTimer);window.ffSnake={body:[[5,5],[4,5],[3,5]],dir:[1,0],food:[10,5],score:0};const box=document.getElementById('snakeBoard'),st=document.getElementById('snakeStatus');function draw(){let g=Array.from({length:12},()=>Array(16).fill(''));let q=window.ffSnake;q.body.forEach(([x,y],i)=>{if(y>=0&&y<12&&x>=0&&x<16)g[y][x]=i?'●':'◆'});g[q.food[1]][q.food[0]]='★';box.textContent=g.map(r=>r.map(v=>v||'·').join(' ')).join('\\n');st.textContent='Pontos: '+q.score}function tick(){let q=window.ffSnake,h=q.body[0],n=[h[0]+q.dir[0],h[1]+q.dir[1]];if(n[0]<0||n[0]>=16||n[1]<0||n[1]>=12||q.body.some(p=>p[0]===n[0]&&p[1]===n[1])){clearInterval(window.ffSnakeTimer);Sons.play('lose');st.textContent='Fim de jogo — '+q.score+' pontos';return}q.body.unshift(n);if(n[0]===q.food[0]&&n[1]===q.food[1]){q.score++;Sons.play('coin');do{q.food=[Math.floor(Math.random()*16),Math.floor(Math.random()*12)]}while(q.body.some(p=>p[0]===q.food[0]&&p[1]===q.food[1]))}else q.body.pop();draw()}draw();window.ffSnakeTimer=setInterval(tick,180);"
+          }
+        },
+        {
+          "id": "0a99e97d-4e8f-44d6-a2a1-57ad5ab35a6d",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 22,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "3846195b-208f-4e73-b49a-0fb88fe1ea95",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 531,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

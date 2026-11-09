@@ -1,0 +1,251 @@
+{
+  "name": "Jogo da Velha - Jogador vs IA",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "bd4fa71b-3f06-474d-b3ae-9a0f48d9c741",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "678ad250-588c-4126-b9f7-8c33bddb8f99",
+          "kind": "heading",
+          "name": "titulo",
+          "text": "Jogo da Velha",
+          "x": 45,
+          "y": 24,
+          "width": "300px",
+          "height": "52px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {
+            "click": "// Título do jogo"
+          }
+        },
+        {
+          "id": "d36d7b85-c5c9-419e-84d3-ac52c938bbcf",
+          "kind": "label",
+          "name": "subtitulo",
+          "text": "Jogador (X) × IA (O)",
+          "x": 70,
+          "y": 76,
+          "width": "250px",
+          "height": "30px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {
+            "click": "// Subtítulo"
+          }
+        },
+        {
+          "id": "59ea68ea-9aa0-42a7-bb42-2f568a4b7175",
+          "kind": "label",
+          "name": "status",
+          "text": "Sua vez — você é X",
+          "x": 65,
+          "y": 112,
+          "width": "260px",
+          "height": "36px",
+          "bg": "#eef2ff",
+          "color": "#312e81",
+          "events": {
+            "click": "// Estado da partida"
+          }
+        },
+        {
+          "id": "9eed05e4-547e-4996-a2e8-467f629d5dc9",
+          "kind": "button",
+          "name": "c0",
+          "text": "",
+          "x": 58,
+          "y": 165,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(0);"
+          }
+        },
+        {
+          "id": "40253e3c-a1ff-4202-9985-07e9fc960fb8",
+          "kind": "button",
+          "name": "c1",
+          "text": "",
+          "x": 148,
+          "y": 165,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(1);"
+          }
+        },
+        {
+          "id": "c539760f-21bb-477c-aad5-14ba8a271865",
+          "kind": "button",
+          "name": "c2",
+          "text": "",
+          "x": 238,
+          "y": 165,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(2);"
+          }
+        },
+        {
+          "id": "910d0a01-6458-46d5-8ff0-dd4e1423cd1d",
+          "kind": "button",
+          "name": "c3",
+          "text": "",
+          "x": 58,
+          "y": 255,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(3);"
+          }
+        },
+        {
+          "id": "b5c0a322-0a5f-4ac8-97f4-12fb932ac330",
+          "kind": "button",
+          "name": "c4",
+          "text": "",
+          "x": 148,
+          "y": 255,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(4);"
+          }
+        },
+        {
+          "id": "a8faecfb-eaed-4b2d-a383-4a20b902549e",
+          "kind": "button",
+          "name": "c5",
+          "text": "",
+          "x": 238,
+          "y": 255,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(5);"
+          }
+        },
+        {
+          "id": "6762f402-9192-4820-8d02-34aff17442b8",
+          "kind": "button",
+          "name": "c6",
+          "text": "",
+          "x": 58,
+          "y": 345,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(6);"
+          }
+        },
+        {
+          "id": "73cd0460-16be-4f3d-9540-8674f5c65517",
+          "kind": "button",
+          "name": "c7",
+          "text": "",
+          "x": 148,
+          "y": 345,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(7);"
+          }
+        },
+        {
+          "id": "f47fa5d3-6def-4229-9d15-115305e1e605",
+          "kind": "button",
+          "name": "c8",
+          "text": "",
+          "x": 238,
+          "y": 345,
+          "width": "82px",
+          "height": "82px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {
+            "click": "window.ffTTTMove ||= function(pos){\n  const cells = Array.from({length:9},(_,i)=>document.getElementById('c'+i));\n  const status = document.getElementById('status');\n  const board = cells.map(c => c.dataset.v || '');\n  const win = b => [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l => l.every(i => b[i] && b[i]===b[l[0]]));\n  const paint = (b,line) => { cells.forEach((c,i)=>{c.textContent=b[i]||'';c.dataset.v=b[i]||'';c.style.fontSize='42px';c.style.fontWeight='700';c.style.display='grid';c.style.placeItems='center';c.style.cursor=b[i]?'default':'pointer';c.style.background=line?.includes(i)?'#d1fae5':'#ffffff';}); };\n  const finish = b => { let l=win(b); if(l){paint(b,l);Sons.play(b[l[0]]==='X'?'win':'lose');status.textContent=(b[l[0]]==='X'?'Você venceu!':'A IA venceu!');return true} if(b.every(Boolean)){paint(b);Sons.play('blip');status.textContent='Empate!';return true} return false; };\n  const score = (b,depth,max) => { let l=win(b); if(l)return b[l[0]]==='O'?10-depth:depth-10;if(b.every(Boolean))return 0;let vals=[];for(let i=0;i<9;i++)if(!b[i]){b[i]=max?'O':'X';vals.push(score(b,depth+1,!max));b[i]=''}return max?Math.max(...vals):Math.min(...vals); };\n  if(board[pos] || finish(board)) return;\n  board[pos]='X';Sons.play('pop');paint(board);if(finish(board))return;status.textContent='IA pensando...';\n  let best=-Infinity,choice=-1;for(let i=0;i<9;i++)if(!board[i]){board[i]='O';let v=score(board,0,false);board[i]='';if(v>best){best=v;choice=i}}\n  if(choice>=0){board[choice]='O';Sons.play('click')}paint(board);if(!finish(board))status.textContent='Sua vez — você é X';\n};\nwindow.ffTTTMove(8);"
+          }
+        },
+        {
+          "id": "c90ade2b-faf7-4a7e-b645-1c24bd8b6697",
+          "kind": "button",
+          "name": "novoJogo",
+          "text": "Novo jogo",
+          "x": 105,
+          "y": 445,
+          "width": "180px",
+          "height": "46px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "const cells=Array.from({length:9},(_,i)=>document.getElementById('c'+i));\ncells.forEach(c=>{c.textContent='';c.dataset.v='';c.style.background='#ffffff';c.style.cursor='pointer';});\ndocument.getElementById('status').textContent='Sua vez — você é X';"
+          }
+        },
+        {
+          "id": "5b7cc77a-964b-4842-8fe2-9963e66d2a02",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 28,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "9b605884-4c66-4514-ab4b-cf0bee3d5cdb",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 503,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

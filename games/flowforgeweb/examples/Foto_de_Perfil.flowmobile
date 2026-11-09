@@ -1,0 +1,234 @@
+{
+  "name": "Foto de Perfil",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "b47c299b-3b1f-4929-bdda-7f71226c7b48",
+      "name": "Perfil",
+      "items": [
+        {
+          "id": "82b2aab0-2187-475a-989d-4b934c7cd9c9",
+          "kind": "heading",
+          "name": "pfTitle",
+          "text": "Foto de Perfil",
+          "x": 20,
+          "y": 68,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "31868946-3530-40c8-81b1-3b55c4bdd652",
+          "kind": "camera",
+          "name": "pfCam",
+          "text": "Câmera",
+          "x": 20,
+          "y": 120,
+          "width": "353px",
+          "height": "250px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "camerastart": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}window.ffPerfil.msg('Câmera ligada ✔');",
+            "cameraerror": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}window.ffPerfil.msg('⚠ '+event.detail.message,true);"
+          },
+          "hideCameraButton": true,
+          "autoplay": false,
+          "facingMode": "user",
+          "muted": true,
+          "fit": "cover"
+        },
+        {
+          "id": "8b4b1856-7a8b-4997-b193-a3b1ea0abd4b",
+          "kind": "button",
+          "name": "pfOn",
+          "text": "▶ Ligar câmera",
+          "x": 20,
+          "y": 380,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}FlowForgeCamera.start('pfCam',{facingMode:'user'}).catch(function(){});"
+          }
+        },
+        {
+          "id": "fd969be8-6494-4b6d-b565-b1bdda0ab367",
+          "kind": "button",
+          "name": "pfShot",
+          "text": "📷 Tirar foto",
+          "x": 205,
+          "y": 380,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#16a34a",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}window.ffPerfil.shot();"
+          }
+        },
+        {
+          "id": "1c8a1d18-714a-49dd-9004-24fcd54507b7",
+          "kind": "picturebox",
+          "name": "pfPreview",
+          "text": "",
+          "x": 20,
+          "y": 436,
+          "width": "101px",
+          "height": "120px",
+          "bg": "#e2e8f0",
+          "color": "#222222",
+          "events": {},
+          "alt": "Pré-visualização"
+        },
+        {
+          "id": "32a8f162-7107-441a-b86e-b8d585156cfc",
+          "kind": "input",
+          "name": "pfNome",
+          "text": "Seu nome",
+          "x": 131,
+          "y": 436,
+          "width": "242px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "48a6ebc7-99da-4e05-8e9f-c79dd17a1d95",
+          "kind": "button",
+          "name": "pfSave",
+          "text": "Salvar perfil",
+          "x": 131,
+          "y": 490,
+          "width": "242px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}if(window.ffPerfil.persist()){FlowForgeCamera.stop('pfCam');window.ffPerfil.card();FlowForgeNavigate('Cartão');}"
+          }
+        },
+        {
+          "id": "4a4f0f8b-45b5-4e6e-b249-bbe139432f88",
+          "kind": "label",
+          "name": "pfMsg",
+          "text": "Ligue a câmera e tire sua foto.",
+          "x": 20,
+          "y": 566,
+          "width": "353px",
+          "height": "30px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}",
+        "onshow": "if(window.ffPerfil){window.ffPerfil.card()}"
+      }
+    },
+    {
+      "id": "82efd9ed-d11b-400e-8c01-d2676ceb1486",
+      "name": "Cartão",
+      "items": [
+        {
+          "id": "cd2a80f5-072d-44ea-90d1-dbcf6027145d",
+          "kind": "heading",
+          "name": "cardTitle",
+          "text": "Seu Cartão",
+          "x": 20,
+          "y": 68,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "5f8fe81e-569f-4e85-bee4-ee4517163953",
+          "kind": "picturebox",
+          "name": "cardFoto",
+          "text": "",
+          "x": 96,
+          "y": 126,
+          "width": "202px",
+          "height": "240px",
+          "bg": "#e2e8f0",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "1ae3c0b2-7f70-4a04-86b8-893b5bf2b028",
+          "kind": "label",
+          "name": "cardVazio",
+          "text": "Nenhuma foto salva ainda.",
+          "x": 20,
+          "y": 226,
+          "width": "353px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#64748b",
+          "events": {}
+        },
+        {
+          "id": "cc36bfdf-fd7a-4557-86be-15cc8ebd2a20",
+          "kind": "heading",
+          "name": "cardNome",
+          "text": "Seu nome",
+          "x": 20,
+          "y": 380,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "1c2db682-4e2f-47c5-9461-2c03c3d8cac9",
+          "kind": "button",
+          "name": "cardRefazer",
+          "text": "↻ Refazer foto",
+          "x": 20,
+          "y": 446,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}FlowForgeNavigate('Perfil');"
+          }
+        },
+        {
+          "id": "217be809-c833-4da2-9015-9d490a8a90ea",
+          "kind": "button",
+          "name": "cardApagar",
+          "text": "Apagar perfil",
+          "x": 205,
+          "y": 446,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#dc2626",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}if(confirm('Apagar foto e nome salvos?')){window.ffPerfil.foto='';window.ffPerfil.nome='';window.ffPerfil.tmp='';window.ffPerfil.save();window.ffPerfil.card();}"
+          }
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}",
+        "onshow": "var $=function(i){return document.getElementById(i)};if(!window.ffPerfil){var F=window.ffPerfil={K:'ffPerfilV1',foto:'',nome:''};try{var s=JSON.parse(localStorage.getItem(F.K)||'{}');F.foto=s.foto||'';F.nome=s.nome||''}catch(e){}\nF.msg=function(t,bad){var m=$('pfMsg');if(m){m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'}};\nF.card=function(){var i=$('cardFoto'),n=$('cardNome'),v=$('cardVazio');if(!i)return;i.style.display=F.foto?'':'none';if(F.foto)i.src=F.foto;n.textContent=F.nome||'Seu nome';v.style.display=F.foto?'none':''};\nF.save=function(){try{localStorage.setItem(F.K,JSON.stringify({foto:F.foto,nome:F.nome}))}catch(e){F.msg('Não foi possível salvar neste navegador.',true);return false}return true};\nF.shot=function(){try{var c=FlowForgeCamera.capture('pfCam','image/jpeg',0.85);\n var im=new Image();im.onload=function(){var S=240,cv=document.createElement('canvas');cv.width=cv.height=S;var x=cv.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);F.tmp=cv.toDataURL('image/jpeg',0.85);$('pfPreview').src=F.tmp;F.msg('Foto capturada. Toque em Salvar perfil.')};im.src=c}catch(e){F.msg('Ligue a câmera antes de tirar a foto.',true)}};\nF.persist=function(){var n=$('pfNome').value.trim();if(!n){F.msg('Digite seu nome.',true);return false}if(!F.tmp&&!F.foto){F.msg('Tire uma foto primeiro.',true);return false}F.nome=n;if(F.tmp)F.foto=F.tmp;if(F.save()){F.msg('Perfil salvo ✔');return true}return false};\nF.card();var nm=$('pfNome');if(nm&&F.nome&&!nm.value)nm.value=F.nome}"
+      }
+    }
+  ]
+}

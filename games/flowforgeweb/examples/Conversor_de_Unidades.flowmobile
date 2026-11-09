@@ -1,0 +1,138 @@
+{
+  "name": "Conversor de Unidades",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "1f8e3211-65c4-4c37-9029-4b2a147f866a",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "882646f2-d8f9-4e0c-98bc-e27dd34a3e24",
+          "kind": "heading",
+          "name": "convTitle",
+          "text": "Conversor de Unidades",
+          "x": 20,
+          "y": 72,
+          "width": "353px",
+          "height": "48px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "aeef000b-61c8-4938-a2cc-c24d6aa7270c",
+          "kind": "select",
+          "name": "convCat",
+          "text": "Categoria",
+          "x": 20,
+          "y": 136,
+          "width": "353px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "var $=function(i){return document.getElementById(i)};if(!window.ffConv){var C=window.ffConv={U:{'Comprimento':{'Metro':1,'Quilômetro':1000,'Centímetro':0.01,'Milha':1609.344,'Pé':0.3048,'Polegada':0.0254},'Massa':{'Quilograma':1,'Grama':0.001,'Libra':0.45359237,'Onça':0.028349523125,'Tonelada':1000},'Volume':{'Litro':1,'Mililitro':0.001,'Galão (US)':3.785411784,'Metro cúbico':1000,'Copo (240 ml)':0.24},'Temperatura':{'Celsius':1,'Fahrenheit':1,'Kelvin':1}}};C.fill=function(sel,names,keep){sel.innerHTML='';names.forEach(function(n){var o=document.createElement('option');o.value=o.textContent=n;sel.appendChild(o)});if(keep&&names.indexOf(keep)>=0)sel.value=keep};C.cat=function(){var names=Object.keys(C.U[$('convCat').value]);C.fill($('convFrom'),names);C.fill($('convTo'),names);$('convFrom').selectedIndex=0;$('convTo').selectedIndex=Math.min(1,names.length-1)};C.temp=function(v,a,b){var c=a==='Celsius'?v:a==='Fahrenheit'?(v-32)*5/9:v-273.15;return b==='Celsius'?c:b==='Fahrenheit'?c*9/5+32:c+273.15};C.run=function(){var raw=$('convValue').value.replace(',','.').trim(),v=Number(raw),r0=$('convResult'),r=r0.querySelector('small')||r0;if(raw===''||!isFinite(v)){r.textContent='Digite um número';return}var cat=$('convCat').value,a=$('convFrom').value,b=$('convTo').value,out;if(cat==='Temperatura')out=C.temp(v,a,b);else out=v*C.U[cat][a]/C.U[cat][b];var s=Number(out.toPrecision(10)).toLocaleString('pt-BR',{maximumFractionDigits:6});r.textContent=raw.replace('.',',')+' '+a+' = '+s+' '+b};C.cat()}window.ffConv.cat();window.ffConv.run();"
+          },
+          "items": [
+            "Comprimento",
+            "Massa",
+            "Volume",
+            "Temperatura"
+          ]
+        },
+        {
+          "id": "09f5a306-8481-4c7b-809b-407d3616d790",
+          "kind": "input",
+          "name": "convValue",
+          "text": "Valor",
+          "x": 20,
+          "y": 196,
+          "width": "353px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "input": "var $=function(i){return document.getElementById(i)};if(!window.ffConv){var C=window.ffConv={U:{'Comprimento':{'Metro':1,'Quilômetro':1000,'Centímetro':0.01,'Milha':1609.344,'Pé':0.3048,'Polegada':0.0254},'Massa':{'Quilograma':1,'Grama':0.001,'Libra':0.45359237,'Onça':0.028349523125,'Tonelada':1000},'Volume':{'Litro':1,'Mililitro':0.001,'Galão (US)':3.785411784,'Metro cúbico':1000,'Copo (240 ml)':0.24},'Temperatura':{'Celsius':1,'Fahrenheit':1,'Kelvin':1}}};C.fill=function(sel,names,keep){sel.innerHTML='';names.forEach(function(n){var o=document.createElement('option');o.value=o.textContent=n;sel.appendChild(o)});if(keep&&names.indexOf(keep)>=0)sel.value=keep};C.cat=function(){var names=Object.keys(C.U[$('convCat').value]);C.fill($('convFrom'),names);C.fill($('convTo'),names);$('convFrom').selectedIndex=0;$('convTo').selectedIndex=Math.min(1,names.length-1)};C.temp=function(v,a,b){var c=a==='Celsius'?v:a==='Fahrenheit'?(v-32)*5/9:v-273.15;return b==='Celsius'?c:b==='Fahrenheit'?c*9/5+32:c+273.15};C.run=function(){var raw=$('convValue').value.replace(',','.').trim(),v=Number(raw),r0=$('convResult'),r=r0.querySelector('small')||r0;if(raw===''||!isFinite(v)){r.textContent='Digite um número';return}var cat=$('convCat').value,a=$('convFrom').value,b=$('convTo').value,out;if(cat==='Temperatura')out=C.temp(v,a,b);else out=v*C.U[cat][a]/C.U[cat][b];var s=Number(out.toPrecision(10)).toLocaleString('pt-BR',{maximumFractionDigits:6});r.textContent=raw.replace('.',',')+' '+a+' = '+s+' '+b};C.cat()}window.ffConv.run();"
+          },
+          "value": ""
+        },
+        {
+          "id": "9b076562-1564-4830-a7a5-4af2bf79e26a",
+          "kind": "select",
+          "name": "convFrom",
+          "text": "De",
+          "x": 20,
+          "y": 256,
+          "width": "160px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "var $=function(i){return document.getElementById(i)};if(!window.ffConv){var C=window.ffConv={U:{'Comprimento':{'Metro':1,'Quilômetro':1000,'Centímetro':0.01,'Milha':1609.344,'Pé':0.3048,'Polegada':0.0254},'Massa':{'Quilograma':1,'Grama':0.001,'Libra':0.45359237,'Onça':0.028349523125,'Tonelada':1000},'Volume':{'Litro':1,'Mililitro':0.001,'Galão (US)':3.785411784,'Metro cúbico':1000,'Copo (240 ml)':0.24},'Temperatura':{'Celsius':1,'Fahrenheit':1,'Kelvin':1}}};C.fill=function(sel,names,keep){sel.innerHTML='';names.forEach(function(n){var o=document.createElement('option');o.value=o.textContent=n;sel.appendChild(o)});if(keep&&names.indexOf(keep)>=0)sel.value=keep};C.cat=function(){var names=Object.keys(C.U[$('convCat').value]);C.fill($('convFrom'),names);C.fill($('convTo'),names);$('convFrom').selectedIndex=0;$('convTo').selectedIndex=Math.min(1,names.length-1)};C.temp=function(v,a,b){var c=a==='Celsius'?v:a==='Fahrenheit'?(v-32)*5/9:v-273.15;return b==='Celsius'?c:b==='Fahrenheit'?c*9/5+32:c+273.15};C.run=function(){var raw=$('convValue').value.replace(',','.').trim(),v=Number(raw),r0=$('convResult'),r=r0.querySelector('small')||r0;if(raw===''||!isFinite(v)){r.textContent='Digite um número';return}var cat=$('convCat').value,a=$('convFrom').value,b=$('convTo').value,out;if(cat==='Temperatura')out=C.temp(v,a,b);else out=v*C.U[cat][a]/C.U[cat][b];var s=Number(out.toPrecision(10)).toLocaleString('pt-BR',{maximumFractionDigits:6});r.textContent=raw.replace('.',',')+' '+a+' = '+s+' '+b};C.cat()}window.ffConv.run();"
+          },
+          "items": [
+            "Metro"
+          ]
+        },
+        {
+          "id": "42c775bf-0221-49d8-afba-2d1cb91f587a",
+          "kind": "select",
+          "name": "convTo",
+          "text": "Para",
+          "x": 213,
+          "y": 256,
+          "width": "160px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "var $=function(i){return document.getElementById(i)};if(!window.ffConv){var C=window.ffConv={U:{'Comprimento':{'Metro':1,'Quilômetro':1000,'Centímetro':0.01,'Milha':1609.344,'Pé':0.3048,'Polegada':0.0254},'Massa':{'Quilograma':1,'Grama':0.001,'Libra':0.45359237,'Onça':0.028349523125,'Tonelada':1000},'Volume':{'Litro':1,'Mililitro':0.001,'Galão (US)':3.785411784,'Metro cúbico':1000,'Copo (240 ml)':0.24},'Temperatura':{'Celsius':1,'Fahrenheit':1,'Kelvin':1}}};C.fill=function(sel,names,keep){sel.innerHTML='';names.forEach(function(n){var o=document.createElement('option');o.value=o.textContent=n;sel.appendChild(o)});if(keep&&names.indexOf(keep)>=0)sel.value=keep};C.cat=function(){var names=Object.keys(C.U[$('convCat').value]);C.fill($('convFrom'),names);C.fill($('convTo'),names);$('convFrom').selectedIndex=0;$('convTo').selectedIndex=Math.min(1,names.length-1)};C.temp=function(v,a,b){var c=a==='Celsius'?v:a==='Fahrenheit'?(v-32)*5/9:v-273.15;return b==='Celsius'?c:b==='Fahrenheit'?c*9/5+32:c+273.15};C.run=function(){var raw=$('convValue').value.replace(',','.').trim(),v=Number(raw),r0=$('convResult'),r=r0.querySelector('small')||r0;if(raw===''||!isFinite(v)){r.textContent='Digite um número';return}var cat=$('convCat').value,a=$('convFrom').value,b=$('convTo').value,out;if(cat==='Temperatura')out=C.temp(v,a,b);else out=v*C.U[cat][a]/C.U[cat][b];var s=Number(out.toPrecision(10)).toLocaleString('pt-BR',{maximumFractionDigits:6});r.textContent=raw.replace('.',',')+' '+a+' = '+s+' '+b};C.cat()}window.ffConv.run();"
+          },
+          "items": [
+            "Metro"
+          ]
+        },
+        {
+          "id": "df5aea97-3a2f-4e92-b0b4-1fcccb05081e",
+          "kind": "button",
+          "name": "convSwap",
+          "text": "⇄ Inverter",
+          "x": 20,
+          "y": 316,
+          "width": "151px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffConv){var C=window.ffConv={U:{'Comprimento':{'Metro':1,'Quilômetro':1000,'Centímetro':0.01,'Milha':1609.344,'Pé':0.3048,'Polegada':0.0254},'Massa':{'Quilograma':1,'Grama':0.001,'Libra':0.45359237,'Onça':0.028349523125,'Tonelada':1000},'Volume':{'Litro':1,'Mililitro':0.001,'Galão (US)':3.785411784,'Metro cúbico':1000,'Copo (240 ml)':0.24},'Temperatura':{'Celsius':1,'Fahrenheit':1,'Kelvin':1}}};C.fill=function(sel,names,keep){sel.innerHTML='';names.forEach(function(n){var o=document.createElement('option');o.value=o.textContent=n;sel.appendChild(o)});if(keep&&names.indexOf(keep)>=0)sel.value=keep};C.cat=function(){var names=Object.keys(C.U[$('convCat').value]);C.fill($('convFrom'),names);C.fill($('convTo'),names);$('convFrom').selectedIndex=0;$('convTo').selectedIndex=Math.min(1,names.length-1)};C.temp=function(v,a,b){var c=a==='Celsius'?v:a==='Fahrenheit'?(v-32)*5/9:v-273.15;return b==='Celsius'?c:b==='Fahrenheit'?c*9/5+32:c+273.15};C.run=function(){var raw=$('convValue').value.replace(',','.').trim(),v=Number(raw),r0=$('convResult'),r=r0.querySelector('small')||r0;if(raw===''||!isFinite(v)){r.textContent='Digite um número';return}var cat=$('convCat').value,a=$('convFrom').value,b=$('convTo').value,out;if(cat==='Temperatura')out=C.temp(v,a,b);else out=v*C.U[cat][a]/C.U[cat][b];var s=Number(out.toPrecision(10)).toLocaleString('pt-BR',{maximumFractionDigits:6});r.textContent=raw.replace('.',',')+' '+a+' = '+s+' '+b};C.cat()}var f=$('convFrom'),t=$('convTo'),x=f.value;f.value=t.value;t.value=x;window.ffConv.run();"
+          }
+        },
+        {
+          "id": "09852a77-1dcb-4d42-8ee2-e80ba7ae9a50",
+          "kind": "label",
+          "name": "convResult",
+          "text": "Digite um número",
+          "x": 20,
+          "y": 376,
+          "width": "353px",
+          "height": "60px",
+          "bg": "#eef2ff",
+          "color": "#222222",
+          "events": {},
+          "fontSize": 16
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffConv){var C=window.ffConv={U:{'Comprimento':{'Metro':1,'Quilômetro':1000,'Centímetro':0.01,'Milha':1609.344,'Pé':0.3048,'Polegada':0.0254},'Massa':{'Quilograma':1,'Grama':0.001,'Libra':0.45359237,'Onça':0.028349523125,'Tonelada':1000},'Volume':{'Litro':1,'Mililitro':0.001,'Galão (US)':3.785411784,'Metro cúbico':1000,'Copo (240 ml)':0.24},'Temperatura':{'Celsius':1,'Fahrenheit':1,'Kelvin':1}}};C.fill=function(sel,names,keep){sel.innerHTML='';names.forEach(function(n){var o=document.createElement('option');o.value=o.textContent=n;sel.appendChild(o)});if(keep&&names.indexOf(keep)>=0)sel.value=keep};C.cat=function(){var names=Object.keys(C.U[$('convCat').value]);C.fill($('convFrom'),names);C.fill($('convTo'),names);$('convFrom').selectedIndex=0;$('convTo').selectedIndex=Math.min(1,names.length-1)};C.temp=function(v,a,b){var c=a==='Celsius'?v:a==='Fahrenheit'?(v-32)*5/9:v-273.15;return b==='Celsius'?c:b==='Fahrenheit'?c*9/5+32:c+273.15};C.run=function(){var raw=$('convValue').value.replace(',','.').trim(),v=Number(raw),r0=$('convResult'),r=r0.querySelector('small')||r0;if(raw===''||!isFinite(v)){r.textContent='Digite um número';return}var cat=$('convCat').value,a=$('convFrom').value,b=$('convTo').value,out;if(cat==='Temperatura')out=C.temp(v,a,b);else out=v*C.U[cat][a]/C.U[cat][b];var s=Number(out.toPrecision(10)).toLocaleString('pt-BR',{maximumFractionDigits:6});r.textContent=raw.replace('.',',')+' '+a+' = '+s+' '+b};C.cat()}",
+        "onshow": ""
+      }
+    }
+  ]
+}

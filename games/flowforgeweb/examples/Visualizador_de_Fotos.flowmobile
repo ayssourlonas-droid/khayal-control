@@ -1,0 +1,97 @@
+{
+  "name": "Visualizador de Fotos",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "5f3d2cc6-0950-424f-a519-493a665f6287",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "0fa85e7d-2b5e-4bd3-8177-1d6e3229f129",
+          "kind": "heading",
+          "name": "heading1",
+          "text": "Visualizador de Fotos",
+          "x": 24,
+          "y": 20,
+          "width": "330px",
+          "height": "52px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// heading1\n"
+          }
+        },
+        {
+          "id": "7e08e270-0ff8-4f76-a2f9-3f2af103d435",
+          "kind": "file",
+          "name": "file1",
+          "text": "",
+          "x": 24,
+          "y": 90,
+          "width": "300px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "const arquivo = event.target.files[0];\nif (!arquivo || !arquivo.type.startsWith(\"image/\")) return;\npicturebox1.src = URL.createObjectURL(arquivo);\npicturebox1.alt = arquivo.name;\nstatus1.textContent = \"Imagem: \" + arquivo.name;"
+          }
+        },
+        {
+          "id": "ec9d9a83-8ff5-45bc-89a9-b675d96a781c",
+          "kind": "picturebox",
+          "name": "picturebox1",
+          "text": "Imagem",
+          "x": 24,
+          "y": 155,
+          "width": "456px",
+          "height": "280px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "status1.textContent = picturebox1.alt || 'Imagem';"
+          },
+          "src": "",
+          "fit": "contain"
+        },
+        {
+          "id": "0955c635-0dac-408a-86c2-d8139794dbdf",
+          "kind": "statuscard",
+          "name": "status1",
+          "text": "Nenhuma imagem carregada",
+          "x": 24,
+          "y": 450,
+          "width": "456px",
+          "height": "80px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// status1\n"
+          },
+          "value": ""
+        },
+        {
+          "id": "b59f84d7-4a5e-4a3c-9208-4e08b1c6e754",
+          "kind": "button",
+          "name": "clear1",
+          "text": "Limpar imagem",
+          "x": 24,
+          "y": 545,
+          "width": "180px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "picturebox1.removeAttribute('src');\npicturebox1.alt = '';\nstatus1.textContent = 'Nenhuma imagem carregada';"
+          }
+        }
+      ]
+    }
+  ]
+}

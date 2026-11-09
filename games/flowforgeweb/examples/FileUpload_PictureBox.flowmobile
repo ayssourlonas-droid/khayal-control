@@ -1,0 +1,66 @@
+{
+  "name": "Carregar imagem no PictureBox",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "6dd12560-0d72-47f5-9f2c-65a33115502c",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "2e9ee2d1-5249-44d9-aa81-e1a72cf8750e",
+          "kind": "label",
+          "name": "label1",
+          "text": "Selecione uma imagem:",
+          "x": 32,
+          "y": 60,
+          "width": "250px",
+          "height": "30px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {
+            "click": "// Texto explicativo\n"
+          }
+        },
+        {
+          "id": "b43e96b8-93dc-489c-bed8-a89b47403477",
+          "kind": "file",
+          "name": "fileUpload1",
+          "text": "Escolher imagem",
+          "x": 32,
+          "y": 100,
+          "width": "280px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "const arquivo = event.target.files[0];\nif (!arquivo) return;\n\nif (!arquivo.type.startsWith(\"image/\")) {\n    alert(\"Selecione um arquivo de imagem.\");\n    event.target.value = \"\";\n    return;\n}\n\n// O PictureBox é um <img> real no HTML exportado/Preview.\nconst urlImagem = URL.createObjectURL(arquivo);\npicturebox1.src = urlImagem;\npicturebox1.alt = arquivo.name;"
+          }
+        },
+        {
+          "id": "29262bb2-c940-4161-94e7-316909cf0d6f",
+          "kind": "picturebox",
+          "name": "picturebox1",
+          "text": "PictureBox",
+          "x": 32,
+          "y": 165,
+          "width": "420px",
+          "height": "280px",
+          "bg": "#f4f4f4",
+          "color": "#222222",
+          "src": "",
+          "fit": "contain",
+          "events": {
+            "click": "// Clique no PictureBox\n"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>FlowForge navigation + TabControl regression</title>
+<style>
+  body{font:13px/1.5 ui-monospace,Consolas,monospace;margin:12px;background:#111;color:#ddd}
+  .pass{color:#4ade80}.fail{color:#f87171;font-weight:700}
+  iframe{position:absolute;left:-9999px;top:0;width:1700px;height:900px;border:0}
+  #summary{margin:10px 0;font-weight:700}
+</style>
+<h3>FlowForge – navegação entre páginas + TabControl (abas reais)</h3>
+<p>Abra por um servidor local: <code>python -m http.server</code> na raiz do projeto e visite <code>/tests/navigation_test.html</code>.</p>
+<div id="summary">Executando…</div>
+<pre id="out"></pre>
+<iframe id="app" src="../index.html"></iframe>
+<iframe id="run" style="left:-9999px"></iframe>
+<script>
+addEventListener('error',function(e){var s=document.getElementById('summary'),o=document.getElementById('out');if(s)s.textContent='ERRO DE SCRIPT: '+e.message;if(o)o.textContent=String(e.filename)+':'+e.lineno+' '+e.message;document.body.dataset.test='FAIL'});
+</script>
+<script>
+const out=document.getElementById('out'),summary=document.getElementById('summary');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const escHtml=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let passed=0,failed=0;
+function check(name,cond,detail){
+  if(cond){passed++;out.insertAdjacentHTML('beforeend','<span class="pass">PASS</span> '+escHtml(name)+'\n');}
+  else{failed++;out.insertAdjacentHTML('beforeend','<span class="fail">FAIL</span> '+escHtml(name)+(detail!==undefined?'  → '+escHtml(JSON.stringify(detail)):'')+'\n');}
+}
+async function run(){
+  const f=document.getElementById('app');
+  await new Promise(r=>f.addEventListener('load',r,{once:true}));
+  await sleep(600);
+  let W,D;
+  try{W=f.contentWindow;D=f.contentDocument;D.body;}catch(e){
+    summary.textContent='Sem acesso ao app: abra por http://, não por file://';document.body.dataset.test='FAIL';return;
+  }
+  const $=s=>D.querySelector(s);
+  const closeDialogs=()=>D.querySelectorAll('dialog[open]').forEach(x=>x.close());
+  async function createProject(type){
+    $('[data-new='+type+']').click();await sleep(250);
+    if($('#siteWizardDlg')?.open)$('#wizCreate').click();
+    await sleep(450);closeDialogs();
+  }
+
+  await createProject('app');
+
+  /* ------------------------------------------------------------------
+     Projeto determinístico: 3 páginas e todos os componentes de
+     navegação na primeira página + 3 TabControls (normal, extremos e
+     JSON inválido).
+     ------------------------------------------------------------------ */
+  W.eval(`project.type='app';project.siteLayout={header:false,footer:false,navigation:'none',titlebar:false};
+project.pages=[
+ {id:'pgA',name:'Página A',slug:'pagina-a',items:[]},
+ {id:'pgB',name:'Página B',slug:'pagina-b',items:[]},
+ {id:'pgC',name:'Página C',slug:'pagina-c',items:[]}
+];
+project.active=0;project.activePage='pgA';
+window.__add=function(kind,extra){
+ const it=Object.assign(toolDefaults(kind),{x:10,y:10},extra||{});
+ project.pages[0].items.push(it);return it;
+};
+['navbar','bottomnav','tabs','drawer','bottomsheet','sidebar','toolbar','breadcrumb','pagination','pagenav','fab'].forEach(function(k,i){
+ const it=window.__add(k);it.x=10;it.y=10+i*64;
+});
+var tc=window.__add('tabcontrol',{tabs:[
+ {label:'Geral',content:'Painel geral'},
+ {label:'Detalhes',content:'Painel detalhes'},
+ {label:'Histórico',content:'Painel histórico'}
+],activeTab:1});
+tc.x=20;tc.y=800;
+tc.events={change:'window.__tabChange=(window.__tabChange||0)+1;window.__tabIdx=event&&event.detail?event.detail.index:-1;'};
+var tc2=window.__add('tabcontrol',{tabs:['<b>Um</b>','Dois'],activeTab:99});
+tc2.x=420;tc2.y=800;
+var tc3=window.__add('tabcontrol',{tabs:'texto simples'});
+tc3.x=820;tc3.y=800;
+var pn=project.pages[0].items.find(function(i){return i.kind==='pagenav'});
+pn.events={change:'window.__pn=(window.__pn||0)+1;'};
+render();`);
+
+  const html=W.generated();
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const shownPages=doc.querySelectorAll('.ff-page');
+
+  /* ---------- markup dos componentes de navegação ---------- */
+  const navKinds=['navbar','bottomnav','tabs','drawer','sheet','sidebar','toolbar','breadcrumb','pagination','pagenav','fab'];
+  const missing=navKinds.filter(k=>!doc.querySelector('[data-ff-nav="'+k+'"]'));
+  check('todos os componentes de navegação aparecem no HTML gerado',missing.length===0,missing);
+  const counts=navKinds.map(k=>[k,doc.querySelectorAll('[data-ff-nav="'+k+'"]').length]);
+  check('cada componente de navegação é renderizado uma única vez',counts.every(([,n])=>n===1),counts);
+  const pageLinks=doc.querySelectorAll('[data-ff-nav="navbar"] [data-page-id]');
+  check('navbar lista as 3 páginas do projeto',pageLinks.length===3&&[...pageLinks].map(b=>b.textContent.trim()).join('|')==='Página A|Página B|Página C',[...pageLinks].map(b=>b.textContent.trim()));
+  check('tabs de página usam ff-page-tabs (não são o TabControl)',doc.querySelectorAll('[data-ff-nav="tabs"].ff-page-tabs').length===1);
+  check('pagination desabilita "anterior" na primeira página e habilita "próxima"',
+    doc.querySelector('[data-ff-page-prev]').hasAttribute('disabled')&&!doc.querySelector('[data-ff-page-next]').hasAttribute('disabled'),
+    {prev:doc.querySelector('[data-ff-page-prev]').outerHTML.slice(0,160),next:doc.querySelector('[data-ff-page-next]').outerHTML.slice(0,160)});
+  check('pagenav é um select com as 3 páginas e a primeira selecionada',
+    doc.querySelector('select[data-ff-nav="pagenav"]').options.length===3&&doc.querySelector('select[data-ff-nav="pagenav"]').value==='pgA');
+  const fabMenu=doc.querySelector('.ff-fab-menu');
+  check('FAB nasce fechado (hidden) e acessível (aria-expanded=false)',
+    fabMenu&&fabMenu.hidden&&doc.querySelector('.ff-real-fab').getAttribute('aria-expanded')==='false');
+  check('drawer e bottom sheet nascem recolhidos',doc.querySelector('.ff-real-drawer-collapsible')&&!doc.querySelector('.ff-real-drawer-collapsible').classList.contains('open')&&doc.querySelector('.ff-sheet-body').hidden);
+  const pnTag=(html.match(/<select[^>]*ff-page-nav[^>]*>/)||[''])[0];
+  check('pagenav mantém o goPage nativo e soma o handler do usuário',
+    /onchange="[^"]*FlowForgeUI\.goPage\(this,this\.value\)[^"]*pagenav1_change\(event\)/.test(pnTag),pnTag.slice(0,260));
+
+  /* ---------- markup do TabControl ---------- */
+  const tabCtrls=doc.querySelectorAll('.ff-tabcontrol');
+  check('o projeto tem 3 TabControls no HTML',tabCtrls.length===3,tabCtrls.length);
+  check('TabControl não é a navegação de páginas (sem data-ff-nav dentro)',!doc.querySelector('.ff-tabcontrol [data-ff-nav]'));
+  check('TabControl expõe role=tablist, 3 role=tab e 3 role=tabpanel',
+    tabCtrls[0].querySelector('[role="tablist"]')&&tabCtrls[0].querySelectorAll('[role="tab"]').length===3&&tabCtrls[0].querySelectorAll('[role="tabpanel"]').length===3,
+    {tabs:tabCtrls[0].querySelectorAll('[role="tab"]').length,panels:tabCtrls[0].querySelectorAll('[role="tabpanel"]').length});
+  const t0=tabCtrls[0];
+  check('activeTab=1 abre a segunda aba',
+    t0.dataset.value==='1'&&[...t0.querySelectorAll('[role="tab"]')].map(b=>b.getAttribute('aria-selected')).join(',')==='false,true,false',
+    [...t0.querySelectorAll('[role="tab"]')].map(b=>b.getAttribute('aria-selected')));
+  check('somente o painel da aba ativa fica visível',
+    [...t0.querySelectorAll('[role="tabpanel"]')].map(p=>p.hidden).join(',')==='true,false,true',
+    [...t0.querySelectorAll('[role="tabpanel"]')].map(p=>p.hidden));
+  check('painéis mostram o conteúdo configurado',
+    [...t0.querySelectorAll('[role="tabpanel"]')].map(p=>p.textContent.trim()).join('|')==='Painel geral|Painel detalhes|Painel histórico',
+    [...t0.querySelectorAll('[role="tabpanel"]')].map(p=>p.textContent.trim()));
+  check('painéis e abas estão ligados por aria-controls/aria-labelledby',
+    [...t0.querySelectorAll('[role="tab"]')].every(b=>{
+      const id=b.getAttribute('aria-controls');
+      const panel=id&&t0.querySelector('[id="'+id+'"]');
+      return !!panel&&panel.getAttribute('aria-labelledby')===b.id;
+    }),
+    [...t0.querySelectorAll('[role="tab"]')].map(b=>b.getAttribute('aria-controls')));
+  const t0tabs=[...t0.querySelectorAll('[role="tab"]')];
+  check('apenas a aba ativa está no fluxo de tabulação (tabindex 0)',
+    t0tabs.map(b=>b.tabIndex).join(',')==='-1,0,-1',t0tabs.map(b=>b.tabIndex));
+  check('painéis ficam focáveis para leitura por teclado',
+    [...t0.querySelectorAll('[role="tabpanel"]')].every(p=>p.tabIndex===0),
+    [...t0.querySelectorAll('[role="tabpanel"]')].map(p=>p.tabIndex));
+  check('TabControl tem botões de teclado ligados ao runtime',
+    t0tabs.every(b=>/onkeydown="FlowForgeUI\.tabKey\(this,event\)"/.test(b.outerHTML)&&/onclick="FlowForgeUI\.tab\(this,\d+\)"/.test(b.outerHTML)));
+  check('a aba ativa recebe a classe visual active',t0tabs[1].classList.contains('active')&&!t0tabs[0].classList.contains('active'));
+  check('activeTab fora da faixa é limitado à última aba',
+    tabCtrls[1].dataset.value==='1'&&tabCtrls[1].querySelectorAll('[role="tab"]').length===2,
+    {value:tabCtrls[1].dataset.value,tabs:tabCtrls[1].querySelectorAll('[role="tab"]').length});
+  check('JSON inválido em tabs vira uma aba (sem quebrar o render)',
+    tabCtrls[2].querySelectorAll('[role="tab"]').length===1&&tabCtrls[2].querySelector('[role="tab"]').textContent.trim()==='texto simples');
+  check('rótulos e conteúdo das abas são escapados',
+    tabCtrls[1].querySelector('[role="tab"]').textContent==='<b>Um</b>'&&!tabCtrls[1].querySelector('b')&&html.includes('&lt;b&gt;Um&lt;/b&gt;'),
+    tabCtrls[1].querySelector('[role="tab"]').outerHTML.slice(0,180));
+  check('o handler change do TabControl é ligado no contêiner do componente',
+    /onchange="tabcontrol1_change\(event\)"/.test(html)||/onchange="[^"]*tabcontrol1_change\(event\)"/.test(html));
+  check('escrita do TabControl no wrapper não quebra outros handlers',doc.querySelectorAll('.ff-tabcontrol').length===3&&html.includes('async function tabcontrol1_change(event)'));
+
+  /* ---------- helper ffTabItems ---------- */
+  const ff1=W.eval('ffTabItems({tabs:"[\\"X\\",\\"Y\\"]"}).map(function(t){return t.label}).join("|")');
+  check('ffTabItems aceita JSON em texto',ff1==='X|Y',ff1);
+  const ff2=W.eval('ffTabItems({tabs:""}).length');
+  check('ffTabItems usa 3 abas padrão quando não há configuração',ff2===3,ff2);
+
+  /* ---------- importação preserva as abas ---------- */
+  const imported=W.FFSecurity.validateProject(JSON.parse(JSON.stringify(W.project)));
+  const impTabs=imported.pages[0].items.filter(i=>i.kind==='tabcontrol');
+  const imp0=impTabs[0]||{};
+  check('importar .flowmobile preserva tabs e activeTab',
+    impTabs.length===3&&Array.isArray(imp0.tabs)&&imp0.tabs.length===3&&imp0.tabs[1].label==='Detalhes'&&imp0.tabs[1].content==='Painel detalhes'&&imp0.activeTab===1,
+    {count:impTabs.length,tabs:imp0.tabs,active:imp0.activeTab});
+  check('importar mantém o texto de abas inválidas como string',impTabs[2]&&impTabs[2].tabs==='texto simples',impTabs[2]&&impTabs[2].tabs);
+
+  /* ---------- designer (palco) ---------- */
+  const stageTabCtrls=D.querySelectorAll('#stage .ff-tabcontrol');
+  check('o palco desenha os 3 TabControls',stageTabCtrls.length===3,stageTabCtrls.length);
+  const s0=stageTabCtrls[0];
+  check('no palco a segunda aba abre por activeTab',
+    s0.dataset.value==='1'&&[...s0.querySelectorAll('[role="tab"]')].map(b=>b.getAttribute('aria-selected')).join(',')==='false,true,false');
+  s0.querySelectorAll('[role="tab"]')[0].click();
+  await sleep(160);
+  const s0b=D.querySelectorAll('#stage .ff-tabcontrol')[0];
+  check('clicar numa aba do palco troca painel e estado ARIA',
+    s0b.dataset.value==='0'&&s0b.querySelectorAll('[role="tab"]')[0].getAttribute('aria-selected')==='true'&&[...s0b.querySelectorAll('[role="tabpanel"]')].map(p=>p.hidden).join(',')==='false,true,true',
+    {value:s0b.dataset.value,hidden:[...s0b.querySelectorAll('[role="tabpanel"]')].map(p=>p.hidden)});
+  const modelActive=W.eval("project.pages[0].items.find(function(i){return i.kind==='tabcontrol'}).activeTab");
+  check('a aba escolhida no palco fica gravada no componente',modelActive===0,modelActive);
+  check('o palco mostra o conteúdo do painel selecionado',s0b.querySelector('[role="tabpanel"]').textContent.trim()==='Painel geral');
+  const s0cs=D.defaultView.getComputedStyle(s0b);
+  const s0bar=s0b.querySelector('.ff-tab-buttons').getBoundingClientRect();
+  const s0root=s0b.getBoundingClientRect();
+  check('o palco aplica o layout de coluna e reserva a barra de abas',
+    s0cs.display==='flex'&&s0cs.flexDirection==='column'&&s0bar.height>0&&s0bar.height<s0root.height*0.5,
+    {display:s0cs.display,dir:s0cs.flexDirection,bar:s0bar.height,root:s0root.height});
+  D.querySelector('#stage .ff-kind-drawer .ff-nav-toggle').click();
+  await sleep(120);
+  check('no palco o drawer abre já no primeiro clique e seleciona o componente',
+    D.querySelector('#stage .ff-kind-drawer .ff-real-drawer').classList.contains('open')&&D.querySelector('#stage .ff-kind-drawer').classList.contains('selected'));
+  D.querySelector('#stage .ff-kind-bottomsheet .ff-nav-toggle').click();
+  await sleep(120);
+  check('no palco o bottom sheet abre já no primeiro clique',!D.querySelector('#stage .ff-kind-bottomsheet .ff-sheet-body').hidden);
+  D.querySelector('#stage .ff-kind-fab .ff-real-fab').click();
+  await sleep(120);
+  check('no palco o FAB abre o menu já no primeiro clique',!D.querySelector('#stage .ff-kind-fab .ff-fab-menu').hidden);
+
+  /* ---------- runtime do HTML gerado ---------- */
+  const probe='<script>window.__errs=[];addEventListener("error",e=>__errs.push(String(e.message)))<\/script>';
+  const runner=document.getElementById('run');
+  runner.srcdoc=html.replace('<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:flowforgeweb:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>','<head>'+probe);
+  await new Promise(r=>runner.addEventListener('load',r,{once:true}));
+  await sleep(700);
+  const RW=runner.contentWindow,RD=runner.contentDocument;
+  const visiblePages=()=>[...RD.querySelectorAll('.ff-page')].filter(p=>!p.hidden&&!p.classList.contains('hidden')).map(p=>p.dataset.pageId);
+  const syncState=()=>RW.eval('(function(){var o={};document.querySelectorAll("[data-ff-nav]").forEach(function(n){var k=n.getAttribute("data-ff-nav");if(k==="pagenav"){o[k]=n.value;return}var on=n.querySelector("[data-page-id].active");o[k]=on?on.dataset.pageId:""});return o})()');
+  const pagState=()=>RW.eval('(function(){var n=document.querySelector(".ff-real-pagination");return {prev:n.querySelector("[data-ff-page-prev]").disabled,next:n.querySelector("[data-ff-page-next]").disabled,active:(n.querySelector("[data-page-id].active")||{}).dataset?(n.querySelector("[data-page-id].active").dataset.pageId):""}})()');
+  const tabState=()=>RW.eval('(function(){var r=document.querySelector(".ff-tabcontrol");return {value:r.dataset.value,sel:Array.prototype.map.call(r.querySelectorAll("[role=tab]"),function(b){return b.getAttribute("aria-selected")}),hidden:Array.prototype.map.call(r.querySelectorAll("[role=tabpanel]"),function(p){return p.hidden}),focus:document.activeElement&&document.activeElement.getAttribute?document.activeElement.getAttribute("role"):null}})()');
+
+  check('o HTML gerado abre na primeira página',visiblePages().join(',')==='pgA',visiblePages());
+  check('abrir o HTML gerado não dispara erro de JS',RW.__errs.length===0,RW.__errs);
+
+  /* navegação pela navbar */
+  RD.querySelector('[data-ff-nav="navbar"] [data-page-id="pgB"]').click();
+  await sleep(120);
+  check('clicar na navbar troca a página exibida',visiblePages().join(',')==='pgB',visiblePages());
+  const syncB=syncState();
+  check('todas as navegações acompanham a página ativa',navKinds.every(k=>syncB[k]==='pgB'),syncB);
+  check('o pagenav também reflete a página ativa',syncB.pagenav==='pgB');
+  check('pagination atualiza a página ativa e libera os dois botões',pagState().active==='pgB'&&!pagState().prev&&!pagState().next,pagState());
+
+  /* paginação */
+  RD.querySelector('.ff-real-pagination [data-ff-page-next]').click();
+  await sleep(120);
+  check('"próxima" avança para a última página',visiblePages().join(',')==='pgC',visiblePages());
+  check('na última página "próxima" fica desabilitada',pagState().next===true&&pagState().prev===false,pagState());
+  RD.querySelector('.ff-real-pagination [data-ff-page-prev]').click();
+  await sleep(120);
+  RD.querySelector('.ff-real-pagination [data-ff-page-prev]').click();
+  await sleep(160);
+  check('"anterior" volta até a primeira página e se desabilita',visiblePages().join(',')==='pgA'&&pagState().prev===true&&pagState().next===false,{pages:visiblePages(),pag:pagState()});
+
+  /* drawer */
+  const drawer=RD.querySelector('.ff-real-drawer');
+  drawer.querySelector('.ff-nav-toggle').click();
+  await sleep(100);
+  check('drawer abre com aria-expanded correto',drawer.classList.contains('open')&&drawer.querySelector('.ff-nav-toggle').getAttribute('aria-expanded')==='true');
+  drawer.querySelector('[data-page-id="pgC"]').click();
+  await sleep(160);
+  check('navegar pelo drawer troca a página',visiblePages().join(',')==='pgC',visiblePages());
+  check('navegar fecha o drawer automaticamente',!drawer.classList.contains('open')&&drawer.querySelector('.ff-nav-toggle').getAttribute('aria-expanded')==='false');
+
+  /* bottom sheet */
+  const sheet=RD.querySelector('.ff-real-bottomsheet'),sheetBtn=sheet.querySelector('.ff-nav-toggle');
+  sheetBtn.click();
+  await sleep(100);
+  check('bottom sheet abre o corpo',sheet.classList.contains('open')&&!sheet.querySelector('.ff-sheet-body').hidden&&sheetBtn.getAttribute('aria-expanded')==='true');
+  RD.dispatchEvent(new RW.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+  await sleep(100);
+  check('Escape fecha o bottom sheet',!sheet.classList.contains('open')&&sheet.querySelector('.ff-sheet-body').hidden&&sheetBtn.getAttribute('aria-expanded')==='false');
+
+  /* FAB */
+  const fabMenuRun=RD.querySelector('.ff-fab-menu'),fabBtn=RD.querySelector('.ff-real-fab');
+  fabBtn.click();
+  await sleep(100);
+  check('FAB abre o menu de páginas',!fabMenuRun.hidden&&fabBtn.getAttribute('aria-expanded')==='true');
+  RD.body.click();
+  await sleep(100);
+  check('clicar fora fecha o menu do FAB',fabMenuRun.hidden&&fabBtn.getAttribute('aria-expanded')==='false');
+  fabBtn.click();
+  await sleep(100);
+  RD.dispatchEvent(new RW.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+  await sleep(100);
+  check('Escape fecha o menu do FAB',fabMenuRun.hidden&&fabBtn.getAttribute('aria-expanded')==='false');
+
+  /* pagenav (select) com handler do usuário */
+  RW.eval('(function(){var s=document.querySelector("select[data-ff-nav=pagenav]");s.value="pgB";s.dispatchEvent(new Event("change",{bubbles:true}))})()');
+  await sleep(160);
+  check('trocar o select do pagenav navega',visiblePages().join(',')==='pgB',visiblePages());
+  check('o handler change do usuário roda junto do goPage nativo',RW.__pn===1,RW.__pn);
+
+  /* TabControl no runtime */
+  RD.querySelector('[data-ff-nav="navbar"] [data-page-id="pgA"]').click();
+  await sleep(160);
+  const tcRoot=RD.querySelectorAll('.ff-tabcontrol')[0];
+  const tcBtns=[...tcRoot.querySelectorAll('[role="tab"]')];
+  tcBtns[2].click();
+  await sleep(120);
+  let ts=tabState();
+  check('clicar numa aba troca o painel visível',ts.value==='2'&&ts.sel.join(',')==='false,false,true'&&ts.hidden.join(',')==='true,true,false',ts);
+  check('a troca de aba dispara o evento change do componente',RW.__tabChange===1&&RW.__tabIdx===2,{n:RW.__tabChange,idx:RW.__tabIdx});
+  check('cada aba tem seu painel correspondente (sem vazamento de conteúdo)',
+    [...tcRoot.querySelectorAll('[role="tabpanel"]')].map(p=>p.textContent.trim()).join('|')==='Painel geral|Painel detalhes|Painel histórico');
+  check('trocar de aba não navega entre páginas do projeto',visiblePages().join(',')==='pgA',visiblePages());
+  const tcLayout=RW.eval('(function(){var r=document.querySelector(".ff-tabcontrol"),b=r.querySelector(".ff-tab-buttons"),p=r.querySelector(".ff-tab-panel");var cs=getComputedStyle(r),cp=getComputedStyle(p);return {display:cs.display,dir:cs.flexDirection,root:r.getBoundingClientRect().height,bar:b.getBoundingClientRect().height,panel:p.getBoundingClientRect().height,overflow:cp.overflowY}})()');
+  check('CSS do TabControl empilha barra e painel (coluna flex)',tcLayout.display==='flex'&&tcLayout.dir==='column',tcLayout);
+  check('a barra de abas não ocupa a altura toda e o painel preenche o restante',
+    tcLayout.bar>0&&tcLayout.bar<tcLayout.root*0.5&&tcLayout.panel>tcLayout.bar,tcLayout);
+
+  RW.focus();
+  tcBtns[2].dispatchEvent(new RW.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true,cancelable:true}));
+  await sleep(100);
+  ts=tabState();
+  check('seta esquerda muda para a aba anterior',ts.value==='1'&&ts.sel[1]==='true'&&ts.hidden[1]===false,ts);
+  check('o foco acompanha a aba ativada pelo teclado',ts.focus==='tab',ts.focus);
+  tcBtns[1].dispatchEvent(new RW.KeyboardEvent('keydown',{key:'End',bubbles:true,cancelable:true}));
+  await sleep(100);
+  check('End vai para a última aba',tabState().value==='2',tabState().value);
+  tcBtns[2].dispatchEvent(new RW.KeyboardEvent('keydown',{key:'Home',bubbles:true,cancelable:true}));
+  await sleep(100);
+  check('Home volta para a primeira aba',tabState().value==='0',tabState().value);
+  tcBtns[0].dispatchEvent(new RW.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));
+  await sleep(100);
+  check('seta direita avança uma aba',tabState().value==='1',tabState().value);
+
+  const tc2Root=RD.querySelectorAll('.ff-tabcontrol')[1];
+  tc2Root.querySelectorAll('[role="tab"]')[0].click();
+  await sleep(100);
+  check('TabControl com JSON inválido continua clicável',tc2Root.dataset.value==='0'&&tc2Root.querySelectorAll('[role="tabpanel"]')[0].hidden===false);
+  check('nenhum erro de JS durante a interação',RW.__errs.length===0,RW.__errs);
+
+  summary.textContent=failed?`${failed} falha(s), ${passed} ok`:`Tudo certo: ${passed} verificações`;
+  summary.className=failed?'fail':'pass';
+  document.body.dataset.test=failed?'FAIL':'PASS';
+}
+run().catch(e=>{out.insertAdjacentHTML('beforeend','<span class="fail">ERRO</span> '+escHtml(e.message)+'\n');summary.textContent='Erro no teste';document.body.dataset.test='FAIL';});
+</script>

@@ -1,0 +1,126 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>FlowForge camera regression</title>
+<style>
+  body{font:13px/1.5 ui-monospace,Consolas,monospace;margin:12px;background:#111;color:#ddd}
+  .pass{color:#4ade80}.fail{color:#f87171;font-weight:700}
+  iframe{position:absolute;left:-9999px;top:0;width:1200px;height:900px;border:0}
+  #summary{margin:10px 0;font-weight:700}
+</style>
+<h3>FlowForge – componente Câmera (botão Ativar, início automático, erros claros)</h3>
+<p>Abra por um servidor local: <code>python -m http.server</code> na raiz do projeto e visite <code>/tests/camera_test.html</code>. O teste usa uma câmera simulada (canvas), não precisa de webcam.</p>
+<div id="summary">Executando…</div>
+<pre id="out"></pre>
+<iframe id="app" src="../index.html"></iframe>
+<iframe id="run"></iframe>
+<script>
+const out=document.getElementById('out'),summary=document.getElementById('summary');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const escHtml=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let passed=0,failed=0;
+function check(name,cond,detail){
+  if(cond){passed++;out.insertAdjacentHTML('beforeend','<span class="pass">PASS</span> '+escHtml(name)+'\n');}
+  else{failed++;out.insertAdjacentHTML('beforeend','<span class="fail">FAIL</span> '+escHtml(name)+(detail!==undefined?'  → '+escHtml(JSON.stringify(detail)):'')+'\n');}
+}
+/* Simulated getUserMedia: behaviour chosen by window.__mode, calls recorded in window.__calls */
+const PROBE='<script>window.__calls=[];window.__mode="ok";'+
+ 'const mk=()=>{const c=document.createElement("canvas");c.width=320;c.height=240;const x=c.getContext("2d");const paint=()=>{x.fillStyle="#"+Math.floor(Math.random()*0xffffff).toString(16).padStart(6,"0");x.fillRect(0,0,320,240)};paint();setInterval(paint,30);return c.captureStream(15)};'+
+ 'const fake={getUserMedia:async(c)=>{__calls.push(JSON.stringify(c));const m=window.__mode;if(m==="deny"){const e=new Error("x");e.name="NotAllowedError";throw e}if(m==="nocam"){const e=new Error("x");e.name="NotFoundError";throw e}if(m==="overfacing"&&c.video&&c.video.facingMode){const e=new Error("x");e.name="OverconstrainedError";throw e}return mk()},enumerateDevices:async()=>[]};'+
+ 'Object.defineProperty(navigator,"mediaDevices",{value:fake,configurable:true});<\/script>';
+async function run(){
+  const f=document.getElementById('app');
+  await new Promise(r=>f.addEventListener('load',r,{once:true}));
+  await sleep(600);
+  let W,D;
+  try{W=f.contentWindow;D=f.contentDocument;D.body;}catch(e){summary.textContent='Sem acesso ao app: abra por http://, não por file://';document.body.dataset.test='FAIL';return;}
+  const $=s=>D.querySelector(s);
+  const closeDialogs=()=>D.querySelectorAll('dialog[open]').forEach(x=>x.close());
+  $('[data-new=app]').click();await sleep(250);if($('#siteWizardDlg')?.open)$('#wizCreate').click();await sleep(450);closeDialogs();
+
+  W.eval(`addItem('camera');addItem('camera');addItem('camera');
+    const cams=ffItems().filter(i=>i.kind==='camera');
+    cams[0].name='camAuto';cams[1].name='camManual';cams[1].autoplay=false;cams[2].name='camHidden';cams[2].autoplay=false;cams[2].hideCameraButton=true;
+    render()`);
+  const html=W.generated();
+  /* A ordem dos atributos depende de onde o id é injetado, então isola a tag <video> do id. */
+  const videoTag=id=>html.match(new RegExp(`<video[^>]*id="${id}"[^>]*>`))?.[0]||'';
+  const tagAuto=videoTag('camAuto'),tagManual=videoTag('camManual'),tagHidden=videoTag('camHidden');
+  check('o HTML marca a câmera para o runtime (data-ff-camera)',/data-ff-camera="true"/.test(tagAuto),tagAuto);
+  check('autoplay ligado gera início automático',/data-ff-autostart="true"/.test(tagAuto),tagAuto);
+  check('autoplay desligado não gera início automático',!/data-ff-autostart/.test(tagManual),tagManual);
+  check('"Ocultar botão" gera data-ff-camera-ui="false"',/data-ff-camera-ui="false"/.test(tagHidden),tagHidden);
+
+  async function load(extra){const r=document.getElementById('run');r.srcdoc=html.replace('<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:flowforgeweb:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>','<head>'+PROBE+(extra||''));await new Promise(x=>r.addEventListener('load',x,{once:true}));await sleep(900);return r.contentWindow}
+  const ov=(R,id)=>R.document.getElementById(id).parentElement.querySelector('.ff-cam-ui');
+  const shown=el=>el&&el.style.display!=='none';
+
+  let R=await load();
+  const A=R.document.getElementById('camAuto');
+  check('início automático: a câmera liga sozinha (srcObject definido)',!!A.srcObject);
+  check('início automático: botão Ativar some depois de ligar',!shown(ov(R,'camAuto')));
+  check('câmera ligada tem imagem (videoWidth>0)',A.videoWidth>0,A.videoWidth);
+  const cap=R.FlowForgeCamera.capture('camAuto');
+  check('capture() devolve um PNG em data URL',/^data:image\/png;base64,/.test(cap),cap.slice(0,20));
+  R.FlowForgeCamera.stop('camAuto');
+  check('stop() mostra o botão Ativar de novo',shown(ov(R,'camAuto')) && !A.srcObject);
+  ov(R,'camAuto').querySelector('button').click();await sleep(800);
+  check('clicar em "Ativar câmera" liga a câmera',!!A.srcObject && !shown(ov(R,'camAuto')));
+
+  const M=R.document.getElementById('camManual');
+  check('sem autoplay: não liga sozinha, mas mostra o botão Ativar',!M.srcObject && shown(ov(R,'camManual')) && /Ativar/.test(ov(R,'camManual').textContent));
+  check('com "Ocultar botão" não existe overlay',ov(R,'camHidden')===null);
+
+  R.__mode='deny';R.__calls.length=0;ov(R,'camManual').querySelector('button').click();await sleep(400);
+  check('permissão negada: mensagem clara no overlay',/Permissão da câmera negada/.test(ov(R,'camManual').textContent),ov(R,'camManual').textContent);
+  check('permissão negada: não repete tentativas inúteis',R.__calls.length===1,R.__calls.length);
+  R.__mode='nocam';ov(R,'camManual').querySelector('button').click();await sleep(400);
+  check('sem câmera: mensagem "Nenhuma câmera"',/Nenhuma câmera/.test(ov(R,'camManual').textContent),ov(R,'camManual').textContent);
+  R.__mode='overfacing';R.__calls.length=0;ov(R,'camManual').querySelector('button').click();await sleep(500);
+  check('facingMode recusado: tenta de novo sem ele e funciona',!!M.srcObject && R.__calls.length===2 && !/facingMode/.test(R.__calls[1]),R.__calls);
+
+  R=await load('<script>document.addEventListener("DOMContentLoaded",function(){var v=document.getElementById("camManual");v.setAttribute("oncamerastart","window.__evt=(window.__evt||0)+1");v.setAttribute("oncamerastop","window.__stop=(window.__stop||0)+1")})<\/script>');
+  ov(R,'camManual').querySelector('button').click();await sleep(800);
+  check('evento camerastart executa a ação do usuário (oncamerastart)',R.__evt===1,R.__evt);
+  R.FlowForgeCamera.stop('camManual');
+  check('evento camerastop executa a ação do usuário (oncamerastop)',R.__stop===1,R.__stop);
+
+  R=await load('<script>Object.defineProperty(window,"isSecureContext",{value:false,configurable:true})<\/script>');
+  check('página sem HTTPS: mensagem pede HTTPS',/HTTPS/.test(ov(R,'camManual')?.textContent||''),ov(R,'camManual')?.textContent);
+  check('página sem HTTPS: início automático não dispara getUserMedia',R.__calls.length===0,R.__calls);
+
+  summary.textContent=failed?`${failed} falha(s), ${passed} ok`:`Tudo certo: ${passed} verificações`;
+  summary.className=failed?'fail':'pass';document.body.dataset.test=failed?'FAIL':'PASS';
+}
+run().catch(e=>{out.insertAdjacentHTML('beforeend','<span class="fail">ERRO</span> '+escHtml(e.message)+'\n');summary.textContent='Erro no teste';document.body.dataset.test='FAIL';});
+</script>

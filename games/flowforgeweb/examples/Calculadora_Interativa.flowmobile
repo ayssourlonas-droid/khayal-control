@@ -1,0 +1,116 @@
+{
+  "name": "Calculadora Interativa",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "0317a679-30ca-4b47-bd4b-e9583edc52d8",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "390e927d-8afc-4585-bf91-d26399f3f3b6",
+          "kind": "heading",
+          "name": "h1",
+          "text": "Calculadora",
+          "x": 24,
+          "y": 20,
+          "width": "280px",
+          "height": "52px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// h1\n"
+          }
+        },
+        {
+          "id": "3cc3ce8b-295e-4a97-93cf-4a9d3de984e5",
+          "kind": "input",
+          "name": "num1",
+          "text": "Primeiro número",
+          "x": 24,
+          "y": 90,
+          "width": "210px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "input": "// num1\n"
+          }
+        },
+        {
+          "id": "a4da2b03-2268-4d29-a1ea-f505f5ceaa1d",
+          "kind": "input",
+          "name": "num2",
+          "text": "Segundo número",
+          "x": 250,
+          "y": 90,
+          "width": "210px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "input": "// num2\n"
+          }
+        },
+        {
+          "id": "1e4d71da-8179-4986-9ecd-9edaedc0c181",
+          "kind": "select",
+          "name": "op1",
+          "text": "Operação",
+          "x": 24,
+          "y": 150,
+          "width": "210px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "// op1\n"
+          },
+          "items": [
+            "Somar",
+            "Subtrair",
+            "Multiplicar",
+            "Dividir"
+          ]
+        },
+        {
+          "id": "1ed4286d-52ac-401d-80db-44da15f4fe5b",
+          "kind": "valuecard",
+          "name": "result1",
+          "text": "Resultado: 0",
+          "x": 24,
+          "y": 215,
+          "width": "436px",
+          "height": "100px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// result1\n"
+          },
+          "value": ""
+        },
+        {
+          "id": "3decb554-413b-438b-bc62-4dc78804d126",
+          "kind": "button",
+          "name": "calc1",
+          "text": "Calcular",
+          "x": 24,
+          "y": 335,
+          "width": "180px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "const a = Number(num1.value), b = Number(num2.value);\nlet r;\nswitch(op1.value){case \"Subtrair\":r=a-b;break;case \"Multiplicar\":r=a*b;break;case \"Dividir\":r=b!==0?a/b:\"Erro\";break;default:r=a+b;}\nresult1.textContent = \"Resultado: \" + r;"
+          }
+        }
+      ]
+    }
+  ]
+}

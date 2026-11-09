@@ -1,0 +1,272 @@
+{
+  "name": "Labirinto 3D",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "2aede6f9-b6f3-4c22-85ff-49359f518f96",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "b528b5fc-78a6-4aff-b2b6-6b8867b84030",
+          "kind": "heading",
+          "name": "lTitle",
+          "text": "Labirinto 3D",
+          "x": 20,
+          "y": 62,
+          "width": "353px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "8461484d-07eb-48df-b358-101cc3d039c1",
+          "kind": "canvas",
+          "name": "lView",
+          "text": "",
+          "x": 20,
+          "y": 108,
+          "width": "353px",
+          "height": "420px",
+          "bg": "#080a17",
+          "color": "#222222",
+          "events": {},
+          "canvasWidth": 420,
+          "canvasHeight": 420
+        },
+        {
+          "id": "ccac988b-faaa-4d1c-8c21-d53ebff9c1da",
+          "kind": "canvas",
+          "name": "lMap",
+          "text": "",
+          "x": 257,
+          "y": 116,
+          "width": "109px",
+          "height": "109px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {},
+          "canvasWidth": 109,
+          "canvasHeight": 109
+        },
+        {
+          "id": "1c0b1d16-78de-4dc7-9726-5a8b3df4f9aa",
+          "kind": "label",
+          "name": "lMsg",
+          "text": "",
+          "x": 37,
+          "y": 226,
+          "width": "319px",
+          "height": "160px",
+          "bg": "transparent",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "1bf778c4-365d-4f3e-8f65-acc0b3568f1e",
+          "kind": "label",
+          "name": "lNivel",
+          "text": "NÍVEL\n1",
+          "x": 20,
+          "y": 536,
+          "width": "83px",
+          "height": "52px",
+          "bg": "#f1f5f9",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "6eb768b8-d7bf-4793-81b6-fddb82d27e95",
+          "kind": "label",
+          "name": "lGemas",
+          "text": "GEMAS\n0/4",
+          "x": 110,
+          "y": 536,
+          "width": "83px",
+          "height": "52px",
+          "bg": "#fae8ff",
+          "color": "#701a75",
+          "events": {}
+        },
+        {
+          "id": "dbb3d4c8-6b76-4035-b6c7-42564aaaa68b",
+          "kind": "label",
+          "name": "lTempo",
+          "text": "TEMPO\n1:00",
+          "x": 200,
+          "y": 536,
+          "width": "83px",
+          "height": "52px",
+          "bg": "#fef3c7",
+          "color": "#78350f",
+          "events": {}
+        },
+        {
+          "id": "38a9c2f2-b6f6-4563-97a2-42bde4be4bf9",
+          "kind": "label",
+          "name": "lPontos",
+          "text": "PONTOS\n0",
+          "x": 290,
+          "y": 536,
+          "width": "83px",
+          "height": "52px",
+          "bg": "#e0e7ff",
+          "color": "#312e81",
+          "events": {}
+        },
+        {
+          "id": "d105f756-5e3e-4453-9222-2c4867f3c472",
+          "kind": "label",
+          "name": "lStatus",
+          "text": "Pronto — Enter ou toque para começar",
+          "x": 20,
+          "y": 594,
+          "width": "353px",
+          "height": "26px",
+          "bg": "transparent",
+          "color": "#334155",
+          "events": {}
+        },
+        {
+          "id": "e90cb244-513f-4d27-b35e-23231ace50e3",
+          "kind": "button",
+          "name": "lLeft",
+          "text": "◀ Girar",
+          "x": 20,
+          "y": 626,
+          "width": "83px",
+          "height": "64px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "e16a67bb-4988-4ef5-ae9a-c26b7c27ecfe",
+          "kind": "button",
+          "name": "lFwd",
+          "text": "▲ Frente",
+          "x": 110,
+          "y": 626,
+          "width": "83px",
+          "height": "64px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "709d9f42-38e7-43f4-8f04-00193314f1be",
+          "kind": "button",
+          "name": "lBack",
+          "text": "▼ Trás",
+          "x": 200,
+          "y": 626,
+          "width": "83px",
+          "height": "64px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "015f161e-de4a-462a-a515-acfbc5a0d386",
+          "kind": "button",
+          "name": "lRight",
+          "text": "Girar ▶",
+          "x": 290,
+          "y": 626,
+          "width": "83px",
+          "height": "64px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "5f102bc2-e5ef-4c81-af27-e50d47ce6206",
+          "kind": "button",
+          "name": "lPause",
+          "text": "Pausar",
+          "x": 20,
+          "y": 698,
+          "width": "168px",
+          "height": "52px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "window.ffLabirinto&&window.ffLabirinto.btn('pause');"
+          }
+        },
+        {
+          "id": "998e586c-f313-4780-a695-3f55a277079a",
+          "kind": "button",
+          "name": "lNew",
+          "text": "Novo jogo",
+          "x": 197,
+          "y": 698,
+          "width": "176px",
+          "height": "52px",
+          "bg": "#dc2626",
+          "color": "#ffffff",
+          "events": {
+            "click": "window.ffLabirinto&&window.ffLabirinto.btn('reset');"
+          }
+        },
+        {
+          "id": "1d630b9c-25d6-419a-85a5-597cfeddee59",
+          "kind": "label",
+          "name": "lHint",
+          "text": "Teclado: ↑ ↓ andam, ← → giram, A D andam de lado, P pausa, Enter começa. Toque: arraste no jogo (para os lados gira, para cima ou para baixo anda) ou segure os botões. Pegue as gemas, ache o farol verde da saída e vigie o tempo. O minimapa mostra só o que você já visitou.",
+          "x": 20,
+          "y": 758,
+          "width": "353px",
+          "height": "96px",
+          "bg": "transparent",
+          "color": "#64748b",
+          "events": {}
+        },
+        {
+          "id": "1c3fc84a-8dbd-418e-a1c8-fec9c0325ecd",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 66,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "2cafaca7-5cb1-413e-95ed-ae426c4c532f",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 866,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "/* Labirinto 3D — primeira pessoa em WebGL puro (sem bibliotecas).\n   Labirinto gerado a cada nível (cresce até 12x12), gemas para coletar, saída com farol verde, tempo limitado,\n   colisão com deslize nas paredes, tocha (luz perto de você + neblina) e minimapa que revela só o que já foi visitado.\n   Teclado: ↑/W frente, ↓/S trás, ←/→ girar, A/D andar de lado, P pausa, Enter/Espaço começa. Toque: arraste no jogo\n   (para os lados gira, para cima/baixo anda) ou segure os botões. */\nif(!window.ffLabirinto){(function(){\nvar C=window.ffLabirinto={},PI=Math.PI,$=function(i){return document.getElementById(i)},KEY='ffLabirintoV1';\nfunction snd(n,v){try{if(window.Sons)window.Sons.play(n,v)}catch(e){}} // sons (componente Game Sound), se o projeto tiver\nvar S=2,WH=2.3,WT=.3,PR=.34,SPEED=3.3,TURN=2.3,FOG=[.03,.035,.09];\nvar G={state:'ready',level:1,n:5,cells:null,walls:[],vis:null,gems:[],ex:{i:0,j:0},x:1,z:1,yaw:0,time:60,score:0,got:0,total:0,best:0,spin:0,seed:7,overAt:0,clearAt:0,freeze:false,hold:{f:0,b:0,l:0,r:0,sl:0,sr:0},drag:{f:0,t:0},bonus:0,t:0};\nvar R={c:null,gl:null,m:null,mx:null,fail:false,frames:0,W:0,H:0,last:0,raf:0,err:''};\nvar now=function(){return performance.now()};\n\n/* ---------- aleatório ---------- */\nfunction rnd(){G.seed=(G.seed+0x6D2B79F5)|0;var t=Math.imul(G.seed^(G.seed>>>15),1|G.seed);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296}\nfunction hash(n){n=(n^61)^(n>>>16);n=(n+(n<<3))|0;n=n^(n>>>4);n=Math.imul(n,0x27d4eb2d);n=n^(n>>>15);return(n>>>0)/4294967296}\n\n/* ---------- labirinto ---------- */\n// bits de passagem: 1=N(-z) 2=E(+x) 4=S(+z) 8=W(-x)\nvar DX={1:0,2:1,4:0,8:-1},DZ={1:-1,2:0,4:1,8:0},OP={1:4,2:8,4:1,8:2};\nfunction build(n){\n var i,j,c=[];for(i=0;i<n;i++){c.push([]);for(j=0;j<n;j++)c[i].push(0)}\n var seen=[];for(i=0;i<n;i++){seen.push([]);for(j=0;j<n;j++)seen[i].push(false)}\n var st=[[0,0]];seen[0][0]=true;\n while(st.length){var p=st[st.length-1],opts=[];\n  [1,2,4,8].forEach(function(d){var a=p[0]+DX[d],b=p[1]+DZ[d];if(a>=0&&b>=0&&a<n&&b<n&&!seen[a][b])opts.push(d)});\n  if(!opts.length){st.pop();continue}\n  var d=opts[Math.floor(rnd()*opts.length)],a=p[0]+DX[d],b=p[1]+DZ[d];c[p[0]][p[1]]|=d;c[a][b]|=OP[d];seen[a][b]=true;st.push([a,b])}\n // alguns atalhos (laços) para o labirinto não ser só um caminho\n var extra=Math.floor(n*.8),k;\n for(k=0;k<extra;k++){i=Math.floor(rnd()*(n-1));j=Math.floor(rnd()*(n-1));var d2=rnd()<.5?2:4;c[i][j]|=d2;c[i+DX[d2]][j+DZ[d2]]|=OP[d2]}\n return c}\nfunction wallsOf(c,n){\n var w=[],i,j;\n function add(x0,x1,z0,z1,h){w.push({x0:x0,x1:x1,z0:z0,z1:z1})}\n for(i=0;i<n;i++)for(j=0;j<n;j++){\n  if(!(c[i][j]&2))add((i+1)*S-WT/2,(i+1)*S+WT/2,j*S-WT/2,(j+1)*S+WT/2);\n  if(!(c[i][j]&4))add(i*S-WT/2,(i+1)*S+WT/2,(j+1)*S-WT/2,(j+1)*S+WT/2);\n  if(i===0)add(-WT/2,WT/2,j*S-WT/2,(j+1)*S+WT/2);\n  if(j===0)add(i*S-WT/2,(i+1)*S+WT/2,-WT/2,WT/2)}\n return w}\nfunction pathLen(c,n,a,b){ // distância mínima em células (busca em largura)\n var d={},q=[[0,0]],i;d['0,0']=0;\n while(q.length){var p=q.shift();if(p[0]===a&&p[1]===b)return d[p[0]+','+p[1]];\n  [1,2,4,8].forEach(function(m){if(c[p[0]][p[1]]&m){var x=p[0]+DX[m],y=p[1]+DZ[m],k=x+','+y;if(!(k in d)){d[k]=d[p[0]+','+p[1]]+1;q.push([x,y])}}})}\n return -1}\nfunction farthest(c,n){var best=[n-1,n-1],bd=-1,i,j;for(i=0;i<n;i++)for(j=0;j<n;j++){var d=pathLen(c,n,i,j);if(d>bd){bd=d;best=[i,j]}}return best}\nfunction level(lv){\n var n=Math.min(12,4+lv),i,j;G.level=lv;G.n=n;G.cells=build(n);G.walls=wallsOf(G.cells,n);\n G.vis=[];for(i=0;i<n;i++){G.vis.push([]);for(j=0;j<n;j++)G.vis[i].push(false)}\n var e=farthest(G.cells,n);G.ex={i:e[0],j:e[1]};\n G.gems=[];var want=Math.min(3+lv,10),tries=0;\n while(G.gems.length<want&&tries++<500){i=Math.floor(rnd()*n);j=Math.floor(rnd()*n);\n  if((i===0&&j===0)||(i===G.ex.i&&j===G.ex.j))continue;if(G.gems.some(function(g){return g.i===i&&g.j===j}))continue;\n  G.gems.push({i:i,j:j,x:(i+.5)*S,z:(j+.5)*S,got:false})}\n G.got=0;G.total=G.gems.length;G.x=S/2;G.z=S/2;\n G.yaw=(G.cells[0][0]&4)?0:PI/2; // olha para uma passagem aberta\n G.time=Math.round(26+n*n*1.25);G.t=0;visit();C.ui()}\nfunction visit(){var i=Math.floor(G.x/S),j=Math.floor(G.z/S),a,b;\n for(a=i-1;a<=i+1;a++)for(b=j-1;b<=j+1;b++)if(a>=0&&b>=0&&a<G.n&&b<G.n&&(a===i&&b===j||(Math.abs(a-i)+Math.abs(b-j)===1&&(G.cells[i][j]&dirTo(a-i,b-j)))))G.vis[a][b]=true}\nfunction dirTo(dx,dz){return dx===1?2:dx===-1?8:dz===1?4:1}\n\n/* ---------- física ---------- */\nfunction resolve(){\n var k,p,w,cx,cz,dx,dz,d;\n for(p=0;p<2;p++)for(k=0;k<G.walls.length;k++){w=G.walls[k];\n  cx=Math.max(w.x0,Math.min(G.x,w.x1));cz=Math.max(w.z0,Math.min(G.z,w.z1));dx=G.x-cx;dz=G.z-cz;d=Math.sqrt(dx*dx+dz*dz);\n  if(d<PR){if(d>1e-6){G.x=cx+dx/d*PR;G.z=cz+dz/d*PR}else{G.x+=PR}}}}\nfunction axes(){\n var h=G.hold,f=Math.max(-1,Math.min(1,h.f-h.b+G.drag.f)),t=Math.max(-1,Math.min(1,h.l-h.r)),s=Math.max(-1,Math.min(1,h.sr-h.sl));return{f:f,t:t,s:s}}\nfunction step(dt){\n G.spin+=dt*2.2;\n if(G.state==='clear'){if(now()-G.clearAt>1500)nextLevel();return}\n if(G.state!=='play')return;\n var a=axes(),dx=Math.sin(G.yaw),dz=Math.cos(G.yaw),rx=-dz,rz=dx,i;\n G.yaw+=a.t*TURN*dt;\n var vx=(dx*a.f+rx*a.s)*SPEED*dt,vz=(dz*a.f+rz*a.s)*SPEED*dt,len=Math.sqrt(vx*vx+vz*vz),maxS=SPEED*dt;\n if(len>maxS){vx*=maxS/len;vz*=maxS/len}\n // passos curtos para não atravessar paredes\n var n=Math.max(1,Math.ceil(Math.max(Math.abs(vx),Math.abs(vz))/.12));\n for(i=0;i<n;i++){G.x+=vx/n;G.z+=vz/n;resolve()}\n G.t+=dt;G.time-=dt;visit();\n for(i=0;i<G.gems.length;i++){var g=G.gems[i];if(!g.got&&Math.hypot(G.x-g.x,G.z-g.z)<.85){g.got=true;G.got++;G.score+=100;snd('coin');C.ui()}}\n var ex=(G.ex.i+.5)*S,ez=(G.ex.j+.5)*S;\n if(Math.hypot(G.x-ex,G.z-ez)<.9){G.bonus=Math.max(0,Math.floor(G.time))*5+200*G.level;G.score+=G.bonus;G.state='clear';G.clearAt=now();snd('win');saveBest();C.ui();return}\n if(G.time<=0){G.time=0;G.state='over';G.overAt=now();snd('lose');saveBest();C.ui()}}\nC.step=step;\nfunction nextLevel(){G.state='play';level(G.level+1)}\nfunction loadBest(){try{G.best=+localStorage.getItem(KEY)||0}catch(e){G.best=0}}\nfunction saveBest(){if(G.score>G.best){G.best=G.score;try{localStorage.setItem(KEY,String(G.best))}catch(e){}}}\nfunction begin(){\n if(G.state==='ready'){G.state='play';G.score=0;C.ui();return true}\n if(G.state==='over'&&now()-G.overAt>550){C.reset();return true}\n return G.state==='play'}\nC.reset=function(){snd('start');G.seed=(Date.now()&0xffff)+3;G.score=0;G.state='play';G.drag.f=0;G.drag.t=0;level(1)};\nC.pause=function(){if(G.state==='play')G.state='pause';else if(G.state==='pause')G.state='play';R.last=0;C.ui()};\nC.start=function(){begin()};\nC.btn=function(n){if(typeof C[n]==='function')C[n]();var e=document.activeElement;if(e&&e.blur&&e.tagName==='BUTTON')e.blur()};\nC.turn=function(d){G.yaw-=d*.35};\n\n/* ---------- interface ---------- */\nfunction fmt(t){t=Math.max(0,Math.ceil(t));return Math.floor(t/60)+':'+('0'+(t%60)).slice(-2)}\nfunction st(id,t){var e=$(id);if(e){e.style.whiteSpace='pre-line';e.style.textAlign='center';e.style.fontWeight='700';e.style.lineHeight='1.35';e.textContent=t}}\nC.ui=function(){\n st('lNivel','NÍVEL\\n'+G.level);st('lGemas','GEMAS\\n'+G.got+'/'+G.total);st('lTempo','TEMPO\\n'+fmt(G.time));st('lPontos','PONTOS\\n'+G.score);\n var s=$('lStatus');if(s)s.textContent=G.state==='over'?'Fim — '+G.score+' pontos (recorde '+Math.max(G.best,G.score)+')':G.state==='pause'?'Pausado':G.state==='ready'?'Pronto — Enter ou toque para começar':G.state==='clear'?'Saída encontrada!':'Ache a saída verde — recorde '+Math.max(G.best,G.score);\n var m=$('lMsg');if(m){var t=G.state==='ready'?'LABIRINTO 3D\\nPegue as gemas e ache a saída\\nantes do tempo acabar\\n\\nEnter, Espaço ou toque para começar':G.state==='pause'?'PAUSADO\\nToque em Continuar':G.state==='clear'?'NÍVEL '+G.level+' CONCLUÍDO\\n+'+G.bonus+' pontos':G.state==='over'?'TEMPO ESGOTADO\\n'+G.score+' pontos'+(G.score>0&&G.score>=G.best?' — novo recorde!':'')+'\\nToque em Novo jogo':R.fail?'WebGL indisponível':'';\n  m.textContent=t;m.style.whiteSpace='pre-line';m.style.textAlign='center';m.style.display='flex';m.style.alignItems='center';m.style.justifyContent='center';m.style.fontWeight='700';m.style.fontSize='17px';m.style.lineHeight='1.4';m.style.borderRadius='12px';m.style.background=t?'rgba(2,6,23,.74)':'transparent';m.style.visibility=t?'visible':'hidden';m.style.pointerEvents='none'}\n var p=$('lPause');if(p){p.textContent=G.state==='pause'?'Continuar':'Pausar';p.disabled=G.state!=='play'&&G.state!=='pause'}};\n\n/* ---------- malhas ---------- */\nfunction M(){this.v=[]}\nM.prototype.t=function(a,b,c,n){this.v.push(a[0],a[1],a[2],n[0],n[1],n[2],b[0],b[1],b[2],n[0],n[1],n[2],c[0],c[1],c[2],n[0],n[1],n[2])};\nM.prototype.box=function(){var h=.5,s=this,F=[[[0,1,0],[-h,h,-h],[h,h,-h],[-h,h,h]],[[0,-1,0],[-h,-h,h],[h,-h,h],[-h,-h,-h]],[[0,0,1],[-h,-h,h],[-h,h,h],[h,-h,h]],[[0,0,-1],[h,-h,-h],[h,h,-h],[-h,-h,-h]],[[1,0,0],[h,-h,h],[h,h,h],[h,-h,-h]],[[-1,0,0],[-h,-h,-h],[-h,h,-h],[-h,-h,h]]];\n F.forEach(function(f){var a=f[1],b=f[2],d=f[3],e=[b[0]+d[0]-a[0],b[1]+d[1]-a[1],b[2]+d[2]-a[2]];s.t(a,b,d,f[0]);s.t(b,e,d,f[0])})};\nM.prototype.quad=function(){this.t([-.5,0,-.5],[.5,0,-.5],[-.5,0,.5],[0,1,0]);this.t([.5,0,-.5],[.5,0,.5],[-.5,0,.5],[0,1,0])};\nM.prototype.octa=function(){var s=this,T=[0,1,0],B=[0,-1,0],P=[[1,0,0],[0,0,1],[-1,0,0],[0,0,-1]],i;\n function nr(a,b,c){var x=a[0]+b[0]+c[0],y=a[1]+b[1]+c[1],z=a[2]+b[2]+c[2],l=Math.sqrt(x*x+y*y+z*z);return[x/l,y/l,z/l]}\n for(i=0;i<4;i++){var a=P[i],b=P[(i+1)%4];s.t(T,a,b,nr(T,a,b));s.t(B,b,a,nr(B,b,a))}};\n\n/* ---------- matrizes e GL ---------- */\nfunction nrm(x,y,z){var l=Math.sqrt(x*x+y*y+z*z)||1;return[x/l,y/l,z/l]}\nfunction persp(f,a,n,fa){var t=1/Math.tan(f/2),o=new Float32Array(16);o[0]=t/a;o[5]=t;o[10]=(fa+n)/(n-fa);o[11]=-1;o[14]=2*fa*n/(n-fa);return o}\nfunction look(e,t){var f=nrm(t[0]-e[0],t[1]-e[1],t[2]-e[2]),s=nrm(-f[2],0,f[0]);\n var u=[s[1]*f[2]-s[2]*f[1],s[2]*f[0]-s[0]*f[2],s[0]*f[1]-s[1]*f[0]],o=new Float32Array(16);\n o[0]=s[0];o[4]=s[1];o[8]=s[2];o[1]=u[0];o[5]=u[1];o[9]=u[2];o[2]=-f[0];o[6]=-f[1];o[10]=-f[2];\n o[12]=-(s[0]*e[0]+s[1]*e[1]+s[2]*e[2]);o[13]=-(u[0]*e[0]+u[1]*e[1]+u[2]*e[2]);o[14]=f[0]*e[0]+f[1]*e[1]+f[2]*e[2];o[15]=1;return o}\nfunction mul(a,b){var o=new Float32Array(16),i,j,k,v;for(i=0;i<4;i++)for(j=0;j<4;j++){v=0;for(k=0;k<4;k++)v+=a[k*4+j]*b[i*4+k];o[i*4+j]=v}return o}\nvar VS='attribute vec3 a_p;attribute vec3 a_n;uniform mat4 u_vp;uniform vec3 u_pos;uniform vec3 u_sc;uniform float u_ry;varying vec3 v_w;varying vec3 v_n;'+\n'void main(){vec3 p=a_p*u_sc;float c=cos(u_ry),s=sin(u_ry);vec3 r=vec3(p.x*c+p.z*s,p.y,-p.x*s+p.z*c);v_n=vec3(a_n.x*c+a_n.z*s,a_n.y,-a_n.x*s+a_n.z*c);v_w=r+u_pos;gl_Position=u_vp*vec4(v_w,1.0);}';\nvar FS='precision mediump float;varying vec3 v_w;varying vec3 v_n;uniform vec3 u_col;uniform float u_mode;uniform vec3 u_eye;uniform vec3 u_fog;'+\n'void main(){vec3 col=u_col;float dd=length(u_eye-v_w);'+\n' if(u_mode<0.5){vec3 N=normalize(v_n);float torch=1.0/(1.0+0.045*dd*dd);float up=max(N.y,0.0);col=u_col*(0.16+0.10*up+0.95*torch*(0.55+0.45*abs(dot(N,normalize(u_eye-v_w)))));}'+\n' float f=clamp((dd-5.0)/22.0,0.0,1.0);if(u_mode>2.5)f=0.0;'+\n' gl_FragColor=vec4(mix(col,u_fog,f),1.0);}';\nfunction sh(gl,t,s){var o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(o));return o}\nfunction buf(gl,m){var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(m.v),gl.STATIC_DRAW);return{b:b,n:m.v.length/6}}\nfunction initGL(c){\n var gl=null;try{gl=c.getContext('webgl',{antialias:true,alpha:false})||c.getContext('experimental-webgl',{antialias:true,alpha:false})}catch(e){}\n if(!gl){R.err='WebGL indisponível';return false}\n try{\n  var p=gl.createProgram();gl.attachShader(p,sh(gl,gl.VERTEX_SHADER,VS));gl.attachShader(p,sh(gl,gl.FRAGMENT_SHADER,FS));gl.linkProgram(p);\n  if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));\n  gl.useProgram(p);R.U={};['u_vp','u_pos','u_sc','u_ry','u_col','u_mode','u_eye','u_fog'].forEach(function(n){R.U[n]=gl.getUniformLocation(p,n)});\n  R.ap=gl.getAttribLocation(p,'a_p');R.an=gl.getAttribLocation(p,'a_n');\n  var b=new M(),q=new M(),o=new M();b.box();q.quad();o.octa();R.mesh={box:buf(gl,b),quad:buf(gl,q),octa:buf(gl,o)};\n  gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.uniform3f(R.U.u_fog,FOG[0],FOG[1],FOG[2]);R.gl=gl;return true}catch(e){R.err=String(e&&e.message||e);return false}}\nfunction draw(mesh,x,y,z,ry,sx,sy,sz,col,mode){\n var gl=R.gl,U=R.U,m=R.mesh[mesh];\n gl.bindBuffer(gl.ARRAY_BUFFER,m.b);gl.enableVertexAttribArray(R.ap);gl.vertexAttribPointer(R.ap,3,gl.FLOAT,false,24,0);gl.enableVertexAttribArray(R.an);gl.vertexAttribPointer(R.an,3,gl.FLOAT,false,24,12);\n gl.uniform3f(U.u_pos,x,y,z);gl.uniform3f(U.u_sc,sx,sy,sz);gl.uniform1f(U.u_ry,ry);gl.uniform3f(U.u_col,col[0],col[1],col[2]);gl.uniform1f(U.u_mode,mode||0);\n gl.drawArrays(gl.TRIANGLES,0,m.n)}\nfunction hex(h){return[parseInt(h.substr(1,2),16)/255,parseInt(h.substr(3,2),16)/255,parseInt(h.substr(5,2),16)/255]}\nvar K={wall:[hex('#6d5bd0'),hex('#4f7be0'),hex('#8a5bd0')],top:hex('#22d3ee'),f1:hex('#26304f'),f2:hex('#1d2540'),gem:[hex('#f0abfc'),hex('#fde047'),hex('#67e8f9')],exit:hex('#34d399'),exitD:hex('#10b981')};\n\n/* ---------- desenho ---------- */\nfunction frame(t){\n R.raf=0;var c=R.c;if(!c||!document.body.contains(c)||!R.gl)return;\n R.raf=requestAnimationFrame(frame);\n var dt=R.last?Math.min(.05,(t-R.last)/1000):.016;R.last=t;\n if(!G.freeze){var s0=G.state,tk=Math.ceil(G.time);step(dt);if(G.state==='play'&&Math.ceil(G.time)!==tk)C.ui()}\n var rc=c.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2),W=Math.max(2,Math.round(rc.width*dpr)),H=Math.max(2,Math.round(rc.height*dpr));\n if(rc.width<2)return;if(c.width!==W||c.height!==H){c.width=W;c.height=H}\n R.W=W;R.H=H;R.frames++;render();drawMap()}\nfunction render(){\n var gl=R.gl,U=R.U,i,j,n=G.n;\n gl.viewport(0,0,R.W,R.H);gl.clearColor(FOG[0],FOG[1],FOG[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);\n var bob=G.state==='play'?Math.sin(G.t*9)*.018*Math.min(1,Math.hypot(axes().f,axes().s)):0;\n var e=[G.x,1.15+bob,G.z],d=[Math.sin(G.yaw),0,Math.cos(G.yaw)];\n R.eye=e;R.vp=mul(persp(72*PI/180,R.W/Math.max(1,R.H),.08,120),look(e,[e[0]+d[0],e[1]-.02,e[2]+d[2]]));\n gl.uniformMatrix4fv(U.u_vp,false,R.vp);gl.uniform3f(U.u_eye,e[0],e[1],e[2]);\n // chão (xadrez) e teto escuro\n for(i=0;i<n;i++)for(j=0;j<n;j++)draw('box',(i+.5)*S,-.05,(j+.5)*S,0,S,.1,S,(i+j)%2?K.f1:K.f2);\n draw('box',n*S/2,WH+.05,n*S/2,0,n*S,.1,n*S,[.05,.05,.12]);\n // paredes\n for(i=0;i<G.walls.length;i++){var w=G.walls[i],cx=(w.x0+w.x1)/2,cz=(w.z0+w.z1)/2,sx=w.x1-w.x0,sz=w.z1-w.z0,hk=Math.floor(hash(Math.floor(cx*7)*31+Math.floor(cz*7)+G.level)*3);\n  draw('box',cx,WH/2,cz,0,sx,WH,sz,K.wall[hk]);draw('box',cx,WH-.06,cz,0,sx+.02,.12,sz+.02,K.top,1);draw('box',cx,.05,cz,0,sx+.02,.1,sz+.02,K.top,1)}\n // gemas\n for(i=0;i<G.gems.length;i++){var g=G.gems[i];if(g.got)continue;draw('octa',g.x,.95+Math.sin(G.spin*1.5+i)*.12,g.z,G.spin+i,.26,.38,.26,K.gem[i%3],1)}\n // saída: base e farol visível de longe\n var ex=(G.ex.i+.5)*S,ez=(G.ex.j+.5)*S;\n draw('box',ex,.02,ez,0,1.5,.05,1.5,K.exit,1);draw('box',ex,.02+WH,ez,G.spin,.5,WH*2,.5,K.exitD,3);draw('box',ex,2.6,ez,G.spin,.9,.12,.9,K.exit,3)}\nC.draw=render;\n\n/* ---------- minimapa (revela só o visitado) ---------- */\nfunction drawMap(){\n var cv=R.mx;if(!cv)return;var x=cv.getContext('2d');if(!x)return;var W=cv.width,H=cv.height,n=G.n,k=Math.min(W,H)/(n*S),i,j;\n x.clearRect(0,0,W,H);x.fillStyle='#0b1020';x.fillRect(0,0,W,H);x.lineCap='round';x.lineWidth=2;\n for(i=0;i<n;i++)for(j=0;j<n;j++){if(!G.vis[i][j])continue;\n  x.fillStyle='rgba(148,163,184,.18)';x.fillRect(i*S*k,j*S*k,S*k,S*k);x.strokeStyle='#c4b5fd';x.beginPath();\n  if(!(G.cells[i][j]&1)){x.moveTo(i*S*k,j*S*k);x.lineTo((i+1)*S*k,j*S*k)}\n  if(!(G.cells[i][j]&2)){x.moveTo((i+1)*S*k,j*S*k);x.lineTo((i+1)*S*k,(j+1)*S*k)}\n  if(!(G.cells[i][j]&4)){x.moveTo(i*S*k,(j+1)*S*k);x.lineTo((i+1)*S*k,(j+1)*S*k)}\n  if(!(G.cells[i][j]&8)){x.moveTo(i*S*k,j*S*k);x.lineTo(i*S*k,(j+1)*S*k)}\n  x.stroke()}\n G.gems.forEach(function(g){if(!g.got&&G.vis[g.i][g.j]){x.fillStyle='#f0abfc';x.beginPath();x.arc(g.x*k,g.z*k,2.6,0,2*PI);x.fill()}});\n if(G.vis[G.ex.i][G.ex.j]){x.fillStyle='#34d399';x.fillRect((G.ex.i+.5)*S*k-4,(G.ex.j+.5)*S*k-4,8,8)}\n var px=G.x*k,pz=G.z*k,dx=Math.sin(G.yaw),dz=Math.cos(G.yaw);\n x.fillStyle='#fde047';x.beginPath();x.moveTo(px+dx*7,pz+dz*7);x.lineTo(px-dx*4-dz*4,pz-dz*4+dx*4);x.lineTo(px-dx*4+dz*4,pz-dz*4-dx*4);x.closePath();x.fill()}\n\n/* ---------- entrada ---------- */\nvar KEYS={ArrowUp:'f',w:'f',W:'f',ArrowDown:'b',s:'b',S:'b',ArrowLeft:'l',ArrowRight:'r',a:'sl',A:'sl',d:'sr',D:'sr'};\nfunction key(e){\n if(!$('lView'))return;var k=e.key,u=true;\n if(KEYS[k]){if(G.state==='ready'||G.state==='over'){begin()}G.hold[KEYS[k]]=1}\n else if(k==='p'||k==='P'||k==='Escape')C.pause();\n else if(k==='Enter'||k===' '||k==='Spacebar'){if(G.state==='ready'||G.state==='over')begin();else u=false}\n else u=false;\n if(u&&e.preventDefault)e.preventDefault()}\nfunction keyup(e){var k=KEYS[e.key];if(k)G.hold[k]=0}\nfunction holdBtn(id,name){var b=$(id);if(!b||b.__ffl)return;b.__ffl=true;\n function on(e){if(G.state==='ready'||G.state==='over')begin();G.hold[name]=1;if(e.preventDefault)e.preventDefault();try{b.setPointerCapture(e.pointerId)}catch(_){}}\n function off(){G.hold[name]=0}\n b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('lostpointercapture',off);b.style.touchAction='none'}\nfunction gestures(cv){\n var d=null;cv.style.touchAction='none';\n cv.addEventListener('pointerdown',function(e){if(G.state==='ready'||G.state==='over'){begin();return}d={x:e.clientX,y:e.clientY,lx:e.clientX};try{cv.setPointerCapture(e.pointerId)}catch(_){}});\n cv.addEventListener('pointermove',function(e){if(!d)return;var dx=e.clientX-d.lx;d.lx=e.clientX;if(G.state==='play')G.yaw-=dx*.012;\n  var dy=e.clientY-d.y;G.drag.f=Math.abs(dy)<12?0:Math.max(-1,Math.min(1,-dy/70))});\n function up(){d=null;G.drag.f=0}\n cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up)}\nC.init=function(){\n var cv=$('lView');loadBest();G.state='ready';G.seed=11;G.score=0;level(1);G.state='ready';C.ui();\n if(!cv)return;R.mx=$('lMap');\n if(R.c!==cv){R.c=cv;if(!initGL(cv)){R.fail=true;C.ui();var x=R.mx&&R.mx.getContext('2d');return}gestures(cv)}\n ['lFwd:f','lBack:b','lLeft:l','lRight:r'].forEach(function(s){var a=s.split(':');holdBtn(a[0],a[1])});\n if(!window.__ffLabKeys){window.__ffLabKeys=true;document.addEventListener('keydown',key);document.addEventListener('keyup',keyup);\n  window.addEventListener('blur',function(){G.hold={f:0,b:0,l:0,r:0,sl:0,sr:0}});\n  document.addEventListener('visibilitychange',function(){if(document.hidden&&G.state==='play'){G.state='pause';C.ui()}})}\n if(!R.raf)R.raf=requestAnimationFrame(frame)};\nC.gl3d={get ok(){return!!R.gl},get error(){return R.err},get frames(){return R.frames},get fail(){return R.fail}};\nC.test={state:function(){return G},freeze:function(f){G.freeze=!!f;R.last=0},step:step,level:level,axes:axes,\n setPos:function(x,z,yaw){G.x=x;G.z=z;if(yaw!=null)G.yaw=yaw;visit()},pathLen:function(){return pathLen(G.cells,G.n,G.ex.i,G.ex.j)},\n reachable:function(){var n=G.n,i,j;for(i=0;i<n;i++)for(j=0;j<n;j++)if(pathLen(G.cells,n,i,j)<0)return false;return true},\n render:render,seed:function(s){G.seed=s}};\n})()}\n\nwindow.ffLabirinto.init();\ndocument.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

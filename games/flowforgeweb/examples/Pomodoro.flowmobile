@@ -1,0 +1,164 @@
+{
+  "name": "Pomodoro",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "ffd1c66b-b585-41b5-8376-6580618a20a8",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "020dcb65-2bbf-4164-9fe1-a4be4a79e5a4",
+          "kind": "heading",
+          "name": "pomoTitle",
+          "text": "Pomodoro",
+          "x": 20,
+          "y": 72,
+          "width": "353px",
+          "height": "48px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "fde6dd9e-9322-4c84-b8a8-aad6124cae09",
+          "kind": "button",
+          "name": "pomoFocus",
+          "text": "Foco 25",
+          "x": 20,
+          "y": 132,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPomo){var M=window.ffPomo={modes:{'Foco':25,'Pausa':5,'Pausa longa':15},mode:'Foco',left:25*60,total:25*60,timer:null,done:0};M.fmt=function(s){var m=Math.floor(s/60),x=s%60;return(m<10?'0':'')+m+':'+(x<10?'0':'')+x};M.bar=function(p){var el=$('pomoBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};M.draw=function(){var tm=$('pomoTime');tm.textContent=M.fmt(M.left);tm.style.cssText+=';font-size:72px;font-weight:700;line-height:1;text-align:center';$('pomoMode').textContent=M.mode+(M.timer?' — em andamento':' — pausado');$('pomoSessions').textContent='Sessões de foco concluídas: '+M.done;$('pomoStart').textContent=M.timer?'Pausar':(M.left<M.total?'Continuar':'Iniciar');M.bar((M.total-M.left)/M.total*100);document.title=M.fmt(M.left)+' · '+M.mode};M.stop=function(){clearInterval(M.timer);M.timer=null};M.set=function(m){M.stop();M.mode=m;M.total=M.left=M.modes[m]*60;M.draw()};M.tick=function(){M.left--;if(M.left<=0){M.left=0;M.stop();if(M.mode==='Foco')M.done++;M.draw();$('pomoMode').textContent=M.mode+' — concluído!';try{if(navigator.vibrate)navigator.vibrate(200)}catch(e){}return}M.draw()};M.toggle=function(){if(M.timer){M.stop();M.draw();return}if(M.left<=0)M.left=M.total;M.timer=setInterval(M.tick,1000);M.draw()};M.reset=function(){M.stop();M.left=M.total;M.draw()};M.draw()}window.ffPomo.set('Foco');"
+          }
+        },
+        {
+          "id": "d3b08093-3831-485d-a669-b34e5a44d3d3",
+          "kind": "button",
+          "name": "pomoShort",
+          "text": "Pausa 5",
+          "x": 139,
+          "y": 132,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPomo){var M=window.ffPomo={modes:{'Foco':25,'Pausa':5,'Pausa longa':15},mode:'Foco',left:25*60,total:25*60,timer:null,done:0};M.fmt=function(s){var m=Math.floor(s/60),x=s%60;return(m<10?'0':'')+m+':'+(x<10?'0':'')+x};M.bar=function(p){var el=$('pomoBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};M.draw=function(){var tm=$('pomoTime');tm.textContent=M.fmt(M.left);tm.style.cssText+=';font-size:72px;font-weight:700;line-height:1;text-align:center';$('pomoMode').textContent=M.mode+(M.timer?' — em andamento':' — pausado');$('pomoSessions').textContent='Sessões de foco concluídas: '+M.done;$('pomoStart').textContent=M.timer?'Pausar':(M.left<M.total?'Continuar':'Iniciar');M.bar((M.total-M.left)/M.total*100);document.title=M.fmt(M.left)+' · '+M.mode};M.stop=function(){clearInterval(M.timer);M.timer=null};M.set=function(m){M.stop();M.mode=m;M.total=M.left=M.modes[m]*60;M.draw()};M.tick=function(){M.left--;if(M.left<=0){M.left=0;M.stop();if(M.mode==='Foco')M.done++;M.draw();$('pomoMode').textContent=M.mode+' — concluído!';try{if(navigator.vibrate)navigator.vibrate(200)}catch(e){}return}M.draw()};M.toggle=function(){if(M.timer){M.stop();M.draw();return}if(M.left<=0)M.left=M.total;M.timer=setInterval(M.tick,1000);M.draw()};M.reset=function(){M.stop();M.left=M.total;M.draw()};M.draw()}window.ffPomo.set('Pausa');"
+          }
+        },
+        {
+          "id": "ba34917c-9ddc-43c6-a22c-b19b36ded41c",
+          "kind": "button",
+          "name": "pomoLong",
+          "text": "Pausa 15",
+          "x": 259,
+          "y": 132,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPomo){var M=window.ffPomo={modes:{'Foco':25,'Pausa':5,'Pausa longa':15},mode:'Foco',left:25*60,total:25*60,timer:null,done:0};M.fmt=function(s){var m=Math.floor(s/60),x=s%60;return(m<10?'0':'')+m+':'+(x<10?'0':'')+x};M.bar=function(p){var el=$('pomoBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};M.draw=function(){var tm=$('pomoTime');tm.textContent=M.fmt(M.left);tm.style.cssText+=';font-size:72px;font-weight:700;line-height:1;text-align:center';$('pomoMode').textContent=M.mode+(M.timer?' — em andamento':' — pausado');$('pomoSessions').textContent='Sessões de foco concluídas: '+M.done;$('pomoStart').textContent=M.timer?'Pausar':(M.left<M.total?'Continuar':'Iniciar');M.bar((M.total-M.left)/M.total*100);document.title=M.fmt(M.left)+' · '+M.mode};M.stop=function(){clearInterval(M.timer);M.timer=null};M.set=function(m){M.stop();M.mode=m;M.total=M.left=M.modes[m]*60;M.draw()};M.tick=function(){M.left--;if(M.left<=0){M.left=0;M.stop();if(M.mode==='Foco')M.done++;M.draw();$('pomoMode').textContent=M.mode+' — concluído!';try{if(navigator.vibrate)navigator.vibrate(200)}catch(e){}return}M.draw()};M.toggle=function(){if(M.timer){M.stop();M.draw();return}if(M.left<=0)M.left=M.total;M.timer=setInterval(M.tick,1000);M.draw()};M.reset=function(){M.stop();M.left=M.total;M.draw()};M.draw()}window.ffPomo.set('Pausa longa');"
+          }
+        },
+        {
+          "id": "0b7948d2-71be-4d0a-a463-5d7e46c4aad5",
+          "kind": "label",
+          "name": "pomoTime",
+          "text": "25:00",
+          "x": 20,
+          "y": 192,
+          "width": "353px",
+          "height": "110px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "fc516aa6-6fc2-4c74-996a-dcf6baae4951",
+          "kind": "label",
+          "name": "pomoMode",
+          "text": "Foco — pausado",
+          "x": 20,
+          "y": 306,
+          "width": "353px",
+          "height": "32px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "7a00fe4b-78bc-46dd-bba9-643fd9c2650a",
+          "kind": "progress",
+          "name": "pomoBar",
+          "text": "",
+          "x": 20,
+          "y": 348,
+          "width": "353px",
+          "height": "16px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "value": 0
+        },
+        {
+          "id": "eb17a7da-d8d6-456e-be04-dc9d60cb9fe9",
+          "kind": "button",
+          "name": "pomoStart",
+          "text": "Iniciar",
+          "x": 20,
+          "y": 384,
+          "width": "168px",
+          "height": "52px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPomo){var M=window.ffPomo={modes:{'Foco':25,'Pausa':5,'Pausa longa':15},mode:'Foco',left:25*60,total:25*60,timer:null,done:0};M.fmt=function(s){var m=Math.floor(s/60),x=s%60;return(m<10?'0':'')+m+':'+(x<10?'0':'')+x};M.bar=function(p){var el=$('pomoBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};M.draw=function(){var tm=$('pomoTime');tm.textContent=M.fmt(M.left);tm.style.cssText+=';font-size:72px;font-weight:700;line-height:1;text-align:center';$('pomoMode').textContent=M.mode+(M.timer?' — em andamento':' — pausado');$('pomoSessions').textContent='Sessões de foco concluídas: '+M.done;$('pomoStart').textContent=M.timer?'Pausar':(M.left<M.total?'Continuar':'Iniciar');M.bar((M.total-M.left)/M.total*100);document.title=M.fmt(M.left)+' · '+M.mode};M.stop=function(){clearInterval(M.timer);M.timer=null};M.set=function(m){M.stop();M.mode=m;M.total=M.left=M.modes[m]*60;M.draw()};M.tick=function(){M.left--;if(M.left<=0){M.left=0;M.stop();if(M.mode==='Foco')M.done++;M.draw();$('pomoMode').textContent=M.mode+' — concluído!';try{if(navigator.vibrate)navigator.vibrate(200)}catch(e){}return}M.draw()};M.toggle=function(){if(M.timer){M.stop();M.draw();return}if(M.left<=0)M.left=M.total;M.timer=setInterval(M.tick,1000);M.draw()};M.reset=function(){M.stop();M.left=M.total;M.draw()};M.draw()}window.ffPomo.toggle();"
+          }
+        },
+        {
+          "id": "0550349b-281a-4dc2-9317-165ad6426e42",
+          "kind": "button",
+          "name": "pomoReset",
+          "text": "Reiniciar",
+          "x": 205,
+          "y": 384,
+          "width": "168px",
+          "height": "52px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffPomo){var M=window.ffPomo={modes:{'Foco':25,'Pausa':5,'Pausa longa':15},mode:'Foco',left:25*60,total:25*60,timer:null,done:0};M.fmt=function(s){var m=Math.floor(s/60),x=s%60;return(m<10?'0':'')+m+':'+(x<10?'0':'')+x};M.bar=function(p){var el=$('pomoBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};M.draw=function(){var tm=$('pomoTime');tm.textContent=M.fmt(M.left);tm.style.cssText+=';font-size:72px;font-weight:700;line-height:1;text-align:center';$('pomoMode').textContent=M.mode+(M.timer?' — em andamento':' — pausado');$('pomoSessions').textContent='Sessões de foco concluídas: '+M.done;$('pomoStart').textContent=M.timer?'Pausar':(M.left<M.total?'Continuar':'Iniciar');M.bar((M.total-M.left)/M.total*100);document.title=M.fmt(M.left)+' · '+M.mode};M.stop=function(){clearInterval(M.timer);M.timer=null};M.set=function(m){M.stop();M.mode=m;M.total=M.left=M.modes[m]*60;M.draw()};M.tick=function(){M.left--;if(M.left<=0){M.left=0;M.stop();if(M.mode==='Foco')M.done++;M.draw();$('pomoMode').textContent=M.mode+' — concluído!';try{if(navigator.vibrate)navigator.vibrate(200)}catch(e){}return}M.draw()};M.toggle=function(){if(M.timer){M.stop();M.draw();return}if(M.left<=0)M.left=M.total;M.timer=setInterval(M.tick,1000);M.draw()};M.reset=function(){M.stop();M.left=M.total;M.draw()};M.draw()}window.ffPomo.reset();"
+          }
+        },
+        {
+          "id": "87483160-1e6b-44f7-b7c4-367f746891ea",
+          "kind": "label",
+          "name": "pomoSessions",
+          "text": "Sessões de foco concluídas: 0",
+          "x": 20,
+          "y": 452,
+          "width": "353px",
+          "height": "32px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffPomo){var M=window.ffPomo={modes:{'Foco':25,'Pausa':5,'Pausa longa':15},mode:'Foco',left:25*60,total:25*60,timer:null,done:0};M.fmt=function(s){var m=Math.floor(s/60),x=s%60;return(m<10?'0':'')+m+':'+(x<10?'0':'')+x};M.bar=function(p){var el=$('pomoBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};M.draw=function(){var tm=$('pomoTime');tm.textContent=M.fmt(M.left);tm.style.cssText+=';font-size:72px;font-weight:700;line-height:1;text-align:center';$('pomoMode').textContent=M.mode+(M.timer?' — em andamento':' — pausado');$('pomoSessions').textContent='Sessões de foco concluídas: '+M.done;$('pomoStart').textContent=M.timer?'Pausar':(M.left<M.total?'Continuar':'Iniciar');M.bar((M.total-M.left)/M.total*100);document.title=M.fmt(M.left)+' · '+M.mode};M.stop=function(){clearInterval(M.timer);M.timer=null};M.set=function(m){M.stop();M.mode=m;M.total=M.left=M.modes[m]*60;M.draw()};M.tick=function(){M.left--;if(M.left<=0){M.left=0;M.stop();if(M.mode==='Foco')M.done++;M.draw();$('pomoMode').textContent=M.mode+' — concluído!';try{if(navigator.vibrate)navigator.vibrate(200)}catch(e){}return}M.draw()};M.toggle=function(){if(M.timer){M.stop();M.draw();return}if(M.left<=0)M.left=M.total;M.timer=setInterval(M.tick,1000);M.draw()};M.reset=function(){M.stop();M.left=M.total;M.draw()};M.draw()}",
+        "onshow": ""
+      }
+    }
+  ]
+}

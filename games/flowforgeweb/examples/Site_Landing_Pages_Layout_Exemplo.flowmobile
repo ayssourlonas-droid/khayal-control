@@ -1,0 +1,243 @@
+{
+  "version": "0.13.0",
+  "name": "FlowForge Site + Landing Layout Demo",
+  "projectVersion": "1.0.0",
+  "icon": "🌐",
+  "favicon": "",
+  "themeColor": "#2563eb",
+  "type": "site",
+  "framework": "none",
+  "designerMode": "flowforge",
+  "titlebar": {
+    "name": "titlebar1",
+    "text": "Site + Landing Layout Demo",
+    "height": "52px",
+    "bg": "#0f172a",
+    "color": "#fff",
+    "showMenu": true,
+    "autoStyle": false
+  },
+  "pages": [
+    {
+      "id": "e6fc3ea4-0167-4010-a816-a4960d05e15a",
+      "name": "Home",
+      "slug": "home",
+      "isHome": true,
+      "items": [
+        {
+          "id": "ade2fb60-3242-4ddd-87fb-7887543e4f6e",
+          "kind": "header",
+          "name": "siteHeader",
+          "text": "FlowForge Studio",
+          "x": 24,
+          "y": 20,
+          "width": "calc(100% - 48px)",
+          "height": 72,
+          "bg": "#ffffff",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "7e65b71b-b6d6-4f14-9cbc-986e6611ee93",
+          "kind": "hero",
+          "name": "hero",
+          "text": "Crie seu site com FlowForge",
+          "x": 24,
+          "y": 115,
+          "width": "calc(100% - 48px)",
+          "height": 150,
+          "bg": "#eff6ff",
+          "color": "#1e3a8a",
+          "events": {}
+        },
+        {
+          "id": "21567b0f-f8bf-40bc-9b48-5e6b1911158d",
+          "kind": "section",
+          "name": "intro",
+          "text": "Uma página visual, responsiva e organizada.",
+          "x": 24,
+          "y": 290,
+          "width": "calc(100% - 48px)",
+          "height": 120,
+          "bg": "#ffffff",
+          "color": "#334155",
+          "events": {}
+        },
+        {
+          "id": "afc5a904-c8fb-4f82-add2-c09bc4903e2e",
+          "kind": "card",
+          "name": "feature1",
+          "text": "Design visual",
+          "x": 24,
+          "y": 440,
+          "width": "30%",
+          "height": 110,
+          "bg": "#f8fafc",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "9e48f3e9-ca36-4cb5-8651-140732c9a086",
+          "kind": "card",
+          "name": "feature2",
+          "text": "Páginas múltiplas",
+          "x": 396,
+          "y": 440,
+          "width": "30%",
+          "height": 110,
+          "bg": "#f8fafc",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "82c3b1c2-5144-4efe-ade4-12576704083a",
+          "kind": "card",
+          "name": "feature3",
+          "text": "Landing pages",
+          "x": 768,
+          "y": 440,
+          "width": "30%",
+          "height": 110,
+          "bg": "#f8fafc",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "46eb1f6f-a0dc-40dc-8155-76dbd34b0492",
+          "kind": "footer",
+          "name": "siteFooter",
+          "text": "© FlowForge • Todos os direitos reservados",
+          "x": 24,
+          "y": 600,
+          "width": "calc(100% - 48px)",
+          "height": 70,
+          "bg": "#0f172a",
+          "color": "#ffffff",
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "3a0bea01-1fa1-4e60-be5f-81c6dc03bbce",
+      "name": "Sobre",
+      "slug": "sobre",
+      "isHome": false,
+      "items": [
+        {
+          "id": "a904904a-65cd-486c-86bd-7c0a786e9999",
+          "kind": "header",
+          "name": "aboutHeader",
+          "text": "FlowForge Studio",
+          "x": 24,
+          "y": 20,
+          "width": "calc(100% - 48px)",
+          "height": 72,
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "d93d4334-27bb-42e2-8ba3-7b20d90b5581",
+          "kind": "heading",
+          "name": "aboutTitle",
+          "text": "Sobre o projeto",
+          "x": 24,
+          "y": 115,
+          "width": "calc(100% - 48px)",
+          "height": 60,
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "780ea54b-cc71-4486-9800-9b4bf19b4287",
+          "kind": "section",
+          "name": "aboutBody",
+          "text": "Use esta página para apresentar sua empresa, produto ou serviço.",
+          "x": 24,
+          "y": 190,
+          "width": "calc(100% - 48px)",
+          "height": 160,
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "0d568bc3-837c-4dc1-b42d-359d694de148",
+          "kind": "footer",
+          "name": "aboutFooter",
+          "text": "© FlowForge",
+          "x": 24,
+          "y": 390,
+          "width": "calc(100% - 48px)",
+          "height": 70,
+          "bg": "#0f172a",
+          "color": "#ffffff",
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "d179216a-ed71-4f86-bdf8-8eebed842941",
+      "name": "Contato",
+      "slug": "contato",
+      "isHome": false,
+      "items": [
+        {
+          "id": "e0305efb-b88d-434b-8db6-fef3b06f745f",
+          "kind": "header",
+          "name": "contactHeader",
+          "text": "FlowForge Studio",
+          "x": 24,
+          "y": 20,
+          "width": "calc(100% - 48px)",
+          "height": 72,
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "25a1c920-a100-462b-8746-2005e2d18ab2",
+          "kind": "heading",
+          "name": "contactTitle",
+          "text": "Entre em contato",
+          "x": 24,
+          "y": 115,
+          "width": "calc(100% - 48px)",
+          "height": 60,
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "b0c5a9b5-ff62-42bd-af86-32e3cb4a4763",
+          "kind": "form",
+          "name": "contactForm",
+          "text": "Formulário de contato",
+          "x": 24,
+          "y": 190,
+          "width": "calc(100% - 48px)",
+          "height": 220,
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "c1d7de4c-b4fc-44cb-9694-871eac3dff6a",
+          "kind": "footer",
+          "name": "contactFooter",
+          "text": "© FlowForge",
+          "x": 24,
+          "y": 440,
+          "width": "calc(100% - 48px)",
+          "height": 70,
+          "bg": "#0f172a",
+          "color": "#ffffff",
+          "events": {}
+        }
+      ]
+    }
+  ],
+  "active": 0,
+  "activePage": "e6fc3ea4-0167-4010-a816-a4960d05e15a"
+}

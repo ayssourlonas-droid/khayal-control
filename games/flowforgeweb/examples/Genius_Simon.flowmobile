@@ -1,0 +1,157 @@
+{
+  "name": "Genius Simon",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "f714c8fb-879e-4c23-83ee-8cb2f8162b06",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "9e4138d2-87ba-4331-9538-15f2e896ed5a",
+          "kind": "heading",
+          "name": "simonTitle",
+          "text": "Genius / Simon",
+          "x": 80,
+          "y": 25,
+          "width": "230px",
+          "height": "45px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "07581792-5a5c-4689-bc0b-9c7897264dd5",
+          "kind": "label",
+          "name": "simonStatus",
+          "text": "Clique em Iniciar",
+          "x": 65,
+          "y": 80,
+          "width": "260px",
+          "height": "35px",
+          "bg": "#f1f5f9",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "d0c84c12-dbe6-4573-8b77-787ebeae3322",
+          "kind": "button",
+          "name": "s0",
+          "text": "1",
+          "x": 75,
+          "y": 145,
+          "width": "110px",
+          "height": "110px",
+          "bg": "#ef4444",
+          "color": "#fff",
+          "events": {
+            "click": "if(!window.ffSimon?.accept)return;const n=0,g=window.ffSimon;ffSimonFlash(n);if(n!==g.seq[g.pos]){g.accept=false;Sons.play('lose');document.getElementById('simonStatus').textContent='Errou! Nível alcançado: '+g.seq.length;return}g.pos++;if(g.pos===g.seq.length){g.accept=false;Sons.play('coin');document.getElementById('simonStatus').textContent='Certo!';setTimeout(ffSimonNext,650)}"
+          }
+        },
+        {
+          "id": "61787420-c613-403e-8a6c-7967ac6f97c7",
+          "kind": "button",
+          "name": "s1",
+          "text": "2",
+          "x": 205,
+          "y": 145,
+          "width": "110px",
+          "height": "110px",
+          "bg": "#3b82f6",
+          "color": "#fff",
+          "events": {
+            "click": "if(!window.ffSimon?.accept)return;const n=1,g=window.ffSimon;ffSimonFlash(n);if(n!==g.seq[g.pos]){g.accept=false;Sons.play('lose');document.getElementById('simonStatus').textContent='Errou! Nível alcançado: '+g.seq.length;return}g.pos++;if(g.pos===g.seq.length){g.accept=false;Sons.play('coin');document.getElementById('simonStatus').textContent='Certo!';setTimeout(ffSimonNext,650)}"
+          }
+        },
+        {
+          "id": "afdffcfc-556f-45cb-b351-4a83ed41c692",
+          "kind": "button",
+          "name": "s2",
+          "text": "3",
+          "x": 75,
+          "y": 275,
+          "width": "110px",
+          "height": "110px",
+          "bg": "#22c55e",
+          "color": "#fff",
+          "events": {
+            "click": "if(!window.ffSimon?.accept)return;const n=2,g=window.ffSimon;ffSimonFlash(n);if(n!==g.seq[g.pos]){g.accept=false;Sons.play('lose');document.getElementById('simonStatus').textContent='Errou! Nível alcançado: '+g.seq.length;return}g.pos++;if(g.pos===g.seq.length){g.accept=false;Sons.play('coin');document.getElementById('simonStatus').textContent='Certo!';setTimeout(ffSimonNext,650)}"
+          }
+        },
+        {
+          "id": "8220ea1a-d946-4089-9e32-be4b442b03dd",
+          "kind": "button",
+          "name": "s3",
+          "text": "4",
+          "x": 205,
+          "y": 275,
+          "width": "110px",
+          "height": "110px",
+          "bg": "#eab308",
+          "color": "#fff",
+          "events": {
+            "click": "if(!window.ffSimon?.accept)return;const n=3,g=window.ffSimon;ffSimonFlash(n);if(n!==g.seq[g.pos]){g.accept=false;Sons.play('lose');document.getElementById('simonStatus').textContent='Errou! Nível alcançado: '+g.seq.length;return}g.pos++;if(g.pos===g.seq.length){g.accept=false;Sons.play('coin');document.getElementById('simonStatus').textContent='Certo!';setTimeout(ffSimonNext,650)}"
+          }
+        },
+        {
+          "id": "63177bce-f2b7-4e83-9ee4-85179a891af5",
+          "kind": "button",
+          "name": "simonStart",
+          "text": "Iniciar / Reiniciar",
+          "x": 105,
+          "y": 420,
+          "width": "180px",
+          "height": "45px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "clearTimeout(window.ffSimonTimer);window.ffSimon={seq:[],pos:0,accept:false};window.ffSimonFlash=function(n){Sons.tone([415,310,252,209][n],260,'sine',0.55);const b=document.getElementById('s'+n),old=b.style.opacity;b.style.opacity='.35';setTimeout(()=>b.style.opacity=old||'1',260)};window.ffSimonNext=function(){let g=window.ffSimon;g.seq.push(Math.floor(Math.random()*4));g.pos=0;g.accept=false;document.getElementById('simonStatus').textContent='Observe: nível '+g.seq.length;let i=0;function play(){if(i>=g.seq.length){g.accept=true;document.getElementById('simonStatus').textContent='Sua vez';return}ffSimonFlash(g.seq[i++]);window.ffSimonTimer=setTimeout(play,520)}play()};ffSimonNext();"
+          }
+        },
+        {
+          "id": "beb3fb59-1024-455b-acc6-90f0f022dd2f",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 29,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "8be5df71-d2c2-401c-871f-44098d24d9ce",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 477,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

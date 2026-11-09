@@ -1,0 +1,1 @@
+window.FlowForgeProgressSchema=[{key:'min',label:'Minimum',type:'number'},{key:'max',label:'Maximum',type:'number'},{key:'value',label:'Value',type:'number'},{key:'showText',label:'Show %',type:'checkbox'},{key:'barColor',label:'Bar Color',type:'color'}];

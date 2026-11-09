@@ -1,0 +1,526 @@
+{
+  "name": "Jogo da Forca",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "c2f786f4-30f1-4104-9feb-243ff47c889a",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "5f19e9eb-cfcf-4b7e-9992-adc9bc775b79",
+          "kind": "heading",
+          "name": "forcaTitle",
+          "text": "Jogo da Forca",
+          "x": 20,
+          "y": 68,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "254fd201-6cd7-4e43-b1bd-b64344595145",
+          "kind": "label",
+          "name": "forcaFace",
+          "text": "😀",
+          "x": 20,
+          "y": 116,
+          "width": "84px",
+          "height": "70px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "b81ef197-d6cb-482e-82e1-5cbe2eab3e3c",
+          "kind": "label",
+          "name": "forcaWord",
+          "text": "Clique em Novo jogo",
+          "x": 109,
+          "y": 120,
+          "width": "277px",
+          "height": "60px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "2db6a37a-a455-45a8-95a4-09f521f04cfe",
+          "kind": "label",
+          "name": "forcaInfo",
+          "text": "",
+          "x": 20,
+          "y": 192,
+          "width": "353px",
+          "height": "28px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "0bf1370d-647d-4a92-9097-92b6a1b75620",
+          "kind": "label",
+          "name": "forcaStatus",
+          "text": "Clique em Novo jogo para começar",
+          "x": 20,
+          "y": 222,
+          "width": "353px",
+          "height": "28px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "278668a4-da74-4ea3-ac5c-c1cf18c456c3",
+          "kind": "button",
+          "name": "forcaA",
+          "text": "A",
+          "x": 20,
+          "y": 262,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('A');"
+          }
+        },
+        {
+          "id": "bb7ed0ef-42b7-48b4-9ad4-66e78f98072a",
+          "kind": "button",
+          "name": "forcaB",
+          "text": "B",
+          "x": 72,
+          "y": 262,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('B');"
+          }
+        },
+        {
+          "id": "f8e64a9c-3e10-4163-ba49-9178f6a69104",
+          "kind": "button",
+          "name": "forcaC",
+          "text": "C",
+          "x": 124,
+          "y": 262,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('C');"
+          }
+        },
+        {
+          "id": "608c1423-1c0b-4fe9-9729-b66c5c5c1957",
+          "kind": "button",
+          "name": "forcaD",
+          "text": "D",
+          "x": 176,
+          "y": 262,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('D');"
+          }
+        },
+        {
+          "id": "0b9394d9-a99f-4509-91a7-983b15b4c9e6",
+          "kind": "button",
+          "name": "forcaE",
+          "text": "E",
+          "x": 228,
+          "y": 262,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('E');"
+          }
+        },
+        {
+          "id": "ffa4152e-57db-4e33-a98a-0c00c32d6915",
+          "kind": "button",
+          "name": "forcaF",
+          "text": "F",
+          "x": 281,
+          "y": 262,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('F');"
+          }
+        },
+        {
+          "id": "51957f65-5189-4c7a-b809-06adcaf9ab7c",
+          "kind": "button",
+          "name": "forcaG",
+          "text": "G",
+          "x": 333,
+          "y": 262,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('G');"
+          }
+        },
+        {
+          "id": "e2b0f307-17c5-408d-9247-55febbdc7c44",
+          "kind": "button",
+          "name": "forcaH",
+          "text": "H",
+          "x": 20,
+          "y": 312,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('H');"
+          }
+        },
+        {
+          "id": "39729c17-47b8-4adb-9b2e-2b11af4d4859",
+          "kind": "button",
+          "name": "forcaI",
+          "text": "I",
+          "x": 72,
+          "y": 312,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('I');"
+          }
+        },
+        {
+          "id": "9894fa11-38d9-400b-bb59-45fc75c1ec81",
+          "kind": "button",
+          "name": "forcaJ",
+          "text": "J",
+          "x": 124,
+          "y": 312,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('J');"
+          }
+        },
+        {
+          "id": "dadf9e9c-96e7-4512-9e73-b5884eeb9054",
+          "kind": "button",
+          "name": "forcaK",
+          "text": "K",
+          "x": 176,
+          "y": 312,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('K');"
+          }
+        },
+        {
+          "id": "60d185d2-1ef9-4b9f-9c95-e79675dab060",
+          "kind": "button",
+          "name": "forcaL",
+          "text": "L",
+          "x": 228,
+          "y": 312,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('L');"
+          }
+        },
+        {
+          "id": "976ad65d-2aa1-4ed8-b1ff-1126cdafdcfd",
+          "kind": "button",
+          "name": "forcaM",
+          "text": "M",
+          "x": 281,
+          "y": 312,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('M');"
+          }
+        },
+        {
+          "id": "44ce1da6-d6f8-4b6d-8d4f-7514c3c3efcb",
+          "kind": "button",
+          "name": "forcaN",
+          "text": "N",
+          "x": 333,
+          "y": 312,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('N');"
+          }
+        },
+        {
+          "id": "61ca2c2e-57d6-43c8-bdf0-2a40ee162ec4",
+          "kind": "button",
+          "name": "forcaO",
+          "text": "O",
+          "x": 20,
+          "y": 362,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('O');"
+          }
+        },
+        {
+          "id": "58c4f886-1dae-4586-9157-0c07dfd88f88",
+          "kind": "button",
+          "name": "forcaP",
+          "text": "P",
+          "x": 72,
+          "y": 362,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('P');"
+          }
+        },
+        {
+          "id": "625bb06b-4e51-497c-ac37-2cf38457ae9f",
+          "kind": "button",
+          "name": "forcaQ",
+          "text": "Q",
+          "x": 124,
+          "y": 362,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('Q');"
+          }
+        },
+        {
+          "id": "19c96f67-0b59-4b01-bbea-64d929bfa773",
+          "kind": "button",
+          "name": "forcaR",
+          "text": "R",
+          "x": 176,
+          "y": 362,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('R');"
+          }
+        },
+        {
+          "id": "541ca91d-80e0-47bc-a9dd-9829beef173f",
+          "kind": "button",
+          "name": "forcaS",
+          "text": "S",
+          "x": 228,
+          "y": 362,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('S');"
+          }
+        },
+        {
+          "id": "23a9b3ec-0646-4b1b-9b15-12c0538b7747",
+          "kind": "button",
+          "name": "forcaT",
+          "text": "T",
+          "x": 281,
+          "y": 362,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('T');"
+          }
+        },
+        {
+          "id": "1622cd03-ac78-44a1-a079-3bf9a28f1d51",
+          "kind": "button",
+          "name": "forcaU",
+          "text": "U",
+          "x": 333,
+          "y": 362,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('U');"
+          }
+        },
+        {
+          "id": "a601aed7-6882-41d5-b0cc-636056e40350",
+          "kind": "button",
+          "name": "forcaV",
+          "text": "V",
+          "x": 20,
+          "y": 412,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('V');"
+          }
+        },
+        {
+          "id": "4cb0d41a-3782-4e25-84ec-c15673d5845e",
+          "kind": "button",
+          "name": "forcaW",
+          "text": "W",
+          "x": 72,
+          "y": 412,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('W');"
+          }
+        },
+        {
+          "id": "dd7f5ecc-352a-4545-915d-8d3edd7861f8",
+          "kind": "button",
+          "name": "forcaX",
+          "text": "X",
+          "x": 124,
+          "y": 412,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('X');"
+          }
+        },
+        {
+          "id": "888feb41-f506-4dee-9d89-5c4bd255d162",
+          "kind": "button",
+          "name": "forcaY",
+          "text": "Y",
+          "x": 176,
+          "y": 412,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('Y');"
+          }
+        },
+        {
+          "id": "114436ab-cacb-4689-8d17-3135d6dc3035",
+          "kind": "button",
+          "name": "forcaZ",
+          "text": "Z",
+          "x": 228,
+          "y": 412,
+          "width": "47px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.guess('Z');"
+          }
+        },
+        {
+          "id": "7eae8aec-ef00-4c55-87a8-d726f19e998a",
+          "kind": "button",
+          "name": "forcaNew",
+          "text": "Novo jogo",
+          "x": 20,
+          "y": 468,
+          "width": "168px",
+          "height": "48px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}window.ffForca.start();"
+          }
+        },
+        {
+          "id": "5c37e648-4386-4ea5-8ac0-872eafbcbfc2",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 72,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "12e34b6c-eeea-4e89-abd0-645a14965576",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 528,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffForca){var F=window.ffForca={W:{\"Frutas\": [\"MORANGO\", \"ABACAXI\", \"LARANJA\", \"MELANCIA\", \"BANANA\"], \"Animais\": [\"ELEFANTE\", \"GIRAFA\", \"TARTARUGA\", \"GOLFINHO\", \"CAVALO\"], \"Tecnologia\": [\"TECLADO\", \"NAVEGADOR\", \"PROGRAMA\", \"INTERNET\", \"SERVIDOR\"]},word:'',cat:'',hit:{},miss:0,over:true,max:6,art:['😀','😐','😟','😨','😰','😱','💀']};F.draw=function(){$('forcaFace').style.fontSize='48px';$('forcaWord').style.cssText+=';font-size:30px;font-weight:700;letter-spacing:2px';var w=F.word.split('').map(function(c){return F.hit[c]||F.over&&F.miss>=F.max?c:'_'}).join(' ');$('forcaWord').textContent=w||'Clique em Novo jogo';$('forcaInfo').textContent=F.word?('Dica: '+F.cat+' · Erros: '+F.miss+'/'+F.max):'';$('forcaFace').textContent=F.art[F.miss];'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){var b=$('forca'+l);if(b){b.disabled=F.over||!!F.hit[l]||!!F.tried[l];b.style.background=F.hit[l]?'#bbf7d0':F.tried[l]?'#fecaca':'#ffffff'}})};F.tried={};F.start=function(){var cats=Object.keys(F.W);F.cat=cats[Math.floor(Math.random()*cats.length)];var l=F.W[F.cat];F.word=l[Math.floor(Math.random()*l.length)];F.hit={};F.tried={};F.miss=0;F.over=false;Sons.play('start');$('forcaStatus').textContent='Escolha uma letra';F.draw()};F.guess=function(l){if(F.over||F.tried[l])return;F.tried[l]=true;if(F.word.indexOf(l)>=0){F.hit[l]=true;if(F.word.split('').every(function(c){return F.hit[c]})){F.over=true;Sons.play('win');$('forcaStatus').textContent='Você venceu! 🎉'}else{Sons.play('pop');$('forcaStatus').textContent='Boa!'}}else{F.miss++;if(F.miss>=F.max){F.over=true;Sons.play('lose');$('forcaStatus').textContent='Fim de jogo! A palavra era '+F.word}else{Sons.play('error');$('forcaStatus').textContent='Letra errada'}}F.draw()};F.draw()}\ndocument.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

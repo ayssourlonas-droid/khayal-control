@@ -1,0 +1,291 @@
+{
+  "name": "Estúdio de Câmera",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "8a54e9ff-77f1-4562-8017-44278479c578",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "94dcc381-f4af-4136-be60-46645c7f71e4",
+          "kind": "label",
+          "name": "ativo",
+          "text": "● AO VIVO",
+          "x": 277,
+          "y": 114,
+          "width": "79px",
+          "height": "24px",
+          "bg": "#ffffff",
+          "color": "#dc2626",
+          "events": {}
+        },
+        {
+          "id": "ab682418-d181-4189-8535-2c234bf621a7",
+          "kind": "heading",
+          "name": "titulo",
+          "text": "Estúdio de Câmera",
+          "x": 20,
+          "y": 58,
+          "width": "336px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "e186531d-29b7-448e-9da0-2cf9c969cb40",
+          "kind": "label",
+          "name": "status",
+          "text": "Câmera desligada",
+          "x": 20,
+          "y": 112,
+          "width": "336px",
+          "height": "30px",
+          "bg": "#ffffff",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "083ef885-91a1-4c99-9f3b-eec24bb99cb1",
+          "kind": "camera",
+          "name": "camera1",
+          "text": "Câmera",
+          "x": 20,
+          "y": 148,
+          "width": "336px",
+          "height": "250px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "camerastart": "document.getElementById(\"status\").textContent=\"Câmera ligada ✔\";\ndocument.getElementById(\"ativo\")?.closest('.ff-component')?.style.setProperty('display','');",
+            "camerastop": "document.getElementById(\"status\").textContent=\"Câmera desligada\";\ndocument.getElementById(\"ativo\")?.closest('.ff-component')?.style.setProperty('display','none');",
+            "cameraerror": "document.getElementById('status').textContent='⚠ '+event.detail.message;"
+          },
+          "hideCameraButton": true,
+          "autoplay": false,
+          "facingMode": "environment",
+          "muted": true,
+          "fit": "cover",
+          "blocks": {
+            "camerastart": [
+              {
+                "type": "set",
+                "target": "status",
+                "prop": "textContent",
+                "value": "Câmera ligada ✔",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "show",
+                "target": "ativo",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              }
+            ],
+            "camerastop": [
+              {
+                "type": "set",
+                "target": "status",
+                "prop": "textContent",
+                "value": "Câmera desligada",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "hide",
+                "target": "ativo",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "3ad2b63e-cab9-4f11-bdf5-c42dee28e423",
+          "kind": "button",
+          "name": "btnStart",
+          "text": "▶ Ligar",
+          "x": 20,
+          "y": 408,
+          "width": "101px",
+          "height": "42px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "document.getElementById(\"status\").textContent=\"Iniciando câmera…\";\nFlowForgeCamera.start(\"camera1\").catch(()=>{});"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "status",
+                "prop": "textContent",
+                "value": "Iniciando câmera…",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "cameraStart",
+                "target": "camera1",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "299449d3-35b6-4724-9df7-88078e246ba6",
+          "kind": "button",
+          "name": "btnStop",
+          "text": "■ Desligar",
+          "x": 129,
+          "y": 408,
+          "width": "101px",
+          "height": "42px",
+          "bg": "#475569",
+          "color": "#ffffff",
+          "events": {
+            "click": "FlowForgeCamera.stop(\"camera1\");"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "cameraStop",
+                "target": "camera1",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "d5a2417b-17ec-46f0-b6ed-0faa7ec8e326",
+          "kind": "button",
+          "name": "btnFlip",
+          "text": "⇄ Trocar",
+          "x": 239,
+          "y": 408,
+          "width": "118px",
+          "height": "42px",
+          "bg": "#0f766e",
+          "color": "#ffffff",
+          "events": {
+            "click": "window.facing=(window.facing||'environment')==='user'?'environment':'user';\ndocument.getElementById('status').textContent='Trocando para câmera '+(window.facing==='user'?'frontal':'traseira')+'…';\nFlowForgeCamera.start('camera1',{facingMode:window.facing}).catch(()=>{});"
+          }
+        },
+        {
+          "id": "e3f6fb1c-9534-4185-82f4-dae9c579a71c",
+          "kind": "button",
+          "name": "btnShot",
+          "text": "📷 Tirar foto",
+          "x": 20,
+          "y": 460,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#16a34a",
+          "color": "#ffffff",
+          "events": {
+            "click": "try{\n document.getElementById('foto').src=FlowForgeCamera.capture('camera1','image/jpeg',0.9);\n window.fotos=(window.fotos||0)+1;\n document.getElementById('contador').textContent='Fotos tiradas: '+window.fotos;\n document.getElementById('status').textContent='Foto capturada ✔';\n}catch(e){document.getElementById('status').textContent='⚠ Ligue a câmera antes de tirar a foto';}"
+          }
+        },
+        {
+          "id": "58008305-3404-4000-a3ab-206b42ddaad3",
+          "kind": "button",
+          "name": "btnDev",
+          "text": "Listar câmeras",
+          "x": 197,
+          "y": 460,
+          "width": "160px",
+          "height": "42px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "FlowForgeCamera.devices().then(function(l){document.getElementById('status').textContent=l.length+' câmera(s) encontrada(s)'+(l.length&&l[0].label?': '+l.map(function(d){return d.label}).join(', '):'');});"
+          }
+        },
+        {
+          "id": "25435423-479e-4fd2-937d-05cc04804f38",
+          "kind": "label",
+          "name": "contador",
+          "text": "Fotos tiradas: 0",
+          "x": 20,
+          "y": 512,
+          "width": "336px",
+          "height": "28px",
+          "bg": "#ffffff",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "c03b732d-27f5-4bd6-87d5-a608fb158793",
+          "kind": "picturebox",
+          "name": "foto",
+          "text": "",
+          "x": 20,
+          "y": 546,
+          "width": "336px",
+          "height": "250px",
+          "bg": "#e2e8f0",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "40df2b38-6bc4-4b6d-b378-c99e99d56b06",
+          "kind": "button",
+          "name": "btnBaixar",
+          "text": "⬇ Baixar foto",
+          "x": 20,
+          "y": 806,
+          "width": "336px",
+          "height": "42px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var f=document.getElementById('foto');\nif(!/^data:image/.test(f.src||'')){document.getElementById('status').textContent='Tire uma foto antes de baixar';}\nelse{var a=document.createElement('a');a.href=f.src;a.download='foto-flowforge.jpg';document.body.appendChild(a);a.click();a.remove();document.getElementById('status').textContent='Foto baixada ✔';}"
+          }
+        }
+      ],
+      "events": {
+        "onload": "var a=document.getElementById('ativo');if(a&&a.closest('.ff-component'))a.closest('.ff-component').style.display='none';",
+        "onshow": ""
+      }
+    }
+  ]
+}

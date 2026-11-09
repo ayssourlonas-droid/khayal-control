@@ -1,0 +1,459 @@
+{
+  "name": "Calculadoras",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "f28e11cb-51fd-4776-9282-1a0c2815f704",
+      "name": "IMC",
+      "items": [
+        {
+          "id": "9cd6e034-ed8e-4db1-ad2b-eddfd27a4c57",
+          "kind": "heading",
+          "name": "imcTitle",
+          "text": "Calculadora de IMC",
+          "x": 20,
+          "y": 72,
+          "width": "353px",
+          "height": "48px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "06b66e1a-4833-46b3-94c9-63192a5982a4",
+          "kind": "button",
+          "name": "imcNavimc",
+          "text": "IMC",
+          "x": 20,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"IMC\");"
+          }
+        },
+        {
+          "id": "a098924a-0dc4-44e9-8bf6-bb448d2c3644",
+          "kind": "button",
+          "name": "imcNavtip",
+          "text": "Gorjeta",
+          "x": 139,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Gorjeta\");"
+          }
+        },
+        {
+          "id": "0fa83267-2b21-43f9-8add-2980a4b5f6ee",
+          "kind": "button",
+          "name": "imcNavinv",
+          "text": "Juros",
+          "x": 259,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Juros\");"
+          }
+        },
+        {
+          "id": "fb744e4a-a590-4113-a28f-94e36f910e50",
+          "kind": "input",
+          "name": "imcPeso",
+          "text": "Peso (kg)",
+          "x": 20,
+          "y": 182,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "b9c8fd32-0ed9-49fb-ac0a-2bffc86b6076",
+          "kind": "input",
+          "name": "imcAltura",
+          "text": "Altura (m)",
+          "x": 205,
+          "y": 182,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "501aac6a-c58c-48e6-b793-dbab9b563ac9",
+          "kind": "button",
+          "name": "imcCalc",
+          "text": "Calcular",
+          "x": 20,
+          "y": 242,
+          "width": "151px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var p=Number(imcPeso.value.replace(',','.')),a=Number(imcAltura.value.replace(',','.'));if(a>3)a=a/100;if(!(p>0)||!(a>0)){imcResult.textContent='Informe peso (kg) e altura (m)';imcClass.textContent='';return}var v=p/(a*a),c=v<18.5?'Abaixo do peso':v<25?'Peso normal':v<30?'Sobrepeso':v<35?'Obesidade grau I':v<40?'Obesidade grau II':'Obesidade grau III';imcResult.textContent='IMC: '+v.toFixed(1).replace('.',',');imcClass.textContent=c;"
+          }
+        },
+        {
+          "id": "3fdeb475-7c5c-468a-b81e-f8eafcacc233",
+          "kind": "label",
+          "name": "imcResult",
+          "text": "IMC: —",
+          "x": 20,
+          "y": 302,
+          "width": "353px",
+          "height": "55px",
+          "bg": "#eef2ff",
+          "color": "#222222",
+          "events": {},
+          "fontSize": 16
+        },
+        {
+          "id": "141d1ef0-1415-4cd7-896e-3f5f5b89ef25",
+          "kind": "label",
+          "name": "imcClass",
+          "text": "",
+          "x": 20,
+          "y": 406,
+          "width": "353px",
+          "height": "50px",
+          "bg": "#eef2ff",
+          "color": "#222222",
+          "events": {},
+          "fontSize": 16
+        }
+      ]
+    },
+    {
+      "id": "9de54d22-c77d-4414-b4e9-fd31e8e34ae1",
+      "name": "Gorjeta",
+      "items": [
+        {
+          "id": "d3c67dc3-b336-418f-abcc-8341d42f71ef",
+          "kind": "heading",
+          "name": "tipTitle",
+          "text": "Gorjeta e Divisão",
+          "x": 20,
+          "y": 72,
+          "width": "353px",
+          "height": "48px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "1bcad8f3-a1b8-46a9-b6d9-0fc8282cf0db",
+          "kind": "button",
+          "name": "tipNavimc",
+          "text": "IMC",
+          "x": 20,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"IMC\");"
+          }
+        },
+        {
+          "id": "b4dcfffb-fe43-46e2-adee-bfa3181a8572",
+          "kind": "button",
+          "name": "tipNavtip",
+          "text": "Gorjeta",
+          "x": 139,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"Gorjeta\");"
+          }
+        },
+        {
+          "id": "36a43c46-b736-473f-8baf-431de3cf50bb",
+          "kind": "button",
+          "name": "tipNavinv",
+          "text": "Juros",
+          "x": 259,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Juros\");"
+          }
+        },
+        {
+          "id": "5a6cc2c5-cf23-49e6-bcaf-8802b32e60f5",
+          "kind": "input",
+          "name": "tipConta",
+          "text": "Valor da conta (R$)",
+          "x": 20,
+          "y": 182,
+          "width": "353px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "82712fcc-441d-4ece-be8b-80553d1e1038",
+          "kind": "select",
+          "name": "tipPct",
+          "text": "Gorjeta",
+          "x": 20,
+          "y": 238,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "items": [
+            "0",
+            "5",
+            "10",
+            "12",
+            "15",
+            "20"
+          ]
+        },
+        {
+          "id": "477d25f6-b46d-4f61-9813-aa3f1ef2664f",
+          "kind": "input",
+          "name": "tipPessoas",
+          "text": "Pessoas",
+          "x": 205,
+          "y": 238,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "b46439f4-bb90-4afb-9f70-491fd4cc80ee",
+          "kind": "button",
+          "name": "tipCalc",
+          "text": "Calcular",
+          "x": 20,
+          "y": 298,
+          "width": "151px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var b=Number(tipConta.value.replace(',','.')),pct=Number(tipPct.value),n=Math.max(1,Math.floor(Number(tipPessoas.value)||1));if(!(b>0)){tipResult.textContent='Informe o valor da conta';tipPerson.textContent='';return}var tip=b*pct/100,tot=b+tip,f=function(x){return 'R$ '+x.toFixed(2).replace('.',',')};tipResult.textContent='Total: '+f(tot)+' (gorjeta '+f(tip)+')';tipPerson.textContent='Por pessoa ('+n+'): '+f(tot/n);"
+          }
+        },
+        {
+          "id": "fc4c9c84-43c3-4988-af6f-7ac03db5392d",
+          "kind": "label",
+          "name": "tipResult",
+          "text": "Total: —",
+          "x": 20,
+          "y": 358,
+          "width": "353px",
+          "height": "55px",
+          "bg": "#eef2ff",
+          "color": "#222222",
+          "events": {},
+          "fontSize": 16
+        },
+        {
+          "id": "fe4dc126-5df9-4877-99ec-ea9414af85f1",
+          "kind": "label",
+          "name": "tipPerson",
+          "text": "",
+          "x": 20,
+          "y": 462,
+          "width": "353px",
+          "height": "50px",
+          "bg": "#eef2ff",
+          "color": "#222222",
+          "events": {},
+          "fontSize": 16
+        }
+      ]
+    },
+    {
+      "id": "7d5e37ae-4765-4a25-9aaf-147ac1fa8493",
+      "name": "Juros",
+      "items": [
+        {
+          "id": "e868ee60-bd4b-4c8a-a283-9ec1982f99ce",
+          "kind": "heading",
+          "name": "invTitle",
+          "text": "Juros Compostos",
+          "x": 20,
+          "y": 72,
+          "width": "353px",
+          "height": "48px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "79f7a7f3-939c-4f41-94b3-9747807f30ac",
+          "kind": "button",
+          "name": "invNavimc",
+          "text": "IMC",
+          "x": 20,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"IMC\");"
+          }
+        },
+        {
+          "id": "c65cf6a7-652d-4748-a954-d68b5d3c700c",
+          "kind": "button",
+          "name": "invNavtip",
+          "text": "Gorjeta",
+          "x": 139,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Gorjeta\");"
+          }
+        },
+        {
+          "id": "46c9043d-3c85-4c74-9fe0-ce8892c935a6",
+          "kind": "button",
+          "name": "invNavinv",
+          "text": "Juros",
+          "x": 259,
+          "y": 126,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"Juros\");"
+          }
+        },
+        {
+          "id": "34904e8e-69f8-4a28-b987-75880bcad246",
+          "kind": "input",
+          "name": "invCap",
+          "text": "Capital inicial (R$)",
+          "x": 20,
+          "y": 182,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "6bdeff5c-b3b1-42b0-8f20-d3a39ea140bc",
+          "kind": "input",
+          "name": "invMes",
+          "text": "Aporte mensal (R$)",
+          "x": 205,
+          "y": 182,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "f30ede36-f93c-4448-9a16-0a2973f8948b",
+          "kind": "input",
+          "name": "invTaxa",
+          "text": "Taxa ao mês (%)",
+          "x": 20,
+          "y": 238,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "4ddbca14-30de-439e-bb31-c933303d762a",
+          "kind": "input",
+          "name": "invMeses",
+          "text": "Meses",
+          "x": 205,
+          "y": 238,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "208876e9-fc8d-4971-9df6-718ec2d75323",
+          "kind": "button",
+          "name": "invCalc",
+          "text": "Calcular",
+          "x": 20,
+          "y": 298,
+          "width": "151px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var c=Number(invCap.value.replace(',','.')),m=Number(invMes.value.replace(',','.')),r=Number(invTaxa.value.replace(',','.'))/100,n=Math.floor(Number(invMeses.value));if(!(c>=0)||!(n>0)||!(r>=0)||invCap.value===''||invTaxa.value===''){invResult.textContent='Preencha capital, taxa e meses';invGain.textContent='';return}m=m||0;var s=c;for(var i=0;i<n;i++){s=s*(1+r)+m}var put=c+m*n,f=function(x){return 'R$ '+x.toFixed(2).replace('.',',')};invResult.textContent='Montante: '+f(s);invGain.textContent='Investido '+f(put)+' · Juros '+f(s-put);"
+          }
+        },
+        {
+          "id": "ae0e2036-b137-4375-9134-47f071906787",
+          "kind": "label",
+          "name": "invResult",
+          "text": "Montante: —",
+          "x": 20,
+          "y": 358,
+          "width": "353px",
+          "height": "55px",
+          "bg": "#eef2ff",
+          "color": "#222222",
+          "events": {},
+          "fontSize": 16
+        },
+        {
+          "id": "405f49bc-f528-4d7f-951b-6d40165c41d3",
+          "kind": "label",
+          "name": "invGain",
+          "text": "",
+          "x": 20,
+          "y": 462,
+          "width": "353px",
+          "height": "50px",
+          "bg": "#eef2ff",
+          "color": "#222222",
+          "events": {},
+          "fontSize": 16
+        }
+      ]
+    }
+  ]
+}

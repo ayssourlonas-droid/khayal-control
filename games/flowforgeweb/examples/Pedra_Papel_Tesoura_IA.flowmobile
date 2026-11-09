@@ -1,0 +1,127 @@
+{
+  "name": "Pedra Papel Tesoura vs IA",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "1cc2d07b-2513-44f5-919a-238a8c4ac502",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "707616a2-8946-4c2a-89ec-bbabf1c279d6",
+          "kind": "heading",
+          "name": "rpsTitle",
+          "text": "Pedra, Papel, Tesoura",
+          "x": 35,
+          "y": 35,
+          "width": "320px",
+          "height": "50px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "9dd9492f-c660-4e2b-b9aa-68565e39f821",
+          "kind": "label",
+          "name": "rpsStatus",
+          "text": "Escolha uma jogada",
+          "x": 35,
+          "y": 100,
+          "width": "320px",
+          "height": "55px",
+          "bg": "#f1f5f9",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "1e4c45fb-aa37-4343-8c4c-3fe8860af5e5",
+          "kind": "button",
+          "name": "rpsPedra",
+          "text": "✊ Pedra",
+          "x": 40,
+          "y": 190,
+          "width": "95px",
+          "height": "75px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "const p='Pedra',opts=['Pedra','Papel','Tesoura'],cpu=opts[Math.floor(Math.random()*3)];let r=p===cpu?'Empate':(p==='Pedra'&&cpu==='Tesoura'||p==='Papel'&&cpu==='Pedra'||p==='Tesoura'&&cpu==='Papel')?'Você venceu!':'IA venceu!';Sons.play(r==='Empate'?'blip':r==='Você venceu!'?'win':'lose');document.getElementById('rpsStatus').textContent='Você: '+p+' | IA: '+cpu+' — '+r;"
+          }
+        },
+        {
+          "id": "c35ba2f3-92e9-4a80-b54c-a98fdd2494d6",
+          "kind": "button",
+          "name": "rpsPapel",
+          "text": "✋ Papel",
+          "x": 145,
+          "y": 190,
+          "width": "95px",
+          "height": "75px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "const p='Papel',opts=['Pedra','Papel','Tesoura'],cpu=opts[Math.floor(Math.random()*3)];let r=p===cpu?'Empate':(p==='Pedra'&&cpu==='Tesoura'||p==='Papel'&&cpu==='Pedra'||p==='Tesoura'&&cpu==='Papel')?'Você venceu!':'IA venceu!';Sons.play(r==='Empate'?'blip':r==='Você venceu!'?'win':'lose');document.getElementById('rpsStatus').textContent='Você: '+p+' | IA: '+cpu+' — '+r;"
+          }
+        },
+        {
+          "id": "5684ad6f-4913-46ff-8a25-62a37683477e",
+          "kind": "button",
+          "name": "rpsTesoura",
+          "text": "✌ Tesoura",
+          "x": 250,
+          "y": 190,
+          "width": "95px",
+          "height": "75px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "const p='Tesoura',opts=['Pedra','Papel','Tesoura'],cpu=opts[Math.floor(Math.random()*3)];let r=p===cpu?'Empate':(p==='Pedra'&&cpu==='Tesoura'||p==='Papel'&&cpu==='Pedra'||p==='Tesoura'&&cpu==='Papel')?'Você venceu!':'IA venceu!';Sons.play(r==='Empate'?'blip':r==='Você venceu!'?'win':'lose');document.getElementById('rpsStatus').textContent='Você: '+p+' | IA: '+cpu+' — '+r;"
+          }
+        },
+        {
+          "id": "296182f8-e50f-4c90-b32d-95b0f01ddfcf",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 39,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "b7ab726c-4720-402c-9026-d89f95e8532a",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 277,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

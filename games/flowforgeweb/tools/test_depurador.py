@@ -1,0 +1,77 @@
+import os,sys,sys,json
+import common
+sys.path.insert(0,os.path.join(common.TOOLS,'gerar_exemplos'))
+from lib import *
+from playwright.sync_api import sync_playwright
+PORT=os.environ.get('PORT','8766'); R=[]
+def t(l,ok,d=''): R.append(bool(ok)); print('✓' if ok else '✗',l,'' if ok else d)
+items=[it('label','lbl','Olá',20,10,200,30),
+ it('button','btnLog','Log',20,50,100,40,{"click":"console.log('clicou',{a:1});window.contador=(window.contador||0)+1;"}),
+ it('button','btnBad','Erro',130,50,100,40,{"click":"naoExiste();"}),
+ it('button','btnNet','Rede',240,50,100,40,{"click":"fetch('/nao-existe-xyz').catch(function(){});"}),
+ it('input','txt','',20,100,200,36,{"input":"window.ultimo=event.target.value;"})]
+p=proj('Dbg',[('Principal',items,{"onload":"console.warn('aviso no onload');window.nome='Ana';window.lista=[1,2,3];","onshow":""})])
+json.dump(p,open(common.OUT+'/dbg.flowmobile','w',encoding='utf-8'),ensure_ascii=False)
+with sync_playwright() as pw:
+    b=pw.chromium.launch(); c=b.new_context(viewport={'width':1400,'height':900}); pg=c.new_page(); perr=[]
+    pg.on('pageerror',lambda e:perr.append(str(e)))
+    pg.goto(f'{common.URL}/index.html'); pg.wait_for_timeout(500)
+    cl=lambda:pg.evaluate("document.querySelectorAll('dialog[open]').forEach(d=>d.close())")
+    cl(); pg.set_input_files('#fileInput',common.OUT+'/dbg.flowmobile'); pg.wait_for_timeout(700); cl()
+    pg.click('#debugBtn'); pg.wait_for_timeout(1200)
+    cons=lambda:pg.inner_text('#dbgConsole')
+    t('captura mensagens do carregamento (onload)','aviso no onload' in cons(),cons())
+    t('estado "Running/Executando"',pg.inner_text('#dbgState') in('Executando','Running'),pg.inner_text('#dbgState'))
+    fr=pg.frame_locator('#preview')
+    fr.locator('#btnLog').click(); pg.wait_for_timeout(300)
+    t('console.log com objeto','clicou {"a":1}' in cons(),cons())
+    t('hora real da mensagem (não a do render)',pg.evaluate("/\\d\\d:\\d\\d:\\d\\d\\.\\d{3}/.test(document.querySelector('#dbgConsole .dbgRow small').textContent)"))
+    fr.locator('#btnBad').click(); pg.wait_for_timeout(400)
+    pg.click('[data-dbg-tab=errors]'); er=pg.inner_text('#dbgErrors')
+    t('erro capturado',  'naoExiste' in er,er)
+    t('erro aponta componente e evento (btnBad · click)','btnBad' in er and 'click' in er,er)
+    t('aba Erros destacada com contador',pg.inner_text('#dbgErrorCount')=='1' and pg.evaluate("document.querySelector('[data-dbg-tab=errors]').classList.contains('hasErr')"))
+    pg.click('#dbgErrors .dbgGo'); pg.wait_for_timeout(400)
+    t('clicar no erro seleciona o componente no Design',pg.evaluate("selected&&selected.name")=='btnBad' and pg.evaluate("document.querySelector('[data-tab=design]').classList.contains('active')"),pg.evaluate("selected&&selected.name"))
+    t('painel continua visível ao trocar para Design',pg.evaluate("!document.getElementById('debuggerPanel').hidden"))
+    pg.click('[data-tab=preview]'); pg.wait_for_timeout(300)
+    fr.locator('#btnNet').click(); pg.wait_for_timeout(800)
+    pg.click('[data-dbg-tab=net]'); nt=pg.inner_text('#dbgNet')
+    t('rede: requisição registrada com status','nao-existe-xyz' in nt and ('404' in nt),nt)
+    t('contador de rede',pg.inner_text('#dbgNetCount')=='1',pg.inner_text('#dbgNetCount'))
+    fr.locator("#txt").fill("abc"); fr.locator("#btnLog").click(); pg.wait_for_timeout(300)
+    pg.click('[data-dbg-tab=events]'); ev=pg.inner_text('#dbgEvents')
+    t('eventos: click e input com valor','click' in ev and 'input' in ev and 'abc' in ev,ev)
+    pg.click('[data-dbg-tab=vars]'); pg.wait_for_timeout(300); vs=pg.inner_text('#dbgVars')+pg.evaluate("[...document.querySelectorAll('#dbgVars input')].map(i=>i.dataset.var+'='+i.value).join(' ')")
+    t('variáveis do usuário aparecem (nome, contador, ultimo, lista)',all(k in vs for k in ['nome=Ana','contador=1','ultimo=abc','lista']),vs)
+    t('variáveis internas do FlowForge ocultas','FlowForge' not in vs and 'project' not in vs.replace('projeto',''),vs[:200])
+    pg.fill('#dbgVars input[data-var=contador]','41'); pg.press('#dbgVars input[data-var=contador]','Enter'); pg.wait_for_timeout(300)
+    t('editar variável altera o app',pg.evaluate("document.getElementById('preview').contentWindow.contador")==41)
+    pg.click('[data-dbg-tab=components]'); pg.wait_for_timeout(300); cp=pg.inner_text('#dbgComponents')
+    t('componentes listados com tipo','btnLog' in cp and 'button' in cp,cp)
+    pg.screenshot(path=common.OUT+'/dbg_comp.png'); pg.click('[data-dbg-tab=errors]'); pg.screenshot(path=common.OUT+'/dbg_err.png'); pg.click('[data-dbg-tab=console]')
+    pg.fill('#dbgExpr','contador+1'); pg.press('#dbgExpr','Enter'); pg.wait_for_timeout(200)
+    t('REPL avalia expressão no app','← 42' in cons(),cons()[-80:])
+    pg.fill('#dbgExpr','algoInexistente'); pg.press('#dbgExpr','Enter'); pg.wait_for_timeout(200)
+    t('REPL mostra erro de expressão','ReferenceError' in cons())
+    pg.select_option('#dbgLevel','warn'); pg.wait_for_timeout(200)
+    t('filtro por nível (avisos)','aviso no onload' in cons() and 'clicou' not in cons())
+    pg.select_option('#dbgLevel','all'); pg.fill('#dbgFilter','clicou'); pg.wait_for_timeout(200)
+    t('filtro de texto','clicou' in cons() and 'aviso' not in cons())
+    pg.fill('#dbgFilter','')
+    pg.click('#dbgCopy'); pg.wait_for_timeout(200); t('botão copiar sinaliza',pg.evaluate("document.getElementById('dbgCopy').classList.contains('copied')"))
+    # redimensionar
+    h0=pg.evaluate("document.getElementById('debuggerPanel').getBoundingClientRect().height"); box=pg.locator('#dbgResize').bounding_box()
+    pg.mouse.move(box['x']+50,box['y']+3); pg.mouse.down(); pg.mouse.move(box['x']+50,box['y']-120,steps=5); pg.mouse.up(); pg.wait_for_timeout(200)
+    h1=pg.evaluate("document.getElementById('debuggerPanel').getBoundingClientRect().height")
+    t('painel redimensionável',h1>h0+80,(h0,h1))
+    t('sem sobreposição com o preview após redimensionar',pg.evaluate("document.getElementById('preview').getBoundingClientRect().bottom<=document.getElementById('debuggerPanel').getBoundingClientRect().top+1"))
+    pg.click('#dbgClear'); pg.wait_for_timeout(200); t('Limpar zera tudo',pg.inner_text('#dbgErrorCount')=='0' and pg.inner_text('#dbgNetCount')=='0')
+    # tradução
+    pg.evaluate("FlowForgeI18n.setLanguage('en')"); pg.wait_for_timeout(500)
+    txt=pg.inner_text('#debuggerPanel')
+    t('painel traduzido para inglês','Network' in txt and 'Copy' in txt and 'Rede' not in txt and 'Copiar' not in txt,txt[:200])
+    perr=[e for e in perr if 'naoExiste' not in e]; t('sem erros JS no IDE (além do erro proposital do app)',not perr,perr)
+    b.close()
+print('TOTAL',sum(R),'/',len(R))
+sys.exit(0 if all(R) else 1)

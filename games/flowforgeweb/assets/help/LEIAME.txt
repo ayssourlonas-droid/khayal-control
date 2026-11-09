@@ -1,0 +1,20 @@
+Screenshots para a ajuda do FlowForge WebStudio (1440x900, interface em pt-BR, exceto 16 e 17).
+
+01-visao-geral      Designer com o exemplo Lista de Tarefas
+02-toolbox-busca    Toolbox filtrada pela busca "bot"
+03-propriedades     Painel de Propriedades com um botão selecionado
+04-acoes            Painel de Ações (OnLoad/OnShow e eventos)
+05-codigo           Aba Código
+06-preview          Aba Preview
+07-debug            Painel Debug (console)
+08-blocos           Aba Blocos (programação visual)
+09-paginas          Painel de páginas
+10-arvore           Árvore do projeto (Outline)
+11-assets           Painel de Assets
+12-exemplos         Janela Exemplos e tutoriais
+13-novo-projeto     Janela Novo projeto
+14-exportar         Exportar HTML (ícone e favicon)
+15-salvar           Salvar projeto (ícone, favicon, versão)
+16-ingles           Interface em inglês
+17-espanhol         Interface em espanhol
+18-exemplo-jogo     Exemplo Jogo da Forca no Designer

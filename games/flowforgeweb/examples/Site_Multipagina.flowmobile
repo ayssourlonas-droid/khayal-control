@@ -1,0 +1,189 @@
+{
+  "name": "Site Multipágina",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "site",
+  "framework": "none",
+  "designerMode": "framework",
+  "titlebar": false,
+  "active": 0,
+  "activePage": "home",
+  "pages": [
+    {
+      "id": "home",
+      "name": "Home",
+      "slug": "home",
+      "showTitlebar": true,
+      "titlebar": {
+        "name": "titlebar1",
+        "text": "Meu Site",
+        "height": "52px",
+        "bg": "#111827",
+        "color": "#ffffff",
+        "showMenu": true,
+        "autoStyle": false
+      },
+      "items": [
+        {
+          "id": "mp-h1",
+          "kind": "heading",
+          "name": "tituloHome",
+          "text": "Home",
+          "x": 60,
+          "y": 70,
+          "width": "500px",
+          "height": "60px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "mp-h2",
+          "kind": "label",
+          "name": "textoHome",
+          "text": "Um exemplo de site com várias páginas.",
+          "x": 60,
+          "y": 145,
+          "width": "500px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "mp-b1",
+          "kind": "button",
+          "name": "irProdutos",
+          "text": "Produtos",
+          "x": 60,
+          "y": 215,
+          "width": "150px",
+          "height": "46px",
+          "bg": "#2563eb",
+          "color": "#fff",
+          "events": {
+            "click": "ffNavigate(\"Produtos\");"
+          }
+        }
+      ]
+    },
+    {
+      "id": "produtos",
+      "name": "Produtos",
+      "slug": "produtos",
+      "showTitlebar": true,
+      "titlebar": {
+        "name": "titlebar1",
+        "text": "Produtos",
+        "height": "52px",
+        "bg": "#2563eb",
+        "color": "#ffffff",
+        "showMenu": false,
+        "autoStyle": false
+      },
+      "items": [
+        {
+          "id": "mp-p1",
+          "kind": "heading",
+          "name": "tituloProdutos",
+          "text": "Produtos",
+          "x": 60,
+          "y": 70,
+          "width": "500px",
+          "height": "60px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "mp-p2",
+          "kind": "card",
+          "name": "produto1",
+          "text": "Produto A",
+          "x": 60,
+          "y": 150,
+          "width": "220px",
+          "height": "140px",
+          "bg": "#fff",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "mp-p3",
+          "kind": "button",
+          "name": "irContato",
+          "text": "Contato",
+          "x": 60,
+          "y": 320,
+          "width": "150px",
+          "height": "46px",
+          "bg": "#2563eb",
+          "color": "#fff",
+          "events": {
+            "click": "ffNavigate(\"Contato\");"
+          }
+        }
+      ]
+    },
+    {
+      "id": "contato",
+      "name": "Contato",
+      "slug": "contato",
+      "showTitlebar": false,
+      "titlebar": {
+        "name": "titlebar1",
+        "text": "Contato",
+        "height": "52px",
+        "bg": "#059669",
+        "color": "#ffffff",
+        "showMenu": false,
+        "autoStyle": false
+      },
+      "items": [
+        {
+          "id": "mp-c1",
+          "kind": "heading",
+          "name": "tituloContato",
+          "text": "Contato",
+          "x": 60,
+          "y": 70,
+          "width": "500px",
+          "height": "60px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "mp-c2",
+          "kind": "label",
+          "name": "textoContato",
+          "text": "Esta página demonstra uma página sem TitleBar.",
+          "x": 60,
+          "y": 145,
+          "width": "600px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "mp-c3",
+          "kind": "button",
+          "name": "voltarHome",
+          "text": "Voltar",
+          "x": 60,
+          "y": 215,
+          "width": "150px",
+          "height": "46px",
+          "bg": "#059669",
+          "color": "#fff",
+          "events": {
+            "click": "ffNavigate(\"Home\");"
+          }
+        }
+      ]
+    }
+  ]
+}

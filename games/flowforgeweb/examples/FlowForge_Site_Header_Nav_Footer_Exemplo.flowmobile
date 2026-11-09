@@ -1,0 +1,165 @@
+{
+  "version": "0.13.0",
+  "name": "FlowForge_Site_Header_Nav_Footer_Exemplo",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#111827",
+  "type": "site",
+  "framework": "none",
+  "designerMode": "framework",
+  "titlebar": {
+    "name": "titlebar1",
+    "text": "FlowForge_Site_Header_Nav_Footer_Exemplo",
+    "height": "52px",
+    "bg": "#111827",
+    "color": "#fff",
+    "showMenu": true,
+    "autoStyle": false
+  },
+  "pages": [
+    {
+      "id": "347b7160-9d68-4e21-8be2-bbef362e8b7b",
+      "name": "Home",
+      "slug": "home",
+      "items": [
+        {
+          "id": "46024679-74db-4048-b6a7-51b22cf4b7c8",
+          "kind": "heading",
+          "name": "heroTitle",
+          "text": "Crie seu próximo projeto",
+          "x": 40,
+          "y": 190,
+          "width": "calc(100% - 80px)",
+          "height": 70,
+          "bg": "#fff",
+          "color": "#111827",
+          "visible": true,
+          "enabled": true,
+          "events": {}
+        },
+        {
+          "id": "318173b2-89ad-4cee-aa19-2d02b4f78453",
+          "kind": "label",
+          "name": "heroText",
+          "text": "Exemplo de Site/Landing Page com Header, navegação e Footer automáticos.",
+          "x": 40,
+          "y": 270,
+          "width": "calc(100% - 80px)",
+          "height": 60,
+          "bg": "#fff",
+          "color": "#475569",
+          "visible": true,
+          "enabled": true,
+          "events": {}
+        },
+        {
+          "id": "fc42ed62-827b-41e3-a140-b33370a3a7df",
+          "kind": "button",
+          "name": "cta",
+          "text": "Começar agora",
+          "x": 40,
+          "y": 350,
+          "width": 180,
+          "height": 48,
+          "bg": "#2563eb",
+          "color": "#fff",
+          "visible": true,
+          "enabled": true,
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "33ea9d34-3041-4ddf-8492-3ea1a351e3f3",
+      "name": "Sobre",
+      "slug": "sobre",
+      "items": [
+        {
+          "id": "873a7686-c460-407b-a355-8ddd131cf232",
+          "kind": "heading",
+          "name": "aboutTitle",
+          "text": "Sobre a empresa",
+          "x": 40,
+          "y": 190,
+          "width": "calc(100% - 80px)",
+          "height": 60,
+          "bg": "#fff",
+          "color": "#111827",
+          "visible": true,
+          "enabled": true,
+          "events": {}
+        },
+        {
+          "id": "396c4433-144d-4e3e-9c8c-ffea76e18148",
+          "kind": "label",
+          "name": "aboutText",
+          "text": "Esta página demonstra a navegação automática entre páginas.",
+          "x": 40,
+          "y": 270,
+          "width": "calc(100% - 80px)",
+          "height": 80,
+          "bg": "#fff",
+          "color": "#475569",
+          "visible": true,
+          "enabled": true,
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "1aaab79b-017f-466f-8516-271fc6f6e535",
+      "name": "Contato",
+      "slug": "contato",
+      "items": [
+        {
+          "id": "99e8b110-971f-4c59-b478-bd5d0ab75668",
+          "kind": "heading",
+          "name": "contactTitle",
+          "text": "Entre em contato",
+          "x": 40,
+          "y": 190,
+          "width": "calc(100% - 80px)",
+          "height": 60,
+          "bg": "#fff",
+          "color": "#111827",
+          "visible": true,
+          "enabled": true,
+          "events": {}
+        },
+        {
+          "id": "0f123921-8d64-4405-b253-c0a53ac4ce78",
+          "kind": "input",
+          "name": "email",
+          "text": "Seu e-mail",
+          "x": 40,
+          "y": 280,
+          "width": 320,
+          "height": 44,
+          "bg": "#fff",
+          "color": "#111827",
+          "visible": true,
+          "enabled": true,
+          "events": {}
+        },
+        {
+          "id": "8e7ddfa0-27a7-4db9-98d4-42a8ed2ecfe2",
+          "kind": "button",
+          "name": "send",
+          "text": "Enviar",
+          "x": 40,
+          "y": 340,
+          "width": 140,
+          "height": 44,
+          "bg": "#2563eb",
+          "color": "#fff",
+          "visible": true,
+          "enabled": true,
+          "events": {}
+        }
+      ]
+    }
+  ],
+  "active": 0,
+  "activePage": "347b7160-9d68-4e21-8be2-bbef362e8b7b"
+}

@@ -1,0 +1,1319 @@
+{
+  "name": "Editor de Texto em Blocos",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "47509204-734d-4ae0-8a6e-f50c68ed4980",
+      "name": "Editor",
+      "items": [
+        {
+          "id": "8ae72fc0-db25-472a-9592-62d97e44daa0",
+          "kind": "heading",
+          "name": "titulo",
+          "text": "Editor de Texto em Blocos",
+          "x": 20,
+          "y": 68,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "285b759a-b6b6-4db4-81d0-d78fa7add1c6",
+          "kind": "textarea",
+          "name": "texto",
+          "text": "",
+          "x": 20,
+          "y": 118,
+          "width": "353px",
+          "height": "230px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "2f51d15a-8980-47fc-8bd2-200d14215703",
+          "kind": "button",
+          "name": "btnItem",
+          "text": "• Item",
+          "x": 20,
+          "y": 358,
+          "width": "84px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "document.getElementById(\"rascunho\").value=document.getElementById(\"texto\")?.value;\ndocument.getElementById(\"texto\").value=String(document.getElementById(\"texto\")?.value)+String(\"\\n• \");\nwindow[\"acoes\"]=(Number(window[\"acoes\"])||0)+1;\ndocument.getElementById(\"acoesLabel\").textContent=String(\"Ações no texto: \")+String(window[\"acoes\"]);\nif(window.acoes > 9){\ndocument.getElementById(\"status\").textContent=\"Muitas alterações — use Desfazer ou revise o texto\";\n}else{\ndocument.getElementById(\"status\").textContent=\"Item de lista inserido\";\n}"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "rascunho",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "texto",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "set",
+                "target": "texto",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "",
+                  "as": {
+                    "kind": "component",
+                    "target": "texto",
+                    "prop": "value"
+                  },
+                  "b": "\n• ",
+                  "bs": null
+                }
+              },
+              {
+                "type": "inc",
+                "target": "acoes",
+                "prop": "textContent",
+                "value": "1",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "set",
+                "target": "acoesLabel",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "Ações no texto: ",
+                  "b": "",
+                  "bs": {
+                    "kind": "variable",
+                    "name": "acoes"
+                  }
+                }
+              },
+              {
+                "type": "if",
+                "target": "",
+                "prop": "textContent",
+                "value": "",
+                "left": "window.acoes",
+                "op": ">",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Muitas alterações — use Desfazer ou revise o texto",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "elseBody": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Item de lista inserido",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "source": {
+                  "kind": "number",
+                  "value": 9
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "801eec1c-4598-4681-86c4-c24fd6b42c0f",
+          "kind": "button",
+          "name": "btnTarefa",
+          "text": "☐ Tarefa",
+          "x": 113,
+          "y": 358,
+          "width": "84px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "document.getElementById(\"rascunho\").value=document.getElementById(\"texto\")?.value;\ndocument.getElementById(\"texto\").value=String(document.getElementById(\"texto\")?.value)+String(\"\\n☐ \");\nwindow[\"acoes\"]=(Number(window[\"acoes\"])||0)+1;\ndocument.getElementById(\"acoesLabel\").textContent=String(\"Ações no texto: \")+String(window[\"acoes\"]);\nif(window.acoes > 9){\ndocument.getElementById(\"status\").textContent=\"Muitas alterações — use Desfazer ou revise o texto\";\n}else{\ndocument.getElementById(\"status\").textContent=\"Tarefa inserida\";\n}"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "rascunho",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "texto",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "set",
+                "target": "texto",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "",
+                  "as": {
+                    "kind": "component",
+                    "target": "texto",
+                    "prop": "value"
+                  },
+                  "b": "\n☐ ",
+                  "bs": null
+                }
+              },
+              {
+                "type": "inc",
+                "target": "acoes",
+                "prop": "textContent",
+                "value": "1",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "set",
+                "target": "acoesLabel",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "Ações no texto: ",
+                  "b": "",
+                  "bs": {
+                    "kind": "variable",
+                    "name": "acoes"
+                  }
+                }
+              },
+              {
+                "type": "if",
+                "target": "",
+                "prop": "textContent",
+                "value": "",
+                "left": "window.acoes",
+                "op": ">",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Muitas alterações — use Desfazer ou revise o texto",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "elseBody": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Tarefa inserida",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "source": {
+                  "kind": "number",
+                  "value": 9
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "842f5ba3-612f-447e-aa5e-0647ea0f3edd",
+          "kind": "button",
+          "name": "btnTitulo",
+          "text": "# Título",
+          "x": 205,
+          "y": 358,
+          "width": "84px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "document.getElementById(\"rascunho\").value=document.getElementById(\"texto\")?.value;\ndocument.getElementById(\"texto\").value=String(document.getElementById(\"texto\")?.value)+String(\"\\n# \");\nwindow[\"acoes\"]=(Number(window[\"acoes\"])||0)+1;\ndocument.getElementById(\"acoesLabel\").textContent=String(\"Ações no texto: \")+String(window[\"acoes\"]);\nif(window.acoes > 9){\ndocument.getElementById(\"status\").textContent=\"Muitas alterações — use Desfazer ou revise o texto\";\n}else{\ndocument.getElementById(\"status\").textContent=\"Título inserido\";\n}"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "rascunho",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "texto",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "set",
+                "target": "texto",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "",
+                  "as": {
+                    "kind": "component",
+                    "target": "texto",
+                    "prop": "value"
+                  },
+                  "b": "\n# ",
+                  "bs": null
+                }
+              },
+              {
+                "type": "inc",
+                "target": "acoes",
+                "prop": "textContent",
+                "value": "1",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "set",
+                "target": "acoesLabel",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "Ações no texto: ",
+                  "b": "",
+                  "bs": {
+                    "kind": "variable",
+                    "name": "acoes"
+                  }
+                }
+              },
+              {
+                "type": "if",
+                "target": "",
+                "prop": "textContent",
+                "value": "",
+                "left": "window.acoes",
+                "op": ">",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Muitas alterações — use Desfazer ou revise o texto",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "elseBody": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Título inserido",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "source": {
+                  "kind": "number",
+                  "value": 9
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "50c73cd1-c102-4f04-97fc-f14df48087e8",
+          "kind": "button",
+          "name": "btnAssina",
+          "text": "— Assinatura",
+          "x": 297,
+          "y": 358,
+          "width": "76px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "document.getElementById(\"rascunho\").value=document.getElementById(\"texto\")?.value;\ndocument.getElementById(\"texto\").value=String(document.getElementById(\"texto\")?.value)+String(\"\\n\\n— Escrito com FlowForge\");\nwindow[\"acoes\"]=(Number(window[\"acoes\"])||0)+1;\ndocument.getElementById(\"acoesLabel\").textContent=String(\"Ações no texto: \")+String(window[\"acoes\"]);\nif(window.acoes > 9){\ndocument.getElementById(\"status\").textContent=\"Muitas alterações — use Desfazer ou revise o texto\";\n}else{\ndocument.getElementById(\"status\").textContent=\"Assinatura inserida\";\n}"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "rascunho",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "texto",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "set",
+                "target": "texto",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "",
+                  "as": {
+                    "kind": "component",
+                    "target": "texto",
+                    "prop": "value"
+                  },
+                  "b": "\n\n— Escrito com FlowForge",
+                  "bs": null
+                }
+              },
+              {
+                "type": "inc",
+                "target": "acoes",
+                "prop": "textContent",
+                "value": "1",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "set",
+                "target": "acoesLabel",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "Ações no texto: ",
+                  "b": "",
+                  "bs": {
+                    "kind": "variable",
+                    "name": "acoes"
+                  }
+                }
+              },
+              {
+                "type": "if",
+                "target": "",
+                "prop": "textContent",
+                "value": "",
+                "left": "window.acoes",
+                "op": ">",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Muitas alterações — use Desfazer ou revise o texto",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "elseBody": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Assinatura inserida",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "source": {
+                  "kind": "number",
+                  "value": 9
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "5b35e67c-9e6e-453f-8a0d-826f1e539f73",
+          "kind": "button",
+          "name": "btnSep",
+          "text": "Separador ─",
+          "x": 20,
+          "y": 406,
+          "width": "118px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "document.getElementById(\"rascunho\").value=document.getElementById(\"texto\")?.value;\nfor(let ff_i=0;ff_i<20;ff_i++){\ndocument.getElementById(\"texto\").value=String(document.getElementById(\"texto\")?.value)+String(\"─\");\n}\nwindow[\"acoes\"]=(Number(window[\"acoes\"])||0)+1;\ndocument.getElementById(\"acoesLabel\").textContent=String(\"Ações no texto: \")+String(window[\"acoes\"]);\nif(window.acoes > 9){\ndocument.getElementById(\"status\").textContent=\"Muitas alterações — use Desfazer ou revise o texto\";\n}else{\ndocument.getElementById(\"status\").textContent=\"Separador inserido\";\n}"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "rascunho",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "texto",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "repeat",
+                "target": "",
+                "prop": "textContent",
+                "value": "20",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "texto",
+                    "prop": "value",
+                    "value": "",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": [],
+                    "source": {
+                      "kind": "join",
+                      "a": "",
+                      "as": {
+                        "kind": "component",
+                        "target": "texto",
+                        "prop": "value"
+                      },
+                      "b": "─",
+                      "bs": null
+                    }
+                  }
+                ],
+                "elseBody": []
+              },
+              {
+                "type": "inc",
+                "target": "acoes",
+                "prop": "textContent",
+                "value": "1",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "set",
+                "target": "acoesLabel",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "Ações no texto: ",
+                  "b": "",
+                  "bs": {
+                    "kind": "variable",
+                    "name": "acoes"
+                  }
+                }
+              },
+              {
+                "type": "if",
+                "target": "",
+                "prop": "textContent",
+                "value": "",
+                "left": "window.acoes",
+                "op": ">",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Muitas alterações — use Desfazer ou revise o texto",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "elseBody": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Separador inserido",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "source": {
+                  "kind": "number",
+                  "value": 9
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "05666662-876b-4917-b754-61ca2ad43fd6",
+          "kind": "button",
+          "name": "btnLinha",
+          "text": "Nova linha ↵",
+          "x": 146,
+          "y": 406,
+          "width": "109px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "document.getElementById(\"rascunho\").value=document.getElementById(\"texto\")?.value;\ndocument.getElementById(\"texto\").value=String(document.getElementById(\"texto\")?.value)+String(\"\\n\");\nwindow[\"acoes\"]=(Number(window[\"acoes\"])||0)+1;\ndocument.getElementById(\"acoesLabel\").textContent=String(\"Ações no texto: \")+String(window[\"acoes\"]);\nif(window.acoes > 9){\ndocument.getElementById(\"status\").textContent=\"Muitas alterações — use Desfazer ou revise o texto\";\n}else{\ndocument.getElementById(\"status\").textContent=\"Nova linha\";\n}"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "rascunho",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "texto",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "set",
+                "target": "texto",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "",
+                  "as": {
+                    "kind": "component",
+                    "target": "texto",
+                    "prop": "value"
+                  },
+                  "b": "\n",
+                  "bs": null
+                }
+              },
+              {
+                "type": "inc",
+                "target": "acoes",
+                "prop": "textContent",
+                "value": "1",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "set",
+                "target": "acoesLabel",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "Ações no texto: ",
+                  "b": "",
+                  "bs": {
+                    "kind": "variable",
+                    "name": "acoes"
+                  }
+                }
+              },
+              {
+                "type": "if",
+                "target": "",
+                "prop": "textContent",
+                "value": "",
+                "left": "window.acoes",
+                "op": ">",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Muitas alterações — use Desfazer ou revise o texto",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "elseBody": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Nova linha",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "source": {
+                  "kind": "number",
+                  "value": 9
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "1dd1a546-ad29-4ef1-8cde-5f6bd318bd07",
+          "kind": "button",
+          "name": "btnPar",
+          "text": "Parágrafo ¶",
+          "x": 264,
+          "y": 406,
+          "width": "109px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "document.getElementById(\"rascunho\").value=document.getElementById(\"texto\")?.value;\ndocument.getElementById(\"texto\").value=String(document.getElementById(\"texto\")?.value)+String(\"\\n\\n\");\nwindow[\"acoes\"]=(Number(window[\"acoes\"])||0)+1;\ndocument.getElementById(\"acoesLabel\").textContent=String(\"Ações no texto: \")+String(window[\"acoes\"]);\nif(window.acoes > 9){\ndocument.getElementById(\"status\").textContent=\"Muitas alterações — use Desfazer ou revise o texto\";\n}else{\ndocument.getElementById(\"status\").textContent=\"Parágrafo inserido\";\n}"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "rascunho",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "texto",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "set",
+                "target": "texto",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "",
+                  "as": {
+                    "kind": "component",
+                    "target": "texto",
+                    "prop": "value"
+                  },
+                  "b": "\n\n",
+                  "bs": null
+                }
+              },
+              {
+                "type": "inc",
+                "target": "acoes",
+                "prop": "textContent",
+                "value": "1",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "set",
+                "target": "acoesLabel",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "Ações no texto: ",
+                  "b": "",
+                  "bs": {
+                    "kind": "variable",
+                    "name": "acoes"
+                  }
+                }
+              },
+              {
+                "type": "if",
+                "target": "",
+                "prop": "textContent",
+                "value": "",
+                "left": "window.acoes",
+                "op": ">",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Muitas alterações — use Desfazer ou revise o texto",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "elseBody": [
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Parágrafo inserido",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "source": {
+                  "kind": "number",
+                  "value": 9
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "c9c592fe-b4a7-4cb3-84ba-5a3e44368e63",
+          "kind": "button",
+          "name": "btnDesfazer",
+          "text": "↶ Desfazer",
+          "x": 20,
+          "y": 458,
+          "width": "109px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "document.getElementById(\"texto\").value=document.getElementById(\"rascunho\")?.value;\ndocument.getElementById(\"status\").textContent=\"Última alteração desfeita\";"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "texto",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "rascunho",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "set",
+                "target": "status",
+                "prop": "textContent",
+                "value": "Última alteração desfeita",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "4abaedfb-a005-4ec5-9318-837b860a4509",
+          "kind": "button",
+          "name": "btnLimpar",
+          "text": "Limpar tudo",
+          "x": 138,
+          "y": 458,
+          "width": "109px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "document.getElementById(\"rascunho\").value=document.getElementById(\"texto\")?.value;\ndocument.getElementById(\"texto\").value=\"\";\nwindow[\"acoes\"]=(Number(window[\"acoes\"])||0)+1;\ndocument.getElementById(\"acoesLabel\").textContent=String(\"Ações no texto: \")+String(window[\"acoes\"]);\ndocument.getElementById(\"status\").textContent=\"Texto limpo (Desfazer restaura)\";"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "set",
+                "target": "rascunho",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "component",
+                  "target": "texto",
+                  "prop": "value"
+                }
+              },
+              {
+                "type": "set",
+                "target": "texto",
+                "prop": "value",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "inc",
+                "target": "acoes",
+                "prop": "textContent",
+                "value": "1",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              },
+              {
+                "type": "set",
+                "target": "acoesLabel",
+                "prop": "textContent",
+                "value": "",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": [],
+                "source": {
+                  "kind": "join",
+                  "a": "Ações no texto: ",
+                  "b": "",
+                  "bs": {
+                    "kind": "variable",
+                    "name": "acoes"
+                  }
+                }
+              },
+              {
+                "type": "set",
+                "target": "status",
+                "prop": "textContent",
+                "value": "Texto limpo (Desfazer restaura)",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ce21fa12-b0df-402c-862e-fa32bd7e93ea",
+          "kind": "button",
+          "name": "btnTrava",
+          "text": "🔒 Travar / liberar",
+          "x": 255,
+          "y": 458,
+          "width": "118px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "if(document.getElementById('texto').disabled == (\"1\" == \"1\")){\ndocument.getElementById(\"texto\").disabled=(\"1\" != \"1\");\ndocument.getElementById(\"status\").textContent=\"Edição liberada\";\n}else{\ndocument.getElementById(\"texto\").disabled=(\"1\" == \"1\");\ndocument.getElementById(\"status\").textContent=\"Texto travado para leitura\";\n}"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "if",
+                "target": "",
+                "prop": "textContent",
+                "value": "",
+                "left": "document.getElementById('texto').disabled",
+                "op": "==",
+                "right": "",
+                "body": [
+                  {
+                    "type": "set",
+                    "target": "texto",
+                    "prop": "disabled",
+                    "value": "",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": [],
+                    "source": {
+                      "kind": "logic",
+                      "a": "1",
+                      "op": "!=",
+                      "b": "1"
+                    }
+                  },
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Edição liberada",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "elseBody": [
+                  {
+                    "type": "set",
+                    "target": "texto",
+                    "prop": "disabled",
+                    "value": "",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": [],
+                    "source": {
+                      "kind": "logic",
+                      "a": "1",
+                      "op": "==",
+                      "b": "1"
+                    }
+                  },
+                  {
+                    "type": "set",
+                    "target": "status",
+                    "prop": "textContent",
+                    "value": "Texto travado para leitura",
+                    "left": "true",
+                    "op": "==",
+                    "right": "",
+                    "body": [],
+                    "elseBody": []
+                  }
+                ],
+                "source": {
+                  "kind": "logic",
+                  "a": "1",
+                  "op": "==",
+                  "b": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "1adb3a7f-fcdf-44b5-bcbe-8514645aee81",
+          "kind": "label",
+          "name": "status",
+          "text": "Pronto para escrever",
+          "x": 20,
+          "y": 508,
+          "width": "353px",
+          "height": "26px",
+          "bg": "transparent",
+          "color": "#2563eb",
+          "events": {}
+        },
+        {
+          "id": "94ac4fcc-82ae-4c2c-b709-75532e440e04",
+          "kind": "label",
+          "name": "acoesLabel",
+          "text": "Ações no texto: 0",
+          "x": 20,
+          "y": 534,
+          "width": "252px",
+          "height": "26px",
+          "bg": "transparent",
+          "color": "#6b7280",
+          "events": {}
+        },
+        {
+          "id": "c56b24bb-2b30-4ec4-acb7-a8d163181dfd",
+          "kind": "button",
+          "name": "btnSobre",
+          "text": "Sobre",
+          "x": 289,
+          "y": 526,
+          "width": "84px",
+          "height": "38px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "FlowForgeNavigate(\"Sobre\");"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "navigate",
+                "target": "",
+                "prop": "textContent",
+                "value": "Sobre",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "01b5cf67-b294-4ba3-9298-90c3de853869",
+          "kind": "label",
+          "name": "rascunhoTitulo",
+          "text": "Cópia de segurança (usada pelo Desfazer):",
+          "x": 20,
+          "y": 572,
+          "width": "353px",
+          "height": "24px",
+          "bg": "transparent",
+          "color": "#6b7280",
+          "events": {}
+        },
+        {
+          "id": "29114b86-39c0-4131-8ea7-21ebdc6cda6f",
+          "kind": "textarea",
+          "name": "rascunho",
+          "text": "",
+          "x": 20,
+          "y": 598,
+          "width": "353px",
+          "height": "90px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "93713527-8dfb-4038-8f6a-2ba6122f3fa7",
+      "name": "Sobre",
+      "items": [
+        {
+          "id": "3be5c4c0-3cea-4cb7-8cfb-387f2264fd6d",
+          "kind": "heading",
+          "name": "sobreTitulo",
+          "text": "Sobre este exemplo",
+          "x": 20,
+          "y": 68,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "f6d74542-19e4-438b-ad43-d8ba53e9aa3a",
+          "kind": "label",
+          "name": "sobreTexto",
+          "text": "Este editor foi criado só com a programação por blocos: nenhum código foi digitado. Os botões usam blocos de definir propriedade, juntar texto, somar variável, repetir, se/senão e ir para página.",
+          "x": 20,
+          "y": 120,
+          "width": "353px",
+          "height": "110px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {},
+          "multiline": true
+        },
+        {
+          "id": "7a5e87bb-0ade-49f7-b55c-5640b9d18fce",
+          "kind": "button",
+          "name": "btnVoltar",
+          "text": "← Voltar ao editor",
+          "x": 20,
+          "y": 246,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "FlowForgeNavigate(\"Editor\");"
+          },
+          "blocks": {
+            "click": [
+              {
+                "type": "navigate",
+                "target": "",
+                "prop": "textContent",
+                "value": "Editor",
+                "left": "true",
+                "op": "==",
+                "right": "",
+                "body": [],
+                "elseBody": []
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

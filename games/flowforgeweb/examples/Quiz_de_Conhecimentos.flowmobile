@@ -1,0 +1,199 @@
+{
+  "name": "Quiz de Conhecimentos",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "a4285ba1-9428-4171-9bff-becf4311c17c",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "3ee9b7c7-e4e1-41bd-ada6-f6006be7e900",
+          "kind": "heading",
+          "name": "quizTitle",
+          "text": "Quiz de Conhecimentos",
+          "x": 20,
+          "y": 72,
+          "width": "353px",
+          "height": "48px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "070b41ea-3949-4ebf-9ddc-600fc8026ec6",
+          "kind": "progress",
+          "name": "quizBar",
+          "text": "",
+          "x": 20,
+          "y": 130,
+          "width": "353px",
+          "height": "16px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "value": 0
+        },
+        {
+          "id": "bab22324-c2db-42e2-82a2-fdf37876e06b",
+          "kind": "label",
+          "name": "quizQuestion",
+          "text": "Carregando...",
+          "x": 20,
+          "y": 156,
+          "width": "353px",
+          "height": "84px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "3919737d-bf1f-482b-968c-8f671a3c241e",
+          "kind": "button",
+          "name": "quizOpt0",
+          "text": "",
+          "x": 20,
+          "y": 252,
+          "width": "353px",
+          "height": "48px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};var vis=function(i,on){var b=$(i),w=b.closest('.ff-component')||b;w.style.display=on?'':'none'};if(!window.ffQuiz){var G=window.ffQuiz={Q:[{\"q\": \"Qual é o maior planeta do Sistema Solar?\", \"o\": [\"Marte\", \"Júpiter\", \"Saturno\", \"Terra\"], \"a\": 1}, {\"q\": \"Quantos estados tem o Brasil (sem contar o Distrito Federal)?\", \"o\": [\"26\", \"27\", \"25\", \"24\"], \"a\": 0}, {\"q\": \"Qual linguagem roda nativamente nos navegadores?\", \"o\": [\"Python\", \"C#\", \"JavaScript\", \"Java\"], \"a\": 2}, {\"q\": \"Qual é o resultado de 7 × 8?\", \"o\": [\"54\", \"56\", \"58\", \"64\"], \"a\": 1}, {\"q\": \"Quem pintou a Mona Lisa?\", \"o\": [\"Michelangelo\", \"Van Gogh\", \"Leonardo da Vinci\", \"Picasso\"], \"a\": 2}, {\"q\": \"Qual elemento químico tem símbolo O?\", \"o\": [\"Ouro\", \"Oxigênio\", \"Ósmio\", \"Prata\"], \"a\": 1}, {\"q\": \"Em que continente fica o Egito?\", \"o\": [\"Ásia\", \"Europa\", \"África\", \"Oceania\"], \"a\": 2}, {\"q\": \"Qual é a capital da Argentina?\", \"o\": [\"Santiago\", \"Montevidéu\", \"Lima\", \"Buenos Aires\"], \"a\": 3}],i:0,score:0,lock:false,order:[]};G.best=function(){try{return Number(localStorage.getItem('ffQuizBest')||0)}catch(e){return 0}};G.bar=function(p){var el=$('quizBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};G.show=function(){var q=G.Q[G.order[G.i]];$('quizQuestion').textContent=(G.i+1)+'/'+G.Q.length+' — '+q.q;for(var k=0;k<4;k++){var b=$('quizOpt'+k);b.textContent=q.o[k];b.style.background='#ffffff';b.style.color='#222222';b.disabled=false}vis('quizNext',false);$('quizScore').textContent='Acertos: '+G.score;G.bar(G.i/G.Q.length*100);G.lock=false};G.start=function(){G.i=0;G.score=0;G.order=G.Q.map(function(_,k){return k}).sort(function(){return Math.random()-.5});vis('quizRestart',false);G.show()};G.pick=function(k){if(G.lock)return;G.lock=true;var q=G.Q[G.order[G.i]],ok=k===q.a;if(ok)G.score++;Sons.play(ok?'coin':'error');for(var j=0;j<4;j++){var b=$('quizOpt'+j);b.disabled=true;if(j===q.a){b.style.background='#16a34a';b.style.color='#ffffff'}else if(j===k){b.style.background='#dc2626';b.style.color='#ffffff'}}$('quizScore').textContent='Acertos: '+G.score+(ok?' — Correto!':' — Errou');G.bar((G.i+1)/G.Q.length*100);if(G.i+1<G.Q.length){vis('quizNext',true);}else{G.end()}};G.end=function(){var n=G.score,t=G.Q.length,b=G.best();setTimeout(function(){Sons.play(n===t?'win':n>=t*0.6?'powerup':'lose')},450);if(n>b){try{localStorage.setItem('ffQuizBest',String(n))}catch(e){}b=n}$('quizQuestion').textContent='Fim do quiz! Você acertou '+n+' de '+t+(n===t?' — Perfeito!':n>=t*0.6?' — Muito bem!':' — Tente de novo!')+' (Recorde: '+b+')';vis('quizRestart',true);vis('quizNext',false)};G.next=function(){G.i++;G.show()};G.start()}window.ffQuiz.pick(0);"
+          }
+        },
+        {
+          "id": "96a90bdc-6c5f-4c6e-aba4-b1135c181727",
+          "kind": "button",
+          "name": "quizOpt1",
+          "text": "",
+          "x": 20,
+          "y": 308,
+          "width": "353px",
+          "height": "48px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};var vis=function(i,on){var b=$(i),w=b.closest('.ff-component')||b;w.style.display=on?'':'none'};if(!window.ffQuiz){var G=window.ffQuiz={Q:[{\"q\": \"Qual é o maior planeta do Sistema Solar?\", \"o\": [\"Marte\", \"Júpiter\", \"Saturno\", \"Terra\"], \"a\": 1}, {\"q\": \"Quantos estados tem o Brasil (sem contar o Distrito Federal)?\", \"o\": [\"26\", \"27\", \"25\", \"24\"], \"a\": 0}, {\"q\": \"Qual linguagem roda nativamente nos navegadores?\", \"o\": [\"Python\", \"C#\", \"JavaScript\", \"Java\"], \"a\": 2}, {\"q\": \"Qual é o resultado de 7 × 8?\", \"o\": [\"54\", \"56\", \"58\", \"64\"], \"a\": 1}, {\"q\": \"Quem pintou a Mona Lisa?\", \"o\": [\"Michelangelo\", \"Van Gogh\", \"Leonardo da Vinci\", \"Picasso\"], \"a\": 2}, {\"q\": \"Qual elemento químico tem símbolo O?\", \"o\": [\"Ouro\", \"Oxigênio\", \"Ósmio\", \"Prata\"], \"a\": 1}, {\"q\": \"Em que continente fica o Egito?\", \"o\": [\"Ásia\", \"Europa\", \"África\", \"Oceania\"], \"a\": 2}, {\"q\": \"Qual é a capital da Argentina?\", \"o\": [\"Santiago\", \"Montevidéu\", \"Lima\", \"Buenos Aires\"], \"a\": 3}],i:0,score:0,lock:false,order:[]};G.best=function(){try{return Number(localStorage.getItem('ffQuizBest')||0)}catch(e){return 0}};G.bar=function(p){var el=$('quizBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};G.show=function(){var q=G.Q[G.order[G.i]];$('quizQuestion').textContent=(G.i+1)+'/'+G.Q.length+' — '+q.q;for(var k=0;k<4;k++){var b=$('quizOpt'+k);b.textContent=q.o[k];b.style.background='#ffffff';b.style.color='#222222';b.disabled=false}vis('quizNext',false);$('quizScore').textContent='Acertos: '+G.score;G.bar(G.i/G.Q.length*100);G.lock=false};G.start=function(){G.i=0;G.score=0;G.order=G.Q.map(function(_,k){return k}).sort(function(){return Math.random()-.5});vis('quizRestart',false);G.show()};G.pick=function(k){if(G.lock)return;G.lock=true;var q=G.Q[G.order[G.i]],ok=k===q.a;if(ok)G.score++;Sons.play(ok?'coin':'error');for(var j=0;j<4;j++){var b=$('quizOpt'+j);b.disabled=true;if(j===q.a){b.style.background='#16a34a';b.style.color='#ffffff'}else if(j===k){b.style.background='#dc2626';b.style.color='#ffffff'}}$('quizScore').textContent='Acertos: '+G.score+(ok?' — Correto!':' — Errou');G.bar((G.i+1)/G.Q.length*100);if(G.i+1<G.Q.length){vis('quizNext',true);}else{G.end()}};G.end=function(){var n=G.score,t=G.Q.length,b=G.best();setTimeout(function(){Sons.play(n===t?'win':n>=t*0.6?'powerup':'lose')},450);if(n>b){try{localStorage.setItem('ffQuizBest',String(n))}catch(e){}b=n}$('quizQuestion').textContent='Fim do quiz! Você acertou '+n+' de '+t+(n===t?' — Perfeito!':n>=t*0.6?' — Muito bem!':' — Tente de novo!')+' (Recorde: '+b+')';vis('quizRestart',true);vis('quizNext',false)};G.next=function(){G.i++;G.show()};G.start()}window.ffQuiz.pick(1);"
+          }
+        },
+        {
+          "id": "4f61064a-afa3-4d68-9d84-923668134ebb",
+          "kind": "button",
+          "name": "quizOpt2",
+          "text": "",
+          "x": 20,
+          "y": 364,
+          "width": "353px",
+          "height": "48px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};var vis=function(i,on){var b=$(i),w=b.closest('.ff-component')||b;w.style.display=on?'':'none'};if(!window.ffQuiz){var G=window.ffQuiz={Q:[{\"q\": \"Qual é o maior planeta do Sistema Solar?\", \"o\": [\"Marte\", \"Júpiter\", \"Saturno\", \"Terra\"], \"a\": 1}, {\"q\": \"Quantos estados tem o Brasil (sem contar o Distrito Federal)?\", \"o\": [\"26\", \"27\", \"25\", \"24\"], \"a\": 0}, {\"q\": \"Qual linguagem roda nativamente nos navegadores?\", \"o\": [\"Python\", \"C#\", \"JavaScript\", \"Java\"], \"a\": 2}, {\"q\": \"Qual é o resultado de 7 × 8?\", \"o\": [\"54\", \"56\", \"58\", \"64\"], \"a\": 1}, {\"q\": \"Quem pintou a Mona Lisa?\", \"o\": [\"Michelangelo\", \"Van Gogh\", \"Leonardo da Vinci\", \"Picasso\"], \"a\": 2}, {\"q\": \"Qual elemento químico tem símbolo O?\", \"o\": [\"Ouro\", \"Oxigênio\", \"Ósmio\", \"Prata\"], \"a\": 1}, {\"q\": \"Em que continente fica o Egito?\", \"o\": [\"Ásia\", \"Europa\", \"África\", \"Oceania\"], \"a\": 2}, {\"q\": \"Qual é a capital da Argentina?\", \"o\": [\"Santiago\", \"Montevidéu\", \"Lima\", \"Buenos Aires\"], \"a\": 3}],i:0,score:0,lock:false,order:[]};G.best=function(){try{return Number(localStorage.getItem('ffQuizBest')||0)}catch(e){return 0}};G.bar=function(p){var el=$('quizBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};G.show=function(){var q=G.Q[G.order[G.i]];$('quizQuestion').textContent=(G.i+1)+'/'+G.Q.length+' — '+q.q;for(var k=0;k<4;k++){var b=$('quizOpt'+k);b.textContent=q.o[k];b.style.background='#ffffff';b.style.color='#222222';b.disabled=false}vis('quizNext',false);$('quizScore').textContent='Acertos: '+G.score;G.bar(G.i/G.Q.length*100);G.lock=false};G.start=function(){G.i=0;G.score=0;G.order=G.Q.map(function(_,k){return k}).sort(function(){return Math.random()-.5});vis('quizRestart',false);G.show()};G.pick=function(k){if(G.lock)return;G.lock=true;var q=G.Q[G.order[G.i]],ok=k===q.a;if(ok)G.score++;Sons.play(ok?'coin':'error');for(var j=0;j<4;j++){var b=$('quizOpt'+j);b.disabled=true;if(j===q.a){b.style.background='#16a34a';b.style.color='#ffffff'}else if(j===k){b.style.background='#dc2626';b.style.color='#ffffff'}}$('quizScore').textContent='Acertos: '+G.score+(ok?' — Correto!':' — Errou');G.bar((G.i+1)/G.Q.length*100);if(G.i+1<G.Q.length){vis('quizNext',true);}else{G.end()}};G.end=function(){var n=G.score,t=G.Q.length,b=G.best();setTimeout(function(){Sons.play(n===t?'win':n>=t*0.6?'powerup':'lose')},450);if(n>b){try{localStorage.setItem('ffQuizBest',String(n))}catch(e){}b=n}$('quizQuestion').textContent='Fim do quiz! Você acertou '+n+' de '+t+(n===t?' — Perfeito!':n>=t*0.6?' — Muito bem!':' — Tente de novo!')+' (Recorde: '+b+')';vis('quizRestart',true);vis('quizNext',false)};G.next=function(){G.i++;G.show()};G.start()}window.ffQuiz.pick(2);"
+          }
+        },
+        {
+          "id": "03135485-46d0-42a0-8c90-56bc95881cc5",
+          "kind": "button",
+          "name": "quizOpt3",
+          "text": "",
+          "x": 20,
+          "y": 420,
+          "width": "353px",
+          "height": "48px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};var vis=function(i,on){var b=$(i),w=b.closest('.ff-component')||b;w.style.display=on?'':'none'};if(!window.ffQuiz){var G=window.ffQuiz={Q:[{\"q\": \"Qual é o maior planeta do Sistema Solar?\", \"o\": [\"Marte\", \"Júpiter\", \"Saturno\", \"Terra\"], \"a\": 1}, {\"q\": \"Quantos estados tem o Brasil (sem contar o Distrito Federal)?\", \"o\": [\"26\", \"27\", \"25\", \"24\"], \"a\": 0}, {\"q\": \"Qual linguagem roda nativamente nos navegadores?\", \"o\": [\"Python\", \"C#\", \"JavaScript\", \"Java\"], \"a\": 2}, {\"q\": \"Qual é o resultado de 7 × 8?\", \"o\": [\"54\", \"56\", \"58\", \"64\"], \"a\": 1}, {\"q\": \"Quem pintou a Mona Lisa?\", \"o\": [\"Michelangelo\", \"Van Gogh\", \"Leonardo da Vinci\", \"Picasso\"], \"a\": 2}, {\"q\": \"Qual elemento químico tem símbolo O?\", \"o\": [\"Ouro\", \"Oxigênio\", \"Ósmio\", \"Prata\"], \"a\": 1}, {\"q\": \"Em que continente fica o Egito?\", \"o\": [\"Ásia\", \"Europa\", \"África\", \"Oceania\"], \"a\": 2}, {\"q\": \"Qual é a capital da Argentina?\", \"o\": [\"Santiago\", \"Montevidéu\", \"Lima\", \"Buenos Aires\"], \"a\": 3}],i:0,score:0,lock:false,order:[]};G.best=function(){try{return Number(localStorage.getItem('ffQuizBest')||0)}catch(e){return 0}};G.bar=function(p){var el=$('quizBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};G.show=function(){var q=G.Q[G.order[G.i]];$('quizQuestion').textContent=(G.i+1)+'/'+G.Q.length+' — '+q.q;for(var k=0;k<4;k++){var b=$('quizOpt'+k);b.textContent=q.o[k];b.style.background='#ffffff';b.style.color='#222222';b.disabled=false}vis('quizNext',false);$('quizScore').textContent='Acertos: '+G.score;G.bar(G.i/G.Q.length*100);G.lock=false};G.start=function(){G.i=0;G.score=0;G.order=G.Q.map(function(_,k){return k}).sort(function(){return Math.random()-.5});vis('quizRestart',false);G.show()};G.pick=function(k){if(G.lock)return;G.lock=true;var q=G.Q[G.order[G.i]],ok=k===q.a;if(ok)G.score++;Sons.play(ok?'coin':'error');for(var j=0;j<4;j++){var b=$('quizOpt'+j);b.disabled=true;if(j===q.a){b.style.background='#16a34a';b.style.color='#ffffff'}else if(j===k){b.style.background='#dc2626';b.style.color='#ffffff'}}$('quizScore').textContent='Acertos: '+G.score+(ok?' — Correto!':' — Errou');G.bar((G.i+1)/G.Q.length*100);if(G.i+1<G.Q.length){vis('quizNext',true);}else{G.end()}};G.end=function(){var n=G.score,t=G.Q.length,b=G.best();setTimeout(function(){Sons.play(n===t?'win':n>=t*0.6?'powerup':'lose')},450);if(n>b){try{localStorage.setItem('ffQuizBest',String(n))}catch(e){}b=n}$('quizQuestion').textContent='Fim do quiz! Você acertou '+n+' de '+t+(n===t?' — Perfeito!':n>=t*0.6?' — Muito bem!':' — Tente de novo!')+' (Recorde: '+b+')';vis('quizRestart',true);vis('quizNext',false)};G.next=function(){G.i++;G.show()};G.start()}window.ffQuiz.pick(3);"
+          }
+        },
+        {
+          "id": "8f49b996-72d0-4fe6-90dc-27d184f0024e",
+          "kind": "label",
+          "name": "quizScore",
+          "text": "Acertos: 0",
+          "x": 20,
+          "y": 486,
+          "width": "252px",
+          "height": "32px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "b7e38051-ca62-473a-9bb1-4eef99deb710",
+          "kind": "button",
+          "name": "quizNext",
+          "text": "Próxima →",
+          "x": 239,
+          "y": 480,
+          "width": "134px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};var vis=function(i,on){var b=$(i),w=b.closest('.ff-component')||b;w.style.display=on?'':'none'};if(!window.ffQuiz){var G=window.ffQuiz={Q:[{\"q\": \"Qual é o maior planeta do Sistema Solar?\", \"o\": [\"Marte\", \"Júpiter\", \"Saturno\", \"Terra\"], \"a\": 1}, {\"q\": \"Quantos estados tem o Brasil (sem contar o Distrito Federal)?\", \"o\": [\"26\", \"27\", \"25\", \"24\"], \"a\": 0}, {\"q\": \"Qual linguagem roda nativamente nos navegadores?\", \"o\": [\"Python\", \"C#\", \"JavaScript\", \"Java\"], \"a\": 2}, {\"q\": \"Qual é o resultado de 7 × 8?\", \"o\": [\"54\", \"56\", \"58\", \"64\"], \"a\": 1}, {\"q\": \"Quem pintou a Mona Lisa?\", \"o\": [\"Michelangelo\", \"Van Gogh\", \"Leonardo da Vinci\", \"Picasso\"], \"a\": 2}, {\"q\": \"Qual elemento químico tem símbolo O?\", \"o\": [\"Ouro\", \"Oxigênio\", \"Ósmio\", \"Prata\"], \"a\": 1}, {\"q\": \"Em que continente fica o Egito?\", \"o\": [\"Ásia\", \"Europa\", \"África\", \"Oceania\"], \"a\": 2}, {\"q\": \"Qual é a capital da Argentina?\", \"o\": [\"Santiago\", \"Montevidéu\", \"Lima\", \"Buenos Aires\"], \"a\": 3}],i:0,score:0,lock:false,order:[]};G.best=function(){try{return Number(localStorage.getItem('ffQuizBest')||0)}catch(e){return 0}};G.bar=function(p){var el=$('quizBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};G.show=function(){var q=G.Q[G.order[G.i]];$('quizQuestion').textContent=(G.i+1)+'/'+G.Q.length+' — '+q.q;for(var k=0;k<4;k++){var b=$('quizOpt'+k);b.textContent=q.o[k];b.style.background='#ffffff';b.style.color='#222222';b.disabled=false}vis('quizNext',false);$('quizScore').textContent='Acertos: '+G.score;G.bar(G.i/G.Q.length*100);G.lock=false};G.start=function(){G.i=0;G.score=0;G.order=G.Q.map(function(_,k){return k}).sort(function(){return Math.random()-.5});vis('quizRestart',false);G.show()};G.pick=function(k){if(G.lock)return;G.lock=true;var q=G.Q[G.order[G.i]],ok=k===q.a;if(ok)G.score++;Sons.play(ok?'coin':'error');for(var j=0;j<4;j++){var b=$('quizOpt'+j);b.disabled=true;if(j===q.a){b.style.background='#16a34a';b.style.color='#ffffff'}else if(j===k){b.style.background='#dc2626';b.style.color='#ffffff'}}$('quizScore').textContent='Acertos: '+G.score+(ok?' — Correto!':' — Errou');G.bar((G.i+1)/G.Q.length*100);if(G.i+1<G.Q.length){vis('quizNext',true);}else{G.end()}};G.end=function(){var n=G.score,t=G.Q.length,b=G.best();setTimeout(function(){Sons.play(n===t?'win':n>=t*0.6?'powerup':'lose')},450);if(n>b){try{localStorage.setItem('ffQuizBest',String(n))}catch(e){}b=n}$('quizQuestion').textContent='Fim do quiz! Você acertou '+n+' de '+t+(n===t?' — Perfeito!':n>=t*0.6?' — Muito bem!':' — Tente de novo!')+' (Recorde: '+b+')';vis('quizRestart',true);vis('quizNext',false)};G.next=function(){G.i++;G.show()};G.start()}window.ffQuiz.next();"
+          }
+        },
+        {
+          "id": "a9334cf1-e1b0-4000-9c16-7877ee8ee1db",
+          "kind": "button",
+          "name": "quizRestart",
+          "text": "Jogar de novo",
+          "x": 20,
+          "y": 536,
+          "width": "168px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};var vis=function(i,on){var b=$(i),w=b.closest('.ff-component')||b;w.style.display=on?'':'none'};if(!window.ffQuiz){var G=window.ffQuiz={Q:[{\"q\": \"Qual é o maior planeta do Sistema Solar?\", \"o\": [\"Marte\", \"Júpiter\", \"Saturno\", \"Terra\"], \"a\": 1}, {\"q\": \"Quantos estados tem o Brasil (sem contar o Distrito Federal)?\", \"o\": [\"26\", \"27\", \"25\", \"24\"], \"a\": 0}, {\"q\": \"Qual linguagem roda nativamente nos navegadores?\", \"o\": [\"Python\", \"C#\", \"JavaScript\", \"Java\"], \"a\": 2}, {\"q\": \"Qual é o resultado de 7 × 8?\", \"o\": [\"54\", \"56\", \"58\", \"64\"], \"a\": 1}, {\"q\": \"Quem pintou a Mona Lisa?\", \"o\": [\"Michelangelo\", \"Van Gogh\", \"Leonardo da Vinci\", \"Picasso\"], \"a\": 2}, {\"q\": \"Qual elemento químico tem símbolo O?\", \"o\": [\"Ouro\", \"Oxigênio\", \"Ósmio\", \"Prata\"], \"a\": 1}, {\"q\": \"Em que continente fica o Egito?\", \"o\": [\"Ásia\", \"Europa\", \"África\", \"Oceania\"], \"a\": 2}, {\"q\": \"Qual é a capital da Argentina?\", \"o\": [\"Santiago\", \"Montevidéu\", \"Lima\", \"Buenos Aires\"], \"a\": 3}],i:0,score:0,lock:false,order:[]};G.best=function(){try{return Number(localStorage.getItem('ffQuizBest')||0)}catch(e){return 0}};G.bar=function(p){var el=$('quizBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};G.show=function(){var q=G.Q[G.order[G.i]];$('quizQuestion').textContent=(G.i+1)+'/'+G.Q.length+' — '+q.q;for(var k=0;k<4;k++){var b=$('quizOpt'+k);b.textContent=q.o[k];b.style.background='#ffffff';b.style.color='#222222';b.disabled=false}vis('quizNext',false);$('quizScore').textContent='Acertos: '+G.score;G.bar(G.i/G.Q.length*100);G.lock=false};G.start=function(){G.i=0;G.score=0;G.order=G.Q.map(function(_,k){return k}).sort(function(){return Math.random()-.5});vis('quizRestart',false);G.show()};G.pick=function(k){if(G.lock)return;G.lock=true;var q=G.Q[G.order[G.i]],ok=k===q.a;if(ok)G.score++;Sons.play(ok?'coin':'error');for(var j=0;j<4;j++){var b=$('quizOpt'+j);b.disabled=true;if(j===q.a){b.style.background='#16a34a';b.style.color='#ffffff'}else if(j===k){b.style.background='#dc2626';b.style.color='#ffffff'}}$('quizScore').textContent='Acertos: '+G.score+(ok?' — Correto!':' — Errou');G.bar((G.i+1)/G.Q.length*100);if(G.i+1<G.Q.length){vis('quizNext',true);}else{G.end()}};G.end=function(){var n=G.score,t=G.Q.length,b=G.best();setTimeout(function(){Sons.play(n===t?'win':n>=t*0.6?'powerup':'lose')},450);if(n>b){try{localStorage.setItem('ffQuizBest',String(n))}catch(e){}b=n}$('quizQuestion').textContent='Fim do quiz! Você acertou '+n+' de '+t+(n===t?' — Perfeito!':n>=t*0.6?' — Muito bem!':' — Tente de novo!')+' (Recorde: '+b+')';vis('quizRestart',true);vis('quizNext',false)};G.next=function(){G.i++;G.show()};G.start()}window.ffQuiz.start();"
+          }
+        },
+        {
+          "id": "42077de0-9f0b-43fa-926d-9c063508b860",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 76,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "fa952e88-ce59-471c-b321-9041f272f3ab",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 592,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};var vis=function(i,on){var b=$(i),w=b.closest('.ff-component')||b;w.style.display=on?'':'none'};if(!window.ffQuiz){var G=window.ffQuiz={Q:[{\"q\": \"Qual é o maior planeta do Sistema Solar?\", \"o\": [\"Marte\", \"Júpiter\", \"Saturno\", \"Terra\"], \"a\": 1}, {\"q\": \"Quantos estados tem o Brasil (sem contar o Distrito Federal)?\", \"o\": [\"26\", \"27\", \"25\", \"24\"], \"a\": 0}, {\"q\": \"Qual linguagem roda nativamente nos navegadores?\", \"o\": [\"Python\", \"C#\", \"JavaScript\", \"Java\"], \"a\": 2}, {\"q\": \"Qual é o resultado de 7 × 8?\", \"o\": [\"54\", \"56\", \"58\", \"64\"], \"a\": 1}, {\"q\": \"Quem pintou a Mona Lisa?\", \"o\": [\"Michelangelo\", \"Van Gogh\", \"Leonardo da Vinci\", \"Picasso\"], \"a\": 2}, {\"q\": \"Qual elemento químico tem símbolo O?\", \"o\": [\"Ouro\", \"Oxigênio\", \"Ósmio\", \"Prata\"], \"a\": 1}, {\"q\": \"Em que continente fica o Egito?\", \"o\": [\"Ásia\", \"Europa\", \"África\", \"Oceania\"], \"a\": 2}, {\"q\": \"Qual é a capital da Argentina?\", \"o\": [\"Santiago\", \"Montevidéu\", \"Lima\", \"Buenos Aires\"], \"a\": 3}],i:0,score:0,lock:false,order:[]};G.best=function(){try{return Number(localStorage.getItem('ffQuizBest')||0)}catch(e){return 0}};G.bar=function(p){var el=$('quizBar');el=el.classList.contains('ff-progress')?el:(el.querySelector('.ff-progress')||el);var i=el.querySelector('i');if(i)i.style.setProperty('width',p+'%');el.setAttribute('aria-valuenow',p);var s=el.querySelector('span');if(s)s.textContent=Math.round(p)+'%'};G.show=function(){var q=G.Q[G.order[G.i]];$('quizQuestion').textContent=(G.i+1)+'/'+G.Q.length+' — '+q.q;for(var k=0;k<4;k++){var b=$('quizOpt'+k);b.textContent=q.o[k];b.style.background='#ffffff';b.style.color='#222222';b.disabled=false}vis('quizNext',false);$('quizScore').textContent='Acertos: '+G.score;G.bar(G.i/G.Q.length*100);G.lock=false};G.start=function(){G.i=0;G.score=0;G.order=G.Q.map(function(_,k){return k}).sort(function(){return Math.random()-.5});vis('quizRestart',false);G.show()};G.pick=function(k){if(G.lock)return;G.lock=true;var q=G.Q[G.order[G.i]],ok=k===q.a;if(ok)G.score++;Sons.play(ok?'coin':'error');for(var j=0;j<4;j++){var b=$('quizOpt'+j);b.disabled=true;if(j===q.a){b.style.background='#16a34a';b.style.color='#ffffff'}else if(j===k){b.style.background='#dc2626';b.style.color='#ffffff'}}$('quizScore').textContent='Acertos: '+G.score+(ok?' — Correto!':' — Errou');G.bar((G.i+1)/G.Q.length*100);if(G.i+1<G.Q.length){vis('quizNext',true);}else{G.end()}};G.end=function(){var n=G.score,t=G.Q.length,b=G.best();setTimeout(function(){Sons.play(n===t?'win':n>=t*0.6?'powerup':'lose')},450);if(n>b){try{localStorage.setItem('ffQuizBest',String(n))}catch(e){}b=n}$('quizQuestion').textContent='Fim do quiz! Você acertou '+n+' de '+t+(n===t?' — Perfeito!':n>=t*0.6?' — Muito bem!':' — Tente de novo!')+' (Recorde: '+b+')';vis('quizRestart',true);vis('quizNext',false)};G.next=function(){G.i++;G.show()};G.start()}\ndocument.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,391 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>FlowForge new components</title>
+<style>
+  body{font:13px/1.5 ui-monospace,Consolas,monospace;margin:12px;background:#111;color:#ddd}
+  .pass{color:#4ade80}.fail{color:#f87171;font-weight:700}
+  iframe{position:absolute;left:-9999px;top:0;width:1400px;height:950px;border:0}
+  #summary{margin:10px 0;font-weight:700}
+</style>
+<h3>FlowForge – novos componentes: palco, export, interações, eventos e sanitização</h3>
+<p>SearchBar, PasswordBox, NumberBox, SegmentedControl, Skeleton, ProgressRing, EmptyState, CodeBlock, Chat, SignaturePad, DropdownMenu, Popover e ThemeToggle.</p>
+<div id="summary">Executando…</div>
+<pre id="out"></pre>
+<iframe id="app" src="../index.html"></iframe>
+<iframe id="run"></iframe>
+<script>
+const out=document.getElementById('out'),summary=document.getElementById('summary');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const escHtml=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let passed=0,failed=0;
+function check(name,cond,detail){
+  if(cond){passed++;out.insertAdjacentHTML('beforeend','<span class="pass">PASS</span> '+escHtml(name)+'\n');}
+  else{failed++;out.insertAdjacentHTML('beforeend','<span class="fail">FAIL</span> '+escHtml(name)+(detail!==undefined?'  → '+escHtml(JSON.stringify(detail)):'')+'\n');}
+}
+async function waitFor(fn,timeout=5000,step=40){
+  const t0=performance.now();
+  while(performance.now()-t0<timeout){try{if(fn())return true}catch(_){}await sleep(step)}
+  return false;
+}
+
+const KINDS=['searchbar','passwordbox','numberbox','segmentedcontrol','skeleton','progressring','emptystate','codeblock','chat','signaturepad','dropdownmenu','popover','themetoggle'];
+const REAL={searchbar:'.ff-real-search',passwordbox:'.ff-real-password',numberbox:'.ff-real-number',segmentedcontrol:'.ff-real-segmented',skeleton:'.ff-real-skeleton',progressring:'.ff-real-ring',emptystate:'.ff-real-empty',codeblock:'.ff-real-code',chat:'.ff-real-chat',signaturepad:'.ff-real-signature',dropdownmenu:'.ff-real-dropdown',popover:'.ff-real-popover',themetoggle:'.ff-real-themetoggle'};
+const HANDLERS={
+  searchbar:{search:"window.__nev.searchbar=(window.__nev.searchbar||0)+1;window.__last.searchbar=event.detail;"},
+  passwordbox:{input:"window.__nev.passwordbox=(window.__nev.passwordbox||0)+1;"},
+  numberbox:{change:"window.__nev.numberbox=(window.__nev.numberbox||0)+1;window.__last.numberbox=event.detail;"},
+  segmentedcontrol:{change:"window.__nev.segmentedcontrol=(window.__nev.segmentedcontrol||0)+1;window.__last.segmentedcontrol=event.detail;"},
+  skeleton:{click:"window.__nev.skeleton=(window.__nev.skeleton||0)+1;"},
+  progressring:{change:"window.__nev.progressring=(window.__nev.progressring||0)+1;window.__last.progressring=event.detail;"},
+  emptystate:{action:"window.__nev.emptystate=(window.__nev.emptystate||0)+1;window.__last.emptystate=event.detail;"},
+  codeblock:{copy:"window.__nev.codeblock=(window.__nev.codeblock||0)+1;window.__last.codeblock=event.detail;"},
+  chat:{send:"window.__nev.chat=(window.__nev.chat||0)+1;window.__last.chat=event.detail;"},
+  signaturepad:{save:"window.__nev.signaturepad=(window.__nev.signaturepad||0)+1;window.__last.signaturepad={empty:event.detail&&event.detail.empty,png:!!(event.detail&&/^data:image\\/png/.test(event.detail.dataUrl||''))};"},
+  dropdownmenu:{select:"window.__nev.dropdownmenu=(window.__nev.dropdownmenu||0)+1;window.__last.dropdownmenu=event.detail;"},
+  popover:{toggle:"window.__nev.popover=(window.__nev.popover||0)+1;window.__last.popover=event.detail;"},
+  themetoggle:{change:"window.__nev.themetoggle=(window.__nev.themetoggle||0)+1;window.__last.themetoggle=event.detail;"}
+};
+
+async function run(){
+  const appFrame=document.getElementById('app'),runFrame=document.getElementById('run');
+  await new Promise(r=>appFrame.addEventListener('load',r,{once:true}));
+  await sleep(700);
+  let W,D;
+  try{W=appFrame.contentWindow;D=appFrame.contentDocument;D.body;}catch(e){
+    summary.textContent='Sem acesso ao app: abra por http://, não por file://';document.body.dataset.test='FAIL';return;
+  }
+  W.__auditErrs=[];
+  W.addEventListener('error',e=>{if(e instanceof W.ErrorEvent)W.__auditErrs.push(e.message||String(e.error||'erro'))});
+  W.addEventListener('unhandledrejection',e=>W.__auditErrs.push('rejection: '+String(e.reason&&e.reason.message||e.reason)));
+  const $=s=>D.querySelector(s);
+  const closeDialogs=()=>D.querySelectorAll('dialog[open]').forEach(x=>x.close());
+
+  $('[data-new=app]').click();
+  await sleep(300);
+  if($('#siteWizardDlg')?.open){$('#wizCreate').click();await sleep(500);}
+  await sleep(300);closeDialogs();
+
+  try{
+    W.eval(`(()=>{
+      const kinds=${JSON.stringify(KINDS)};
+      project.pages[0].items.length=0;
+      kinds.forEach((k,i)=>{
+        const it=toolDefaults(k);
+        it.name='FF_'+k;
+        it.x=10+(i%3)*360;
+        it.y=10+Math.floor(i/3)*160;
+        it.width='340px';it.height='140px';
+        it.events=${JSON.stringify(HANDLERS)}[k];
+        project.pages[0].items.push(it);
+      });
+      const ring=project.pages[0].items.find(x=>x.kind==='progressring');ring.value=65;
+      const seg=project.pages[0].items.find(x=>x.kind==='segmentedcontrol');seg.items=['Dia','Semana','Mês'];seg.activeIndex=0;
+      const chat=project.pages[0].items.find(x=>x.kind==='chat');chat.items=[{from:'them',text:'Olá'},{from:'me',text:'Oi'}];chat.placeholder='Escreva...';chat.sendText='Enviar';
+      const code=project.pages[0].items.find(x=>x.kind==='codeblock');code.code='const x = 1;\\nconsole.log(x);';code.language='javascript';
+      const empty=project.pages[0].items.find(x=>x.kind==='emptystate');empty.text='Nada aqui';empty.description='Crie o primeiro item.';empty.actionText='Criar item';
+      const pop=project.pages[0].items.find(x=>x.kind==='popover');pop.content='Conteúdo extra do popover';pop.placement='bottom';
+      const sig=project.pages[0].items.find(x=>x.kind==='signaturepad');sig.penColor='#ff0066';sig.lineWidth=3;
+      const sk=project.pages[0].items.find(x=>x.kind==='skeleton');sk.lines=4;
+      const nb=project.pages[0].items.find(x=>x.kind==='numberbox');nb.value=5;nb.min=0;nb.max=10;nb.step=1;
+      ffAddPage('Second');
+      project.active=0;
+      project.activePage=project.pages[0].id;
+      selected=null;
+      render();
+    })()`);
+  }catch(e){
+    check('montar projeto com os 13 novos componentes',false,e.message);
+    summary.textContent='Falha ao montar';summary.className='fail';document.body.dataset.test='FAIL';return;
+  }
+  await sleep(900);
+
+  /* ---------------- palco ---------------- */
+  const stage=W.eval(`(()=>{
+    const kinds=${JSON.stringify(KINDS)},real=${JSON.stringify(REAL)};
+    return kinds.map(k=>{
+      const el=document.querySelector('#stage .component.ff-kind-'+k);
+      const inner=el?el.querySelector(real[k]):null;
+      const r=el?el.getBoundingClientRect():null;
+      return {k,found:!!el,inner:!!inner,w:r?Math.round(r.width):0,h:r?Math.round(r.height):0};
+    });
+  })()`);
+  check('palco: os 13 componentes são criados',stage.every(x=>x.found),stage.filter(x=>!x.found).map(x=>x.k));
+  check('palco: os 13 têm markup real interno',stage.every(x=>x.inner),stage.filter(x=>!x.inner).map(x=>x.k));
+  check('palco: todos têm largura/altura',stage.every(x=>x.w>=10&&x.h>=10),stage.filter(x=>x.w<10||x.h<10).map(x=>[x.k,x.w,x.h]));
+
+  const stageUi=W.eval(`(()=>{
+    const out={};
+    const pw=document.querySelector('#stage .ff-kind-passwordbox');
+    const pwi=pw&&pw.querySelector('input'),pwb=pw&&pw.querySelector('.ff-password-toggle');
+    if(pwi&&pwb){pwb.click();out.pwType=pwi.type;pwb.click();out.pwBack=pwi.type}
+    const sg=document.querySelector('#stage .ff-kind-segmentedcontrol');
+    const sgr=sg&&sg.querySelector('.ff-real-segmented');
+    const sgb=sgr&&sgr.querySelectorAll('button');
+    if(sgb&&sgb[1]){sgb[1].click();out.seg=sgr.dataset.value;out.segPressed=sgb[1].getAttribute('aria-pressed')}
+    const th=document.querySelector('#stage .ff-kind-themetoggle .ff-real-themetoggle');
+    if(th){th.click();out.themeBtn=th.getAttribute('aria-pressed');out.docTheme=document.documentElement.dataset.theme||''}
+    const dd=document.querySelector('#stage .ff-kind-dropdownmenu');
+    const ddb=dd&&dd.querySelector('.ff-dropdown-toggle');
+    if(ddb){ddb.click();out.ddOpen=!dd.querySelector('.ff-dropdown-menu').hidden}
+    return out;
+  })()`);
+  check('palco: PasswordBox alterna visibilidade',stageUi.pwType==='text'&&stageUi.pwBack==='password',stageUi);
+  check('palco: SegmentedControl seleciona segmento',stageUi.seg==='1'&&stageUi.segPressed==='true',stageUi);
+  check('palco: ThemeToggle não altera o tema do editor',stageUi.themeBtn==='true'&&stageUi.docTheme!=='dark',stageUi);
+  check('palco: DropdownMenu abre',stageUi.ddOpen===true,stageUi);
+  check('palco: renderizar os novos componentes não gera erro',W.__auditErrs.length===0,W.__auditErrs.slice(0,5));
+
+  /* ---------------- export ---------------- */
+  let html='';
+  try{html=W.generated();}catch(e){check('gerar o HTML exportado',false,e.message);}
+  check('exportação gerada',html.length>30000,html.length);
+  check('exportação contém os 13 tipos',KINDS.every(k=>html.includes('ff-kind-'+k)),KINDS.filter(k=>!html.includes('ff-kind-'+k)));
+  check('exportação marca eventos personalizados',html.includes('data-ff-custom-events'),'sem marcador');
+
+  const patch=`<script>(function(){
+    window.__nev={};window.__last={};
+    window.__errs=[];
+    window.addEventListener('error',function(e){if(e instanceof ErrorEvent)window.__errs.push(e.message||String(e.error||'erro'))});
+    window.addEventListener('unhandledrejection',function(e){window.__errs.push('rejection: '+String(e.reason&&e.reason.message||e.reason))});
+    var ce=console.error;console.error=function(){window.__errs.push(Array.prototype.join.call(arguments,' '));ce.apply(console,arguments)};
+  })();<\/script>`;
+  const loaded=new Promise(r=>runFrame.addEventListener('load',r,{once:true}));
+  runFrame.srcdoc=html.replace('<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:flowforgeweb:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>','<head>'+patch);
+  await Promise.race([loaded,new Promise(r=>setTimeout(r,8000))]);
+  const RW=runFrame.contentWindow;
+  const ready=await waitFor(()=>RW.document.querySelectorAll('.ff-component').length>=KINDS.length,5000);
+  check('export: os 13 componentes existem no DOM',ready,{count:RW.document.querySelectorAll('.ff-component').length});
+  if(!ready){
+    summary.textContent='Export não carregou';summary.className='fail';document.body.dataset.test='FAIL';return;
+  }
+  await sleep(500);
+
+  /* SearchBar */
+  const sb=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-searchbar'),i=r.querySelector('input'),clr=r.querySelector('.ff-search-clear');
+    i.value='abc';i.dispatchEvent(new Event('input',{bubbles:true}));
+    const shown=!clr.hidden;
+    i.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
+    const afterEnter={nev:window.__nev.searchbar||0,detail:window.__last.searchbar};
+    i.value='abc';i.dispatchEvent(new Event('input',{bubbles:true}));clr.click();
+    return {shown,afterEnter,cleared:i.value,hideAfterClear:clr.hidden};
+  })()`);
+  check('SearchBar: botão limpar aparece ao digitar',sb.shown===true,sb);
+  check('SearchBar: Enter dispara o evento search do usuário',sb.afterEnter.nev===1&&sb.afterEnter.detail&&sb.afterEnter.detail.value==='abc',sb.afterEnter);
+  check('SearchBar: limpar zera o campo',sb.cleared===''&&sb.hideAfterClear===true,sb);
+
+  /* PasswordBox */
+  const pw=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-passwordbox'),i=r.querySelector('input'),b=r.querySelector('.ff-password-toggle');
+    b.click();const t=i.type,aria=b.getAttribute('aria-pressed');
+    b.click();const back=i.type;
+    i.value='segredo';i.dispatchEvent(new Event('input',{bubbles:true}));
+    return {t,aria,back,value:i.value,nev:window.__nev.passwordbox||0};
+  })()`);
+  check('PasswordBox: botão mostra/oculta a senha',pw.t==='text'&&pw.back==='password'&&pw.aria==='true',pw);
+  check('PasswordBox: input dispara o evento do usuário',pw.nev===1&&pw.value==='segredo',pw);
+
+  /* NumberBox */
+  const nb=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-numberbox'),i=r.querySelector('input'),bs=r.querySelectorAll('.ff-number-step');
+    const start=i.value;bs[1].click();const up=i.value,ev1=window.__nev.numberbox||0;bs[0].click();const down=i.value,ev2=window.__nev.numberbox||0;
+    for(let k=0;k<20;k++)bs[1].click();
+    return {start,up,down,ev1,ev2,max:i.value,last:window.__last.numberbox};
+  })()`);
+  check('NumberBox: passos + e − respeitam min/max/step',nb.start==='5'&&nb.up==='6'&&nb.down==='5'&&nb.max==='10',nb);
+  check('NumberBox: cada passo dispara change do usuário',nb.ev1===1&&nb.ev2===2&&nb.max==='10',nb);
+
+  /* SegmentedControl */
+  const sg=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-segmentedcontrol'),inner=r.querySelector('.ff-real-segmented'),bs=inner.querySelectorAll('button');
+    const initial=window.FF_segmentedcontrol.value;
+    bs[1].click();const after={value:window.FF_segmentedcontrol.value,data:inner.dataset.value,nev:window.__nev.segmentedcontrol||0};
+    bs[1].focus();bs[1].dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));
+    const afterKey={pressed:[...bs].map(b=>b.getAttribute('aria-pressed')).join(','),ev:window.__nev.segmentedcontrol||0};
+    window.FF_segmentedcontrol.value='Dia';
+    const afterApi={value:window.FF_segmentedcontrol.value,ev:window.__nev.segmentedcontrol||0,last:window.__last.segmentedcontrol};
+    return {initial,after,afterKey,afterApi};
+  })()`);
+  check('SegmentedControl: valor inicial e clique',sg.initial==='Dia'&&sg.after.value==='Semana'&&sg.after.data==='1'&&sg.after.nev===1,sg);
+  check('SegmentedControl: setas do teclado movem a seleção',sg.afterKey.pressed==='false,false,true'&&sg.afterKey.ev===2,sg.afterKey);
+  check('SegmentedControl: API .value seleciona por rótulo',sg.afterApi.value==='Dia'&&sg.afterApi.ev===3,sg.afterApi);
+
+  /* Skeleton */
+  const sk=RW.eval(`(()=>{const r=document.querySelector('.ff-kind-skeleton'),inner=r.querySelector('.ff-real-skeleton'),bars=inner.querySelectorAll('.ff-skel-line');return {n:bars.length,busy:inner.getAttribute('aria-busy'),status:inner.getAttribute('role')}})()`);
+  check('Skeleton: desenha as linhas configuradas',sk.n===4&&sk.busy==='true'&&sk.status==='status',sk);
+
+  /* ProgressRing */
+  const pr=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-progressring'),ring=r.querySelector('.ff-real-ring');
+    const initial={value:window.FF_progressring.value,now:ring.getAttribute('aria-valuenow'),text:ring.querySelector('span').textContent};
+    window.FF_progressring.value=30;
+    const mid={value:window.FF_progressring.value,now:ring.getAttribute('aria-valuenow'),dash:ring.querySelector('.ff-ring-bar').getAttribute('stroke-dasharray'),text:ring.querySelector('span').textContent,nev:window.__nev.progressring||0,last:window.__last.progressring};
+    window.FF_progressring.value=120;
+    const over={value:window.FF_progressring.value,now:ring.getAttribute('aria-valuenow'),text:ring.querySelector('span').textContent};
+    return {initial,mid,over};
+  })()`);
+  check('ProgressRing: valor inicial e texto',pr.initial.value===65&&pr.initial.now==='65'&&pr.initial.text==='65%',pr.initial);
+  check('ProgressRing: API atualiza anel e dispara change',pr.mid.value===30&&pr.mid.now==='30'&&pr.mid.dash==='30.00 100'&&pr.mid.text==='30%'&&pr.mid.nev===1&&pr.mid.last.value===30,pr.mid);
+  check('ProgressRing: valor acima do máximo é limitado',pr.over.value===100&&pr.over.now==='100'&&pr.over.text==='100%',pr.over);
+
+  /* EmptyState */
+  const es=RW.eval(`(()=>{const r=document.querySelector('.ff-kind-emptystate');const b=r.querySelector('button');b.click();return {nev:window.__nev.emptystate||0,last:window.__last.emptystate,title:r.querySelector('strong').textContent,desc:r.querySelector('p').textContent,label:b.textContent}})()`);
+  check('EmptyState: botão de ação dispara o evento do usuário',es.nev===1&&es.last&&es.last.label==='Criar item',es);
+  check('EmptyState: título, descrição e ação renderizados',es.title==='Nada aqui'&&es.desc==='Crie o primeiro item.'&&es.label==='Criar item',es);
+
+  /* CodeBlock */
+  const cb=RW.eval(`(()=>{const r=document.querySelector('.ff-kind-codeblock'),b=r.querySelector('.ff-code-copy');b.click();return {code:window.FF_codeblock.code,lang:r.querySelector('.ff-real-code').dataset.language,nev:window.__nev.codeblock||0,last:window.__last.codeblock,button:b.textContent}})()`);
+  await sleep(250);
+  const cb2=RW.eval(`(()=>{const r=document.querySelector('.ff-kind-codeblock');return {button:r.querySelector('.ff-code-copy').textContent,nev:window.__nev.codeblock||0}})()`);
+  check('CodeBlock: código e linguagem renderizados',cb.code.indexOf('const x = 1;')===0&&cb.lang==='javascript',cb);
+  check('CodeBlock: copiar dispara o evento do usuário',cb.nev===1&&cb.last&&cb.last.text.indexOf('console.log')>0,cb);
+  check('CodeBlock: feedback "Copiado!" aparece',cb2.button==='Copiado!',cb2);
+
+  /* Chat */
+  const ch=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-chat'),form=r.querySelector('form'),input=r.querySelector('input'),log=r.querySelector('.ff-chat-log');
+    const initial=window.FF_chat.messages.length;
+    input.value='Mensagem nova';
+    form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+    const afterSubmit={n:log.querySelectorAll('.ff-chat-msg').length,nev:window.__nev.chat||0,last:window.__last.chat,cleared:input.value};
+    const ok=window.FF_chat.send('Via API');
+    return {initial,afterSubmit,ok,afterApi:{n:window.FF_chat.messages.length,nev:window.__nev.chat||0,lastMsg:window.FF_chat.messages.slice(-1)[0]}};
+  })()`);
+  check('Chat: mensagens iniciais renderizadas',ch.initial===2,ch.initial);
+  check('Chat: formulário anexa mensagem e dispara send',ch.afterSubmit.n===3&&ch.afterSubmit.nev===1&&ch.afterSubmit.last.text==='Mensagem nova'&&ch.afterSubmit.cleared==='',ch.afterSubmit);
+  check('Chat: API .send e .messages funcionam',ch.ok===true&&ch.afterApi.n===4&&ch.afterApi.nev===2&&ch.afterApi.lastMsg.text==='Via API'&&ch.afterApi.lastMsg.from==='me',ch.afterApi);
+
+  /* SignaturePad */
+  const sig=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-signaturepad'),c=r.querySelector('canvas');
+    const rect=c.getBoundingClientRect();
+    const pe=(type,x,y)=>c.dispatchEvent(new PointerEvent(type,{bubbles:true,cancelable:true,clientX:rect.left+x,clientY:rect.top+y,pointerId:1,pointerType:'mouse',isPrimary:true}));
+    pe('pointerdown',20,20);pe('pointermove',80,60);pe('pointermove',140,30);pe('pointerup',140,30);
+    const inked=!window.FlowForgeUI.signEmpty(c);
+    const apiEmpty=window.FF_signaturepad.isEmpty;
+    const saveBtn=r.querySelector('.ff-signature-actions button:last-child');saveBtn.click();
+    const saved={nev:window.__nev.signaturepad||0,last:window.__last.signaturepad};
+    window.FF_signaturepad.clear();
+    return {inked,apiEmpty,saved,afterClear:{isEmpty:window.FF_signaturepad.isEmpty,width:c.width,height:c.height}};
+  })()`);
+  check('SignaturePad: desenho marca o canvas como preenchido',sig.inked===true&&sig.apiEmpty===false,sig);
+  check('SignaturePad: canvas tem tamanho real',sig.afterClear.width>0&&sig.afterClear.height>0,sig.afterClear);
+  check('SignaturePad: salvar dispara save com PNG',sig.saved.nev===1&&sig.saved.last.empty===false&&sig.saved.last.png===true,sig.saved);
+  check('SignaturePad: limpar esvazia o canvas',sig.afterClear.isEmpty===true,sig.afterClear);
+
+  /* DropdownMenu */
+  const dd=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-dropdownmenu'),t=r.querySelector('.ff-dropdown-toggle'),m=r.querySelector('.ff-dropdown-menu'),items=m.querySelectorAll('button');
+    t.click();const opened={open:!m.hidden,aria:t.getAttribute('aria-expanded')};
+    items[1].click();const picked={value:window.FF_dropdownmenu.value,nev:window.__nev.dropdownmenu||0,last:window.__last.dropdownmenu,closed:m.hidden};
+    t.focus();t.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}));
+    const keyOpen={open:!m.hidden,focus:document.activeElement===items[0]};
+    t.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));
+    return {opened,picked,keyOpen,afterEsc:m.hidden};
+  })()`);
+  check('DropdownMenu: abre/fecha pelo botão',dd.opened.open===true&&dd.opened.aria==='true',dd);
+  check('DropdownMenu: selecionar item dispara select',dd.picked.value==='Duplicar'&&dd.picked.nev===1&&dd.picked.last.index===1&&dd.picked.closed===true,dd.picked);
+  check('DropdownMenu: teclado abre e Escape fecha',dd.keyOpen.open===true&&dd.keyOpen.focus===true&&dd.afterEsc===true,dd);
+
+  /* Popover */
+  const po=RW.eval(`(()=>{
+    const r=document.querySelector('.ff-kind-popover'),t=r.querySelector('.ff-popover-toggle'),p=r.querySelector('.ff-popover-panel');
+    t.click();const opened={open:!p.hidden,aria:t.getAttribute('aria-expanded'),nev:window.__nev.popover||0,last:window.__last.popover};
+    p.querySelector('button').click();
+    return {opened,closed:{hidden:p.hidden,aria:t.getAttribute('aria-expanded'),nev:window.__nev.popover||0,last:window.__last.popover},content:p.textContent.indexOf('Conteúdo extra do popover')>=0};
+  })()`);
+  check('Popover: abre e dispara toggle',po.opened.open===true&&po.opened.aria==='true'&&po.opened.nev===1&&po.opened.last.open===true&&po.content===true,po);
+  check('Popover: fechar dispara toggle',po.closed.hidden===true&&po.closed.aria==='false'&&po.closed.nev===2&&po.closed.last.open===false,po.closed);
+
+  /* ThemeToggle */
+  const th=RW.eval(`(()=>{
+    const b=document.querySelector('.ff-kind-themetoggle .ff-real-themetoggle');
+    b.click();
+    const dark={theme:document.documentElement.dataset.theme,stored:localStorage.getItem('ff-theme'),aria:b.getAttribute('aria-pressed'),api:window.FF_themetoggle.theme,nev:window.__nev.themetoggle||0,last:window.__last.themetoggle};
+    b.click();
+    const light={theme:document.documentElement.dataset.theme,stored:localStorage.getItem('ff-theme'),aria:b.getAttribute('aria-pressed'),api:window.FF_themetoggle.theme};
+    return {dark,light};
+  })()`);
+  check('ThemeToggle: aplica e persiste o tema escuro',th.dark.theme==='dark'&&th.dark.stored==='dark'&&th.dark.aria==='true'&&th.dark.api==='dark'&&th.dark.nev===1&&th.dark.last.theme==='dark',th.dark);
+  check('ThemeToggle: volta ao tema claro',th.light.theme==='light'&&th.light.stored==='light'&&th.light.aria==='false'&&th.light.api==='light',th.light);
+
+  /* ---------------- sanitização na importação ---------------- */
+  const san=W.eval(`(()=>{
+    const raw=JSON.parse(JSON.stringify(project));
+    const items=raw.pages[0].items,byK=k=>items.find(i=>i.kind===k);
+    const chat=byK('chat');chat.items=[{from:'ME',text:'<b>x</b>'},'texto'];
+    const seg=byK('segmentedcontrol');seg.items=[{label:'A'},{text:'B'},{label:'   '}];
+    const dd=byK('dropdownmenu');dd.items=Array.from({length:40},(_,i)=>'Item '+i);
+    const code=byK('codeblock');code.language='php';
+    const sig=byK('signaturepad');sig.lineWidth=0;sig.penColor='javascript:alert(1)';
+    const pop=byK('popover');pop.placement='evil';
+    const ring=byK('progressring');ring.activeIndex=-5;
+    const search=byK('searchbar');search.showClear='yes';search.events={search:'window.__x=1;'};
+    const sk=byK('skeleton');sk.lines=99;
+    const out=FFSecurity.validateProject(raw);
+    const get=k=>out.pages[0].items.find(i=>i.kind===k);
+    return {
+      chat:get('chat').items,
+      seg:get('segmentedcontrol').items,
+      dd:get('dropdownmenu').items,
+      code:get('codeblock').language,
+      sig:{lineWidth:get('signaturepad').lineWidth,penColor:get('signaturepad').penColor},
+      pop:get('popover').placement,
+      ring:get('progressring').activeIndex,
+      search:{showClear:get('searchbar').showClear,event:get('searchbar').events.search},
+      sk:get('skeleton').lines
+    };
+  })()`);
+  check('importação: itens do Chat viram {from,text} seguros',Array.isArray(san.chat)&&san.chat.length===2&&san.chat[0].from==='me'&&san.chat[0].text==='<b>x</b>'&&san.chat[1].from==='them'&&san.chat[1].text==='texto',san.chat);
+  check('importação: itens do SegmentedControl viram rótulos',Array.isArray(san.seg)&&san.seg.join('|')==='A|B',san.seg);
+  check('importação: DropdownMenu limita a 24 itens',Array.isArray(san.dd)&&san.dd.length===24&&san.dd[0]==='Item 0',san.dd&&san.dd.length);
+  check('importação: linguagem inválida vira text',san.code==='text',san.code);
+  check('importação: espessura e cor da assinatura são sanitizadas',san.sig.lineWidth===1&&san.sig.penColor==='#111827',san.sig);
+  check('importação: posição inválida do Popover vira bottom',san.pop==='bottom',san.pop);
+  check('importação: activeIndex negativo vira 0',san.ring===0,san.ring);
+  check('importação: booleanos e eventos novos preservados',san.search.showClear===true&&san.search.event==='window.__x=1;',san.search);
+  check('importação: linhas do Skeleton limitadas a 12',san.sk===12,san.sk);
+
+  check('export: nenhum erro de runtime',RW.__errs.length===0,RW.__errs.slice(0,5));
+  check('editor: nenhum erro durante a auditoria',W.__auditErrs.length===0,W.__auditErrs.slice(0,5));
+
+  summary.textContent=failed?`${failed} falha(s), ${passed} ok`:`Tudo certo: ${passed} verificações (13 novos componentes)`;
+  summary.className=failed?'fail':'pass';
+  document.body.dataset.test=failed?'FAIL':'PASS';
+}
+run().catch(e=>{
+  out.insertAdjacentHTML('beforeend','<span class="fail">ERRO</span> '+escHtml(e&&e.stack||e&&e.message||e)+'\n');
+  summary.textContent='Erro no teste';summary.className='fail';document.body.dataset.test='FAIL';
+});
+</script>

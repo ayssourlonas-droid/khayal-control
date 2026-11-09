@@ -1,0 +1,136 @@
+{
+  "name": "Jogo da Memória",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "d36d3433-ae74-4045-95d9-59d90813f152",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "802a8faa-3ec3-41ba-a8f5-c3eebc0181ca",
+          "kind": "heading",
+          "name": "heading1",
+          "text": "Jogo da Memória",
+          "x": 20,
+          "y": 70,
+          "width": "350px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "567aa216-e0ca-4122-a8e2-fbc9a9a6608c",
+          "kind": "label",
+          "name": "lblJogadas",
+          "text": "Jogadas: 0",
+          "x": 20,
+          "y": 122,
+          "width": "110px",
+          "height": "44px",
+          "bg": "#e0e7ff",
+          "color": "#312e81",
+          "events": {}
+        },
+        {
+          "id": "62256894-ba9c-409e-b3d0-fa15cd7f4fe3",
+          "kind": "label",
+          "name": "lblTempo",
+          "text": "Tempo: 0s",
+          "x": 140,
+          "y": 122,
+          "width": "110px",
+          "height": "44px",
+          "bg": "#e0e7ff",
+          "color": "#312e81",
+          "events": {}
+        },
+        {
+          "id": "2e070c08-9d8e-4b6c-ba31-3c59321e4e87",
+          "kind": "label",
+          "name": "lblRecorde",
+          "text": "Recorde: -",
+          "x": 260,
+          "y": 122,
+          "width": "110px",
+          "height": "44px",
+          "bg": "#e0e7ff",
+          "color": "#312e81",
+          "events": {}
+        },
+        {
+          "id": "b1e98201-004e-4434-b545-b6812e240e5b",
+          "kind": "select",
+          "name": "selNivel",
+          "text": "",
+          "x": 20,
+          "y": 178,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "btnNovo.click();\n"
+          },
+          "items": [
+            "Fácil",
+            "Médio",
+            "Difícil"
+          ]
+        },
+        {
+          "id": "784ec20a-d0a7-48e9-8929-c76bc7098ad4",
+          "kind": "button",
+          "name": "btnNovo",
+          "text": "Novo jogo",
+          "x": 200,
+          "y": 178,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "// 1) Configuração: níveis e figuras do jogo\nconst NIVEIS = { 'Fácil': [4, 3], 'Médio': [4, 4], 'Difícil': [6, 4] };\nconst FIGURAS = ['🍎','🍌','🍒','🍇','🍉','🍓','🥝','🍍','🍋','🥥','🍑','🥕'];\nconst [colunas, linhas] = NIVEIS[selNivel.value] || NIVEIS['Médio'];\n\n// 2) Sorteio: cada figura aparece duas vezes, embaralhadas\nconst pares = FIGURAS.slice(0, (colunas * linhas) / 2);\nconst cartas = [...pares, ...pares].sort(() => Math.random() - 0.5);\n\n// 3) Estado do jogo (e zera o relógio da partida anterior)\nclearInterval(window.relogio);\nlet primeira = null, trava = false, achados = 0, jogadas = 0, inicio = 0;\nlblJogadas.textContent = 'Jogadas: 0';\nlblTempo.textContent = 'Tempo: 0s';\nlblMsg.textContent = 'Encontre todos os pares!';\nconst chave = 'memoria_' + selNivel.value;\nconst melhor = localStorage.getItem(chave);\nlblRecorde.textContent = 'Recorde: ' + (melhor ? melhor : '-');\n\n// 4) Tabuleiro: uma grade com um botão para cada carta\ntabuleiro.innerHTML = '';\ntabuleiro.style.display = 'grid';\ntabuleiro.style.gridTemplateColumns = 'repeat(' + colunas + ', 1fr)';\ntabuleiro.style.gridTemplateRows = 'repeat(' + linhas + ', 1fr)';\ntabuleiro.style.gap = '8px';\ncartas.forEach(figura => {\n  const carta = document.createElement('button');\n  carta.textContent = '?';\n  carta.dataset.figura = figura;\n  carta.style.fontSize = '26px';\n  carta.onclick = () => virar(carta);\n  tabuleiro.appendChild(carta);\n});\n\n// 5) Virar uma carta: compara a primeira com a segunda\nfunction virar(carta) {\n  if (trava || carta.disabled || carta === primeira) return;\n  if (!inicio) {\n    inicio = Date.now();\n    window.relogio = setInterval(() => {\n      lblTempo.textContent = 'Tempo: ' + Math.floor((Date.now() - inicio) / 1000) + 's';\n    }, 500);\n  }\n  carta.textContent = carta.dataset.figura;\n  carta.style.background = '#fef3c7';\n  if (!primeira) { primeira = carta; return; }\n  jogadas++;\n  lblJogadas.textContent = 'Jogadas: ' + jogadas;\n  if (primeira.dataset.figura === carta.dataset.figura) {\n    [primeira, carta].forEach(c => { c.disabled = true; c.style.background = '#bbf7d0'; });\n    primeira = null;\n    if (++achados === cartas.length / 2) fim();\n  } else {\n    trava = true;\n    setTimeout(() => {\n      [primeira, carta].forEach(c => { c.textContent = '?'; c.style.background = ''; });\n      primeira = null;\n      trava = false;\n    }, 800);\n  }\n}\n\n// 6) Fim de jogo: para o relógio e guarda o recorde\nfunction fim() {\n  clearInterval(window.relogio);\n  const segundos = Math.floor((Date.now() - inicio) / 1000);\n  const melhorAtual = Number(localStorage.getItem(chave)) || 999;\n  if (jogadas < melhorAtual) {\n    localStorage.setItem(chave, jogadas);\n    lblRecorde.textContent = 'Recorde: ' + jogadas;\n    lblMsg.textContent = 'Novo recorde! ' + jogadas + ' jogadas em ' + segundos + 's';\n  } else {\n    lblMsg.textContent = 'Você venceu em ' + jogadas + ' jogadas e ' + segundos + 's!';\n  }\n}\n"
+          }
+        },
+        {
+          "id": "bf924dcd-8cd8-4798-9010-156275dae9b6",
+          "kind": "panel",
+          "name": "tabuleiro",
+          "text": "",
+          "x": 20,
+          "y": 234,
+          "width": "350px",
+          "height": "350px",
+          "bg": "#f1f5f9",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "a59f5bdc-abfb-496f-98f2-3233cebb90c1",
+          "kind": "label",
+          "name": "lblMsg",
+          "text": "Encontre todos os pares!",
+          "x": 20,
+          "y": 596,
+          "width": "350px",
+          "height": "50px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "btnNovo.click();",
+        "onshow": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "name": "Dashboard do Sistema",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "07acfe4f-bb30-42c1-81c0-9f99b6e7132b",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "b5e9d49d-b303-40a9-8383-37dcb17e852e",
+          "kind": "heading",
+          "name": "heading1",
+          "text": "Dashboard do Sistema",
+          "x": 24,
+          "y": 20,
+          "width": "330px",
+          "height": "52px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// Título do painel\n"
+          }
+        },
+        {
+          "id": "4d9064a7-3c0d-4dd8-92ed-e84ab947bc51",
+          "kind": "valuecard",
+          "name": "cpuCard",
+          "text": "CPU: 0%",
+          "x": 24,
+          "y": 90,
+          "width": "220px",
+          "height": "110px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// Card de CPU\n"
+          },
+          "value": ""
+        },
+        {
+          "id": "a3a14436-368e-48fd-95f7-7f0c3635e26a",
+          "kind": "valuecard",
+          "name": "ramCard",
+          "text": "RAM: 0%",
+          "x": 260,
+          "y": 90,
+          "width": "220px",
+          "height": "110px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// Card de RAM\n"
+          },
+          "value": ""
+        },
+        {
+          "id": "0f851785-1f50-4a82-be4f-f01602f8e6d9",
+          "kind": "battery",
+          "name": "battery1",
+          "text": "Bateria: 78%",
+          "x": 24,
+          "y": 220,
+          "width": "220px",
+          "height": "54px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// Indicador de bateria\n"
+          }
+        },
+        {
+          "id": "8a1d2366-7536-4e41-ad28-6066128c94ee",
+          "kind": "thermometer",
+          "name": "thermometer1",
+          "text": "24 °C",
+          "x": 260,
+          "y": 220,
+          "width": "90px",
+          "height": "180px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// Temperatura\n"
+          }
+        },
+        {
+          "id": "f2281d3d-5029-4bd7-b698-7c931f0a8316",
+          "kind": "led",
+          "name": "led1",
+          "text": "Online",
+          "x": 370,
+          "y": 230,
+          "width": "110px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// Estado da conexão\n"
+          }
+        },
+        {
+          "id": "493bb617-80a3-4341-ac9e-f730aeea0e67",
+          "kind": "range",
+          "name": "range1",
+          "text": "",
+          "x": 24,
+          "y": 310,
+          "width": "210px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "input": "cpuCard.textContent = 'CPU: ' + event.target.value + '%';\nwindow.ffCpuHistory = (window.ffCpuHistory || [20, 35, 30, 45, 40, 55, 50]).concat(Number(event.target.value)).slice(-12);\nsparkline1.dataset.values = window.ffCpuHistory.join(',');"
+          }
+        },
+        {
+          "id": "906c785e-07ff-41ab-9597-1437d5bf63b2",
+          "kind": "sparkline",
+          "name": "sparkline1",
+          "text": "Histórico CPU",
+          "x": 24,
+          "y": 370,
+          "width": "220px",
+          "height": "90px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// Histórico visual\n"
+          },
+          "values": "20,35,30,45,40,55,50"
+        },
+        {
+          "id": "5761e387-9246-4e0b-867a-ef2d225d6604",
+          "kind": "button",
+          "name": "button1",
+          "text": "Simular atualização",
+          "x": 260,
+          "y": 420,
+          "width": "220px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "const v = Math.floor(Math.random()*101);\nrange1.value = v;\ncpuCard.textContent = 'CPU: ' + v + '%';\nramCard.textContent = 'RAM: ' + Math.floor(Math.random()*101) + '%';\nwindow.ffCpuHistory = (window.ffCpuHistory || [20, 35, 30, 45, 40, 55, 50]).concat(Number(v)).slice(-12);\nsparkline1.dataset.values = window.ffCpuHistory.join(',');"
+          }
+        }
+      ]
+    }
+  ]
+}

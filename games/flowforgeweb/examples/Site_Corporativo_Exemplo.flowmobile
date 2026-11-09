@@ -1,0 +1,448 @@
+{
+  "version": "0.13.0",
+  "name": "Exemplo - Site Corporativo",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#111827",
+  "type": "site",
+  "framework": "bulma",
+  "designerMode": "framework",
+  "titlebar": {
+    "name": "titlebar1",
+    "text": "FlowForge Studio",
+    "height": "52px",
+    "bg": "#111827",
+    "color": "#ffffff",
+    "showMenu": true,
+    "autoStyle": true
+  },
+  "pages": [
+    {
+      "id": "ba849faa-59e9-432a-9c07-c6f248085e35",
+      "name": "Home",
+      "slug": "home",
+      "items": [
+        {
+          "id": "73cdc5c3-553e-46c4-b94c-24db06c22454",
+          "kind": "navbar",
+          "name": "siteNav",
+          "text": "FlowForge Studio",
+          "x": 0,
+          "y": 0,
+          "width": "100%",
+          "height": "64px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "2ac5a7be-9df4-4ded-a514-543bf8f6274a",
+          "kind": "hero",
+          "name": "heroHome",
+          "text": "Crie experiências digitais com liberdade",
+          "x": 40,
+          "y": 90,
+          "width": "calc(100% - 80px)",
+          "height": "210px",
+          "bg": "#eef2ff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "d307b710-a1f1-4e98-ae5f-e3a420a77c1a",
+          "kind": "heading",
+          "name": "homeTitle",
+          "text": "Sites modernos, rápidos e fáceis de editar",
+          "x": 70,
+          "y": 330,
+          "width": "70%",
+          "height": "55px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "c43f935e-4228-4229-a4b5-2f444cea0166",
+          "kind": "label",
+          "name": "homeText",
+          "text": "Um exemplo de site multipágina criado visualmente no FlowForge WebStudio.",
+          "x": 70,
+          "y": 395,
+          "width": "70%",
+          "height": "50px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "2b50402a-b4a4-43d6-9171-71cea0cf3c97",
+          "kind": "button",
+          "name": "homeCta",
+          "text": "Conheça os serviços",
+          "x": 70,
+          "y": 465,
+          "width": "190px",
+          "height": "48px",
+          "bg": "#4f46e5",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate('servicos')"
+          }
+        },
+        {
+          "id": "78d0fed4-8caa-4cdb-a67b-6db3df1102b6",
+          "kind": "card",
+          "name": "homeCard1",
+          "text": "Design visual",
+          "x": 70,
+          "y": 550,
+          "width": "250px",
+          "height": "150px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "2e8812a6-6680-4219-9f30-dc77057d4c9a",
+          "kind": "card",
+          "name": "homeCard2",
+          "text": "Código quando precisar",
+          "x": 340,
+          "y": 550,
+          "width": "250px",
+          "height": "150px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "7a4bd4ae-28b2-44ee-abf2-c8320df4adce",
+          "kind": "card",
+          "name": "homeCard3",
+          "text": "Exportação HTML",
+          "x": 610,
+          "y": 550,
+          "width": "250px",
+          "height": "150px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "8edd4a22-8314-4ccb-989c-0c9243ec41a9",
+          "kind": "footer",
+          "name": "siteFooter",
+          "text": "FlowForge Studio • 2026",
+          "x": 0,
+          "y": 735,
+          "width": "100%",
+          "height": "72px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "71c72059-2c4b-4b62-a87b-2eddd4ab4a00",
+      "name": "Sobre",
+      "slug": "sobre",
+      "items": [
+        {
+          "id": "0257055f-ac42-4e82-90d2-8ccbee4a557c",
+          "kind": "navbar",
+          "name": "siteNavSobre",
+          "text": "FlowForge Studio",
+          "x": 0,
+          "y": 0,
+          "width": "100%",
+          "height": "64px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "009ec5db-d2fb-4a06-86f1-9dcf647784f8",
+          "kind": "heading",
+          "name": "sobreTitle",
+          "text": "Sobre a empresa",
+          "x": 60,
+          "y": 100,
+          "width": "70%",
+          "height": "55px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "fa37072b-6322-44fb-817a-5700eb14d8ec",
+          "kind": "label",
+          "name": "sobreText",
+          "text": "Este projeto demonstra como construir um site completo com páginas, navegação, seções e componentes reutilizáveis.",
+          "x": 60,
+          "y": 175,
+          "width": "75%",
+          "height": "80px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "152c9557-0022-4d46-8da0-221f69088c2a",
+          "kind": "section",
+          "name": "sobreSection",
+          "text": "Nossa abordagem",
+          "x": 60,
+          "y": 290,
+          "width": "80%",
+          "height": "180px",
+          "bg": "#f8fafc",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "b0bc6e89-57a3-49fc-a0db-1d5236d236fb",
+          "kind": "footer",
+          "name": "siteFooterSobre",
+          "text": "FlowForge Studio • 2026",
+          "x": 0,
+          "y": 520,
+          "width": "100%",
+          "height": "72px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "985a7276-401f-4d01-8273-4d61070b913f",
+      "name": "Servicos",
+      "slug": "servicos",
+      "items": [
+        {
+          "id": "a7b4b2ea-d30c-4d48-98f5-015de3e4e943",
+          "kind": "navbar",
+          "name": "siteNavServicos",
+          "text": "FlowForge Studio",
+          "x": 0,
+          "y": 0,
+          "width": "100%",
+          "height": "64px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "9dcf5d49-e257-4123-ab44-d47ba1a8286a",
+          "kind": "heading",
+          "name": "servicosTitle",
+          "text": "Serviços",
+          "x": 60,
+          "y": 100,
+          "width": "70%",
+          "height": "55px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "d57e4fa1-9730-41e9-ae6e-4f7d05bc8d99",
+          "kind": "card",
+          "name": "servico1",
+          "text": "Web Design",
+          "x": 60,
+          "y": 180,
+          "width": "250px",
+          "height": "150px",
+          "bg": "#eef2ff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "191189db-ab2b-4a99-be76-11cc66217fb9",
+          "kind": "card",
+          "name": "servico2",
+          "text": "Landing Pages",
+          "x": 330,
+          "y": 180,
+          "width": "250px",
+          "height": "150px",
+          "bg": "#ecfeff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "170662c0-e9b0-450e-85c8-c4c164627475",
+          "kind": "card",
+          "name": "servico3",
+          "text": "Aplicações Web",
+          "x": 600,
+          "y": 180,
+          "width": "250px",
+          "height": "150px",
+          "bg": "#f0fdf4",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "7d171616-7846-4b47-b7dd-00009b1eb234",
+          "kind": "heading",
+          "name": "servicosSub",
+          "text": "Pronto para começar?",
+          "x": 60,
+          "y": 390,
+          "width": "70%",
+          "height": "50px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "53577083-897c-4f78-8494-65ca870b8ea0",
+          "kind": "button",
+          "name": "servicosCta",
+          "text": "Fale conosco",
+          "x": 60,
+          "y": 460,
+          "width": "180px",
+          "height": "48px",
+          "bg": "#4f46e5",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate('contato')"
+          }
+        },
+        {
+          "id": "0bd988d9-e436-4e6e-9905-8c2968fa5e57",
+          "kind": "footer",
+          "name": "siteFooterServicos",
+          "text": "FlowForge Studio • 2026",
+          "x": 0,
+          "y": 560,
+          "width": "100%",
+          "height": "72px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "9a40c23a-c5b8-4e11-9fb1-f4aaba830857",
+      "name": "Contato",
+      "slug": "contato",
+      "items": [
+        {
+          "id": "079ccf29-7bd7-483e-ae9c-ccbd845324a0",
+          "kind": "navbar",
+          "name": "siteNavContato",
+          "text": "FlowForge Studio",
+          "x": 0,
+          "y": 0,
+          "width": "100%",
+          "height": "64px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "061f6e17-a34e-4c04-95d7-9a4bed5406a6",
+          "kind": "heading",
+          "name": "contatoTitle",
+          "text": "Vamos conversar",
+          "x": 60,
+          "y": 100,
+          "width": "70%",
+          "height": "55px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "1b6569f9-fc68-4df5-9acf-8c6ec2eb2613",
+          "kind": "label",
+          "name": "contatoText",
+          "text": "Preencha o formulário de demonstração.",
+          "x": 60,
+          "y": 170,
+          "width": "70%",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "1a3a6507-fdc0-4c10-b289-1400f82bdd50",
+          "kind": "input",
+          "name": "nomeContato",
+          "text": "Seu nome",
+          "x": 60,
+          "y": 235,
+          "width": "360px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "3b9b765f-b3d2-4bab-9e50-e4ff25aa797f",
+          "kind": "input",
+          "name": "emailContato",
+          "text": "Seu e-mail",
+          "x": 60,
+          "y": 295,
+          "width": "360px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "b08cf702-fb8e-4202-98c9-becc8b40029a",
+          "kind": "textarea",
+          "name": "mensagemContato",
+          "text": "Sua mensagem",
+          "x": 60,
+          "y": 355,
+          "width": "500px",
+          "height": "110px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "4ef56008-5f50-4a50-926b-e0d07920b63c",
+          "kind": "button",
+          "name": "enviarContato",
+          "text": "Enviar mensagem",
+          "x": 60,
+          "y": 490,
+          "width": "200px",
+          "height": "48px",
+          "bg": "#4f46e5",
+          "color": "#ffffff",
+          "events": {
+            "click": "alert('Mensagem enviada no exemplo!')"
+          }
+        },
+        {
+          "id": "94155ac9-11ef-41a3-9d08-895676707b33",
+          "kind": "footer",
+          "name": "siteFooterContato",
+          "text": "FlowForge Studio • 2026",
+          "x": 0,
+          "y": 590,
+          "width": "100%",
+          "height": "72px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        }
+      ]
+    }
+  ],
+  "active": 0,
+  "activePage": "ba849faa-59e9-432a-9c07-c6f248085e35"
+}

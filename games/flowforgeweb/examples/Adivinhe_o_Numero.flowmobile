@@ -1,0 +1,125 @@
+{
+  "name": "Adivinhe o Número",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "998fe2c7-aad9-4a0b-b92e-98caa718d81e",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "d3a88ebe-86ef-415a-986e-6687d2fd705a",
+          "kind": "heading",
+          "name": "guessTitle",
+          "text": "Adivinhe o Número",
+          "x": 45,
+          "y": 35,
+          "width": "300px",
+          "height": "50px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "0a145fbf-d2ef-4173-849b-eba26a129eca",
+          "kind": "label",
+          "name": "guessStatus",
+          "text": "Clique em Novo jogo",
+          "x": 55,
+          "y": 100,
+          "width": "280px",
+          "height": "45px",
+          "bg": "#f1f5f9",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "cb0e69b2-8dcb-4aa2-91b6-8cc1eae2d747",
+          "kind": "input",
+          "name": "guessInput",
+          "text": "",
+          "x": 95,
+          "y": 170,
+          "width": "200px",
+          "height": "44px",
+          "bg": "#fff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "4445a20e-480b-46d3-b043-3f7cfa144aec",
+          "kind": "button",
+          "name": "guessGo",
+          "text": "Tentar",
+          "x": 95,
+          "y": 230,
+          "width": "200px",
+          "height": "44px",
+          "bg": "#16a34a",
+          "color": "#fff",
+          "events": {
+            "click": "if(!window.ffSecret){window.ffSecret=1+Math.floor(Math.random()*100);window.ffTries=0;document.getElementById('guessStatus').textContent='Escolhi um número de 1 a 100';}const el=document.getElementById('guessInput'),n=Number(el.value);if(!Number.isInteger(n)||n<1||n>100){Sons.play('error');document.getElementById('guessStatus').textContent='Digite um número entre 1 e 100';return}window.ffTries++;Sons.play(n===window.ffSecret?'win':n<window.ffSecret?'blip':'tick');document.getElementById('guessStatus').textContent=n===window.ffSecret?'Acertou em '+window.ffTries+(window.ffTries===1?' tentativa!':' tentativas!'):n<window.ffSecret?'É maior ↑':'É menor ↓';"
+          }
+        },
+        {
+          "id": "06af216b-0ca7-4fd6-a9fd-2bcf0f433641",
+          "kind": "button",
+          "name": "guessNew",
+          "text": "Novo jogo",
+          "x": 95,
+          "y": 290,
+          "width": "200px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#fff",
+          "events": {
+            "click": "window.ffSecret=1+Math.floor(Math.random()*100);window.ffTries=0;document.getElementById('guessStatus').textContent='Escolhi um número de 1 a 100';document.getElementById('guessInput').value='';"
+          }
+        },
+        {
+          "id": "e937673f-65e4-4032-b39f-1b525a2521a8",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 39,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "2f579305-b58d-42dc-b286-96a75728f889",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 346,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

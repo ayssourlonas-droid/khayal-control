@@ -1,0 +1,268 @@
+{
+  "name": "Divisor de Conta",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#0ea5e9",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "ac7748b5-b67a-46b1-ae77-161a3a8a9130",
+      "name": "Divisor de Conta",
+      "items": [
+        {
+          "id": "55a50c13-215c-4681-9abb-462f7090b429",
+          "kind": "heading",
+          "name": "heading1",
+          "text": "Divisor de Conta",
+          "x": 20,
+          "y": 70,
+          "width": "350px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "15f6b5fd-cdb0-4906-bc58-2c1e82f7125d",
+          "kind": "label",
+          "name": "lblV",
+          "text": "Valor da conta (R$)",
+          "x": 20,
+          "y": 120,
+          "width": "350px",
+          "height": "24px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "aaa87389-d9d8-40f3-9f25-e42487294a69",
+          "kind": "input",
+          "name": "inpValor",
+          "text": "",
+          "x": 20,
+          "y": 146,
+          "width": "350px",
+          "height": "46px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "keydown": "DC.tecla();"
+          }
+        },
+        {
+          "id": "2bc7790b-8e15-498f-8e15-069673bb92cc",
+          "kind": "label",
+          "name": "lblG",
+          "text": "Gorjeta",
+          "x": 20,
+          "y": 204,
+          "width": "170px",
+          "height": "24px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "34c80059-efe2-4e51-8467-557b2e0121c6",
+          "kind": "select",
+          "name": "selGorjeta",
+          "text": "",
+          "x": 20,
+          "y": 230,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "DC.calc();"
+          },
+          "items": [
+            "0%",
+            "5%",
+            "10%",
+            "12%",
+            "15%",
+            "20%"
+          ]
+        },
+        {
+          "id": "f4e2173f-facb-4647-a6fc-8e9b9a21888e",
+          "kind": "label",
+          "name": "lblA",
+          "text": "Arredondar p/ cima",
+          "x": 200,
+          "y": 204,
+          "width": "170px",
+          "height": "24px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "f97959cf-cc1d-463b-b6be-749142b6fae3",
+          "kind": "select",
+          "name": "selArred",
+          "text": "",
+          "x": 200,
+          "y": 230,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "DC.calc();"
+          },
+          "items": [
+            "Não",
+            "Sim"
+          ]
+        },
+        {
+          "id": "9eff228b-ec90-428c-b7f8-11a770a10e12",
+          "kind": "button",
+          "name": "btnMenos",
+          "text": "−",
+          "x": 20,
+          "y": 292,
+          "width": "60px",
+          "height": "48px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "DC.menos();"
+          }
+        },
+        {
+          "id": "eaf04f35-85d3-4c64-b976-fff6b9248883",
+          "kind": "label",
+          "name": "lblPessoas",
+          "text": "4 pessoas",
+          "x": 90,
+          "y": 292,
+          "width": "210px",
+          "height": "48px",
+          "bg": "transparent",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "6fee26a5-8cb4-4528-aba3-b5921a526439",
+          "kind": "button",
+          "name": "btnMais",
+          "text": "+",
+          "x": 310,
+          "y": 292,
+          "width": "60px",
+          "height": "48px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "DC.mais();"
+          }
+        },
+        {
+          "id": "00e00316-6fe8-4bdf-ade3-b5de1f4fb6e3",
+          "kind": "label",
+          "name": "lblMsg",
+          "text": "",
+          "x": 20,
+          "y": 356,
+          "width": "350px",
+          "height": "26px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "fdaa2c8b-dd84-47e9-a268-de0b8d920ba6",
+          "kind": "label",
+          "name": "lblGorjeta",
+          "text": "",
+          "x": 20,
+          "y": 384,
+          "width": "350px",
+          "height": "26px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "2887155b-c822-468d-9be1-2a00b3cbc0dc",
+          "kind": "label",
+          "name": "lblTotal",
+          "text": "",
+          "x": 20,
+          "y": 412,
+          "width": "350px",
+          "height": "26px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "691105b8-dcb8-43ff-be10-b4f9ea066f18",
+          "kind": "label",
+          "name": "lblTit",
+          "text": "Cada pessoa paga",
+          "x": 20,
+          "y": 450,
+          "width": "350px",
+          "height": "26px",
+          "bg": "transparent",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "b44d9813-5c6a-496b-9296-09dd35763231",
+          "kind": "label",
+          "name": "lblPor",
+          "text": "R$ 0,00",
+          "x": 20,
+          "y": 478,
+          "width": "350px",
+          "height": "60px",
+          "bg": "#dcfce7",
+          "color": "#166534",
+          "events": {}
+        },
+        {
+          "id": "39141760-ee54-4a85-aacb-2a6a3e25c6e0",
+          "kind": "label",
+          "name": "lblNota",
+          "text": "",
+          "x": 20,
+          "y": 548,
+          "width": "350px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#64748b",
+          "events": {}
+        },
+        {
+          "id": "ae51efc2-208d-4628-ace5-63d48033545a",
+          "kind": "button",
+          "name": "btnLimpar",
+          "text": "Limpar",
+          "x": 20,
+          "y": 604,
+          "width": "350px",
+          "height": "46px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "DC.limpar();"
+          }
+        }
+      ],
+      "events": {
+        "onload": "if (!window.DC) {\nwindow.DC = (function () {\n  const $ = id => document.getElementById(id);\n  const MAXP = 30, MAXV = 1000000;\n  const D = { pessoas: 4 };\n  const brl = c => 'R$ ' + (c / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });\n  // aceita \"45,90\", \"45.90\", \"1.234,50\" e \"R$ 80\"\n  D.ler = txt => {\n    let s = String(txt || '').replace(/R\\$|\\s/g, '');\n    if (!s) return null;\n    if (s.includes(',')) s = s.replace(/\\./g, '').replace(',', '.');\n    else if ((s.match(/\\./g) || []).length > 1) s = s.replace(/\\./g, '');\n    if (!/^\\d+(\\.\\d{1,2})?$/.test(s)) return NaN;\n    return Math.round(parseFloat(s) * 100);\n  };\n  // trabalha em centavos (sem erros de ponto flutuante)\n  D.conta = (valor, pct, n, arred) => {\n    const gorjeta = Math.round(valor * pct / 100), total = valor + gorjeta;\n    let por = Math.ceil(total / n);\n    if (arred) por = Math.ceil(por / 100) * 100;\n    return { gorjeta: gorjeta, total: total, por: por, cobrado: por * n, sobra: por * n - total };\n  };\n  D.calc = () => {\n    if (!$('lblPessoas')) return;\n    const est = (id, css) => { const e = $(id); if (e && !e.dataset.est) { e.style.cssText += ';' + css; e.dataset.est = '1'; } };\n    est('lblPor', 'font-size:38px;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:12px');\n    est('lblPessoas', 'font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center');\n    est('btnMenos', 'font-size:26px;border-radius:12px'); est('btnMais', 'font-size:26px;border-radius:12px');\n    $('lblPessoas').textContent = D.pessoas + (D.pessoas === 1 ? ' pessoa' : ' pessoas');\n    const v = D.ler($('inpValor').value), pct = parseInt($('selGorjeta').value, 10) || 0, arred = $('selArred').value === 'Sim';\n    const campos = ['lblGorjeta', 'lblTotal', 'lblPor', 'lblNota'];\n    if (v === null || Number.isNaN(v) || v <= 0 || v > MAXV * 100) {\n      $('lblMsg').textContent = v === null ? 'Digite o valor da conta.' : v === 0 ? 'O valor precisa ser maior que zero.' : 'Valor inválido. Exemplo: 125,90';\n      $('lblPor').textContent = 'R$ 0,00'; $('lblGorjeta').textContent = 'Gorjeta: R$ 0,00'; $('lblTotal').textContent = 'Total: R$ 0,00'; $('lblNota').textContent = '';\n      return null;\n    }\n    const r = D.conta(v, pct, D.pessoas, arred);\n    $('lblMsg').textContent = 'Valor da conta: ' + brl(v);\n    $('lblGorjeta').textContent = 'Gorjeta (' + pct + '%): ' + brl(r.gorjeta);\n    $('lblTotal').textContent = 'Total: ' + brl(r.total);\n    $('lblPor').textContent = brl(r.por);\n    $('lblNota').textContent = D.pessoas === 1 ? 'Só uma pessoa: paga o total.' : r.sobra > 0 ? 'Arredondando, sobram ' + brl(r.sobra) + ' (vira gorjeta extra).' : 'Divisão exata, sem sobras.';\n    return r;\n  };\n  D.mais = () => { if (D.pessoas < MAXP) D.pessoas++; D.calc(); };\n  D.menos = () => { if (D.pessoas > 1) D.pessoas--; D.calc(); };\n  D.limpar = () => { $('inpValor').value = ''; $('selGorjeta').value = '10%'; $('selArred').value = 'Não'; D.pessoas = 4; D.calc(); };\n  D.tecla = () => setTimeout(D.calc, 0);\n  return D;\n})();\n}\nif (!document.getElementById(\"inpValor\").value) selGorjeta.value = \"10%\";\nDC.calc();",
+        "onshow": ""
+      }
+    }
+  ]
+}

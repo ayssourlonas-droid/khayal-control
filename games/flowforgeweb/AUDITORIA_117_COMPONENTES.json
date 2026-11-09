@@ -1,0 +1,938 @@
+[
+  {
+    "tipo": "gamesound",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": false,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "header",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "pagenav",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "combobox",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "listbox",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "label",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "heading",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "button",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "link",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "image",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "picturebox",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "icon",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "divider",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "spacer",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": false,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "input",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "textarea",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "checkbox",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "radio",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "switch",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "select",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "range",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "date",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "time",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "file",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "form",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "container",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": false,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "section",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": false,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "card",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": false,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "row",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": false,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "columns",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": false,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "hero",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "navbar",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "bottomnav",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "tabs",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "tabcontrol",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "drawer",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "bottomsheet",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "sidebar",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "toolbar",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "footer",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "breadcrumb",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "pagination",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "fab",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "list",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "table",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "datagrid",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "chart",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "calendar",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "listview",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "treeview",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "statcard",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "rating",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "timeline",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "stepper",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "badge",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "progress",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "spinner",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "accordion",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "alert",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "modalbox",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "video",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "audio",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "camera",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "fileupload",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "colorpicker",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "avatar",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "modal",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "toast",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "tooltip",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "carousel",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "timer",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "http",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "websocket",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "storage",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "geolocation",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "notification",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "clipboard",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "network",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "vibration",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "iframe",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "canvas",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "map",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "qrcode",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "battery",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "thermometer",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "led",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "sevenseg",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "dotmatrix",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "sparkline",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "valuecard",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "statuscard",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "glasspanel",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "gradientbutton",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "iconbutton",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "mobilelist",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "searchbar",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "passwordbox",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "numberbox",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "segmentedcontrol",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "skeleton",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "progressring",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "emptystate",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "codeblock",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "chat",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "signaturepad",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "dropdownmenu",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "popover",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "themetoggle",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": false,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "meterbar",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": false,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "detailsbox",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "textcounter",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "richtexteditor",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "daterangepicker",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "mediagallery",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "datatablefilter",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "passwordstrength",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  },
+  {
+    "tipo": "colorpalette",
+    "declarado_no_catalogo": true,
+    "referencia_renderizacao_no_app": true,
+    "intellisense_especifico": true,
+    "eventos_especificos": true,
+    "status": "Inspeção estática; funcionamento não comprovado"
+  }
+]

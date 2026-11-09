@@ -1,0 +1,7 @@
+FlowForge WebStudio - exemplos intermediários/avançados
+1. Dashboard do Sistema
+2. Visualizador de Fotos
+3. Calculadora Interativa
+4. Painel de Configurações
+5. Cadastro de Usuário
+Abra os arquivos .flowmobile pelo botão Abrir da IDE.

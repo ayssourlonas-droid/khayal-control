@@ -1,0 +1,456 @@
+{
+  "name": "Xadrez 3D",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "landing",
+  "framework": "none",
+  "designerMode": "framework",
+  "titlebar": false,
+  "active": 0,
+  "activePage": "landing",
+  "pages": [
+    {
+      "id": "landing",
+      "name": "Landing",
+      "slug": "landing",
+      "showTitlebar": false,
+      "titlebar": {
+        "name": "titlebar1",
+        "text": "Chess",
+        "height": "52px",
+        "bg": "#111827",
+        "color": "#fff",
+        "showMenu": false,
+        "autoStyle": false
+      },
+      "items": [
+        {
+          "id": "ch-hd",
+          "kind": "header",
+          "name": "header",
+          "text": "♞ Xadrez 3D com WebGL",
+          "x": 24,
+          "y": 16,
+          "width": "calc(100% - 48px)",
+          "height": 72,
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "ch-h",
+          "kind": "hero",
+          "name": "chessHero",
+          "text": "Jogue xadrez 3D no navegador",
+          "x": 55,
+          "y": 105,
+          "width": "690px",
+          "height": "140px",
+          "bg": "#111827",
+          "color": "#fff",
+          "events": {}
+        },
+        {
+          "id": "ch-l",
+          "kind": "label",
+          "name": "chessIntro",
+          "text": "Tabuleiro e peças em 3D desenhados com WebGL puro, sem bibliotecas nem imagens. Arraste para girar a câmera, use a roda do mouse para aproximar e clique nas peças para jogar. Contra o computador, com um amigo ou com duas máquinas se enfrentando, com relógios analógicos.",
+          "x": 65,
+          "y": 260,
+          "width": "650px",
+          "height": "70px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "ch-c",
+          "kind": "canvas",
+          "name": "chessBoard",
+          "text": "",
+          "x": 65,
+          "y": 340,
+          "width": "480px",
+          "height": "480px",
+          "bg": "#172033",
+          "color": "#222",
+          "events": {
+            "click": "window.ffChess&&window.ffChess.click(event);"
+          },
+          "canvasWidth": 480,
+          "canvasHeight": 480
+        },
+        {
+          "id": "ch-t",
+          "kind": "heading",
+          "name": "chessTitle",
+          "text": "Partida",
+          "x": 575,
+          "y": 340,
+          "width": "190px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "ch-s",
+          "kind": "label",
+          "name": "chessStatus",
+          "text": "Vez das brancas",
+          "x": 575,
+          "y": 384,
+          "width": "190px",
+          "height": "48px",
+          "bg": "#f1f5f9",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "ch-m",
+          "kind": "select",
+          "name": "chessMode",
+          "text": "Modo",
+          "x": 575,
+          "y": 436,
+          "width": "190px",
+          "height": "34px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "change": "window.ffChess&&window.ffChess.modeChanged();"
+          },
+          "items": [
+            "Contra o computador — fácil",
+            "Contra o computador — médio",
+            "Dois jogadores",
+            "Computador x Computador"
+          ]
+        },
+        {
+          "id": "ch-sp",
+          "kind": "select",
+          "name": "chessSpeed",
+          "text": "Ritmo do computador",
+          "x": 575,
+          "y": 474,
+          "width": "190px",
+          "height": "34px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "change": "window.ffChess&&window.ffChess.save();"
+          },
+          "items": [
+            "Computador: Lento",
+            "Computador: Normal",
+            "Computador: Rápido"
+          ]
+        },
+        {
+          "id": "ch-tm",
+          "kind": "select",
+          "name": "chessTime",
+          "text": "Tempo",
+          "x": 575,
+          "y": 512,
+          "width": "190px",
+          "height": "34px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "change": "window.ffChess&&window.ffChess.timeChanged();"
+          },
+          "items": [
+            "Sem limite (cronômetro)",
+            "1 min",
+            "3 min + 2 s",
+            "5 min",
+            "5 min + 3 s",
+            "10 min",
+            "15 min + 10 s",
+            "30 min"
+          ]
+        },
+        {
+          "id": "ch-p",
+          "kind": "select",
+          "name": "chessPromo",
+          "text": "Promoção",
+          "x": 575,
+          "y": 550,
+          "width": "190px",
+          "height": "34px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "change": "window.ffChess&&window.ffChess.save();"
+          },
+          "items": [
+            "Promover em Dama",
+            "Promover em Torre",
+            "Promover em Bispo",
+            "Promover em Cavalo"
+          ]
+        },
+        {
+          "id": "ch-b",
+          "kind": "button",
+          "name": "chessStart",
+          "text": "Novo jogo",
+          "x": 575,
+          "y": 590,
+          "width": "92px",
+          "height": "38px",
+          "bg": "#2563eb",
+          "color": "#fff",
+          "events": {
+            "click": "window.ffChess&&window.ffChess.reset(true);"
+          }
+        },
+        {
+          "id": "ch-pa",
+          "kind": "button",
+          "name": "chessPause",
+          "text": "Pausar",
+          "x": 673,
+          "y": 590,
+          "width": "92px",
+          "height": "38px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "click": "window.ffChess&&window.ffChess.pause();"
+          }
+        },
+        {
+          "id": "ch-u",
+          "kind": "button",
+          "name": "chessUndo",
+          "text": "Desfazer",
+          "x": 575,
+          "y": 634,
+          "width": "92px",
+          "height": "38px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "click": "window.ffChess&&window.ffChess.undo();"
+          }
+        },
+        {
+          "id": "ch-f",
+          "kind": "button",
+          "name": "chessFlip",
+          "text": "Girar",
+          "x": 673,
+          "y": 634,
+          "width": "92px",
+          "height": "38px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "click": "window.ffChess&&window.ffChess.flip();"
+          }
+        },
+        {
+          "id": "ch-v",
+          "kind": "textarea",
+          "name": "chessMoves",
+          "text": "",
+          "x": 575,
+          "y": 678,
+          "width": "190px",
+          "height": "142px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {},
+          "readOnly": true
+        },
+        {
+          "id": "ch-k",
+          "kind": "label",
+          "name": "chessCaptured",
+          "text": "Brancas capturaram: —     Pretas capturaram: —",
+          "x": 65,
+          "y": 830,
+          "width": "700px",
+          "height": "56px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "ch-ct",
+          "kind": "heading",
+          "name": "chessClockTitle",
+          "text": "Relógio de xadrez",
+          "x": 65,
+          "y": 896,
+          "width": "400px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {}
+        },
+        {
+          "id": "ch-cw",
+          "kind": "canvas",
+          "name": "chessClockW",
+          "text": "",
+          "x": 115,
+          "y": 942,
+          "width": "210px",
+          "height": "210px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "click": "window.ffChess&&window.ffChess.clockClick();"
+          },
+          "canvasWidth": 210,
+          "canvasHeight": 210
+        },
+        {
+          "id": "ch-cb",
+          "kind": "canvas",
+          "name": "chessClockB",
+          "text": "",
+          "x": 475,
+          "y": 942,
+          "width": "210px",
+          "height": "210px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "click": "window.ffChess&&window.ffChess.clockClick();"
+          },
+          "canvasWidth": 210,
+          "canvasHeight": 210
+        },
+        {
+          "id": "ch-lw",
+          "kind": "label",
+          "name": "chessClockWLabel",
+          "text": "Brancas  10:00",
+          "x": 115,
+          "y": 1156,
+          "width": "210px",
+          "height": "32px",
+          "bg": "transparent",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "ch-lb",
+          "kind": "label",
+          "name": "chessClockBLabel",
+          "text": "Pretas  10:00",
+          "x": 475,
+          "y": 1156,
+          "width": "210px",
+          "height": "32px",
+          "bg": "transparent",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "ch-sc",
+          "kind": "label",
+          "name": "chessScore",
+          "text": "Placar:  Brancas 0  •  Empates 0  •  Pretas 0",
+          "x": 65,
+          "y": 1202,
+          "width": "430px",
+          "height": "34px",
+          "bg": "transparent",
+          "color": "#334155",
+          "events": {}
+        },
+        {
+          "id": "ch-au",
+          "kind": "select",
+          "name": "chessAuto",
+          "text": "Reinício",
+          "x": 505,
+          "y": 1202,
+          "width": "260px",
+          "height": "34px",
+          "bg": "transparent",
+          "color": "#222",
+          "events": {
+            "change": "window.ffChess&&window.ffChess.save();"
+          },
+          "items": [
+            "Nova partida automática: não",
+            "Nova partida automática: sim"
+          ]
+        },
+        {
+          "id": "ch-h",
+          "kind": "label",
+          "name": "chessHint",
+          "text": "Dicas: arraste o tabuleiro para girar a câmera e use a roda do mouse para o zoom. “Girar” vira o tabuleiro para o lado das pretas. Clique em um relógio para pausar ou continuar.",
+          "x": 65,
+          "y": 1246,
+          "width": "700px",
+          "height": "56px",
+          "bg": "transparent",
+          "color": "#64748b",
+          "events": {}
+        },
+        {
+          "id": "ch-ft",
+          "kind": "footer",
+          "name": "footer",
+          "text": "© FlowForge WebStudio",
+          "x": 24,
+          "y": 1332,
+          "width": "calc(100% - 48px)",
+          "height": 70,
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "eca8ad2d-e645-4c23-90a9-a6c85cf03b16",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 729,
+          "y": 274,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "2c80a11e-ec77-44b8-a55f-8a402624793b",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 1414,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};\nif(!window.ffChess){(function(){\nvar C=window.ffChess={};\nfunction snd(n,v){try{if(window.Sons)window.Sons.play(n,v)}catch(e){}} // sons (componente Game Sound), se o projeto tiver\nvar SYM={K:'♚',Q:'♛',R:'♜',B:'♝',N:'♞',P:'♟︎'};\nvar PT={K:'R',Q:'D',R:'T',B:'B',N:'C',P:''};\nvar NOME={Q:'Dama',R:'Torre',B:'Bispo',N:'Cavalo'};\nvar VAL={P:100,N:320,B:330,R:500,Q:900,K:0};\nvar KEY='ffChessV1';\nvar KN=[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];\nvar KG=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];\nvar DG=[[-1,-1],[-1,1],[1,-1],[1,1]];\nvar OR=[[-1,0],[1,0],[0,-1],[0,1]];\nfunction isW(p){return p>='A'&&p<='Z'}\nfunction col(p){return isW(p)?'w':'b'}\nfunction sqName(i){return 'abcdefgh'.charAt(i%8)+(8-(i>>3))}\nfunction startBoard(){var b=[],back='rnbqkbnr',i;for(i=0;i<64;i++)b.push(null);for(i=0;i<8;i++){b[i]=back.charAt(i);b[8+i]='p';b[48+i]='P';b[56+i]=back.charAt(i).toUpperCase()}return b}\nfunction newState(){return{b:startBoard(),t:'w',c:{K:1,Q:1,k:1,q:1},ep:-1,hm:0,fm:1}}\n\n/* ---------- regras ---------- */\nfunction attacked(b,sq,by){\n var r=sq>>3,c=sq&7,i,d,rr,cc,p,L=function(x){return by==='w'?x:x.toLowerCase()};\n var pr=by==='w'?r+1:r-1;\n if(pr>=0&&pr<8){if(c>0&&b[pr*8+c-1]===L('P'))return true;if(c<7&&b[pr*8+c+1]===L('P'))return true}\n for(i=0;i<8;i++){rr=r+KN[i][0];cc=c+KN[i][1];if(rr>=0&&rr<8&&cc>=0&&cc<8&&b[rr*8+cc]===L('N'))return true}\n for(i=0;i<8;i++){rr=r+KG[i][0];cc=c+KG[i][1];if(rr>=0&&rr<8&&cc>=0&&cc<8&&b[rr*8+cc]===L('K'))return true}\n for(i=0;i<4;i++){rr=r+DG[i][0];cc=c+DG[i][1];while(rr>=0&&rr<8&&cc>=0&&cc<8){p=b[rr*8+cc];if(p){if(p===L('B')||p===L('Q'))return true;break}rr+=DG[i][0];cc+=DG[i][1]}}\n for(i=0;i<4;i++){rr=r+OR[i][0];cc=c+OR[i][1];while(rr>=0&&rr<8&&cc>=0&&cc<8){p=b[rr*8+cc];if(p){if(p===L('R')||p===L('Q'))return true;break}rr+=OR[i][0];cc+=OR[i][1]}}\n return false}\nfunction kingSq(b,t){var k=t==='w'?'K':'k',i;for(i=0;i<64;i++)if(b[i]===k)return i;return -1}\nfunction inCheck(S,t){return attacked(S.b,kingSq(S.b,t),t==='w'?'b':'w')}\nfunction gen(S){\n var b=S.b,t=S.t,out=[],opp=t==='w'?'b':'w',i,p,u,r,c,k,rr,cc,q,to;\n function addP(f,to,cap,lastRank){if(lastRank){['Q','R','B','N'].forEach(function(x){out.push({f:f,t:to,p:x,cap:cap||null})})}else out.push({f:f,t:to,cap:cap||null})}\n for(i=0;i<64;i++){p=b[i];if(!p||col(p)!==t)continue;u=p.toUpperCase();r=i>>3;c=i&7;\n  if(u==='P'){\n   var dir=t==='w'?-1:1,start=t==='w'?6:1,last=t==='w'?0:7,r1=r+dir;\n   if(r1>=0&&r1<8){\n    if(!b[r1*8+c]){addP(i,r1*8+c,null,r1===last);if(r===start&&!b[(r+2*dir)*8+c])out.push({f:i,t:(r+2*dir)*8+c,dp:1,cap:null})}\n    for(k=-1;k<=1;k+=2){cc=c+k;if(cc<0||cc>7)continue;to=r1*8+cc;q=b[to];\n     if(q&&col(q)!==t)addP(i,to,q,r1===last);\n     else if(!q&&to===S.ep)out.push({f:i,t:to,ep:1,cap:t==='w'?'p':'P'})}}\n  }else if(u==='N'||u==='K'){\n   var D=u==='N'?KN:KG;\n   for(k=0;k<8;k++){rr=r+D[k][0];cc=c+D[k][1];if(rr<0||rr>7||cc<0||cc>7)continue;to=rr*8+cc;q=b[to];if(!q||col(q)!==t)out.push({f:i,t:to,cap:q||null})}\n   if(u==='K'){\n    if(t==='w'&&i===60){\n     if(S.c.K&&!b[61]&&!b[62]&&b[63]==='R'&&!attacked(b,60,opp)&&!attacked(b,61,opp)&&!attacked(b,62,opp))out.push({f:60,t:62,cs:'K',cap:null});\n     if(S.c.Q&&!b[59]&&!b[58]&&!b[57]&&b[56]==='R'&&!attacked(b,60,opp)&&!attacked(b,59,opp)&&!attacked(b,58,opp))out.push({f:60,t:58,cs:'Q',cap:null})}\n    if(t==='b'&&i===4){\n     if(S.c.k&&!b[5]&&!b[6]&&b[7]==='r'&&!attacked(b,4,opp)&&!attacked(b,5,opp)&&!attacked(b,6,opp))out.push({f:4,t:6,cs:'K',cap:null});\n     if(S.c.q&&!b[3]&&!b[2]&&!b[1]&&b[0]==='r'&&!attacked(b,4,opp)&&!attacked(b,3,opp)&&!attacked(b,2,opp))out.push({f:4,t:2,cs:'Q',cap:null})}}\n  }else{\n   var dirs=u==='B'?DG:(u==='R'?OR:DG.concat(OR));\n   for(k=0;k<dirs.length;k++){rr=r+dirs[k][0];cc=c+dirs[k][1];\n    while(rr>=0&&rr<8&&cc>=0&&cc<8){to=rr*8+cc;q=b[to];if(q){if(col(q)!==t)out.push({f:i,t:to,cap:q});break}out.push({f:i,t:to,cap:null});rr+=dirs[k][0];cc+=dirs[k][1]}}}}\n return out}\nfunction apply(S,m){\n var b=S.b.slice(),p=b[m.f],t=S.t,cap=b[m.t],c={K:S.c.K,Q:S.c.Q,k:S.c.k,q:S.c.q};\n b[m.f]=null;\n if(m.ep)b[m.t+(t==='w'?8:-8)]=null;\n b[m.t]=m.p?(t==='w'?m.p:m.p.toLowerCase()):p;\n if(m.cs){if(m.t===62){b[63]=null;b[61]='R'}else if(m.t===58){b[56]=null;b[59]='R'}else if(m.t===6){b[7]=null;b[5]='r'}else{b[0]=null;b[3]='r'}}\n if(p==='K'){c.K=0;c.Q=0}if(p==='k'){c.k=0;c.q=0}\n [m.f,m.t].forEach(function(s){if(s===63)c.K=0;if(s===56)c.Q=0;if(s===7)c.k=0;if(s===0)c.q=0});\n return{b:b,t:t==='w'?'b':'w',c:c,ep:m.dp?(m.f+m.t)/2:-1,hm:(p.toUpperCase()==='P'||cap||m.ep)?0:S.hm+1,fm:S.fm+(t==='b'?1:0)}}\nfunction legal(S){var me=S.t,opp=me==='w'?'b':'w';return gen(S).filter(function(m){var n=apply(S,m);return !attacked(n.b,kingSq(n.b,me),opp)})}\nfunction perft(S,d){if(d===0)return 1;var L=legal(S);if(d===1)return L.length;var n=0,i;for(i=0;i<L.length;i++)n+=perft(apply(S,L[i]),d-1);return n}\nfunction fromFen(f){\n var a=f.split(' '),b=[],i,ch,rows=a[0].split('/'),r,c;\n for(r=0;r<8;r++){for(i=0;i<rows[r].length;i++){ch=rows[r].charAt(i);if(ch>='1'&&ch<='8'){for(c=0;c<+ch;c++)b.push(null)}else b.push(ch)}}\n var cs=a[2]||'-';\n return{b:b,t:a[1]==='b'?'b':'w',c:{K:cs.indexOf('K')>=0?1:0,Q:cs.indexOf('Q')>=0?1:0,k:cs.indexOf('k')>=0?1:0,q:cs.indexOf('q')>=0?1:0},\n  ep:a[3]&&a[3]!=='-'?(8-(+a[3].charAt(1)))*8+'abcdefgh'.indexOf(a[3].charAt(0)):-1,hm:+(a[4]||0),fm:+(a[5]||1)}}\nfunction san(S,m,L){\n var p=S.b[m.f],u=p.toUpperCase(),s='',cap=S.b[m.t]||m.ep;\n if(m.cs)s=m.cs==='K'?'O-O':'O-O-O';\n else if(u==='P'){if(cap)s+=sqName(m.f).charAt(0)+'x';s+=sqName(m.t);if(m.p)s+='='+PT[m.p]}\n else{s+=PT[u];\n  var amb=L.filter(function(x){return !(x.f===m.f&&x.t===m.t&&x.p===m.p)&&S.b[x.f]===p&&x.t===m.t});\n  if(amb.length){var sf=amb.some(function(x){return(x.f&7)===(m.f&7)}),sr=amb.some(function(x){return(x.f>>3)===(m.f>>3)});\n   if(!sf)s+=sqName(m.f).charAt(0);else if(!sr)s+=sqName(m.f).charAt(1);else s+=sqName(m.f)}\n  if(cap)s+='x';s+=sqName(m.t)}\n var n=apply(S,m);if(inCheck(n,n.t))s+=legal(n).length?'+':'#';\n return s}\n\n/* ---------- computador ---------- */\nfunction evalS(S){\n var s=0,i,p,u,r,c,v,cen;\n for(i=0;i<64;i++){p=S.b[i];if(!p)continue;u=p.toUpperCase();r=i>>3;c=i&7;v=VAL[u];cen=7-Math.abs(c-3.5)-Math.abs(r-3.5);\n  if(u==='N'||u==='B')v+=cen*6;else if(u==='P')v+=(isW(p)?6-r:r-1)*8+cen*2;else if(u==='Q')v+=cen;\n  s+=isW(p)?v:-v}\n return S.t==='w'?s:-s}\nfunction order(L){return L.sort(function(a,b){return((b.cap?VAL[b.cap.toUpperCase()]*10:0)+(b.p?800:0))-((a.cap?VAL[a.cap.toUpperCase()]*10:0)+(a.p?800:0))})}\nfunction search(S,d,a,b){\n var L=legal(S),i,v;\n if(!L.length)return inCheck(S,S.t)?-100000-d:0;\n if(d===0)return evalS(S);\n order(L);\n for(i=0;i<L.length;i++){v=-search(apply(S,L[i]),d-1,-b,-a);if(v>a)a=v;if(a>=b)break}\n return a}\nfunction best(S,depth,noise){\n var L=order(legal(S)),bm=null,bv=-Infinity,i,v;\n for(i=0;i<L.length;i++){v=-search(apply(S,L[i]),depth-1,-Infinity,Infinity)+(Math.random()*2-1)*noise;if(v>bv){bv=v;bm=L[i]}}\n return bm}\n\n/* ---------- partida ---------- */\nvar G={S:newState(),hist:[],sel:-1,targets:[],flip:false,last:null,over:false,msg:'',thinking:false,legal:null,paused:false,timeMsg:'',cw:0,cb:0,t0:0,scored:false,score:[0,0,0],timer:null};\nfunction modeKind(){var t=($('chessMode')&&$('chessMode').value)||'';if(t.indexOf('Computador x')>=0)return 'pcpc';if(t.indexOf('fácil')>=0)return 'easy';if(t.indexOf('médio')>=0)return 'med';return '2p'}\nfunction cpuTurn(){var k=modeKind();return k==='pcpc'||((k==='easy'||k==='med')&&G.S.t==='b')}\nfunction delay(){var v=($('chessSpeed')&&$('chessSpeed').value)||'';return v.indexOf('Lento')>=0?1000:(v.indexOf('Rápido')>=0?60:380)}\nfunction tcOf(){var v=($('chessTime')&&$('chessTime').value)||'';\n var T={'1 min':[60,0],'3 min + 2 s':[180,2],'5 min':[300,0],'5 min + 3 s':[300,3],'10 min':[600,0],'15 min + 10 s':[900,10],'30 min':[1800,0]};\n var r=T[v];return r?{base:r[0],inc:r[1],up:false}:{base:0,inc:0,up:true}}\nfunction mmss(x){x=Math.max(0,Math.floor(x));var m=Math.floor(x/60),sc=x%60;return(m<10?'0':'')+m+':'+(sc<10?'0':'')+sc}\nfunction now(){return(window.performance&&performance.now)?performance.now():Date.now()}\nfunction lacks(S,c){var pcs=S.b.filter(function(p){return p&&col(p)===c&&p.toUpperCase()!=='K'});return !pcs.length||(pcs.length===1&&'NB'.indexOf(pcs[0].toUpperCase())>=0)}\nfunction keyOf(S){return S.b.map(function(p){return p||'.'}).join('')+S.t+S.c.K+S.c.Q+S.c.k+S.c.q+S.ep}\nfunction autoOn(){return(($('chessAuto')&&$('chessAuto').value)||'').indexOf('sim')>=0}\nfunction legalNow(){if(!G.legal)G.legal=legal(G.S);return G.legal}\nfunction result(){\n if(G.timeMsg)return G.timeMsg;\n var S=G.S,L=legalNow(),w=S.t==='w'?'brancas':'pretas',o=S.t==='w'?'Pretas':'Brancas';\n if(!L.length)return inCheck(S,S.t)?'Xeque-mate! '+o+' vencem.':'Empate por afogamento (rei sem lances).';\n var pcs=S.b.filter(function(p){return p&&p.toUpperCase()!=='K'});\n if(!pcs.length||(pcs.length===1&&'NB'.indexOf(pcs[0].toUpperCase())>=0))return 'Empate por material insuficiente.';\n if(S.hm>=100)return 'Empate pela regra dos 50 lances.';\n if(G.hist.length>=300)return 'Empate por limite de lances (150 jogadas).';\n var k=keyOf(S),n=0;G.hist.forEach(function(h){if(keyOf(h.after)===k)n++});if(n>=3)return 'Empate por repetição de posição.';\n return ''}\nfunction captured(){\n var cw=[],cb=[],mat=0;\n G.hist.forEach(function(h){var c=h.m.cap;if(!c)return;if(isW(c)){cb.push(c.toUpperCase());mat-=VAL[c.toUpperCase()]}else{cw.push(c.toUpperCase());mat+=VAL[c.toUpperCase()]}});\n function show(a){a.sort(function(x,y){return VAL[y]-VAL[x]});return a.map(function(x){return SYM[x]}).join('')||'—'}\n return{w:show(cw),b:show(cb),mat:mat/100}}\nC.ui=function(){\n var S=G.S,L=legalNow(),txt;\n G.msg=result();G.over=!!G.msg;\n if(G.over)txt=G.msg;\n else if(G.paused)txt='Partida pausada';\n else{txt='Vez das '+(S.t==='w'?'brancas':'pretas');if(inCheck(S,S.t))txt+=' — Xeque!';if(cpuTurn())txt+=G.thinking?' — computador pensando…':' (computador)'}\n if(G.over&&!G.scored){G.scored=true;snd(/vencem/.test(G.msg)?'win':'blip');var o=/vencem/.test(G.msg)?(/Brancas vencem/.test(G.msg)?0:2):1;G.score[o]++;C.save();if(modeKind()==='pcpc'&&autoOn())setTimeout(function(){if(G.over&&modeKind()==='pcpc'&&autoOn())C.reset(false)},3200)}\n $('chessStatus').textContent=txt;\n var out=[],i;for(i=0;i<G.hist.length;i+=2){out.push((i/2+1)+'. '+G.hist[i].san+(G.hist[i+1]?' '+G.hist[i+1].san:''))}\n var mv=$('chessMoves');mv.value=out.join('\\n');mv.scrollTop=mv.scrollHeight;\n var cp=captured();$('chessCaptured').textContent='Brancas capturaram: '+cp.w+'     Pretas capturaram: '+cp.b+(Math.round(cp.mat)?'     Vantagem: '+(cp.mat>0?'brancas +':'pretas +')+Math.abs(Math.round(cp.mat)):'');\n $('chessUndo').disabled=!G.hist.length||G.thinking;\n var pb=$('chessPause');if(pb)pb.textContent=G.paused?'Continuar':'Pausar';\n var sc=$('chessScore');if(sc)sc.textContent='Placar:  Brancas '+G.score[0]+'  •  Empates '+G.score[1]+'  •  Pretas '+G.score[2];\n C.draw();C.drawClocks()}\nC.draw=function(){\n var c=$('chessBoard');if(!c)return;var x=c.getContext('2d'),s=c.width/8,f=G.flip,r,cl,i,p,kx;\n var FONT=Math.round(s*0.78)+'px \"Segoe UI Symbol\",\"DejaVu Sans\",\"Noto Sans Symbols 2\",\"Apple Symbols\",sans-serif';\n x.clearRect(0,0,c.width,c.height);\n var chk=inCheck(G.S,G.S.t)?kingSq(G.S.b,G.S.t):-1;\n for(r=0;r<8;r++)for(cl=0;cl<8;cl++){\n  i=f?63-(r*8+cl):r*8+cl;\n  x.fillStyle=(r+cl)%2?'#b58863':'#f0d9b5';x.fillRect(cl*s,r*s,s,s);\n  if(G.last&&(i===G.last.f||i===G.last.t)){x.fillStyle='rgba(250,220,60,.5)';x.fillRect(cl*s,r*s,s,s)}\n  if(i===G.sel){x.fillStyle='rgba(66,165,245,.6)';x.fillRect(cl*s,r*s,s,s)}\n  if(i===chk){var g=x.createRadialGradient(cl*s+s/2,r*s+s/2,s*.08,cl*s+s/2,r*s+s/2,s*.6);g.addColorStop(0,'rgba(255,0,0,.85)');g.addColorStop(1,'rgba(255,0,0,0)');x.fillStyle=g;x.fillRect(cl*s,r*s,s,s)}\n  x.font='bold '+Math.round(s*.17)+'px sans-serif';x.textAlign='left';x.textBaseline='top';\n  x.fillStyle=(r+cl)%2?'#f0d9b5':'#b58863';\n  if(r===7)x.fillText('abcdefgh'.charAt(f?7-cl:cl),cl*s+s-Math.round(s*.17)-3,r*s+s-Math.round(s*.17)-4);\n  if(cl===0)x.fillText(String(f?r+1:8-r),3,r*s+3)}\n x.textAlign='center';x.textBaseline='middle';x.font=FONT;\n for(r=0;r<8;r++)for(cl=0;cl<8;cl++){\n  i=f?63-(r*8+cl):r*8+cl;p=G.S.b[i];if(!p)continue;\n  var u=p.toUpperCase(),px=cl*s+s/2,py=r*s+s/2+s*.04;\n  if(isW(p)){x.lineWidth=s*.05;x.strokeStyle='#1f2937';x.strokeText(SYM[u],px,py);x.fillStyle='#ffffff';x.fillText(SYM[u],px,py)}\n  else{x.lineWidth=s*.03;x.strokeStyle='#f8fafc';x.strokeText(SYM[u],px,py);x.fillStyle='#1f2937';x.fillText(SYM[u],px,py)}}\n G.targets.forEach(function(m){\n  var idx=f?63-m.t:m.t,cx=(idx&7)*s+s/2,cy=(idx>>3)*s+s/2;\n  x.beginPath();\n  if(G.S.b[m.t]||m.ep){x.lineWidth=s*.08;x.strokeStyle='rgba(20,20,20,.35)';x.arc(cx,cy,s*.42,0,Math.PI*2);x.stroke()}\n  else{x.fillStyle='rgba(20,20,20,.3)';x.arc(cx,cy,s*.16,0,Math.PI*2);x.fill()}})}\nC.play=function(m){\n var S=G.S,L=legalNow(),sn=san(S,m,L),tc=tcOf();\n C.tick();\n var n=apply(S,m);G.hist.push({m:m,san:sn,before:S,after:n,clk:{w:G.cw,b:G.cb}});\n if(!tc.up){if(S.t==='w')G.cw+=tc.inc;else G.cb+=tc.inc}\n G.S=n;G.legal=null;G.sel=-1;G.targets=[];G.last=m;G.t0=now();\n snd(S.b[m.t]||m.ep?'hit':'move');if(inCheck(n,n.t))setTimeout(function(){snd('error')},150);\n C.save();C.ui();C.sched()};\nC.sched=function(){\n if(!G.over&&!G.paused&&!G.thinking&&cpuTurn()){G.thinking=true;C.ui();setTimeout(C.cpu,delay())}};\nC.cpu=function(){\n if(!G.thinking)return;\n if(G.paused||G.over){G.thinking=false;C.ui();return}\n var k=modeKind(),m=best(G.S,k==='med'?3:(k==='easy'?1:2),k==='easy'?60:(k==='med'?4:30));\n G.thinking=false;if(m)C.play(m);else C.ui()};\nC.pick=function(i){\n if(G.over||G.thinking||G.paused||cpuTurn())return;\n var S=G.S,p=S.b[i],L=legalNow();\n if(G.sel>=0&&G.sel!==i){\n  var cand=G.targets.filter(function(m){return m.t===i});\n  if(cand.length){\n   var want='Q',pv=($('chessPromo')&&$('chessPromo').value)||'';\n   if(pv.indexOf('Torre')>=0)want='R';else if(pv.indexOf('Bispo')>=0)want='B';else if(pv.indexOf('Cavalo')>=0)want='N';\n   var m=cand.filter(function(x){return !x.p||x.p===want})[0]||cand[0];\n   C.play(m);return}}\n if(p&&col(p)===S.t){G.sel=i;G.targets=L.filter(function(m){return m.f===i})}else{G.sel=-1;G.targets=[]}\n C.draw()};\nC.click=function(ev){\n var c=$('chessBoard'),r=c.getBoundingClientRect();\n var x=(ev.clientX-r.left)*c.width/r.width,y=(ev.clientY-r.top)*c.height/r.height,s=c.width/8;\n var cl=Math.floor(x/s),rw=Math.floor(y/s);if(cl<0||cl>7||rw<0||rw>7)return;\n C.pick(G.flip?63-(rw*8+cl):rw*8+cl)};\nC.undo=function(){\n if(G.thinking||!G.hist.length)return;\n C.tick();\n var k=modeKind(),h=G.hist.pop();\n if((k==='easy'||k==='med')&&G.hist.length&&G.hist.length%2===1)h=G.hist.pop();\n if(k==='pcpc')G.paused=true;\n G.timeMsg='';G.scored=false;\n G.cw=h.clk.w;G.cb=h.clk.b;\n G.S=G.hist.length?G.hist[G.hist.length-1].after:newState();G.legal=null;G.sel=-1;G.targets=[];\n G.last=G.hist.length?G.hist[G.hist.length-1].m:null;G.t0=now();C.save();C.ui()};\nC.resetClocks=function(){var tc=tcOf();G.cw=G.cb=tc.up?0:tc.base;G.t0=now()};\nC.reset=function(ask){\n if(ask&&G.hist.length&&!G.over&&!confirm('Começar uma nova partida? A atual será perdida.'))return;\n G.thinking=false;G.paused=false;G.timeMsg='';G.scored=false;\n G.S=newState();G.hist=[];G.legal=null;G.sel=-1;G.targets=[];G.last=null;C.resetClocks();C.save();C.ui();C.sched()};\nC.flip=function(){G.flip=!G.flip;C.save();C.draw();C.drawClocks()};\nC.modeChanged=function(){C.save();C.ui();C.sched()};\nC.timeChanged=function(){if(G.hist.length&&!G.over&&!confirm('Mudar o tempo reinicia os relógios desta partida. Continuar?')){return}C.resetClocks();G.timeMsg='';C.save();C.ui()};\nC.pause=function(){\n if(G.over)return;C.tick();G.paused=!G.paused;G.t0=now();C.save();C.ui();if(!G.paused)C.sched()};\n/* ---------- relógio de xadrez analógico ---------- */\nfunction timeoutMsg(loser){var win=loser==='w'?'b':'w',n=win==='w'?'Brancas':'Pretas';return lacks(G.S,win)?'Tempo esgotado — as '+n.toLowerCase()+' não têm material para dar mate: empate.':'Tempo esgotado! '+n+' vencem.'}\nC.tick=function(){\n var t=now(),dt=(t-G.t0)/1000;G.t0=t;\n if(!G.hist.length||G.over||G.paused)return false;\n var tc=tcOf(),k=G.S.t;\n if(tc.up){if(k==='w')G.cw+=dt;else G.cb+=dt;return false}\n if(k==='w')G.cw-=dt;else G.cb-=dt;\n if((k==='w'?G.cw:G.cb)<=0){if(k==='w')G.cw=0;else G.cb=0;G.timeMsg=timeoutMsg(k);G.thinking=false;G.sel=-1;G.targets=[];C.ui();return true}\n return false};\nC.loop=function(){C.tick();C.drawClocks()};\nfunction dial(cv,secs,up,active,name){\n if(!cv)return;\n var x=cv.getContext('2d'),W=cv.width,cx=W/2,cy=W/2,R=W/2-6,i,a,low=!up&&secs<10,out=!up&&secs<=0;\n x.clearRect(0,0,W,W);\n var g=x.createLinearGradient(0,0,W,W);g.addColorStop(0,'#4a4a4a');g.addColorStop(1,'#0f0f0f');\n x.beginPath();x.arc(cx,cy,R,0,6.2832);x.fillStyle=g;x.fill();\n if(active){x.lineWidth=5;x.strokeStyle='#22c55e';x.beginPath();x.arc(cx,cy,R-2,0,6.2832);x.stroke()}\n x.beginPath();x.arc(cx,cy,R-10,0,6.2832);x.fillStyle=low?'#fbd5d5':'#fbf4e2';x.fill();\n for(i=0;i<60;i++){a=i*Math.PI/30;var big=i%5===0,r1=R-13,r2=R-13-(big?11:5);x.lineWidth=big?2.4:1;x.strokeStyle='#2b2b2b';x.beginPath();x.moveTo(cx+Math.sin(a)*r1,cy-Math.cos(a)*r1);x.lineTo(cx+Math.sin(a)*r2,cy-Math.cos(a)*r2);x.stroke()}\n x.fillStyle='#222';x.font='bold '+Math.round(W*.085)+'px Georgia,serif';x.textAlign='center';x.textBaseline='middle';\n for(i=1;i<=12;i++){a=i*Math.PI/6;x.fillText(String(i),cx+Math.sin(a)*(R-36),cy-Math.cos(a)*(R-36))}\n x.font='bold '+Math.round(W*.065)+'px sans-serif';x.fillStyle='#7c2d12';x.fillText(name,cx,cy+R*.36);\n /* bandeirinha: sobe no último minuto e cai quando o tempo acaba */\n if(!up&&secs<=60){x.save();x.translate(cx,cy-R*.52);x.fillStyle='#dc2626';\n  if(out){x.fillRect(-16,-4,32,16);x.fillStyle='#fff';x.font='bold 13px sans-serif';x.fillText('!',0,4)}\n  else{x.fillRect(-1,-12,2,16);x.beginPath();x.moveTo(1,-12);x.lineTo(15,-7);x.lineTo(1,-2);x.fill()}\n  x.restore()}\n /* o ponteiro avança até as 12:00 exatamente quando o tempo termina (ou parte das 12:00, no modo cronômetro) */\n var D=up?secs%43200:Math.max(0,43200-Math.min(secs,43200))%43200;\n var ah=D/43200*6.2832,am=(D%3600)/3600*6.2832,as=(D%60)/60*6.2832;\n function hand(ang,len,w,col,tail){x.lineWidth=w;x.strokeStyle=col;x.lineCap='round';x.beginPath();x.moveTo(cx-Math.sin(ang)*tail,cy+Math.cos(ang)*tail);x.lineTo(cx+Math.sin(ang)*len,cy-Math.cos(ang)*len);x.stroke()}\n hand(ah,R*.48,7,'#111',8);hand(am,R*.74,4.5,'#111',10);\n if(!out)hand(as,R*.8,1.6,'#c0172a',14);\n x.beginPath();x.arc(cx,cy,6,0,6.2832);x.fillStyle='#c0172a';x.fill();x.beginPath();x.arc(cx,cy,2.2,0,6.2832);x.fillStyle='#fff';x.fill()}\nC.drawClocks=function(){\n var tc=tcOf(),run=G.hist.length&&!G.over&&!G.paused;\n dial($('chessClockW'),G.cw,tc.up,run&&G.S.t==='w','BRANCAS');\n dial($('chessClockB'),G.cb,tc.up,run&&G.S.t==='b','PRETAS');\n var lw=$('chessClockWLabel'),lb=$('chessClockBLabel');\n if(lw)lw.textContent='Brancas  '+mmss(G.cw);if(lb)lb.textContent='Pretas  '+mmss(G.cb)};\nC.clockClick=function(){C.pause()};\nC.save=function(){try{var ix=function(i){return $(i)?$(i).selectedIndex:0};localStorage.setItem(KEY,JSON.stringify({mode:ix('chessMode'),promo:ix('chessPromo'),speed:ix('chessSpeed'),time:ix('chessTime'),auto:ix('chessAuto'),cw:G.cw,cb:G.cb,paused:G.paused,score:G.score,flip:G.flip,moves:G.hist.map(function(h){return[h.m.f,h.m.t,h.m.p||'']})}))}catch(e){}};\nC.load=function(){\n var d=null;try{d=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}\n if(!d){if($('chessTime'))$('chessTime').value='10 min';C.resetClocks();return}\n var sel=function(i,v){if($(i)&&v>=0&&v<$(i).options.length)$(i).selectedIndex=v};\n sel('chessMode',d.mode);sel('chessPromo',d.promo);sel('chessSpeed',d.speed);sel('chessTime',d.time);sel('chessAuto',d.auto);\n G.flip=!!d.flip;G.paused=!!d.paused;if(d.score&&d.score.length===3)G.score=d.score;\n (d.moves||[]).forEach(function(mv){\n  var L=legal(G.S),m=L.filter(function(x){return x.f===mv[0]&&x.t===mv[1]&&(x.p||'')===mv[2]})[0];\n  if(!m)return;var sn=san(G.S,m,L),n=apply(G.S,m);G.hist.push({m:m,san:sn,before:G.S,after:n});G.S=n;G.last=m});\n G.legal=null;\n if(typeof d.cw==='number'&&typeof d.cb==='number'){G.cw=d.cw;G.cb=d.cb}else C.resetClocks();\n G.t0=now();\n if(G.hist.length&&!tcOf().up){if(G.cw<=0)G.timeMsg=timeoutMsg('w');else if(G.cb<=0)G.timeMsg=timeoutMsg('b')}\n if(result())G.scored=true};\nC.init=function(){C.load();C.ui();C.sched();if(!G.timer)G.timer=setInterval(C.loop,100)};\nC.test={clock:function(){return{cw:G.cw,cb:G.cb}},setClock:function(w,b){G.cw=w;G.cb=b;G.t0=now()},fromFen:fromFen,perft:perft,legal:legal,apply:apply,state:function(){return G},setState:function(S){G.S=S;G.legal=null;G.hist=[]},newState:newState,best:best,inCheck:inCheck,kingSq:kingSq};\n})();}\n\n/* Renderizador 3D (WebGL puro, sem bibliotecas) para o motor window.ffChess.\n   Substitui C.draw e C.click: o tabuleiro e as peças viram malhas 3D (peças torneadas),\n   com iluminação, sombras suaves, câmera orbital (arraste/roda), animação dos lances e\n   seleção por raio. Se o navegador não tiver WebGL, volta ao desenho 2D. */\nif(window.ffChess&&!window.ffChess.gl3d){(function(){\nvar C=window.ffChess,PI=Math.PI;\nvar st=function(){return C.test.state()};\nvar $g=function(i){return document.getElementById(i)};\nvar R={c:null,gl:null,fail:false,yaw:0,yawT:0,pitch:.92,dist:15.5,flip:false,len:-1,an:null,raf:0,frames:0,down:null,moved:false,suppress:false,lastT:0,vp:null,eye:[0,0,0],W:0,H:0};\nvar HT={P:.78,R:.92,N:1.02,B:1.2,Q:1.34,K:1.42};\n\n/* ---------- construtor de malhas ---------- */\nfunction M(){this.v=[]}\nM.prototype.t=function(a,b,c,na,nb,nc){var v=this.v;v.push(a[0],a[1],a[2],na[0],na[1],na[2],b[0],b[1],b[2],nb[0],nb[1],nb[2],c[0],c[1],c[2],nc[0],nc[1],nc[2])};\nfunction nrm(x,y,z){var l=Math.sqrt(x*x+y*y+z*z)||1;return[x/l,y/l,z/l]}\nfunction arc(cx,cy,rx,ry,a0,a1,n){var o=[],i,a;for(i=0;i<=n;i++){a=(a0+(a1-a0)*i/n)*PI/180;o.push([rx*Math.cos(a),cy+ry*Math.sin(a)])}return o}\n/* torno: perfil [[raio,altura],...] de baixo para cima, terminando no eixo */\nM.prototype.lathe=function(prof,ox,oy,oz,seg){\n seg=seg||32;ox=ox||0;oy=oy||0;oz=oz||0;\n var sn=[],i,k;\n for(i=0;i<prof.length-1;i++){var dr=prof[i+1][0]-prof[i][0],dy=prof[i+1][1]-prof[i][1],l=Math.sqrt(dr*dr+dy*dy);sn.push(l<1e-6?null:[dy/l,-dr/l])}\n var self=this;\n function nlo(i){var n=sn[i],p=i>0?sn[i-1]:null;if(n&&p&&n[0]*p[0]+n[1]*p[1]>.8)return nrm(n[0]+p[0],n[1]+p[1],0);return n}\n function nhi(i){var n=sn[i],q=i+1<sn.length?sn[i+1]:null;if(n&&q&&n[0]*q[0]+n[1]*q[1]>.8)return nrm(n[0]+q[0],n[1]+q[1],0);return n}\n for(i=0;i<sn.length;i++){\n  if(!sn[i])continue;\n  var a0=prof[i],a1=prof[i+1],n0=nlo(i),n1=nhi(i);\n  for(k=0;k<seg;k++){\n   var t0=k/seg*2*PI,t1=(k+1)/seg*2*PI,c0=Math.cos(t0),s0=Math.sin(t0),c1=Math.cos(t1),s1=Math.sin(t1);\n   var p00=[a0[0]*c0+ox,a0[1]+oy,a0[0]*s0+oz],p01=[a0[0]*c1+ox,a0[1]+oy,a0[0]*s1+oz],p10=[a1[0]*c0+ox,a1[1]+oy,a1[0]*s0+oz],p11=[a1[0]*c1+ox,a1[1]+oy,a1[0]*s1+oz];\n   var q00=[n0[0]*c0,n0[1],n0[0]*s0],q01=[n0[0]*c1,n0[1],n0[0]*s1],q10=[n1[0]*c0,n1[1],n1[0]*s0],q11=[n1[0]*c1,n1[1],n1[0]*s1];\n   self.t(p00,p01,p11,q00,q01,q11);self.t(p00,p11,p10,q00,q11,q10)}}\n};\nM.prototype.sphere=function(cx,cy,cz,r,seg){this.lathe(arc(0,0,r,r,-90,90,12),cx,cy,cz,seg||20)};\nM.prototype.box=function(cx,cy,cz,sx,sy,sz,ry){\n ry=ry||0;var c=Math.cos(ry),s=Math.sin(ry),hx=sx/2,hy=sy/2,hz=sz/2,self=this;\n function P(x,y,z){return[cx+x*c+z*s,cy+y,cz-x*s+z*c]}\n function N(x,y,z){return[x*c+z*s,y,-x*s+z*c]}\n function face(n,u,v,w){ // n normal; 4 cantos\n  var a=P.apply(0,u),b=P.apply(0,v),d=P.apply(0,w),e=P.apply(0,[v[0]+w[0]-u[0],v[1]+w[1]-u[1],v[2]+w[2]-u[2]]),nn=N.apply(0,n);\n  self.t(a,b,d,nn,nn,nn);self.t(b,e,d,nn,nn,nn)}\n face([0,1,0],[-hx,hy,-hz],[hx,hy,-hz],[-hx,hy,hz]);\n face([0,-1,0],[-hx,-hy,hz],[hx,-hy,hz],[-hx,-hy,-hz]);\n face([0,0,1],[-hx,-hy,hz],[-hx,hy,hz],[hx,-hy,hz]);\n face([0,0,-1],[hx,-hy,-hz],[hx,hy,-hz],[-hx,-hy,-hz]);\n face([1,0,0],[hx,-hy,hz],[hx,hy,hz],[hx,-hy,-hz]);\n face([-1,0,0],[-hx,-hy,-hz],[-hx,hy,-hz],[-hx,-hy,hz])};\nfunction ears(poly){ // triangulação por \"ear clipping\" (polígono anti-horário)\n var idx=poly.map(function(_,i){return i}),out=[],guard=0;\n function cr(a,b,c){return(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0])}\n function inside(p,a,b,c){return cr(a,b,p)>=0&&cr(b,c,p)>=0&&cr(c,a,p)>=0}\n while(idx.length>3&&guard++<500){\n  var found=false,i;\n  for(i=0;i<idx.length;i++){\n   var ia=idx[(i+idx.length-1)%idx.length],ib=idx[i],ic=idx[(i+1)%idx.length],a=poly[ia],b=poly[ib],c=poly[ic];\n   if(cr(a,b,c)<=0)continue;\n   var ok=true;idx.forEach(function(j){if(j!==ia&&j!==ib&&j!==ic&&inside(poly[j],a,b,c))ok=false});\n   if(ok){out.push([ia,ib,ic]);idx.splice(i,1);found=true;break}}\n  if(!found)break}\n if(idx.length===3)out.push([idx[0],idx[1],idx[2]]);\n return out}\nM.prototype.extrude=function(poly,th,ry,oy,sc){\n var c=Math.cos(ry),s=Math.sin(ry),h=th/2,self=this;\n function P(p,z){var x=p[0]*sc,y=p[1]*sc+oy;return[x*c+z*s,y,-x*s+z*c]}\n function N(x,y,z){return[x*c+z*s,y,-x*s+z*c]}\n ears(poly).forEach(function(t){\n  var nf=N(0,0,1),nb=N(0,0,-1);\n  self.t(P(poly[t[0]],h),P(poly[t[1]],h),P(poly[t[2]],h),nf,nf,nf);\n  self.t(P(poly[t[2]],-h),P(poly[t[1]],-h),P(poly[t[0]],-h),nb,nb,nb)});\n for(var i=0;i<poly.length;i++){\n  var a=poly[i],b=poly[(i+1)%poly.length],dx=b[0]-a[0],dy=b[1]-a[1],l=Math.sqrt(dx*dx+dy*dy)||1,n=N(dy/l,-dx/l,0);\n  self.t(P(a,h),P(a,-h),P(b,-h),n,n,n);self.t(P(a,h),P(b,-h),P(b,h),n,n,n)}};\n\n/* ---------- peças ---------- */\nvar BASE=[[0,0],[.37,0],[.39,.04],[.37,.09],[.31,.13]];\nfunction pawn(){var m=new M();m.lathe(BASE.concat([[.22,.17],[.15,.3],[.13,.37],[.23,.41],[.23,.45],[.15,.47],[.10,.49]]).concat(arc(0,.62,.16,.16,-50,90,10)));return m}\nfunction rook(){var m=new M(),i;m.lathe(BASE.concat([[.27,.17],[.21,.24],[.2,.52],[.25,.58],[.31,.63],[.31,.78],[0,.78]]));\n for(i=0;i<4;i++){var a=PI/4+i*PI/2;m.box(Math.cos(a)*.2,.85,Math.sin(a)*.2,.17,.14,.17,-a)}return m}\nfunction bishop(){var m=new M();m.lathe(BASE.concat([[.25,.17],[.18,.25],[.12,.46],[.21,.53],[.21,.57],[.12,.61]]).concat(arc(0,.83,.17,.27,-62,90,14)));m.sphere(0,1.13,0,.075,14);return m}\nfunction queen(){var m=new M(),i;m.lathe(BASE.concat([[.29,.17],[.2,.26],[.14,.56],[.25,.63],[.25,.69],[.15,.74],[.19,.92],[.27,1.08],[.22,1.12],[0,1.12]]));\n for(i=0;i<8;i++){var a=i*PI/4;m.sphere(Math.cos(a)*.22,1.16,Math.sin(a)*.22,.05,10)}m.sphere(0,1.26,0,.085,14);return m}\nfunction king(){var m=new M();m.lathe(BASE.concat([[.29,.17],[.2,.26],[.14,.56],[.25,.63],[.25,.69],[.15,.74],[.19,.92],[.25,1.06],[.2,1.1],[.16,1.12],[0,1.12]]));\n m.box(0,1.28,0,.09,.34,.09,0);m.box(0,1.33,0,.27,.09,.09,0);return m}\nvar HORSE=[[-.26,.1],[.26,.1],[.24,.28],[.10,.44],[.30,.50],[.37,.58],[.31,.67],[.16,.81],[.12,.95],[.02,.85],[-.10,.83],[-.24,.60],[-.32,.34]];\nfunction knight(){var m=new M();m.lathe(BASE.concat([[.27,.16],[.24,.2],[0,.2]]));m.extrude(HORSE,.44,0,.12,1.0);return m}\n\n/* ---------- matrizes ---------- */\nfunction persp(f,a,n,fa){var t=1/Math.tan(f/2),o=new Float32Array(16);o[0]=t/a;o[5]=t;o[10]=(fa+n)/(n-fa);o[11]=-1;o[14]=2*fa*n/(n-fa);return o}\nfunction look(e,t){var f=nrm(t[0]-e[0],t[1]-e[1],t[2]-e[2]),s=nrm(-f[2],0,f[0]);// s = f x (0,1,0)\n var u=[s[1]*f[2]-s[2]*f[1],s[2]*f[0]-s[0]*f[2],s[0]*f[1]-s[1]*f[0]];\n var o=new Float32Array(16);o[0]=s[0];o[4]=s[1];o[8]=s[2];o[1]=u[0];o[5]=u[1];o[9]=u[2];o[2]=-f[0];o[6]=-f[1];o[10]=-f[2];\n o[12]=-(s[0]*e[0]+s[1]*e[1]+s[2]*e[2]);o[13]=-(u[0]*e[0]+u[1]*e[1]+u[2]*e[2]);o[14]=f[0]*e[0]+f[1]*e[1]+f[2]*e[2];o[15]=1;return{m:o,f:f,s:s,u:u}}\nfunction mul(a,b){var o=new Float32Array(16),i,j,k,v;for(i=0;i<4;i++)for(j=0;j<4;j++){v=0;for(k=0;k<4;k++)v+=a[k*4+j]*b[i*4+k];o[i*4+j]=v}return o}\n\n/* ---------- GL ---------- */\nvar VS='attribute vec3 a_p;attribute vec3 a_n;uniform mat4 u_vp;uniform vec3 u_pos;uniform vec3 u_sc;uniform float u_ry;varying vec3 v_w;varying vec3 v_n;varying vec2 v_l;'+\n'void main(){vec3 p=a_p*u_sc;float c=cos(u_ry),s=sin(u_ry);vec3 r=vec3(p.x*c+p.z*s,p.y,-p.x*s+p.z*c);vec3 n=vec3(a_n.x*c+a_n.z*s,a_n.y,-a_n.x*s+a_n.z*c);v_w=r+u_pos;v_n=n;v_l=a_p.xz*2.0;gl_Position=u_vp*vec4(v_w,1.0);}';\nvar FS='precision mediump float;varying vec3 v_w;varying vec3 v_n;varying vec2 v_l;uniform vec3 u_col;uniform float u_a;uniform float u_mode;uniform float u_spec;uniform float u_shin;uniform sampler2D u_tex;uniform vec3 u_eye;'+\n'void main(){'+\n' if(u_mode>1.5){float d=length(v_l);float a=u_a;'+\n'  if(u_mode<2.5){}'+\n'  else if(u_mode<3.5){if(d>1.0)discard;a*=1.0-smoothstep(0.15,1.0,d);}'+\n'  else if(u_mode<4.5){if(d>1.0)discard;a*=1.0-smoothstep(0.0,1.0,d);}'+\n'  else if(u_mode<5.5){if(d>1.0)discard;a*=1.0-smoothstep(0.82,1.0,d);}'+\n'  else{if(d>1.0||d<0.74)discard;a*=smoothstep(0.74,0.80,d)*(1.0-smoothstep(0.94,1.0,d));}'+\n'  gl_FragColor=vec4(u_col,a);return;}'+\n' vec3 N=normalize(v_n);vec3 L1=normalize(vec3(-0.45,1.0,0.55));vec3 L2=normalize(vec3(0.7,0.45,-0.6));vec3 V=normalize(u_eye-v_w);'+\n' float d1=max(dot(N,L1),0.0);float d2=max(dot(N,L2),0.0)*0.32;'+\n' vec3 base=u_mode>0.5?texture2D(u_tex,(v_w.xz+5.0)/10.0).rgb:u_col;'+\n' vec3 H=normalize(L1+V);float sp=pow(max(dot(N,H),0.0),u_shin)*u_spec;'+\n' float rim=pow(1.0-max(dot(N,V),0.0),3.0)*0.10;'+\n' vec3 col=base*(0.40+0.10*N.y+0.78*d1+d2)+vec3(sp)+vec3(rim);'+\n' gl_FragColor=vec4(col,1.0);}';\n\nfunction sh(gl,t,s){var o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(o));return o}\nfunction buf(gl,m){var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(m.v),gl.STATIC_DRAW);return{b:b,n:m.v.length/6}}\n\nfunction boardTex(gl){\n var cv=document.createElement('canvas');cv.width=cv.height=1024;var x=cv.getContext('2d'),k=1024/10,r,c,i;\n x.fillStyle='#5a3920';x.fillRect(0,0,1024,1024);\n var g=x.createLinearGradient(0,0,1024,1024);g.addColorStop(0,'rgba(255,255,255,.07)');g.addColorStop(1,'rgba(0,0,0,.18)');x.fillStyle=g;x.fillRect(0,0,1024,1024);\n x.strokeStyle='#c9a46a';x.lineWidth=3;x.strokeRect(k*.78,k*.78,1024-2*k*.78,1024-2*k*.78);\n for(r=0;r<8;r++)for(c=0;c<8;c++){x.fillStyle=(r+c)%2?'#a9744a':'#efd7ab';x.fillRect((c+1)*k,(r+1)*k,k+1,k+1)}\n // veios suaves\n for(i=0;i<120;i++){x.strokeStyle='rgba(60,30,10,'+(Math.random()*.05).toFixed(3)+')';x.beginPath();var yy=Math.random()*1024;x.moveTo(k,yy);x.bezierCurveTo(300,yy+8,700,yy-8,1024-k,yy+Math.random()*6);x.stroke()}\n x.fillStyle='#e8cf9e';x.font='bold '+Math.round(k*.36)+'px sans-serif';x.textAlign='center';x.textBaseline='middle';\n for(i=0;i<8;i++){var L='abcdefgh'.charAt(i),D=String(8-i);\n  x.fillText(L,(i+1.5)*k,9.5*k);x.fillText(D,.5*k,(i+1.5)*k);\n  x.save();x.translate((i+1.5)*k,.5*k);x.rotate(PI);x.fillText(L,0,0);x.restore();\n  x.save();x.translate(9.5*k,(i+1.5)*k);x.rotate(PI);x.fillText(D,0,0);x.restore()}\n var t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,cv);\n gl.generateMipmap(gl.TEXTURE_2D);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);\n var an=gl.getExtension('EXT_texture_filter_anisotropic');if(an)gl.texParameterf(gl.TEXTURE_2D,an.TEXTURE_MAX_ANISOTROPY_EXT,4);\n return t}\n\nfunction initGL(c){\n var gl=null;try{gl=c.getContext('webgl',{antialias:true,alpha:false})||c.getContext('experimental-webgl',{antialias:true,alpha:false})}catch(e){}\n if(!gl)return false;\n try{\n  var p=gl.createProgram();gl.attachShader(p,sh(gl,gl.VERTEX_SHADER,VS));gl.attachShader(p,sh(gl,gl.FRAGMENT_SHADER,FS));gl.linkProgram(p);\n  if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));\n  gl.useProgram(p);R.p=p;R.U={};['u_vp','u_pos','u_sc','u_ry','u_col','u_a','u_mode','u_spec','u_shin','u_tex','u_eye'].forEach(function(n){R.U[n]=gl.getUniformLocation(p,n)});\n  R.ap=gl.getAttribLocation(p,'a_p');R.an_=gl.getAttribLocation(p,'a_n');\n  var q=new M();q.t([-.5,0,-.5],[.5,0,-.5],[-.5,0,.5],[0,1,0],[0,1,0],[0,1,0]);q.t([.5,0,-.5],[.5,0,.5],[-.5,0,.5],[0,1,0],[0,1,0],[0,1,0]);\n  var b=new M();b.box(0,0,0,1,1,1,0);\n  R.mesh={P:buf(gl,pawn()),R:buf(gl,rook()),N:buf(gl,knight()),B:buf(gl,bishop()),Q:buf(gl,queen()),K:buf(gl,king()),quad:buf(gl,q),box:buf(gl,b)};\n  R.tex=boardTex(gl);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,R.tex);gl.uniform1i(R.U.u_tex,0);\n  gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.disable(gl.CULL_FACE);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);\n  R.gl=gl;return true}catch(e){R.err=String(e&&e.message||e);return false}}\n\nfunction draw(mesh,x,y,z,ry,sx,sy,sz,col,a,mode,spec,shin){\n var gl=R.gl,U=R.U,m=R.mesh[mesh];\n gl.bindBuffer(gl.ARRAY_BUFFER,m.b);gl.enableVertexAttribArray(R.ap);gl.vertexAttribPointer(R.ap,3,gl.FLOAT,false,24,0);gl.enableVertexAttribArray(R.an_);gl.vertexAttribPointer(R.an_,3,gl.FLOAT,false,24,12);\n gl.uniform3f(U.u_pos,x,y,z);gl.uniform3f(U.u_sc,sx,sy,sz);gl.uniform1f(U.u_ry,ry);gl.uniform3f(U.u_col,col[0],col[1],col[2]);gl.uniform1f(U.u_a,a);gl.uniform1f(U.u_mode,mode);gl.uniform1f(U.u_spec,spec||0);gl.uniform1f(U.u_shin,shin||16);\n gl.drawArrays(gl.TRIANGLES,0,m.n)}\n\n/* ---------- câmera ---------- */\nfunction cam(){\n var T=R.T||[0,.25,.1],cp=Math.cos(R.pitch),e=[T[0]+R.dist*cp*Math.sin(R.yaw),T[1]+R.dist*Math.sin(R.pitch),T[2]+R.dist*cp*Math.cos(R.yaw)];\n var v=look(e,T),fov=38*PI/180,asp=R.W/Math.max(1,R.H);\n R.eye=e;R.cv=v;R.fov=fov;R.asp=asp;R.vp=mul(persp(fov,asp,.5,80),v.m)}\nfunction toScreen(x,y,z){var v=R.vp,w=v[3]*x+v[7]*y+v[11]*z+v[15];return[(v[0]*x+v[4]*y+v[8]*z+v[12])/w,(v[1]*x+v[5]*y+v[9]*z+v[13])/w]}\nfunction sqXZ(i){return[(i&7)-3.5,(i>>3)-3.5]}\n\n/* ---------- quadro ---------- */\nvar WCOL=[.93,.89,.79],BCOL=[.17,.15,.16];\nfunction pieces(){\n var g=st(),b=g.S.b,out=[],an=R.an,i,t=1,e=1;\n if(an){t=Math.min(1,(performance.now()-an.t0)/an.dur);e=t<.5?2*t*t:1-2*(1-t)*(1-t)}\n var skip={},m=an&&an.m;\n if(an&&t<1){skip[m.t]=1;\n  var mover=an.before[m.f],cap=an.before[m.t];\n  var A=sqXZ(m.f),B=sqXZ(m.t);\n  out.push({p:mover,x:A[0]+(B[0]-A[0])*e,y:Math.sin(t*PI)*.75,z:A[1]+(B[1]-A[1])*e,s:1});\n  if(mover&&mover.toUpperCase()==='P'&&!cap&&(m.f&7)!==(m.t&7)){var ci=(m.f>>3)*8+(m.t&7);cap=an.before[ci];var Cc=sqXZ(ci);if(cap)out.push({p:cap,x:Cc[0],y:-e*.5,z:Cc[1],s:1-e})}\n  else if(cap)out.push({p:cap,x:B[0],y:-e*.5,z:B[1],s:1-e});\n  if(mover&&mover.toUpperCase()==='K'&&Math.abs(m.t-m.f)===2){\n   var rf=m.t>m.f?m.f+3:m.f-4,rt=m.t>m.f?m.f+1:m.f-1,RA=sqXZ(rf),RB=sqXZ(rt);skip[rt]=1;\n   out.push({p:an.before[rf],x:RA[0]+(RB[0]-RA[0])*e,y:Math.sin(t*PI)*.3,z:RA[1]+(RB[1]-RA[1])*e,s:1})}}\n for(i=0;i<64;i++){if(b[i]&&!skip[i]){var P=sqXZ(i);out.push({p:b[i],x:P[0],y:i===g.sel?.16:0,z:P[1],s:1,sq:i})}}\n return out}\n\nfunction frame(){\n R.raf=0;var c=R.c;if(!c||!document.body.contains(c)||!R.gl)return;\n var g=st(),rc=c.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2),W=Math.max(2,Math.round(rc.width*dpr)),H=Math.max(2,Math.round(rc.height*dpr));\n if(rc.width<2)return;\n if(c.width!==W||c.height!==H){c.width=W;c.height=H}\n R.W=W;R.H=H;var gl=R.gl,U=R.U,more=false;\n var nt=performance.now(),dt=R.ft?Math.min(100,nt-R.ft):16;R.ft=nt;\n if(Math.abs(R.yawT-R.yaw)>.002){R.yaw+=(R.yawT-R.yaw)*(1-Math.exp(-dt/110));more=true}else R.yaw=R.yawT;\n if(R.an){if(performance.now()-R.an.t0>=R.an.dur)R.an=null;else more=true}\n cam();\n gl.viewport(0,0,W,H);gl.clearColor(.09,.12,.18,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);\n gl.uniformMatrix4fv(U.u_vp,false,R.vp);gl.uniform3f(U.u_eye,R.eye[0],R.eye[1],R.eye[2]);\n // mesa, base e tabuleiro\n draw('box',0,-.9,0,0,60,.1,60,[.07,.08,.11],1,0,.1,8);\n draw('box',0,-.36,0,0,10.5,.7,10.5,[.23,.14,.08],1,0,.25,20);\n draw('quad',0,0,0,0,10,1,10,[1,1,1],1,1,.0,8);\n // marcações (translúcidas)\n gl.enable(gl.BLEND);gl.depthMask(false);\n var last=g.last,chk=-1,Sx=g.S,k,i;\n function sq(i,col,a,mode,sc,y){var P=sqXZ(i);draw('quad',P[0],y||.006,P[1],0,sc||1,1,sc||1,col,a,mode||2,0,8)}\n if(last){sq(last.f,[.98,.85,.2],.42);sq(last.t,[.98,.85,.2],.5)}\n if(g.sel>=0)sq(g.sel,[.25,.65,.98],.65);\n var kk=Sx.t==='w'?'K':'k';for(i=0;i<64;i++)if(Sx.b[i]===kk){chk=i;break}\n if(chk>=0&&C.test.inCheck(Sx,Sx.t))sq(chk,[1,.1,.1],.95,4,1.35);\n (g.targets||[]).forEach(function(m){var cap=Sx.b[m.t]||m.ep;if(cap)sq(m.t,[.9,.2,.2],.9,6,1.0,.008);else sq(m.t,[.1,.1,.1],.38,5,.34,.008)});\n var list=pieces();\n list.forEach(function(o){if(o.s>.3)draw('quad',o.x+.09,.01,o.z-.07,0,.95*o.s,1,.95*o.s,[0,0,0],.38,3,0,8)});\n gl.depthMask(true);gl.disable(gl.BLEND);\n list.forEach(function(o){\n  var w=o.p===o.p.toUpperCase(),u=o.p.toUpperCase();\n  draw(u,o.x,o.y,o.z,u==='N'?(w?PI/4:-3*PI/4):0,o.s,o.s,o.s,w?WCOL:BCOL,1,0,w?.55:.85,w?36:60)});\n R.frames++;\n if(more)kick();else R.ft=0}\nfunction kick(){if(!R.raf&&R.gl)R.raf=requestAnimationFrame(frame)}\n/* ---------- seleção por raio ---------- */\nfunction rayAt(ev){\n var c=R.c,rc=c.getBoundingClientRect(),nx=(ev.clientX-rc.left)/rc.width*2-1,ny=1-(ev.clientY-rc.top)/rc.height*2,v=R.cv,th=Math.tan(R.fov/2);\n return{o:R.eye,d:nrm(v.f[0]+v.s[0]*nx*th*R.asp+v.u[0]*ny*th,v.f[1]+v.s[1]*nx*th*R.asp+v.u[1]*ny*th,v.f[2]+v.s[2]*nx*th*R.asp+v.u[2]*ny*th)}}\nfunction pickSq(ev){\n if(!R.vp)return -1;var r=rayAt(ev),o=r.o,d=r.d,g=st(),best=1e9,res=-1,i;\n if(Math.abs(d[1])>1e-6){var tp=-o[1]/d[1];if(tp>0){var hx=o[0]+d[0]*tp,hz=o[2]+d[2]*tp,cx=Math.floor(hx+4),cz=Math.floor(hz+4);if(cx>=0&&cx<8&&cz>=0&&cz<8){best=tp;res=cz*8+cx}}}\n for(i=0;i<64;i++){var p=g.S.b[i];if(!p)continue;\n  var P=sqXZ(i),px=o[0]-P[0],pz=o[2]-P[1],a=d[0]*d[0]+d[2]*d[2],b=2*(px*d[0]+pz*d[2]),cc=px*px+pz*pz-.3*.3,D=b*b-4*a*cc;\n  if(D<0||a<1e-9)continue;var t=(-b-Math.sqrt(D))/(2*a),y=o[1]+d[1]*t;\n  if(t>0&&y>=0&&y<=HT[p.toUpperCase()]*.95&&t<best){best=t;res=i}}\n return res}\n\n/* ---------- integração com o motor ---------- */\nC.draw2d=C.draw;C.click2d=C.click;\nfunction ensure(){\n var c=$g('chessBoard');if(!c)return false;\n if(R.c===c)return !R.fail;\n R.c=c;R.fail=false;R.gl=null;\n if(!initGL(c)){R.fail=true;return false}\n var g=st();R.flip=!!g.flip;R.yaw=R.yawT=g.flip?PI:0;\n c.style.touchAction='none';c.style.cursor='grab';\n c.addEventListener('pointerdown',function(e){R.down={x:e.clientX,y:e.clientY,yaw:R.yawT,pitch:R.pitch};R.moved=false;try{c.setPointerCapture(e.pointerId)}catch(_){}});\n c.addEventListener('pointermove',function(e){if(!R.down)return;var dx=e.clientX-R.down.x,dy=e.clientY-R.down.y;\n  if(!R.moved&&Math.hypot(dx,dy)>5){R.moved=true;c.style.cursor='grabbing'}\n  if(R.moved){R.yawT=R.yaw=R.down.yaw-dx*.008;R.pitch=Math.max(.3,Math.min(1.5,R.down.pitch+dy*.006));kick()}});\n var up=function(){if(R.moved){R.suppress=true;setTimeout(function(){R.suppress=false},60)}R.down=null;c.style.cursor='grab'};\n c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up);\n c.addEventListener('wheel',function(e){e.preventDefault();R.dist=Math.max(7,Math.min(22,R.dist*Math.exp(e.deltaY*.001)));kick()},{passive:false});\n c.addEventListener('webglcontextlost',function(e){e.preventDefault()});\n return true}\nC.draw=function(){\n if(!ensure()){return C.draw2d()}\n var g=st(),n=g.hist.length,now=performance.now();\n if(R.flip!==!!g.flip){R.flip=!!g.flip;R.yawT+=PI}\n if(R.len>=0&&n===R.len+1){var h=g.hist[n-1];if(h&&h.before)R.an={m:h.m,before:h.before.b,t0:now,dur:Math.max(70,Math.min(420,(now-R.lastT)*.85))}}\n else if(n!==R.len)R.an=null;\n if(n!==R.len)R.lastT=now;\n R.len=n;kick()};\nC.click=function(ev){\n if(R.fail)return C.click2d(ev);\n if(R.suppress||R.moved)return;\n var i=pickSq(ev);if(i>=0)C.pick(i)};\nC.gl3d={ok:function(){return !!R.gl&&!R.fail},error:function(){return R.err||''},frames:function(){return R.frames},\n // posição (coordenadas da janela) do centro de uma casa; útil para testes\n screen:function(i,h){var P=sqXZ(i),s=toScreen(P[0],h||0,P[1]),rc=R.c.getBoundingClientRect();return{x:rc.left+(s[0]+1)/2*rc.width,y:rc.top+(1-s[1])/2*rc.height}},\n camera:function(){return{yaw:R.yaw,yawT:R.yawT,pitch:R.pitch,dist:R.dist}},\n setCamera:function(y,p,d,t){R.yaw=R.yawT=y;R.pitch=p;R.dist=d;R.T=t||null;kick()},\n animating:function(){return !!R.an}};\n})()}\n\nwindow.ffChess.init();\ndocument.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

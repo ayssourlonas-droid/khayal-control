@@ -1,0 +1,55 @@
+import os,sys
+import common,sys
+from playwright.sync_api import sync_playwright
+PORT=os.environ.get('PORT','8766'); f=f'{common.ROOT}/examples/Estudio_de_Camera.flowmobile'
+R=[]
+def t(l,ok,d=''): R.append(ok); print(('✓' if ok else '✗'),l,'' if ok else d)
+with sync_playwright() as p:
+    b=p.chromium.launch(); c=b.new_context(viewport={'width':1100,'height':900}); pg=c.new_page()
+    pg.route('**/*',lambda r: r.continue_() if r.request.url.startswith(('http://localhost','data:','about:','blob:')) else r.abort())
+    pg.goto(f'http://localhost:{PORT}/index.html'); pg.wait_for_timeout(400)
+    pg.evaluate("FlowForgeI18n.setLanguage('pt-BR');document.querySelectorAll('dialog[open]').forEach(d=>d.close())")
+    pg.set_input_files('#fileInput',f); pg.wait_for_timeout(700)
+    open(f'{common.OUT}/Estudio_de_Camera.html','w',encoding='utf-8').write(pg.evaluate("FlowForgeImageAssets.resolveHtml(generated())")); c.close()
+    # 1) com câmera falsa
+    b2=p.chromium.launch(args=['--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream'])
+    ctx=b2.new_context(permissions=['camera'],viewport={'width':430,'height':900}); pg=ctx.new_page(); errs=[]
+    pg.on('pageerror',lambda e:errs.append(str(e))); pg.on('dialog',lambda d:d.accept())
+    pg.goto(f'file://{common.OUT}/Estudio_de_Camera.html'); pg.wait_for_timeout(600)
+    g=lambda js:pg.evaluate(js); txt=lambda i:g(f"document.getElementById('{i}').textContent.trim()")
+    vis=lambda i:g(f"(()=>{{const e=document.getElementById('{i}').closest('.ff-component');return getComputedStyle(e).display!=='none'}})()")
+    t('começa desligada, sem botão interno "Ativar câmera"',txt('status')=='Câmera desligada' and not g("!!document.querySelector('.ff-cam-ui')"))
+    t('Tirar foto e Trocar sempre visíveis; indicador AO VIVO oculto',vis('btnShot') and vis('btnFlip') and not vis('ativo'))
+    pg.click('#btnStart'); pg.wait_for_timeout(1500)
+    t('Ligar (bloco cameraStart) abre a câmera',g("document.getElementById('camera1').videoWidth")>0,g("document.getElementById('camera1').videoWidth"))
+    t('evento camerastart (blocos) atualiza status',txt('status')=='Câmera ligada ✔',txt('status'))
+    t('camerastart mostra o indicador AO VIVO',vis('ativo'))
+    pg.click('#btnShot'); pg.wait_for_timeout(300)
+    t('Tirar foto (capture) preenche a imagem',g("document.getElementById('foto').src.startsWith('data:image/jpeg')"))
+    t('contador de fotos',txt('contador')=='Fotos tiradas: 1',txt('contador'))
+    pg.click('#btnShot'); t('segunda foto soma',txt('contador')=='Fotos tiradas: 2')
+    pg.click('#btnFlip'); pg.wait_for_timeout(1500)
+    t('Trocar reinicia a câmera (facingMode user)',g("document.getElementById('camera1').videoWidth")>0 and g("window.facing")=='user',g("window.facing"))
+    pg.click('#btnDev'); pg.wait_for_timeout(500); t('Listar câmeras',' câmera(s) encontrada(s)' in txt('status'),txt('status'))
+    pg.click('#btnBaixar')
+    pg.wait_for_timeout(300); t('Baixar foto',txt('status')=='Foto baixada ✔',txt('status'))
+    pg.click('#btnStop'); pg.wait_for_timeout(400)
+    t('Desligar (cameraStop) para o vídeo',g("!document.getElementById('camera1').srcObject"))
+    t('evento camerastop atualiza status e oculta botões',txt('status')=='Câmera desligada' and not vis('ativo'),txt('status'))
+    t('sem erros JS',not errs,errs)
+    pg.screenshot(path=f'{common.OUT}/ok.png')
+    ctx.close(); b2.close()
+    # 2) sem câmera: erro amigável
+    b3=p.chromium.launch(); ctx=b3.new_context(viewport={'width':430,'height':900}); pg=ctx.new_page(); errs=[]
+    pg.on('pageerror',lambda e:errs.append(str(e))); pg.goto(f'file://{common.OUT}/Estudio_de_Camera.html'); pg.wait_for_timeout(500)
+    pg.add_init_script("") 
+    pg.evaluate("(()=>{navigator.mediaDevices.getUserMedia=()=>Promise.reject(Object.assign(new Error('x'),{name:'NotAllowedError'}));})()")
+    pg.click('#btnStart'); pg.wait_for_timeout(600)
+    st=pg.evaluate("document.getElementById('status').textContent")
+    t('permissão negada mostra mensagem clara (cameraerror)','Permissão' in st,st)
+    t('sem erro JS não tratado ao falhar',not errs,errs)
+    pg.click('#btnShot'); t('tirar foto sem câmera avisa',pg.evaluate("document.getElementById('status').textContent")=='⚠ Ligue a câmera antes de tirar a foto')
+    pg.click('#btnBaixar'); t('baixar sem foto avisa',pg.evaluate("document.getElementById('status').textContent")=='Tire uma foto antes de baixar')
+    b3.close()
+print('TOTAL',sum(R),'/',len(R))
+sys.exit(0 if all(R) else 1)

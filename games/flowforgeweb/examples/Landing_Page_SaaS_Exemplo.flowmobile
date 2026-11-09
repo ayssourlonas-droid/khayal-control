@@ -1,0 +1,191 @@
+{
+  "version": "0.13.0",
+  "name": "Exemplo - Landing Page SaaS",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#0f172a",
+  "type": "landing",
+  "framework": "bootstrap",
+  "designerMode": "framework",
+  "titlebar": {
+    "name": "titlebar1",
+    "text": "NovaFlow",
+    "height": "52px",
+    "bg": "#0f172a",
+    "color": "#ffffff",
+    "showMenu": false,
+    "autoStyle": true
+  },
+  "pages": [
+    {
+      "id": "23fe91fd-2736-4c0b-afe0-d0879e3d74df",
+      "name": "Landing",
+      "slug": "landing",
+      "items": [
+        {
+          "id": "e43e60a2-3ef8-44e5-b93f-9d1002d34de2",
+          "kind": "navbar",
+          "name": "landingNav",
+          "text": "NovaFlow",
+          "x": 0,
+          "y": 0,
+          "width": "100%",
+          "height": "64px",
+          "bg": "#0f172a",
+          "color": "#ffffff",
+          "events": {}
+        },
+        {
+          "id": "f721b564-3817-4125-96dd-3bfd9a9e7aea",
+          "kind": "hero",
+          "name": "landingHero",
+          "text": "Transforme sua ideia em produto digital",
+          "x": 40,
+          "y": 90,
+          "width": "calc(100% - 80px)",
+          "height": "250px",
+          "bg": "#e0e7ff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "d5013830-85b1-48cc-bb28-7eb05b7abc2f",
+          "kind": "label",
+          "name": "landingLead",
+          "text": "Uma landing page completa, responsiva e pronta para apresentar seu produto.",
+          "x": 70,
+          "y": 365,
+          "width": "80%",
+          "height": "60px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "530aa459-d977-4cbf-a3e9-9d9013fb51fc",
+          "kind": "button",
+          "name": "landingCta",
+          "text": "Começar agora",
+          "x": 70,
+          "y": 445,
+          "width": "180px",
+          "height": "50px",
+          "bg": "#4f46e5",
+          "color": "#ffffff",
+          "events": {
+            "click": "document.getElementById('recursos').scrollIntoView({behavior:'smooth'})"
+          }
+        },
+        {
+          "id": "9fc46afd-fedd-4268-961c-fd103ec84215",
+          "kind": "heading",
+          "name": "recursos",
+          "text": "Tudo que você precisa",
+          "x": 70,
+          "y": 550,
+          "width": "80%",
+          "height": "55px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "7e9833e3-5e37-4127-a0f6-eb3ce1ca43fe",
+          "kind": "card",
+          "name": "feature1",
+          "text": "Visual profissional",
+          "x": 70,
+          "y": 630,
+          "width": "250px",
+          "height": "160px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "c5cb50d7-4bf1-4f8b-80e5-120783c9adb6",
+          "kind": "card",
+          "name": "feature2",
+          "text": "Responsivo",
+          "x": 340,
+          "y": 630,
+          "width": "250px",
+          "height": "160px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "4c158ff4-d12d-4285-9645-777f291e7c35",
+          "kind": "card",
+          "name": "feature3",
+          "text": "Fácil de publicar",
+          "x": 610,
+          "y": 630,
+          "width": "250px",
+          "height": "160px",
+          "bg": "#ffffff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "8c4feef2-2fb4-442c-afdc-8eae9099e476",
+          "kind": "section",
+          "name": "socialProof",
+          "text": "Mais de 1.000 projetos criados com uma experiência visual simples.",
+          "x": 70,
+          "y": 840,
+          "width": "calc(100% - 140px)",
+          "height": "150px",
+          "bg": "#f8fafc",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "bb0c561a-1266-4d78-8319-226281b2a311",
+          "kind": "heading",
+          "name": "finalTitle",
+          "text": "Pronto para lançar?",
+          "x": 70,
+          "y": 1030,
+          "width": "80%",
+          "height": "55px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "221e7849-81a3-4303-895b-9a4dbea6eb19",
+          "kind": "button",
+          "name": "finalCta",
+          "text": "Quero experimentar",
+          "x": 70,
+          "y": 1100,
+          "width": "210px",
+          "height": "50px",
+          "bg": "#111827",
+          "color": "#ffffff",
+          "events": {
+            "click": "alert('Obrigado! Este é um exemplo de landing page.')"
+          }
+        },
+        {
+          "id": "dc0ebf0c-c17c-4dbc-a92d-f6aa82134d00",
+          "kind": "footer",
+          "name": "landingFooter",
+          "text": "NovaFlow • Produto digital para equipes modernas",
+          "x": 0,
+          "y": 1210,
+          "width": "100%",
+          "height": "72px",
+          "bg": "#0f172a",
+          "color": "#ffffff",
+          "events": {}
+        }
+      ]
+    }
+  ],
+  "active": 0,
+  "activePage": "23fe91fd-2736-4c0b-afe0-d0879e3d74df"
+}

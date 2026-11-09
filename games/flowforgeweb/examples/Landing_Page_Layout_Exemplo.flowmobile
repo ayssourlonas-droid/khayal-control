@@ -1,0 +1,183 @@
+{
+  "version": "0.13.0",
+  "name": "FlowForge Landing Layout Demo",
+  "projectVersion": "1.0.0",
+  "icon": "🚀",
+  "favicon": "",
+  "themeColor": "#7c3aed",
+  "type": "landing",
+  "framework": "none",
+  "designerMode": "flowforge",
+  "titlebar": {
+    "name": "titlebar1",
+    "text": "Landing Layout Demo",
+    "height": "52px",
+    "bg": "#111827",
+    "color": "#fff",
+    "showMenu": false,
+    "autoStyle": false
+  },
+  "pages": [
+    {
+      "id": "6aaf0143-713a-47d3-bbfa-22401af5892e",
+      "name": "Landing",
+      "slug": "landing",
+      "isHome": true,
+      "items": [
+        {
+          "id": "7d63609c-3548-4d26-b0a0-352ffa3bec8e",
+          "kind": "header",
+          "name": "header",
+          "text": "FlowForge",
+          "x": 24,
+          "y": 20,
+          "width": "calc(100% - 48px)",
+          "height": 72,
+          "bg": "#fff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "b7a0cec2-4808-40df-b768-491c6dbffec8",
+          "kind": "hero",
+          "name": "hero",
+          "text": "Transforme sua ideia em uma experiência web",
+          "x": 24,
+          "y": 115,
+          "width": "calc(100% - 48px)",
+          "height": 170,
+          "bg": "#f5f3ff",
+          "color": "#4c1d95",
+          "events": {}
+        },
+        {
+          "id": "7876d52c-e4dd-43cb-a556-8236d9d8d228",
+          "kind": "section",
+          "name": "benefits",
+          "text": "Tudo visual: estrutura, conteúdo e navegação.",
+          "x": 24,
+          "y": 310,
+          "width": "calc(100% - 48px)",
+          "height": 120,
+          "bg": "#fff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "d2957932-8bfb-4dc1-bdf7-19bbe08165f8",
+          "kind": "card",
+          "name": "b1",
+          "text": "Rápido",
+          "x": 24,
+          "y": 460,
+          "width": "30%",
+          "height": 110,
+          "bg": "#faf5ff",
+          "color": "#581c87",
+          "events": {}
+        },
+        {
+          "id": "413abf2c-eeee-4bb5-ad3c-599f65a51681",
+          "kind": "card",
+          "name": "b2",
+          "text": "Responsivo",
+          "x": 396,
+          "y": 460,
+          "width": "30%",
+          "height": 110,
+          "bg": "#faf5ff",
+          "color": "#581c87",
+          "events": {}
+        },
+        {
+          "id": "305a53da-427d-45a8-96b6-f336b454f4da",
+          "kind": "card",
+          "name": "b3",
+          "text": "Exportável",
+          "x": 768,
+          "y": 460,
+          "width": "30%",
+          "height": 110,
+          "bg": "#faf5ff",
+          "color": "#581c87",
+          "events": {}
+        },
+        {
+          "id": "41d1a1e7-07e8-4132-895a-730638f19d3e",
+          "kind": "footer",
+          "name": "footer",
+          "text": "© FlowForge",
+          "x": 24,
+          "y": 620,
+          "width": "calc(100% - 48px)",
+          "height": 70,
+          "bg": "#111827",
+          "color": "#fff",
+          "events": {}
+        }
+      ]
+    },
+    {
+      "id": "71c1ce5b-93f6-476e-badc-ec7e5feac536",
+      "name": "Obrigado",
+      "slug": "obrigado",
+      "isHome": false,
+      "items": [
+        {
+          "id": "2637e4f7-360b-4853-b682-5bce3b654067",
+          "kind": "header",
+          "name": "header2",
+          "text": "FlowForge",
+          "x": 24,
+          "y": 20,
+          "width": "calc(100% - 48px)",
+          "height": 72,
+          "bg": "#fff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "92111826-6517-4ed7-9a68-1859c3c9bb80",
+          "kind": "heading",
+          "name": "thanks",
+          "text": "Obrigado!",
+          "x": 24,
+          "y": 130,
+          "width": "calc(100% - 48px)",
+          "height": 70,
+          "bg": "#fff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "8ae159ea-6026-450d-a0c9-27ad394fb606",
+          "kind": "section",
+          "name": "thanksText",
+          "text": "Esta é uma segunda página para testar a navegação e o gerenciamento.",
+          "x": 24,
+          "y": 220,
+          "width": "calc(100% - 48px)",
+          "height": 140,
+          "bg": "#fff",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "d5de7a01-3e26-47b8-a8ba-43332e21cdd5",
+          "kind": "footer",
+          "name": "footer2",
+          "text": "© FlowForge",
+          "x": 24,
+          "y": 400,
+          "width": "calc(100% - 48px)",
+          "height": 70,
+          "bg": "#111827",
+          "color": "#fff",
+          "events": {}
+        }
+      ]
+    }
+  ],
+  "active": 0,
+  "activePage": "6aaf0143-713a-47d3-bbfa-22401af5892e"
+}

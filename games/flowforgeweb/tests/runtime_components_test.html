@@ -1,0 +1,460 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>FlowForge runtime components regression</title>
+<style>
+  body{font:13px/1.5 ui-monospace,Consolas,monospace;margin:12px;background:#111;color:#ddd}
+  .pass{color:#4ade80}.fail{color:#f87171;font-weight:700}
+  iframe{position:absolute;left:-9999px;top:0;width:1300px;height:950px;border:0}
+  #summary{margin:10px 0;font-weight:700}
+</style>
+<h3>FlowForge – jogos, serviços, eventos e proxy no HTML gerado</h3>
+<p>Suíte determinística: rAF controlado manualmente e stubs de gamepad, geolocalização, clipboard, Notification e WebSocket. HTTP usa o próprio servidor da suíte.</p>
+<div id="summary">Executando…</div>
+<pre id="out"></pre>
+<iframe id="app" src="../index.html"></iframe>
+<iframe id="run"></iframe>
+<script>
+const out=document.getElementById('out'),summary=document.getElementById('summary');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const escHtml=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let passed=0,failed=0;
+function check(name,cond,detail){
+  if(cond){passed++;out.insertAdjacentHTML('beforeend','<span class="pass">PASS</span> '+escHtml(name)+'\n');}
+  else{failed++;out.insertAdjacentHTML('beforeend','<span class="fail">FAIL</span> '+escHtml(name)+(detail!==undefined?'  → '+escHtml(JSON.stringify(detail)):'')+'\n');}
+}
+async function waitFor(fn,timeout=3000,step=30){
+  const t0=performance.now();
+  while(performance.now()-t0<timeout){
+    try{if(fn())return true}catch(_){}
+    await sleep(step);
+  }
+  return false;
+}
+function sheetImage(){
+  const c=document.createElement('canvas');c.width=48;c.height=16;
+  const g=c.getContext('2d');
+  [['#ef4444','1'],['#22c55e','2'],['#3b82f6','3']].forEach(([color,label],i)=>{
+    g.fillStyle=color;g.fillRect(i*16,0,16,16);
+    g.fillStyle='#fff';g.font='bold 10px monospace';g.fillText(label,i*16+5,12);
+  });
+  return c.toDataURL('image/png');
+}
+
+async function run(){
+  const appFrame=document.getElementById('app'),runFrame=document.getElementById('run');
+  await new Promise(r=>appFrame.addEventListener('load',r,{once:true}));
+  await sleep(600);
+  let W,D;
+  try{W=appFrame.contentWindow;D=W.document;D.body;}catch(e){
+    summary.textContent='Sem acesso ao app: abra por http://, não por file://';
+    document.body.dataset.test='FAIL';return;
+  }
+  const $=s=>D.querySelector(s);
+  const closeDialogs=()=>D.querySelectorAll('dialog[open]').forEach(x=>x.close());
+
+  /* ---------------- projeto de teste ---------------- */
+  $('[data-new=app]').click();
+  await sleep(300);
+  if($('#siteWizardDlg')?.open){$('#wizCreate').click();await sleep(500);}
+  await sleep(300);closeDialogs();
+
+  const httpURL=location.href.split('#')[0];
+  W.__rtSetup={sheetURL:sheetImage(),httpURL};
+  let info;
+  try{
+    info=W.eval(`
+(function(){
+  const p1=ffEnsurePages()[0];
+  ['gamecanvas','sprite','sprite','collisionarea','spritesheet','keyboardinput','gamepadinput','gametimer','scorelabel','healthbar','joystick','http','websocket','storage','geolocation','notification','clipboard','network','vibration'].forEach(function(k){addItem(k)});
+  const it=ffItems();
+  function pick(k,i){return it.filter(function(x){return x.kind===k})[i||0]}
+  var canvas=pick('gamecanvas'),hero=pick('sprite',0),enemy=pick('sprite',1),goal=pick('collisionarea'),sheet=pick('spritesheet'),keys=pick('keyboardinput'),pad=pick('gamepadinput'),timer=pick('gametimer'),score=pick('scorelabel'),health=pick('healthbar'),joy=pick('joystick'),http=pick('http'),ws=pick('websocket'),store=pick('storage'),geo=pick('geolocation'),note=pick('notification'),clip=pick('clipboard'),net=pick('network'),vib=pick('vibration');
+  Object.assign(canvas,{name:'RTCanvas',x:10,y:10,width:320,height:240,canvasWidth:320,canvasHeight:240,fps:60,autoplay:true,bg:'#111827'});
+  Object.assign(hero,{name:'RTHero',x:40,y:40,width:48,height:48,vx:0,vy:0,collidable:true,tag:'player'});
+  Object.assign(enemy,{name:'RTEnemy',x:160,y:40,width:48,height:48,vx:0,vy:0,collidable:true,tag:'enemy'});
+  Object.assign(goal,{name:'RTGoal',x:280,y:40,width:100,height:60,tag:'goal'});
+  Object.assign(sheet,{name:'RTSheet',x:430,y:300,width:64,height:64,frameWidth:16,frameHeight:16,frame:0,frames:3,fps:10,loop:false,autoplay:true,src:__rtSetup.sheetURL});
+  Object.assign(keys,{name:'RTKeys',enabled:true,preventDefault:false});
+  Object.assign(pad,{name:'RTPad',enabled:true,index:0,deadZone:.15});
+  Object.assign(timer,{name:'RTTimer',interval:40,enabled:true,oneShot:false});
+  Object.assign(score,{name:'RTScore',x:400,y:10,width:140,height:36,value:0,prefix:'Score: '});
+  Object.assign(health,{name:'RTHealth',x:400,y:56,width:180,height:24,value:100,max:100});
+  Object.assign(joy,{name:'RTJoy',x:400,y:100,width:120,height:120,deadZone:.15});
+  Object.assign(http,{name:'RTHttp',url:__rtSetup.httpURL,method:'GET'});
+  Object.assign(ws,{name:'RTWs',url:'ws://fake.test',protocol:'',autoConnect:false});
+  Object.assign(store,{name:'RTStore',key:'ff_rt_key'});
+  Object.assign(geo,{name:'RTGeo',highAccuracy:true,watch:false});
+  Object.assign(note,{name:'RTNotify',title:'RT Notificação',body:'Corpo'});
+  Object.assign(clip,{name:'RTClip'});
+  Object.assign(net,{name:'RTNet'});
+  Object.assign(vib,{name:'RTVib',pattern:200});
+
+  canvas.events={
+    gameStart:"__ev('gcstart',{w:event.detail.width,h:event.detail.height,ctx:!!event.detail.ctx})",
+    gameUpdate:"__ev('gcupdate',event.detail.dt)",
+    gameOver:"__ev('gcover',event.detail.reason)"
+  };
+  hero.events={
+    move:"__ev('heromove',1)",
+    enter:"__ev('heroenter',{name:event.detail.otherName,tag:event.detail.otherTag})",
+    leave:"__ev('heroleave',event.detail.otherName)",
+    collision:"__ev('herocollision',1)"
+  };
+  goal.events={enter:"__ev('goalenter',1)",leave:"__ev('goalleave',1)"};
+  sheet.events={
+    animationStart:"__ev('sheetstart',1)",
+    frame:"__ev('sheetframe',event.detail.frame)",
+    animationEnd:"__ev('sheetend',1)"
+  };
+  keys.events={
+    keydown:"__ev('keydown',event.detail.key)",
+    keyup:"__ev('keyup',event.detail.key)"
+  };
+  pad.events={
+    connected:"__ev('padconnected',event.detail.id)",
+    disconnected:"__ev('paddisconnected',1)",
+    buttondown:"__ev('padbuttondown',event.detail.button)",
+    buttonup:"__ev('padbuttonup',event.detail.button)",
+    axis:"__ev('padaxis',event.detail.value)"
+  };
+  timer.events={tick:"__ev('timer',event.detail.count)"};
+  score.events={change:"__ev('score',event.detail.value)"};
+  health.events={change:"__ev('health',event.detail.value)",empty:"__ev('healthempty',1)"};
+  joy.events={
+    start:"__ev('joystart',event.detail.x)",
+    move:"__ev('joymove',event.detail.x)",
+    end:"__ev('joyend',event.detail.x)"
+  };
+  ws.events={
+    open:"__ev('wsopen',event.detail.protocol||'')",
+    message:"__ev('wsmsg',{data:event.detail.data,ok:event.detail.json&&event.detail.json.ok===true})",
+    close:"__ev('wsclose',event.detail.code)",
+    error:"__ev('wserr',1)"
+  };
+  store.events={change:"__ev('store',{key:event.detail.key,value:event.detail.value})"};
+  geo.events={change:"__ev('geopos',event.detail.latitude)",error:"__ev('geoerr',event.detail.code)"};
+  note.events={click:"__ev('noteclick',1)",close:"__ev('noteclose',1)",error:"__ev('noteerr',1)"};
+  clip.events={change:"__ev('clip',{text:event.detail.text,method:event.detail.method})",error:"__ev('cliperr',1)"};
+  net.events={
+    online:"__ev('netonline',event.detail.online)",
+    offline:"__ev('netoffline',event.detail.online)",
+    change:"__ev('netchange',event.detail.online)"
+  };
+  vib.events={start:"__ev('vibstart',event.detail.duration)",end:"__ev('vibend',1)",error:"__ev('viberr',1)"};
+  http.events={
+    request:"__ev('httpreq',event.detail.method)",
+    response:"__ev('httpres',{status:event.detail.status,type:typeof event.detail.data})",
+    error:"__ev('httperr',1)"
+  };
+
+  render();
+
+  ffAddPage('Second');
+  addItem('gamecanvas');
+  var gc2=ffItems().filter(function(x){return x.kind==='gamecanvas'})[0];
+  Object.assign(gc2,{name:'RTCanvas2',x:10,y:10,width:320,height:240,canvasWidth:320,canvasHeight:240,fps:60,autoplay:true,bg:'#0f172a'});
+  gc2.events={gameStart:"__ev('gc2start',1)",gameOver:"__ev('gc2over',1)"};
+  render();
+  return {page1:p1.id,page2:ffEnsurePages()[1].id};
+})()
+`);
+  }catch(e){
+    check('montar o projeto de teste',false,e.message);
+    summary.textContent='Falha ao montar o projeto';summary.className='fail';document.body.dataset.test='FAIL';return;
+  }
+
+  let html='';
+  try{html=W.generated();}catch(e){check('gerar o HTML exportado',false,e.message);}
+  check('exportação gerada',html.length>20000,html.length);
+  check('runtime de jogos presente no export',html.includes('window.FlowForgeGame='));
+  check('runtime de serviços presente no export',html.includes('window.FlowForgeServices='));
+  check('configuração de runtime contém os itens',html.includes('"RTCanvas"')&&html.includes('"RTSheet"')&&html.includes('"RTHttp"')&&html.includes('"RTJoy"'));
+  check('fonte do spritesheet chega ao canvas',/data-ff-src="data:image\/png;base64,/.test(html));
+  check('componentes não visuais ficam ocultos no export',html.includes('.ff-kind-keyboardinput')&&html.includes('display:none!important'));
+  check('proxy global é gerado para os componentes',html.includes('window["RTCanvas"] = FlowForgeComponent')&&html.includes('window["RTScore"] = FlowForgeComponent'));
+
+  /* ---------------- shim + execução real ---------------- */
+  const patch=`<script>(function(){
+  try{Object.defineProperty(document,'hidden',{configurable:true,get:function(){return false}})}catch(e){}
+  try{Object.defineProperty(document,'visibilityState',{configurable:true,get:function(){return 'visible'}})}catch(e){}
+  try{Object.defineProperty(Document.prototype,'hidden',{configurable:true,get:function(){return false}})}catch(e){}
+  try{Object.defineProperty(Document.prototype,'visibilityState',{configurable:true,get:function(){return 'visible'}})}catch(e){}
+  var pending=null,seq=0,fakeNow=0;
+  window.requestAnimationFrame=function(cb){pending=cb;return ++seq};
+  window.cancelAnimationFrame=function(){pending=null};
+  window.__step=function(ms){fakeNow+=(ms==null?16.667:ms);var cb=pending;pending=null;if(cb){try{cb(fakeNow)}catch(e){console.error('step',e)}}return !!cb};
+  window.__hasFrame=function(){return !!pending};
+  window.__errs=[];
+  window.addEventListener('error',function(e){
+    /* eventos "error" dos componentes (WebSocket, GPS, clipboard…) borbulham até window */
+    if(e instanceof ErrorEvent)window.__errs.push(e.message||String(e.error||'erro'));
+  });
+  window.addEventListener('unhandledrejection',function(e){window.__errs.push('rejection: '+String(e.reason&&e.reason.message||e.reason))});
+  var ce=console.error;console.error=function(){window.__errs.push(Array.prototype.join.call(arguments,' '));ce.apply(console,arguments)};
+  window.__ev=function(name,data){try{var r=window.parent.__rt;var e=r.events;(e[name]=e[name]||[]).push(data===undefined?1:data)}catch(_){}};
+
+  window.__pads=[{index:0,id:'Fake Pad',buttons:[{pressed:false,value:0},{pressed:false,value:0}],axes:[0,0]}];
+  try{Object.defineProperty(Navigator.prototype,'getGamepads',{configurable:true,value:function(){return window.__pads}})}catch(e){}
+  try{Object.defineProperty(navigator,'getGamepads',{configurable:true,value:function(){return window.__pads}})}catch(e){}
+
+  try{Object.defineProperty(Navigator.prototype,'vibrate',{configurable:true,value:function(p){window.__vibCalls=(window.__vibCalls||0)+1;window.__vibPattern=p;return window.__vibReturn!==false}})}catch(e){}
+  try{Object.defineProperty(navigator,'vibrate',{configurable:true,value:function(p){window.__vibCalls=(window.__vibCalls||0)+1;window.__vibPattern=p;return window.__vibReturn!==false}})}catch(e){}
+
+  var geo={
+    getCurrentPosition:function(ok,err){
+      if(window.__geoMode==='error'){err({code:1,message:'negado'});return}
+      ok({coords:{latitude:-23.5,longitude:-46.6,accuracy:5},timestamp:Date.now()});
+    },
+    watchPosition:function(ok,err){
+      window.__geoWatch=(window.__geoWatch||0)+1;
+      if(window.__geoMode==='error'){err({code:2,message:'watch'})}
+      else{ok({coords:{latitude:-23.5,longitude:-46.6,accuracy:5},timestamp:Date.now()})}
+      return 7;
+    },
+    clearWatch:function(id){window.__geoCleared=id}
+  };
+  try{Object.defineProperty(Navigator.prototype,'geolocation',{configurable:true,get:function(){return geo}})}catch(e){}
+  try{Object.defineProperty(navigator,'geolocation',{configurable:true,value:geo})}catch(e){}
+
+  var clip={
+    writeText:function(t){window.__clipText=t;return window.__clipFail?Promise.reject(new Error('negado')):Promise.resolve()},
+    readText:function(){return window.__clipReadFail?Promise.reject(new Error('sem leitura')):Promise.resolve('clip-lido')}
+  };
+  try{Object.defineProperty(Navigator.prototype,'clipboard',{configurable:true,get:function(){return clip}})}catch(e){}
+  try{Object.defineProperty(navigator,'clipboard',{configurable:true,value:clip})}catch(e){}
+
+  function FakeNotification(title,opts){this.title=title;this.body=opts&&opts.body;window.__note=this}
+  FakeNotification.permission='granted';
+  FakeNotification.requestPermission=function(){return Promise.resolve('granted')};
+  window.Notification=FakeNotification;
+
+  function FakeWS(url,protocols){
+    window.__ws=this;
+    this.url=url;this.protocols=protocols||[];
+    this.protocol=Array.isArray(protocols)?(protocols[0]||''):(protocols||'');
+    this.readyState=0;this.sent=[];
+    var self=this;
+    queueMicrotask(function(){if(self.readyState===0){self.readyState=1;if(self.onopen)self.onopen({type:'open'})}});
+  }
+  FakeWS.prototype.send=function(d){this.sent.push(d);window.__wsSent=this.sent.slice()};
+  FakeWS.prototype.close=function(code,reason){
+    this.readyState=3;window.__wsClosed={code:code,reason:reason};
+    if(this.onclose)this.onclose({code:code||1000,reason:reason||'',wasClean:true});
+  };
+  window.WebSocket=FakeWS;
+})();<\/script>`;
+  window.__rt={events:{}};
+  const runHtml=html.replace('<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:flowforgeweb:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>','<head>'+patch);
+  const loaded=new Promise(r=>runFrame.addEventListener('load',r,{once:true}));
+  runFrame.srcdoc=runHtml;
+  await Promise.race([loaded,new Promise(r=>setTimeout(r,6000))]);
+  const RW=runFrame.contentWindow;
+  const ready=await waitFor(()=>RW.FlowForgeGame&&RW.FlowForgeServices&&RW.document.querySelector('.ff-kind-gamecanvas'),4000);
+  check('runtimes instanciados no HTML exportado',ready);
+  if(!ready){summary.textContent='Runtime não iniciou';summary.className='fail';document.body.dataset.test='FAIL';return;}
+
+  const G=RW.FlowForgeGame,S=RW.FlowForgeServices;
+  const ev=n=>(window.__rt.events[n]||[]);
+  const canvas=G.byName('RTCanvas'),hero=G.byName('RTHero'),sheet=G.byName('RTSheet'),keysApi=G.byName('RTKeys'),padApi=G.byName('RTPad'),timerApi=G.byName('RTTimer'),joyApi=G.byName('RTJoy');
+  check('API por nome encontra os componentes',!!canvas&&!!hero&&!!sheet&&!!keysApi&&!!padApi&&!!timerApi&&!!joyApi);
+  check('canvas tem contexto 2D e está rodando',!!canvas&&!!canvas.ctx&&canvas.running===true);
+  check('gameStart disparou uma vez',ev('gcstart').length===1&&ev('gcstart')[0].ctx===true&&ev('gcstart')[0].w===320,ev('gcstart'));
+  check('CSS oculta os componentes de jogo não visuais',['keyboardinput','gamepadinput','gametimer','http','websocket','storage','geolocation','notification','clipboard','network','vibration'].every(k=>{const el=RW.document.querySelector('.ff-kind-'+k);return el&&RW.getComputedStyle(el).display==='none'}));
+  check('serviços não visuais usam markup oculto',RW.document.querySelectorAll('.ff-nonvisual').length===8);
+
+  const sheetReady=await waitFor(()=>sheet&&sheet.playing===true,3000,25);
+  check('spritesheet começa ao carregar a imagem',sheetReady,{playing:sheet&&sheet.playing,frame:sheet&&sheet.frame});
+  await sleep(250);
+
+  /* avança 26 quadros de 50 ms (dt limitado a 0,05 s) */
+  hero.vx=400;
+  for(let i=0;i<26;i++)RW.__step(50);
+
+  check('gameUpdate roda continuamente',ev('gcupdate').length>=20,ev('gcupdate').length);
+  check('gameUpdate informa dt e fps',ev('gcupdate').some(v=>v>0.04&&v<=0.05)&&canvas.fps===60);
+  check('sprite move e dispara move',ev('heromove').length>=20&&hero.x>200,{x:hero.x,moves:ev('heromove').length});
+  check('colisão com Enemy: enter',ev('heroenter').some(e=>e&&e.name==='RTEnemy'&&e.tag==='enemy'),ev('heroenter'));
+  check('colisão com Enemy: leave',ev('heroleave').includes('RTEnemy'),ev('heroleave'));
+  check('colisão com Collision Area: enter',ev('goalenter').length>=1&&ev('heroenter').some(e=>e&&e.name==='RTGoal'),ev('heroenter'));
+  check('colisão com Collision Area: leave',ev('goalleave').length>=1&&ev('heroleave').includes('RTGoal'),ev('heroleave'));
+  check('evento collision do sprite dispara',ev('herocollision').length>0,ev('herocollision').length);
+  check('spritesheet avança quadros',ev('sheetframe').includes(1)&&ev('sheetframe').includes(2),ev('sheetframe'));
+  check('spritesheet emite animationStart e animationEnd',ev('sheetstart').length===1&&ev('sheetend').length===1,{start:ev('sheetstart'),end:ev('sheetend')});
+  check('spritesheet para no último quadro',sheet.playing===false&&sheet.frame===2,{playing:sheet.playing,frame:sheet.frame});
+
+  check('gamepad conecta',ev('padconnected').length===1&&ev('padconnected')[0]==='Fake Pad',ev('padconnected'));
+  RW.__pads[0].buttons[0].pressed=true;RW.__step(50);
+  check('gamepad buttondown',ev('padbuttondown')[0]===0,ev('padbuttondown'));
+  RW.__pads[0].buttons[0].pressed=false;RW.__step(50);
+  check('gamepad buttonup',ev('padbuttonup')[0]===0,ev('padbuttonup'));
+  RW.__pads[0].axes[0]=0.9;RW.__step(50);
+  check('gamepad axis',ev('padaxis')[0]===0.9,ev('padaxis'));
+  check('gamepad API isDown/value',padApi.isDown(0)===false&&padApi.value(0)===0);
+  RW.__pads=[];RW.__step(50);
+  check('gamepad desconecta',ev('paddisconnected').length===1);
+
+  RW.dispatchEvent(new RW.KeyboardEvent('keydown',{key:'a',code:'KeyA',bubbles:true}));
+  check('teclado keydown dispara uma vez',ev('keydown').length===1&&ev('keydown')[0]==='a',ev('keydown'));
+  check('teclado isDown durante a tecla',keysApi.isDown('a')===true);
+  RW.dispatchEvent(new RW.KeyboardEvent('keyup',{key:'a',code:'KeyA',bubbles:true}));
+  check('teclado keyup dispara uma vez',ev('keyup').length===1&&keysApi.isDown('a')===false,ev('keyup'));
+
+  const joyEl=RW.document.querySelector('[data-ff-joystick]');
+  const jr=joyEl.getBoundingClientRect();
+  const cx=jr.left+jr.width/2,cy=jr.top+jr.height/2;
+  joyEl.dispatchEvent(new RW.PointerEvent('pointerdown',{bubbles:true,pointerId:9,clientX:cx+40,clientY:cy}));
+  check('joystick start',ev('joystart').length===1&&joyApi.x>0.5,{x:joyApi.x,ev:ev('joystart')});
+  joyEl.dispatchEvent(new RW.PointerEvent('pointermove',{bubbles:true,pointerId:9,clientX:cx+jr.width/2,clientY:cy}));
+  check('joystick move',ev('joymove').length>=1&&joyApi.x>0.9,{x:joyApi.x});
+  joyEl.dispatchEvent(new RW.PointerEvent('pointerup',{bubbles:true,pointerId:9,clientX:cx,clientY:cy}));
+  check('joystick end zera o vetor',ev('joyend').length===1&&joyApi.x===0,{x:joyApi.x});
+
+  check('proxy do Score lê/escreve valor',(()=>{RW.RTScore.value=42;return RW.RTScore.value===42&&RW.document.querySelector('[data-ff-score-value]').textContent==='42'})());
+  RW.RTScore.add(8);
+  check('proxy do Score incrementa',RW.RTScore.value===50&&ev('score').at(-1)===50,ev('score'));
+  RW.RTScore.prefix='Pts: ';
+  check('proxy do Score altera prefixo',RW.document.querySelector('.ff-score-prefix').textContent==='Pts: ');
+  RW.RTHealth.value=25;
+  const healthBox=RW.document.querySelector('[data-ff-health]');
+  check('proxy do Health atualiza barra',RW.RTHealth.value===25&&healthBox.getAttribute('aria-valuenow')==='25'&&healthBox.querySelector('i').style.width==='25%',healthBox&&healthBox.outerHTML.slice(0,160));
+  RW.RTHealth.damage(100);
+  check('Health emite empty ao zerar',RW.RTHealth.value===0&&ev('healthempty').length===1,ev('healthempty'));
+  RW.RTHealth.heal(40);
+  check('Health heal',RW.RTHealth.value===40);
+
+  await sleep(1300);
+  check('gametimer dispara tick',timerApi.count>=1&&ev('timer').length>=1,{count:timerApi.count});
+  timerApi.stop();
+  const timerCount=timerApi.count;
+  await sleep(120);
+  check('gametimer para',timerApi.running===false&&timerApi.count===timerCount,{count:timerApi.count});
+
+  const WS=S.byName('RTWs');
+  check('WebSocket.connect aceita ws://',WS.connect('ws://fake.test')===true);
+  await Promise.resolve();await Promise.resolve();
+  check('WebSocket emite open e fica conectado',WS.state==='open'&&WS.connected===true&&ev('wsopen').length===1,{state:WS.state});
+  check('WebSocket.send serializa objeto',WS.send({a:1})===true&&RW.__ws.sent.at(-1)==='{"a":1}',RW.__ws.sent);
+  RW.__ws.onmessage({data:'{"ok":true}'});
+  check('WebSocket message decodifica JSON',ev('wsmsg').length===1&&ev('wsmsg')[0].ok===true,ev('wsmsg'));
+  check('WebSocket recusa URL não ws',WS.connect('http://x')===false&&ev('wserr').length===1);
+  check('WebSocket.close emite close',WS.close(1000,'bye')===true&&WS.state==='closed'&&ev('wsclose')[0]===1000,{state:WS.state,close:ev('wsclose')});
+
+  const St=S.byName('RTStore');
+  check('Storage.set usa a chave padrão',St.set('v1')===true);
+  check('Storage.get/has/json',St.get()==='v1'&&St.has()===true&&St.json()==='v1',{get:St.get()});
+  St.set('ff_rt_obj','{"n":3}');
+  check('Storage.json decodifica objeto',St.json('ff_rt_obj')&&St.json('ff_rt_obj').n===3);
+  check('Storage emite change',ev('store').length>=2,ev('store'));
+  St.remove('ff_rt_obj');St.remove();
+  check('Storage.remove',St.has()===false);
+
+  const Geo=S.byName('RTGeo');
+  RW.__geoMode='ok';
+  const pos=await Geo.getCurrent();
+  check('Geolocation retorna posição',pos&&pos.coords.latitude===-23.5&&Geo.latitude===-23.5,{lat:Geo.latitude});
+  check('Geolocation emite change',ev('geopos').length>=1);
+  RW.__geoMode='error';
+  let geoRejected=false;
+  try{await Geo.getCurrent()}catch(_){geoRejected=true}
+  check('Geolocation emite error',geoRejected&&ev('geoerr').includes(1),ev('geoerr'));
+  RW.__geoMode='ok';
+  const wid=Geo.watch();
+  check('Geolocation watch/stop',wid===7&&Geo.watching===true);
+  Geo.stop();
+  check('Geolocation limpa watch',RW.__geoCleared===7&&Geo.watching===false);
+
+  const N=S.byName('RTNotify');
+  check('Notification permission',N.permission==='granted');
+  check('Notification requestPermission',(await N.requestPermission())==='granted');
+  const note=N.show('RT Título',{body:'Corpo'});
+  check('Notification.show cria notificação',!!note&&note.title==='RT Título');
+  note.onclick({});note.onclose({});
+  check('Notification click/close',ev('noteclick').length===1&&ev('noteclose').length===1);
+
+  const C=S.byName('RTClip');
+  check('Clipboard.writeText',(await C.writeText('abc'))===true&&RW.__clipText==='abc');
+  check('Clipboard emite change',ev('clip').length===1&&ev('clip')[0].text==='abc'&&ev('clip')[0].method==='clipboard-api',ev('clip'));
+  check('Clipboard.readText',(await C.readText())==='clip-lido');
+  RW.__clipReadFail=true;
+  check('Clipboard erro de leitura',(await C.readText())===''&&ev('cliperr').length>=1);
+  RW.__clipReadFail=false;
+
+  const Net=S.byName('RTNet');
+  RW.dispatchEvent(new RW.Event('offline'));
+  RW.dispatchEvent(new RW.Event('online'));
+  check('Network offline/online sem duplicar',ev('netoffline').length===1&&ev('netonline').length===1&&ev('netchange').length===2,{off:ev('netoffline'),on:ev('netonline')});
+  check('Network change informa o estado',ev('netchange').some(v=>v===false)&&ev('netchange').some(v=>v===true));
+  check('Network info',Net.info().online===true&&typeof Net.info().effectiveType==='string');
+
+  const V=S.byName('RTVib');
+  RW.__vibReturn=true;
+  check('Vibration.start',V.vibrate(5000)===true&&V.vibrating===true&&ev('vibstart').length===1,{v:V.vibrating});
+  check('Vibration.stop emite end',V.stop()===true&&V.vibrating===false&&ev('vibend').length===1);
+  RW.__vibReturn=false;
+  check('Vibration recusa emite error',V.vibrate(10)===false&&ev('viberr').length===1);
+
+  const H=S.byName('RTHttp');
+  const res=await H.get();
+  check('HTTP responde 200',res.status===200&&res.ok===true,{status:res.status});
+  check('HTTP entrega o corpo',typeof res.data==='string'&&res.data.length>500,{type:typeof res.data,len:res.data&&res.data.length});
+  check('HTTP eventos request/response',ev('httpreq').length===1&&ev('httpreq')[0]==='GET'&&ev('httpres').length===1&&ev('httpres')[0].status===200,{req:ev('httpreq'),res:ev('httpres')});
+
+  const pages=RW.__FLOWFORGE_PAGES__;
+  const secondPage=pages.find(p=>p.name==='Second')||pages[1];
+  canvas.over();
+  check('gameOver via API',ev('gcover').includes('over'),ev('gcover'));
+  canvas.start();
+  const startsBefore=ev('gcstart').length;
+  const toSecond=RW.FlowForgeNavigate(secondPage.id);
+  check('navega para a segunda página',toSecond===true&&G.page===secondPage.id,{page:G.page});
+  check('GC1 recebe gameOver na troca de página',ev('gcover').includes('page'),ev('gcover'));
+  check('GC2 inicia ao entrar na página',ev('gc2start').length===1);
+  const toFirst=RW.FlowForgeNavigate(pages[0].id);
+  check('volta para a primeira página',toFirst===true&&G.page===pages[0].id,{page:G.page});
+  check('GC1 reinicia ao voltar',ev('gcstart').length===startsBefore+1,{starts:ev('gcstart').length,before:startsBefore});
+  check('GC2 recebe gameOver ao sair',ev('gc2over').length===1);
+
+  const errs=RW.__errs.slice();
+  check('nenhum erro de runtime no HTML exportado',errs.length===0,errs.slice(0,3));
+
+  G.stopAll();
+  summary.textContent=failed?`${failed} falha(s), ${passed} ok`:`Tudo certo: ${passed} verificações`;
+  summary.className=failed?'fail':'pass';
+  document.body.dataset.test=failed?'FAIL':'PASS';
+}
+run().catch(e=>{
+  out.insertAdjacentHTML('beforeend','<span class="fail">ERRO</span> '+escHtml(e&&e.stack||e&&e.message||e)+'\n');
+  summary.textContent='Erro no teste';summary.className='fail';document.body.dataset.test='FAIL';
+});
+</script>

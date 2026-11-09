@@ -1,0 +1,23 @@
+{
+  "catalog_entries": 120,
+  "unique_types": 117,
+  "duplicate_keys": {
+    "iframe": 2,
+    "canvas": 2,
+    "map": 2
+  },
+  "tests": {
+    "all_components_test.html": {
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:33903/tests/all_components_test.html\nCall log:\n  - navigating to \"http://127.0.0.1:33903/tests/all_components_test.html\", waiting until \"domcontentloaded\"\n"
+    },
+    "component_semantics_test.html": {
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:33903/tests/component_semantics_test.html\nCall log:\n  - navigating to \"http://127.0.0.1:33903/tests/component_semantics_test.html\", waiting until \"domcontentloaded\"\n"
+    },
+    "generated_events_test.html": {
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:33903/tests/generated_events_test.html\nCall log:\n  - navigating to \"http://127.0.0.1:33903/tests/generated_events_test.html\", waiting until \"domcontentloaded\"\n"
+    },
+    "new_components_test.html": {
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:33903/tests/new_components_test.html\nCall log:\n  - navigating to \"http://127.0.0.1:33903/tests/new_components_test.html\", waiting until \"domcontentloaded\"\n"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+<!doctype html><script>/*khayal-iso*/(function(){try{
+var P='khayal:flowforgeweb:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<title>FlowForge preview assets regression</title>
+<style>
+  body{font:13px/1.5 ui-monospace,Consolas,monospace;margin:12px;background:#111;color:#ddd}
+  .pass{color:#4ade80}.fail{color:#f87171;font-weight:700}
+  iframe{position:absolute;left:-9999px;top:0;width:1700px;height:900px;border:0}
+  #summary{margin:10px 0;font-weight:700}
+</style>
+<h3>FlowForge – imagens (Base64/Assets) no Preview e na exportação</h3>
+<p>Abra por um servidor local: <code>python -m http.server</code> na raiz do projeto e visite <code>/tests/preview_assets_test.html</code>.</p>
+<div id="summary">Executando…</div>
+<pre id="out"></pre>
+<iframe id="app" src="../index.html"></iframe>
+<script>
+const PNG='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC';
+const out=document.getElementById('out'),summary=document.getElementById('summary');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let passed=0,failed=0;
+function check(name,cond,detail){
+  if(cond){passed++;out.insertAdjacentHTML('beforeend','<span class="pass">PASS</span> '+name+'\n');}
+  else{failed++;out.insertAdjacentHTML('beforeend','<span class="fail">FAIL</span> '+name+(detail!==undefined?'  → '+JSON.stringify(detail):'')+'\n');}
+}
+async function run(){
+  const f=document.getElementById('app');
+  await new Promise(r=>f.addEventListener('load',r,{once:true}));
+  await sleep(500);
+  let W,D;
+  try{W=f.contentWindow;D=f.contentDocument;D.body;}catch(e){
+    summary.textContent='Sem acesso ao app: abra por http://, não por file://';document.body.dataset.test='FAIL';return;
+  }
+  const $=s=>D.querySelector(s);
+  const closeDialogs=()=>D.querySelectorAll('dialog[open]').forEach(x=>x.close());
+  async function createProject(type){ /* "Novo" abre o assistente: é preciso clicar em "Criar projeto" */
+    $('[data-new='+type+']').click();await sleep(250);
+    if($('#siteWizardDlg')?.open)$('#wizCreate').click();
+    await sleep(450);closeDialogs();
+  }
+  /* The preview is intentionally sandboxed without allow-same-origin, so its DOM is not reachable.
+     Render the preview's srcdoc in a local frame to inspect the actual images. */
+  const previewRun=document.createElement('iframe');
+  previewRun.style.cssText='position:absolute;left:-9999px;top:0;width:1200px;height:800px;border:0';
+  document.body.append(previewRun);
+  async function previewImgs(){
+    const src=$('#preview').srcdoc||'';
+    const loaded=new Promise(r=>previewRun.addEventListener('load',r,{once:true}));
+    previewRun.srcdoc=src;
+    await Promise.race([loaded,sleep(3000)]);
+    return [...(previewRun.contentDocument?.querySelectorAll('img')||[])].map(i=>i.complete&&i.naturalWidth>0);
+  }
+
+  closeDialogs();await createProject('app');
+  W.eval(`addItem('image');addItem('picturebox');
+    project.assets=[{id:'asset-t1',name:'t.png',type:'image/png',size:1,data:${JSON.stringify(PNG)}}];
+    ffItems().slice(-2).forEach(x=>{x.assetId='asset-t1';x.src='asset://asset-t1';x.srcType='asset'});render()`);
+  await sleep(300);
+
+  /* Aba Preview */
+  $('#tabs [data-tab=preview]').click();await sleep(700);
+  const imgs=await previewImgs();
+  check('aba Preview: Image e PictureBox renderizados',imgs.length===2&&imgs.every(Boolean),imgs);
+  check('aba Preview: srcdoc sem tokens asset://',!$('#preview').srcdoc.includes('asset://'));
+
+  /* Editar no Designer e voltar ao Preview atualiza o iframe */
+  $('#tabs [data-tab=design]').click();await sleep(200);
+  W.eval(`addItem('image');const x=ffItems().at(-1);x.assetId='asset-t1';x.src='asset://asset-t1';x.srcType='asset';render()`);
+  $('#tabs [data-tab=preview]').click();await sleep(700);
+  const imgs2=await previewImgs();
+  check('Preview atualiza após editar',imgs2.length===3&&imgs2.every(Boolean),imgs2);
+
+  /* Depurador */
+  $('#tabs [data-tab=design]').click();await sleep(200);
+  $('#debugBtn').click();await sleep(900);
+  const imgs3=await previewImgs();
+  check('Depurador: imagens renderizadas',imgs3.length===3&&imgs3.every(Boolean),imgs3);
+  $('#debuggerPanel').hidden=true;
+
+  /* Exportação (mesmo resolvedor) */
+  const html=W.FlowForgeImageAssets.resolveHtml(W.generated());
+  check('exportação: data URL presente e sem tokens',html.includes('data:image/png;base64,')&&!html.includes('asset://'));
+
+  /* Token dentro de url(...) não engole o ")" */
+  const css=W.FlowForgeImageAssets.resolveHtml('background:url(asset://asset-t1);color:red');
+  check('url(asset://id) é resolvido sem consumir ")"',css.startsWith('background:url(data:image/png')&&css.endsWith(');color:red'),css.slice(-24));
+
+  summary.textContent=failed?`${failed} falha(s), ${passed} ok`:`Tudo certo: ${passed} verificações`;
+  summary.className=failed?'fail':'pass';
+  document.body.dataset.test=failed?'FAIL':'PASS';
+}
+run().catch(e=>{out.insertAdjacentHTML('beforeend','<span class="fail">ERRO</span> '+e.message+'\n');summary.textContent='Erro no teste';document.body.dataset.test='FAIL';});
+</script>

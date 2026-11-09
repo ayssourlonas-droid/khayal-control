@@ -1,0 +1,217 @@
+{
+  "name": "Jogo da Memória",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "d363c928-62ce-4b4b-98bf-b4b1dff48c30",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "928e7d0d-2e7b-4fbb-b413-efb6f06a9113",
+          "kind": "heading",
+          "name": "memTitle",
+          "text": "Jogo da Memória",
+          "x": 55,
+          "y": 25,
+          "width": "280px",
+          "height": "45px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "3b6057fb-354b-4d41-9aa9-23631692414a",
+          "kind": "label",
+          "name": "memStatus",
+          "text": "Clique em Novo jogo",
+          "x": 75,
+          "y": 78,
+          "width": "240px",
+          "height": "34px",
+          "bg": "#f1f5f9",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "bfa6e908-c7fc-4f1b-aa26-6b6b649e4947",
+          "kind": "button",
+          "name": "m0",
+          "text": "?",
+          "x": 48,
+          "y": 135,
+          "width": "62px",
+          "height": "62px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "if(!window.ffMem){window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';}const b=document.getElementById('m0'),g=window.ffMem;if(g.lock||b.dataset.ok||b===g.first)return;b.textContent=b.dataset.v;Sons.play('pop');if(!g.first){g.first=b}else if(g.first.dataset.v===b.dataset.v){b.dataset.ok=g.first.dataset.ok='1';g.first=null;g.pairs++;Sons.play(g.pairs===4?'win':'coin');document.getElementById('memStatus').textContent=g.pairs===4?'Você venceu!':'Par encontrado!'}else{g.lock=true;Sons.play('error');let a=g.first;g.first=null;setTimeout(()=>{a.textContent=b.textContent='?';g.lock=false;document.getElementById('memStatus').textContent='Tente novamente'},650)}"
+          }
+        },
+        {
+          "id": "271c0f0c-ae2f-4f2d-9fb0-d3de8301bcc0",
+          "kind": "button",
+          "name": "m1",
+          "text": "?",
+          "x": 120,
+          "y": 135,
+          "width": "62px",
+          "height": "62px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "if(!window.ffMem){window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';}const b=document.getElementById('m1'),g=window.ffMem;if(g.lock||b.dataset.ok||b===g.first)return;b.textContent=b.dataset.v;Sons.play('pop');if(!g.first){g.first=b}else if(g.first.dataset.v===b.dataset.v){b.dataset.ok=g.first.dataset.ok='1';g.first=null;g.pairs++;Sons.play(g.pairs===4?'win':'coin');document.getElementById('memStatus').textContent=g.pairs===4?'Você venceu!':'Par encontrado!'}else{g.lock=true;Sons.play('error');let a=g.first;g.first=null;setTimeout(()=>{a.textContent=b.textContent='?';g.lock=false;document.getElementById('memStatus').textContent='Tente novamente'},650)}"
+          }
+        },
+        {
+          "id": "6afe2ebc-e420-4caf-a666-872e3354fc55",
+          "kind": "button",
+          "name": "m2",
+          "text": "?",
+          "x": 192,
+          "y": 135,
+          "width": "62px",
+          "height": "62px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "if(!window.ffMem){window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';}const b=document.getElementById('m2'),g=window.ffMem;if(g.lock||b.dataset.ok||b===g.first)return;b.textContent=b.dataset.v;Sons.play('pop');if(!g.first){g.first=b}else if(g.first.dataset.v===b.dataset.v){b.dataset.ok=g.first.dataset.ok='1';g.first=null;g.pairs++;Sons.play(g.pairs===4?'win':'coin');document.getElementById('memStatus').textContent=g.pairs===4?'Você venceu!':'Par encontrado!'}else{g.lock=true;Sons.play('error');let a=g.first;g.first=null;setTimeout(()=>{a.textContent=b.textContent='?';g.lock=false;document.getElementById('memStatus').textContent='Tente novamente'},650)}"
+          }
+        },
+        {
+          "id": "c6edf034-9e43-48b8-902e-0b9f983af43d",
+          "kind": "button",
+          "name": "m3",
+          "text": "?",
+          "x": 264,
+          "y": 135,
+          "width": "62px",
+          "height": "62px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "if(!window.ffMem){window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';}const b=document.getElementById('m3'),g=window.ffMem;if(g.lock||b.dataset.ok||b===g.first)return;b.textContent=b.dataset.v;Sons.play('pop');if(!g.first){g.first=b}else if(g.first.dataset.v===b.dataset.v){b.dataset.ok=g.first.dataset.ok='1';g.first=null;g.pairs++;Sons.play(g.pairs===4?'win':'coin');document.getElementById('memStatus').textContent=g.pairs===4?'Você venceu!':'Par encontrado!'}else{g.lock=true;Sons.play('error');let a=g.first;g.first=null;setTimeout(()=>{a.textContent=b.textContent='?';g.lock=false;document.getElementById('memStatus').textContent='Tente novamente'},650)}"
+          }
+        },
+        {
+          "id": "f46ee390-8dfe-418a-8a2b-c293c07f77e1",
+          "kind": "button",
+          "name": "m4",
+          "text": "?",
+          "x": 48,
+          "y": 217,
+          "width": "62px",
+          "height": "62px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "if(!window.ffMem){window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';}const b=document.getElementById('m4'),g=window.ffMem;if(g.lock||b.dataset.ok||b===g.first)return;b.textContent=b.dataset.v;Sons.play('pop');if(!g.first){g.first=b}else if(g.first.dataset.v===b.dataset.v){b.dataset.ok=g.first.dataset.ok='1';g.first=null;g.pairs++;Sons.play(g.pairs===4?'win':'coin');document.getElementById('memStatus').textContent=g.pairs===4?'Você venceu!':'Par encontrado!'}else{g.lock=true;Sons.play('error');let a=g.first;g.first=null;setTimeout(()=>{a.textContent=b.textContent='?';g.lock=false;document.getElementById('memStatus').textContent='Tente novamente'},650)}"
+          }
+        },
+        {
+          "id": "84e9ec71-834a-4c9f-9b8f-1258e83bc6f7",
+          "kind": "button",
+          "name": "m5",
+          "text": "?",
+          "x": 120,
+          "y": 217,
+          "width": "62px",
+          "height": "62px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "if(!window.ffMem){window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';}const b=document.getElementById('m5'),g=window.ffMem;if(g.lock||b.dataset.ok||b===g.first)return;b.textContent=b.dataset.v;Sons.play('pop');if(!g.first){g.first=b}else if(g.first.dataset.v===b.dataset.v){b.dataset.ok=g.first.dataset.ok='1';g.first=null;g.pairs++;Sons.play(g.pairs===4?'win':'coin');document.getElementById('memStatus').textContent=g.pairs===4?'Você venceu!':'Par encontrado!'}else{g.lock=true;Sons.play('error');let a=g.first;g.first=null;setTimeout(()=>{a.textContent=b.textContent='?';g.lock=false;document.getElementById('memStatus').textContent='Tente novamente'},650)}"
+          }
+        },
+        {
+          "id": "e7bf3215-1206-4e6d-a6e1-2bb6cbadd3c8",
+          "kind": "button",
+          "name": "m6",
+          "text": "?",
+          "x": 192,
+          "y": 217,
+          "width": "62px",
+          "height": "62px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "if(!window.ffMem){window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';}const b=document.getElementById('m6'),g=window.ffMem;if(g.lock||b.dataset.ok||b===g.first)return;b.textContent=b.dataset.v;Sons.play('pop');if(!g.first){g.first=b}else if(g.first.dataset.v===b.dataset.v){b.dataset.ok=g.first.dataset.ok='1';g.first=null;g.pairs++;Sons.play(g.pairs===4?'win':'coin');document.getElementById('memStatus').textContent=g.pairs===4?'Você venceu!':'Par encontrado!'}else{g.lock=true;Sons.play('error');let a=g.first;g.first=null;setTimeout(()=>{a.textContent=b.textContent='?';g.lock=false;document.getElementById('memStatus').textContent='Tente novamente'},650)}"
+          }
+        },
+        {
+          "id": "23242480-d7d4-4617-813c-461c4120ffd4",
+          "kind": "button",
+          "name": "m7",
+          "text": "?",
+          "x": 264,
+          "y": 217,
+          "width": "62px",
+          "height": "62px",
+          "bg": "#fff",
+          "color": "#111",
+          "events": {
+            "click": "if(!window.ffMem){window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';}const b=document.getElementById('m7'),g=window.ffMem;if(g.lock||b.dataset.ok||b===g.first)return;b.textContent=b.dataset.v;Sons.play('pop');if(!g.first){g.first=b}else if(g.first.dataset.v===b.dataset.v){b.dataset.ok=g.first.dataset.ok='1';g.first=null;g.pairs++;Sons.play(g.pairs===4?'win':'coin');document.getElementById('memStatus').textContent=g.pairs===4?'Você venceu!':'Par encontrado!'}else{g.lock=true;Sons.play('error');let a=g.first;g.first=null;setTimeout(()=>{a.textContent=b.textContent='?';g.lock=false;document.getElementById('memStatus').textContent='Tente novamente'},650)}"
+          }
+        },
+        {
+          "id": "e45bdf1d-a820-4452-8e1e-a01a33b88084",
+          "kind": "button",
+          "name": "memNew",
+          "text": "Novo jogo",
+          "x": 105,
+          "y": 320,
+          "width": "180px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#fff",
+          "events": {
+            "click": "window.ffMem={lock:false,first:null,pairs:0};const vals=['🍎','🍌','🍒','🍇','🍎','🍌','🍒','🍇'].sort(()=>Math.random()-.5);[0,1,2,3,4,5,6,7].map(k=>document.getElementById('m'+k)).forEach((b,i)=>{b.dataset.v=vals[i];b.textContent='?';b.dataset.ok='';});document.getElementById('memStatus').textContent='Encontre os 4 pares';"
+          }
+        },
+        {
+          "id": "73c96e59-bdd6-40dd-b290-e0f88a7ae805",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 29,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "801d213a-703d-4901-8a20-e66832a9da89",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 376,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

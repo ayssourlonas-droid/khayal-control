@@ -1,0 +1,112 @@
+{
+  "name": "Teste de Reflexo",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "44e1ca0c-916f-417b-b868-0d09e43090f9",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "7a72bd02-3394-4037-a84f-b083774f3f03",
+          "kind": "heading",
+          "name": "reactTitle",
+          "text": "Teste de Reflexo",
+          "x": 55,
+          "y": 35,
+          "width": "280px",
+          "height": "50px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "0d957c19-2ff7-4178-a445-84f8ac61b999",
+          "kind": "label",
+          "name": "reactStatus",
+          "text": "Clique em Começar",
+          "x": 55,
+          "y": 100,
+          "width": "280px",
+          "height": "42px",
+          "bg": "#f1f5f9",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "9e78fa46-d61b-4142-85a1-22940ab234a5",
+          "kind": "button",
+          "name": "reactBtn",
+          "text": "Pronto",
+          "x": 95,
+          "y": 170,
+          "width": "200px",
+          "height": "100px",
+          "bg": "#64748b",
+          "color": "#fff",
+          "events": {
+            "click": "const s=document.getElementById('reactStatus'),b=document.getElementById('reactBtn');if(window.ffReactReady){let ms=Math.round(performance.now()-window.ffReactAt);window.ffReactReady=false;Sons.play('coin');s.textContent='Seu tempo: '+ms+' ms';b.textContent='Pronto';b.style.background='#64748b'}else{Sons.play('error');s.textContent='Queimou! Comece novamente.';clearTimeout(window.ffReactTimer)}"
+          }
+        },
+        {
+          "id": "69a3b84a-1687-4ac3-a5fb-5d85fd47fdb4",
+          "kind": "button",
+          "name": "reactStart",
+          "text": "Começar",
+          "x": 95,
+          "y": 300,
+          "width": "200px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#fff",
+          "events": {
+            "click": "const b=document.getElementById('reactBtn'),s=document.getElementById('reactStatus');clearTimeout(window.ffReactTimer);window.ffReactReady=false;b.textContent='Espere...';b.style.background='#ef4444';s.textContent='Não clique ainda';window.ffReactTimer=setTimeout(()=>{window.ffReactReady=true;window.ffReactAt=performance.now();b.textContent='CLIQUE!';b.style.background='#22c55e';Sons.tone(880,140,'square',0.45);s.textContent='Agora!'},900+Math.random()*2200);"
+          }
+        },
+        {
+          "id": "1f33cc59-ad20-4e5d-87fe-2b49fc1ac0f5",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 39,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "80fefde1-6e61-4380-afed-b02d9a2c5d96",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 356,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

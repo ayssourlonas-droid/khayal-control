@@ -1,0 +1,405 @@
+{
+  "name": "Rastreador de Hábitos",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#16a34a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "16741ecb-a687-4266-9342-3d386f928b60",
+      "name": "Hoje",
+      "items": [
+        {
+          "id": "46535f59-c2d4-44be-a7ff-1a9cb5c25e74",
+          "kind": "heading",
+          "name": "hjTitle",
+          "text": "Hábitos de hoje",
+          "x": 20,
+          "y": 70,
+          "width": "350px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "f4e27c85-5fcf-48af-91ef-a16c79e7012b",
+          "kind": "button",
+          "name": "hjNav0",
+          "text": "Hoje",
+          "x": 20,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"Hoje\");"
+          }
+        },
+        {
+          "id": "0b22c432-714c-4607-b874-824ab91da154",
+          "kind": "button",
+          "name": "hjNav1",
+          "text": "Semana",
+          "x": 139,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Semana\");"
+          }
+        },
+        {
+          "id": "7cee9c3c-dfb0-4f30-a455-27a9375131f0",
+          "kind": "button",
+          "name": "hjNav2",
+          "text": "Hábitos",
+          "x": 259,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Hábitos\");"
+          }
+        },
+        {
+          "id": "cd9308d9-1c97-4d78-b87f-cf3fca5b6fc4",
+          "kind": "label",
+          "name": "hjData",
+          "text": "",
+          "x": 20,
+          "y": 172,
+          "width": "350px",
+          "height": "28px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "8aa1f6ea-7897-4add-9e47-683c2ca3d0b6",
+          "kind": "label",
+          "name": "hjProgresso",
+          "text": "0 de 4 concluídos (0%)",
+          "x": 20,
+          "y": 204,
+          "width": "350px",
+          "height": "26px",
+          "bg": "transparent",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "c082802f-d5c7-4d88-9f20-0fcfdeddcbeb",
+          "kind": "panel",
+          "name": "hjBarra",
+          "text": "",
+          "x": 20,
+          "y": 236,
+          "width": "350px",
+          "height": "14px",
+          "bg": "#e2e8f0",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "e431b16d-0eb9-4be5-bfa6-5405bf305f36",
+          "kind": "panel",
+          "name": "hjLista",
+          "text": "",
+          "x": 20,
+          "y": 264,
+          "width": "350px",
+          "height": "346px",
+          "bg": "#f8fafc",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "dc7fd1d9-b76a-49ae-8986-e8f62fac41ce",
+          "kind": "label",
+          "name": "hjMsg",
+          "text": "",
+          "x": 20,
+          "y": 620,
+          "width": "350px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#334155",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "if (!window.HB) {\n/* Rastreador de Hábitos — dados e telas (Hoje, Semana, Hábitos). Executa no OnLoad da primeira página;\n   cada página chama a sua função no OnShow. Tudo fica salvo no aparelho (localStorage). */\nwindow.HB = (function () {\n  const KEY = 'habitos_v1', MAX = 10;\n  const PADRAO = ['Beber 2 L de água', 'Ler 10 minutos', 'Exercício', 'Meditar'];\n  const $ = id => document.getElementById(id);\n  const esc = s => String(s).replace(/[&<>\"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' }[c]));\n  const pad = n => String(n).padStart(2, '0');\n  const padrao = () => ({ habitos: PADRAO.map((n, i) => ({ id: i + 1, nome: n })), feitos: {}, prox: PADRAO.length + 1 });\n  function carregar() {\n    try {\n      const d = JSON.parse(localStorage.getItem(KEY));\n      if (d && Array.isArray(d.habitos) && d.feitos && typeof d.feitos === 'object') return d;\n    } catch (e) { /* dados antigos ou corrompidos: começa do zero */ }\n    return padrao();\n  }\n  let dados = carregar();\n  const salvar = () => { try { localStorage.setItem(KEY, JSON.stringify(dados)); } catch (e) {} };\n  const H = { agora: () => new Date() };\n\n  // ---- datas (meio-dia evita problemas de horário de verão) ----\n  const dia = n => { const d = H.agora(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() - n); return d; };\n  const chave = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());\n  const feito = (id, k) => (dados.feitos[k] || []).includes(id);\n\n  // ---- regras ----\n  H.alternar = (id, k) => {\n    const a = dados.feitos[k] || [], i = a.indexOf(id);\n    if (i >= 0) a.splice(i, 1); else a.push(id);\n    dados.feitos[k] = a;\n    if (!a.length) delete dados.feitos[k];\n    salvar();\n  };\n  // dias seguidos até hoje (se hoje ainda não foi feito, a sequência de ontem continua valendo)\n  H.sequencia = id => {\n    let n = 0, i = feito(id, chave(dia(0))) ? 0 : 1;\n    while (i < 400 && feito(id, chave(dia(i)))) { n++; i++; }\n    return n;\n  };\n  H.dados = () => dados;\n  H.chave = chave;\n  H.dia = dia;\n\n  // ---- tela Hoje ----\n  H.hoje = () => {\n    const lista = $('hjLista'); if (!lista) return;\n    const k = chave(dia(0)), total = dados.habitos.length;\n    const ok = dados.habitos.filter(h => feito(h.id, k)).length, pct = total ? Math.round(ok * 100 / total) : 0;\n    const dt = dia(0).toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });\n    $('hjData').textContent = dt.charAt(0).toUpperCase() + dt.slice(1);\n    $('hjProgresso').textContent = ok + ' de ' + total + ' concluídos (' + pct + '%)';\n    const barra = $('hjBarra'); barra.style.borderRadius = '7px'; barra.style.overflow = 'hidden';\n    barra.innerHTML = '<div style=\"height:100%;width:' + pct + '%;background:#22c55e;transition:width .3s\"></div>';\n    lista.innerHTML = ''; lista.style.overflowY = 'auto'; lista.style.padding = '2px';\n    if (!total) lista.innerHTML = '<p style=\"color:#64748b;text-align:center;margin-top:40px\">Nenhum hábito ainda.<br>Cadastre na aba Hábitos.</p>';\n    dados.habitos.forEach(h => {\n      const f = feito(h.id, k), s = H.sequencia(h.id), row = document.createElement('div');\n      row.className = 'hb-linha'; row.dataset.id = h.id; row.dataset.feito = f ? '1' : '';\n      row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:8px;border-radius:12px;cursor:pointer;border:1px solid ' + (f ? '#86efac' : '#e2e8f0') + ';background:' + (f ? '#dcfce7' : '#ffffff');\n      row.innerHTML = '<span style=\"width:28px;height:28px;flex:none;border-radius:50%;border:2px solid ' + (f ? '#16a34a' : '#94a3b8') + ';background:' + (f ? '#16a34a' : 'transparent') + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700\">' + (f ? '✓' : '') + '</span>'\n        + '<span class=\"hb-nome\" style=\"flex:1;font-size:16px;' + (f ? 'text-decoration:line-through;color:#64748b' : 'color:#0f172a') + '\"></span>'\n        + '<span class=\"hb-seq\" style=\"font-size:14px;color:#b45309;font-weight:700;white-space:nowrap\">' + (s ? '🔥 ' + s : '') + '</span>';\n      row.querySelector('.hb-nome').textContent = h.nome;  // textContent: nomes nunca viram HTML\n      row.onclick = () => { H.alternar(h.id, k); H.hoje(); };\n      lista.appendChild(row);\n    });\n    $('hjMsg').textContent = !total ? 'Adicione seus primeiros hábitos.' : pct === 100 ? 'Tudo feito hoje! Sequências mantidas.' : ok === 0 ? 'Comece por um hábito pequeno.' : 'Falta pouco, continue!';\n  };\n\n  // ---- tela Semana ----\n  H.semana = () => {\n    const g = $('smGrade'); if (!g) return;\n    const dias = []; for (let i = 6; i >= 0; i--) dias.push(dia(i));\n    const ini = 'DSTQQSS';\n    let html = '<table style=\"width:100%;border-collapse:collapse;font-size:14px\"><tr><th></th>'\n      + dias.map((d, i) => '<th style=\"padding:4px 0;color:#475569;' + (i === 6 ? 'background:#e0e7ff;border-radius:8px' : '') + '\">' + ini.charAt(d.getDay()) + '<br><small>' + d.getDate() + '</small></th>').join('') + '</tr>';\n    let feitos = 0, melhor = null;\n    dados.habitos.forEach(h => {\n      let n = 0;\n      html += '<tr><td style=\"padding:6px 4px;max-width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap\">' + esc(h.nome) + '</td>'\n        + dias.map(d => {\n          const k = chave(d), f = feito(h.id, k); if (f) n++;\n          return '<td data-h=\"' + h.id + '\" data-k=\"' + k + '\" style=\"text-align:center;cursor:pointer;font-size:20px;color:' + (f ? '#16a34a' : '#cbd5e1') + '\">' + (f ? '●' : '○') + '</td>';\n        }).join('') + '</tr>';\n      feitos += n; if (!melhor || n > melhor.n) melhor = { nome: h.nome, n: n };\n    });\n    g.innerHTML = html + '</table>';\n    g.style.overflowY = 'auto';\n    g.onclick = e => { const td = e.target.closest('td[data-k]'); if (td) { H.alternar(+td.dataset.h, td.dataset.k); H.semana(); } };\n    const possivel = dados.habitos.length * 7;\n    $('smResumo').textContent = possivel ? 'Taxa da semana: ' + Math.round(feitos * 100 / possivel) + '% (' + feitos + ' de ' + possivel + ')' : 'Nenhum hábito cadastrado.';\n    $('smMelhor').textContent = melhor && melhor.n ? 'Melhor hábito: ' + melhor.nome + ' (' + melhor.n + '/7)' : 'Marque hábitos para ver o melhor da semana.';\n  };\n\n  // ---- tela Hábitos (gerenciar) ----\n  H.gerenciar = () => {\n    const lista = $('gdLista'); if (!lista) return;\n    lista.innerHTML = ''; lista.style.overflowY = 'auto'; lista.style.padding = '2px';\n    dados.habitos.forEach(h => {\n      const row = document.createElement('div'); row.className = 'hb-gerencia';\n      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:8px;border-radius:12px;border:1px solid #e2e8f0;background:#fff';\n      row.innerHTML = '<span class=\"hb-nome\" style=\"flex:1;font-size:16px;color:#0f172a\"></span><button class=\"hb-del\" title=\"Remover\" style=\"border:0;background:#fee2e2;color:#b91c1c;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:15px\">Remover</button>';\n      row.querySelector('.hb-nome').textContent = h.nome;\n      row.querySelector('.hb-del').onclick = () => H.remover(h.id);\n      lista.appendChild(row);\n    });\n    $('gdInfo').textContent = dados.habitos.length + ' de ' + MAX + ' hábitos';\n  };\n  H.adicionar = () => {\n    const el = $('gdNome'), info = $('gdInfo'), nome = (el.value || '').trim().replace(/\\s+/g, ' ');\n    if (!nome) { info.textContent = 'Digite o nome do hábito.'; return false; }\n    if (nome.length > 28) { info.textContent = 'Use no máximo 28 letras.'; return false; }\n    if (dados.habitos.length >= MAX) { info.textContent = 'Limite de ' + MAX + ' hábitos atingido.'; return false; }\n    if (dados.habitos.some(h => h.nome.toLowerCase() === nome.toLowerCase())) { info.textContent = 'Esse hábito já existe.'; return false; }\n    dados.habitos.push({ id: dados.prox++, nome: nome }); salvar();\n    el.value = ''; H.gerenciar(); info.textContent = 'Hábito adicionado: ' + nome;\n    return true;\n  };\n  H.remover = id => {\n    dados.habitos = dados.habitos.filter(h => h.id !== id);\n    Object.keys(dados.feitos).forEach(k => { dados.feitos[k] = dados.feitos[k].filter(x => x !== id); if (!dados.feitos[k].length) delete dados.feitos[k]; });\n    salvar(); H.gerenciar();\n  };\n  H.restaurar = () => {\n    if (!confirm('Voltar aos hábitos padrão? O histórico será apagado.')) return false;\n    dados = padrao(); salvar(); H.gerenciar(); return true;\n  };\n  return H;\n})();\n}\n",
+        "onshow": "window.HB && HB.hoje();"
+      }
+    },
+    {
+      "id": "9322cc61-5325-43fe-9f93-531715ba28c5",
+      "name": "Semana",
+      "items": [
+        {
+          "id": "6e2d446b-697c-47df-96b0-f341c22d4b1d",
+          "kind": "heading",
+          "name": "smTitle",
+          "text": "Últimos 7 dias",
+          "x": 20,
+          "y": 70,
+          "width": "350px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "8bd2091d-803b-42cc-bed1-12db40446b10",
+          "kind": "button",
+          "name": "smNav0",
+          "text": "Hoje",
+          "x": 20,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Hoje\");"
+          }
+        },
+        {
+          "id": "2e3c2760-c362-4051-9cf3-3de82ca007f4",
+          "kind": "button",
+          "name": "smNav1",
+          "text": "Semana",
+          "x": 139,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"Semana\");"
+          }
+        },
+        {
+          "id": "cc1e9a39-9367-43f7-b6e4-45574e0f396c",
+          "kind": "button",
+          "name": "smNav2",
+          "text": "Hábitos",
+          "x": 259,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Hábitos\");"
+          }
+        },
+        {
+          "id": "91f15c22-03a1-4ec7-9058-7610dbe096a5",
+          "kind": "panel",
+          "name": "smGrade",
+          "text": "",
+          "x": 20,
+          "y": 176,
+          "width": "350px",
+          "height": "300px",
+          "bg": "#f8fafc",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "25b8a9c0-4495-4fa4-8dd5-c7258aab1584",
+          "kind": "label",
+          "name": "smResumo",
+          "text": "",
+          "x": 20,
+          "y": 488,
+          "width": "350px",
+          "height": "28px",
+          "bg": "transparent",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "ce16508d-e0aa-4273-a4f2-b1d34eaebd5d",
+          "kind": "label",
+          "name": "smMelhor",
+          "text": "",
+          "x": 20,
+          "y": 520,
+          "width": "350px",
+          "height": "28px",
+          "bg": "transparent",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "35b8b160-bc18-42dc-b68f-13abc48664be",
+          "kind": "label",
+          "name": "smDica",
+          "text": "Toque numa bolinha para marcar ou corrigir um dia.",
+          "x": 20,
+          "y": 560,
+          "width": "350px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#64748b",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "if (!window.HB) {\n/* Rastreador de Hábitos — dados e telas (Hoje, Semana, Hábitos). Executa no OnLoad da primeira página;\n   cada página chama a sua função no OnShow. Tudo fica salvo no aparelho (localStorage). */\nwindow.HB = (function () {\n  const KEY = 'habitos_v1', MAX = 10;\n  const PADRAO = ['Beber 2 L de água', 'Ler 10 minutos', 'Exercício', 'Meditar'];\n  const $ = id => document.getElementById(id);\n  const esc = s => String(s).replace(/[&<>\"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' }[c]));\n  const pad = n => String(n).padStart(2, '0');\n  const padrao = () => ({ habitos: PADRAO.map((n, i) => ({ id: i + 1, nome: n })), feitos: {}, prox: PADRAO.length + 1 });\n  function carregar() {\n    try {\n      const d = JSON.parse(localStorage.getItem(KEY));\n      if (d && Array.isArray(d.habitos) && d.feitos && typeof d.feitos === 'object') return d;\n    } catch (e) { /* dados antigos ou corrompidos: começa do zero */ }\n    return padrao();\n  }\n  let dados = carregar();\n  const salvar = () => { try { localStorage.setItem(KEY, JSON.stringify(dados)); } catch (e) {} };\n  const H = { agora: () => new Date() };\n\n  // ---- datas (meio-dia evita problemas de horário de verão) ----\n  const dia = n => { const d = H.agora(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() - n); return d; };\n  const chave = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());\n  const feito = (id, k) => (dados.feitos[k] || []).includes(id);\n\n  // ---- regras ----\n  H.alternar = (id, k) => {\n    const a = dados.feitos[k] || [], i = a.indexOf(id);\n    if (i >= 0) a.splice(i, 1); else a.push(id);\n    dados.feitos[k] = a;\n    if (!a.length) delete dados.feitos[k];\n    salvar();\n  };\n  // dias seguidos até hoje (se hoje ainda não foi feito, a sequência de ontem continua valendo)\n  H.sequencia = id => {\n    let n = 0, i = feito(id, chave(dia(0))) ? 0 : 1;\n    while (i < 400 && feito(id, chave(dia(i)))) { n++; i++; }\n    return n;\n  };\n  H.dados = () => dados;\n  H.chave = chave;\n  H.dia = dia;\n\n  // ---- tela Hoje ----\n  H.hoje = () => {\n    const lista = $('hjLista'); if (!lista) return;\n    const k = chave(dia(0)), total = dados.habitos.length;\n    const ok = dados.habitos.filter(h => feito(h.id, k)).length, pct = total ? Math.round(ok * 100 / total) : 0;\n    const dt = dia(0).toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });\n    $('hjData').textContent = dt.charAt(0).toUpperCase() + dt.slice(1);\n    $('hjProgresso').textContent = ok + ' de ' + total + ' concluídos (' + pct + '%)';\n    const barra = $('hjBarra'); barra.style.borderRadius = '7px'; barra.style.overflow = 'hidden';\n    barra.innerHTML = '<div style=\"height:100%;width:' + pct + '%;background:#22c55e;transition:width .3s\"></div>';\n    lista.innerHTML = ''; lista.style.overflowY = 'auto'; lista.style.padding = '2px';\n    if (!total) lista.innerHTML = '<p style=\"color:#64748b;text-align:center;margin-top:40px\">Nenhum hábito ainda.<br>Cadastre na aba Hábitos.</p>';\n    dados.habitos.forEach(h => {\n      const f = feito(h.id, k), s = H.sequencia(h.id), row = document.createElement('div');\n      row.className = 'hb-linha'; row.dataset.id = h.id; row.dataset.feito = f ? '1' : '';\n      row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:8px;border-radius:12px;cursor:pointer;border:1px solid ' + (f ? '#86efac' : '#e2e8f0') + ';background:' + (f ? '#dcfce7' : '#ffffff');\n      row.innerHTML = '<span style=\"width:28px;height:28px;flex:none;border-radius:50%;border:2px solid ' + (f ? '#16a34a' : '#94a3b8') + ';background:' + (f ? '#16a34a' : 'transparent') + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700\">' + (f ? '✓' : '') + '</span>'\n        + '<span class=\"hb-nome\" style=\"flex:1;font-size:16px;' + (f ? 'text-decoration:line-through;color:#64748b' : 'color:#0f172a') + '\"></span>'\n        + '<span class=\"hb-seq\" style=\"font-size:14px;color:#b45309;font-weight:700;white-space:nowrap\">' + (s ? '🔥 ' + s : '') + '</span>';\n      row.querySelector('.hb-nome').textContent = h.nome;  // textContent: nomes nunca viram HTML\n      row.onclick = () => { H.alternar(h.id, k); H.hoje(); };\n      lista.appendChild(row);\n    });\n    $('hjMsg').textContent = !total ? 'Adicione seus primeiros hábitos.' : pct === 100 ? 'Tudo feito hoje! Sequências mantidas.' : ok === 0 ? 'Comece por um hábito pequeno.' : 'Falta pouco, continue!';\n  };\n\n  // ---- tela Semana ----\n  H.semana = () => {\n    const g = $('smGrade'); if (!g) return;\n    const dias = []; for (let i = 6; i >= 0; i--) dias.push(dia(i));\n    const ini = 'DSTQQSS';\n    let html = '<table style=\"width:100%;border-collapse:collapse;font-size:14px\"><tr><th></th>'\n      + dias.map((d, i) => '<th style=\"padding:4px 0;color:#475569;' + (i === 6 ? 'background:#e0e7ff;border-radius:8px' : '') + '\">' + ini.charAt(d.getDay()) + '<br><small>' + d.getDate() + '</small></th>').join('') + '</tr>';\n    let feitos = 0, melhor = null;\n    dados.habitos.forEach(h => {\n      let n = 0;\n      html += '<tr><td style=\"padding:6px 4px;max-width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap\">' + esc(h.nome) + '</td>'\n        + dias.map(d => {\n          const k = chave(d), f = feito(h.id, k); if (f) n++;\n          return '<td data-h=\"' + h.id + '\" data-k=\"' + k + '\" style=\"text-align:center;cursor:pointer;font-size:20px;color:' + (f ? '#16a34a' : '#cbd5e1') + '\">' + (f ? '●' : '○') + '</td>';\n        }).join('') + '</tr>';\n      feitos += n; if (!melhor || n > melhor.n) melhor = { nome: h.nome, n: n };\n    });\n    g.innerHTML = html + '</table>';\n    g.style.overflowY = 'auto';\n    g.onclick = e => { const td = e.target.closest('td[data-k]'); if (td) { H.alternar(+td.dataset.h, td.dataset.k); H.semana(); } };\n    const possivel = dados.habitos.length * 7;\n    $('smResumo').textContent = possivel ? 'Taxa da semana: ' + Math.round(feitos * 100 / possivel) + '% (' + feitos + ' de ' + possivel + ')' : 'Nenhum hábito cadastrado.';\n    $('smMelhor').textContent = melhor && melhor.n ? 'Melhor hábito: ' + melhor.nome + ' (' + melhor.n + '/7)' : 'Marque hábitos para ver o melhor da semana.';\n  };\n\n  // ---- tela Hábitos (gerenciar) ----\n  H.gerenciar = () => {\n    const lista = $('gdLista'); if (!lista) return;\n    lista.innerHTML = ''; lista.style.overflowY = 'auto'; lista.style.padding = '2px';\n    dados.habitos.forEach(h => {\n      const row = document.createElement('div'); row.className = 'hb-gerencia';\n      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:8px;border-radius:12px;border:1px solid #e2e8f0;background:#fff';\n      row.innerHTML = '<span class=\"hb-nome\" style=\"flex:1;font-size:16px;color:#0f172a\"></span><button class=\"hb-del\" title=\"Remover\" style=\"border:0;background:#fee2e2;color:#b91c1c;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:15px\">Remover</button>';\n      row.querySelector('.hb-nome').textContent = h.nome;\n      row.querySelector('.hb-del').onclick = () => H.remover(h.id);\n      lista.appendChild(row);\n    });\n    $('gdInfo').textContent = dados.habitos.length + ' de ' + MAX + ' hábitos';\n  };\n  H.adicionar = () => {\n    const el = $('gdNome'), info = $('gdInfo'), nome = (el.value || '').trim().replace(/\\s+/g, ' ');\n    if (!nome) { info.textContent = 'Digite o nome do hábito.'; return false; }\n    if (nome.length > 28) { info.textContent = 'Use no máximo 28 letras.'; return false; }\n    if (dados.habitos.length >= MAX) { info.textContent = 'Limite de ' + MAX + ' hábitos atingido.'; return false; }\n    if (dados.habitos.some(h => h.nome.toLowerCase() === nome.toLowerCase())) { info.textContent = 'Esse hábito já existe.'; return false; }\n    dados.habitos.push({ id: dados.prox++, nome: nome }); salvar();\n    el.value = ''; H.gerenciar(); info.textContent = 'Hábito adicionado: ' + nome;\n    return true;\n  };\n  H.remover = id => {\n    dados.habitos = dados.habitos.filter(h => h.id !== id);\n    Object.keys(dados.feitos).forEach(k => { dados.feitos[k] = dados.feitos[k].filter(x => x !== id); if (!dados.feitos[k].length) delete dados.feitos[k]; });\n    salvar(); H.gerenciar();\n  };\n  H.restaurar = () => {\n    if (!confirm('Voltar aos hábitos padrão? O histórico será apagado.')) return false;\n    dados = padrao(); salvar(); H.gerenciar(); return true;\n  };\n  return H;\n})();\n}\n",
+        "onshow": "window.HB && HB.semana();"
+      }
+    },
+    {
+      "id": "c077f4b4-e77a-46d9-a652-fde4fe80cd7b",
+      "name": "Hábitos",
+      "items": [
+        {
+          "id": "b84fa256-b667-44d7-818c-0d0d6ac2f0d4",
+          "kind": "heading",
+          "name": "gdTitle",
+          "text": "Meus hábitos",
+          "x": 20,
+          "y": 70,
+          "width": "350px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "4ea95ccd-0ba7-46eb-ad78-99c494efdbfa",
+          "kind": "button",
+          "name": "gdNav0",
+          "text": "Hoje",
+          "x": 20,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Hoje\");"
+          }
+        },
+        {
+          "id": "b3c48298-cfc5-47d3-b747-9e38c980ccf6",
+          "kind": "button",
+          "name": "gdNav1",
+          "text": "Semana",
+          "x": 139,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Semana\");"
+          }
+        },
+        {
+          "id": "81c58d09-e071-425f-8274-252eeff05fda",
+          "kind": "button",
+          "name": "gdNav2",
+          "text": "Hábitos",
+          "x": 259,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"Hábitos\");"
+          }
+        },
+        {
+          "id": "9d3b7dad-70c9-41c8-ba9a-6c54c9fa386b",
+          "kind": "input",
+          "name": "gdNome",
+          "text": "Novo hábito (ex.: Estudar inglês)",
+          "x": 20,
+          "y": 176,
+          "width": "232px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "keydown": "if(event.key==='Enter')HB.adicionar();"
+          }
+        },
+        {
+          "id": "d5ed029b-2e88-4fbb-8483-53695a5eda85",
+          "kind": "button",
+          "name": "gdAdd",
+          "text": "Adicionar",
+          "x": 260,
+          "y": 176,
+          "width": "110px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "HB.adicionar();"
+          }
+        },
+        {
+          "id": "115d0b1a-ef07-4a1b-a649-8e00e473ee97",
+          "kind": "label",
+          "name": "gdInfo",
+          "text": "",
+          "x": 20,
+          "y": 230,
+          "width": "350px",
+          "height": "28px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "4467acc3-995f-46e3-883a-1599b61d8e27",
+          "kind": "panel",
+          "name": "gdLista",
+          "text": "",
+          "x": 20,
+          "y": 264,
+          "width": "350px",
+          "height": "330px",
+          "bg": "#f8fafc",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "fa68f1b9-3983-4060-8799-cf81a9d838a8",
+          "kind": "button",
+          "name": "gdReset",
+          "text": "Restaurar hábitos padrão",
+          "x": 20,
+          "y": 604,
+          "width": "350px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "HB.restaurar();"
+          }
+        }
+      ],
+      "events": {
+        "onload": "if (!window.HB) {\n/* Rastreador de Hábitos — dados e telas (Hoje, Semana, Hábitos). Executa no OnLoad da primeira página;\n   cada página chama a sua função no OnShow. Tudo fica salvo no aparelho (localStorage). */\nwindow.HB = (function () {\n  const KEY = 'habitos_v1', MAX = 10;\n  const PADRAO = ['Beber 2 L de água', 'Ler 10 minutos', 'Exercício', 'Meditar'];\n  const $ = id => document.getElementById(id);\n  const esc = s => String(s).replace(/[&<>\"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' }[c]));\n  const pad = n => String(n).padStart(2, '0');\n  const padrao = () => ({ habitos: PADRAO.map((n, i) => ({ id: i + 1, nome: n })), feitos: {}, prox: PADRAO.length + 1 });\n  function carregar() {\n    try {\n      const d = JSON.parse(localStorage.getItem(KEY));\n      if (d && Array.isArray(d.habitos) && d.feitos && typeof d.feitos === 'object') return d;\n    } catch (e) { /* dados antigos ou corrompidos: começa do zero */ }\n    return padrao();\n  }\n  let dados = carregar();\n  const salvar = () => { try { localStorage.setItem(KEY, JSON.stringify(dados)); } catch (e) {} };\n  const H = { agora: () => new Date() };\n\n  // ---- datas (meio-dia evita problemas de horário de verão) ----\n  const dia = n => { const d = H.agora(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() - n); return d; };\n  const chave = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());\n  const feito = (id, k) => (dados.feitos[k] || []).includes(id);\n\n  // ---- regras ----\n  H.alternar = (id, k) => {\n    const a = dados.feitos[k] || [], i = a.indexOf(id);\n    if (i >= 0) a.splice(i, 1); else a.push(id);\n    dados.feitos[k] = a;\n    if (!a.length) delete dados.feitos[k];\n    salvar();\n  };\n  // dias seguidos até hoje (se hoje ainda não foi feito, a sequência de ontem continua valendo)\n  H.sequencia = id => {\n    let n = 0, i = feito(id, chave(dia(0))) ? 0 : 1;\n    while (i < 400 && feito(id, chave(dia(i)))) { n++; i++; }\n    return n;\n  };\n  H.dados = () => dados;\n  H.chave = chave;\n  H.dia = dia;\n\n  // ---- tela Hoje ----\n  H.hoje = () => {\n    const lista = $('hjLista'); if (!lista) return;\n    const k = chave(dia(0)), total = dados.habitos.length;\n    const ok = dados.habitos.filter(h => feito(h.id, k)).length, pct = total ? Math.round(ok * 100 / total) : 0;\n    const dt = dia(0).toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });\n    $('hjData').textContent = dt.charAt(0).toUpperCase() + dt.slice(1);\n    $('hjProgresso').textContent = ok + ' de ' + total + ' concluídos (' + pct + '%)';\n    const barra = $('hjBarra'); barra.style.borderRadius = '7px'; barra.style.overflow = 'hidden';\n    barra.innerHTML = '<div style=\"height:100%;width:' + pct + '%;background:#22c55e;transition:width .3s\"></div>';\n    lista.innerHTML = ''; lista.style.overflowY = 'auto'; lista.style.padding = '2px';\n    if (!total) lista.innerHTML = '<p style=\"color:#64748b;text-align:center;margin-top:40px\">Nenhum hábito ainda.<br>Cadastre na aba Hábitos.</p>';\n    dados.habitos.forEach(h => {\n      const f = feito(h.id, k), s = H.sequencia(h.id), row = document.createElement('div');\n      row.className = 'hb-linha'; row.dataset.id = h.id; row.dataset.feito = f ? '1' : '';\n      row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:8px;border-radius:12px;cursor:pointer;border:1px solid ' + (f ? '#86efac' : '#e2e8f0') + ';background:' + (f ? '#dcfce7' : '#ffffff');\n      row.innerHTML = '<span style=\"width:28px;height:28px;flex:none;border-radius:50%;border:2px solid ' + (f ? '#16a34a' : '#94a3b8') + ';background:' + (f ? '#16a34a' : 'transparent') + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700\">' + (f ? '✓' : '') + '</span>'\n        + '<span class=\"hb-nome\" style=\"flex:1;font-size:16px;' + (f ? 'text-decoration:line-through;color:#64748b' : 'color:#0f172a') + '\"></span>'\n        + '<span class=\"hb-seq\" style=\"font-size:14px;color:#b45309;font-weight:700;white-space:nowrap\">' + (s ? '🔥 ' + s : '') + '</span>';\n      row.querySelector('.hb-nome').textContent = h.nome;  // textContent: nomes nunca viram HTML\n      row.onclick = () => { H.alternar(h.id, k); H.hoje(); };\n      lista.appendChild(row);\n    });\n    $('hjMsg').textContent = !total ? 'Adicione seus primeiros hábitos.' : pct === 100 ? 'Tudo feito hoje! Sequências mantidas.' : ok === 0 ? 'Comece por um hábito pequeno.' : 'Falta pouco, continue!';\n  };\n\n  // ---- tela Semana ----\n  H.semana = () => {\n    const g = $('smGrade'); if (!g) return;\n    const dias = []; for (let i = 6; i >= 0; i--) dias.push(dia(i));\n    const ini = 'DSTQQSS';\n    let html = '<table style=\"width:100%;border-collapse:collapse;font-size:14px\"><tr><th></th>'\n      + dias.map((d, i) => '<th style=\"padding:4px 0;color:#475569;' + (i === 6 ? 'background:#e0e7ff;border-radius:8px' : '') + '\">' + ini.charAt(d.getDay()) + '<br><small>' + d.getDate() + '</small></th>').join('') + '</tr>';\n    let feitos = 0, melhor = null;\n    dados.habitos.forEach(h => {\n      let n = 0;\n      html += '<tr><td style=\"padding:6px 4px;max-width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap\">' + esc(h.nome) + '</td>'\n        + dias.map(d => {\n          const k = chave(d), f = feito(h.id, k); if (f) n++;\n          return '<td data-h=\"' + h.id + '\" data-k=\"' + k + '\" style=\"text-align:center;cursor:pointer;font-size:20px;color:' + (f ? '#16a34a' : '#cbd5e1') + '\">' + (f ? '●' : '○') + '</td>';\n        }).join('') + '</tr>';\n      feitos += n; if (!melhor || n > melhor.n) melhor = { nome: h.nome, n: n };\n    });\n    g.innerHTML = html + '</table>';\n    g.style.overflowY = 'auto';\n    g.onclick = e => { const td = e.target.closest('td[data-k]'); if (td) { H.alternar(+td.dataset.h, td.dataset.k); H.semana(); } };\n    const possivel = dados.habitos.length * 7;\n    $('smResumo').textContent = possivel ? 'Taxa da semana: ' + Math.round(feitos * 100 / possivel) + '% (' + feitos + ' de ' + possivel + ')' : 'Nenhum hábito cadastrado.';\n    $('smMelhor').textContent = melhor && melhor.n ? 'Melhor hábito: ' + melhor.nome + ' (' + melhor.n + '/7)' : 'Marque hábitos para ver o melhor da semana.';\n  };\n\n  // ---- tela Hábitos (gerenciar) ----\n  H.gerenciar = () => {\n    const lista = $('gdLista'); if (!lista) return;\n    lista.innerHTML = ''; lista.style.overflowY = 'auto'; lista.style.padding = '2px';\n    dados.habitos.forEach(h => {\n      const row = document.createElement('div'); row.className = 'hb-gerencia';\n      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:8px;border-radius:12px;border:1px solid #e2e8f0;background:#fff';\n      row.innerHTML = '<span class=\"hb-nome\" style=\"flex:1;font-size:16px;color:#0f172a\"></span><button class=\"hb-del\" title=\"Remover\" style=\"border:0;background:#fee2e2;color:#b91c1c;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:15px\">Remover</button>';\n      row.querySelector('.hb-nome').textContent = h.nome;\n      row.querySelector('.hb-del').onclick = () => H.remover(h.id);\n      lista.appendChild(row);\n    });\n    $('gdInfo').textContent = dados.habitos.length + ' de ' + MAX + ' hábitos';\n  };\n  H.adicionar = () => {\n    const el = $('gdNome'), info = $('gdInfo'), nome = (el.value || '').trim().replace(/\\s+/g, ' ');\n    if (!nome) { info.textContent = 'Digite o nome do hábito.'; return false; }\n    if (nome.length > 28) { info.textContent = 'Use no máximo 28 letras.'; return false; }\n    if (dados.habitos.length >= MAX) { info.textContent = 'Limite de ' + MAX + ' hábitos atingido.'; return false; }\n    if (dados.habitos.some(h => h.nome.toLowerCase() === nome.toLowerCase())) { info.textContent = 'Esse hábito já existe.'; return false; }\n    dados.habitos.push({ id: dados.prox++, nome: nome }); salvar();\n    el.value = ''; H.gerenciar(); info.textContent = 'Hábito adicionado: ' + nome;\n    return true;\n  };\n  H.remover = id => {\n    dados.habitos = dados.habitos.filter(h => h.id !== id);\n    Object.keys(dados.feitos).forEach(k => { dados.feitos[k] = dados.feitos[k].filter(x => x !== id); if (!dados.feitos[k].length) delete dados.feitos[k]; });\n    salvar(); H.gerenciar();\n  };\n  H.restaurar = () => {\n    if (!confirm('Voltar aos hábitos padrão? O histórico será apagado.')) return false;\n    dados = padrao(); salvar(); H.gerenciar(); return true;\n  };\n  return H;\n})();\n}\n",
+        "onshow": "window.HB && HB.gerenciar();"
+      }
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "name": "Controle de Gastos",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "68957416-d726-4641-88eb-2365abcbda76",
+      "name": "Principal",
+      "items": [
+        {
+          "id": "5388d553-26db-4ab4-a742-6dd5b97a0630",
+          "kind": "heading",
+          "name": "gTitle",
+          "text": "Controle de Gastos",
+          "x": 20,
+          "y": 68,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "70c4eb70-6616-4718-88af-385af3cd7882",
+          "kind": "input",
+          "name": "gDesc",
+          "text": "Descrição (ex.: almoço)",
+          "x": 20,
+          "y": 120,
+          "width": "353px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "keydown": "var $=function(i){return document.getElementById(i)};if(!window.ffGastos){var G=window.ffGastos={items:[],K:'ffGastosV1'};try{G.items=JSON.parse(localStorage.getItem(G.K)||'[]')}catch(e){G.items=[]}\nG.brl=function(v){return 'R$ '+v.toFixed(2).replace('.',',').replace(/\\B(?=(\\d{3})+(?!\\d))/g,'.')};\nG.save=function(){try{localStorage.setItem(G.K,JSON.stringify(G.items))}catch(e){}};\nG.draw=function(){var tot=0,cat={};G.items.forEach(function(x){tot+=x.v;cat[x.c]=(cat[x.c]||0)+x.v});\n $('gTotal').textContent='Total: '+G.brl(tot);\n var keys=Object.keys(cat).sort(function(a,b){return cat[b]-cat[a]});\n $('gCats').textContent=keys.length?keys.map(function(k){return k+' '+Math.round(cat[k]/tot*100)+'%'}).join(' • '):'Nenhum gasto ainda.';\n $('gList').value=G.items.slice().reverse().map(function(x){return x.d+'  —  '+G.brl(x.v)+'  ('+x.c+')'}).join('\\n');\n $('gCount').textContent=G.items.length+(G.items.length===1?' lançamento':' lançamentos')};\nG.msg=function(t,bad){var m=$('gMsg');m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'};\nG.add=function(){var d=$('gDesc').value.trim(),raw=String($('gValor').value).replace(',','.'),v=parseFloat(raw);\n if(!d){G.msg('Descreva o gasto.',true);return}if(isNaN(v)||v<=0){G.msg('Informe um valor maior que zero.',true);return}\n G.items.push({d:d,v:Math.round(v*100)/100,c:$('gCat').value});G.save();$('gDesc').value='';$('gValor').value='';G.msg('Gasto adicionado ✔');G.draw();$('gDesc').focus()};\nG.undo=function(){if(!G.items.length){G.msg('Nada para desfazer.',true);return}var x=G.items.pop();G.save();G.msg('Removido: '+x.d);G.draw()};\nG.clear=function(){if(!G.items.length)return;if(confirm('Apagar todos os lançamentos?')){G.items=[];G.save();G.msg('Lista limpa.');G.draw()}};G.draw()}if(event.key==='Enter')window.ffGastos.add();"
+          }
+        },
+        {
+          "id": "1af89303-d02f-4898-b911-dc4a460787cc",
+          "kind": "input",
+          "name": "gValor",
+          "text": "Valor (R$)",
+          "x": 20,
+          "y": 170,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "keydown": "var $=function(i){return document.getElementById(i)};if(!window.ffGastos){var G=window.ffGastos={items:[],K:'ffGastosV1'};try{G.items=JSON.parse(localStorage.getItem(G.K)||'[]')}catch(e){G.items=[]}\nG.brl=function(v){return 'R$ '+v.toFixed(2).replace('.',',').replace(/\\B(?=(\\d{3})+(?!\\d))/g,'.')};\nG.save=function(){try{localStorage.setItem(G.K,JSON.stringify(G.items))}catch(e){}};\nG.draw=function(){var tot=0,cat={};G.items.forEach(function(x){tot+=x.v;cat[x.c]=(cat[x.c]||0)+x.v});\n $('gTotal').textContent='Total: '+G.brl(tot);\n var keys=Object.keys(cat).sort(function(a,b){return cat[b]-cat[a]});\n $('gCats').textContent=keys.length?keys.map(function(k){return k+' '+Math.round(cat[k]/tot*100)+'%'}).join(' • '):'Nenhum gasto ainda.';\n $('gList').value=G.items.slice().reverse().map(function(x){return x.d+'  —  '+G.brl(x.v)+'  ('+x.c+')'}).join('\\n');\n $('gCount').textContent=G.items.length+(G.items.length===1?' lançamento':' lançamentos')};\nG.msg=function(t,bad){var m=$('gMsg');m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'};\nG.add=function(){var d=$('gDesc').value.trim(),raw=String($('gValor').value).replace(',','.'),v=parseFloat(raw);\n if(!d){G.msg('Descreva o gasto.',true);return}if(isNaN(v)||v<=0){G.msg('Informe um valor maior que zero.',true);return}\n G.items.push({d:d,v:Math.round(v*100)/100,c:$('gCat').value});G.save();$('gDesc').value='';$('gValor').value='';G.msg('Gasto adicionado ✔');G.draw();$('gDesc').focus()};\nG.undo=function(){if(!G.items.length){G.msg('Nada para desfazer.',true);return}var x=G.items.pop();G.save();G.msg('Removido: '+x.d);G.draw()};\nG.clear=function(){if(!G.items.length)return;if(confirm('Apagar todos os lançamentos?')){G.items=[];G.save();G.msg('Lista limpa.');G.draw()}};G.draw()}if(event.key==='Enter')window.ffGastos.add();"
+          }
+        },
+        {
+          "id": "06fa3f79-dedb-44f3-ae38-57db1a9145ca",
+          "kind": "select",
+          "name": "gCat",
+          "text": "Categoria",
+          "x": 198,
+          "y": 170,
+          "width": "175px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "items": [
+            "Alimentação",
+            "Transporte",
+            "Moradia",
+            "Lazer",
+            "Saúde",
+            "Outros"
+          ]
+        },
+        {
+          "id": "8465d6ff-a7cb-494b-a9d0-5dbc6aba7839",
+          "kind": "button",
+          "name": "gAdd",
+          "text": "Adicionar gasto",
+          "x": 20,
+          "y": 222,
+          "width": "353px",
+          "height": "46px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffGastos){var G=window.ffGastos={items:[],K:'ffGastosV1'};try{G.items=JSON.parse(localStorage.getItem(G.K)||'[]')}catch(e){G.items=[]}\nG.brl=function(v){return 'R$ '+v.toFixed(2).replace('.',',').replace(/\\B(?=(\\d{3})+(?!\\d))/g,'.')};\nG.save=function(){try{localStorage.setItem(G.K,JSON.stringify(G.items))}catch(e){}};\nG.draw=function(){var tot=0,cat={};G.items.forEach(function(x){tot+=x.v;cat[x.c]=(cat[x.c]||0)+x.v});\n $('gTotal').textContent='Total: '+G.brl(tot);\n var keys=Object.keys(cat).sort(function(a,b){return cat[b]-cat[a]});\n $('gCats').textContent=keys.length?keys.map(function(k){return k+' '+Math.round(cat[k]/tot*100)+'%'}).join(' • '):'Nenhum gasto ainda.';\n $('gList').value=G.items.slice().reverse().map(function(x){return x.d+'  —  '+G.brl(x.v)+'  ('+x.c+')'}).join('\\n');\n $('gCount').textContent=G.items.length+(G.items.length===1?' lançamento':' lançamentos')};\nG.msg=function(t,bad){var m=$('gMsg');m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'};\nG.add=function(){var d=$('gDesc').value.trim(),raw=String($('gValor').value).replace(',','.'),v=parseFloat(raw);\n if(!d){G.msg('Descreva o gasto.',true);return}if(isNaN(v)||v<=0){G.msg('Informe um valor maior que zero.',true);return}\n G.items.push({d:d,v:Math.round(v*100)/100,c:$('gCat').value});G.save();$('gDesc').value='';$('gValor').value='';G.msg('Gasto adicionado ✔');G.draw();$('gDesc').focus()};\nG.undo=function(){if(!G.items.length){G.msg('Nada para desfazer.',true);return}var x=G.items.pop();G.save();G.msg('Removido: '+x.d);G.draw()};\nG.clear=function(){if(!G.items.length)return;if(confirm('Apagar todos os lançamentos?')){G.items=[];G.save();G.msg('Lista limpa.');G.draw()}};G.draw()}window.ffGastos.add();"
+          }
+        },
+        {
+          "id": "ec2b1c75-80a9-4cd8-95ea-40f3c6c37bec",
+          "kind": "label",
+          "name": "gMsg",
+          "text": "",
+          "x": 20,
+          "y": 274,
+          "width": "353px",
+          "height": "28px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "bebadf60-0b09-4cb3-992c-4e2371d93c0b",
+          "kind": "label",
+          "name": "gTotal",
+          "text": "Total: R$ 0,00",
+          "x": 20,
+          "y": 306,
+          "width": "353px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "5c684432-9941-4ae8-9de9-11082244cc0d",
+          "kind": "label",
+          "name": "gCats",
+          "text": "Nenhum gasto ainda.",
+          "x": 20,
+          "y": 348,
+          "width": "353px",
+          "height": "44px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "9a3d8c3b-b129-4fb0-8796-a5310ee0372d",
+          "kind": "textarea",
+          "name": "gList",
+          "text": "",
+          "x": 20,
+          "y": 398,
+          "width": "353px",
+          "height": "190px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "readOnly": true
+        },
+        {
+          "id": "9ecb0ef3-cff1-4730-8b30-69128ef356a6",
+          "kind": "label",
+          "name": "gCount",
+          "text": "0 lançamentos",
+          "x": 20,
+          "y": 596,
+          "width": "168px",
+          "height": "30px",
+          "bg": "transparent",
+          "color": "#475569",
+          "events": {}
+        },
+        {
+          "id": "75dd0948-4249-439c-832e-3da519f5494c",
+          "kind": "button",
+          "name": "gUndo",
+          "text": "Desfazer último",
+          "x": 20,
+          "y": 630,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffGastos){var G=window.ffGastos={items:[],K:'ffGastosV1'};try{G.items=JSON.parse(localStorage.getItem(G.K)||'[]')}catch(e){G.items=[]}\nG.brl=function(v){return 'R$ '+v.toFixed(2).replace('.',',').replace(/\\B(?=(\\d{3})+(?!\\d))/g,'.')};\nG.save=function(){try{localStorage.setItem(G.K,JSON.stringify(G.items))}catch(e){}};\nG.draw=function(){var tot=0,cat={};G.items.forEach(function(x){tot+=x.v;cat[x.c]=(cat[x.c]||0)+x.v});\n $('gTotal').textContent='Total: '+G.brl(tot);\n var keys=Object.keys(cat).sort(function(a,b){return cat[b]-cat[a]});\n $('gCats').textContent=keys.length?keys.map(function(k){return k+' '+Math.round(cat[k]/tot*100)+'%'}).join(' • '):'Nenhum gasto ainda.';\n $('gList').value=G.items.slice().reverse().map(function(x){return x.d+'  —  '+G.brl(x.v)+'  ('+x.c+')'}).join('\\n');\n $('gCount').textContent=G.items.length+(G.items.length===1?' lançamento':' lançamentos')};\nG.msg=function(t,bad){var m=$('gMsg');m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'};\nG.add=function(){var d=$('gDesc').value.trim(),raw=String($('gValor').value).replace(',','.'),v=parseFloat(raw);\n if(!d){G.msg('Descreva o gasto.',true);return}if(isNaN(v)||v<=0){G.msg('Informe um valor maior que zero.',true);return}\n G.items.push({d:d,v:Math.round(v*100)/100,c:$('gCat').value});G.save();$('gDesc').value='';$('gValor').value='';G.msg('Gasto adicionado ✔');G.draw();$('gDesc').focus()};\nG.undo=function(){if(!G.items.length){G.msg('Nada para desfazer.',true);return}var x=G.items.pop();G.save();G.msg('Removido: '+x.d);G.draw()};\nG.clear=function(){if(!G.items.length)return;if(confirm('Apagar todos os lançamentos?')){G.items=[];G.save();G.msg('Lista limpa.');G.draw()}};G.draw()}window.ffGastos.undo();"
+          }
+        },
+        {
+          "id": "23e6c2a5-0cec-421b-9f33-f9a106a64433",
+          "kind": "button",
+          "name": "gClear",
+          "text": "Limpar tudo",
+          "x": 205,
+          "y": 630,
+          "width": "168px",
+          "height": "42px",
+          "bg": "#dc2626",
+          "color": "#ffffff",
+          "events": {
+            "click": "var $=function(i){return document.getElementById(i)};if(!window.ffGastos){var G=window.ffGastos={items:[],K:'ffGastosV1'};try{G.items=JSON.parse(localStorage.getItem(G.K)||'[]')}catch(e){G.items=[]}\nG.brl=function(v){return 'R$ '+v.toFixed(2).replace('.',',').replace(/\\B(?=(\\d{3})+(?!\\d))/g,'.')};\nG.save=function(){try{localStorage.setItem(G.K,JSON.stringify(G.items))}catch(e){}};\nG.draw=function(){var tot=0,cat={};G.items.forEach(function(x){tot+=x.v;cat[x.c]=(cat[x.c]||0)+x.v});\n $('gTotal').textContent='Total: '+G.brl(tot);\n var keys=Object.keys(cat).sort(function(a,b){return cat[b]-cat[a]});\n $('gCats').textContent=keys.length?keys.map(function(k){return k+' '+Math.round(cat[k]/tot*100)+'%'}).join(' • '):'Nenhum gasto ainda.';\n $('gList').value=G.items.slice().reverse().map(function(x){return x.d+'  —  '+G.brl(x.v)+'  ('+x.c+')'}).join('\\n');\n $('gCount').textContent=G.items.length+(G.items.length===1?' lançamento':' lançamentos')};\nG.msg=function(t,bad){var m=$('gMsg');m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'};\nG.add=function(){var d=$('gDesc').value.trim(),raw=String($('gValor').value).replace(',','.'),v=parseFloat(raw);\n if(!d){G.msg('Descreva o gasto.',true);return}if(isNaN(v)||v<=0){G.msg('Informe um valor maior que zero.',true);return}\n G.items.push({d:d,v:Math.round(v*100)/100,c:$('gCat').value});G.save();$('gDesc').value='';$('gValor').value='';G.msg('Gasto adicionado ✔');G.draw();$('gDesc').focus()};\nG.undo=function(){if(!G.items.length){G.msg('Nada para desfazer.',true);return}var x=G.items.pop();G.save();G.msg('Removido: '+x.d);G.draw()};\nG.clear=function(){if(!G.items.length)return;if(confirm('Apagar todos os lançamentos?')){G.items=[];G.save();G.msg('Lista limpa.');G.draw()}};G.draw()}window.ffGastos.clear();"
+          }
+        }
+      ],
+      "events": {
+        "onload": "var $=function(i){return document.getElementById(i)};if(!window.ffGastos){var G=window.ffGastos={items:[],K:'ffGastosV1'};try{G.items=JSON.parse(localStorage.getItem(G.K)||'[]')}catch(e){G.items=[]}\nG.brl=function(v){return 'R$ '+v.toFixed(2).replace('.',',').replace(/\\B(?=(\\d{3})+(?!\\d))/g,'.')};\nG.save=function(){try{localStorage.setItem(G.K,JSON.stringify(G.items))}catch(e){}};\nG.draw=function(){var tot=0,cat={};G.items.forEach(function(x){tot+=x.v;cat[x.c]=(cat[x.c]||0)+x.v});\n $('gTotal').textContent='Total: '+G.brl(tot);\n var keys=Object.keys(cat).sort(function(a,b){return cat[b]-cat[a]});\n $('gCats').textContent=keys.length?keys.map(function(k){return k+' '+Math.round(cat[k]/tot*100)+'%'}).join(' • '):'Nenhum gasto ainda.';\n $('gList').value=G.items.slice().reverse().map(function(x){return x.d+'  —  '+G.brl(x.v)+'  ('+x.c+')'}).join('\\n');\n $('gCount').textContent=G.items.length+(G.items.length===1?' lançamento':' lançamentos')};\nG.msg=function(t,bad){var m=$('gMsg');m.textContent=t;m.style.color=bad?'#dc2626':'#16a34a'};\nG.add=function(){var d=$('gDesc').value.trim(),raw=String($('gValor').value).replace(',','.'),v=parseFloat(raw);\n if(!d){G.msg('Descreva o gasto.',true);return}if(isNaN(v)||v<=0){G.msg('Informe um valor maior que zero.',true);return}\n G.items.push({d:d,v:Math.round(v*100)/100,c:$('gCat').value});G.save();$('gDesc').value='';$('gValor').value='';G.msg('Gasto adicionado ✔');G.draw();$('gDesc').focus()};\nG.undo=function(){if(!G.items.length){G.msg('Nada para desfazer.',true);return}var x=G.items.pop();G.save();G.msg('Removido: '+x.d);G.draw()};\nG.clear=function(){if(!G.items.length)return;if(confirm('Apagar todos os lançamentos?')){G.items=[];G.save();G.msg('Lista limpa.');G.draw()}};G.draw()}",
+        "onshow": ""
+      }
+    }
+  ]
+}

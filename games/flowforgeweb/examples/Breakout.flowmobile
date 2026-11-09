@@ -1,0 +1,140 @@
+{
+  "name": "Breakout",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#20242a",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "1219d346-c40c-47b9-bc9a-e38d60d8e3ef",
+      "name": "Jogo",
+      "items": [
+        {
+          "id": "6f4b22a2-673d-4a63-8893-9e12cd5f4fc2",
+          "kind": "heading",
+          "name": "breakTitle",
+          "text": "Breakout",
+          "x": 125,
+          "y": 20,
+          "width": "140px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "be1dedda-585f-4be2-a76a-df0e6d7d44b8",
+          "kind": "label",
+          "name": "breakStatus",
+          "text": "Clique em Iniciar",
+          "x": 85,
+          "y": 65,
+          "width": "220px",
+          "height": "32px",
+          "bg": "#f1f5f9",
+          "color": "#111827",
+          "events": {}
+        },
+        {
+          "id": "39c451cb-e598-4890-981e-0d5aa79104a9",
+          "kind": "textarea",
+          "name": "breakBoard",
+          "text": "",
+          "x": 25,
+          "y": 110,
+          "width": "340px",
+          "height": "270px",
+          "bg": "#0f172a",
+          "color": "#f8fafc",
+          "events": {}
+        },
+        {
+          "id": "acaea761-ef48-4700-860c-9355b60b9e63",
+          "kind": "button",
+          "name": "breakLeft",
+          "text": "←",
+          "x": 55,
+          "y": 400,
+          "width": "80px",
+          "height": "48px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "if(window.ffBreak)Sons.play('tick');if(window.ffBreak)window.ffBreak.p=Math.max(0,window.ffBreak.p-2)"
+          }
+        },
+        {
+          "id": "ea8a368f-cfc6-4b1e-80f7-5f973ea80bc0",
+          "kind": "button",
+          "name": "breakRight",
+          "text": "→",
+          "x": 145,
+          "y": 400,
+          "width": "80px",
+          "height": "48px",
+          "bg": "#334155",
+          "color": "#fff",
+          "events": {
+            "click": "if(window.ffBreak)Sons.play('tick');if(window.ffBreak)window.ffBreak.p=Math.min(12,window.ffBreak.p+2)"
+          }
+        },
+        {
+          "id": "ee2a0ad5-465a-4eba-9fc0-eb746e661549",
+          "kind": "button",
+          "name": "breakStart",
+          "text": "Iniciar",
+          "x": 235,
+          "y": 400,
+          "width": "100px",
+          "height": "48px",
+          "bg": "#2563eb",
+          "color": "#fff",
+          "events": {
+            "click": "Sons.play('start');clearInterval(window.ffBreakTimer);window.ffBreak={x:7,y:8,dx:1,dy:-1,p:6,bricks:Array.from({length:24},(_,i)=>i),score:0};const b=document.getElementById('breakBoard'),st=document.getElementById('breakStatus');function draw(){let q=window.ffBreak,g=Array.from({length:12},()=>Array(16).fill(' '));q.bricks.forEach(i=>g[1+Math.floor(i/8)][i%8*2]='■');for(let i=0;i<4;i++)if(q.p+i<16)g[11][q.p+i]='═';g[q.y][q.x]='●';b.textContent=g.map(r=>r.join(' ')).join('\\n');st.textContent='Pontos: '+q.score}function tick(){let q=window.ffBreak,nx=q.x+q.dx,ny=q.y+q.dy;if(nx<0||nx>15){q.dx*=-1;Sons.play('blip');nx=q.x+q.dx}if(ny<0){q.dy=1;Sons.play('blip');ny=1}if(ny>=11){if(nx>=q.p&&nx<q.p+4){q.dy=-1;ny=10;Sons.play('click');}else{clearInterval(window.ffBreakTimer);Sons.play('lose');st.textContent='Fim — '+q.score+' pontos';return}}let bi=q.bricks.find(i=>1+Math.floor(i/8)===ny&&i%8*2===nx);if(bi!==undefined){q.bricks=q.bricks.filter(i=>i!==bi);q.score++;Sons.play('pop');q.dy*=-1;ny=q.y+q.dy;if(!q.bricks.length){clearInterval(window.ffBreakTimer);Sons.play('win');st.textContent='Você venceu!';draw();return}}q.x=nx;q.y=ny;draw()}draw();window.ffBreakTimer=setInterval(tick,110);"
+          }
+        },
+        {
+          "id": "1dff69ce-43c4-4317-99f2-f1edd60ea5e4",
+          "kind": "button",
+          "name": "btnSom",
+          "text": "🔊",
+          "x": 334,
+          "y": 24,
+          "width": "36px",
+          "height": "32px",
+          "bg": "#e2e8f0",
+          "color": "#0f172a",
+          "events": {
+            "click": "Sons.toggleMute();document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';Sons.play('click');"
+          }
+        },
+        {
+          "id": "866cfe68-b40a-48d6-b948-ca1576ba3d51",
+          "kind": "gamesound",
+          "name": "Sons",
+          "text": "Sons",
+          "x": 20,
+          "y": 460,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "volume": 0.6,
+          "muted": false,
+          "sounds": "",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "document.getElementById('btnSom').textContent=Sons.muted?'🔇':'🔊';",
+        "onshow": ""
+      }
+    }
+  ]
+}

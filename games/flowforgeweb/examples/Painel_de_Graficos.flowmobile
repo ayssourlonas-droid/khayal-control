@@ -1,0 +1,491 @@
+{
+  "name": "Painel de Gráficos",
+  "projectVersion": "1.0.0",
+  "icon": "",
+  "favicon": "",
+  "themeColor": "#4f46e5",
+  "type": "app",
+  "framework": "none",
+  "titlebar": true,
+  "active": 0,
+  "pages": [
+    {
+      "id": "3f5cdfb4-06d2-4472-9643-835fd36db7bd",
+      "name": "Vendas",
+      "items": [
+        {
+          "id": "737fdc3e-5a66-436d-897c-007d5e7815d2",
+          "kind": "heading",
+          "name": "vdTitle",
+          "text": "Vendas do semestre",
+          "x": 20,
+          "y": 70,
+          "width": "350px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "17c55df7-6a49-4c57-a915-5f746baeb9a3",
+          "kind": "button",
+          "name": "vdNav0",
+          "text": "Vendas",
+          "x": 20,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"Vendas\");"
+          }
+        },
+        {
+          "id": "f8885c2c-6a96-4f92-859a-b685f170ee38",
+          "kind": "button",
+          "name": "vdNav1",
+          "text": "Ao vivo",
+          "x": 139,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Ao_vivo\");"
+          }
+        },
+        {
+          "id": "73713751-9979-4353-ab34-60bf78d20d44",
+          "kind": "button",
+          "name": "vdNav2",
+          "text": "Despesas",
+          "x": 259,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Despesas\");"
+          }
+        },
+        {
+          "id": "91509767-a6ca-4458-9835-07163f3d75bb",
+          "kind": "chart",
+          "name": "gfVendas",
+          "text": "",
+          "x": 20,
+          "y": 172,
+          "width": "350px",
+          "height": "250px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "select": "// event.detail = { index, label, value, series }\nlblInfo.textContent = event.detail.label + ': R$ ' + event.detail.value.toLocaleString('pt-BR');\n"
+          },
+          "chartType": "bar",
+          "chartTitle": "Vendas por mês",
+          "chartLabels": "Jan,Fev,Mar,Abr,Mai,Jun",
+          "values": "[1200,1850,950,2100,1700,2400]",
+          "chartSeries": "Vendas",
+          "valuePrefix": "R$ ",
+          "legend": true,
+          "showValues": true,
+          "chartGrid": true,
+          "animate": true
+        },
+        {
+          "id": "65200e6b-45b6-4fd3-8c42-739be75b43f3",
+          "kind": "select",
+          "name": "selTipo",
+          "text": "",
+          "x": 20,
+          "y": 432,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "change": "const tipos = {\"Barras\": \"bar\", \"Barras horizontais\": \"hbar\", \"Linhas\": \"line\", \"Área\": \"area\"};\ngfVendas.chartType = tipos[selTipo.value] || 'bar';\n"
+          },
+          "items": [
+            "Barras",
+            "Barras horizontais",
+            "Linhas",
+            "Área"
+          ]
+        },
+        {
+          "id": "1f5daada-c9d4-4d18-a7df-5a40063971cc",
+          "kind": "button",
+          "name": "btnNovos",
+          "text": "Novos dados",
+          "x": 200,
+          "y": 432,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "// Sorteia 6 valores novos e troca os dados do gráfico\nconst valores = [];\nfor (let i = 0; i < 6; i++) valores.push(Math.round(800 + Math.random() * 2200));\ngfVendas.setData(['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'], valores);\nconst total = valores.reduce((a, b) => a + b, 0);\nlblInfo.textContent = 'Novos dados! Total do semestre: R$ ' + total.toLocaleString('pt-BR');\n"
+          }
+        },
+        {
+          "id": "c6222551-eca6-4855-b7dd-19d197fe2d63",
+          "kind": "label",
+          "name": "lblInfo",
+          "text": "Toque numa barra para ver o valor.",
+          "x": 20,
+          "y": 488,
+          "width": "350px",
+          "height": "50px",
+          "bg": "transparent",
+          "color": "#334155",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "",
+        "onshow": "// Mostra os dados atuais (ficam no próprio gráfico)\nlblInfo.textContent = 'Toque numa barra para ver o valor.';\n"
+      }
+    },
+    {
+      "id": "e3d83198-a573-4c4f-ab1e-2410308c9c16",
+      "name": "Ao_vivo",
+      "items": [
+        {
+          "id": "6cb56024-7f22-42b4-abeb-16dbd1f49619",
+          "kind": "heading",
+          "name": "lvTitle",
+          "text": "Uso da CPU ao vivo",
+          "x": 20,
+          "y": 70,
+          "width": "350px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "a63fac2f-3794-4c21-9eca-2e7919ccfa59",
+          "kind": "button",
+          "name": "lvNav0",
+          "text": "Vendas",
+          "x": 20,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Vendas\");"
+          }
+        },
+        {
+          "id": "5f325ad1-e672-4eed-9c70-e4b34cb6621f",
+          "kind": "button",
+          "name": "lvNav1",
+          "text": "Ao vivo",
+          "x": 139,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"Ao_vivo\");"
+          }
+        },
+        {
+          "id": "583d891f-ef2f-4869-8fd0-962596aaa2ee",
+          "kind": "button",
+          "name": "lvNav2",
+          "text": "Despesas",
+          "x": 259,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Despesas\");"
+          }
+        },
+        {
+          "id": "1e0ea570-fd0e-48e9-8461-cc9ffb662c5a",
+          "kind": "chart",
+          "name": "gfLive",
+          "text": "",
+          "x": 20,
+          "y": 172,
+          "width": "350px",
+          "height": "250px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "chartType": "area",
+          "chartTitle": "CPU (%)",
+          "chartLabels": "",
+          "values": "[]",
+          "chartSeries": "CPU",
+          "valueSuffix": "%",
+          "yMin": 0,
+          "yMax": 100,
+          "maxPoints": 20,
+          "showValues": false,
+          "smooth": true,
+          "animate": false,
+          "chartColors": "#0ea5e9"
+        },
+        {
+          "id": "a546956d-f00b-45d4-8ceb-bb46443ce895",
+          "kind": "label",
+          "name": "lblValor",
+          "text": "Novos pontos a cada segundo.",
+          "x": 20,
+          "y": 432,
+          "width": "350px",
+          "height": "36px",
+          "bg": "transparent",
+          "color": "#334155",
+          "events": {}
+        },
+        {
+          "id": "d21b2293-3809-439d-bf81-56151d1f3bca",
+          "kind": "button",
+          "name": "btnPausa",
+          "text": "Pausar",
+          "x": 20,
+          "y": 478,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "window.__aoVivoPausa = !window.__aoVivoPausa;\nbtnPausa.textContent = window.__aoVivoPausa ? 'Continuar' : 'Pausar';\nlblValor.textContent = window.__aoVivoPausa ? 'Pausado' : 'Agora: ' + Math.round(window.__aoVivo ?? 50) + '%';\n"
+          }
+        },
+        {
+          "id": "23b5e92f-2fa3-43c7-a66b-1dfda75c3cab",
+          "kind": "button",
+          "name": "btnLimpar2",
+          "text": "Limpar",
+          "x": 200,
+          "y": 478,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "gfLive.clear();\nwindow.__aoVivo = 50;\nlblValor.textContent = 'Gráfico limpo. Novos pontos a cada segundo.';\n"
+          }
+        },
+        {
+          "id": "119b1217-b7b6-4f4c-bb20-b7baf6a8e921",
+          "kind": "timer",
+          "name": "tmLive",
+          "text": "Timer",
+          "x": 20,
+          "y": 600,
+          "width": "90px",
+          "height": "34px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "tick": "// A cada segundo acrescenta um ponto; o gráfico guarda só os últimos 20 (maxPoints)\nif (window.__aoVivoPausa) return;\nwindow.__aoVivo = Math.max(5, Math.min(95, (window.__aoVivo ?? 50) + (Math.random() - 0.5) * 18));\nconst agora = new Date();\nconst hora = String(agora.getMinutes()).padStart(2, '0') + ':' + String(agora.getSeconds()).padStart(2, '0');\ngfLive.addPoint(hora, Math.round(window.__aoVivo));\nlblValor.textContent = 'Agora: ' + Math.round(window.__aoVivo) + '%';\n"
+          },
+          "interval": 1000,
+          "enabled": true
+        }
+      ],
+      "events": {
+        "onload": "",
+        "onshow": ""
+      }
+    },
+    {
+      "id": "7e7b3c04-345e-4863-afc2-67980140e5bb",
+      "name": "Despesas",
+      "items": [
+        {
+          "id": "aba003bd-c34c-4767-94a5-2e68490456c1",
+          "kind": "heading",
+          "name": "dsTitle",
+          "text": "Minhas despesas",
+          "x": 20,
+          "y": 70,
+          "width": "350px",
+          "height": "40px",
+          "bg": "transparent",
+          "color": "#222222",
+          "events": {}
+        },
+        {
+          "id": "bca9565b-a320-4a4c-9e6e-f8b7f4802f2a",
+          "kind": "button",
+          "name": "dsNav0",
+          "text": "Vendas",
+          "x": 20,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Vendas\");"
+          }
+        },
+        {
+          "id": "fe0a5a55-a27e-45f3-837f-c45a39c17343",
+          "kind": "button",
+          "name": "dsNav1",
+          "text": "Ao vivo",
+          "x": 139,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "ffNavigate(\"Ao_vivo\");"
+          }
+        },
+        {
+          "id": "a6aa177b-f3c5-4d73-aef5-116e9245e8eb",
+          "kind": "button",
+          "name": "dsNav2",
+          "text": "Despesas",
+          "x": 259,
+          "y": 122,
+          "width": "113px",
+          "height": "40px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "ffNavigate(\"Despesas\");"
+          }
+        },
+        {
+          "id": "7654ddf1-6211-419d-9407-c8c14039fbc7",
+          "kind": "chart",
+          "name": "gfDesp",
+          "text": "",
+          "x": 20,
+          "y": 172,
+          "width": "350px",
+          "height": "240px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "select": "lblMsg.textContent = event.detail.label + ': R$ ' + event.detail.value.toLocaleString('pt-BR') + ' (' + Math.round(event.detail.value * 100 / Math.max(1, gfDesp.getData().series[0].values.reduce((a, b) => a + b, 0))) + '%)';"
+          },
+          "chartType": "doughnut",
+          "chartTitle": "Despesas do mês",
+          "chartLabels": "Moradia,Comida,Transporte,Lazer,Saúde",
+          "values": "[1200,650,280,190,120]",
+          "valuePrefix": "R$ ",
+          "legend": true,
+          "showValues": true,
+          "animate": true
+        },
+        {
+          "id": "21299489-8410-4279-9d5d-a667e8436aa8",
+          "kind": "select",
+          "name": "selCat",
+          "text": "",
+          "x": 20,
+          "y": 422,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {},
+          "items": [
+            "Moradia",
+            "Comida",
+            "Transporte",
+            "Lazer",
+            "Saúde"
+          ]
+        },
+        {
+          "id": "59e5a745-1c53-40f3-87f7-619896a6dd23",
+          "kind": "input",
+          "name": "inpValor",
+          "text": "Valor (ex.: 45,90)",
+          "x": 200,
+          "y": 422,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "keydown": "if(event.key==='Enter')btnAdd.click();"
+          }
+        },
+        {
+          "id": "0811c203-38df-4e25-b9cc-6a4ca2b02a4f",
+          "kind": "button",
+          "name": "btnAdd",
+          "text": "Adicionar",
+          "x": 20,
+          "y": 476,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#2563eb",
+          "color": "#ffffff",
+          "events": {
+            "click": "// lê os lançamentos salvos no aparelho (ou usa valores de exemplo)\nlet d = null;\ntry { d = JSON.parse(localStorage.getItem('graficos_despesas')); } catch (e) {}\nif (!d || typeof d !== 'object') d = { Moradia: 1200, Comida: 650, Transporte: 280, Lazer: 190, Saúde: 120 };\n// aceita 45,90 / 45.90 / R$ 1.200,50\nlet txt = inpValor.value.replace(/R\\$|\\s/g, '');\nif (txt.includes(',')) txt = txt.replace(/\\./g, '').replace(',', '.');\nconst v = Number(txt);\nif (!txt || !isFinite(v) || v <= 0 || v > 1000000) {\n  lblMsg.textContent = 'Digite um valor válido. Exemplo: 45,90';\n  return;\n}\nd[selCat.value] = Math.round(((d[selCat.value] || 0) + v) * 100) / 100;\ntry { localStorage.setItem('graficos_despesas', JSON.stringify(d)); } catch (e) {}\ninpValor.value = '';\nlblMsg.textContent = 'Adicionado em ' + selCat.value + ': R$ ' + v.toLocaleString('pt-BR');\nconst nomes = Object.keys(d);\ngfDesp.setData(nomes, nomes.map(n => d[n]));\nconst total = nomes.reduce((a, n) => a + d[n], 0);\nlblTotal.textContent = 'Total: R$ ' + total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });\n"
+          }
+        },
+        {
+          "id": "2144dbdd-c9ac-415a-ac31-bcca7c6b9c11",
+          "kind": "button",
+          "name": "btnApagar",
+          "text": "Apagar tudo",
+          "x": 200,
+          "y": 476,
+          "width": "170px",
+          "height": "44px",
+          "bg": "#ffffff",
+          "color": "#222222",
+          "events": {
+            "click": "const d = {};\ntry { localStorage.setItem('graficos_despesas', JSON.stringify(d)); } catch (e) {}\ngfDesp.clear();\nlblTotal.textContent = 'Total: R$ 0,00';\nlblMsg.textContent = 'Lançamentos apagados. Adicione novos acima.';\n"
+          }
+        },
+        {
+          "id": "93a236c3-816e-47fb-89a8-8b76c721ae89",
+          "kind": "label",
+          "name": "lblTotal",
+          "text": "",
+          "x": 20,
+          "y": 530,
+          "width": "350px",
+          "height": "30px",
+          "bg": "transparent",
+          "color": "#0f172a",
+          "events": {}
+        },
+        {
+          "id": "0de557b8-1083-4370-8759-7deac054f1b6",
+          "kind": "label",
+          "name": "lblMsg",
+          "text": "Toque numa fatia para ver o valor.",
+          "x": 20,
+          "y": 564,
+          "width": "350px",
+          "height": "50px",
+          "bg": "transparent",
+          "color": "#64748b",
+          "events": {}
+        }
+      ],
+      "events": {
+        "onload": "",
+        "onshow": "// lê os lançamentos salvos no aparelho (ou usa valores de exemplo)\nlet d = null;\ntry { d = JSON.parse(localStorage.getItem('graficos_despesas')); } catch (e) {}\nif (!d || typeof d !== 'object') d = { Moradia: 1200, Comida: 650, Transporte: 280, Lazer: 190, Saúde: 120 };\nconst nomes = Object.keys(d);\ngfDesp.setData(nomes, nomes.map(n => d[n]));\nconst total = nomes.reduce((a, n) => a + d[n], 0);\nlblTotal.textContent = 'Total: R$ ' + total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });\n"
+      }
+    }
+  ]
+}
