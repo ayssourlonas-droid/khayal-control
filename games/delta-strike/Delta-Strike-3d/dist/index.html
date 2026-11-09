@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:delta-strike:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#142b3a" />
+    <meta
+      name="description"
+      content="One river. Two ways to fly. Choose the 2D classic or take flight in Delta Strike 3D."
+    />
+    <title>Delta Strike — Choose your flight</title>
+    <link rel="icon" href="icons/delta-strike-192.webp" />
+    <link rel="stylesheet" href="selection/selection.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="icons/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Delta Strike" />
+    <link rel="manifest" href="manifest.webmanifest" />
+  </head>
+  <body>
+    <div class="selection-shell">
+      <header class="masthead">
+        <a class="wordmark" href="./" aria-label="Delta Strike home">
+          <svg viewBox="0 0 40 36" aria-hidden="true">
+            <path d="M20 1 39 34 20 26 1 34Z" fill="currentColor" />
+            <path d="M20 10v13" stroke="#142b3a" stroke-width="2" />
+          </svg>
+          <span>DELTA STRIKE</span>
+        </a>
+        <span class="header-note">One river. Two ways to fly.</span>
+      </header>
+      <main>
+        <div class="intro">
+          <h1>Choose your airspace.</h1>
+          <p>The same mission. A new perspective. Your next flight awaits.</p>
+        </div>
+        <div class="editions" aria-label="Game editions">
+          <a
+            class="edition classic"
+            href="classic.html"
+            aria-labelledby="classic-title classic-play"
+            aria-describedby="classic-description"
+          >
+            <div class="scene classic-scene">
+              <img
+                src="selection/classic.webp"
+                alt="Pixel art river and aircraft from the original game"
+                width="640"
+                height="840"
+                fetchpriority="high"
+              />
+            </div>
+            <div class="edition-top">
+              <span class="edition-format">2D</span
+              ><span class="perspective"
+                >Top-down flight<br />Arcade spirit</span
+              >
+            </div>
+            <div class="edition-content">
+              <span class="edition-label">The original flight</span>
+              <h2 id="classic-title">Delta Strike <span>Classic</span></h2>
+              <p id="classic-description">
+                Pixels, reflexes, and one more try.<br />Master the river in the
+                classic that started it all.
+              </p>
+              <div class="edition-action">
+                <span id="classic-play">Play in 2D</span
+                ><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 5 7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </a>
+          <a
+            class="edition modern"
+            href="3d.html"
+            aria-labelledby="modern-title modern-play"
+            aria-describedby="modern-description"
+          >
+            <div class="scene">
+              <img
+                src="selection/flight.webp"
+                alt="Fighter flying over a river between islands and canyons in 3D"
+                width="1200"
+                height="900"
+                fetchpriority="high"
+              />
+            </div>
+            <div class="edition-top">
+              <span class="edition-format">3D</span
+              ><span class="perspective"
+                >Chase-camera flight<br />A new horizon</span
+              >
+            </div>
+            <div class="edition-content">
+              <span class="edition-label">The next dimension</span>
+              <h2 id="modern-title">Delta Strike <span>3D</span></h2>
+              <p id="modern-description">
+                Gain altitude. Race through the canyons.<br />Find your way
+                through a delta stretching beyond the horizon.
+              </p>
+              <div class="edition-action">
+                <span id="modern-play">Play in 3D</span
+                ><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 5 7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </a>
+        </div>
+      </main>
+      <footer>
+        <span>For those who never stopped playing.</span
+        ><span
+          >Keyboard or touch <span class="footer-dot">•</span> Play in your
+          browser</span
+        >
+      </footer>
+    </div>
+    <script>
+      if ("serviceWorker" in navigator && window.isSecureContext) {
+        navigator.serviceWorker.register("./sw.js").catch(function () {});
+      }
+    </script>
+  </body>
+</html>

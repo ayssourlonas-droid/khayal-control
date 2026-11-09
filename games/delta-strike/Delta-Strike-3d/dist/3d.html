@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:delta-strike:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#243f42" />
+    <meta
+      name="description"
+      content="Take the river. Own the sky. An original 3D arcade flight game."
+    />
+    <title>Delta Strike 3D</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Delta Strike" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <script type="module" crossorigin src="./assets/3d-DekE-M8C.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/three-G6xj0nex.js">
+    <link rel="stylesheet" crossorigin href="./assets/3d-B7zvxtFR.css">
+  </head>
+  <body>
+    <canvas id="game" aria-label="Delta Strike 3D flight view"></canvas>
+    <div id="vignette"></div>
+    <header id="masthead">
+      <a class="brand" href="#" aria-label="Delta Strike home"
+        ><svg viewBox="0 0 40 36" aria-hidden="true">
+          <path d="M20 1 39 34 20 26 1 34Z" fill="currentColor" />
+          <path d="M20 10v13" stroke="#294247" stroke-width="2" /></svg
+        ><span>DELTA STRIKE<span class="brand-edition">FLIGHT OPERATIONS</span></span></a
+      >
+      <nav aria-label="Game options">
+        <a id="versions-link" href="./" class="text-button" aria-label="Back to edition selection"
+          >Versions</a
+        >
+        <button id="instructions-open" class="text-button">Instructions</button>
+        <button id="sound" class="icon-button" aria-label="Mute sound" title="Sound (M)">
+          <svg viewBox="0 0 24 24">
+            <path d="M11 4 6 8H3v8h3l5 4V4Zm4 4c2 2 2 6 0 8m3-11c4 4 4 10 0 14" />
+          </svg></button
+        ><button id="settings-open" class="text-button">Settings</button
+        ><button id="pause-button" class="icon-button" hidden aria-label="Pause game">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" /></svg>
+        </button>
+      </nav>
+    </header>
+    <main id="menu">
+      <div class="hero">
+        <div class="sortie-label"><span></span> YOUR NEXT SORTIE STARTS HERE</div>
+        <h1>DELTA<br />STRIKE<span class="dimension">3D</span></h1>
+        <p class="tagline">Take the river. Own the sky.</p>
+        <p class="intro">
+          Split rivers. Fast crossings. A long way home.<br />Fly the delta to one million points.
+        </p>
+        <div class="launch-row">
+          <button id="launch" class="primary" disabled>
+            <span id="launch-label">Preparing aircraft…</span
+            ><svg viewBox="0 0 24 24"><path d="m5 12 14 0m-6-6 6 6-6 6" /></svg></button
+          ><span class="enter-hint">PRESS <kbd>ENTER</kbd></span>
+        </div>
+        <button id="continue" class="continue-button" hidden>Continue expedition</button>
+        <button id="briefing-open" class="briefing-link">
+          Instructions &amp; controls <span>↗</span>
+        </button>
+      </div>
+      <aside class="mission-card">
+        <div class="mission-card-top">
+          <span class="signal"></span> OPERATION RIVER SPEAR <span>1,000,000</span>
+        </div>
+        <div class="mission-map">
+          <svg viewBox="0 0 310 92" aria-hidden="true">
+            <path
+              class="map-bank"
+              d="M-10 12C60 95 90-18 158 34S245 5 320 67M-10 42C60 125 90 12 158 64S245 35 320 97"
+            />
+            <path class="map-route" d="M-10 27C60 110 90-3 158 49S245 20 320 82" />
+            <circle cx="43" cy="62" r="5" />
+            <circle cx="157" cy="49" r="5" />
+            <circle cx="257" cy="53" r="5" />
+          </svg>
+        </div>
+        <div class="mission-card-bottom">
+          <span>Split channels</span><span>The narrows</span><span>Far upstream</span>
+        </div>
+        <p>Every bridge is a checkpoint. How far can you fly?</p>
+      </aside>
+      <footer class="menu-footer">
+        <span>ARCADE FLIGHT <i>/</i> SINGLE PLAYER</span
+        ><span>Built for the love of the original.<span class="version">DS—3D / V1.1</span></span>
+      </footer>
+    </main>
+    <section id="hud" hidden aria-label="Flight instruments">
+      <div class="mission-status">
+        <div id="sector-code">DELTA / 01</div>
+        <h2 id="sector-name">The river mouth</h2>
+        <p id="objective">Destroy the bridge control tower</p>
+        <div class="progress-track"><span id="sector-progress"></span></div>
+      </div>
+      <div class="score-panel">
+        <span>SCORE</span><strong id="score">000000</strong
+        ><small>BEST <span id="best">0</span></small>
+      </div>
+      <div id="notice" role="status"></div>
+      <div id="crosshair"><span></span><i></i></div>
+      <div id="target-marker" hidden><span id="target-label">LOCK</span></div>
+      <div id="fuel-marker" hidden>＋<small id="fuel-distance">FUEL</small></div>
+      <div class="flight-number speed-number">
+        <span>AIRSPEED</span><strong id="speed">230</strong><small>km/h</small>
+        <div class="tape"></div>
+      </div>
+      <div class="flight-number altitude-number">
+        <span>ALTITUDE</span><strong id="altitude">28</strong><small>m AGL</small>
+        <div class="tape"></div>
+      </div>
+      <div class="bottom-hud">
+        <div class="airframe">
+          <span class="small-label">AIRFRAME</span>
+          <div id="lives">▲ ▲ ▲</div>
+        </div>
+        <div class="gauge">
+          <div><span>HULL</span><b id="health-value">100%</b></div>
+          <div class="gauge-track"><span id="health-fill"></span></div>
+        </div>
+        <div class="gauge fuel-gauge">
+          <div><span>FUEL</span><b id="fuel-value">100%</b></div>
+          <div class="gauge-track"><span id="fuel-fill"></span></div>
+        </div>
+        <div class="gauge boost-gauge">
+          <div><span>BOOST</span><b>SHIFT</b></div>
+          <div class="gauge-track"><span id="boost-fill"></span></div>
+        </div>
+        <div class="weapons">
+          <span class="small-label">MISSILES <kbd>F</kbd></span
+          ><strong id="missiles">4</strong>
+        </div>
+      </div>
+      <div id="controls-hint">
+        <span><kbd>W A S D</kbd> Fly</span><span><kbd>SPACE</kbd> Cannons</span
+        ><span><kbd>F</kbd> Missile</span><span><kbd>Q / E</kbd> Throttle</span>
+      </div>
+      <div id="touch-controls">
+        <div id="stick" aria-label="Flight joystick"><span id="stick-knob"></span></div>
+        <div class="touch-actions">
+          <button id="touch-boost">BOOST</button><button id="touch-missile">MISSILE</button
+          ><button id="touch-fire">FIRE</button>
+        </div>
+      </div>
+    </section>
+    <div id="overlay" class="overlay" hidden>
+      <section id="pause-panel" class="panel" hidden>
+        <span class="panel-kicker">FLIGHT ON HOLD</span>
+        <h2>Take a breath.</h2>
+        <p>Your aircraft is paused. Ready when you are.</p>
+        <button id="resume" class="primary">Resume flight</button
+        ><button id="restart" class="secondary">Restart mission</button
+        ><button id="return-menu" class="text-button">Return to base</button>
+      </section>
+      <section id="result-panel" class="panel" hidden>
+        <span id="result-kicker" class="panel-kicker">SORTIE REPORT</span>
+        <h2 id="result-title">Aircraft lost.</h2>
+        <p id="result-description"></p>
+        <div class="result-stats">
+          <div><span>Score</span><strong id="result-score">0</strong></div>
+          <div><span>Targets</span><strong id="result-kills">0</strong></div>
+          <div><span>Flight time</span><strong id="result-time">0:00</strong></div>
+        </div>
+        <button id="retry" class="primary">Fly again</button
+        ><button id="result-menu" class="text-button">Return to base</button>
+      </section>
+      <section id="briefing-panel" class="panel briefing-panel" hidden>
+        <span class="panel-kicker">PILOT BRIEFING</span>
+        <h2>Instructions &amp; controls</h2>
+        <p>
+          Follow the delta to 1,000,000 points. Clear bridge control towers, choose either channel
+          around islands, and watch for fast jets crossing from the banks. Every bridge is a
+          checkpoint.
+        </p>
+        <div class="briefing-grid keyboard-instructions">
+          <div>
+            <h3>Fly the aircraft</h3>
+            <p>
+              <kbd>A</kbd> <kbd>D</kbd> bank and turn<br /><kbd>W</kbd> climb ·
+              <kbd>S</kbd> dive<br /><kbd>←</kbd> <kbd>→</kbd> bank and turn<br />
+              <kbd>↑</kbd> nose down · <kbd>↓</kbd> nose up
+            </p>
+          </div>
+          <div>
+            <h3>Speed control — hold the key</h3>
+            <p>
+              <kbd>E</kbd> accelerate<br /><kbd>Q</kbd> brake<br />
+              <kbd>SHIFT</kbd> turbo boost<br />
+              Release E / Q to return to cruising speed.<br />
+              Boost recharges when released and uses extra fuel.
+            </p>
+          </div>
+          <div>
+            <h3>Make every pass count</h3>
+            <p>
+              <kbd>SPACE</kbd> hold for cannons<br /><kbd>F</kbd> launch a missile<br />Aim toward a
+              target to lock on.<br />Green rings refuel below 23 m.
+            </p>
+          </div>
+          <div>
+            <h3>Pause &amp; sound</h3>
+            <p>
+              <kbd>ESC</kbd> / <kbd>P</kbd> pause or resume<br />
+              <kbd>M</kbd> toggle sound<br />
+              Open Instructions anytime to review controls.<br />
+              Your flight pauses while you read.
+            </p>
+          </div>
+        </div>
+        <div class="briefing-grid touch-instructions">
+          <div>
+            <h3>Fly with the touch stick</h3>
+            <p>
+              Drag the left stick forward (up) to dive.<br />
+              Pull it back (down) to climb.<br />
+              Drag left or right to bank and turn.<br />Release to center the stick.
+            </p>
+          </div>
+          <div>
+            <h3>Speed &amp; weapons</h3>
+            <p>
+              Hold BOOST to accelerate; release to recharge.<br />
+              Hold FIRE for cannons. Tap MISSILE to launch.<br />
+              Steer and use the buttons at the same time.<br />Green rings refuel below 23 m.
+            </p>
+          </div>
+          <div>
+            <h3>Pause &amp; sound</h3>
+            <p>
+              Tap the pause icon to pause the flight.<br />
+              Tap the speaker icon to mute or enable sound.<br />
+              Opening Instructions pauses the game.
+            </p>
+          </div>
+        </div>
+        <p class="briefing-note">
+          Three aircraft. An extra life every 10,000 points (up to nine). Fuel and damage carry
+          between bridges; collect green depots. Bridges supply two missiles and save progress.
+          Controller: left stick to fly, RT cannons, A missile, LT boost. On touch screens, use the
+          on-screen controls.
+        </p>
+        <button id="briefing-close" class="primary">Ready to fly</button>
+      </section>
+      <section id="settings-panel" class="panel" hidden>
+        <span class="panel-kicker">FLIGHT PREFERENCES</span>
+        <h2>Make it yours.</h2>
+        <label class="setting-row"
+          >Sound effects<input id="sound-setting" type="checkbox" checked /></label
+        ><label class="setting-row"
+          >High quality shadows<input id="quality-setting" type="checkbox" checked /></label
+        ><label class="setting-row"
+          >Reduced camera motion<input id="motion-setting" type="checkbox"
+        /></label>
+        <p class="settings-note">Lower shadow quality can help on older devices.</p>
+        <button id="settings-close" class="primary">Done</button>
+      </section>
+      <section id="error-panel" class="panel" hidden>
+        <span class="panel-kicker">PREFLIGHT CHECK</span>
+        <h2>Unable to take off.</h2>
+        <p id="error-message">The game could not load. Please reload to try again.</p>
+        <button id="reload" class="primary">Reload game</button>
+      </section>
+    </div>
+  </body>
+</html>

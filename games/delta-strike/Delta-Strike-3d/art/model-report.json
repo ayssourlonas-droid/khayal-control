@@ -1,0 +1,175 @@
+{
+  "player": {
+    "dimensions_blender_xyz": [
+      10.0,
+      12.740000247955322,
+      2.209999978542328
+    ],
+    "dimensions_gltf_xyz": [
+      10.0,
+      2.209999978542328,
+      12.740000247955322
+    ],
+    "objects": [
+      "Faceted lifting fuselage",
+      "Swept delta wing -1",
+      "Silver leading-edge rail -1",
+      "Orange wing slash -1",
+      "Inset elevon -1",
+      "Twin jet exhaust -1",
+      "Exhaust inner ember -1",
+      "Canted tail stabilizer -1",
+      "Shoulder intake -1",
+      "Swept delta wing 1",
+      "Silver leading-edge rail 1",
+      "Orange wing slash 1",
+      "Inset elevon 1",
+      "Twin jet exhaust 1",
+      "Exhaust inner ember 1",
+      "Canted tail stabilizer 1",
+      "Shoulder intake 1",
+      "Navy armored canopy",
+      "Canopy spine",
+      "Nose identification stripe"
+    ]
+  },
+  "jet": {
+    "dimensions_blender_xyz": [
+      10.0,
+      12.740000247955322,
+      2.209999978542328
+    ],
+    "dimensions_gltf_xyz": [
+      10.0,
+      2.209999978542328,
+      12.740000247955322
+    ],
+    "objects": [
+      "Faceted lifting fuselage",
+      "Swept delta wing -1",
+      "Silver leading-edge rail -1",
+      "Orange wing slash -1",
+      "Inset elevon -1",
+      "Twin jet exhaust -1",
+      "Exhaust inner ember -1",
+      "Canted tail stabilizer -1",
+      "Shoulder intake -1",
+      "Swept delta wing 1",
+      "Silver leading-edge rail 1",
+      "Orange wing slash 1",
+      "Inset elevon 1",
+      "Twin jet exhaust 1",
+      "Exhaust inner ember 1",
+      "Canted tail stabilizer 1",
+      "Shoulder intake 1",
+      "Navy armored canopy",
+      "Canopy spine",
+      "Nose identification stripe"
+    ]
+  },
+  "boat": {
+    "dimensions_blender_xyz": [
+      6.0,
+      17.0,
+      6.024999797344208
+    ],
+    "dimensions_gltf_xyz": [
+      6.0,
+      6.024999797344208,
+      17.0
+    ],
+    "objects": [
+      "Deep angular hull",
+      "Raised perimeter deck",
+      "Armored cabin",
+      "Bridge windows front",
+      "Bridge side windows",
+      "Bridge side windows.001",
+      "Turret ring",
+      "Forward gun turret",
+      "Naval gun barrel",
+      "Radar mast",
+      "Radar array",
+      "Deck ventilation",
+      "Deck ventilation.001",
+      "Deck ventilation.002",
+      "Deck ventilation.003"
+    ]
+  },
+  "helicopter": {
+    "dimensions_blender_xyz": [
+      9.0,
+      11.150000095367432,
+      3.2100000381469727
+    ],
+    "dimensions_gltf_xyz": [
+      9.0,
+      3.2100000381469727,
+      11.150000095367432
+    ],
+    "objects": [
+      "Armored helicopter cabin",
+      "Wraparound cockpit",
+      "Tapered tail boom",
+      "Tail stabilizer",
+      "Tail fin",
+      "Rotor mast",
+      "Rotor",
+      "Rotor cross blade",
+      "Landing skid",
+      "Skid strut",
+      "Skid strut.001",
+      "Landing skid.001",
+      "Skid strut.002",
+      "Skid strut.003",
+      "Tail rotor hub",
+      "Tail rotor"
+    ]
+  },
+  "bridge": {
+    "dimensions_blender_xyz": [
+      110.0,
+      10.0,
+      13.100000381469727
+    ],
+    "dimensions_gltf_xyz": [
+      110.0,
+      13.100000381469727,
+      10.0
+    ],
+    "objects": [
+      "Concrete bridge deck",
+      "Road surface",
+      "Continuous parapet",
+      "Continuous parapet.001",
+      "Tapered concrete pier",
+      "Tapered concrete pier.001",
+      "Tapered concrete pier.002",
+      "Tapered concrete pier.003",
+      "Tapered concrete pier.004",
+      "Tapered concrete pier.005",
+      "Tapered concrete pier.006",
+      "Tapered concrete pier.007",
+      "Tapered concrete pier.008",
+      "Tapered concrete pier.009",
+      "Lane paint",
+      "Lane paint.001",
+      "Lane paint.002",
+      "Lane paint.003",
+      "Lane paint.004",
+      "Lane paint.005",
+      "Lane paint.006",
+      "Lane paint.007",
+      "Lane paint.008",
+      "Lane paint.009",
+      "Lane paint.010",
+      "Lane paint.011",
+      "Lane paint.012",
+      "Lane paint.013",
+      "Lane paint.014",
+      "Lane paint.015",
+      "Lane paint.016",
+      "Lane paint.017"
+    ]
+  }
+}

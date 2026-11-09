@@ -1,0 +1,31 @@
+{
+  "name": "DELTA STRIKE",
+  "short_name": "DELTA STRIKE",
+  "description": "One river. Two ways to fly. Play Delta Strike Classic or 3D.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#142b3a",
+  "theme_color": "#142b3a",
+  "icons": [
+    {
+      "src": "icons/delta-strike-192.webp",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/delta-strike-512.webp",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/delta-strike-maskable-512.webp",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

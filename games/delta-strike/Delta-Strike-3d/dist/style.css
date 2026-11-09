@@ -1,0 +1,43 @@
+/* DELTA STRIKE */
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  background: #000; overflow: hidden;
+  touch-action: none; overscroll-behavior: none;
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  display: flex; align-items: center; justify-content: center;
+}
+#screen {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges; /* fallback for old Firefox */
+  background: #000;
+}
+.hint {
+  position: fixed; bottom: 18%;
+  font: 12px/1.4 monospace; letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  opacity: 1; transition: opacity 0.5s ease-out;
+}
+#hint-left  { left: 8%; }
+#hint-right { right: 8%; }
+.hint.hidden { opacity: 0; }
+
+#hint-keys {
+  position: fixed; bottom: 4px; left: 0; width: 100%;
+  text-align: center; font: 12px monospace; color: #666666;
+  pointer-events: none;
+}
+
+/* Shared edition selector; stays clear of the classic touch corner controls. */
+.edition-home {
+  position: fixed; top: max(10px, env(safe-area-inset-top)); left: 50%;
+  transform: translateX(-50%); z-index: 5;
+  padding: 7px 13px; border: 1px solid #ffffff50; border-radius: 4px;
+  color: #edf2ef; background: #142b3ae6; text-decoration: none;
+  font: 12px/1.3 system-ui, sans-serif;
+}
+.edition-home:focus-visible { outline: 3px solid #f29b59; outline-offset: 3px; }

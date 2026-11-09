@@ -686,5 +686,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: For the voice clips, the manifest records the voice model as MIT-licensed and its dataset as CC0. | LICENSE: attribution notices from the Source form of the Work,"
+  },
+  {
+    "key": "deltastrike",
+    "size": 4991,
+    "repo": "eldermoraes/Delta-Strike",
+    "id": 47,
+    "slug": "delta-strike",
+    "title": "Delta Strike",
+    "developer": "eldermoraes",
+    "license": "Apache-2.0",
+    "source": "https://github.com/eldermoraes/Delta-Strike",
+    "commit": "f1905c650eeab7b1f376689a9c61d66d031a7cac",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
