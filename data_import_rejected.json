@@ -664,5 +664,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42643194760"
+  },
+  {
+    "url": "https://github.com/rsamwilson2323-cloud/Stickman-Tracker-Recorder",
+    "repo": "rsamwilson2323-cloud/Stickman-Tracker-Recorder",
+    "reason": "لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. جرّب إدخال subdir أو build_cmd",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42643446606"
   }
 ]
