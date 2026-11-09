@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from browser_check import browser_test, fix_case, lint_js
-from common import ALLOWED, COUNT, FIXES, HTML_SKIPPED, MAX_FILES, MAX_TOTAL_FAIL, MAX_TOTAL_WARN, TIMINGS, api, fixed, log, parse_repo, pretty_title, run, slugify, stage, start_watchdog, stop_watchdog
+from common import ALLOWED, COPYLEFT, COUNT, FIXES, HTML_SKIPPED, MAX_FILES, MAX_TOTAL_FAIL, MAX_TOTAL_WARN, TIMINGS, api, fixed, log, parse_repo, pretty_title, run, slugify, stage, start_watchdog, stop_watchdog
 from html_sanitize import sanitize, scan_suspicious
 from provenance import provenance_lines, scan_provenance, server_side_hints
 from prune import prune_site
@@ -110,6 +110,8 @@ def main():
     if reasons:
         finish("fail")
     notes.append("رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه")
+    if spdx in COPYLEFT:
+        warnings.append(f"رخصة حقوق متبادلة ({spdx}): أي عمل مشتق يلزمه نشر المصدر بالرخصة نفسها؛ راجعها قبل النشر العام")
 
     stage("جلب المستودع")
     # 2) الجلب
@@ -271,8 +273,8 @@ def main():
     stage("تقليل الملفات")
     # 6أ) تقليل الملفات
     files_before = sum(len(f) for _, _, f in os.walk(site))
-    if spdx == "GPL-3.0" and prune_mode != "off":
-        notes.append("رخصة GPL-3.0: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)")
+    if spdx in COPYLEFT and prune_mode != "off":
+        notes.append(f"رخصة {spdx}: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)")
         prune_mode = "off"
     if prune_mode != "off" and t["ran"]:
         pr = prune_site(site, work, shot, t, prune_mode)
@@ -294,8 +296,8 @@ def main():
     stage("تحسين الوسائط")
     # 6أ-2) تحسين الوسائط (صور/صوت/فيديو/خطوط)
     if media_mode != "off" and t["ran"]:
-        if spdx == "GPL-3.0":
-            notes.append("رخصة GPL-3.0: لم تُحسَّن الوسائط")
+        if spdx in COPYLEFT:
+            notes.append(f"رخصة {spdx}: لم تُحسَّن الوسائط")
         else:
             try:
                 import optimize_media
