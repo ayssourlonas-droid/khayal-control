@@ -1,0 +1,8 @@
+Source: https://github.com/scriptex/material-snake
+Commit: 693645d4d9e1112f14bb1736e780c01e5a2cfecc
+License: MIT
+Imported: 2026-11-08T23:59:59.212762+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تحسين وسائط صور": 25}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 48, audio: 0, tagged audio: 0

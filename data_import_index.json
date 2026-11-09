@@ -581,5 +581,20 @@
     "date": "2026-11-08",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: — [Wikipedia, \"SubSpace (video game)\"](https://en.wikipedia.org/wiki/SubSpace_(video_game)), CC BY-SA 4.0 | ASSETS.md: or own any of this material and want it credited or removed, please"
+  },
+  {
+    "key": "materialsnake",
+    "size": 2481,
+    "repo": "scriptex/material-snake",
+    "id": 40,
+    "slug": "material-snake",
+    "title": "Material Snake",
+    "developer": "scriptex",
+    "license": "MIT",
+    "source": "https://github.com/scriptex/material-snake",
+    "commit": "693645d4d9e1112f14bb1736e780c01e5a2cfecc",
+    "date": "2026-11-08",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
