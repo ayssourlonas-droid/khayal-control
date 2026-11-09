@@ -196,5 +196,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42541935495"
+  },
+  {
+    "url": "https://github.com/korial29/air-hockey",
+    "repo": "korial29/air-hockey",
+    "reason": "هذه لعبة جماعية تحتاج خادماً لحظياً (ws) ولا تعمل كموقع ثابت، فلا يمكن استضافتها على Cloudflare Pages ولا تشغيلها في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "Apache-2.0",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42542038516"
   }
 ]
