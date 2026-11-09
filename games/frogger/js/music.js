@@ -25,7 +25,7 @@
 const TRACKS = [
 
   /* MUSIC-FILES:START -- rebuilt by `deno task music`, do not hand-edit */
-  { name: 'Archer Speedrun',    file: 'music/Archer Speedrun.mp3' },
+  { name: 'Archer Speedrun',    file: 'music/Archer Speedrun.ogg' },
   { name: 'Boneyard',           file: 'music/boneyard.ogg' },
   { name: 'Box Jumping',        file: 'music/Box Jumping.m4a' },
   { name: 'Chiptune Party',     file: 'music/Chiptune Party.mp3' },
