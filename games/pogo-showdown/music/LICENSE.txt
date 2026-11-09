@@ -1,0 +1,14 @@
+Eternity High soundtrack (formerly Pogo Showdown)
+by 9x25dillon
+
+  score (menu-score.mp3)
+  110 points (explore-110-points.mp3)
+  50 points (explore-50-points.mp3)
+  chaose mode max (danger-chaose-mode-max.mp3)
+  woned (win-woned.mp3)
+  Loss (loss.mp3)
+
+Licensed under Creative Commons Attribution-ShareAlike 4.0 International
+(CC BY-SA 4.0): https://creativecommons.org/licenses/by-sa/4.0/
+The full legal text is LICENSE-MUSIC in the source repository:
+https://github.com/9x25dillon/pogo-showdown

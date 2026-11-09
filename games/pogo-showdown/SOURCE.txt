@@ -1,0 +1,16 @@
+Source: https://github.com/9x25dillon/pogo-showdown
+Commit: 838e7f0549c0342b6450325cc64eb020a92e58a6
+License: GPL-3.0
+Imported: 2026-11-09T10:08:23.104187+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: Soundtrack** (`public/music/`) by 9x25dillon: [Creative Commons Attribution-ShareAlike 4.0](LICENSE-MUSIC). Track list and credit are in `pu
+- LICENSE: author attributions in that material or in the Appropriate Legal
+- LICENSE-MUSIC: Attribution-ShareAlike 4.0 International
+- LICENSE-MUSIC: Creative Commons Corporation ("Creative Commons") is not a law firm and
+- LICENSE-MUSIC: Creative Commons public licenses does not create a lawyer-client or
+- LICENSE-MUSIC: other relationship. Creative Commons makes its licenses and related
+- artist=9x25dillon
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 35, audio: 6, tagged audio: 6

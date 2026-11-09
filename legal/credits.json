@@ -836,5 +836,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE-DOCS: Attribution-ShareAlike 4.0 International | LICENSE-DOCS: Creative Commons Corporation (\"Creative Commons\") is not a law firm and"
+  },
+  {
+    "key": "pogoshowdown",
+    "size": 28403,
+    "repo": "9x25dillon/pogo-showdown",
+    "id": 57,
+    "slug": "pogo-showdown",
+    "title": "Pogo Showdown",
+    "developer": "9x25dillon",
+    "license": "GPL-3.0",
+    "source": "https://github.com/9x25dillon/pogo-showdown",
+    "commit": "838e7f0549c0342b6450325cc64eb020a92e58a6",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Soundtrack** (`public/music/`) by 9x25dillon: [Creative Commons Attribution-ShareAlike 4.0](LICENSE-MUSIC). Track list and credit are in `pu | LICENSE: author attributions in that material or in the Appropriate Legal | artist=9x25dillon"
   }
 ]
