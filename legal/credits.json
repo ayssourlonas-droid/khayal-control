@@ -626,5 +626,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "chinesechess",
+    "size": 21502,
+    "repo": "tjlstar/Chinese-Chess",
+    "id": 43,
+    "slug": "chinese-chess",
+    "title": "Chinese Chess",
+    "developer": "tjlstar",
+    "license": "Apache-2.0",
+    "source": "https://github.com/tjlstar/Chinese-Chess",
+    "commit": "35b3a8a5e41476a6976800fd2c37761258b210c6",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
