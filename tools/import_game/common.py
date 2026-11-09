@@ -8,8 +8,12 @@ import time
 import urllib.request
 import urllib.error
 
-ALLOWED = ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "CC0-1.0", "CC-BY-4.0",
-           "CC-BY-3.0", "GPL-3.0", "ISC", "Zlib"]  # OWNED/PARTNER لا تُقبل تلقائياً
+# أ) متساهلة
+PERMISSIVE = ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "CC0-1.0", "CC-BY-4.0", "CC-BY-3.0", "ISC", "Zlib",
+              "Unlicense", "0BSD", "BSL-1.0", "WTFPL", "Artistic-2.0", "AFL-3.0"]
+# ب) حقوق متبادلة: تُقبل مع ملاحظة، ولا تُحذف ملفاتها ولا تُحسَّن وسائطها (يجب إتاحة المصدر كاملاً)
+COPYLEFT = ["GPL-3.0", "GPL-2.0", "LGPL-3.0", "LGPL-2.1", "MPL-2.0", "CC-BY-SA-4.0"]
+ALLOWED = PERMISSIVE + COPYLEFT  # OWNED/PARTNER لا تُقبل تلقائياً؛ AGPL وNC وND مرفوضة عمداً
 
 PREBUILT_DIRS = ["docs", "dist", "build", "www", "release", "web", "html", "public"]
 EXCLUDE_DIRS = {".git", "node_modules", ".github", "__MACOSX"}
