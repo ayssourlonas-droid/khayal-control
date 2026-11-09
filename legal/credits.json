@@ -866,5 +866,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "echoprotocol",
+    "size": 7860,
+    "repo": "alberto2005-coder/echo-protocol",
+    "id": 59,
+    "slug": "echo-protocol",
+    "title": "Echo Protocol",
+    "developer": "alberto2005-coder",
+    "license": "GPL-3.0",
+    "source": "https://github.com/alberto2005-coder/echo-protocol",
+    "commit": "125dffe99fb29bae39fd2925d8cac3788a8c04f4",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Survive endless sectors against rogue cybernetic drone swarms, earn Cyber Credits, buy permanent upgrades in the Armory, and take down a mas | README.md: Economy & permanent Armory** — every kill pays out Cyber Credits instantly; upgrades bought between floors persist forever via `localStorage"
   }
 ]
