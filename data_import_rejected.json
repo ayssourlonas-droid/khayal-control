@@ -709,5 +709,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42647229521"
+  },
+  {
+    "url": "https://github.com/shaurya-tiwari/ONLINE-MULTIPLAYER-GAME-socket.io-",
+    "repo": "shaurya-tiwari/ONLINE-MULTIPLAYER-GAME-socket.io-",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42647474772"
   }
 ]
