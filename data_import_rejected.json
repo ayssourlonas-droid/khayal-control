@@ -754,5 +754,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42648492492"
+  },
+  {
+    "url": "https://github.com/lday2017-byte/stickmanify",
+    "repo": "lday2017-byte/stickmanify",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (Dockerfile) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42648747154"
   }
 ]
