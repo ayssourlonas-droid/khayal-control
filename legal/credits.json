@@ -821,5 +821,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: CREDITS.md: Game data** – Tremulous artists and mappers, CC BY-SA 2.5. Maps in rotation: ATCS, Niveus, Karith, Nexus 6, Uncreation, Transit, Tremor (Dar | README.md: <img src=\"https://img.shields.io/badge/license-GPL%20%2F%20CC%20BY--SA-4b5563?labelColor=1a1d21\" alt=\"GPL / CC BY-SA\">"
+  },
+  {
+    "key": "creaturesweeper",
+    "size": 5219,
+    "repo": "Skizmo229/Creature-Sweeper",
+    "id": 56,
+    "slug": "creature-sweeper",
+    "title": "Creature Sweeper",
+    "developer": "Skizmo229",
+    "license": "GPL-3.0",
+    "source": "https://github.com/Skizmo229/Creature-Sweeper",
+    "commit": "a0fd8f2cb6901285e2874e4ca5dbb57c49ce4b02",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE-DOCS: Attribution-ShareAlike 4.0 International | LICENSE-DOCS: Creative Commons Corporation (\"Creative Commons\") is not a law firm and"
   }
 ]
