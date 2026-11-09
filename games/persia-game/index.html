@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:persia-game:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <!-- SEO keywords:
+       primary:   arcade shooter
+       secondary: browser game, boss fight, Persian, free online game
+       intent:    navigational / play
+       Nothing in this head makes a network request: the game runs offline at any sub-path. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Persia: an arcade shooter</title>
+  <meta name="description" content="Free arcade shooter in your browser. Ten levels of angry animals, each named in Persian as it arrives, and a giant at the end of each.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#05060b">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Persia">
+  <meta property="og:title" content="Persia: an arcade shooter">
+  <meta property="og:description" content="Shoot down waves of angry animals and ten giants: a cat, a mouse, a fish, a bird, a cow, a dog, a horse, a lion, a camel and a fox. You hear each animal's name in Persian when it shows up. Free in your browser.">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The PERSIA logo under a formation of angry pixel cats and dogs, a blood-red moon over the ruins of Persepolis, and a Persian word with each letter in its own colour">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Persia: an arcade shooter">
+  <meta name="twitter:description" content="Shoot down waves of angry animals and ten giants: a cat, a mouse, a fish, a bird, a cow, a dog, a horse, a lion, a camel and a fox. You hear each animal's name in Persian when it shows up. Free in your browser.">
+  <meta name="twitter:image:alt" content="The PERSIA logo under a formation of angry pixel cats and dogs, a blood-red moon over the ruins of Persepolis, and a Persian word with each letter in its own colour">
+  <link rel="canonical" href="https://persia.cocode.dk/">
+  <meta property="og:url" content="https://persia.cocode.dk/">
+  <meta property="og:image" content="https://persia.cocode.dk/og.webp">
+  <meta name="twitter:image" content="https://persia.cocode.dk/og.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Persia",
+    "description": "Free arcade shooter in your browser. Ten levels of angry animals, each named in Persian as it arrives, and a giant at the end of each.",
+    "url": "https://persia.cocode.dk/",
+    "image": "https://persia.cocode.dk/og.webp",
+    "genre": ["Shooter", "Arcade"],
+    "gamePlatform": "Web browser",
+    "applicationCategory": "Game",
+    "operatingSystem": "Any",
+    "playMode": "SinglePlayer",
+    "numberOfPlayers": { "@type": "QuantitativeValue", "value": 1 },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Babak Bandpey", "url": "https://linkedin.com/in/babakbandpey" },
+    "publisher": { "@type": "Organization", "name": "Cocode", "url": "https://cocode.dk" },
+    "codeRepository": "https://github.com/cocodedk/persia-game"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="src/ui/css/base.css">
+  <link rel="stylesheet" href="src/ui/css/screens.css">
+  <link rel="stylesheet" href="src/ui/css/word.css">
+  <link rel="stylesheet" href="src/ui/css/open.css">
+</head>
+<body>
+  <canvas id="game" width="1920" height="1080"></canvas>
+  <div id="words"></div>
+  <div id="ui"></div>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- Persia: the angry cat's head (src/ui/aliens/animals.js, cat frame 1, rows 1-10) in the night
+       look's colours (src/ui/looks/persia.js), over its sky -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#05030f"/>
+      <stop offset="0.5" stop-color="#120a2e"/>
+      <stop offset="0.82" stop-color="#3a1240"/>
+      <stop offset="1" stop-color="#6a1e3a"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="url(#sky)" shape-rendering="auto"/>
+  <path fill="#ff9a3a" d="M5 6h2v2h-2zM25 6h2v2h-2zM5 8h4v2h-4zM23 8h4v2h-4zM5 10h2v2h-2zM9 10h2v2h-2zM21 10h2v2h-2zM25 10h2v2h-2zM5 12h22v2h-22zM9 14h14v2h-14zM5 16h4v2h-4zM13 16h6v2h-6zM23 16h4v2h-4zM5 18h2v2h-2zM13 18h6v2h-6zM25 18h2v2h-2zM5 20h10v2h-10zM17 20h10v2h-10zM7 22h6v2h-6zM19 22h6v2h-6zM9 24h14v2h-14z"/>
+  <path fill="#ffd2a6" d="M7 10h2v2h-2zM23 10h2v2h-2z"/>
+  <path fill="#ff1428" d="M5 14h4v2h-4zM23 14h4v2h-4zM9 16h4v2h-4zM19 16h4v2h-4z"/>
+  <path fill="#ffe14a" d="M7 18h2v2h-2zM11 18h2v2h-2zM19 18h2v2h-2zM23 18h2v2h-2z"/>
+  <path fill="#1a0a2a" d="M9 18h2v2h-2zM21 18h2v2h-2zM15 22h2v2h-2z"/>
+  <path fill="#ff5a8a" d="M15 20h2v2h-2z"/>
+  <path fill="#fff8e8" d="M13 22h2v2h-2zM17 22h2v2h-2z"/>
+</svg>

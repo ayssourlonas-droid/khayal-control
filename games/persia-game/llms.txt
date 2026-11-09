@@ -1,0 +1,22 @@
+# Persia
+
+> Persia is a free arcade shooter that runs in the browser. Across ten levels you shoot down waves of angry animals and a giant boss at the end of each, a cat, then a mouse, then a fish, then a bird, then a cow, then a dog, then a horse, then a lion, then a camel, then a fox, and each animal's name is spoken in Persian when it first shows up.
+
+The eleven animals are dog, cat, horse, cow, fish, bird, rabbit, mouse, lion, camel and fox. When a species arrives in a wave, a voice says its Persian name once and the word appears large over the fight for about a second, each letter in its own colour. In a boss fight it also names every animal the giant sends out, each time. Level 1 plays over the ruins of Persepolis; level 2 plays over Si-o-se-pol in Isfahan at night, where the waves count on from six to ten in Persian digits; level 3 plays at the Tomb of Hafez in Shiraz, where they count on to fifteen and the score is in Persian digits too; level 4 plays at the Azadi Tower in Tehran, where they count on to twenty, rain falls from wave 18 and the voice names it, and the combo and the level's number are in Persian digits as well; level 5 plays at the Tomb of Cyrus at Pasargadae at night, where they count on to twenty-five in the same Persian digits, stars fall from wave 23 and the voice names them, and the giant's name bar reads its Persian name; level 6 plays among the windcatchers of Yazd at night, where they count on to thirty, flower petals fall from wave 28 and the voice names them, and even the wave line at the top is in Persian; level 7 plays under the Milad Tower in Tehran at night, where they count on to thirty-five, the blood moon turns white from wave 33 and the voice names it, and the label over the score is in Persian too; level 8 plays on Naqsh-e Jahan Square in Isfahan at night, where they count on to forty, a lion dives at the ship, dawn colours the sky from wave 38 and the voice names it, and the label over the bombs is in Persian as well; level 9 plays at Gonbad-e Qabus in Golestan at night, where they count on to forty-five, a camel spits at the ship, the sun rises from wave 43 and the voice names it, and the label over the lives is in Persian too; level 10 plays at the Tomb of Ferdowsi in Tus at night, where they count on to fifty, a fox dives at the ship, a rainbow rises from wave 48 and the voice names it, and the label over the combo is in Persian too. The menus are in English. It opens like a film: the lights go down and eyes blink open in the dark around the title. When a giant falls, that level's animals parade past, each named once more, and then the score comes up, with Next or Again. Spread shot, laser, rapid fire, shield and smart bombs drop along the way. The bombs panel shows how to drop one, with key caps for B and the right mouse button; on a touch screen, a tap on the panel drops a bomb. It is made for a laptop or desktop with a keyboard and mouse.
+
+Every clip is synthesised speech that a native Persian speaker approved before it went in; the game never synthesises speech itself. It is plain HTML, CSS and JavaScript ES modules with no dependencies, no build step and no network requests at runtime. Made by Babak Bandpey at Cocode, released under Apache-2.0.
+
+## Play
+
+- [Persia](https://persia.cocode.dk/): the game itself; keyboard and mouse
+
+## Source
+
+- [Repository](https://github.com/cocodedk/persia-game): source code and issues
+- [README](https://github.com/cocodedk/persia-game/blob/main/README.md): what it is, controls, running locally, tests and where the voice clips come from
+- [Contributing](https://github.com/cocodedk/persia-game/blob/main/CONTRIBUTING.md): setup, git hooks and house rules
+
+## Optional
+
+- [Security policy](https://github.com/cocodedk/persia-game/blob/main/SECURITY.md): how to report a vulnerability
+- [Cocode](https://cocode.dk): the author's company

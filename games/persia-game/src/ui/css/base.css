@@ -1,0 +1,78 @@
+/* Invaders: page frame, the overlay stage, buttons and focus (from Barrage). Sizes are in rem,
+   and 1 rem is 1/54 of the world's height (20 px at 1080p): the 1920 x 1080 world is always
+   96 x 54 rem, centred, so the overlay lines up with the canvas on a TV, a laptop or a phone. */
+:root {
+  --ink: #f2f5ff;
+  --ink-dim: rgba(232, 238, 255, 0.66);
+  --glass: rgba(7, 9, 20, 0.68);
+  --glass-hi: rgba(20, 24, 44, 0.88);
+  --line: rgba(255, 255, 255, 0.15);
+  --gold: #ffd24a;
+  --hot: #ff7a2a;
+  --cyan: #46f2ff;
+  --magenta: #ff4fd8;
+  --focus: #ffd24a;
+  --font: "PackDigits", system-ui, -apple-system, "Segoe UI", Roboto, "DejaVu Sans", sans-serif;
+  --display: "PackDigits", "Bahnschrift", "DejaVu Sans Condensed", "Liberation Sans Narrow", "Arial Narrow", system-ui, sans-serif;
+  color-scheme: dark;
+}
+html { font-size: min(calc(100vh / 54), calc(100vw / 96)); }
+html, body { margin: 0; height: 100%; background: #05060b; overflow: hidden; }
+body { font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; user-select: none; }
+canvas#game { display: block; width: 100vw; height: 100vh; object-fit: contain; touch-action: none; }
+body.playing canvas#game { cursor: none; }
+
+#ui { position: fixed; inset: 0; pointer-events: none; }
+.screen {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 1.6rem; padding: 3rem; box-sizing: border-box;
+  pointer-events: auto; opacity: 0; transform: scale(1.03);
+  transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.screen.show { opacity: 1; transform: none; }
+.screen.leaving { pointer-events: none; transform: scale(0.98); }
+.screen.dim { background: radial-gradient(ellipse at center, rgba(4, 5, 12, 0.62), rgba(4, 5, 12, 0.9)); }
+.screen-title {
+  margin: 0; font: 900 4.6rem var(--display); font-stretch: condensed; letter-spacing: 0.08em;
+  text-transform: uppercase; text-shadow: 0 0.3rem 1.4rem rgba(0, 0, 0, 0.6);
+}
+.sub { margin: 0; font-size: 1.6rem; font-weight: 700; color: var(--ink-dim); text-align: center; }
+.hint { margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--ink-dim); letter-spacing: 0.06em; }
+.row { display: flex; align-items: center; gap: 2rem; }
+
+.menu { display: flex; flex-direction: column; gap: 1rem; min-width: 26rem; }
+.menu-row { flex-direction: row; flex-wrap: wrap; justify-content: center; min-width: 0; }
+
+.btn {
+  font: 800 1.6rem var(--font); color: var(--ink); padding: 0.9rem 2.2rem; cursor: pointer;
+  background: var(--glass); border: 0.12rem solid var(--line); border-radius: 1rem;
+  box-shadow: 0 0.4rem 1.4rem rgba(0, 0, 0, 0.35), inset 0 0.08rem 0 rgba(255, 255, 255, 0.08); outline: none;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-big { font-size: 2.1rem; padding: 1.1rem 3rem; letter-spacing: 0.04em; }
+.btn:focus {
+  outline: none; border-color: var(--focus); transform: scale(1.05);
+  background: linear-gradient(180deg, rgba(255, 190, 70, 0.34), rgba(255, 110, 30, 0.2)), var(--glass-hi);
+  box-shadow: 0 0 0 0.3rem rgba(255, 210, 74, 0.32), 0 0 2.4rem rgba(255, 150, 40, 0.45);
+}
+.btn:active { transform: scale(0.98); }
+
+.stars i { font-style: normal; color: rgba(255, 255, 255, 0.2); }
+.stars i.on { color: var(--gold); text-shadow: 0 0 0.6rem rgba(255, 190, 60, 0.75); }
+
+/* The author's credit (dom.js credit()): bottom right on every screen that is not play. */
+.credit { position: absolute; right: 3rem; bottom: 2.2rem; font-size: 1.05rem; font-weight: 800; letter-spacing: 0.1em;
+  color: var(--ink-dim); text-decoration: none; text-shadow: 0 0.15rem 0.6rem #000; }
+.credit:hover { color: var(--gold); }
+
+.toast {
+  position: fixed; left: 50%; bottom: 9rem; transform: translate(-50%, 1rem); opacity: 0;
+  font: 900 1.6rem var(--font); padding: 0.8rem 1.8rem; border-radius: 1rem;
+  background: var(--glass-hi); border: 0.12rem solid var(--line); pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease; z-index: 5;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .screen, .btn, .toast { transition: none; }
+}
