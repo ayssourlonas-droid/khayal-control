@@ -881,5 +881,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Survive endless sectors against rogue cybernetic drone swarms, earn Cyber Credits, buy permanent upgrades in the Armory, and take down a mas | README.md: Economy & permanent Armory** — every kill pays out Cyber Credits instantly; upgrades bought between floors persist forever via `localStorage"
+  },
+  {
+    "key": "protolnr",
+    "size": 1883,
+    "repo": "wallabra/proto-lnr",
+    "id": 60,
+    "slug": "proto-lnr",
+    "title": "Proto Lnr",
+    "developer": "wallabra",
+    "license": "GPL-3.0",
+    "source": "https://github.com/wallabra/proto-lnr",
+    "commit": "5444b734d0e189f7f8c684da3e5a51b05417bebc",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
   }
 ]

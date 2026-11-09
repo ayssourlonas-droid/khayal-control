@@ -1140,5 +1140,31 @@
       "type": "web",
       "category": "arena-shooter"
     }
+  },
+  {
+    "id": 60,
+    "release_year": "2026",
+    "category_tags": [
+      "game",
+      "gamedev",
+      "html5-canvas"
+    ],
+    "main_scene": {
+      "title_ar": "Proto Lnr",
+      "title_en": "Proto Lnr",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/proto-lnr/_cover.png"
+    },
+    "details_scene": {
+      "description": "Prototype of Loot & Roam, a physics-based pirate looter game.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/proto-lnr/",
+      "developer": "wallabra",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/wallabra/proto-lnr",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game"
+    }
   }
 ]
