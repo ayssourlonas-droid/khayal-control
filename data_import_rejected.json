@@ -277,5 +277,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42596720709"
+  },
+  {
+    "url": "https://github.com/Pavelgq/fight-game",
+    "repo": "Pavelgq/fight-game",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'ci', '--no-audit', '--no-fund'] (رمز 1)",
+    "license": "ISC",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42597331340"
   }
 ]
