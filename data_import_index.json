@@ -926,5 +926,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: 数据和文案（`src/data/` 下的 JSON、游戏内文字）：[CC BY-SA 4.0](LICENSE-DATA.md)。 | README.md: English**: *Can I Afford It?* is an open-source, offline-capable web game about buying a home in China on a real salary: mortgages, providen"
+  },
+  {
+    "key": "escapevelocity",
+    "size": 61015,
+    "repo": "behlulakdag/escape-velocity",
+    "id": 63,
+    "slug": "escape-velocity",
+    "title": "Escape Velocity",
+    "developer": "behlulakdag",
+    "license": "GPL-3.0",
+    "source": "https://github.com/behlulakdag/escape-velocity",
+    "commit": "d3533b54b7302a2334ec740c6aa65716f270390e",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: <p align=\"center\"><a href=\"https://behlulakdag.itch.io/escape-velocity\"><b>▶ Play it in your browser on itch.io</b></a> · made in 48 hours f | README.md: `itch/` | itch.io page text, screenshots, banner |"
   }
 ]
