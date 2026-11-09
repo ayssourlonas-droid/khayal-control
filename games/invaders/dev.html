@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:invaders:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invaders — render bench</title>
+  <link rel="icon" href="data:,">
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+    canvas#game { display: block; width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+<canvas id="game" width="1920" height="1080"></canvas>
+<script type="module">
+// Dev bench for the renderer (not shipped UI):
+//   dev.html?level=w3-2&t=12   the real sim stepped headless to t (autopilot input, fixed TICK),
+//                              its events fed into fx, then that frozen frame drawn every frame
+//   &live=1   keep simulating after t     &seed=N   world seed (default: the level's)
+//   &hud=0    hide the HUD                &film=1   the trailer's film look, fully on
+//   &debug    frame time and auto-quality readout
+//   dev.html?sheet=w4   instead: world 4's aliens, bunkers and pickups large on its sky (aliens/sheet.js)
+import { LEVELS, levelById } from './src/core/levels.js';
+import { createWorld, stepWorld } from './src/core/world.js';
+import { autopilot } from './src/core/autopilot.js';
+import { TICK } from './src/core/kinds.js';
+import { createFx, stepFx } from './src/fx/fx.js';
+import { applyEvents } from './src/fx/react.js';
+import { createFilm, stepFilm } from './src/fx/film.js';
+import { createView, drawFrame } from './src/ui/view.js';
+import { sampleFrame } from './src/ui/quality.js';
+import { createDebug } from './src/ui/debug.js';
+import { fxRng } from './src/ui/session.js';
+import { drawSheet } from './src/ui/aliens/sheet.js';
+
+const q = new URLSearchParams(location.search);
+const level = levelById(q.get('level') || 'w1-1') ?? LEVELS[0];
+const world = createWorld(level, q.has('seed') ? Number(q.get('seed')) : level.seed);
+const fx = createFx();
+const rng = fxRng(level.seed);
+const film = q.get('film') === '1' ? createFilm(world) : null;
+
+function tick() {
+  stepWorld(world, TICK, autopilot(world));
+  applyEvents(fx, world.events.splice(0), rng, world);
+  stepFx(fx, TICK);
+  if (film) stepFilm(film, TICK, true);
+}
+
+const T = Number(q.get('t') || 0);
+for (let i = 0, n = Math.round(T / TICK); i < n; i++) tick();
+
+const view = createView(document.getElementById('game'), level);
+view.showHud = q.get('hud') !== '0';
+const debug = createDebug();
+const live = q.get('live') === '1';
+let t = T;
+let last = null;
+// The auto-quality scaler is fed the frame's WORK (sim + fx + draw), not the rAF interval: a 60 Hz
+// display pins the interval at 16.7 ms, under which quality could never be restored.
+function frame(now) {
+  const interval = last == null ? 0 : now - last;
+  last = now;
+  const start = performance.now();
+  if (live) {
+    tick();
+    t += TICK;
+  }
+  drawFrame(view, world, fx, t, film);
+  const work = performance.now() - start;
+  if (interval) {
+    sampleFrame(view.quality, work, interval);
+    fx.density = view.quality.level;
+    debug?.sample(work, interval, view.quality);
+  }
+  requestAnimationFrame(frame);
+}
+if (q.has('sheet')) drawSheet(document.getElementById('game'), q.get('sheet'));
+else requestAnimationFrame(frame);
+globalThis.bench = { world, fx, view };
+</script>
+</body>
+</html>

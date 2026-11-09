@@ -1,0 +1,20 @@
+# Invaders
+
+> Invaders is a free cinematic arcade shooter that runs in the browser: fly anywhere in the lower half of the screen, shoot down alien formations and beat a boss at the end of each of 18 worlds, 90 levels in all.
+
+Each world has its own look, music and twist. Power-ups (spread shot, laser, rapid fire, shield, homing shots, slow time; a second one waits in reserve while the first runs), smart bombs and extra lives drop along the way. The thirteenth world, Sunset Armada, adds wingmen (two escort fighters that fire with the ship for 10 seconds) and a broadside twist: catch a pickup and the ship's side guns fire left and right for 6 seconds. The fourteenth world, Ember Carnival, has a fireworks twist: some invaders are shells, and a shell shot down bursts and sets off the invaders around it. The fifteenth world, Lantern Deep, drops two powers found nowhere else: pearls (three that circle the ship for 10 seconds, wiping out the enemy bullets they touch) and a trident (the ship's shot runs through every invader in its path for 10 seconds). The sixteenth world, Glass Cathedral, drops a mirror found nowhere else (a glass twin of the ship that flies opposite it and fires when it fires, for 10 seconds), and its armored invaders shatter into glass that mends itself within 2 seconds unless the player shoots the shards. The seventeenth world, Ash to Air, is the hardest: the enemy is the habit itself (cigarettes, cigars and pipes, led by a boss called the Craving), the city it chokes with smog heals as the player wins, from brown haze to clear sky, and every so often a breath of fresh air comes to help and sweeps the enemy bullets off the screen. The eighteenth world, Anvil Sky, is a dogfight inside a thunderstorm and the first free-flight world: the ship flies anywhere on the screen below the score panels, not just the lower half, and so does the ship in every world after it. The enemy's homing bullets turn to follow the ship, and a bullet the player leads far enough round turns on the first invader or boss part it crosses and hurts it, so the enemy is shot down with its own fire. The invaders and the boss, the Squall Ray (a manta of thundercloud with iron plates, a storm heart and a Tesla coil at each wing tip), cost a life on touch, and the ship's side guns come as a power-up there. After every cleared level the game cuts a movie trailer from the player's own run, re-simulated from the recorded inputs; the Cinema on the title screen keeps the best run of every level, and a lost level plays a short blooper. It is plain HTML, CSS and JavaScript ES modules with no dependencies, no build step and no network requests at runtime. Made by Babak Bandpey at Cocode, released under Apache-2.0.
+
+## Play
+
+- [Invaders](https://invaders.cocode.dk/): the game itself; keyboard or mouse
+
+## Source
+
+- [Repository](https://github.com/cocodedk/invaders): source code and issues
+- [README](https://github.com/cocodedk/invaders/blob/main/README.md): what it is, controls, running locally and tests
+- [Contributing](https://github.com/cocodedk/invaders/blob/main/CONTRIBUTING.md): setup, git hooks and house rules
+
+## Optional
+
+- [Security policy](https://github.com/cocodedk/invaders/blob/main/SECURITY.md): how to report a vulnerability
+- [Cocode](https://cocode.dk): the author's company

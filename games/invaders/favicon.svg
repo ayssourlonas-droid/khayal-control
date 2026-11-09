@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Invaders: the world-1 grunt (src/ui/aliens/w1.js), filled with the title logo's chrome gradient,
+       its magenta and cyan chroma split behind it -->
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.3" stop-color="#c9fbff"/>
+      <stop offset="0.52" stop-color="#46f2ff"/>
+      <stop offset="0.74" stop-color="#8a5cff"/>
+      <stop offset="1" stop-color="#ff4fd8"/>
+    </linearGradient>
+    <path id="bug" d="M11.5 7h9v2.25h-9zM7 9.25h18v2.25h-18zM4.75 11.5h22.5v2.25h-22.5zM4.75 13.75h2.25v2.25h-2.25zM11.5 13.75h9v2.25h-9zM25 13.75h2.25v2.25h-2.25zM2.5 16h4.5v2.25h-4.5zM11.5 16h9v2.25h-9zM25 16h4.5v2.25h-4.5zM2.5 18.25h27v2.25h-27zM4.75 20.5h2.25v2.25h-2.25zM9.25 20.5h2.25v2.25h-2.25zM13.75 20.5h4.5v2.25h-4.5zM20.5 20.5h2.25v2.25h-2.25zM25 20.5h2.25v2.25h-2.25zM2.5 22.75h2.25v2.25h-2.25zM7 22.75h2.25v2.25h-2.25zM22.75 22.75h2.25v2.25h-2.25zM27.25 22.75h2.25v2.25h-2.25z"/>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#05060b"/>
+  <use href="#bug" x="-1" fill="#ff4fd8" opacity="0.6"/>
+  <use href="#bug" x="1" fill="#2ff6ff" opacity="0.6"/>
+  <use href="#bug" fill="url(#chrome)"/>
+</svg>

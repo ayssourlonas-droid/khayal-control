@@ -656,5 +656,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "invaders",
+    "size": 7124,
+    "repo": "cocodedk/invaders",
+    "id": 45,
+    "slug": "invaders",
+    "title": "Invaders",
+    "developer": "cocodedk",
+    "license": "Apache-2.0",
+    "source": "https://github.com/cocodedk/invaders",
+    "commit": "1904a0046b987a95ecd557e5f8df4d4acb00ed46",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]

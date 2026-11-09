@@ -1,0 +1,43 @@
+/* Cinema (the best runs, each a showing with its poster, reel, stars and box office) and the
+   trailer's own screen, which only carries the skip hint: the film is drawn on the canvas. */
+/* Its gap, padding, subtitle and poster canvas are the lobby's (lobby.css). */
+.cinema { justify-content: flex-start;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(70, 18, 28, 0.6), rgba(0, 0, 0, 0) 70%),
+    radial-gradient(ellipse at center, rgba(10, 8, 14, 0.95), rgba(3, 2, 5, 0.99)); }
+/* at most three columns (the keys move by three); fewer showings stay centred. The padding leaves
+   room for the focused showing's glow inside the scrolling box. */
+.showings { display: grid; grid-template-columns: repeat(auto-fit, 27rem); justify-content: center; align-content: start;
+  gap: 1rem 1.2rem; overflow-y: auto; width: 88rem; max-height: 39rem; padding: 1.6rem 2rem; box-sizing: border-box;
+  scrollbar-width: none; }
+.showings::-webkit-scrollbar { display: none; }
+.showing { --accent: #fff; display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; align-items: center; padding: 0.6rem;
+  font: inherit; color: var(--ink); text-align: left; cursor: pointer; outline: none;
+  background: linear-gradient(180deg, rgba(26, 22, 34, 0.94), rgba(12, 10, 18, 0.94));
+  border: 0.12rem solid rgba(255, 230, 180, 0.16); border-radius: 0.7rem;
+  box-shadow: 0 0.6rem 1.6rem rgba(0, 0, 0, 0.55);
+  transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease; }
+.showing-art { position: relative; display: block; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 0.4rem;
+  border: 0.1rem solid rgba(255, 230, 180, 0.3); }
+.showing-info { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.showing-world { font: 900 1.9rem/1 var(--display); font-stretch: condensed; letter-spacing: 0.04em; text-transform: uppercase;
+  color: #fff; text-shadow: 0 0 0.8rem var(--accent); white-space: nowrap; }
+.showing-reel { font-size: 1rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); }
+.showing .stars { font-size: 1.4rem; letter-spacing: 0.08em; }
+.showing-box { font: 900 1.7rem var(--display); font-variant-numeric: tabular-nums; color: var(--gold); }
+.showing-box small { display: block; font: 800 0.75rem var(--font); letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-dim); }
+.showing:focus { border-color: var(--accent); transform: scale(1.04);
+  box-shadow: 0 0 0 0.16rem rgba(0, 0, 0, 0.6), 0 0 1.2rem var(--accent), 0 0.8rem 1.4rem rgba(0, 0, 0, 0.7); }
+.cinema-empty { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; margin: 6rem 0; }
+.cinema-empty-title { margin: 0; font: 900 4rem var(--display); font-stretch: condensed; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255, 244, 214, 0.9); }
+.cinema .row { margin-top: auto; }
+
+.film { background: none; }
+.film-skip { position: absolute; right: 3rem; bottom: 2.2rem; margin: 0; font-size: 1.05rem; font-weight: 800;
+  letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
+  animation: skip-fade 4s ease 0.6s both; }
+@keyframes skip-fade { 0% { opacity: 0; } 15%, 70% { opacity: 1; } 100% { opacity: 0.35; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .showing, .film-skip, .showing-art.develop .showing-canvas { transition: none; animation: none; }
+}

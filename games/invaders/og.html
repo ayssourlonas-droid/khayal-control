@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:invaders:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <title>Invaders — social card</title>
+  <!-- Source for og.webp (1200 x 630). Render: serve the repo root, open og.html at a 1200 x 630
+       viewport, screenshot. The card is a trailer frame: a letterboxed boss fight, the frames below
+       it a cut of four more worlds. Every image is a real frame from dev.html with &hud=0:
+       hero.webp ?level=w2-5&t=20, w1.webp ?level=w1-5&t=24, w3.webp ?level=w3-5&t=20,
+       w4.webp ?level=w4-3&t=14, w5.webp ?level=w5-5&t=20. The logo copies the title screen's .logo
+       (src/ui/css/screens.css). -->
+  <style>
+    :root { --void: #05060b; --cyan: #46f2ff; --magenta: #ff4fd8; --gold: #ffd24a;
+      --display: "Bahnschrift", "DejaVu Sans Condensed", "Liberation Sans Narrow", "Arial Narrow", sans-serif; }
+    html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: var(--void); }
+    body { position: relative; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: #f2f5ff; -webkit-font-smoothing: antialiased; }
+    .shot { position: absolute; left: -4px; top: -48px; width: 1209px; height: 680px; }
+    .scrim { position: absolute; inset: 0; background:
+      radial-gradient(ellipse 52% 46% at 26% 52%, rgba(5, 6, 11, 0.72), rgba(5, 6, 11, 0) 100%),
+      linear-gradient(90deg, rgba(5, 6, 11, 0.55) 0%, rgba(5, 6, 11, 0) 55%); }
+    .bar { position: absolute; left: 0; right: 0; background: var(--void); }
+    .bar.top { top: 0; height: 24px; }
+    .bar.bottom { bottom: 0; height: 50px; display: flex; align-items: center; padding: 0 56px; }
+    .play { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 0.01em; color: rgba(242, 245, 255, 0.86); }
+    .play b { color: var(--gold); font-weight: 800; }
+    .brand { position: absolute; left: 50px; top: 150px; }
+    .logo { position: relative; margin: 0; font: 900 132px/1 var(--display); font-stretch: condensed;
+      letter-spacing: 0.1em; }
+    .logo span { display: block; }
+    .logo-text { position: relative; color: transparent;
+      background: linear-gradient(180deg, #ffffff 0%, #c9fbff 30%, #46f2ff 52%, #8a5cff 74%, #ff4fd8 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: 1.5px rgba(10, 0, 40, 0.5); }
+    .logo-glow { position: absolute; inset: 0; color: #3fd8ff; filter: blur(26px); opacity: 0.75; }
+    .logo-chroma { position: absolute; inset: 0; opacity: 0.55; mix-blend-mode: screen; }
+    .logo-chroma.c1 { color: var(--magenta); transform: translateX(-4px); }
+    .logo-chroma.c2 { color: #2ff6ff; transform: translateX(4px); }
+    .logo-shine { position: absolute; inset: 0; color: transparent;
+      background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.6) 38%, transparent 46%);
+      -webkit-background-clip: text; background-clip: text; }
+    .logo::after { content: ""; position: absolute; inset: 0; mix-blend-mode: multiply;
+      background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0) 0 4px, rgba(0, 0, 20, 0.35) 4px 6px); }
+    .tagline { margin: 16px 0 0 8px; max-width: 560px; font-size: 30px; line-height: 1.25; font-weight: 800;
+      color: rgba(226, 248, 255, 0.95); text-shadow: 0 2px 12px #000, 0 0 2px #000; }
+    .cut { position: absolute; left: 58px; bottom: 74px; display: flex; gap: 10px; margin: 0; padding: 0;
+      list-style: none; }
+    .cut img { display: block; width: 136px; height: 77px; border-radius: 3px;
+      outline: 2px solid rgba(255, 255, 255, 0.82); outline-offset: -1px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6); }
+  </style>
+</head>
+<body>
+  <img class="shot" src="docs/og/hero.webp" alt="">
+  <div class="scrim"></div>
+  <div class="bar top"></div>
+  <div class="brand">
+    <h1 class="logo">
+      <span class="logo-glow">INVADERS</span><span class="logo-chroma c1">INVADERS</span><span class="logo-chroma c2">INVADERS</span><span class="logo-text">INVADERS</span><span class="logo-shine">INVADERS</span>
+    </h1>
+    <p class="tagline">The cinematic arcade shooter that cuts a trailer of every level you clear.</p>
+  </div>
+  <ul class="cut">
+    <li><img src="docs/og/w1.webp" alt=""></li>
+    <li><img src="docs/og/w3.webp" alt=""></li>
+    <li><img src="docs/og/w4.webp" alt=""></li>
+    <li><img src="docs/og/w5.webp" alt=""></li>
+  </ul>
+  <div class="bar bottom"><p class="play">18 worlds, 90 levels, free in your browser at <b>invaders.cocode.dk</b></p></div>
+</body>
+</html>

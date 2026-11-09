@@ -1,0 +1,120 @@
+/* The level select as a cinema lobby: a page that scrolls (the marquee with chasing bulbs, the star total and
+   the rank, then the worlds' posters in lightboxes, each over its five reels, its showtimes, with stars and best
+   score), and a bar fixed to the bottom of the screen with Back and Reset scores.
+   Every world has the same card, --card wide, --cols to a row (lobby-nav.js PER_ROW, set by lobby.js) on --gap, in
+   world order, a row --row-w wide; a partly filled last row leaves its columns empty on the right (its rail ends at
+   its last card), so a new world needs no layout change.
+   The grid is 8 x 10.6 + 7 x 0.8 = 90.4 rem of the screen's 96 (always 96 x 54 rem at 16:9, base.css), the card
+   about 29.8 rem tall (poster 15.9, the difficulty strip 1.05, five reels 11.7, two gaps of 0.6), so a row and a half show at once and
+   the rest is a scroll away. */
+.cinema { gap: 1rem; padding: 1.6rem 2rem 1.4rem; }
+.lobby .sub, .cinema .sub { font-size: 1.3rem; }
+.lobby {
+  --card: 10.6rem; --gap: 0.8rem; --bar-h: 5rem; --row-w: calc(var(--cols) * var(--card) + (var(--cols) - 1) * var(--gap));
+  padding: 0; gap: 0; justify-content: flex-start; align-items: stretch;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(60, 24, 70, 0.55), rgba(0, 0, 0, 0) 70%),
+    radial-gradient(ellipse at center, rgba(10, 10, 22, 0.93), rgba(3, 3, 8, 0.98)); }
+/* The page. Its scroll-padding keeps a card the keys scroll into view clear of the bar and of the top edge. */
+.lobby-scroll { position: relative; flex: 1; min-height: 0; box-sizing: border-box; display: flex; flex-direction: column;
+  align-items: center; gap: 1.6rem; overflow: hidden auto; scrollbar-gutter: stable both-edges; padding: 1.6rem 1.5rem calc(var(--bar-h) + 1.6rem);
+  scroll-padding: 1.4rem 0 calc(var(--bar-h) + 1.4rem); scrollbar-width: thin; scrollbar-color: rgba(255, 210, 74, 0.45) transparent; }
+.lobby-scroll > * { flex: none; }
+.marquee { display: flex; align-items: center; gap: 1.6rem; }
+.marquee-title { margin: 0; font: 900 3.6rem/1 var(--display); font-stretch: condensed; letter-spacing: 0.3em; padding-left: 0.3em;
+  text-transform: uppercase; color: #fff4d6;
+  text-shadow: 0 0 0.6rem rgba(255, 210, 120, 0.9), 0 0 2.2rem rgba(255, 150, 40, 0.6); }
+.bulbs { width: 16rem; height: 1rem; border-radius: 1rem;
+  background: radial-gradient(circle, #fff1c2 0 0.22rem, rgba(255, 190, 80, 0.35) 0.3rem, transparent 0.42rem) 0 50% / 1.4rem 1rem repeat-x;
+  filter: drop-shadow(0 0 0.4rem rgba(255, 180, 60, 0.9)); animation: chase 0.9s steps(2) infinite; }
+@keyframes chase { to { background-position: 1.4rem 50%; } }
+.lobby-total, .lobby-rank { color: var(--gold); margin-left: 0.8rem; letter-spacing: 0.06em; }
+.lobby-rank { margin-left: 1.4rem; }
+
+/* A shelf is one row of --cols columns. Its rail (a gold hairline fading out at both ends) runs under its cards:
+   --filled of them (lobby.js), so a short last row's rail ends at its last card, not under the empty columns. */
+.posters { display: grid; grid-template-columns: repeat(var(--cols), var(--card)); gap: var(--gap); padding-bottom: 1.2rem;
+  background: linear-gradient(90deg, transparent, rgba(255, 210, 120, 0.4) 20%, rgba(255, 210, 120, 0.4) 80%, transparent) 0 100%
+    / calc(var(--filled) * var(--card) + (var(--filled) - 1) * var(--gap)) 0.1rem no-repeat; }
+.poster { --accent: #fff; display: flex; flex-direction: column; gap: 0.6rem; transition: transform 0.2s ease; }
+.poster-art {
+  position: relative; container-type: inline-size; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 0.5rem; cursor: pointer;
+  border: 0.14rem solid rgba(255, 230, 180, 0.28);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.6), inset 0 0 0 0.1rem rgba(0, 0, 0, 0.5);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.poster-canvas, .showing-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.poster-art.develop .poster-canvas, .showing-art.develop .showing-canvas { animation: develop 0.9s ease-out both; }
+@keyframes develop { from { opacity: 0; filter: brightness(2.2) saturate(0); } }
+.poster-art::after { /* the print's grade: a top vignette and a dark foot for the type */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 16%, rgba(0, 0, 0, 0) 56%, rgba(0, 0, 0, 0.86) 84%, #000 100%); }
+/* The type is sized to the poster's width (cqw), so it keeps its layout at any size. The head is the kicker alone;
+   the difficulty is a strip under the poster, so nothing but the name and its lines lies over the boss. */
+.poster-head { position: absolute; z-index: 1; top: 6.5cqw; left: 0; right: 0; text-align: center;
+  text-shadow: 0 0.05rem 0.25rem #000, 0 0 0.5rem rgba(0, 0, 0, 0.8); }
+.poster-world { font-size: 8.6cqw; font-weight: 900; letter-spacing: 0.36em; text-transform: uppercase; white-space: nowrap;
+  color: rgba(255, 255, 255, 0.85); }
+.poster-type { position: absolute; z-index: 1; left: 5.5cqw; right: 5.5cqw; bottom: 7.5cqw; text-align: center; }
+/* The free-flight flag stands in the black foot under the bill, so it takes no room from the name above. */
+.poster-flag { position: absolute; z-index: 1; left: 50%; bottom: 1.1cqw; transform: translateX(-50%); white-space: nowrap;
+  padding: 0 0.45rem; border-radius: 0.7rem; border: 0.05rem solid var(--gold); background: rgba(0, 0, 0, 0.55);
+  font-size: 4.6cqw; line-height: 1.05; font-weight: 900; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+.poster-name { margin: 0; font: 900 16.5cqw/0.95 var(--display); font-stretch: condensed; letter-spacing: 0.04em;
+  text-transform: uppercase; color: #fff; text-shadow: 0 0 1.2rem var(--accent), 0 0.15rem 0.4rem #000; }
+.poster-name.long { font-size: 13.5cqw; } /* a word of nine letters or more ("Cathedral") is wider than the poster at the full size */
+.poster-tag { margin: 4.2cqw 0 3.6cqw; font-size: 7.6cqw; font-weight: 700; font-style: italic; line-height: 1.25;
+  color: rgba(255, 255, 255, 0.86); }
+.poster-bill { margin: 0; padding-top: 3.6cqw; border-top: 0.06rem solid rgba(255, 255, 255, 0.25); font-size: 6.6cqw;
+  font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); }
+.poster-bill b { display: block; font-size: 8cqw; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.9); }
+/* The difficulty strip between the poster and the reels: the caption, a bar of ten segments, the score. */
+.poster > .rating { display: flex; align-items: center; gap: 0.4rem; padding: 0 0.2rem; }
+.rating-cap { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
+.rating-bar { --seg: #7fe36a; flex: 1; display: flex; gap: 0.1rem; }
+.rating-bar i { flex: 1; height: 0.6rem; border-radius: 0.07rem; background: rgba(255, 255, 255, 0.16); box-shadow: 0 0 0 0.05rem rgba(0, 0, 0, 0.65); }
+.rating-bar i:nth-child(n+4) { --seg: #ffd24a; }
+.rating-bar i:nth-child(n+7) { --seg: #ff9a2e; }
+.rating-bar i:nth-child(n+9) { --seg: #ff4a3a; }
+.rating-bar i.on { background: var(--seg); box-shadow: 0 0 0 0.05rem rgba(0, 0, 0, 0.65), 0 0 0.3rem var(--seg); }
+.rating-bar i.half { background: linear-gradient(90deg, var(--seg) 50%, rgba(255, 255, 255, 0.16) 50%); }
+.rating-n { font: 900 1.05rem/1 var(--display); font-variant-numeric: tabular-nums; color: var(--gold); }
+.poster:focus-within { transform: translateY(-0.5rem); }
+.poster:focus-within .poster-art { border-color: var(--accent);
+  box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.6), 0 0 2.4rem var(--accent), 0 1.4rem 2.6rem rgba(0, 0, 0, 0.7); }
+
+/* A reel is one line: its number, the stars, the best score. */
+.reels { display: flex; flex-direction: column; gap: 0.26rem; }
+.reel {
+  display: grid; grid-template-columns: 1.5rem auto 1fr; align-items: center; gap: 0.4rem; padding: 0.22rem 0.45rem;
+  font: 800 0.85rem var(--font); color: var(--ink); cursor: pointer; outline: none; text-align: right;
+  background: rgba(14, 16, 30, 0.86); border: 0.1rem solid rgba(255, 255, 255, 0.1); border-radius: 0.45rem;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+.reel-n { position: relative; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; font-size: 0.82rem;
+  font-weight: 900; color: #0b0d18; background: rgba(255, 255, 255, 0.72); }
+.reel-n .medal { position: absolute; right: -0.4rem; bottom: -0.32rem; margin: 0; font-size: 1rem; }
+.reel.finale .reel-n { background: #ff5a4a; color: #fff; box-shadow: 0 0 0.6rem rgba(255, 70, 50, 0.7); }
+.reel .stars { font-size: 0.82rem; letter-spacing: 0.02em; }
+.reel-best { font-variant-numeric: tabular-nums; color: var(--ink-dim); font-size: 0.85rem; }
+.reel.played .reel-best { color: var(--ink); }
+.reel:focus { border-color: var(--accent); transform: scale(1.07); background: rgba(30, 34, 60, 0.96);
+  box-shadow: 0 0 0 0.16rem rgba(0, 0, 0, 0.5), 0 0 1.2rem var(--accent); }
+.reel:focus .reel-n { background: var(--accent); }
+.reel.finale:focus .reel-n { background: #ff5a4a; }
+
+/* The bar, over the foot of the page: Back and Reset scores on the grid's left edge, the key hint on its right.
+   The page's own bottom padding and scroll-padding are --bar-h plus room, so no reel is left under it. */
+.lobby-bar { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; height: var(--bar-h); box-sizing: border-box;
+  display: flex; align-items: center; gap: 1.6rem; padding: 0 max(1.5rem, calc((100% - var(--row-w)) / 2));
+  background: #04050a; border-top: 0.1rem solid rgba(255, 210, 120, 0.4); }
+/* Solid, so the names of the cards behind it do not show through; a fade above it takes the cards out of sight, as tall
+   as the page's scroll-padding leaves free over the bar, so it never covers a reel the keys have scrolled to. */
+.lobby-bar::before { content: ""; position: absolute; left: 0; right: 0; bottom: calc(100% + 0.1rem); height: 1.4rem; pointer-events: none;
+  background: linear-gradient(rgba(4, 5, 10, 0), #04050a); }
+.lobby-bar .btn { font-size: 1.3rem; padding: 0.55rem 1.8rem; }
+.lobby-bar .hint { margin-left: auto; display: flex; gap: 2rem; }
+.lobby-bar .credit { position: static; margin-left: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bulbs, .poster-art.develop .poster-canvas { animation: none; }
+}

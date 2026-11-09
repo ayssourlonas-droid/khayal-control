@@ -750,5 +750,31 @@
       "type": "web",
       "category": "browser-game"
     }
+  },
+  {
+    "id": 45,
+    "release_year": "2026",
+    "category_tags": [
+      "arcade",
+      "browser-game",
+      "canvas"
+    ],
+    "main_scene": {
+      "title_ar": "Invaders",
+      "title_en": "Invaders",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/invaders/_cover.png"
+    },
+    "details_scene": {
+      "description": "A cinematic arcade shooter for the browser: 8 worlds, 40 levels, and a trailer cut from your own run",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/invaders/",
+      "developer": "cocodedk",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/cocodedk/invaders",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "arcade"
+    }
   }
 ]
