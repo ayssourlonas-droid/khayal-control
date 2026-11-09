@@ -906,5 +906,31 @@
       "type": "web",
       "category": "devjam"
     }
+  },
+  {
+    "id": 51,
+    "release_year": "2026",
+    "category_tags": [
+      "buckshot-roulette",
+      "html-css-javascript",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "Buckshot And Crosses",
+      "title_en": "Buckshot And Crosses",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/buckshot-and-crosses/_cover.png"
+    },
+    "details_scene": {
+      "description": "A web game, written in pure HTML, CSS and JavaScript, giving a Buckshot Roulette flavour to classic Noughts and Crosses.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/buckshot-and-crosses/",
+      "developer": "TotalDwarf03",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/TotalDwarf03/buckshot-and-crosses",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "buckshot-roulette"
+    }
   }
 ]

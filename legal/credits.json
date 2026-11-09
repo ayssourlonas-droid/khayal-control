@@ -746,5 +746,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "buckshotandcrosses",
+    "size": 35694,
+    "repo": "TotalDwarf03/buckshot-and-crosses",
+    "id": 51,
+    "slug": "buckshot-and-crosses",
+    "title": "Buckshot And Crosses",
+    "developer": "TotalDwarf03",
+    "license": "GPL-3.0",
+    "source": "https://github.com/TotalDwarf03/buckshot-and-crosses",
+    "commit": "df34ed3026bd06941de0c8e16472dad4aa9d5fd7",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: [Credits and Acknowledgements](#credits-and-acknowledgements) | README.md: Credit:**"
   }
 ]

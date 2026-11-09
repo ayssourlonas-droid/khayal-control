@@ -1,0 +1,13 @@
+Source: https://github.com/TotalDwarf03/buckshot-and-crosses
+Commit: df34ed3026bd06941de0c8e16472dad4aa9d5fd7
+License: GPL-3.0
+Imported: 2026-11-09T09:35:54.561486+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: [Credits and Acknowledgements](#credits-and-acknowledgements)
+- README.md: Credit:**
+- README.md: Credits and Acknowledgements
+- LICENSE: author attributions in that material or in the Appropriate Legal
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 25, audio: 22, tagged audio: 0

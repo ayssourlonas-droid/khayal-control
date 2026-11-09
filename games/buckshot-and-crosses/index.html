@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:buckshot-and-crosses:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buckshot and Crosses</title>
+
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body class="hud-hidden player-controls-disabled">
+    <!-- Base layer: Game Grid -->
+    <div id="base-panel" class="viewport-layer base-layer">
+      <div id="game-container">
+        <div id="table-backdrop" aria-hidden="true"></div>
+        <div id="grid">
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications layer -->
+    <div class="viewport-layer notifications-layer">
+      <div id="shell-container">
+        <div id="shell-loader"></div>
+      </div>
+
+      <div id="health-container"></div>
+    </div>
+
+    <!-- HUD layer -->
+    <div class="viewport-layer hud-layer">
+      <div id="shotgun-container">
+        <img src="assets/shotgun.png" alt="Shotgun" id="shotgun-image" />
+        <div id="shotgun-warning">Point of no return</div>
+      </div>
+
+      <div id="inventory">
+        <div id="item-slot-1" class="item-slot"></div>
+        <div id="item-slot-2" class="item-slot"></div>
+      </div>
+    </div>
+
+    <!-- Dealer Layer -->
+    <div class="viewport-layer dealer-layer">
+      <div id="dealer-text"></div>
+
+      <div id="dealer-container">
+        <img src="assets/dealer.png" alt="Dealer" id="dealer-image" />
+      </div>
+
+      <div id="waiver">
+        <img src="assets/waiver.png" alt="Waiver" id="waiver-image" />
+      </div>
+
+      <button id="briefcase" type="button" disabled>
+        <img
+          src="assets/briefcase/briefcase-closed.png"
+          alt="Open briefcase"
+          id="briefcase-image"
+        />
+      </button>
+    </div>
+
+    <!-- Home Layer -->
+    <div class="viewport-layer home-layer">
+      <div class="home-content">
+        <img
+          src="assets/branding/buckshot-and-crosses-logo.png"
+          alt="Buckshot and Crosses Logo"
+          class="home-logo"
+        />
+
+        <nav class="home-menu">
+          <button id="start-button" class="menu-item">Start</button>
+          <a
+            href="https://github.com/TotalDwarf03/buckshot-and-crosses"
+            target="_blank"
+            class="menu-item"
+            >GitHub Repository</a
+          >
+        </nav>
+        <p class="focus-prompt">Click to focus</p>
+
+        <div class="home-footer">
+          <p class="home-credit">Created by Kieran Pritchard</p>
+          <p class="home-inspiration">
+            Inspired by Mike Klubnika's Buckshot Roulette.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="end-screen">
+      <h1 id="status-text"></h1>
+      <button id="restart-button" class="menu-item" type="button">
+        Restart
+      </button>
+    </div>
+
+    <img src="assets/crosshair.png" alt="Crosshair" id="crosshair" hidden />
+    <div id="aiming-help">
+      Press SPACE to pump shell<br />Press ESC to cancel aiming
+    </div>
+
+    <div id="vignette" hidden></div>
+
+    <!-- Scripts loaded at the end of the body to avoid blocking rendering / timing issues -->
+    <script src="scripts/audio.js"></script>
+    <script src="scripts/state.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/render.js"></script>
+    <script src="scripts/gameplay.js"></script>
+    <script src="scripts/shotgun.js"></script>
+    <script src="scripts/dealer.js"></script>
+    <script src="scripts/dialogue.js"></script>
+    <script src="components/inventoryItemBase.js"></script>
+    <script src="components/cigarettePack.js"></script>
+    <script src="components/expiredVodka.js"></script>
+    <script src="components/flashlight.js"></script>
+    <script src="components/jammer.js"></script>
+    <script src="components/strangeContraption.js"></script>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
