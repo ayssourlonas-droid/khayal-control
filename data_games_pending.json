@@ -1348,5 +1348,29 @@
       "type": "web",
       "category": "agent-skills"
     }
+  },
+  {
+    "id": 71,
+    "release_year": "2026",
+    "category_tags": [
+      "beat-em-up-game"
+    ],
+    "main_scene": {
+      "title_ar": "Stickman Fighter",
+      "title_en": "Stickman Fighter",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/stickman-fighter/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Local stickman beat-'em-up game.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/stickman-fighter/",
+      "developer": "sinusphi",
+      "license": "MIT",
+      "source_url": "https://github.com/sinusphi/stickman-fighter",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "beat-em-up-game"
+    }
   }
 ]

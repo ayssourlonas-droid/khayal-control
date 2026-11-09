@@ -1046,5 +1046,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Nothing here generates pixels.** There is no Sora, Veo, Runway or other video model, and no video API or per-video credits. Your coding agen | README.md: Video API or per-video credits | No | Required | No |"
+  },
+  {
+    "key": "stickmanfighter",
+    "size": 28554,
+    "repo": "sinusphi/stickman-fighter",
+    "id": 71,
+    "slug": "stickman-fighter",
+    "title": "Stickman Fighter",
+    "developer": "sinusphi",
+    "license": "MIT",
+    "source": "https://github.com/sinusphi/stickman-fighter",
+    "commit": "cb7834d37b2b8efae36732c99267da31f163708b",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
