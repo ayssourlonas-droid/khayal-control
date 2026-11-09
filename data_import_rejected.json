@@ -205,5 +205,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42542038516"
+  },
+  {
+    "url": "https://github.com/inj-krish19/F1-Thunder",
+    "repo": "inj-krish19/F1-Thunder",
+    "reason": "الحجم 207MB كبير جداً؛ ملفات تتجاوز 25MB (حد Cloudflare): Videos/Casual Mode Intro.mp4 (36MB), Videos/Duration Mode Intro.mp4 (29MB), Videos/Infinite Drive Intro.mp4 (29MB), Videos/Racing Car Intro.mp4 (46MB)",
+    "license": "GPL-3.0",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42593585145"
   }
 ]
