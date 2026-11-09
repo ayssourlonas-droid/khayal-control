@@ -389,5 +389,31 @@
       "type": "web",
       "category": "board-game"
     }
+  },
+  {
+    "id": 63,
+    "release_year": "2026",
+    "category_tags": [
+      "game-jam",
+      "html5-game",
+      "javascript"
+    ],
+    "main_scene": {
+      "title_ar": "Escape Velocity",
+      "title_en": "Escape Velocity",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/escape-velocity/_cover.png"
+    },
+    "details_scene": {
+      "description": "Hand-drawn one-thumb speed game: hold to grab a planet, let go to fling, outrun the supernova. Made in 48h for Slapjam #2 (theme: Speed). Phaser 3, mobile portrait.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/escape-velocity/",
+      "developer": "behlulakdag",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/behlulakdag/escape-velocity",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game-jam"
+    }
   }
 ]
