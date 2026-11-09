@@ -1,0 +1,40 @@
+{
+  "$schema": "https://example.invalid/lqai-plugin-0.1-draft.json",
+  "schemaNote": "PROPOSED manifest format. The LQAI Spire has no published cabinet spec as of 2026-07-09; this file describes the game so the venue maintainer can wire it to whatever the cabinets expect. See docs/LQAI_PLUGIN_SPEC.md.",
+  "id": "depo-doom",
+  "name": "Depo Doom",
+  "version": "1.1.0",
+  "type": "arcade-minigame",
+  "entry": "index.html",
+  "homepage": "https://github.com/joelakaufmann-lgtm/depo-doom",
+  "author": "Joel A. Kaufmann",
+  "license": "Apache-2.0",
+  "description": "Deposition-training arcade game. Choose your litigator; each round a coin flip decides your side — take the deposition (foundation, exhibits, impeachment) or defend it (objection calls, privilege instructions, restraint). Twelve fictional witnesses. Training simulation, not legal advice.",
+  "display": {
+    "aspectRatio": "4:3",
+    "minWidth": 640,
+    "minHeight": 480,
+    "scales": true,
+    "orientation": "landscape"
+  },
+  "input": ["mouse", "touch", "keyboard"],
+  "audio": { "used": true, "requiresUserGesture": true, "mutable": true },
+  "runtime": {
+    "selfContained": true,
+    "externalRequests": "none",
+    "storage": "optional-localStorage (graceful fallback to memory)",
+    "iframeSandbox": "allow-scripts (allow-same-origin only needed for persistent hi-scores)"
+  },
+  "messages": {
+    "protocol": "window.postMessage, JSON objects with source: 'depo-doom'",
+    "outbound": [
+      { "type": "depo-doom:ready", "when": "game booted and interactive" },
+      { "type": "depo-doom:score", "when": "XP banked after each deposition", "payload": "{ xp, witnessId, rank, litigator, won, mode: 'take'|'defend' }" },
+      { "type": "depo-doom:complete", "when": "a circuit is cleared", "payload": "{ circuit, totalXp }" }
+    ],
+    "inbound": [
+      { "type": "lqai:init", "effect": "optional; may carry { playerName } to display on the title screen" },
+      { "type": "lqai:mute", "effect": "force-mute audio (cabinet ambience control)" }
+    ]
+  }
+}
