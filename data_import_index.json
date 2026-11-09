@@ -641,5 +641,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "browsersimtower",
+    "size": 2008,
+    "repo": "gordonmurray/browser-sim-tower",
+    "id": 44,
+    "slug": "browser-sim-tower",
+    "title": "Browser Sim Tower",
+    "developer": "gordonmurray",
+    "license": "Apache-2.0",
+    "source": "https://github.com/gordonmurray/browser-sim-tower",
+    "commit": "574a73df874f0000fe60cc4451d86da0e13c906d",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
