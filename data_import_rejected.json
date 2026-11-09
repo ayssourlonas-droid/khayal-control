@@ -394,5 +394,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42608313443"
+  },
+  {
+    "url": "https://github.com/phaserjs/template-webpack",
+    "repo": "phaserjs/template-webpack",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'ci', '--no-audit', '--no-fund'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42608520265"
   }
 ]
