@@ -761,5 +761,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: [Credits and Acknowledgements](#credits-and-acknowledgements) | README.md: Credit:**"
+  },
+  {
+    "key": "numbersort",
+    "size": 456,
+    "repo": "pewplay/number-sort",
+    "id": 52,
+    "slug": "number-sort",
+    "title": "Number Sort",
+    "developer": "pewplay",
+    "license": "ISC",
+    "source": "https://github.com/pewplay/number-sort",
+    "commit": "308d5f74b849d4f80f2f6335e373d04fc7204b55",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

@@ -932,5 +932,31 @@
       "type": "web",
       "category": "buckshot-roulette"
     }
+  },
+  {
+    "id": 52,
+    "release_year": "2026",
+    "category_tags": [
+      "browser-game",
+      "html5-game",
+      "pewplay"
+    ],
+    "main_scene": {
+      "title_ar": "Number Sort",
+      "title_en": "Number Sort",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/number-sort/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Slide numbered tiles back into order on boards from 3x3 up to a brutal 13x13 in this free sliding puzzle you can play in your browser.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/number-sort/",
+      "developer": "pewplay",
+      "license": "ISC",
+      "source_url": "https://github.com/pewplay/number-sort",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-game"
+    }
   }
 ]

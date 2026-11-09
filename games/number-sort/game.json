@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/pewplay/pewplay/main/schema/game.schema.json",
+  "title": "Number Sort",
+  "description": "Slide numbered tiles back into order on boards from 3x3 up to a brutal 13x13 in this free sliding puzzle you can play in your browser.",
+  "about": "Number Sort is a classic sliding number puzzle with a twist of scale. Every board starts shuffled, and your job is to slide the tiles through the single empty gap until the numbers read in order from the top-left corner, with the gap ending in the bottom-right.\n\nYou can slide a whole line of tiles at once, a clock tracks every attempt and your best time for each board is saved. The small boards are quick warm-ups, but solving the 8x8 unlocks the bigger ones, all the way to 13x13 with 168 tiles. When you get stuck, a limited supply of hints plays the next move of the solution, and a robot can finish the board for you if you just want to watch it happen.\n\nOriginally created by Jorge Rubiano for js13kGames 2024 as 13 Order.",
+  "howToPlay": "Slide the tiles into the empty space until all the numbers are in order, left to right and top to bottom, with the gap in the bottom-right corner. Clicking or tapping any tile in the same row or column as the gap slides it together with every tile in between. Hints play one move of the solution, and boards solved by the robot do not count toward your best time. Solve the 8x8 board to unlock the boards from 9x9 to 13x13.",
+  "controls": [
+    { "input": "Click / Tap", "action": "Slide a tile (or a whole line of tiles) into the gap" },
+    { "input": "Arrow keys", "action": "Slide the tile next to the gap in that direction" },
+    { "input": "On-screen buttons", "action": "Hint, let the robot solve, or reshuffle the board" }
+  ],
+  "tips": [
+    "Solve the board one row at a time from the top, and leave the last two rows for the end.",
+    "Place the last tile of a row by tucking it below its spot first, then rotate it in together with its neighbor.",
+    "Sliding a whole line with a single tap is much faster than moving tiles one by one.",
+    "Save your hints for the final two rows, where the tricky rotations happen."
+  ],
+  "faq": [
+    {
+      "question": "Is Number Sort free to play?",
+      "answer": "Yes, Number Sort is completely free and runs right in your browser with nothing to install."
+    },
+    {
+      "question": "Can I play Number Sort on my phone or tablet?",
+      "answer": "Yes, just tap the tiles to slide them, in portrait or landscape. The biggest boards have small tiles on a phone, so a tablet or a phone held sideways is more comfortable for 12x12 and 13x13."
+    },
+    {
+      "question": "How do I unlock the 13x13 board?",
+      "answer": "Solve the 8x8 board once yourself and all the boards from 9x9 to 13x13 unlock. Boards finished by the robot do not count."
+    }
+  ],
+  "category": "Puzzle",
+  "tags": ["sliding puzzle", "numbers", "logic", "brain teaser", "15 puzzle"],
+  "author": "Jorge Rubiano",
+  "playMode": "SinglePlayer",
+  "orientation": "any",
+  "cover": "cover.webp",
+  "screenshots": ["screenshots/1.webp", "screenshots/2.webp", "screenshots/3.webp"],
+  "added": "2026-10-01",
+  "draft": false
+}

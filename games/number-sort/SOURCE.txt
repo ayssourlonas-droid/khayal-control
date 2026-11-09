@@ -1,0 +1,8 @@
+Source: https://github.com/pewplay/number-sort
+Commit: 308d5f74b849d4f80f2f6335e373d04fc7204b55
+License: ISC
+Imported: 2026-11-09T09:41:11.500940+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تحسين وسائط صور": 4}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 5, audio: 0, tagged audio: 0
