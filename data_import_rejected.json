@@ -178,5 +178,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42539610488"
+  },
+  {
+    "url": "https://github.com/mothereal/legendary-whores",
+    "repo": "mothereal/legendary-whores",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (server) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "Apache-2.0",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42541461658"
   }
 ]
