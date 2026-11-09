@@ -1296,5 +1296,31 @@
       "type": "web",
       "category": "arcade-game"
     }
+  },
+  {
+    "id": 66,
+    "release_year": "2026",
+    "category_tags": [
+      "canvas",
+      "html5-game-development",
+      "javascript"
+    ],
+    "main_scene": {
+      "title_ar": "Phaser Ce",
+      "title_en": "Phaser Ce",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/phaser-ce/_cover.png"
+    },
+    "details_scene": {
+      "description": "Phaser CE is a fun, free and fast 2D game framework for making HTML5 games for desktop and mobile web browsers, supporting Canvas and WebGL rendering.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/phaser-ce/",
+      "developer": "phaserjs",
+      "license": "MIT",
+      "source_url": "https://github.com/phaserjs/phaser-ce",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas"
+    }
   }
 ]

@@ -1,0 +1,10 @@
+Source: https://github.com/phaserjs/phaser-ce
+Commit: 768b0d87c14851b29a4312fccee1ebbebb49cf82
+License: MIT
+Imported: 2026-11-09T11:17:11.796888+00:00
+Automated changes (see report): {"http ← https": 801, "عزل تخزين اللعبة": 194}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: 2. Add details of the new version to `CHANGELOG.md`. This should include a summary of changes made in the version. You can usually obtain th
+- README.md: The Phaser logo and characters are © 2024 Photon Storm Limited. All rights reserved.
+- images: 265, audio: 1, tagged audio: 0

@@ -971,5 +971,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "phaserce",
+    "size": 236434,
+    "repo": "phaserjs/phaser-ce",
+    "id": 66,
+    "slug": "phaser-ce",
+    "title": "Phaser Ce",
+    "developer": "phaserjs",
+    "license": "MIT",
+    "source": "https://github.com/phaserjs/phaser-ce",
+    "commit": "768b0d87c14851b29a4312fccee1ebbebb49cf82",
+    "date": "2026-11-09",
+    "license_file": "license.txt",
+    "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): README.md: 2. Add details of the new version to `CHANGELOG.md`. This should include a summary of changes made in the version. You can usually obtain th"
   }
 ]
