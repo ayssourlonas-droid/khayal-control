@@ -295,5 +295,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42597918309"
+  },
+  {
+    "url": "https://github.com/m1omg/Low-Tide-Letters",
+    "repo": "m1omg/Low-Tide-Letters",
+    "reason": "الحجم 193MB كبير جداً",
+    "license": "GPL-3.0",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42599305281"
   }
 ]
