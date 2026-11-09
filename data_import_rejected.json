@@ -385,5 +385,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42608103466"
+  },
+  {
+    "url": "https://github.com/kevinshen56714/SkyOffice",
+    "repo": "kevinshen56714/SkyOffice",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (اعتمادات خادم: colyseus، express؛ server) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42608313443"
   }
 ]
