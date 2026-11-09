@@ -279,7 +279,10 @@ def main():
         if not str(dsc.get("play_url") or "").startswith("https://"):
             dsc["play_url"] = play_url
             fixed.append("رابط اللعب")
-        if poster and not str(msc.get("poster_url") or "").startswith("https://"):
+        old_poster = str(msc.get("poster_url") or "")
+        # نحدّث الغلاف إن كان مفقوداً/نسبياً، أو كان غلافاً مستضافاً عندنا (_cover.*) تغيّر اسمه بعد إعادة الاستيراد.
+        # غلاف خارجي وضعه المالك يدوياً لا يُمسّ.
+        if poster and (not old_poster.startswith("https://") or (old_poster.startswith(play_url) and old_poster != poster)):
             msc["poster_url"] = poster
             fixed.append("رابط الغلاف")
         if fixed:

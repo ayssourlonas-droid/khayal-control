@@ -677,6 +677,10 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45):
             resp = page.goto(f"http://127.0.0.1:{port}/game/index.html", wait_until="load", timeout=45000)
             res["status_ok"] = bool(resp and resp.status == 200)
             page.wait_for_timeout(6000)
+            try:
+                page.screenshot(path=str(shot.with_name("_title.png")))  # لقطة الشاشة الأولى (احتياطي للغلاف)
+            except Exception:
+                pass
             if explore:
                 res["virtual_ms"] = _explore(page, 412, 915, seconds)
             info = page.evaluate(
@@ -1427,6 +1431,18 @@ def main():
     if reasons:
         finish("fail")
 
+    stage("الغلاف")
+    # 6-0) نبحث عن الغلاف الآن (قبل تقليل الملفات وتحسين الوسائط) كي تبقى الأسماء والملفات الأصلية
+    cover_pick = None
+    try:
+        import cover_finder
+        cover_pick = cover_finder.choose(site, src, t.get("used", []), work,
+                                         title_shot=shot.with_name("_title.png"), final_shot=shot,
+                                         blank=bool(t.get("blank")))
+        report["cover_candidates"] = cover_pick.get("top", [])
+    except Exception as e:
+        warnings.append(f"تعذّر البحث عن الغلاف: {str(e)[:120]}")
+
     stage("تقليل الملفات")
     # 6أ) تقليل الملفات
     files_before = sum(len(f) for _, _, f in os.walk(site))
@@ -1507,18 +1523,24 @@ def main():
            + f"- images: {pv['images']}, audio: {pv['audio']}, tagged audio: {pv['tagged_audio']}\n" if pv else ""),
         encoding="utf-8")
 
-    stage("الغلاف")
-    # 7) الغلاف
-    cover = pick_cover(site, src)
+    stage("إخراج الغلاف")
+    # 7) الغلاف: نجهّزه بمكتبة Pillow (تصغير دون قصّ، وخلفية مموّهة إن لم تناسب نسبة البطاقة)
     cover_name = ""
-    if cover:
-        cover_name = "_cover" + cover.suffix.lower()
-        shutil.copy2(cover, site / cover_name)
-        notes.append(f"الغلاف من ملف اللعبة: {cover.name}")
-    elif shot.is_file():
-        cover_name = "_cover.png"
-        shutil.copy2(shot, site / cover_name)
-        warnings.append("لا توجد صورة غلاف؛ استُخدمت لقطة شاشة (يُفضّل استبدالها)")
+    if cover_pick and cover_pick.get("path"):
+        try:
+            import cover_finder
+            cover_name = cover_finder.render(cover_pick["path"], site / "_cover")
+            if cover_pick.get("fallback"):
+                warnings.append(cover_pick["note"])
+            else:
+                notes.append(cover_pick["note"])
+        except Exception as e:
+            warnings.append(f"تعذّر تجهيز الغلاف: {str(e)[:120]}")
+            ext = Path(cover_pick["path"]).suffix.lower() or ".png"
+            cover_name = "_cover" + ext
+            shutil.copy2(cover_pick["path"], site / cover_name)
+    if not cover_name:
+        warnings.append("لا توجد صورة غلاف ولا لقطة شاشة صالحة")
 
     slug = slugify(repo)
     meta = {
