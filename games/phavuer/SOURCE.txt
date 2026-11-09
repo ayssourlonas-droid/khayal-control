@@ -1,0 +1,8 @@
+Source: https://github.com/laineus/phavuer
+Commit: 04ea5dcc228247dd624e76a29009a3b4c0b50e19
+License: MIT
+Imported: 2026-11-09T11:48:09.050866+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 1, "عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 16, "تحسين وسائط صور": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 9, audio: 0, tagged audio: 0

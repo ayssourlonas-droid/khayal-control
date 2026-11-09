@@ -1244,5 +1244,31 @@
       "type": "web",
       "category": "canvas"
     }
+  },
+  {
+    "id": 67,
+    "release_year": "2026",
+    "category_tags": [
+      "game-engine",
+      "phaser",
+      "vue"
+    ],
+    "main_scene": {
+      "title_ar": "Phavuer",
+      "title_en": "Phavuer",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/phavuer/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A integration library seamlessly combining Phaser 3 with Vue for enhanced game development.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/phavuer/",
+      "developer": "laineus",
+      "license": "MIT",
+      "source_url": "https://github.com/laineus/phavuer",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game-engine"
+    }
   }
 ]

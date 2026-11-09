@@ -1,0 +1,126 @@
+import type { Meta, StoryObj } from '@storybook/vue3'
+import { Game, Image, Light, Scene } from '../../'
+import { referPhaserVersion, take } from './utils'
+import 'phaser'
+
+type Story = StoryObj<typeof Light>
+
+const description = `
+A 2D point light.
+
+These are typically created by a Phaser.GameObjects.LightsManager, available from within a scene via this.lights.
+
+Any Game Objects using the lighting property will then be affected by these Lights as long as they have a normal map.
+
+They can also simply be used to represent a point light for your own purposes.
+
+\`\`\`html
+<Game>
+  <Scene name="SceneName">
+    <GameObject :lighting="true" />
+    <Light :radius="200" :color="0xFFFF00" :intensity="10" />
+  </Scene>
+</Game>
+\`\`\`
+
+See also: [Phaser.GameObjects.Light](https://docs.phaser.io/api-documentation/class/gameobjects-light)
+`
+
+const meta: Meta<typeof Light> = {
+  title: 'GameObjects/Light',
+  parameters: {
+    docs: {
+      description: {
+        component: description,
+      },
+    },
+  },
+  component: Light as any,
+  tags: ['autodocs'],
+  args: {
+    visible: true,
+    x: 120,
+    y: 30,
+    radius: 256,
+    color: '0x66AAFF' as unknown as number,
+    intensity: 10,
+    z: 10,
+  },
+  argTypes: {
+    ...take(
+      'visible',
+      'x',
+      'y',
+      'radius',
+    ),
+    color: {
+      control: 'text',
+      description: 'The color of the light.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: '0xFFFFFF' },
+      },
+    },
+    intensity: {
+      description: 'The intensity of the light.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: '1' },
+      },
+    },
+    z: {
+      description: 'The z position of the light. Affects the angle of the shading effect. Defaults to radius * 0.1.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+      },
+    },
+    ...take(
+      'tween',
+      'tweens',
+      'timeline',
+      'create',
+    ),
+  },
+}
+
+export const Default: Story = {
+  render: (args: any) => ({
+    components: { Game, Scene, Image, Light },
+    setup() {
+      const preload = (scene: Phaser.Scene) => {
+        scene.load.image('logo', '/logo.png')
+      }
+      return { args, preload }
+    },
+    template: `
+      <Game :config="{ width: 400, height: 225 }">
+        <Scene name="Scene" @preload="preload" v-slot="{ preloaded }">
+          <template v-if="preloaded">
+            <Image
+              :texture="'logo'"
+              :x="30"
+              :y="30"
+              :scale="0.6"
+              :originX="0"
+              :originY="0"
+              :lighting="true"
+              />
+            <Light
+              :visible="args.visible"
+              :x="args.x"
+              :y="args.y"
+              :radius="args.radius"
+              :color="Number(args.color)"
+              :intensity="args.intensity"
+              :z="args.z"
+              />
+          </template>
+        </Scene>
+      </Game>`,
+  }),
+}
+
+export default meta

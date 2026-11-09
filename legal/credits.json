@@ -986,5 +986,20 @@
     "date": "2026-11-09",
     "license_file": "license.txt",
     "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): README.md: 2. Add details of the new version to `CHANGELOG.md`. This should include a summary of changes made in the version. You can usually obtain th"
+  },
+  {
+    "key": "phavuer",
+    "size": 1499,
+    "repo": "laineus/phavuer",
+    "id": 67,
+    "slug": "phavuer",
+    "title": "Phavuer",
+    "developer": "laineus",
+    "license": "MIT",
+    "source": "https://github.com/laineus/phavuer",
+    "commit": "04ea5dcc228247dd624e76a29009a3b4c0b50e19",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

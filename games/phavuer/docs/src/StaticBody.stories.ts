@@ -1,0 +1,140 @@
+import type { Meta, StoryObj } from '@storybook/vue3'
+import { ref, watch } from 'vue'
+import { Game, Image, Scene, StaticBody } from '../../'
+import box from './assets/box.png'
+import { referPhaserVersion } from './utils'
+import 'phaser'
+
+type Story = StoryObj<typeof StaticBody>
+
+const description = `
+A Static Arcade Physics Body.
+
+A Static Body never moves, and isn't automatically synchronized with its parent Game Object. That means if you make any change to the parent's origin, position, or scale after creating or adding the body, you'll need to update the Static Body manually.
+
+A Static Body can collide with other Bodies, but is never moved by collisions.
+
+Physics is enabled by mounting it as a child of GameObject.
+
+\`\`\`html
+<Game :config="{ physics: { default: 'arcade', arcade: { debug: true } } }">
+  <Scene name="SceneName">
+    <GameObject>
+      <Body />
+    </GameObject>
+  </Scene>
+</Game>
+\`\`\`
+
+Physics must be enabled in gameConfig.
+
+See also: [Phaser.Physics.Arcade.StaticBody](https://docs.phaser.io/api-documentation/class/physics-arcade-staticbody)
+`
+
+const meta: Meta<typeof StaticBody> = {
+  title: 'Physics/StaticBody',
+  parameters: {
+    docs: {
+      description: {
+        component: description,
+      },
+    },
+  },
+  component: StaticBody as any,
+  tags: ['autodocs'],
+  args: {
+    width: 100,
+    height: 80,
+    offsetX: 0,
+    offsetY: 0,
+    enable: true,
+  },
+  argTypes: {
+    width: {
+      description: 'The width of the StaticBody.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: 'Same as its Game Object\'s width' },
+      },
+    },
+    height: {
+      description: 'The height of the StaticBody.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: 'Same as its Game Object\'s height' },
+      },
+    },
+    offsetX: {
+      description: 'The horizontal offset of the StaticBody\'s position from its Game Object\'s position.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+      },
+    },
+    offsetY: {
+      description: 'The vertical offset of the StaticBody\'s position from its Game Object\'s position.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+      },
+    },
+    enable: {
+      description: 'Whether this StaticBody is updated by the physics simulation.',
+      table: {
+        category: 'Props',
+        type: { summary: 'boolean' },
+      },
+    },
+    // @ts-expect-error - create is not a prop
+    create: {
+      name: '@create',
+      control: false,
+      description: '**Parameters:**<br>pointer: `Phaser.Physics.Arcade.StaticBody`',
+      table: {
+        category: 'Emits',
+        type: { summary: 'function' },
+      },
+    },
+  },
+}
+
+export const Default: Story = {
+  render: (args: any) => ({
+    components: { Game, Scene, Image, StaticBody },
+    setup() {
+      const preload = (scene: Phaser.Scene) => {
+        scene.load.image('box', box)
+      }
+      const version = ref(0)
+      watch(args, () => {
+        version.value++
+      })
+      return { args, preload, version }
+    },
+    template: `
+    <Game :config="{ width: 400, height: 225, physics: { default: 'arcade', arcade: { debug: true } } }">
+      <Scene name="Scene" @preload="preload" v-slot="{ preloaded }">
+        <Image
+          v-if="preloaded"
+          :x="30"
+          :y="30"
+          :origin="0"
+          :texture="'box'"
+          :key="version"
+          >
+          <StaticBody
+            :width="args.width"
+            :height="args.height"
+            :offsetX="args.offsetX"
+            :offsetY="args.offsetY"
+            :enable="args.enable"
+            />
+        </Image>
+      </Scene>
+    </Game>`,
+  }),
+}
+
+export default meta

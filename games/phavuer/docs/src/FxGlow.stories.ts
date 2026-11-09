@@ -1,0 +1,166 @@
+import type { Meta, StoryObj } from '@storybook/vue3'
+import { FxGlow, Game, Image, Scene } from '../../'
+import { referPhaserVersion } from './utils'
+import 'phaser'
+
+type Story = StoryObj<typeof FxGlow>
+
+const description = `
+Adds a Glow effect.
+
+The glow effect is a visual technique that creates a soft, luminous halo around game objects, characters, or UI elements. This effect is used to emphasize importance, enhance visual appeal, or convey a sense of energy, magic, or otherworldly presence. The effect can also be set on the inside of the Game Object. The color and strength of the glow can be modified.
+
+\`\`\`html
+<Game>
+  <Scene name="SceneName">
+    <Rectangle :width="100" :height="100" :fillColor="0xFF0000">
+      <FxGlow :color="0x00FFFF" :outerStrength="4" :innerStrength="2" />
+    </Rectangle>
+  </Scene>
+</Game>
+\`\`\`
+
+See also: [Phaser.Filters.Glow](https://docs.phaser.io/api-documentation/class/filters-glow)
+`
+
+const meta: Meta<typeof FxGlow> = {
+  title: 'FX/FxGlow',
+  parameters: {
+    docs: {
+      description: {
+        component: description,
+      },
+    },
+  },
+  component: FxGlow,
+  tags: ['autodocs'],
+  args: {
+    color: 0x00FFFF,
+    outerStrength: 4,
+    innerStrength: 0,
+    scale: 1,
+    knockout: false,
+    quality: 10,
+    distance: 10,
+  },
+  argTypes: {
+    external: {
+      description: 'Use external filter list (true) or internal filter list (false).',
+      table: {
+        category: 'Props',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    color: {
+      description: 'Color of the glow effect as number value.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: '0xFFFFFF' },
+      },
+    },
+    outerStrength: {
+      description: 'Strength of glow outward from edge.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: '4' },
+      },
+    },
+    innerStrength: {
+      description: 'Strength of glow inward from edge.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: '0' },
+      },
+    },
+    scale: {
+      description: 'Scale of the glow effect. Multiplies the fixed distance.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: '1' },
+      },
+    },
+    knockout: {
+      description: 'If true, only glow is drawn, not texture.',
+      table: {
+        category: 'Props',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    quality: {
+      description: 'Quality of glow effect. **Read-only after creation** — only takes effect at mount time.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: '10' },
+      },
+    },
+    distance: {
+      description: 'Distance of glow effect. **Read-only after creation** — only takes effect at mount time.',
+      table: {
+        category: 'Props',
+        type: { summary: 'number' },
+        defaultValue: { summary: '10' },
+      },
+    },
+    // @ts-expect-error - create is not a prop
+    create: {
+      name: '@create',
+      control: false,
+      description: '**Parameters:**<br>glow: `Phaser.FX.Glow`',
+      table: {
+        category: 'Emits',
+        type: { summary: 'function' },
+      },
+    },
+  },
+}
+
+export const Default: Story = {
+  render: (args: any) => ({
+    components: { Game, Scene, Image, FxGlow },
+    setup() {
+      const preload = (scene: Phaser.Scene) => {
+        scene.load.image('logo', '/logo.png')
+      }
+      return { args, preload }
+    },
+    template: `
+      <Game :config="{ 
+        width: 400, 
+        height: 225,
+        type: 2,
+        backgroundColor: 0x1a1a1a
+      }">
+        <Scene name="Scene" @preload="preload" v-slot="{ preloaded }">
+          <Image
+            v-if="preloaded"
+            :x="200"
+            :y="112"
+            :texture="'logo'"
+            :originX="0.5"
+            :originY="0.5"
+            :scale="0.6"
+          >
+            <FxGlow
+              :key="args.quality + '-' + args.distance"
+              :color="args.color"
+              :outerStrength="args.outerStrength"
+              :innerStrength="args.innerStrength"
+              :scale="args.scale"
+              :knockout="args.knockout"
+              :quality="args.quality"
+              :distance="args.distance"
+            />
+          </Image>
+        </Scene>
+      </Game>`,
+  }),
+}
+
+export default meta
