@@ -421,5 +421,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42608921128"
+  },
+  {
+    "url": "https://github.com/rune/rune",
+    "repo": "rune/rune",
+    "reason": "فشل البناء: فشل الأمر: ['yarn', 'install'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42609160584"
   }
 ]
