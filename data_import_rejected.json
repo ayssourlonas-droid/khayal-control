@@ -448,5 +448,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42609865354"
+  },
+  {
+    "url": "https://github.com/AILHC/EasyGameFrameworkOpen",
+    "repo": "AILHC/EasyGameFrameworkOpen",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42610154746"
   }
 ]
