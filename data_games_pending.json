@@ -1192,5 +1192,31 @@
       "type": "web",
       "category": "browser-game"
     }
+  },
+  {
+    "id": 62,
+    "release_year": "2026",
+    "category_tags": [
+      "chinese",
+      "game",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "Can I Afford It",
+      "title_en": "Can I Afford It",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/can-i-afford-it/_cover.png"
+    },
+    "details_scene": {
+      "description": "买得起吗：开源的买房与消费模拟游戏。输入工资，按月还房贷，看看和租房+投资比差多少。",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/can-i-afford-it/",
+      "developer": "askxiaozhang",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/askxiaozhang/can-i-afford-it",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "chinese"
+    }
   }
 ]

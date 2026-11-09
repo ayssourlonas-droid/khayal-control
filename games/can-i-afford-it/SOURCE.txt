@@ -1,0 +1,13 @@
+Source: https://github.com/askxiaozhang/can-i-afford-it
+Commit: d4d915789da143bf3b8af622991f02862c81e910
+License: GPL-3.0
+Imported: 2026-11-09T10:30:49.802960+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: 数据和文案（`src/data/` 下的 JSON、游戏内文字）：[CC BY-SA 4.0](LICENSE-DATA.md)。
+- README.md: English**: *Can I Afford It?* is an open-source, offline-capable web game about buying a home in China on a real salary: mortgages, providen
+- LICENSE: author attributions in that material or in the Appropriate Legal
+- LICENSE-DATA.md: 知识共享 署名-相同方式共享 4.0 国际许可协议（CC BY-SA 4.0）** 授权。
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 10, audio: 0, tagged audio: 0

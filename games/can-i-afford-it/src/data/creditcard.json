@@ -1,0 +1,36 @@
+{
+  "asOf": "2026-09",
+  "note": "信用卡规则按国内大多数银行的常见做法简化，来源见 DATA_SOURCES.md。银行是虚构的，具体以各行领用合约为准。",
+  "name": "小鹿银行信用卡",
+  "minPayRate": 0.1,
+  "dailyRate": 0.0005,
+  "fullInterest": true,
+  "firstCycleDays": 35,
+  "cycleDays": 30,
+  "lateFeeRate": 0.05,
+  "lateFeeMin": 10,
+  "limitMul": 2.5,
+  "limitMin": 5000,
+  "limitMax": 100000,
+  "freezeAfter": 2,
+  "installments": [
+    {
+      "n": 3,
+      "fee": 0.0075
+    },
+    {
+      "n": 6,
+      "fee": 0.007
+    },
+    {
+      "n": 12,
+      "fee": 0.0065
+    }
+  ],
+  "cashYieldAsset": "mmf",
+  "lifestyle": {
+    "base": 8500,
+    "min": 0.7,
+    "max": 2.0
+  }
+}

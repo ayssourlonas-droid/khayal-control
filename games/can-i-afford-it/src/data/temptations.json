@@ -1,0 +1,224 @@
+{
+  "asOf": "2026-09",
+  "note": "价格是 2026 年常见价位的估算。开心值、开心减半要几个月（halfLife）、冷静一段时间后还想要的程度（fade）都是作者定的游戏参数，方向参考了消费与幸福感的研究（见 DATA_SOURCES.md），不是测量值。life=true 的价格会按你的收入水平缩放（收入高，圈子里的消费也高）。",
+  "kinds": {
+    "thing": {"name": "东西", "halfLife": 2, "floor": 0, "antic": 0.05},
+    "experience": {"name": "体验", "halfLife": 6, "floor": 0.25, "antic": 0.15},
+    "consumable": {"name": "小花费", "halfLife": 0.3, "floor": 0, "antic": 0.03},
+    "tool": {"name": "用得上的", "halfLife": 8, "floor": 0.25, "antic": 0.05},
+    "social": {"name": "人情", "halfLife": 2, "floor": 0.2, "antic": 0.05},
+    "need": {"name": "不得不花", "halfLife": 1.5, "floor": 0, "antic": 0}
+  },
+  "items": [
+    {
+      "id": "phone", "name": "新款旗舰手机", "kind": "thing", "price": 6999, "joy": 7, "months": [9, 10, 11], "weight": 1.2,
+      "hook": "发布会刚开完，同事已经拿到手了",
+      "impulse": {"label": "刷卡买首发"},
+      "plan": {"label": "等两个月，赶上促销再买", "wait": 2, "disc": 0.15, "fade": 0.35},
+      "skip": {"label": "旧手机还能用"}
+    },
+    {
+      "id": "earbuds", "name": "降噪耳机", "kind": "thing", "price": 1999, "joy": 4,
+      "hook": "地铁太吵，这款降噪据说很好",
+      "impulse": {"label": "马上下单"},
+      "plan": {"label": "等一个月，比比价", "wait": 1, "disc": 0.15, "fade": 0.4},
+      "skip": {"label": "有线耳机凑合用"}
+    },
+    {
+      "id": "console", "name": "新款游戏机", "kind": "thing", "price": 2999, "joy": 5, "halfLife": 3,
+      "hook": "朋友都在联机，就差你了",
+      "impulse": {"label": "今晚就买"},
+      "plan": {"label": "等首发热度过去再买", "wait": 2, "disc": 0.08, "fade": 0.4},
+      "skip": {"label": "先玩手机游戏"}
+    },
+    {
+      "id": "tablet", "name": "平板电脑", "kind": "thing", "price": 3299, "joy": 4, "halfLife": 1.5,
+      "hook": "说是用来学习，其实主要想追剧",
+      "impulse": {"label": "刷卡买"},
+      "plan": {"label": "想清楚用来干嘛再说", "wait": 2, "disc": 0.15, "fade": 0.55},
+      "skip": {"label": "用手机看"}
+    },
+    {
+      "id": "sneakers", "name": "限量联名球鞋", "kind": "thing", "price": 1299, "joy": 3, "halfLife": 1.2,
+      "hook": "限量发售，今晚开抢",
+      "impulse": {"label": "没抢到，加价从二手平台买", "mul": 1.6},
+      "plan": {"label": "等补货，原价买", "wait": 1, "disc": 0, "fade": 0.5},
+      "skip": {"label": "鞋柜里还有好几双"}
+    },
+    {
+      "id": "bag", "name": "轻奢包", "kind": "thing", "price": 5800, "joy": 5,
+      "hook": "朋友群里都在晒同款",
+      "impulse": {"label": "刷卡买下"},
+      "plan": {"label": "存够三个月再说", "wait": 3, "disc": 0.1, "fade": 0.5},
+      "skip": {"label": "包够用了"}
+    },
+    {
+      "id": "clothes", "name": "换季新衣服", "kind": "thing", "price": 1500, "life": true, "joy": 2, "halfLife": 1, "months": [3, 4, 9, 10], "weight": 1.5,
+      "hook": "换季了，衣柜里好像没一件能穿",
+      "impulse": {"label": "逛一圈，看上就买"},
+      "plan": {"label": "列个清单，只买缺的", "wait": 0, "priceMul": 0.45, "joyMul": 0.85},
+      "skip": {"label": "翻出去年的接着穿"}
+    },
+    {
+      "id": "skincare", "name": "护肤品套装", "kind": "thing", "price": 1600, "joy": 2, "halfLife": 1.5, "months": [5, 6, 10, 11],
+      "hook": "主播说这个价格一年就一次",
+      "impulse": {"label": "直播间下单，还送小样"},
+      "plan": {"label": "用完手上的再买", "wait": 1, "disc": 0.25, "fade": 0.4},
+      "skip": {"label": "手上的还没用完"}
+    },
+    {
+      "id": "d11", "name": "双11 购物车", "kind": "consumable", "price": 3000, "life": true, "joy": 4, "halfLife": 0.5, "months": [11], "weight": 6,
+      "hook": "凑满减，再加几件好像更划算",
+      "impulse": {"label": "全部付款"},
+      "plan": {"label": "只买清单上的", "wait": 0, "priceMul": 0.4, "joyMul": 0.8},
+      "skip": {"label": "清空购物车"}
+    },
+    {
+      "id": "m618", "name": "618 购物车", "kind": "consumable", "price": 2500, "life": true, "joy": 3, "halfLife": 0.5, "months": [6], "weight": 6,
+      "hook": "跨店满减，不买好像亏了",
+      "impulse": {"label": "全部付款"},
+      "plan": {"label": "只买清单上的", "wait": 0, "priceMul": 0.4, "joyMul": 0.8},
+      "skip": {"label": "清空购物车"}
+    },
+    {
+      "id": "robot", "name": "扫地机器人", "kind": "tool", "price": 2999, "joy": 4,
+      "hook": "每天下班回家，实在不想扫地",
+      "impulse": {"label": "买最新款"},
+      "plan": {"label": "等大促，选上一代型号", "wait": 1, "disc": 0.2, "fade": 0.2},
+      "skip": {"label": "周末自己拖"}
+    },
+    {
+      "id": "gym", "name": "健身年卡", "kind": "thing", "price": 3600, "joy": 4, "months": [1, 3, 5], "weight": 1.5,
+      "hook": "现在办年卡，再送三个月",
+      "impulse": {"label": "办年卡", "halfLife": 0.7},
+      "plan": {"label": "先买 10 次卡，坚持下来再办年卡", "wait": 0, "priceMul": 0.25, "joy": 3, "halfLife": 4},
+      "skip": {"label": "下班去跑步"}
+    },
+    {
+      "id": "course", "name": "线上课程", "kind": "experience", "price": 2999, "joy": 2,
+      "hook": "朋友圈都在说\"不学就被淘汰\"",
+      "impulse": {"label": "立刻报名"},
+      "plan": {"label": "先听免费试听课", "wait": 1, "disc": 0.1, "fade": 0.6},
+      "skip": {"label": "先看看免费资料"}
+    },
+    {
+      "id": "weekend", "name": "周末短途游", "kind": "experience", "price": 1800, "life": true, "joy": 5,
+      "hook": "连着加了两周班，想出去透透气",
+      "impulse": {"label": "说走就走，临时订", "mul": 1.3},
+      "plan": {"label": "提前一个月订票订房", "wait": 1, "disc": 0.2, "fade": 0.1},
+      "skip": {"label": "在家躺两天"}
+    },
+    {
+      "id": "holiday", "name": "国庆长途旅行", "kind": "experience", "price": 6000, "life": true, "joy": 8, "months": [8, 9], "weight": 2,
+      "hook": "七天长假，大家都在做攻略",
+      "impulse": {"label": "临时订，机票酒店全是高峰价", "mul": 1.35},
+      "plan": {"label": "攒两个月，错峰去", "wait": 2, "disc": 0.25, "fade": 0.1},
+      "skip": {"label": "就近转转"}
+    },
+    {
+      "id": "abroad", "name": "出国旅行", "kind": "experience", "price": 12000, "life": true, "joy": 11, "months": [1, 2, 4, 7], "weight": 0.5,
+      "hook": "特价机票，只剩两天",
+      "impulse": {"label": "刷卡订下"},
+      "plan": {"label": "存三个月，挑个淡季去", "wait": 3, "disc": 0.25, "fade": 0.15},
+      "skip": {"label": "先不出国"}
+    },
+    {
+      "id": "concert", "name": "演唱会", "kind": "experience", "price": 1280, "joy": 5, "halfLife": 5,
+      "hook": "喜欢了十年的歌手来巡演",
+      "impulse": {"label": "买内场前排", "mul": 1.8, "joyMul": 1.1},
+      "plan": {"label": "提前蹲开票，买看台", "wait": 1, "disc": 0, "fade": 0.1},
+      "skip": {"label": "看直播片段"}
+    },
+    {
+      "id": "dinner", "name": "朋友聚会", "kind": "social", "price": 500, "life": true, "joy": 2, "halfLife": 0.5, "weight": 1.5,
+      "hook": "周五晚上，群里在约饭和剧本杀",
+      "impulse": {"label": "去！还续了第二场", "mul": 1.6},
+      "plan": {"label": "去，但只玩一场", "wait": 0, "priceMul": 0.7, "joyMul": 1},
+      "skip": {"label": "这次不去了", "penalty": 1, "months": 1}
+    },
+    {
+      "id": "tea", "name": "奶茶咖啡", "kind": "consumable", "price": 600, "life": true, "joy": 1, "halfLife": 0.2, "weight": 1.5,
+      "hook": "这个月几乎每天一杯",
+      "impulse": {"label": "想喝就买"},
+      "plan": {"label": "每周两杯，其余自己泡", "wait": 0, "priceMul": 0.4, "joyMul": 0.8},
+      "skip": {"label": "全戒了"}
+    },
+    {
+      "id": "takeout", "name": "外卖", "kind": "consumable", "price": 1200, "life": true, "joy": 1, "halfLife": 0.2, "weight": 1.5,
+      "hook": "加班回家太累，天天点外卖",
+      "impulse": {"label": "继续点"},
+      "plan": {"label": "周末备好一周的菜", "wait": 0, "priceMul": 0.45, "joyMul": 0.8},
+      "skip": {"label": "全自己做"}
+    },
+    {
+      "id": "blindbox", "name": "盲盒潮玩", "kind": "consumable", "price": 800, "joy": 2, "halfLife": 0.5,
+      "hook": "就差一个隐藏款",
+      "impulse": {"label": "直接买一整盒"},
+      "plan": {"label": "只在二手平台买想要的那一个", "wait": 0, "priceMul": 0.3, "joyMul": 0.7},
+      "skip": {"label": "不抽了"}
+    },
+    {
+      "id": "livestream", "name": "直播间好物", "kind": "consumable", "price": 999, "joy": 1, "halfLife": 0.4,
+      "hook": "主播喊\"最后 3 单，手慢无\"",
+      "impulse": {"label": "马上下单"},
+      "plan": {"label": "先加购物车，冷静一个月", "wait": 1, "disc": 0.1, "fade": 0.7},
+      "skip": {"label": "退出直播间"}
+    },
+    {
+      "id": "subs", "name": "会员全家桶", "kind": "tool", "price": 600, "joy": 1, "halfLife": 6,
+      "hook": "视频、音乐、网盘，年卡打包价",
+      "impulse": {"label": "全都开"},
+      "plan": {"label": "只留最常用的一个", "wait": 0, "priceMul": 0.35, "joyMul": 0.85},
+      "skip": {"label": "用免费版"}
+    },
+    {
+      "id": "wedding", "name": "朋友婚礼", "kind": "social", "price": 800, "life": true, "joy": 2, "halfLife": 3, "months": [1, 5, 10], "weight": 1.2,
+      "hook": "大学室友结婚，请你当伴郎（伴娘）",
+      "impulse": {"label": "随大红包，再买身新衣服", "mul": 2},
+      "plan": {"label": "按惯例随份子，提前订票", "wait": 0, "priceMul": 1, "joyMul": 1},
+      "skip": {"label": "不去也不随", "penalty": 2, "months": 3}
+    },
+    {
+      "id": "parents", "name": "给爸妈的心意", "kind": "social", "price": 2000, "life": true, "joy": 2, "halfLife": 3, "months": [1, 2, 9],
+      "hook": "妈妈生日快到了",
+      "impulse": {"label": "买一套贵的保健品", "mul": 1.5, "joyMul": 0.8},
+      "plan": {"label": "回家陪他们吃顿饭，再买件实用的", "wait": 0, "priceMul": 0.8, "joyMul": 1.1},
+      "skip": {"label": "打个电话就算了", "penalty": 3, "months": 2}
+    },
+    {
+      "id": "gift", "name": "节日礼物", "kind": "social", "price": 1314, "life": true, "joy": 3, "months": [2, 5, 8], "weight": 1.5,
+      "hook": "节日到了，另一半在暗示",
+      "impulse": {"label": "买大牌", "mul": 1.6},
+      "plan": {"label": "提前挑一份用心的", "wait": 0, "priceMul": 0.5, "joyMul": 1.1},
+      "skip": {"label": "说句\"节日快乐\"", "penalty": 1, "months": 1}
+    },
+    {
+      "id": "spring", "name": "春节回家", "kind": "need", "price": 3000, "life": true, "joy": 2, "halfLife": 2, "months": [1], "weight": 8,
+      "hook": "回家的机票和年货",
+      "impulse": {"label": "拖到年前才买，票价最高", "mul": 1.4},
+      "plan": {"label": "提前一个月抢票", "wait": 0, "priceMul": 0.85, "joyMul": 1},
+      "skip": {"label": "今年不回了", "penalty": 3, "months": 2}
+    },
+    {
+      "id": "screen", "name": "手机屏幕碎了", "kind": "need", "accident": true, "price": 6999, "joy": 5, "halfLife": 2,
+      "hook": "手机摔了，屏幕裂成蜘蛛网",
+      "impulse": {"label": "干脆换新手机"},
+      "plan": {"label": "去官方维修点换屏", "wait": 0, "priceMul": 0.13, "joy": 1},
+      "skip": {"label": "贴个膜凑合用", "penalty": 1, "months": 4}
+    },
+    {
+      "id": "tooth", "name": "牙疼", "kind": "need", "accident": true, "price": 2600, "joy": 1,
+      "hook": "智齿发炎，疼得睡不着",
+      "impulse": {"label": "去最贵的私立诊所，当天就看"},
+      "plan": {"label": "去医保定点医院，排两天队", "wait": 0, "priceMul": 0.45, "joy": 1},
+      "skip": {"label": "忍一忍", "penalty": 3, "months": 2, "later": {"after": 3, "price": 4500, "name": "牙疼拖成了根管治疗"}}
+    },
+    {
+      "id": "laptop", "name": "电脑坏了", "kind": "need", "accident": true, "price": 8999, "joy": 4, "halfLife": 2,
+      "hook": "工作用的电脑开不了机",
+      "impulse": {"label": "买顶配新款"},
+      "plan": {"label": "买一台够用的", "wait": 0, "priceMul": 0.5, "joy": 3},
+      "skip": {"label": "修一修，慢就慢点", "penalty": 2, "months": 3}
+    }
+  ]
+}

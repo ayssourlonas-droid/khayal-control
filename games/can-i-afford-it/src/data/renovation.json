@@ -1,0 +1,218 @@
+{
+  "note": "per 为元/㎡；styles 中 mult 为风格单价系数；split 为硬装/家具软装/家电占比。",
+  "tiers": {
+    "none": {
+      "name": "不装修",
+      "per": 0,
+      "months": 0,
+      "d": "直接入住"
+    },
+    "light": {
+      "name": "刷墙+家电",
+      "per": 600,
+      "months": 1,
+      "d": "约600元/㎡"
+    },
+    "basic": {
+      "name": "简装",
+      "per": 1200,
+      "months": 2,
+      "d": "约1200元/㎡"
+    },
+    "mid": {
+      "name": "中档装修",
+      "per": 2000,
+      "months": 3,
+      "d": "约2000元/㎡"
+    },
+    "lux": {
+      "name": "豪装",
+      "per": 3500,
+      "months": 4,
+      "d": "约3500元/㎡"
+    }
+  },
+  "byDeco": {
+    "毛坯": [
+      "basic",
+      "mid",
+      "lux"
+    ],
+    "旧装": [
+      "none",
+      "light",
+      "basic",
+      "mid",
+      "lux"
+    ],
+    "简装": [
+      "none",
+      "light",
+      "basic",
+      "mid",
+      "lux"
+    ],
+    "精装": [
+      "none",
+      "light",
+      "mid",
+      "lux"
+    ]
+  },
+  "styles": {
+    "plain": {
+      "name": "简约白",
+      "mult": 1,
+      "wall": "#EEEDE8",
+      "ceil": "#F7F6F2",
+      "floor": "tile",
+      "floorC": "#D9D5CC",
+      "sofa": "#A1A6A9",
+      "wood": "#C9A77E",
+      "accent": "#6A8BA6",
+      "rug": "#CEC8BB",
+      "curtain": "#E3DED3",
+      "art": "none",
+      "light": "round",
+      "tv": "plain",
+      "cab": "#ECEAE4",
+      "counter": "#C2BCB0",
+      "bed": "#E9E6DF"
+    },
+    "modern": {
+      "name": "现代简约",
+      "mult": 1,
+      "wall": "#E8E9E7",
+      "ceil": "#F5F5F3",
+      "floor": "wood",
+      "floorC": "#BDB4A6",
+      "sofa": "#5E666E",
+      "wood": "#A88C6B",
+      "accent": "#D3893C",
+      "rug": "#C9C6BF",
+      "curtain": "#D9D7D2",
+      "art": "abstract",
+      "light": "track",
+      "tv": "stone",
+      "cab": "#F1F1EF",
+      "counter": "#3E4245",
+      "bed": "#D7D9DB"
+    },
+    "cream": {
+      "name": "奶油原木",
+      "mult": 1.05,
+      "wall": "#F0E6D5",
+      "ceil": "#F7F1E6",
+      "floor": "wood",
+      "floorC": "#C9A478",
+      "sofa": "#EADFCC",
+      "wood": "#B88958",
+      "accent": "#B07A4E",
+      "rug": "#E5D8C3",
+      "curtain": "#EFE4D1",
+      "art": "arch",
+      "light": "rattan",
+      "tv": "wood",
+      "cab": "#EFE6D8",
+      "counter": "#E8DCC8",
+      "bed": "#F2E9DA"
+    },
+    "chinese": {
+      "name": "新中式",
+      "mult": 1.2,
+      "wall": "#EDE6D8",
+      "ceil": "#F4EFE5",
+      "floor": "wood",
+      "floorC": "#7C5B3F",
+      "sofa": "#3D3B37",
+      "wood": "#5E4330",
+      "accent": "#9C2E27",
+      "rug": "#B9A68C",
+      "curtain": "#D8CCB6",
+      "art": "ink",
+      "light": "lantern",
+      "tv": "grille",
+      "cab": "#4A3628",
+      "counter": "#E2DCD0",
+      "bed": "#DCCFB8"
+    },
+    "luxe": {
+      "name": "轻奢",
+      "mult": 1.15,
+      "wall": "#E6E1D9",
+      "ceil": "#F3F0EB",
+      "floor": "marble",
+      "floorC": "#ECE8E2",
+      "sofa": "#2F3D55",
+      "wood": "#7A6450",
+      "accent": "#C3A05A",
+      "rug": "#D7CFC3",
+      "curtain": "#CFC5B6",
+      "art": "gold",
+      "light": "tray",
+      "tv": "panel",
+      "cab": "#E9E5DE",
+      "counter": "#F2EFEA",
+      "bed": "#E4DCCF"
+    },
+    "italian": {
+      "name": "意式极简",
+      "mult": 1.3,
+      "wall": "#D9D4CD",
+      "ceil": "#EEEBE6",
+      "floor": "slab",
+      "floorC": "#B7B1A8",
+      "sofa": "#8C7A68",
+      "wood": "#5A4B3E",
+      "accent": "#2B2A28",
+      "rug": "#A59C90",
+      "curtain": "#C8C1B7",
+      "art": "line",
+      "light": "strip",
+      "tv": "rock",
+      "cab": "#3A3936",
+      "counter": "#D8D2CA",
+      "bed": "#CFC7BC"
+    }
+  },
+  "tierStyles": {
+    "light": [
+      "plain"
+    ],
+    "basic": [
+      "plain"
+    ],
+    "mid": [
+      "modern",
+      "cream",
+      "chinese"
+    ],
+    "lux": [
+      "luxe",
+      "italian",
+      "chinese"
+    ]
+  },
+  "split": {
+    "light": [
+      30,
+      40,
+      30
+    ],
+    "basic": [
+      60,
+      25,
+      15
+    ],
+    "mid": [
+      55,
+      30,
+      15
+    ],
+    "lux": [
+      50,
+      35,
+      15
+    ]
+  }
+}

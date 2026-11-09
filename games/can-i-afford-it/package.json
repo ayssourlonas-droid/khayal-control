@@ -1,0 +1,39 @@
+{
+  "name": "can-i-afford-it",
+  "version": "0.2.0",
+  "description": "买得起吗：一个关于买房、贷款和冲动消费的开源模拟游戏",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:single": "vite build --mode single",
+    "build:taptap": "vite build --mode taptap",
+    "build:release": "npm run build:single && npm run build:taptap && node scripts/pack-release.js",
+    "build:all": "npm run build && npm run build:release",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vite": "^8.3.3",
+    "vite-plugin-pwa": "^2.0.0",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vitest": "^5.0.3",
+    "workbox-build": "^7.4.1",
+    "workbox-window": "^7.4.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "game",
+    "finance",
+    "mortgage",
+    "simulator",
+    "pwa",
+    "中文",
+    "买房",
+    "房贷"
+  ]
+}

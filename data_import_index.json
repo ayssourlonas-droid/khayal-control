@@ -911,5 +911,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Credit line requested in-game and here: Hermes Agent + 123mikey included. | LICENSE: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "caniaffordit",
+    "size": 1366,
+    "repo": "askxiaozhang/can-i-afford-it",
+    "id": 62,
+    "slug": "can-i-afford-it",
+    "title": "Can I Afford It",
+    "developer": "askxiaozhang",
+    "license": "GPL-3.0",
+    "source": "https://github.com/askxiaozhang/can-i-afford-it",
+    "commit": "d4d915789da143bf3b8af622991f02862c81e910",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: 数据和文案（`src/data/` 下的 JSON、游戏内文字）：[CC BY-SA 4.0](LICENSE-DATA.md)。 | README.md: English**: *Can I Afford It?* is an open-source, offline-capable web game about buying a home in China on a real salary: mortgages, providen"
   }
 ]

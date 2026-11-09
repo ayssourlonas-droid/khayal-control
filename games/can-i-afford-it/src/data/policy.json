@@ -1,0 +1,22 @@
+{
+  "asOf": "2026-09",
+  "lpr5": 3.5,
+  "lpr1": 3,
+  "gjjRate": 2.6,
+  "gjjRateShort": 2.1,
+  "note": "LPR 为 2026年9月22日公布值；公积金为首套个人住房贷款利率。",
+  "sources": [
+    {
+      "name": "LPR 2026年9月报价",
+      "url": "https://www.mrjjxw.com/articles/2026-09-20/4586489.html"
+    },
+    {
+      "name": "公积金贷款利率（2026年8月）",
+      "url": "https://news.qq.com/rain/a/20260821A0CZE000"
+    },
+    {
+      "name": "新发放个人住房贷款利率约3.1%",
+      "url": "https://www.bbtnews.com.cn/2026/0715/599450.shtml"
+    }
+  ]
+}
