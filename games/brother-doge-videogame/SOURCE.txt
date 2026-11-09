@@ -1,0 +1,11 @@
+Source: https://github.com/123mikeyd/Brother_Doge_VideoGame
+Commit: ff6a10ed0fe8bcb7fb11212ce9ac74533e36112e
+License: GPL-3.0
+Imported: 2026-11-09T10:25:54.111289+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: Credit line requested in-game and here: Hermes Agent + 123mikey included.
+- LICENSE: author attributions in that material or in the Appropriate Legal
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 0, audio: 0, tagged audio: 0

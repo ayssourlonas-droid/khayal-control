@@ -1166,5 +1166,31 @@
       "type": "web",
       "category": "game"
     }
+  },
+  {
+    "id": 61,
+    "release_year": "2026",
+    "category_tags": [
+      "browser-game",
+      "canvas-game",
+      "dogecoin"
+    ],
+    "main_scene": {
+      "title_ar": "Brother Doge VideoGame",
+      "title_en": "Brother Doge VideoGame",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/brother-doge-videogame/_cover.png"
+    },
+    "details_scene": {
+      "description": "HODL OR DIE: Brother Doge — a Dogecoin-themed HTML5 survival shooter vs the Wicked Paper Hand mob.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/brother-doge-videogame/",
+      "developer": "123mikeyd",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/123mikeyd/Brother_Doge_VideoGame",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-game"
+    }
   }
 ]
