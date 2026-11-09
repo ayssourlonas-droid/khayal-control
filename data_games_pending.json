@@ -1244,5 +1244,31 @@
       "type": "web",
       "category": "game-jam"
     }
+  },
+  {
+    "id": 64,
+    "release_year": "2025",
+    "category_tags": [
+      "arcade-game",
+      "brick-breaker-game",
+      "browser-game"
+    ],
+    "main_scene": {
+      "title_ar": "Color Match Brick Breaker",
+      "title_en": "Color Match Brick Breaker",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/color-match-brick-breaker/_cover.png"
+    },
+    "details_scene": {
+      "description": "A colorful twist on the classic brick breaker game where the ball must match the brick color to break it. Built with HTML5 Canvas and JavaScript.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/color-match-brick-breaker/",
+      "developer": "shahbajtahershezan",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/shahbajtahershezan/Color-Match-Brick-Breaker",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "arcade-game"
+    }
   }
 ]

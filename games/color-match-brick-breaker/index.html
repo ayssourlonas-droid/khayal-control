@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:color-match-brick-breaker:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Match Brick Breaker</title>
+       <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Color Match Brick Breaker</h1>
+            <div class="game-stats">
+                <div class="score">Score: <span id="score">0</span></div>
+                <div id="activePowerUps" class="power-ups-display">No active power-ups</div>
+            </div>
+        </header>
+        
+        <div class="game-area">
+            <div class="game-container">
+                <canvas id="gameCanvas" width="800" height="500"></canvas>
+                
+                <div id="gameOver" class="game-over hidden">
+                    <h2 id="gameOverTitle">Game Over!</h2>
+                    <p>Final Score: <span id="finalScore">0</span></p>
+                    <p>Press <kbd>R</kbd> to restart</p>
+                </div>
+            </div>
+            
+            <div class="controls-sidebar">
+                <div class="controls-panel">
+                    <h3>🎮 Controls</h3>
+                    <div class="control-group">
+                        <div class="control-item">
+                            <kbd>A</kbd> <kbd>D</kbd>
+                            <span>Fast Movement</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>←</kbd> <kbd>→</kbd>
+                            <span>Normal Movement</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>R</kbd>
+                            <span>Restart Game</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="power-ups-panel">
+                    <h3>⚡ Power Ups</h3>
+                    <div class="power-up-list">
+                        <div class="power-up-item">
+                            <div class="power-up-color red"></div>
+                            <div class="power-up-info">
+                                <strong>Speed Boost</strong>
+                                <small>+30% ball speed</small>
+                            </div>
+                        </div>
+                        <div class="power-up-item">
+                            <div class="power-up-color green"></div>
+                            <div class="power-up-info">
+                                <strong>Multi-Ball</strong>
+                                <small>Double active balls</small>
+                            </div>
+                        </div>
+                        <div class="power-up-item">
+                            <div class="power-up-color blue"></div>
+                            <div class="power-up-info">
+                                <strong>Wider Paddle</strong>
+                                <small>Lasts 20 seconds</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-rules">
+                    <h3>📋 Game Rules</h3>
+                    <ul>
+                        <li>Break bricks by matching colors</li>
+                        <li>Ball changes color after breaking bricks</li>
+                        <li>Collect power-ups for special abilities</li>
+                        <li>Don't let balls pass the paddle!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script src="game.js"></script>
+</body>
+</html>

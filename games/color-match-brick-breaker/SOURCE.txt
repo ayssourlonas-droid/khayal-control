@@ -1,0 +1,10 @@
+Source: https://github.com/shahbajtahershezan/Color-Match-Brick-Breaker
+Commit: 1ec273a13c7aa6ed2263f5dbfc019ab385e6c61d
+License: GPL-3.0
+Imported: 2026-11-09T10:36:44.202251+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: author attributions in that material or in the Appropriate Legal
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 1, audio: 0, tagged audio: 0

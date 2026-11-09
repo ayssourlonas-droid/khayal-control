@@ -941,5 +941,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: <p align=\"center\"><a href=\"https://behlulakdag.itch.io/escape-velocity\"><b>▶ Play it in your browser on itch.io</b></a> · made in 48 hours f | README.md: `itch/` | itch.io page text, screenshots, banner |"
+  },
+  {
+    "key": "colormatchbrickbreaker",
+    "size": 125,
+    "repo": "shahbajtahershezan/Color-Match-Brick-Breaker",
+    "id": 64,
+    "slug": "color-match-brick-breaker",
+    "title": "Color Match Brick Breaker",
+    "developer": "shahbajtahershezan",
+    "license": "GPL-3.0",
+    "source": "https://github.com/shahbajtahershezan/Color-Match-Brick-Breaker",
+    "commit": "1ec273a13c7aa6ed2263f5dbfc019ab385e6c61d",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
   }
 ]
