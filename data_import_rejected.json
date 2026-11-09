@@ -232,5 +232,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42593929444"
+  },
+  {
+    "url": "https://github.com/moebiusmania/counterfire",
+    "repo": "moebiusmania/counterfire",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 127)",
+    "license": "GPL-3.0",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42594130301"
   }
 ]
