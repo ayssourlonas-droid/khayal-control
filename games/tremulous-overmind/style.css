@@ -1,0 +1,433 @@
+/* Tremulous Overmind – the look borrows from the game's own menus:
+   black, thin grey frames with folded corners, right-aligned menu,
+   green terminal title. WebNova360 blue only for the "presented by" mark. */
+:root {
+  --black: #000;
+  --ink: #e9e9e4;
+  --dim: #8f8f88;
+  --faint: #55554f;
+  --line: rgba(233, 233, 228, 0.22);
+  --line-strong: rgba(233, 233, 228, 0.45);
+  --green: #3fb34f;          /* title / terminal */
+  --alien: #d9541e;
+  --human: #4f8fd6;
+  --wn: #2598ff;             /* WebNova360 */
+  --menu: "Bahnschrift", "DIN Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --text: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", monospace;
+  --fold: 10px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--black); }
+body { margin: 0; color: var(--ink); font: 400 1rem/1.6 var(--text); background: var(--black); overflow-x: hidden; }
+::selection { background: var(--green); color: #000; }
+a { color: var(--ink); text-decoration-color: var(--faint); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--ink); }
+:focus-visible { outline: 1px solid var(--green); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- first screen = the in-game main menu ---------- */
+.menu-screen {
+  position: relative;
+  min-height: 88svh; /* the server list's frame peeks in below: there is more */
+  display: grid;
+  grid-template: "presented menu" auto "title title" 1fr "credits credits" auto / 1fr auto;
+  padding: clamp(1rem, 3vw, 1.75rem) var(--gutter) 1.25rem;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 40%, rgba(0,0,0,.85) 100%),
+    url("img/hero.jpg") center / cover no-repeat,
+    var(--black);
+}
+
+.presented { grid-area: presented; align-self: start; text-decoration: none; line-height: 1.1; }
+.presented small { display: block; font: 500 0.66rem/1 var(--mono); letter-spacing: 0.28em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.35rem; }
+.presented span { font: 600 clamp(1.05rem, 2.4vw, 1.4rem)/1 var(--menu); letter-spacing: 0.02em; color: var(--ink); }
+.presented b { color: var(--wn); font-weight: 600; }
+
+.mainmenu { grid-area: menu; display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; }
+.mainmenu a, .mainmenu button {
+  font: 400 clamp(1.15rem, 2.6vw, 1.55rem)/1.25 var(--menu);
+  color: var(--ink); text-decoration: none; background: none; border: 0; padding: 0.1rem 0; cursor: pointer;
+  letter-spacing: 0.04em; text-shadow: 0 1px 2px #000;
+}
+.mainmenu a:hover, .mainmenu button:hover { color: #fff; text-shadow: 0 0 12px rgba(255,255,255,.55); }
+.mainmenu button { color: #fff; }
+
+.title { grid-area: title; align-self: center; justify-self: center; text-align: center; padding-block: 2rem; }
+.title h1 { margin: 0; line-height: 0; }
+.title img {
+  width: min(720px, 88vw); height: auto;
+  /* lift the dim scanline letters; "screen" drops the jpg's dark backdrop */
+  mix-blend-mode: screen; filter: brightness(3.2) contrast(1.5) saturate(1.2);
+}
+.cta { margin-top: clamp(1.25rem, 4vh, 2.25rem); display: flex; flex-direction: column; align-items: center; gap: .9rem; }
+.cta-play { width: auto; padding: .85rem 2.6rem; font-size: 1.15rem; }
+.install { font: 500 .8rem/1 var(--menu); letter-spacing: .14em; text-transform: uppercase; color: var(--ink);
+  background: rgba(0,0,0,.45); border: 1px solid var(--line-strong); padding: .55rem 1.1rem; cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px)); }
+.install:hover { border-color: var(--ink); }
+.install[hidden], .ios-hint[hidden] { display: none; }
+.ios-hint { margin: 0; max-width: 22rem; padding: .7rem .9rem; font: 400 .85rem/1.45 var(--text); color: #c9c9c2;
+  background: rgba(0,0,0,.6); border: 1px solid var(--line-strong); }
+.ios-hint b { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .cue span { animation: none; } }
+.cue { margin-top: .4rem; font: 500 .78rem/1 var(--menu); letter-spacing: .16em; text-transform: uppercase;
+  color: var(--dim); text-decoration: none; text-shadow: 0 1px 2px #000; }
+.cue:hover { color: var(--ink); }
+.cue span { display: block; margin-top: .3rem; font-size: 1.2rem; animation: cue 1.8s ease-in-out infinite; }
+@keyframes cue { 0%, 100% { transform: translateY(0); opacity: .55; } 50% { transform: translateY(5px); opacity: 1; } }
+.sub { margin: 1.1rem 0 0; font: 400 clamp(0.95rem, 2vw, 1.1rem)/1.5 var(--text); color: #c9c9c2; text-shadow: 0 1px 3px #000; }
+
+.credits { grid-area: credits; margin: 0; text-align: center; font: 400 0.72rem/1.6 var(--menu); color: rgba(233,233,228,.6); letter-spacing: 0.03em; }
+
+/* ---------- framed blocks (in-game window style) ---------- */
+main { max-width: 64rem; margin: 0 auto; padding: 0 var(--gutter); }
+.block { position: relative; margin-block: clamp(2.5rem, 7vw, 4.5rem); }
+.frame-title {
+  margin: 0 0 0.9rem; font: 400 1.5rem/1 var(--menu); letter-spacing: 0.05em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 1rem;
+}
+.frame-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* server browser */
+.browser {
+  border: 1px solid var(--line-strong);
+  clip-path: polygon(0 0, calc(100% - var(--fold)) 0, 100% var(--fold), 100% 100%, var(--fold) 100%, 0 calc(100% - var(--fold)));
+  background: rgba(255,255,255,.015);
+}
+.row { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.6fr) 7rem 6rem; align-items: center; gap: 1rem; padding: 0.7rem 1rem; }
+.row + .row { border-top: 1px solid var(--line); }
+.row.head { font: 400 0.75rem/1 var(--menu); letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); padding-block: 0.6rem; background: rgba(255,255,255,.04); }
+.row:not(.head):hover { background: rgba(255,255,255,.035); }
+.name b { display: block; font: 600 1.15rem/1.2 var(--menu); letter-spacing: 0.02em; }
+.name small { color: var(--dim); font-size: 0.85rem; }
+.map { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+.map img { width: 96px; height: 72px; object-fit: cover; border: 1px solid var(--line); flex: none; background: #111; }
+.map i { font: normal 400 0.95rem/1 var(--mono); color: var(--dim); overflow: hidden; text-overflow: ellipsis; }
+.players { font: 400 0.95rem/1.2 var(--mono); color: var(--dim); }
+.players.on { color: var(--ink); }
+.join {
+  font: 500 1rem/1 var(--menu); letter-spacing: 0.08em; text-transform: uppercase; color: #000; background: var(--ink);
+  border: 0; padding: 0.7rem 1.1rem; cursor: pointer; width: 100%;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+  transition: background-color .15s;
+}
+.join:hover { background: #fff; }
+.join:active { transform: translateY(1px); }
+.note { margin: 0.9rem 0 0; color: var(--dim); font-size: 0.92rem; max-width: 42rem; }
+
+/* teams */
+.teams { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.5rem; }
+.teams .frame-title, .teams .keys { grid-column: 1 / -1; }
+.team { padding-left: 1rem; border-left: 2px solid var(--alien); }
+.team.human { border-left-color: var(--human); }
+.team h3 { margin: 0 0 0.4rem; font: 600 1.3rem/1 var(--menu); letter-spacing: 0.06em; text-transform: uppercase; }
+.team.alien h3 { color: var(--alien); }
+.team.human h3 { color: var(--human); }
+.team p { margin: 0; color: #c4c4bd; }
+.keys { margin: 2rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.4rem 2rem; }
+.keys div { display: flex; gap: 0.9rem; align-items: baseline; border-bottom: 1px dotted var(--line); padding-block: 0.35rem; }
+.keys dt { font: 500 0.85rem/1 var(--mono); color: var(--green); min-width: 5.5rem; }
+.keys dd { margin: 0; color: var(--dim); font-size: 0.92rem; }
+
+/* faq */
+.faq { max-width: 44rem; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; padding: 0.85rem 0; font: 500 1.08rem/1.3 var(--menu); letter-spacing: 0.02em; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--mono); color: var(--dim); }
+.faq details[open] summary::after { content: "–"; }
+.faq p { margin: 0 0 1rem; color: #c4c4bd; }
+
+.foot { max-width: 64rem; margin: 0 auto; padding: 1.5rem var(--gutter) 2.5rem; border-top: 1px solid var(--line); font: 400 0.8rem/1.6 var(--menu); color: var(--dim); letter-spacing: 0.02em; }
+.foot p { margin: 0.2rem 0; }
+.foot a { color: var(--dim); }
+.noscript { position: fixed; inset: auto 1rem 1rem; padding: 1rem; background: #300; }
+
+@media (max-width: 44rem) {
+  .row { grid-template-columns: 1fr auto; grid-template-areas: "name join" "map players"; gap: 0.6rem 1rem; }
+  .row.head { display: none; }
+  .row > .name { grid-area: name; }
+  .row > .map { grid-area: map; }
+  .row > .players { grid-area: players; text-align: right; }
+  .row > span:last-child { grid-area: join; }
+  .map img { width: 72px; height: 54px; }
+  .teams { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+.touch-hint { display: none; grid-column: 1 / -1; margin: 0; color: var(--dim); }
+.touch-hint b { color: var(--ink); font-weight: 600; }
+@media (pointer: coarse) {
+  .touch-hint { display: block; }
+  .keys { display: none; }
+}
+
+.callsign { display: flex; align-items: center; gap: .75rem; margin: 1.25rem 0 0; font: 600 .8rem/1 var(--menu);
+  letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.callsign input { flex: 0 1 14rem; min-width: 0; height: 2.5rem; padding: 0 .75rem; border: 1px solid var(--line-strong);
+  border-radius: 0; background: #000; color: var(--ink); font: 400 1rem/1 var(--mono); letter-spacing: 0; text-transform: none; }
+.callsign input:focus { outline: none; border-color: var(--green); }
+
+/* ---------- in-game layer ---------- */
+.game { position: fixed; inset: 0; z-index: 50; background: #000; touch-action: none; }
+.game[hidden] { display: none; }
+#viewport-frame { position: absolute; inset: 0; overflow: hidden; }
+#viewport-frame canvas { display: block; width: 100% !important; height: 100% !important; } /* engine sets px sizes inline */
+#viewport-frame:focus { outline: none; }
+
+/* Engine overlays. tremulous.js injects these rules as an inline <style>, which our CSP
+   blocks, so they live here. The QuakeJS demo EULA never applies to Tremulous. */
+#eula-frame { display: none !important; }
+#dialog, #loading { display: none; position: absolute; }
+#dialog { top: 50%; left: 50%; width: min(24em, calc(100% - 32px)); transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, .85); border: 1px solid var(--green); z-index: 2; }
+#dialog .title { margin: 0; padding: .3em .6em; color: var(--green); font: 600 1rem var(--menu);
+  letter-spacing: .12em; text-transform: uppercase; }
+#dialog .description { margin: 0; padding: .6em; color: #ddd; }
+#loading { inset: 0; z-index: 1; }
+#loading-progress { position: absolute; top: 50%; left: 50%; width: min(24em, calc(100% - 32px));
+  transform: translate(-50%, -50%); padding: .4em; background: rgba(0, 0, 0, .7); }
+#loading-progress .description { text-align: center; color: #fff; text-transform: uppercase; letter-spacing: .1em; }
+#loading-progress .bar-wrapper { background: #222; }
+#loading-progress .bar { width: 0; height: 4px; background: var(--green); }
+
+.splash { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; background: #000; transition: opacity .5s ease, visibility .5s; }
+.splash.done { opacity: 0; visibility: hidden; }
+.splash-inner { width: min(30rem, 88vw); text-align: center; }
+.splash-inner img { width: 100%; height: auto; mix-blend-mode: screen; filter: brightness(3.2) contrast(1.5) saturate(1.2); }
+.presented-by { margin: 1.5rem 0 1.75rem; font: 400 0.8rem/1 var(--mono); letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); }
+.presented-by b { color: var(--wn); font-weight: 500; }
+.bar { height: 2px; background: #1a1a18; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 4%; background: var(--green); transition: width .3s ease; }
+.msg { margin: 0.8rem 0 0; font: 400 0.78rem/1.4 var(--mono); color: var(--faint); min-height: 1.2em; }
+
+.exit {
+  position: absolute; top: max(0.5rem, env(safe-area-inset-top)); right: max(0.5rem, env(safe-area-inset-right)); z-index: 4;
+  width: 2rem; height: 2rem; border: 1px solid var(--line); background: rgba(0,0,0,.5); color: var(--dim);
+  font: 400 1.1rem/1 var(--mono); cursor: pointer; opacity: .5;
+}
+.exit:hover { opacity: 1; color: var(--ink); }
+/* PC: mouse look without pointer lock stops at the window edge (play.js keepPointerLock) */
+.lock-hint {
+  position: absolute; left: 50%; top: 40%; transform: translateX(-50%); z-index: 3; pointer-events: none;
+  padding: .45rem .9rem; border: 1px solid var(--line); background: rgba(0,0,0,.6); color: var(--ink);
+  font: 400 .78rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+}
+.lock-hint[hidden] { display: none; }
+.controls { right: calc(max(0.5rem, env(safe-area-inset-right)) + 2.5rem); font-size: 1rem; }
+.fs { right: calc(max(0.5rem, env(safe-area-inset-right)) + 5rem); font-size: 1rem; }
+.controls[hidden] + .fs { right: calc(max(0.5rem, env(safe-area-inset-right)) + 2.5rem); }
+/* touch draws its own top bar: the page's corner buttons stay out of its way */
+#game.touch-on .fs { display: none; }
+
+/* ---------- touch controls (touch.js) ----------
+   Same language as the game menus: black glass, thin frames, folded corners,
+   condensed caps. Big targets for thumbs, nothing in the middle of the view. */
+.touch { position: absolute; inset: 0; z-index: 2; touch-action: none; user-select: none;
+  -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+.touch[hidden] { display: none; }
+.touch[data-mode="menu"] > * { display: none; }   /* menus: the whole layer acts as a mouse */
+.t-zone { position: absolute; top: 0; bottom: 0; }
+.t-move { left: 0; width: 45%; }
+.t-look { right: 0; width: 55%; }
+.t-stick { position: absolute; left: max(110px, 17%); top: 68%; width: 124px; height: 124px; margin: -62px 0 0 -62px; border-radius: 50%;
+  border: 1px solid var(--line-strong); background: rgba(0, 0, 0, .25); opacity: .28; transition: opacity .12s; pointer-events: none; }
+.t-stick.on { opacity: 1; }
+.t-stick b { position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%;
+  background: rgba(63, 179, 79, .35); border: 1px solid var(--green); }
+.touch button {
+  position: absolute; display: grid; place-items: center; padding: 0; border: 1px solid var(--line-strong);
+  background: rgba(0, 0, 0, .38); color: var(--ink); font: 600 .72rem/1 var(--menu); letter-spacing: .1em;
+  text-transform: uppercase; opacity: .78;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
+}
+.touch .t-fire { border-color: rgba(63, 179, 79, .75); }
+.touch button.down { background: rgba(63, 179, 79, .45); border-color: var(--green); opacity: 1; }
+.t-top { position: absolute; top: max(.5rem, env(safe-area-inset-top)); left: max(.5rem, env(safe-area-inset-left));
+  display: flex; gap: .4rem; }
+.t-top button { position: static; height: 34px; padding: 0 .7rem; font-size: .66rem; }
+/* right thumb cluster; sizes follow the short screen side. The containers let touches
+   through (pointer-events: none), so the gaps between buttons aim like the open view. */
+.t-pad { --u: clamp(46px, 15vmin, 72px); position: absolute; pointer-events: none;
+  right: max(.75rem, env(safe-area-inset-right)); bottom: max(.75rem, env(safe-area-inset-bottom));
+  width: calc(var(--u) * 4.1); height: calc(var(--u) * 3.1); }
+.t-pad button { pointer-events: auto; }
+/* combat: fire in the thumb's resting spot, jump and alt one short reach away */
+.t-fire   { right: calc(var(--u) * .1); bottom: calc(var(--u) * .45); width: calc(var(--u) * 1.5); height: calc(var(--u) * 1.5); font-size: .85rem; }
+.t-jump   { right: calc(var(--u) * 1.8); bottom: 0; width: calc(var(--u) * 1.1); height: calc(var(--u) * 1.1); }
+.t-alt    { right: calc(var(--u) * .35); bottom: calc(var(--u) * 2.15); width: var(--u); height: calc(var(--u) * .85); }
+.t-reload, .t-third { right: calc(var(--u) * 1.85); bottom: calc(var(--u) * 1.35); width: calc(var(--u) * .9); height: calc(var(--u) * .72); font-size: .62rem; }
+.t-crouch { right: calc(var(--u) * 3.1); bottom: 0; width: calc(var(--u) * .95); height: calc(var(--u) * .8); }
+/* rail on the right edge above the cluster: use/evolve, weapon and the contextual
+   actions; fills upwards and wraps into a second column on short screens */
+.t-rail { position: absolute; right: 0; bottom: calc(var(--u) * 3.15); pointer-events: none;
+  height: calc(100dvh - var(--u) * 3.15 - max(.75rem, env(safe-area-inset-bottom)) - max(.5rem, env(safe-area-inset-top)) - 52px);
+  display: flex; flex-flow: column-reverse wrap-reverse; align-content: flex-start; gap: .35rem; }
+.touch .t-rail button { position: static; width: calc(var(--u) * 1.05); height: calc(var(--u) * .66); font-size: .6rem; opacity: .7; }
+
+/* team and spawn picker (touch.js), drawn over the game while spectating or dead */
+.touch[data-picking] .t-pad, .touch[data-picking] .t-zone { display: none; }
+.t-pick { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: .8rem;
+  padding: 1rem; background: rgba(0, 0, 0, .55); }
+.t-pick[hidden] { display: none; }
+.t-pick-title { margin: 0; font: 600 clamp(1rem, 4.2vmin, 1.4rem)/1 var(--menu); letter-spacing: .18em;
+  text-transform: uppercase; color: var(--ink); text-shadow: 0 1px 3px #000; }
+.t-pick-row { display: flex; gap: clamp(.6rem, 3vmin, 1.2rem); }
+.t-pick-alt { display: flex; }
+.touch .t-pick button { position: static; display: flex; flex-direction: column; justify-content: center; gap: .45rem;
+  width: clamp(150px, 34vmin, 240px); min-height: clamp(84px, 24vmin, 130px); padding: .8rem; opacity: 1;
+  background: rgba(0, 0, 0, .72); font-size: clamp(1rem, 4.4vmin, 1.35rem); }
+.touch .t-pick button small { font: 400 clamp(.7rem, 2.8vmin, .85rem)/1.3 var(--text); letter-spacing: 0; text-transform: none; color: #c9c9c2; }
+.touch .t-pick .p-alien { border-color: rgba(200, 60, 40, .8); }
+.touch .t-pick .p-human { border-color: rgba(70, 140, 220, .8); }
+.touch .t-pick .p-small { width: auto; min-height: 0; padding: .55rem 1.2rem; font-size: .75rem; }
+
+/* ---------- touch extras (touch.js): pad size, toggles, sprint, settings sheet
+   --t-scale is set on #touch from the S/M/L setting. */
+.t-pad { --u: calc(clamp(46px, 15vmin, 72px) * var(--t-scale, 1)); }
+.touch button.on { border-color: var(--green); color: var(--green); opacity: 1; }
+.t-top .t-cog { width: 38px; padding: 0; }
+.t-top .t-cog svg { display: block; }
+.t-stick em { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); display: none;
+  padding: .3rem .55rem; border: 1px solid var(--green); background: rgba(0, 0, 0, .65); color: var(--green);
+  font: 600 .62rem/1 var(--menu); font-style: normal; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px)); }
+.t-stick.sprint { border-color: var(--green); }
+.t-stick.sprint b { background: rgba(63, 179, 79, .6); }
+.t-stick.sprint em { display: block; }
+.t-sheet { position: absolute; z-index: 3; top: calc(max(.5rem, env(safe-area-inset-top)) + 42px); left: max(.5rem, env(safe-area-inset-left));
+  display: grid; gap: .5rem; width: min(300px, calc(100% - 1rem)); max-height: calc(100% - 60px); overflow: auto;
+  padding: .8rem .9rem .9rem; border: 1px solid var(--line-strong); background: rgba(0, 0, 0, .82);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
+.t-sheet[hidden] { display: none; }
+.t-sheet-title { margin: 0 0 .2rem; font: 600 .8rem/1 var(--menu); letter-spacing: .22em; text-transform: uppercase; color: var(--ink); }
+.t-row { display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  font: 600 .66rem/1 var(--menu); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.t-seg { display: flex; align-items: center; gap: .3rem; }
+.t-val { min-width: 2.6em; text-align: center; color: var(--ink); }
+.touch .t-sheet button { position: static; min-width: 40px; height: 34px; padding: 0 .6rem; font-size: .66rem; opacity: 1; }
+.touch .t-sheet button.on { background: rgba(63, 179, 79, .18); }
+.touch .t-sheet .t-sheet-done { justify-self: end; margin-top: .2rem; padding: 0 1.1rem; }
+
+/* left fire button: up in the top-left corner, out of the stick's way - the left thumb
+   reaches it on purpose but never lands on it while steering */
+.t-lfire { --u: calc(clamp(46px, 15vmin, 72px) * var(--t-scale, 1));
+  left: max(.9rem, env(safe-area-inset-left)); top: calc(max(.5rem, env(safe-area-inset-top)) + 9%);
+  width: calc(var(--u) * 1.05); height: calc(var(--u) * 1.05); font-size: .7rem; }
+.touch[data-picking] .t-lfire, .touch .t-lfire[hidden] { display: none; }
+/* auto fire is shooting */
+.touch .t-fire.auto { border-color: #e2493a; color: #ff8a7a; opacity: 1; box-shadow: 0 0 14px rgba(226, 73, 58, .45) inset; }
+
+/* top bar centred: the engine prints kill and chat lines top left, fps/clock top right */
+.t-top { left: 50%; transform: translateX(-50%); }
+.touch:not([data-team="2"]) .t-h { display: none; }
+/* build picker: a grid of structures, cost under the name; the game stays visible above */
+.t-pick.t-pick-build .t-pick-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(.4rem, 1.8vmin, .7rem);
+  width: min(720px, calc(100vw - 2rem)); }
+.touch .t-pick.t-pick-build .t-pick-row button { width: auto; min-height: clamp(64px, 17vmin, 96px); padding: .55rem .4rem;
+  font-size: clamp(.8rem, 3.4vmin, 1.05rem); gap: .3rem; }
+.touch .t-pick.t-pick-build .p-low { opacity: .5; }
+@media (orientation: portrait) { .t-pick.t-pick-build .t-pick-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* blueprint in hand: Fire becomes Place, green once the spot is valid */
+.touch .t-pad .t-fire.place, .touch .t-lfire.place { border-color: #d9a43a; color: #ffd27a; opacity: 1; }
+.touch .t-pad .t-fire.place.ok, .touch .t-lfire.place.ok { border-color: var(--green); color: var(--green);
+  box-shadow: 0 0 14px rgba(63, 179, 79, .45) inset; }
+.t-hint { position: absolute; left: 50%; bottom: calc(max(.6rem, env(safe-area-inset-bottom)) + 4px); transform: translateX(-50%);
+  padding: .4rem .8rem; border: 1px solid #d9a43a; background: rgba(0, 0, 0, .7); color: #ffd27a; pointer-events: none;
+  font: 600 .7rem/1 var(--menu); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.t-hint.ok { border-color: var(--green); color: var(--green); }
+.t-hint[hidden] { display: none; }
+.touch .t-pad button[hidden] { display: none; }
+/* running vote */
+.t-vote { position: absolute; top: calc(max(.5rem, env(safe-area-inset-top)) + 44px); left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: .4rem; padding: .35rem .5rem .35rem .8rem;
+  border: 1px solid var(--line-strong); background: rgba(0, 0, 0, .72);
+  font: 600 .66rem/1 var(--menu); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); }
+.t-vote[hidden] { display: none; }
+.touch .t-vote button { position: static; height: 34px; min-width: 52px; font-size: .66rem; opacity: 1; }
+/* waiting in the spawn queue / respawning: a small banner, the game stays visible */
+.t-pick.t-pick-mini { inset: auto 0 auto 0; top: calc(max(.5rem, env(safe-area-inset-top)) + 48px);
+  background: none; gap: .5rem; padding: 0; pointer-events: none; }
+.t-pick.t-pick-mini .t-pick-title { font-size: .85rem; }
+.t-pick.t-pick-mini .t-pick-row { display: none; }
+.t-pick.t-pick-mini button { pointer-events: auto; }
+/* chat line with the device keyboard */
+.t-chat { position: absolute; z-index: 4; left: 50%; top: calc(max(.5rem, env(safe-area-inset-top)) + 44px); transform: translateX(-50%);
+  display: flex; gap: .35rem; width: min(560px, calc(100% - 1rem)); padding: .4rem;
+  border: 1px solid var(--line-strong); background: rgba(0, 0, 0, .85); }
+.t-chat[hidden] { display: none; }
+.t-chat input { flex: 1; min-width: 0; height: 38px; padding: 0 .6rem; border: 1px solid var(--line); background: #0b0b0a;
+  color: var(--ink); font: 400 16px/1 var(--text); /* 16px: iOS does not zoom the page */ }
+.touch .t-chat button { position: static; height: 38px; min-width: 52px; padding: 0 .6rem; font-size: .66rem; opacity: 1; }
+
+/* phones held upright: the game needs landscape */
+.rotate { position: absolute; inset: 0; z-index: 5; display: none; place-items: center; padding: 2rem; background: #000;
+  text-align: center; font: 600 1rem/1.5 var(--menu); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.rotate b { display: block; margin-bottom: .75rem; color: var(--green); font-size: 2.2rem; letter-spacing: 0; }
+@media (orientation: portrait) and (pointer: coarse) { .game.touch-on .rotate { display: grid; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* ---------- settings panel (settings.js) ----------
+   PC controls overlay: same language as the in-game menus – black glass,
+   thin frames, folded corners, condensed caps, green for "live" state. */
+/* in-game brightness (settings.js): a gamma curve on the finished picture */
+.om-bright #game canvas { filter: url(#om-gamma); }
+.om-set { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px;
+  background: rgba(0, 0, 0, .62); font: 400 .95rem/1.4 var(--text); color: var(--ink); }
+.om-set-box { width: min(60rem, 100%); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+  display: flex; flex-direction: column; background: rgba(0, 0, 0, .9); border: 1px solid var(--line-strong);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); }
+.om-set-head { display: flex; align-items: center; gap: 1rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); }
+.om-set-title { margin: 0; flex: 1; font: 400 1.5rem/1 var(--menu); letter-spacing: .08em; text-transform: uppercase; color: var(--green); }
+.om-set-x { width: 2rem; height: 2rem; border: 1px solid var(--line); background: none; color: var(--dim);
+  font: 400 1.1rem/1 var(--mono); cursor: pointer; }
+.om-set-x:hover { color: var(--ink); border-color: var(--line-strong); }
+.om-set-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: .4rem 1.1rem 1rem;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr)); gap: 0 2rem; align-content: start; }
+.om-set-sec { min-width: 0; }
+.om-set-mouse { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 2rem; }
+.om-set-mouse .om-set-h { flex-basis: 100%; }
+.om-set-h { margin: .9rem 0 .4rem; display: flex; align-items: center; gap: .8rem; font: 400 .78rem/1 var(--menu);
+  letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+.om-set-h::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.om-set-field { display: flex; align-items: center; gap: .8rem; flex: 1 1 18rem; }
+.om-set-field label, .om-set-check label { font: 500 .95rem/1.2 var(--menu); letter-spacing: .04em; cursor: pointer; }
+.om-set-field input[type="range"] { flex: 1; min-width: 6rem; accent-color: var(--green); }
+.om-set-val { min-width: 2.6rem; text-align: right; font: 400 .9rem/1 var(--mono); color: var(--green); }
+.om-set-check { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .55rem; }
+.om-set-check input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--green); cursor: pointer; }
+.om-set-note { flex-basis: 100%; padding-left: 1.55rem; font-size: .78rem; color: var(--dim); }
+.om-set-list { list-style: none; margin: 0; padding: 0; }
+.om-set-row { display: grid; grid-template-columns: minmax(0, 1fr) 6.6rem 6.6rem 1.9rem; align-items: center; gap: .35rem;
+  padding: .22rem 0; border-bottom: 1px dotted var(--line); }
+.om-set-row:hover { background: rgba(255, 255, 255, .03); }
+.om-set-name { font: 500 .98rem/1.2 var(--menu); letter-spacing: .03em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.om-set-key { height: 1.9rem; padding: 0 .4rem; border: 1px solid var(--line-strong); background: rgba(255, 255, 255, .03);
+  color: var(--ink); font: 500 .8rem/1 var(--menu); letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px)); }
+.om-set-key:hover { border-color: var(--ink); background: rgba(255, 255, 255, .07); }
+.om-set-key.empty { color: var(--faint); }
+.om-set-key.listening { border-color: var(--green); color: var(--green); background: rgba(63, 179, 79, .14); }
+.om-set-clr { height: 1.9rem; border: 0; background: none; color: var(--faint); font: 400 1rem/1 var(--mono); cursor: pointer; }
+.om-set-clr:hover { color: var(--alien); }
+.om-set-foot { display: flex; align-items: center; gap: .75rem; padding: .75rem 1.1rem; border-top: 1px solid var(--line); }
+.om-set-status { flex: 1; min-width: 0; margin: 0; font: 400 .8rem/1.3 var(--mono); color: var(--dim); }
+.om-set-btn { font: 500 .95rem/1 var(--menu); letter-spacing: .08em; text-transform: uppercase; color: #000; background: var(--ink);
+  border: 1px solid var(--ink); padding: .65rem 1.2rem; cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px)); }
+.om-set-btn:hover { background: #fff; }
+.om-set-btn.ghost { background: none; color: var(--ink); border-color: var(--line-strong); }
+.om-set-btn.ghost:hover { border-color: var(--ink); background: rgba(255, 255, 255, .06); }
+.om-set :focus-visible { outline: 1px solid var(--green); outline-offset: 2px; }
+@media (max-width: 34rem) {
+  .om-set-body { grid-template-columns: 1fr; }
+  .om-set-row { grid-template-columns: minmax(0, 1fr) 5.2rem 5.2rem 1.6rem; }
+  .om-set-foot { flex-wrap: wrap; }
+  .om-set-status { flex-basis: 100%; }
+}.om-set-key:focus-visible, .om-set-btn:focus-visible { outline: none; border-color: var(--green); box-shadow: inset 0 0 0 1px var(--green); }

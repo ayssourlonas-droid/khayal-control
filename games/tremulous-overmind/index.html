@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:tremulous-overmind:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Play Tremulous Online – free in your browser | Tremulous Overmind</title>
+<meta name="description" content="Play Tremulous free in your browser. No download, no account. Aliens vs humans, base building, evolving classes. Two public servers, PC, tablet and phone. Presented by WebNova360.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tremulous">
+<link rel="canonical" href="https://webnova360.com%BASE%">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tremulous – play it in your browser">
+<meta property="og:description" content="Aliens vs humans. Build, evolve, hold the base. Free, no download. Presented by WebNova360.com">
+<meta property="og:image" content="https://webnova360.com%BASE%img/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="%BASE%img/icons/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="%BASE%img/icons/apple-touch-icon.png">
+<link rel="manifest" href="%BASE%site.webmanifest">
+<link rel="preload" href="%BASE%img/hero.jpg" as="image">
+<link rel="stylesheet" href="%BASE%style.css?v=%SHELL_VER%">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Tremulous Overmind","alternateName":"Tremulous Browser Edition","description":"Free browser version of Tremulous, the team-based aliens versus humans first person shooter with real-time strategy elements.","genre":["First-person shooter","Real-time strategy"],"gamePlatform":["Web browser","PC","Tablet","Mobile"],"playMode":["MultiPlayer"],"applicationCategory":"Game","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"publisher":{"@type":"Organization","name":"WebNova360","url":"https://webnova360.com"}}
+</script>
+</head>
+<body>
+
+<!-- the first screen mirrors the in-game main menu -->
+<header class="menu-screen">
+  <a class="presented" href="https://webnova360.com/?ref=tremulous" rel="noopener">
+    <small>Presented by</small>
+    <span><b>WebNova360</b>.com</span>
+  </a>
+
+  <nav class="mainmenu" aria-label="Main menu">
+    <button type="button" data-server="1">Play</button>
+    <a href="#servers">Servers</a>
+    <a href="#howto">How to play</a>
+    <a href="https://github.com/fiveworld-development/tremulous-overmind" rel="noopener">Source</a>
+  </nav>
+
+  <div class="title">
+    <h1><img src="%BASE%img/title.jpg" width="480" height="90" alt="Tremulous"></h1>
+    <p class="sub">The aliens-vs-humans shooter from 2006.<br>Now in your browser, on every screen.</p>
+    <div class="cta">
+      <button type="button" class="join cta-play" data-server="1">Play now</button>
+      <button type="button" class="install" id="install" hidden>Install app</button>
+      <p class="ios-hint" id="ios-hint" hidden>Tap <b>Share</b> <span aria-hidden="true">⎙</span> and then <b>Add to Home Screen</b>. Tremulous then opens in full screen, without the browser bars.</p>
+      <a class="cue" href="#servers">Servers &amp; how to play<span aria-hidden="true">▾</span></a>
+    </div>
+  </div>
+
+  <p class="credits">
+    Copyright (C) 2015-2019 GrangerHub · Copyright (C) 2005-2009 darklegion development<br>
+    Web Edition by greekman99 (Justin Luong) and Auriga (Alexander) · Browser Edition presented by WebNova360.com
+  </p>
+</header>
+
+<main>
+  <section id="servers" class="block">
+    <h2 class="frame-title">Servers</h2>
+    <div class="browser" role="table" aria-label="Server list">
+      <div class="row head" role="row">
+        <span role="columnheader">Server</span>
+        <span role="columnheader">Map</span>
+        <span role="columnheader">Players</span>
+        <span role="columnheader" class="sr-only">Join</span>
+      </div>
+      <div class="row" role="row" data-row="1">
+        <span role="cell" class="name"><b>Overmind Arena</b><small>20 vs 20 · long games, big bases</small></span>
+        <span role="cell" class="map"><img data-map="1" src="%BASE%img/maps/atcs.jpg" width="96" height="72" alt="" loading="lazy"><i data-mapname="1">atcs</i></span>
+        <span role="cell" class="players" data-status="1">–</span>
+        <span role="cell"><button type="button" class="join" data-server="1">Join</button></span>
+      </div>
+      <div class="row" role="row" data-row="2">
+        <span role="cell" class="name"><b>Reactor Skirmish</b><small>10 vs 10 · 25 minute rounds</small></span>
+        <span role="cell" class="map"><img data-map="2" src="%BASE%img/maps/niveus.jpg" width="96" height="72" alt="" loading="lazy"><i data-mapname="2">niveus</i></span>
+        <span role="cell" class="players" data-status="2">–</span>
+        <span role="cell"><button type="button" class="join" data-server="2">Join</button></span>
+      </div>
+    </div>
+    <label class="callsign">Your name
+      <input id="callsign" type="text" maxlength="20" autocomplete="nickname" autocapitalize="off" spellcheck="false" placeholder="Player">
+    </label>
+    <p class="note">Bring a friend: share the link and join the same server.</p>
+  </section>
+
+  <section id="howto" class="block teams">
+    <h2 class="frame-title">How to play</h2>
+    <div class="team alien">
+      <h3>Aliens</h3>
+      <p>Start as a dretch, the smallest alien. Kill humans to earn evos, then evolve: basilisk, marauder, dragoon, up to the tyrant. Builders grow the base around the Overmind – without it, nothing new spawns.</p>
+    </div>
+    <div class="team human">
+      <h3>Humans</h3>
+      <p>Spawn with a rifle and a construction kit. Credits from kills buy shotguns, lasguns, flamers, armour and jetpacks at the armoury. The Reactor powers everything; turrets and medistations keep the base alive.</p>
+    </div>
+    <p class="touch-hint">On touch: your left thumb walks, your right thumb looks around. Hold <b>Fire</b> and slide to aim while shooting. <b>Use</b> evolves, builds and opens the armoury. Tap <b>Look</b> to change the aim speed. Best in landscape – add the page to your home screen for full screen.</p>
+    <dl class="keys">
+      <div><dt>W A S D</dt><dd>move</dd></div>
+      <div><dt>Mouse</dt><dd>aim · left fire · right secondary</dd></div>
+      <div><dt>Space / C</dt><dd>jump / crouch</dd></div>
+      <div><dt>Enter</dt><dd>use: armoury, evolve, build</dd></div>
+      <div><dt>R · B · M</dt><dd>reload · buy ammo · medkit</dd></div>
+      <div><dt>E</dt><dd>deconstruct a building</dd></div>
+      <div><dt>T</dt><dd>chat</dd></div>
+      <div><dt>Esc</dt><dd>menu</dd></div>
+    </dl>
+  </section>
+
+  <section class="block faq">
+    <h2 class="frame-title">Questions</h2>
+    <details><summary>Is it free?</summary><p>Yes. Tremulous is free and open source, and so is this edition. No ads in the game, no account.</p></details>
+    <details><summary>Does it work on my phone?</summary><p>Yes. On phones and tablets you get on-screen controls made for thumbs, in Chrome, Safari or Firefox. Turn the device sideways; on iPhone, adding the page to the home screen gives you full screen. The first start loads about 250&nbsp;MB of game data, after that it comes from the browser cache.</p></details>
+    <details><summary>Can I play with friends on the original game?</summary><p>Browsers can't open the UDP connections the desktop game uses, so these servers are web-only. Everyone just opens this page.</p></details>
+    <details><summary>Is there always a match?</summary><p>Yes. When a server is short of people, AI players take the free seats so every round is a full one, and they step aside as more players join.</p></details>
+    <details><summary>Who is behind this?</summary><p>Tremulous was made by Dark Legion Development and kept alive by GrangerHub. Justin Luong and Auriga ported it to the web. <a href="https://webnova360.com/?ref=tremulous" rel="noopener">WebNova360</a> runs these servers, the AI players and the fixes. Everything is on GitHub.</p></details>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Game data <a href="https://creativecommons.org/licenses/by-sa/2.5/" rel="noopener">CC BY-SA 2.5</a> · Code GPL · <a href="https://github.com/fiveworld-development/tremulous-overmind" rel="noopener">github.com/fiveworld-development/tremulous-overmind</a></p>
+  <p><a href="https://webnova360.com/?ref=tremulous" rel="noopener">WebNova360.com</a> builds software and automation for EU teams.</p>
+</footer>
+
+<div id="game" class="game" hidden>
+  <div id="viewport-frame"></div>
+  <div id="splash" class="splash">
+    <div class="splash-inner">
+      <img src="%BASE%img/title.jpg" width="480" height="90" alt="Tremulous">
+      <p class="presented-by">presented by <b>WebNova360</b>.com</p>
+      <div class="bar"><i id="bar"></i></div>
+      <p id="splash-msg" class="msg">Loading game…</p>
+    </div>
+  </div>
+  <div id="touch" class="touch" hidden></div>
+  <div class="rotate" role="status"><p><b>⟳</b>Turn your device sideways</p></div>
+  <button id="exit" class="exit" type="button" aria-label="Leave game" title="Leave game">×</button>
+  <button id="controls" class="exit controls" type="button" aria-label="Controls and key bindings" title="Controls (F10)" hidden>⚙</button>
+  <button id="fullscreen" class="exit fs" type="button" aria-label="Toggle fullscreen" title="Fullscreen" hidden>⛶</button>
+</div>
+
+<noscript><p class="noscript">Tremulous needs JavaScript and WebGL 2.</p></noscript>
+<script src="%BASE%perf.js?v=%SHELL_VER%" defer></script>
+<script src="%BASE%settings.js?v=%SHELL_VER%" defer></script>
+<script src="%BASE%touch.js?v=%SHELL_VER%" defer></script>
+<script src="%BASE%play.js?v=%SHELL_VER%" defer></script>
+</body>
+</html>

@@ -806,5 +806,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Two-finger tap**                 | Pauses and opens the Options page: music, fullscreen, help, and quit to the menu. On the intro it offers  | README.md: O**                              | On the intro, the Options page, as does the Options link at the foot of the intro: music, fullscreen, cap"
+  },
+  {
+    "key": "tremulousovermind",
+    "size": 3640,
+    "repo": "fiveworld-development/tremulous-overmind",
+    "id": 55,
+    "slug": "tremulous-overmind",
+    "title": "Tremulous Overmind",
+    "developer": "fiveworld-development",
+    "license": "GPL-3.0",
+    "source": "https://github.com/fiveworld-development/tremulous-overmind",
+    "commit": "f4bb9c57b88683f62971da4af8f92f90c70d8627",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: CREDITS.md: Game data** – Tremulous artists and mappers, CC BY-SA 2.5. Maps in rotation: ATCS, Niveus, Karith, Nexus 6, Uncreation, Transit, Tremor (Dar | README.md: <img src=\"https://img.shields.io/badge/license-GPL%20%2F%20CC%20BY--SA-4b5563?labelColor=1a1d21\" alt=\"GPL / CC BY-SA\">"
   }
 ]

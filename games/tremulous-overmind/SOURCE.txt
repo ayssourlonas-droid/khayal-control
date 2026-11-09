@@ -1,0 +1,15 @@
+Source: https://github.com/fiveworld-development/tremulous-overmind
+Commit: f4bb9c57b88683f62971da4af8f92f90c70d8627
+License: GPL-3.0
+Imported: 2026-11-09T10:00:00.841575+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- CREDITS.md: Game data** – Tremulous artists and mappers, CC BY-SA 2.5. Maps in rotation: ATCS, Niveus, Karith, Nexus 6, Uncreation, Transit, Tremor (Dar
+- README.md: <img src="https://img.shields.io/badge/license-GPL%20%2F%20CC%20BY--SA-4b5563?labelColor=1a1d21" alt="GPL / CC BY-SA">
+- README.md: [Performance](#performance) · [Bots](#bots-that-play-like-a-team) · [Controls](#controls-touch-and-pc) · [Self-healing ops](#self-healing-se
+- README.md: The armoury works like the 1.3 menus.** Buying a weapon or upgrade sells whatever blocks its slot and credits you for it. You no longer see 
+- README.md: The full list is in [CREDITS.md](CREDITS.md).
+- README.md: Game data** is [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5/). The branding pak and the artwork derived from it keep that l
+- LICENSE: alternative is allowed only occasionally and noncommercially, and
+- images: 16, audio: 0, tagged audio: 0

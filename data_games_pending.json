@@ -1010,5 +1010,31 @@
       "type": "web",
       "category": "apache2-license"
     }
+  },
+  {
+    "id": 55,
+    "release_year": "2026",
+    "category_tags": [
+      "browser-game",
+      "emscripten",
+      "fps"
+    ],
+    "main_scene": {
+      "title_ar": "Tremulous Overmind",
+      "title_en": "Tremulous Overmind",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/tremulous-overmind/_cover.png"
+    },
+    "details_scene": {
+      "description": "Tremulous in your browser: aliens vs humans FPS with bots, on PC, tablet and phone. Presented by WebNova360.com",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/tremulous-overmind/",
+      "developer": "fiveworld-development",
+      "license": "GPL-3.0",
+      "source_url": "https://github.com/fiveworld-development/tremulous-overmind",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-game"
+    }
   }
 ]
