@@ -475,5 +475,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42610778424"
+  },
+  {
+    "url": "https://github.com/Sun0fABeach/vue-phaser3",
+    "repo": "Sun0fABeach/vue-phaser3",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42611144119"
   }
 ]
