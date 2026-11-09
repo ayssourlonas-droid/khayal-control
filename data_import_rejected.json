@@ -304,5 +304,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42599305281"
+  },
+  {
+    "url": "https://github.com/marvec/SynergyTower",
+    "repo": "marvec/SynergyTower",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 127)",
+    "license": "GPL-3.0",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42600055642"
   }
 ]
