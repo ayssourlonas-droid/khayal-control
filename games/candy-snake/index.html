@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:candy-snake:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Candy Snake</title>
+    <meta
+      name="description"
+      content="An arcade game where the snake is a pulled sugar strand: grow it, knead red, yellow and blue dye into it, and chop it into candies for the children at the window."
+    />
+    <!--
+      The card. Absolute URLs on purpose: Vite builds with a relative base so the
+      game can be served from a subpath, but a crawler resolves these against
+      nothing and needs the whole address.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Candy Snake" />
+    <meta
+      property="og:description"
+      content="Pull sugar · knead dye · chop candy. A snake made of candy, in the browser."
+    />
+    <meta property="og:url" content="https://williamchong.github.io/candy-snake/" />
+    <meta
+      property="og:image"
+      content="https://williamchong.github.io/candy-snake/social-card.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍬</text></svg>"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        /* Must match the Phaser backgroundColor. Scale.RESIZE leaves no
+           letterbox bars, but the page still shows through for the frame or two
+           before the canvas is sized. */
+        background: #d8cbe4;
+        overscroll-behavior: none;
+      }
+      /* The canvas fills this, and every scene lays itself out from its real
+         size (architecture §9) — so there is nothing left over to centre. */
+      #app {
+        height: 100%;
+      }
+      #app canvas {
+        touch-action: none;
+        /* A long press over a canvas raises iOS's Save Image sheet and starts a
+           selection on Android, either of which lands on top of a run in
+           progress — the same complaint as a page that scrolls under one, and
+           the same answer: while the game is being played, nothing but the game
+           moves. Unverifiable in headless Chromium (these are real-device
+           behaviours), which is why they are the standard properties rather
+           than anything clever. */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        /* Not decoration: an inline canvas sits on a text baseline, so the line
+           box leaves descender space under it and the page is four pixels
+           taller than the viewport. That is enough for an arrow key to scroll
+           the whole game a few pixels mid-run. `block` takes the canvas off the
+           baseline and the overflow with it. */
+        display: block;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-Rmgned_d.js"></script>
+  </head>
+  <body>
+    <!-- `main` rather than `div`: the canvas is the whole of the page's
+         content, so a screen reader landing here should be told so. Phaser
+         parents by id and does not care which element it is. -->
+    <main id="app"></main>
+  </body>
+</html>

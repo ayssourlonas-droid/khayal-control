@@ -956,5 +956,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
+  },
+  {
+    "key": "candysnake",
+    "size": 1128,
+    "repo": "williamchong/candy-snake",
+    "id": 65,
+    "slug": "candy-snake",
+    "title": "Candy Snake",
+    "developer": "williamchong",
+    "license": "GPL-3.0",
+    "source": "https://github.com/williamchong/candy-snake",
+    "commit": "271bda5c891f56f5768904e6565812dc5c77af8d",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: author attributions in that material or in the Appropriate Legal"
   }
 ]
