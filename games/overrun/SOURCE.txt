@@ -1,0 +1,14 @@
+Source: https://github.com/Mahdi-mortazavi/overrun
+Commit: 912dcf14854f9ea69022ceb7678af03a0dc6367c
+License: Apache-2.0
+Imported: 2026-11-09T00:06:56.365054+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 12, "عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 3, "تحسين وسائط صور": 6}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: a credit budget, a composition weighting that reacts to what the *group* has
+- README.md: │   │   ├── director.js        credit-budget wave composition
+- LICENSE: attribution notices from the Source form of the Work,
+- LICENSE: include a readable copy of the attribution notices contained
+- LICENSE: do not modify the License. You may add Your own attribution
+- LICENSE: that such additional attribution notices cannot be construed
+- images: 76, audio: 0, tagged audio: 0

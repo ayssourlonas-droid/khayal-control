@@ -646,5 +646,31 @@
       "type": "web",
       "category": "canvas-game"
     }
+  },
+  {
+    "id": 41,
+    "release_year": "2026",
+    "category_tags": [
+      "arena-shooter",
+      "browser-game",
+      "cloudflare-workers"
+    ],
+    "main_scene": {
+      "title_ar": "Overrun",
+      "title_en": "Overrun",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/overrun/_cover.png"
+    },
+    "details_scene": {
+      "description": "A browser arena shooter that installs like an app, plays offline, and takes eight people online. Co-op waves, 4v4 team deathmatch, 2v2v2v2 squad royale. Zero asset files.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/overrun/",
+      "developer": "Mahdi-mortazavi",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/Mahdi-mortazavi/overrun",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "arena-shooter"
+    }
   }
 ]

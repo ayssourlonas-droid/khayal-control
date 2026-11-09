@@ -596,5 +596,20 @@
     "date": "2026-11-08",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "overrun",
+    "size": 6857,
+    "repo": "Mahdi-mortazavi/overrun",
+    "id": 41,
+    "slug": "overrun",
+    "title": "Overrun",
+    "developer": "Mahdi-mortazavi",
+    "license": "Apache-2.0",
+    "source": "https://github.com/Mahdi-mortazavi/overrun",
+    "commit": "912dcf14854f9ea69022ceb7678af03a0dc6367c",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: a credit budget, a composition weighting that reacts to what the *group* has | README.md: │   │   ├── director.js        credit-budget wave composition"
   }
 ]
