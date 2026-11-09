@@ -268,5 +268,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42596534335"
+  },
+  {
+    "url": "https://github.com/meuse24/DinoRun",
+    "repo": "meuse24/DinoRun",
+    "reason": "لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. جرّب إدخال subdir أو build_cmd",
+    "license": "BSD-3-Clause",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42596720709"
   }
 ]
