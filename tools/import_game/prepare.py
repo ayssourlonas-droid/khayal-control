@@ -1251,6 +1251,23 @@ def main():
         report["warnings"] = warnings
         report["notes"] = notes
         (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        if status != "fail":
+            # ملاحظات الاستيراد تُحفظ مع ملفات اللعبة (games/<slug>/_import_report.json) فيقرؤها تطبيق التحكم دائماً
+            try:
+                keep = {
+                    "date": report.get("date"), "status": status,
+                    "source": report.get("repo_url"), "commit": report.get("commit"), "license": report.get("license"),
+                    "warnings": warnings, "notes": notes,
+                    "console_errors": [str(x)[:300] for x in (report.get("console_errors") or [])[:8]],
+                    "failed_requests": [str(x)[:300] for x in (report.get("failed_requests") or [])[:10]],
+                    "external_requests": [str(x)[:300] for x in (report.get("external_requests") or [])[:10]],
+                    "cover_candidates": report.get("cover_candidates", []),
+                    "lint": {k: (report.get("lint") or {}).get(k) for k in ("ran", "checked", "errors")},
+                    "fixes": report.get("fixes", {}),
+                }
+                (site / "_import_report.json").write_text(json.dumps(keep, ensure_ascii=False, indent=1), encoding="utf-8")
+            except Exception as e:
+                log("تعذّر حفظ ملاحظات الاستيراد:", e)
         write_summary(report)
         emit_annotations(report)
         if status == "fail":
