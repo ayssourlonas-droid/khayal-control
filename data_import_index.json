@@ -791,5 +791,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "breakzero",
+    "size": 94210,
+    "repo": "sarev/break2zero",
+    "id": 54,
+    "slug": "break2zero",
+    "title": "Break2zero",
+    "developer": "sarev",
+    "license": "Apache-2.0",
+    "source": "https://github.com/sarev/break2zero",
+    "commit": "16ddf41fe3b967b7a4bcc2ad2cc4e072307642f7",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Two-finger tap**                 | Pauses and opens the Options page: music, fullscreen, help, and quit to the menu. On the intro it offers  | README.md: O**                              | On the intro, the Options page, as does the Options link at the foot of the intro: music, fullscreen, cap"
   }
 ]
