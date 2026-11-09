@@ -430,5 +430,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42609160584"
+  },
+  {
+    "url": "https://github.com/winsznx/bull-rush",
+    "repo": "winsznx/bull-rush",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-09",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42609436058"
   }
 ]
