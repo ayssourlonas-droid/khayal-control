@@ -1,0 +1,9 @@
+Source: https://github.com/phaserjs/phaser-box2d
+Commit: 178874a066f380ba725b0df6e9bc90e6a4e48cf7
+License: MIT
+Imported: 2026-11-09T12:05:33.656593+00:00
+Automated changes (see report): {"http ← https": 1, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 1, "تحسين وسائط خطوط": 8}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: The Getting Started Guide, Examples and API Documentation are Copyright 2025 Phaser Studio Inc and are not for commercial use or distribution.
+- images: 6, audio: 0, tagged audio: 0

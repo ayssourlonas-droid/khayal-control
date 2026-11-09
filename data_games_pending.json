@@ -1270,5 +1270,31 @@
       "type": "web",
       "category": "game-engine"
     }
+  },
+  {
+    "id": 68,
+    "release_year": "2025",
+    "category_tags": [
+      "box2d",
+      "game-development",
+      "phaser"
+    ],
+    "main_scene": {
+      "title_ar": "Phaser Box2d",
+      "title_en": "Phaser Box2d",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/phaser-box2d/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A high-performance, industry-standard 2D physics engine built on Box2D v3, delivering incredibly realistic and engaging web game experiences.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/phaser-box2d/",
+      "developer": "phaserjs",
+      "license": "MIT",
+      "source_url": "https://github.com/phaserjs/phaser-box2d",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "box2d"
+    }
   }
 ]

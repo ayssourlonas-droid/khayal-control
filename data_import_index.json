@@ -1001,5 +1001,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "phaserboxd",
+    "size": 2851,
+    "repo": "phaserjs/phaser-box2d",
+    "id": 68,
+    "slug": "phaser-box2d",
+    "title": "Phaser Box2d",
+    "developer": "phaserjs",
+    "license": "MIT",
+    "source": "https://github.com/phaserjs/phaser-box2d",
+    "commit": "178874a066f380ba725b0df6e9bc90e6a4e48cf7",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
