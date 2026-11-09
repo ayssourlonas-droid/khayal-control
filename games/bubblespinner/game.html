@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:bubblespinner:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Spinner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #myCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- TODO: fix the slow motion on mobile potentially caused by the high dpr or simply low fps -->
+
+    <canvas id="myCanvas"></canvas>
+
+    <script>
+        var phantomLimbConfig = { style: false }
+        var GameGlobal = {};
+        var canvas = document.getElementById("myCanvas");
+
+        // Symbol used to unwrap our createImage Proxies before passing to native drawImage
+        var _IMAGE_UNWRAP = Symbol('rawImage');
+        // Patch all canvas 2d contexts so drawImage transparently unwraps our image Proxies
+        (function () {
+            var _nativeGetContext = HTMLCanvasElement.prototype.getContext;
+            HTMLCanvasElement.prototype.getContext = function (type, opts) {
+                var ctx = _nativeGetContext.call(this, type, opts);
+                if (ctx && type === '2d' && !ctx._drawImagePatched) {
+                    ctx._drawImagePatched = true;
+                    var _drawImage = ctx.drawImage.bind(ctx);
+                    ctx.drawImage = function (img) {
+                        if (img && img[_IMAGE_UNWRAP]) img = img[_IMAGE_UNWRAP];
+                        return _drawImage.apply(ctx, [img].concat(Array.prototype.slice.call(arguments, 1)));
+                    };
+                }
+                return ctx;
+            };
+        })();
+        var sharedCanvas = (function () {
+            var c = document.createElement('canvas');
+            var _getContext = c.getContext.bind(c);
+            c.getContext = function (type) {
+                var ctx = _getContext(type);
+                if (type === '2d' && !ctx._sharedCanvasPatched) {
+                    ctx._sharedCanvasPatched = true;
+                    // drawImage unwraps our createImage Proxies
+                    var _drawImage = ctx.drawImage.bind(ctx);
+                    ctx.drawImage = function (img) {
+                        if (img && img[_IMAGE_UNWRAP]) img = img[_IMAGE_UNWRAP];
+                        return _drawImage.apply(ctx, [img].concat(Array.prototype.slice.call(arguments, 1)));
+                    };
+                }
+                return ctx;
+            };
+            return c;
+        })();
+        var _shareMessageHandler = null;
+        var _wxMessageHandler = null;
+
+        function _wxShowToast(msg) {
+            alert(msg);
+        }
+
+        // Generates a simple placeholder avatar data URL (grey square + person silhouette)
+        var _avatarPlaceholderDataURL = (function () {
+            var size = 80;
+            var c = document.createElement('canvas');
+            c.width = size; c.height = size;
+            var cx = c.getContext('2d');
+            // Background square
+            cx.fillStyle = '#888888';
+            cx.fillRect(0, 0, size, size);
+            // Head
+            cx.fillStyle = '#cccccc';
+            cx.beginPath();
+            cx.arc(size / 2, size * 0.38, size * 0.2, 0, 2 * Math.PI);
+            cx.fill();
+            // Body
+            cx.beginPath();
+            cx.arc(size / 2, size * 0.95, size * 0.28, Math.PI, 0);
+            cx.fill();
+            return c.toDataURL();
+        })();
+
+        var wx = {
+            createCanvas: function () {
+                var canvas = document.createElement('canvas');
+                return canvas;
+            },
+            createImage: function () {
+                var img = new Image();
+                var extra = {};
+                return new Proxy(img, {
+                    set: function (target, prop, value) {
+                        if (prop === 'src' && !value) value = _avatarPlaceholderDataURL;
+                        extra[prop] = value; // always track; catches silent failures on getter-only props (e.g. x, y)
+                        try { target[prop] = value; } catch (e) { /* getter-only on some browsers */ }
+                        return true;
+                    },
+                    get: function (target, prop) {
+                        if (prop === _IMAGE_UNWRAP) return target;
+                        if (Object.prototype.hasOwnProperty.call(extra, prop)) return extra[prop];
+                        var v = target[prop];
+                        return typeof v === 'function' ? v.bind(target) : v;
+                    }
+                });
+            },
+            getSystemInfoSync: function () {
+                return {
+                    pixelRatio: window.devicePixelRatio,
+                    screenWidth: document.body.clientWidth,
+                    screenHeight: document.body.clientHeight,
+                    SDKVersion: "0.0.1"
+                }
+            },
+            getOpenDataContext: function () {
+                return {
+                    postMessage: function (msg) {
+                        if (_wxMessageHandler) _wxMessageHandler(msg);
+                    },
+                    // Keep shared canvas dimensions in sync with main canvas
+                    get canvas() {
+                        sharedCanvas.width = canvas.width;
+                        sharedCanvas.height = canvas.height;
+                        return sharedCanvas;
+                    }
+                };
+            },
+            // Open data context APIs
+            onMessage: function (cb) {
+                _wxMessageHandler = cb;
+            },
+            getSharedCanvas: function () {
+                sharedCanvas.width = canvas.width;
+                sharedCanvas.height = canvas.height;
+                return sharedCanvas;
+            },
+            // WeChat cloud storage — persists the local player's score in localStorage;
+            // friend/group cloud storage returns empty data (no WeChat social graph).
+            getUserCloudStorage: function (opts) {
+                try {
+                    var KVDataList = (opts.keyList || []).reduce(function (acc, k) {
+                        var v = localStorage.getItem('wx_cloud_' + k);
+                        if (v !== null && v !== '') acc.push({ key: k, value: v });
+                        return acc;
+                    }, []);
+                    if (opts.success) opts.success({ KVDataList: KVDataList });
+                } catch (e) { if (opts.fail) opts.fail(e); }
+            },
+            setUserCloudStorage: function (opts) {
+                try {
+                    opts.KVDataList.forEach(function (kv) {
+                        localStorage.setItem('wx_cloud_' + kv.key, kv.value);
+                    });
+                    if (opts.success) opts.success();
+                } catch (e) { if (opts.fail) opts.fail(e); }
+            },
+            getFriendCloudStorage: function (opts) {
+                // No social graph in browser — return the local player's own record
+                // so the leaderboard shows at least their own score.
+                try {
+                    var KVDataList = (opts.keyList || []).reduce(function (acc, k) {
+                        var v = localStorage.getItem('wx_cloud_' + k);
+                        if (v !== null && v !== '') acc.push({ key: k, value: v });
+                        return acc;
+                    }, []);
+                    if (opts.success) opts.success({
+                        data: [{ KVDataList: KVDataList, nickname: 'You', avatarUrl: '' }]
+                    });
+                } catch (e) { if (opts.fail) opts.fail(e); }
+            },
+            getGroupCloudStorage: function (opts) {
+                // No group context in browser — same as friend storage.
+                try {
+                    var KVDataList = (opts.keyList || []).reduce(function (acc, k) {
+                        var v = localStorage.getItem('wx_cloud_' + k);
+                        if (v !== null && v !== '') acc.push({ key: k, value: v });
+                        return acc;
+                    }, []);
+                    if (opts.success) opts.success({
+                        data: [{ KVDataList: KVDataList, nickname: 'You', avatarUrl: '' }]
+                    });
+                } catch (e) { if (opts.fail) opts.fail(e); }
+            },
+            getUserInfo: function (opts) {
+                // GameEnded expects res.data[0].nickName / .avatarUrl
+                if (opts.success) opts.success({
+                    data: [{ nickName: 'You', avatarUrl: '' }]
+                });
+            },
+            onTouchStart: function (cb) {
+                canvas.addEventListener("touchstart", cb);
+            },
+            onTouchCancel: function (cb) {
+                canvas.addEventListener("touchcancel", cb);
+            },
+            onTouchMove: function (cb) {
+                canvas.addEventListener("touchmove", cb);
+            },
+            onTouchEnd: function (cb) {
+                canvas.addEventListener("touchend", cb);
+            },
+            offTouchEnd: function (cb) {
+                canvas.removeEventListener("touchend", cb);
+            },
+            setPreferredFramesPerSecond: function () { },
+            getMenuButtonBoundingClientRect: function () {
+                var paddingTop = 8;
+                var paddingRight = 8;
+                var width = 80;
+                var height = 30;
+                var top = paddingTop;
+                var bottom = top + height;
+                var right = window.innerWidth - paddingRight;
+                var left = right - width;
+                return { top: top, bottom: bottom, left: left, right: right, width: width, height: height };
+            },
+            createInnerAudioContext: function () {
+                var audio = new Audio();
+                return {
+                    set src(v) { audio.src = v; },
+                    get src() { return audio.src; },
+                    set volume(v) { audio.volume = v; },
+                    get volume() { return audio.volume; },
+                    play: function () { audio.currentTime = 0; audio.play().catch(function () { }); },
+                    stop: function () { audio.pause(); audio.currentTime = 0; },
+                    pause: function () { audio.pause(); },
+                    destroy: function () { audio.src = ""; },
+                    onError: function () { },
+                };
+            },
+            showShareMenu: function () { },
+            onShareAppMessage: function (cb) {
+                _shareMessageHandler = cb;
+            },
+            shareAppMessage: function (info) {
+                if (!navigator.share) {
+                    _wxShowToast('Sharing is not supported in this browser');
+                    return;
+                }
+                navigator.share({
+                    title: info.title || document.title,
+                    url: window.location.href
+                }).catch(function () { });
+            },
+            onShow: function (cb) {
+                // Mirrors WeChat onShow: fires when the app/page becomes visible.
+                // No shareTicket in browser, so the rank-scene branch is skipped.
+                document.addEventListener('visibilitychange', function () {
+                    if (!document.hidden) cb({});
+                });
+                window.addEventListener('pageshow', function (e) {
+                    if (e.persisted) cb({});
+                });
+            },
+        }
+    </script>
+    <script src="./phantom-limb.js?v=__PHANTOM_HASH__"></script>
+</body>
+
+</html>

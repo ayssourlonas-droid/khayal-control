@@ -672,5 +672,31 @@
       "type": "web",
       "category": "arena-shooter"
     }
+  },
+  {
+    "id": 42,
+    "release_year": "2026",
+    "category_tags": [
+      "bubble-spinner",
+      "html5-game",
+      "vanilla-javascript"
+    ],
+    "main_scene": {
+      "title_ar": "BubbleSpinner",
+      "title_en": "BubbleSpinner",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/bubblespinner/_cover.png"
+    },
+    "details_scene": {
+      "description": "Bubble Spinner on WeChat. Simple yet entertaining!",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/bubblespinner/",
+      "developer": "xiandew",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/xiandew/BubbleSpinner",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "bubble-spinner"
+    }
   }
 ]

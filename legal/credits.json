@@ -611,5 +611,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: a credit budget, a composition weighting that reacts to what the *group* has | README.md: │   │   ├── director.js        credit-budget wave composition"
+  },
+  {
+    "key": "bubblespinner",
+    "size": 1086,
+    "repo": "xiandew/BubbleSpinner",
+    "id": 42,
+    "slug": "bubblespinner",
+    "title": "BubbleSpinner",
+    "developer": "xiandew",
+    "license": "Apache-2.0",
+    "source": "https://github.com/xiandew/BubbleSpinner",
+    "commit": "e963bac0e89bcf03c211b7d3631092acfe6c97e1",
+    "date": "2026-11-09",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
