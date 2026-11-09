@@ -1,0 +1,40 @@
+{
+ "date": "2026-11-09T22:23:23.888496+00:00",
+ "status": "warn",
+ "source": "https://github.com/girishlade111/Ludo-Game",
+ "commit": "407a40d49b54af206e16b6ce0d931a69b7ba112e",
+ "license": "CC0-1.0",
+ "warnings": [
+  "لا توجد صورة غلاف مناسبة؛ استُخدمت لقطة الشاشة الأولى (يُفضّل استبدالها)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 0 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: Creative Commons Legal Code",
+  "تصريح المطوّر عن الوسائط: LICENSE: CC0 1.0 Universal",
+  "تصريح المطوّر عن الوسائط: LICENSE: CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE",
+  "تصريح المطوّر عن الوسائط: LICENSE: ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS",
+  "تصريح المطوّر عن الوسائط: LICENSE: INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES",
+  "تصريح المطوّر عن الوسائط: LICENSE: associating CC0 with a Work (the \"Affirmer\"), to the extent that he or she",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:ludo-game:) في 2 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 353 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 1 ملفاً (1 KB)؛ من 4 إلى 3",
+  "تعديل تلقائي: عزل تخزين اللعبة × 2",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 1",
+  "الأزمنة: اختبار المتصفح: 68ث؛ تقليل الملفات: 46ث (أوامر: 2، اختبارات متصفح: 2)"
+ ],
+ "console_errors": [],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 2,
+  "حذف ملفات غير لازمة": 1
+ }
+}
