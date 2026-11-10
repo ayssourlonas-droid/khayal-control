@@ -997,5 +997,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42915031588"
+  },
+  {
+    "url": "https://github.com/vzhou842/example-.io-game",
+    "repo": "vzhou842/example-.io-game",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42916256745"
   }
 ]
