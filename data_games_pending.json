@@ -1794,5 +1794,31 @@
       "type": "web",
       "category": "animation"
     }
+  },
+  {
+    "id": 90,
+    "release_year": "2024",
+    "category_tags": [
+      "asteroids",
+      "asteroids-game",
+      "html5"
+    ],
+    "main_scene": {
+      "title_ar": "HTML5 Asteroids",
+      "title_en": "HTML5 Asteroids",
+      "app_rating": 0.0,
+      "poster_url": ""
+    },
+    "details_scene": {
+      "description": "Pure Javascript Asteroids",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/html5-asteroids/",
+      "developer": "dmcinnes",
+      "license": "MIT",
+      "source_url": "https://github.com/dmcinnes/HTML5-Asteroids",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "asteroids"
+    }
   }
 ]

@@ -1,0 +1,8 @@
+Source: https://github.com/dmcinnes/HTML5-Asteroids
+Commit: 930301cbda83ed3b120f64b801d937d077ee2da0
+License: MIT
+Imported: 2026-11-10T22:57:09.353863+00:00
+Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صوت": 2, "تنظيف الكود": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 0, audio: 2, tagged audio: 0

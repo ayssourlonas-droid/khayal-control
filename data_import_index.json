@@ -1331,5 +1331,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: artist=Mike Koenig"
+  },
+  {
+    "key": "htmlasteroids",
+    "size": 281,
+    "repo": "dmcinnes/HTML5-Asteroids",
+    "id": 90,
+    "slug": "html5-asteroids",
+    "title": "HTML5 Asteroids",
+    "developer": "dmcinnes",
+    "license": "MIT",
+    "source": "https://github.com/dmcinnes/HTML5-Asteroids",
+    "commit": "930301cbda83ed3b120f64b801d937d077ee2da0",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
