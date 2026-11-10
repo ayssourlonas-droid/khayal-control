@@ -960,32 +960,6 @@
     }
   },
   {
-    "id": 54,
-    "release_year": "2026",
-    "category_tags": [
-      "apache2-license",
-      "breakout",
-      "breakout-game"
-    ],
-    "main_scene": {
-      "title_ar": "Break2zero",
-      "title_en": "Break2zero",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/break2zero/_cover.png"
-    },
-    "details_scene": {
-      "description": "A retro brick-breaker you can play in your browser, on desktop or phone (plus the original Python version)",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/break2zero/",
-      "developer": "sarev",
-      "license": "Apache-2.0",
-      "source_url": "https://github.com/sarev/break2zero",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "apache2-license"
-    }
-  },
-  {
     "id": 55,
     "release_year": "2026",
     "category_tags": [
