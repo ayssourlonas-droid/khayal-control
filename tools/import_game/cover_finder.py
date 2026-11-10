@@ -21,6 +21,7 @@ from urllib.parse import unquote, urlparse, urljoin
 IMG_EXT = (".png", ".jpg", ".jpeg", ".webp", ".gif")
 SKIP_DIRS = {".git", "node_modules", "__MACOSX"}
 MAX_REMOTE = 8 * 1024 * 1024
+GOOD_SHOT = 60           # لقطة شاشة بدرجة أعلى تُعدّ مقبولة (ملاحظة لا تحذير)
 MIN_ACCEPT = 40          # أدنى درجة لقبول مرشّح (دونها نستعمل لقطة الشاشة)
 POSTER_W, POSTER_H = 470, 700  # بطاقة التفاصيل في تطبيق خيال
 OUT_W, OUT_H = POSTER_W * 2, POSTER_H * 2
@@ -203,7 +204,38 @@ def _score(path, origin, order, used_set):
     return sc, "، ".join(why)
 
 
-def choose(site, src, used, work, title_shot=None, final_shot=None, blank=False):
+def shot_quality(path):
+    """درجة 'جاذبية' للقطة شاشة (0-100 تقريباً): تنوّع الألوان، تعقيد المحتوى، وعقوبة الخلفية المصمتة.
+    تهدف لاختيار أفضل لقطة بين عدة لقطات، لا لتقييم الجمال."""
+    try:
+        from PIL import Image
+        im = Image.open(path).convert("RGB")
+        im.thumbnail((160, 160))
+        w, h = im.size
+        px = list(im.getdata())
+        n = len(px)
+        bins = {}
+        for r, g, b in px:
+            k = (r >> 4, g >> 4, b >> 4)
+            bins[k] = bins.get(k, 0) + 1
+        top = max(bins.values()) / n
+        colors = sum(1 for v in bins.values() if v / n >= 0.004)
+        gray = im.convert("L").histogram()
+        import math
+        ent = -sum((c / n) * math.log2(c / n) for c in gray if c)
+        gp = list(im.convert("L").getdata())
+        edge = sum(abs(gp[i] - gp[i + 1]) for i in range(n - 1) if (i + 1) % w) / n
+        sc = min(colors, 14) * 3.0 + ent * 5.0 + min(edge, 20) * 1.5
+        if top > 0.85:
+            sc -= 40
+        elif top > 0.65:
+            sc -= 18
+        return round(sc, 1)
+    except Exception:
+        return -100.0
+
+
+def choose(site, src, used, work, title_shot=None, final_shot=None, blank=False, extra_shots=None):
     """يختار أفضل غلاف؛ يعيد dict: path (نسخة محفوظة خارج site)، origin، score، note، fallback."""
     site, src, work = Path(site), Path(src), Path(work)
     dl = work / "cover_dl"
@@ -253,13 +285,25 @@ def choose(site, src, used, work, title_shot=None, final_shot=None, blank=False)
         out.update(path=keep, origin=best["origin"], score=best["score"],
                    note=f"الغلاف: {best['path'].name} ← {best['why']} (درجة {best['score']})")
         return out
-    for shot, label in ((title_shot, "الشاشة الأولى"), (final_shot, "نهاية الاختبار")):
-        if shot and Path(shot).is_file() and not blank:
-            keep = work / "_cover_pick.png"
-            shutil.copy2(shot, keep)
-            out.update(path=keep, origin="screenshot", fallback=True,
-                       note=f"لا توجد صورة غلاف مناسبة؛ استُخدمت لقطة {label} (يُفضّل استبدالها)")
-            return out
+    shots = [(title_shot, "الشاشة الأولى")] + [(p, "لقطة " + Path(p).stem.replace("_s_", "")) for p in (extra_shots or [])]
+    shots.append((final_shot, "نهاية الاختبار"))
+    scored = []
+    if not blank:
+        for shot, label in shots:
+            if shot and Path(shot).is_file():
+                scored.append((shot_quality(shot), shot, label))
+    scored.sort(key=lambda x: x[0], reverse=True)
+    out["shots"] = [f"{q}: {Path(p).name}" for q, p, _ in scored]
+    if scored and scored[0][0] > 0:
+        q, shot, label = scored[0]
+        keep = work / "_cover_pick.png"
+        shutil.copy2(shot, keep)
+        good = q >= GOOD_SHOT
+        out.update(path=keep, origin="screenshot", fallback=not good, score=q,
+                   note=(f"لا توجد صورة غلاف في المستودع؛ أُخذت {label} (درجة {q} من {len(scored)} لقطات) — مقبولة"
+                         if good else
+                         f"لا توجد صورة غلاف؛ أفضل لقطة ({label}) ضعيفة (درجة {q}) — يُفضّل استبدال الغلاف يدوياً"))
+        return out
     if best and best["score"] > -50:
         keep = work / ("_cover_pick" + best["path"].suffix.lower())
         shutil.copy2(best["path"], keep)

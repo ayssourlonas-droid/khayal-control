@@ -81,7 +81,103 @@ def _explore(page, w=412, h=915, seconds=45):
     return virtual_ms
 
 
-def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45):
+_CLICK_JS = """(skip) => {
+  const good = /play|start|begin|enter|new game|vs|player|single|solo|ابدأ|ابدا|العب|بدء|لعب|ابتدئ|تشغيل/i;
+  const bad = /download|github|donate|rate|share|exit|quit|setting|sound|music|mute|about|help|credit|privacy|تحميل|مشاركة|خروج|إعدادات|اعدادات|صوت/i;
+  const els = [...document.querySelectorAll('button,a,[role=button],input[type=button],input[type=submit],.btn,.button,[onclick]')];
+  const out = [];
+  for (const e of els) {
+    const r = e.getBoundingClientRect(); const s = getComputedStyle(e);
+    if (r.width < 24 || r.height < 18 || r.bottom <= 0 || r.top >= innerHeight || r.right <= 0 || r.left >= innerWidth) continue;
+    if (s.visibility === 'hidden' || s.display === 'none' || s.pointerEvents === 'none' || +s.opacity === 0) continue;
+    const t = ((e.innerText || e.value || e.getAttribute('aria-label') || '') + '').trim().slice(0, 60);
+    if (bad.test(t)) continue;
+    if (e.tagName === 'A') { const h = e.getAttribute('href') || ''; if (/^https?:|^mailto:/i.test(h)) continue; }
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    if ((skip || []).some(p => Math.abs(p[0] - cx) < 6 && Math.abs(p[1] - cy) < 6)) continue;
+    out.push({x: cx, y: cy, g: good.test(t) ? 1 : 0, a: r.width * r.height});
+  }
+  if (!out.length) return null;
+  out.sort((p, q) => q.g - p.g || q.a - p.a);
+  return [out[0].x, out[0].y];
+}"""
+
+_CANVAS_JS = """() => {
+  let best = null, ba = 0;
+  for (const c of document.querySelectorAll('canvas')) {
+    const r = c.getBoundingClientRect();
+    if (r.width < 200 || r.height < 200 || r.bottom <= 0 || r.top >= innerHeight) continue;
+    if (r.width * r.height > ba) { ba = r.width * r.height; best = c; }
+  }
+  if (!best) return false;
+  best.setAttribute('data-kh-cv', '1'); return true;
+}"""
+
+
+def _extra_shots(page, shots_dir: Path):
+    """لقطات إضافية لاختيار غلاف بديل: بعد الضغط على أول زر مناسب (مرتين)، بعد Enter/Space، وللوحة الرسم الكبيرة."""
+    shots_dir.mkdir(parents=True, exist_ok=True)
+    got = []
+
+    def snap(name):
+        p = shots_dir / name
+        try:
+            page.screenshot(path=str(p))
+            got.append(str(p))
+        except Exception:
+            pass
+
+    try:
+        clicked = []
+        for i in (1, 2, 3):
+            pos = page.evaluate(_CLICK_JS, clicked)
+            if not pos:
+                break
+            clicked.append(pos)
+            page.touchscreen.tap(pos[0], pos[1])
+            page.wait_for_timeout(2500)
+            snap(f"_s_click{i}.png")
+        for k, name in (("Enter", "_s_enter.png"), ("Space", "_s_space.png")):
+            page.keyboard.press(k)
+            page.wait_for_timeout(1800)
+            snap(name)
+        if page.evaluate(_CANVAS_JS):
+            p = shots_dir / "_s_canvas.png"
+            try:
+                page.locator("canvas[data-kh-cv]").first.screenshot(path=str(p), timeout=4000)
+                got.append(str(p))
+            except Exception:
+                pass
+    except Exception:
+        pass
+    return got
+
+
+def _landscape_shot(port, shots_dir: Path):
+    """لقطة بوضع أفقي (ألعاب كثيرة مصمّمة للعرض الأفقي وتبدو فارغة بالعمودي)."""
+    try:
+        from playwright.sync_api import sync_playwright
+        shots_dir.mkdir(parents=True, exist_ok=True)
+        p = shots_dir / "_s_land.png"
+        with sync_playwright() as pw:
+            b = pw.chromium.launch(args=["--no-sandbox"])
+            ctx = b.new_context(viewport={"width": 915, "height": 412}, device_scale_factor=2,
+                                is_mobile=True, has_touch=True)
+            pg = ctx.new_page()
+            pg.goto(f"http://127.0.0.1:{port}/game/index.html", wait_until="load", timeout=30000)
+            pg.wait_for_timeout(5000)
+            pos = pg.evaluate(_CLICK_JS, [])
+            if pos:
+                pg.touchscreen.tap(pos[0], pos[1])
+                pg.wait_for_timeout(2500)
+            pg.screenshot(path=str(p))
+            b.close()
+        return [str(p)]
+    except Exception:
+        return []
+
+
+def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45, shots=False):
     COUNT["browser_tests"] += 1
     log(f"🌐 اختبار متصفح رقم {COUNT['browser_tests']} (المرحلة: {_STAGE['name']})")
     res = {"ran": False, "console_errors": [], "failed_requests": [], "status_ok": False,
@@ -146,6 +242,8 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45):
                 page.screenshot(path=str(shot.with_name("_title.png")))  # لقطة الشاشة الأولى (احتياطي للغلاف)
             except Exception:
                 pass
+            if shots:
+                res["extra_shots"] = _extra_shots(page, work / "shots")
             if explore:
                 res["virtual_ms"] = _explore(page, 412, 915, seconds)
             info = page.evaluate(
@@ -155,6 +253,8 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45):
             page.screenshot(path=str(shot))
             res["used"] = sorted(used)
             b.close()
+        if shots:
+            res.setdefault("extra_shots", []).extend(_landscape_shot(port, work / "shots"))
         res["ran"] = True
     except Exception as e:
         res["console_errors"].append(f"فشل الاختبار الآلي: {str(e)[:200]}")

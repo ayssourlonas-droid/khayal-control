@@ -230,12 +230,12 @@ def main():
     stage("اختبار المتصفح")
     # 6) اختبار
     shot = out / "_shot.png"
-    t = browser_test(site, work, shot, explore=True, seconds=60)
+    t = browser_test(site, work, shot, explore=True, seconds=60, shots=True)
     if t["ran"] and t["missing"]:
         n_alias = fix_case(site, t["missing"])
         if n_alias:
             fixed("نسخ ملفات بحالة الأحرف المطلوبة", n_alias)
-            t = browser_test(site, work, shot, explore=True, seconds=60)
+            t = browser_test(site, work, shot, explore=True, seconds=60, shots=True)
     report["test"] = {k: t[k] for k in ("ran", "status_ok", "blank")}
     if t.get("virtual_ms"):
         notes.append(f"لاعب آلي عشوائي: جُرّب نحو {t['virtual_ms'] // 1000} ثانية لعب افتراضية خلال 60 ثانية حقيقية")
@@ -264,7 +264,7 @@ def main():
     try:
         import cover_finder
         cover_pick = cover_finder.choose(site, src, t.get("used", []), work,
-                                         title_shot=shot.with_name("_title.png"), final_shot=shot,
+                                         title_shot=shot.with_name("_title.png"), final_shot=shot, extra_shots=t.get("extra_shots"),
                                          blank=bool(t.get("blank")))
         report["cover_candidates"] = cover_pick.get("top", [])
     except Exception as e:
