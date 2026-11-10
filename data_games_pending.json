@@ -1535,5 +1535,31 @@
       "type": "web",
       "category": "bezier-curves"
     }
+  },
+  {
+    "id": 80,
+    "release_year": "2026",
+    "category_tags": [
+      "canvas",
+      "canvas-game",
+      "chrome-dino"
+    ],
+    "main_scene": {
+      "title_ar": "Google Chrome Dino",
+      "title_en": "Google Chrome Dino",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/google-chrome-dino/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Recreation of everyone's favorite offline companion, google chrome dinosaur game, with the same classic monochrome interface.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/google-chrome-dino/",
+      "developer": "KarthikNedunchezhiyan",
+      "license": "MIT",
+      "source_url": "https://github.com/KarthikNedunchezhiyan/google-chrome-dino",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas"
+    }
   }
 ]

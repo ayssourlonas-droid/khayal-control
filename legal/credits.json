@@ -1181,5 +1181,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "googlechromedino",
+    "size": 4068,
+    "repo": "KarthikNedunchezhiyan/google-chrome-dino",
+    "id": 80,
+    "slug": "google-chrome-dino",
+    "title": "Google Chrome Dino",
+    "developer": "KarthikNedunchezhiyan",
+    "license": "MIT",
+    "source": "https://github.com/KarthikNedunchezhiyan/google-chrome-dino",
+    "commit": "318da0e4807db34165219675fd5861e4a86cfadf",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

@@ -1,0 +1,8 @@
+Source: https://github.com/KarthikNedunchezhiyan/google-chrome-dino
+Commit: 318da0e4807db34165219675fd5861e4a86cfadf
+License: MIT
+Imported: 2026-11-10T17:53:49.740014+00:00
+Automated changes (see report): {"إزالة وسم إعلانات/تتبّع": 2, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 6, "تنظيف الكود": 4}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 5, audio: 0, tagged audio: 0
