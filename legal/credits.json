@@ -1196,5 +1196,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "fifteenpuzzlemaker",
+    "size": 2725,
+    "repo": "Kirilllive/Fifteen_puzzle_maker",
+    "id": 81,
+    "slug": "fifteen-puzzle-maker",
+    "title": "Fifteen Puzzle Maker",
+    "developer": "Kirilllive",
+    "license": "MIT",
+    "source": "https://github.com/Kirilllive/Fifteen_puzzle_maker",
+    "commit": "3690769d5d6e1607cbfb6b16302155394cfb019e",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

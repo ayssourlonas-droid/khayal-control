@@ -1561,5 +1561,31 @@
       "type": "web",
       "category": "canvas"
     }
+  },
+  {
+    "id": 81,
+    "release_year": "2026",
+    "category_tags": [
+      "15-puzzle",
+      "15puzzle",
+      "15puzzlegame"
+    ],
+    "main_scene": {
+      "title_ar": "Fifteen Puzzle Maker",
+      "title_en": "Fifteen Puzzle Maker",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/fifteen-puzzle-maker/_cover.webp"
+    },
+    "details_scene": {
+      "description": "This is a classic mini-game Fifteen Sliding Puzzle. This option works in the browser, in it you need to specify a regular picture, the program itself will cut the picture into squares and mix them.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/fifteen-puzzle-maker/",
+      "developer": "Kirilllive",
+      "license": "MIT",
+      "source_url": "https://github.com/Kirilllive/Fifteen_puzzle_maker",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "15-puzzle"
+    }
   }
 ]

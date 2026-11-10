@@ -1,0 +1,8 @@
+Source: https://github.com/Kirilllive/Fifteen_puzzle_maker
+Commit: 3690769d5d6e1607cbfb6b16302155394cfb019e
+License: MIT
+Imported: 2026-11-10T17:58:48.737099+00:00
+Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 1, "تنظيف الكود": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 2, audio: 0, tagged audio: 0
