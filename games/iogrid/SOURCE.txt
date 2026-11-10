@@ -1,0 +1,8 @@
+Source: https://github.com/jondubois/iogrid
+Commit: 5ee7e86143b30bc714ad175e11221aaa948c2bef
+License: MIT
+Imported: 2026-11-10T22:32:41.818388+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 7, "إضافة meta charset": 1, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 5, "تحسين وسائط صور": 2, "تنظيف الكود": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 23, audio: 0, tagged audio: 0

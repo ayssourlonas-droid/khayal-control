@@ -1,0 +1,64 @@
+{
+ "date": "2026-11-10T22:32:41.818388+00:00",
+ "status": "warn",
+ "source": "https://github.com/jondubois/iogrid",
+ "commit": "5ee7e86143b30bc714ad175e11221aaa948c2bef",
+ "license": "MIT",
+ "warnings": [
+  "المستودع يحوي ملفات خادم (اعتمادات خادم: express؛ server.js) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: bugzilla.mozilla.org, ecma-international.org, feross.org, gist.github.com, github.com, javascript.crockford.com, jquery.org, kawanet.github.io",
+  "7 أخطاء في الكونسول، أولها: WebSocket connection to 'ws://127.0.0.1:43423/socketcluster/' failed: Error during WebSocket handsha"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: public",
+  "الوسائط: 23 صورة و0 صوتاً",
+  "أنماط تستحق الانتباه: طلب كاميرا/ميكروفون (phaser.min.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:iogrid:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 4 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 5 ملفاً (101 KB)؛ من 32 إلى 27",
+  "تحسين صور: 2 ملفاً، وفّر 4318 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 5MB ← 1MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: 2 ملاحظات خفيفة في 3 ملفات (مفاتيح مكررة أو شيفرة لا تُنفَّذ)؛ لا تمنع اللعب غالباً",
+  "3 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 3 ملفاً، 297KB ← 179KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 7",
+  "تعديل تلقائي: إضافة meta charset × 1",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 5",
+  "تعديل تلقائي: تحسين وسائط صور × 2",
+  "تعديل تلقائي: تنظيف الكود × 3",
+  "الغلاف: iogrid.gif ← README #2 (درجة 86)",
+  "الأزمنة: اختبار المتصفح: 77ث؛ تقليل الملفات: 48ث؛ تحسين الوسائط: 48ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 49ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "WebSocket connection to 'ws://127.0.0.1:43423/socketcluster/' failed: Error during WebSocket handshake: Unexpected response code: 404",
+  "JS: SocketProtocolError",
+  "WebSocket connection to 'ws://127.0.0.1:43423/socketcluster/' failed: Error during WebSocket handshake: Unexpected response code: 404",
+  "WebSocket connection to 'ws://127.0.0.1:43423/socketcluster/' failed: Error during WebSocket handshake: Unexpected response code: 404",
+  "SocketProtocolError",
+  "WebSocket connection to 'ws://127.0.0.1:43423/socketcluster/' failed: Error during WebSocket handshake: Unexpected response code: 404",
+  "SocketProtocolError"
+ ],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "86: iogrid.gif (README #2)",
+  "18: sc-phaser-sample.png ()",
+  "-40: background-texture.png (حمّلتها اللعبة، اسم شاشة، اسم جزء/عنصر، ملف صغير جداً)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 3,
+  "errors": 0
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 7,
+  "إضافة meta charset": 1,
+  "عزل تخزين اللعبة": 1,
+  "حذف ملفات غير لازمة": 5,
+  "تحسين وسائط صور": 2,
+  "تنظيف الكود": 3
+ }
+}
