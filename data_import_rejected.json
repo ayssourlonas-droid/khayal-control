@@ -934,5 +934,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42872526745"
+  },
+  {
+    "url": "https://github.com/rootasjey/backwards",
+    "repo": "rootasjey/backwards",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42873032257"
   }
 ]
