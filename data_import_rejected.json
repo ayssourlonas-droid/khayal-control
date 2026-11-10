@@ -763,5 +763,14 @@
     "date": "2026-11-09",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42648747154"
+  },
+  {
+    "url": "https://github.com/WenyiWU0111/RSIGame",
+    "repo": "WenyiWU0111/RSIGame",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (.env.example) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "Apache-2.0",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42860077059"
   }
 ]
