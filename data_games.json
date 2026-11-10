@@ -415,5 +415,31 @@
       "type": "web",
       "category": "bubble-spinner"
     }
+  },
+  {
+    "id": 43,
+    "release_year": "2025",
+    "category_tags": [
+      "ai-algorithm",
+      "alpha-beta-pruning",
+      "board-game"
+    ],
+    "main_scene": {
+      "title_ar": "Chinese Chess",
+      "title_en": "Chinese Chess",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/chinese-chess/_cover.png"
+    },
+    "details_scene": {
+      "description": "中国象棋",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/chinese-chess/",
+      "developer": "tjlstar",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/tjlstar/Chinese-Chess",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "ai-algorithm"
+    }
   }
 ]
