@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:phaser-raycaster:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Phaser-raycaster Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.paper.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Phaser-raycaster</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Raycaster.html">Raycaster</a></li><li><a href="Raycaster.Ray.html">Raycaster.Ray</a></li><li><a href="Raycaster.Map.html">Raycaster.Map</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>Phaser Raycaster</h1>
+<p>Raycasting plugin for Phaser 3 and 4.</p>
+<p><a href="https://github.com/wiserim/phaser-raycaster/releases"><img src="https://img.shields.io/github/release/wiserim/phaser-raycaster.svg" alt="GitHub release"></a> <a href="https://www.npmjs.com/package/phaser-raycaster"><img src="https://img.shields.io/npm/v/phaser-raycaster.svg" alt="npm"></a> <a href="https://github.com/wiserim/phaser-raycaster/blob/master/LICENSE"><img src="https://img.shields.io/github/license/wiserim/phaser-raycaster.svg" alt="GitHub"></a> <a href="https://github.com/wiserim/phaser-raycaster"><img src="https://img.shields.io/github/size/wiserim/phaser-raycaster/dist/phaser-raycaster.min.js.svg" alt="Github file size"></a> <a href="https://www.jsdelivr.com/package/npm/phaser-raycaster"><img src="https://data.jsdelivr.com/v1/package/npm/phaser-raycaster/badge?style=rounded" alt=""></a></p>
+<p>Phaser Raycaster is a <a href="https://github.com/photonstorm/phaser">Phaser 3 and 4</a> plugin which provide raycasting for geometric game objects, sprites, Arcade Physics and Matter.js bodies.</p>
+<p>Documentation: <a href="https://wiserim.github.io/phaser-raycaster/">https://wiserim.github.io/phaser-raycaster/</a></p>
+<p>Code examples are available on CodePen: <a href="https://codepen.io/collection/JYOmLN">LINK</a>
+Old examples for Phaser 3: <a href="https://codepen.io/collection/AOOQWr">LINK</a></p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>compatible with arcade and matter physics,</li>
+<li>raycasting in a single direction, 360 degrees circle or in a cone,</li>
+<li>visibility detection (collision detection with game objects),</li>
+<li>test rays on mapped game objects (containers, lines, rectangles, polygons, circles, sprites, tilemaps and matter bodies),</li>
+<li>provides closest intersection points between rays and tested objects,</li>
+<li>tests can be made on all mapped objects, selected ones or only ones within detection range,</li>
+<li>static and dynamic mapping for individual objects,</li>
+<li>mapped objects intersections detection,</li>
+<li>debug mode.</li>
+</ul>
+<p><em><strong>NPM</strong></em></p>
+<pre class="prettyprint source"><code>npm install phaser-raycaster
+</code></pre>
+<p><em><strong>CDN</strong></em></p>
+<p><a href="https://www.jsdelivr.com/package/npm/phaser-raycaster">https://www.jsdelivr.com/package/npm/phaser-raycaster</a></p>
+<h2>Getting started</h2>
+<h3>1. Include plugin in your project:</h3>
+<pre class="prettyprint source lang-html"><code>&lt;!--CDN-->
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/npm/phaser-raycaster@0.11.1/dist/phaser-raycaster.min.js&quot;>&lt;/script>
+</code></pre>
+<pre class="prettyprint source"><code># NPM
+npm install phaser-raycaster
+</code></pre>
+<h3>2. Enable plugin in your Game config:</h3>
+<pre class="prettyprint source lang-javascript"><code>import PhaserRaycaster from 'phaser-raycaster'
+
+let config = {
+    type: Phaser.Auto,
+    parent: 'game',
+    width: 800,
+    height: 600,
+    backgroundColor: &quot;black&quot;,
+    scene: [
+        Scene1
+    ],
+    plugins: {
+        scene: [
+            {
+                key: 'PhaserRaycaster',
+                plugin: PhaserRaycaster,
+                mapping: 'raycasterPlugin'
+            }
+        ]
+    }
+}
+
+new Phaser.Game(config);
+</code></pre>
+<h3>3. Create new raycaster in your scene:</h3>
+<pre class="prettyprint source lang-javascript"><code>create() {
+  this.raycaster = this.raycasterPlugin.createRaycaster(options);
+  
+  // additional code
+}
+</code></pre>
+<p>If you're using TypeScript, you need to add to scene plugin class:</p>
+<pre class="prettyprint source lang-javascript"><code>import PhaserRaycaster from 'phaser-raycaster'
+
+export default class MyScene extends Phaser.Scene {
+  raycasterPlugin: PhaserRaycaster
+
+  // aditional code
+}
+</code></pre>
+<h3>4. Create new ray</h3>
+<pre class="prettyprint source lang-javascript"><code>create() {
+  // additional code
+  
+  this.ray = this.raycaster.createRay();
+  
+  // additional code
+}
+</code></pre>
+<h3>5. Map game objects which will be tested by rays</h3>
+<pre class="prettyprint source lang-javascript"><code>//create game object
+this.rectangle = this.add.rectangle(100, 100, 50, 50)
+  .setStrokeStyle(1, 0xff0000);
+
+//map game object
+this.raycaster.mapGameObjects(this.rectangle);
+
+//create group
+this.group = this.add.group();
+
+//map game objects actually in group
+this.raycaster.mapGameObjects(this.group.getChildren());
+
+//map tilemap layer
+this.map = this.make.tilemap();
+this.tilemap = this.map.createStaticLayer();
+
+this.raycaster.mapGameObjects(this.tilemap, false, {
+  collisionTiles: [1,2,3] //array of tiles types which can collide with ray
+});
+</code></pre>
+<h3>6. Cast ray</h3>
+<pre class="prettyprint source lang-javascript"><code>//set ray position
+this.ray.setOrigin(400, 300);
+//set ray direction (in radians)
+this.ray.setAngle(2);
+//set ray direction (in degrees)
+this.ray.setAngleDeg(90);
+//cast single ray and get closets intersection, hit mapped object and hit segment
+let intersection = this.ray.cast();
+let hitObject = intersection.object;
+let hitSegment = intersection.segment;
+
+//cast rays in all directions (toward all mapped objects vertices / points)
+let intersections = this.ray.castCircle();
+
+//set ray's cone angle (in radians)
+this.ray.setCone(1);
+//set ray's cone angle (in degrees)
+this.ray.setConeDeg(90);
+
+//cast rays in a cone
+let intersections = this.ray.castCone();
+</code></pre>
+<h3>7. Raycaster bounding box</h3>
+<p>By default Raycaster is setting it's bounding box based on Arcade Physics / Matter physics world bounds.
+If world size will change after creation of Raycaster, bounding box needs to be updated.</p>
+<pre class="prettyprint source lang-javascript"><code>//define bounds
+var bounds = new Phaser.Geom.Rectangle(x, y, width, height);
+
+//get world bounds (arcade physics)
+bounds = this.worldLayer.getBounds();
+
+//get bounds (matter physics)
+let walls = this.matter.world;
+bounds = new Phaser.Geom.Rectangle(
+  walls.top.vertices[3].x, //x
+  walls.top.vertices[3].y, //y
+  walls.bottom.vertices[1].x - walls.top.vertices[3].x, //width
+  walls.bottom.vertices[1].y - walls.top.vertices[3].y //height
+)
+
+//set bounding box on raycaster creation
+var raycaster = this.raycasterPlugin.createRaycaster({
+  boundingBox: bounds
+});
+
+//set bounding box after creation
+raycaster.setBoundingBox(x, y, width, height);
+</code></pre>
+<h3>8. Collisions (arcade physics)</h3>
+<pre class="prettyprint source lang-javascript"><code>//enable auto slicing field of view
+this.ray.autoSlice = true;
+//enable arcade physics body
+this.ray.enablePhysics();
+//set collision (field of view) range
+this.ray.setCollisionRange(200);
+//cast ray
+this.ray.castCircle();
+
+//get all game objects in field of view (which bodies overlap ray's field of view)
+let visibleObjects = this.ray.overlap();
+
+//get objects in field of view
+visibleObjects = this.ray.overlap(group.getChildren());
+
+//check if object is in field of view
+visibleObjects = this.ray.overlap(gameObject);
+
+//add overlap collider (require passing ray.processOverlap as process callback)
+this.physics.add.overlap(this.ray, targets, function(rayFoVCircle, target){
+  /*
+  * What to do with game objects in line of sight.
+  */
+}, this.ray.processOverlap.bind(this.ray));
+</code></pre>
+<h3>9. Collisions (matter physics)</h3>
+<pre class="prettyprint source lang-javascript"><code>//enable auto slicing field of view
+this.ray.autoSlice = true;
+//enable matter physics body
+this.ray.enablePhysics('matter');
+//cast ray
+this.ray.castCircle();
+
+//get all game objects and bodies in field of view (which bodies overlap ray's field of view)
+let visibleObjects = this.ray.overlap();
+
+//get objects and bodies in field of view
+visibleObjects = this.ray.overlap([gameObject1, gameObject2, body1, body2]);
+
+//check if object or body is in field of view
+visibleObjects = this.ray.overlap(gameObject);
+
+//add onCollide event
+this.ray.setOnCollide(function(collisionInfo){
+  //get body
+  let body = collisionInfo.bodyA.label === 'phaser-raycaster-ray-body' ? collisionInfo.bodyB : collisionInfo.bodyA;
+    /*
+    * What to do with game object which enters line of sight .
+    */
+  }
+});
+
+//add onCollideWith event
+this.ray.setOnCollideWith(body, function(body, collisionInfo){
+    /*
+    * What to do with game object which enters line of sight.
+    */
+  }
+});
+
+//add onCollideEnd event
+this.ray.setOnCollideEnd(function(collisionInfo){
+  //get body
+  let body = collisionInfo.bodyA.label === 'phaser-raycaster-ray-body' ? collisionInfo.bodyB : collisionInfo.bodyA;
+    /*
+    * What to do with game object which leaves line of sight.
+    */
+  }
+});
+
+//add onCollideActive event
+this.ray.setOnCollide(function(collisionInfo){
+  //get body
+  let body = collisionInfo.bodyA.label === 'phaser-raycaster-ray-body' ? collisionInfo.bodyB : collisionInfo.bodyA;
+    /*
+    * What to do with game object while it's in line of sight.
+    */
+  }
+});
+</code></pre>
+<h3>10. Destroy objects</h3>
+<pre class="prettyprint source lang-javascript"><code>//remove mapped objects
+this.raycaster.removeMappedObjects(object);
+this.raycaster.removeMappedObjects(arrayOfObjects);
+
+//destroy ray
+this.ray.destroy();
+
+//destroy raycaster
+this.raycaster.destroy();
+</code></pre>
+<h3>11. Statistics</h3>
+<pre class="prettyprint source lang-javascript"><code>//get raycaster statistics
+let statistics = this.raycaster.getStats();
+/*
+  statistics = {
+    mappedObjects: {
+      total - mapped objects total
+      static - static maps
+      dynamic - dynamic maps
+      rectangleMaps - rectangle maps
+      polygonMaps - polygon maps
+      circleMaps - circle maps
+      lineMaps - line maps
+      containerMaps - container maps
+      tilemapMaps - tilemap maps
+      matterMaps - matter body maps
+    }
+  }
+*/
+
+//get ray statistics
+let rayStatistics = this.ray.getStats();
+/*
+  rayStatistics = {
+    method - used casting method (cast, castCircle, castCone)
+    rays - casted rays
+    testedMappedObjects - tested mapped objects
+    hitMappedObjects - hit mapped objects
+    segments - tested segments
+    time - casting time
+  }
+*/
+</code></pre>
+<h3>12. Debug mode</h3>
+<pre class="prettyprint source lang-javascript"><code>  //enable debug mode
+  this.raycaster = this.raycasterPlugin.createRaycaster({
+    debug: true
+  });
+
+  //advanced debug mode options
+  this.raycaster = this.raycasterPlugin.createRaycaster({
+    debug: {
+      enabled: false, //enable debug mode
+      maps: true, //enable maps debug
+      rays: true, //enable rays debug
+      graphics: {
+          ray: 0x00ff00, //debug ray color; set false to disable
+          rayPoint: 0xff00ff, //debug ray point color; set false to disable
+          mapPoint: 0x00ffff, //debug map point color; set false to disable
+          mapSegment: 0x0000ff, //debug map segment color; set false to disable
+          mapBoundingBox: 0xff0000 //debug map bounding box color; set false to disable
+      }
+    }
+  });
+
+  //change debug options after initialization
+  this.raycaster.debugOptions.enabled = true;
+
+  this.raycaster.setOptions({
+    debug: true
+  });
+
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+	<p class="text-center"><a href="https://github.com/wiserim/phaser-raycaster" target="_blank" rel="noopener noreferrer">Phaser-raycaster</a></p>
+
+
+	<span class="copyright">
+	&copy; Marcin Walczak 2022
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
+	
+		on 2026-07-18T18:32:21+02:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

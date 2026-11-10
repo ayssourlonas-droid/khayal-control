@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:phaser-raycaster:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Phaser-raycaster Source: map/map-tilemap-methods.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.paper.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Phaser-raycaster</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Raycaster.html">Raycaster</a></li><li><a href="Raycaster.Ray.html">Raycaster.Ray</a></li><li><a href="Raycaster.Map.html">Raycaster.Map</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: map/map-tilemap-methods.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">/*Map methods for tilemaps*/
+
+import { Geom, Math as PhaserMath } from 'phaser';
+
+/**
+* Get array of mapped tilemap's vertices used as rays targets.
+*
+* @method Raycaster.Map#tilemap.getPoints
+* @memberof Raycaster.Map
+* @instance
+* @private
+* @since 0.7.3
+*
+* @param {Raycaster.Ray} [ray] - {Raycaster.Ray} object used in some some types of maps.
+*
+* @return {Phaser.Math.Vector2[]} - Array of mapped object's vertices.
+*/
+export function getPoints(ray = false) {
+    if(!this.active)
+        return [];
+    if(!ray || ray &amp;&amp; (ray.detectionRange == 0 || ray.detectionRange >= PhaserMath.MAX_SAFE_INTEGER))
+        return this._points;
+
+    let points = [];
+    for(let point of this._points) {
+        if(PhaserMath.Distance.Between(ray.origin.x, ray.origin.y, point.x, point.y) &lt;= ray.detectionRange)
+            points.push(point);
+    }
+
+    //get intersections between tilemap's segments and ray's detection range edge
+    let segments = this.getSegments(ray);
+
+    for(let segment of segments) {
+        if(PhaserMath.Distance.Between(ray.origin.x, ray.origin.y, segment.x1, segment.y1) > ray.detectionRange)
+            points.push(new PhaserMath.Vector2(segment.x1, segment.y1));
+        
+        if(PhaserMath.Distance.Between(ray.origin.x, ray.origin.y, segment.x2, segment.y2) > ray.detectionRange)
+            points.push(new PhaserMath.Vector2(segment.x2, segment.y2));
+    }
+
+    return points;
+};
+
+/**
+* Get array of mapped tilemap's segments used to test object's intersection with ray.
+*
+* @method Raycaster.Map#tilemap.getSegments
+* @memberof Raycaster.Map
+* @instance
+* @private
+* @since 0.7.3
+*
+* @param {Raycaster.Ray} [ray] - {Raycaster.Ray} object used in some some types of maps.
+*
+* @return {Phaser.Geom.Line[]} - Array of mapped object's segments.
+*/
+export function getSegments(ray = false) {
+    if(!this.active)
+        return [];
+    if(!ray || (ray &amp;&amp; (ray.detectionRange == 0 || ray.detectionRange >= PhaserMath.MAX_SAFE_INTEGER)))
+        return this._segments;
+
+    let segments = [];
+    for(let segment of this._segments) {
+        if(Geom.Intersects.LineToCircle(segment, ray.detectionRangeCircle)) {
+            segments.push(segment);
+        }
+    }
+
+    return segments;
+};
+
+/**
+* Update tilemap's map of points and segments.
+*
+* @method Raycaster.Map#tilemap.updateMap
+* @memberof Raycaster.Map
+* @instance
+* @private
+* @since 0.7.3
+*
+* @return {Raycaster.Map} {@link Raycaster.Map Raycaster.Map} instance
+*/
+export function updateMap() {
+    if(!this.active)
+        return this;
+
+    let points = [],
+        segments = [],
+        columns = Array(this.object.layer.data[0].length + 1);
+        
+        for(let i = 0, iLength = columns.length; i &lt; iLength; i++) {
+            columns[i] = [];
+        }
+
+    
+    //calculate offset based on object position and origin point
+    let offset = new PhaserMath.Vector2(this.object.x, this.object.y);
+
+    let row = this.object.layer.data[0],
+        tileWidth = this.object.layer.tileWidth * this.object.scaleX,
+        tileHeight = this.object.layer.tileHeight * this.object.scaleY,
+        startPoint,
+        endPoint;
+
+    //set top horizontal lines
+    if(this.collisionTiles.includes(row[0].index)) {
+        startPoint = new PhaserMath.Vector2(offset.x, offset.y);
+        endPoint = new PhaserMath.Vector2(tileWidth + offset.x, offset.y);
+
+        columns[0].push(startPoint);
+    }
+
+    for(let i = 1, iLength = row.length; i &lt; iLength; i++) {
+        let tile = row[i];
+        
+        if(!this.collisionTiles.includes(tile.index)) {
+            if(startPoint) {
+                startPoint.neighbours = [endPoint];
+                endPoint.neighbours = [startPoint];
+
+                points.push(startPoint, endPoint);
+                segments.push(new Geom.Line(startPoint.x, startPoint.y, endPoint.x, endPoint.y));
+
+                columns[i].push(endPoint);
+
+                startPoint = false;
+                endPoint = false;
+            }
+            continue;
+        }
+
+        let x = i * tileWidth + offset.x,
+            y = offset.y;
+
+        if(!startPoint) {
+            startPoint = new PhaserMath.Vector2(x, y);
+            columns[i].push(startPoint);
+        }
+
+        if(!endPoint) {
+            endPoint = new PhaserMath.Vector2(x + tileWidth, y);
+        }
+        else {
+            endPoint.x = x + tileWidth;
+        }
+    }
+
+    if(startPoint) {
+        startPoint.neighbours = [endPoint];
+        endPoint.neighbours = [startPoint];
+
+        points.push(startPoint, endPoint);
+        segments.push(new Geom.Line(startPoint.x, startPoint.y, endPoint.x, endPoint.y));
+
+        columns[row.length].push(endPoint);
+    }
+
+    startPoint = false;
+    endPoint = false;
+    let lastPoint = false;
+
+    for(let i = 1, iLength = this.object.layer.data.length; i &lt; iLength; i++) {
+        row = this.object.layer.data[i];
+        let higherRow = this.object.layer.data[i - 1];
+
+        if(this.collisionTiles.includes(row[0].index) != this.collisionTiles.includes(higherRow[0].index)) {
+            startPoint = new PhaserMath.Vector2(offset.x,  i * tileHeight + offset.y);
+            endPoint = new PhaserMath.Vector2(tileWidth + offset.x, i * tileHeight + offset.y);
+
+            columns[0].push(startPoint);
+        }
+
+        for(let j = 1, jLength = row.length; j &lt; jLength; j++) {
+            let tile = row[j],
+                isCollisionTile = this.collisionTiles.includes(tile.index),
+                isCollisionHigherTile = this.collisionTiles.includes(higherRow[j].index);
+            
+            if(isCollisionTile == isCollisionHigherTile) {
+                if(startPoint) {
+
+                    if(!startPoint.neighbours) {
+                        startPoint.neighbours = [endPoint];
+                        points.push(startPoint);
+                    }
+
+                    endPoint.neighbours = [lastPoint ? lastPoint : startPoint];
+                    points.push(endPoint);
+                    
+                    segments.push(new Geom.Line(startPoint.x, startPoint.y, endPoint.x, endPoint.y));
+
+                    columns[j].push(endPoint);
+
+                    startPoint = false;
+                    endPoint = false;
+                }
+                continue;
+            }
+    
+            let x = j * tileWidth + offset.x,
+                y = i * tileHeight + offset.y;
+
+            // check for checkerbox pattern
+            if(
+                startPoint
+                &amp;&amp; this.collisionTiles.includes(higherRow[j - 1].index) != isCollisionHigherTile
+            ) {
+                let midPoint = new PhaserMath.Vector2(x, y);
+                midPoint.neighbours = [];
+                points.push(midPoint);
+            }
+    
+            if(!startPoint) {
+                startPoint = new PhaserMath.Vector2(x, y);
+
+                columns[j].push(startPoint);
+                lastPoint = false;
+            }
+    
+            if(!endPoint) {
+                endPoint = new PhaserMath.Vector2(x + tileWidth, y);
+            }
+            else {
+                endPoint.x = x + tileWidth;
+            }
+        }
+    
+        if(startPoint) {
+            if(!startPoint.neighbours)
+                startPoint.neighbours = [lastPoint ? lastPoint : endPoint];
+            endPoint.neighbours = [lastPoint ? lastPoint : startPoint];
+
+            if(lastPoint)
+                lastPoint.neighbours.push(endPoint);
+
+            points.push(startPoint, endPoint);
+            segments.push(new Geom.Line(startPoint.x, startPoint.y, endPoint.x, endPoint.y));
+
+            columns[row.length].push(endPoint);
+        }
+
+        startPoint = false;
+        endPoint = false;
+        lastPoint = false;
+    }
+
+    //set bottom horizontal lines
+    row = this.object.layer.data.slice(-1)[0];
+    let y = this.object.layer.data.length * tileHeight + offset.y;
+
+    if(this.collisionTiles.includes(row[0].index)) {
+        startPoint = new PhaserMath.Vector2(offset.x, y);
+        endPoint = new PhaserMath.Vector2(tileWidth + offset.x, y);
+
+        columns[0].push(startPoint);
+    }
+
+    for(let i = 1, iLength = row.length; i &lt; iLength; i++) {
+        let tile = row[i];
+        
+        if(!this.collisionTiles.includes(tile.index)) {
+            if(startPoint) {
+                startPoint.neighbours = [endPoint];
+                endPoint.neighbours = [startPoint];
+
+                points.push(startPoint, endPoint);
+                segments.push(new Geom.Line(startPoint.x, startPoint.y, endPoint.x, endPoint.y));
+
+                columns[i].push(endPoint);
+
+                startPoint = false;
+                endPoint = false;
+            }
+            continue;
+        }
+
+        let x = i * tileWidth + offset.x;
+
+        if(!startPoint) {
+            startPoint = new PhaserMath.Vector2(x, y);
+
+            columns[i].push(startPoint);
+        }
+
+        if(!endPoint) {
+            endPoint = new PhaserMath.Vector2(x + tileWidth, y);
+        }
+        else {
+            endPoint.x = x + tileWidth;
+        }
+    }
+
+    if(startPoint) {
+        startPoint.neighbours = [endPoint];
+        endPoint.neighbours = [startPoint];
+
+        points.push(startPoint, endPoint);
+        segments.push(new Geom.Line(startPoint.x, startPoint.y, endPoint.x, endPoint.y));
+
+        columns[row.length].push(endPoint);
+    }
+
+    //set vertical lines
+    for(let i = 0, iLength = columns.length; i &lt; iLength; i++) {
+        const column = columns[i];
+
+        for(let j = 0, jLength = column.length - 1; j &lt; jLength; j++) {
+            segments.push(new Geom.Line(column[j].x, column[j].y, column[j+1].x, column[j+1].y));
+            column[j].neighbours.push(column[j+1]);
+            column[j+1].neighbours.push(column[j]);
+            j++;
+        }
+    }
+
+    this._points = points;
+    this._segments = segments;
+    return this;
+};
+
+/**
+* Set tile types which should be mapped (for Phaser.Tilemaps.StaticTilemapLayer and Phaser.Tilemaps.DynamicTilemapLayer maps only).
+*
+* @method Raycaster.Map#setCollisionTiles
+* @memberof Raycaster.Map
+* @instance
+* @since 0.7.3
+*
+* @param {array} [tiles = []] - Set of tile's indexes to map.
+*
+* @return {Raycaster.Map} {@link Raycaster.Map Raycaster.Map} instance
+*/
+export function setCollisionTiles(tiles = []) {
+    this.collisionTiles = tiles;
+    return this;
+}
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+	<p class="text-center"><a href="https://github.com/wiserim/phaser-raycaster" target="_blank" rel="noopener noreferrer">Phaser-raycaster</a></p>
+
+
+	<span class="copyright">
+	&copy; Marcin Walczak 2022
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
+	
+		on 2026-07-18T18:32:21+02:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

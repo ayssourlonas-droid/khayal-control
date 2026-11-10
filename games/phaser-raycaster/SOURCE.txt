@@ -1,0 +1,8 @@
+Source: https://github.com/wiserim/phaser-raycaster
+Commit: fae4ea840219c237f18f8370dad8b0e13c849ade
+License: MIT
+Imported: 2026-11-10T17:20:19.635151+00:00
+Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 24, "تنظيف الكود": 28}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 2, audio: 0, tagged audio: 0

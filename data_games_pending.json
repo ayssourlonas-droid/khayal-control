@@ -1457,5 +1457,31 @@
       "type": "web",
       "category": "listview"
     }
+  },
+  {
+    "id": 77,
+    "release_year": "2026",
+    "category_tags": [
+      "phaser",
+      "phaser-framework",
+      "phaser-plugin"
+    ],
+    "main_scene": {
+      "title_ar": "Phaser Raycaster",
+      "title_en": "Phaser Raycaster",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/phaser-raycaster/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Raycasting plugin for Phaser 3 and 4.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/phaser-raycaster/",
+      "developer": "wiserim",
+      "license": "MIT",
+      "source_url": "https://github.com/wiserim/phaser-raycaster",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "phaser"
+    }
   }
 ]

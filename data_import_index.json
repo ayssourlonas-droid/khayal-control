@@ -1136,5 +1136,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "phaserraycaster",
+    "size": 2149,
+    "repo": "wiserim/phaser-raycaster",
+    "id": 77,
+    "slug": "phaser-raycaster",
+    "title": "Phaser Raycaster",
+    "developer": "wiserim",
+    "license": "MIT",
+    "source": "https://github.com/wiserim/phaser-raycaster",
+    "commit": "fae4ea840219c237f18f8370dad8b0e13c849ade",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

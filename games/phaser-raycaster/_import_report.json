@@ -1,0 +1,74 @@
+{
+ "date": "2026-11-10T17:20:19.635151+00:00",
+ "status": "warn",
+ "source": "https://github.com/wiserim/phaser-raycaster",
+ "commit": "fae4ea840219c237f18f8370dad8b0e13c849ade",
+ "license": "MIT",
+ "warnings": [
+  "خطوط مضمّنة (3): تأكد من ترخيصها، مثل docs/fonts/glyphicons-halflings-regular.woff، docs/fonts/glyphicons-halflings-regular.woff2، docs/fonts/glyphicons-halflings-regular.ttf",
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: blargh.tommymontgomery.com, codepen.io, daneden.me, data.jsdelivr.com, docs.python.org, getbootstrap.com, github.com, img.shields.io",
+  "5 ملفات لم تُحمَّل (404 ونحوه): مثال: 403 https://codepen.io/collection/JYOmLN",
+  "12 أخطاء في الكونسول، أولها: Permissions policy violation: unload is not allowed in this document."
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: docs",
+  "الوسائط: 2 صورة و0 صوتاً",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:phaser-raycaster:) في 24 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 254 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "ESLint: لا أخطاء في 6 ملفات",
+  "3 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 28 ملفاً، 2809KB ← 2300KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "تعديل تلقائي: إضافة meta charset × 1",
+  "تعديل تلقائي: عزل تخزين اللعبة × 24",
+  "تعديل تلقائي: تنظيف الكود × 28",
+  "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة click3 (درجة 64.3 من 8 لقطات) — مقبولة",
+  "الأزمنة: اختبار المتصفح: 89ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 49ث (أوامر: 4، اختبارات متصفح: 2)"
+ ],
+ "console_errors": [
+  "Permissions policy violation: unload is not allowed in this document.",
+  "Permissions policy violation: unload is not allowed in this document.",
+  "Failed to load resource: the server responded with a status of 403 ()",
+  "Loading the image 'https://public.codepenassets.com/favicon/favicon.ico' violates the following Content Security Policy directive: \"img-src 'self' https://challenges.cloudflare.com\". The action has be",
+  "Loading the image 'https://public.codepenassets.com/favicon/favicon.ico' violates the following Content Security Policy directive: \"img-src 'self' https://challenges.cloudflare.com\". The action has be",
+  "Connecting to 'data:,' violates the following Content Security Policy directive: \"connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://*.alg13.",
+  "Connecting to 'data:,' violates the following Content Security Policy directive: \"connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://*.alg13.",
+  "Fetch API cannot load data:,. Refused to connect because it violates the document's Content Security Policy."
+ ],
+ "failed_requests": [
+  "403 https://codepen.io/collection/JYOmLN",
+  "https://brunhild.challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/i/a586babdcb8c7c13/ChCqC0O2BhnCapX3neHoLuaJMK7BnDI3tEvPvOmO_Z0_acz0d8p7ilh5N",
+  "401 https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/pat/a586babdcb8c7c13/1794331243604/d7d513abc3d82fafc8dc8990a5bb56dbef13c75b",
+  "blob:https://challenges.cloudflare.com/60cf7e1d-fb43-4325-9879-f37d3f8345f0",
+  "403 https://codepen.io/collection/JYOmLN",
+  "blob:https://codepen.io/ef33cff0-491e-402c-b689-1cda5c64c033",
+  "401 https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/pat/a586bb3a0abe7c13/1794331263290/0498a4d0414de45b4dba270e601ae71e81ac528a",
+  "https://brunhild.challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/i/a586bb3a0abe7c13/CggX0YhhA3Nf1ya-ZKtQsaMQlbBAyn0W2hEl4Z02hgIn1Ogc_S0mGAAQC",
+  "blob:https://challenges.cloudflare.com/aaae1a2d-1af3-482f-b494-9fa5869dd04d",
+  "403 https://codepen.io/collection/JYOmLN"
+ ],
+ "external_requests": [
+  "challenges.cloudflare.com",
+  "codepen.io",
+  "data.jsdelivr.com",
+  "fonts.googleapis.com",
+  "fonts.gstatic.com",
+  "img.shields.io"
+ ],
+ "cover_candidates": [
+  "-105: glyphicons-halflings-white.png (أيقونة صغيرة، اسم جزء/عنصر)",
+  "-105: glyphicons-halflings.png (أيقونة صغيرة، اسم جزء/عنصر)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 6,
+  "errors": 0
+ },
+ "fixes": {
+  "إضافة meta charset": 1,
+  "عزل تخزين اللعبة": 24,
+  "تنظيف الكود": 28
+ }
+}
