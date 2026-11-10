@@ -1,0 +1,63 @@
+{
+ "date": "2026-11-10T15:42:49.557964+00:00",
+ "status": "warn",
+ "source": "https://github.com/cuixiping/99points",
+ "commit": "ea59ec8b496e35f09786d5607ca029f2f5436560",
+ "license": "LGPL-2.1",
+ "warnings": [
+  "رخصة حقوق متبادلة (LGPL-2.1): أي عمل مشتق يلزمه نشر المصدر بالرخصة نفسها؛ راجعها قبل النشر العام",
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: github.com, pages.github.com",
+  "2 أخطاء في الكونسول، أولها: JS: Cannot read properties of undefined (reading 'length')"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا توجد نسخة ويب في الفرع الرئيسي، فاستُعملت النسخة المنشورة من المطوّر في فرع gh-pages (ليست مبنية من الكود هنا، وقد تكون أقدم أو أحدث منه)",
+  "الوسائط: 9 صورة و0 صوتاً",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:99points:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 334 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "رخصة LGPL-2.1: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)",
+  "رخصة LGPL-2.1: لم تُحسَّن الوسائط",
+  "ESLint: لا أخطاء في 1 ملفات",
+  "رخصة LGPL-2.1: لم يُنظَّف الكود (يجب إتاحة المصدر كما هو)",
+  "تعديل تلقائي: http ← https × 1",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "الغلاف: readme0.jpg ← README #1 (درجة 98)",
+  "الأزمنة: جلب المستودع: 1ث؛ البحث/البناء: 1ث؛ اختبار المتصفح: 77ث؛ فحص JavaScript: 4ث (أوامر: 5، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [
+  "JS: Cannot read properties of undefined (reading 'length')",
+  "JS: Cannot read properties of undefined (reading 'navitems')"
+ ],
+ "failed_requests": [
+  "https://appleid.apple.com/appleauth/jslog",
+  "https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-am.pdf",
+  "https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-am.pdf"
+ ],
+ "external_requests": [
+  "api.github.com",
+  "appleid.apple.com",
+  "appleid.cdn-apple.com",
+  "avatars.githubusercontent.com",
+  "collector.github.com",
+  "github.com",
+  "github.githubassets.com",
+  "is1-ssl.mzstatic.com",
+  "raw.githubusercontent.com",
+  "securemetrics.apple.com"
+ ],
+ "cover_candidates": [
+  "98: readme0.jpg (README #1)",
+  "58: bg-desktop.png (اسم شاشة)",
+  "18: 99-desktop.png ()"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 1,
+  "errors": 0
+ },
+ "fixes": {
+  "http ← https": 1,
+  "عزل تخزين اللعبة": 1
+ }
+}

@@ -1354,5 +1354,30 @@
       "type": "web",
       "category": "2d"
     }
+  },
+  {
+    "id": 73,
+    "release_year": "2025",
+    "category_tags": [
+      "game",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "99points",
+      "title_en": "99points",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/99points/_cover.webp"
+    },
+    "details_scene": {
+      "description": "99points is a multi-player online card game developed by html5 and javascript. 九十九分，是一个适合多人一起玩的扑克牌游戏，我们做了这个游戏的HTML5版本，可以多人联机玩。",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/99points/",
+      "developer": "cuixiping",
+      "license": "LGPL-2.1",
+      "source_url": "https://github.com/cuixiping/99points",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game"
+    }
   }
 ]

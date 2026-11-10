@@ -1,0 +1,8 @@
+Source: https://github.com/cuixiping/99points
+Commit: ea59ec8b496e35f09786d5607ca029f2f5436560
+License: LGPL-2.1
+Imported: 2026-11-10T15:42:49.557964+00:00
+Automated changes (see report): {"http ← https": 1, "عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 9, audio: 0, tagged audio: 0

@@ -1076,5 +1076,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE_OPL: You MUST provide a direct link to Kaetram in the credits section. | LICENSE_OPL: You may NOT remove the credits section. It MUST remain visible on the front page of the website. It MUST be easily accessible to any user wh | artist=Aaron Krogh | artist=FreakyT"
+  },
+  {
+    "key": "points",
+    "size": 8481,
+    "repo": "cuixiping/99points",
+    "id": 73,
+    "slug": "99points",
+    "title": "99points",
+    "developer": "cuixiping",
+    "license": "LGPL-2.1",
+    "source": "https://github.com/cuixiping/99points",
+    "commit": "ea59ec8b496e35f09786d5607ca029f2f5436560",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
