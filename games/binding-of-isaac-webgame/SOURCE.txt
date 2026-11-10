@@ -1,8 +1,8 @@
 Source: https://github.com/liyupi/binding-of-isaac-webgame
 Commit: 444138dc4e7c865182f7d80ab0201670837f2939
 License: MIT
-Imported: 2026-11-07T19:38:05.011690+00:00
-Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 84}
+Imported: 2026-11-10T00:57:48.891699+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 84, "تنظيف الكود": 9}
 
 Media provenance (automated signals, not a legal guarantee):
 - images: 73, audio: 0, tagged audio: 0
