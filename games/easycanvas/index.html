@@ -1,0 +1,120 @@
+<html>
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:easycanvas:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="utf-8">
+    <title>Easycanvas文档</title>
+
+    <link href="./lib/sidebar/css/jquery-accordion-menu.css" rel="stylesheet" type="text/css" />
+    <link href="./lib/sidebar/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <script src="./lib/vue-2.4.0.min.js"></script>
+    <script src="./lib/sidebar/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="./lib/sidebar/js/jquery-accordion-menu.js" type="text/javascript"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+    <section id="docApp"></section>
+
+    <script id="docApp-template" type="javascript/template">
+        <section>
+            <header>
+                <span class="title">Easycanvas</span>
+                <span class="decription">数据驱动、渐进式canvas渲染库，支持浏览器端与微信小游戏，配备Chrome调试插件</span>
+                <div class="github">
+                    <a class="github-button" href="https://github.com/c-zhuo/easycanvas" data-icon="octicon-star" data-show-count="true" aria-label="Star c-zhuo/easycanvas on GitHub">Star</a>
+                    <!-- <a href="https://github.com/c-zhuo/easycanvas" target="_blank">
+                    <svg height="32" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+                    </a> -->
+                </div>
+            </header>
+
+            <!-- sidebar -->
+            <div id="jquery-accordion-menu" class="sidebar jquery-accordion-menu red">
+                <ul>
+                    <li v-for="item in sidebar">
+                        <a href="#">
+                            <i v-if=0 class="fa fa-home"></i>
+                            <span class="sidebar-text">{{ item.name }}</span>
+                        </a>
+                        <ul class="submenu">
+                            <!-- 不绑定touchstart不生效，应该是和jQuery的特效冲突 -->
+                            <li
+                                :class="{
+                                    'active': currentTitle === subitem.name
+                                }"
+                                v-for="subitem in item.children"
+                                @click.stop.prevent="chooseTitle(subitem)"
+                                @touchstart.stop.prevent="chooseTitle(subitem)">
+                                <a href="#">{{ subitem.name }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+                
+            <div class="content">
+                <div class="content-inner" v-html="content"></div>
+            </div>
+            <div class="demo-transition-small"
+                :class="{
+                    'bg-demo': !demoVisible,
+                    'demo-transition-big': demoVisible
+                }"
+                v-show="hasDemo"
+                @click="showDemo"
+            ></div>
+            <div class="demo"
+                v-show="demoVisible">
+                <div class="demo-close" @click="hideDemo">Close</div>
+                <div class="demo-code">
+                    <div class="demo-update" @click="updateDemo">Run</div>
+                    <div class="ace"></div>
+                </div>
+                <div class="demo-frame">
+                    <iframe id="demo-iframe"></iframe>
+                </div>
+            </div>
+        </section>
+    </script>
+</body>
+
+<script src="./lib/ace.js"></script>
+<script src="./lib/es6-promise.auto.min.js"></script>
+<script src="./main.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.5.5/babel.min.js"></script>
+<script src="https://unpkg.com/@babel/preset-env-standalone@7.5.5/babel-preset-env.min.js"></script>
+<script src="./lib/mode-jsx.js"></script>
+<script src="./lib/mode-html.js"></script>
+<script src="./lib/babel-plugin.standalone.prod.js"></script>
+
+</html>

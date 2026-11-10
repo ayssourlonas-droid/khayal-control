@@ -1361,5 +1361,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "easycanvas",
+    "size": 38754,
+    "repo": "c-zhuo/easycanvas",
+    "id": 92,
+    "slug": "easycanvas",
+    "title": "Easycanvas",
+    "developer": "c-zhuo",
+    "license": "MIT",
+    "source": "https://github.com/c-zhuo/easycanvas",
+    "commit": "d43f16944edf129ff76958ceea716afb9a33a3c1",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

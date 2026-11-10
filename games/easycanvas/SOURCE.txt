@@ -1,0 +1,8 @@
+Source: https://github.com/c-zhuo/easycanvas
+Commit: d43f16944edf129ff76958ceea716afb9a33a3c1
+License: MIT
+Imported: 2026-11-10T23:08:34.375484+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 7, "تحسين وسائط خطوط": 2, "تنظيف الكود": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 42, audio: 0, tagged audio: 0

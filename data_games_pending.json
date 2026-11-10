@@ -1846,5 +1846,31 @@
       "type": "web",
       "category": "canvas-game"
     }
+  },
+  {
+    "id": 92,
+    "release_year": "2020",
+    "category_tags": [
+      "animation",
+      "canvas",
+      "canvas-game"
+    ],
+    "main_scene": {
+      "title_ar": "Easycanvas",
+      "title_en": "Easycanvas",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/easycanvas/_cover.webp"
+    },
+    "details_scene": {
+      "description": "数据驱动、2D&3D、渐进式Canvas库，支持JSX，配备Chrome调试插件，支持微信小游戏、物理引擎等。",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/easycanvas/",
+      "developer": "c-zhuo",
+      "license": "MIT",
+      "source_url": "https://github.com/c-zhuo/easycanvas",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "animation"
+    }
   }
 ]
