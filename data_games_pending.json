@@ -1431,5 +1431,31 @@
       "type": "web",
       "category": "idle"
     }
+  },
+  {
+    "id": 76,
+    "release_year": "2025",
+    "category_tags": [
+      "listview",
+      "phaser",
+      "scroller"
+    ],
+    "main_scene": {
+      "title_ar": "Phaser List View",
+      "title_en": "Phaser List View",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/phaser-list-view/_cover.webp"
+    },
+    "details_scene": {
+      "description": "List view class for Phaser. Great for high scoreboards.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/phaser-list-view/",
+      "developer": "mattcolman",
+      "license": "MIT",
+      "source_url": "https://github.com/mattcolman/phaser-list-view",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "listview"
+    }
   }
 ]

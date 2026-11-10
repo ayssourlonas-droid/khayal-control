@@ -1,0 +1,44 @@
+{
+ "date": "2026-11-10T17:13:08.171578+00:00",
+ "status": "warn",
+ "source": "https://github.com/mattcolman/phaser-list-view",
+ "commit": "e0d8af886d38ea9a017fc6a5ad816182e03ee426",
+ "license": "MIT",
+ "warnings": [
+  "روابط لمواقع خارجية: code.google.com, gist.github.com, github.com, jsperf.lnkit.com, people.mozilla.org, phaser.io, raw.github.com, raw.githubusercontent.com",
+  "ESLint: 1 أخطاء برمجية في 24 ملفات، أولها: webpack.demos.config.js:1 Definition for rule 'import/no-extraneous-dependencies' was not found."
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 0 صورة و0 صوتاً",
+  "أنماط تستحق الانتباه: طلب كاميرا/ميكروفون (dist/phaser.min.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:phaser-list-view:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 46 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 3 ملفاً (10 KB)؛ من 36 إلى 33",
+  "2 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 22 ملفاً، 440KB ← 274KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 3",
+  "تعديل تلقائي: تنظيف الكود × 22",
+  "الغلاف: readme0.gif ← README #1 (درجة 75)",
+  "الأزمنة: اختبار المتصفح: 80ث؛ تقليل الملفات: 47ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 49ث (أوامر: 4، اختبارات متصفح: 3)"
+ ],
+ "console_errors": [],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "75: readme0.gif (README #1)",
+  "63: readme1.gif (README #2)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 24,
+  "errors": 1
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "حذف ملفات غير لازمة": 3,
+  "تنظيف الكود": 22
+ }
+}

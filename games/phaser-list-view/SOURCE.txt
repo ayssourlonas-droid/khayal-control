@@ -1,0 +1,8 @@
+Source: https://github.com/mattcolman/phaser-list-view
+Commit: e0d8af886d38ea9a017fc6a5ad816182e03ee426
+License: MIT
+Imported: 2026-11-10T17:13:08.171578+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 3, "تنظيف الكود": 22}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 0, audio: 0, tagged audio: 0
