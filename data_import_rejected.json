@@ -1051,5 +1051,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42925099712"
+  },
+  {
+    "url": "https://github.com/cristianbote/phaser-state-transition",
+    "repo": "cristianbote/phaser-state-transition",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42925309192"
   }
 ]
