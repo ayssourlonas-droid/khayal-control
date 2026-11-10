@@ -1,0 +1,67 @@
+{
+ "date": "2026-11-10T16:55:08.204764+00:00",
+ "status": "warn",
+ "source": "https://github.com/Annoraaq/grid-engine",
+ "commit": "2749a0629b9bde0cb5bd3da07470572bc2543ab2",
+ "license": "Apache-2.0",
+ "warnings": [
+  "روابط لمواقع خارجية: annoraaq.github.io, developer.mozilla.org, en.wikipedia.org, github.com, lunrjs.com, tartarus.org, typedoc.org",
+  "1 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&",
+  "3 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 ()"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: docs/public/api",
+  "الوسائط: 66 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:grid-engine:) في 63 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 317 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "5 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 2 ملفاً، 49KB ← 34KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "تعديل تلقائي: عزل تخزين اللعبة × 63",
+  "تعديل تلقائي: تنظيف الكود × 2",
+  "الغلاف: transparent-bright-bg.png ← اسم شاشة (درجة 48)",
+  "الأزمنة: الرخصة: 1ث؛ جلب المستودع: 1ث؛ البحث/البناء: 20ث؛ اختبار المتصفح: 87ث؛ الغلاف: 6ث؛ تنظيف الكود: 48ث (أوامر: 5، اختبارات متصفح: 2)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 ()",
+  "JS: Cannot read properties of undefined (reading 'length')",
+  "JS: Cannot read properties of undefined (reading 'navitems')"
+ ],
+ "failed_requests": [
+  "404 https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui",
+  "https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-am.pdf",
+  "https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-am.pdf"
+ ],
+ "external_requests": [
+  "api.github.com",
+  "appleid.apple.com",
+  "appleid.cdn-apple.com",
+  "avatars.githubusercontent.com",
+  "collector.github.com",
+  "github.com",
+  "github.githubassets.com",
+  "is1-ssl.mzstatic.com",
+  "securemetrics.apple.com",
+  "www.apple.com"
+ ],
+ "cover_candidates": [
+  "48: transparent-bright-bg.png (اسم شاشة)",
+  "44: readme3.png (README #4)",
+  "43: char-layers-bridge.png (مجلد ترويج)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 63,
+  "تنظيف الكود": 2
+ }
+}

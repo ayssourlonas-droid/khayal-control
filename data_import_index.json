@@ -1091,5 +1091,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "gridengine",
+    "size": 53037,
+    "repo": "Annoraaq/grid-engine",
+    "id": 74,
+    "slug": "grid-engine",
+    "title": "Grid Engine",
+    "developer": "Annoraaq",
+    "license": "Apache-2.0",
+    "source": "https://github.com/Annoraaq/grid-engine",
+    "commit": "2749a0629b9bde0cb5bd3da07470572bc2543ab2",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]

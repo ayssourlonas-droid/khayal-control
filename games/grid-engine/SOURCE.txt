@@ -1,0 +1,12 @@
+Source: https://github.com/Annoraaq/grid-engine
+Commit: 2749a0629b9bde0cb5bd3da07470572bc2543ab2
+License: Apache-2.0
+Imported: 2026-11-10T16:55:08.204764+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 63, "تنظيف الكود": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: attribution notices from the Source form of the Work,
+- LICENSE: include a readable copy of the attribution notices contained
+- LICENSE: do not modify the License. You may add Your own attribution
+- LICENSE: that such additional attribution notices cannot be construed
+- images: 66, audio: 0, tagged audio: 0
