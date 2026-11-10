@@ -1,0 +1,5 @@
+/*!
+ * socket.io-node
+ * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
+ * MIT Licensed
+ */var HTTPPolling=require("./http-polling"),jsonpolling_re=/^\d+$/;exports=module.exports=JSONPPolling;function JSONPPolling(mng,data,req){HTTPPolling.call(this,mng,data,req),this.head="io.j[0](",this.foot=");",data.query.i&&jsonpolling_re.test(data.query.i)&&(this.head="io.j["+data.query.i+"](")}JSONPPolling.prototype.__proto__=HTTPPolling.prototype,JSONPPolling.prototype.name="jsonppolling",JSONPPolling.prototype.postEncoded=!0,JSONPPolling.prototype.onData=function(data){try{data=JSON.parse(data)}catch{this.error("parse","reconnect");return}HTTPPolling.prototype.onData.call(this,data)},JSONPPolling.prototype.doWrite=function(data){HTTPPolling.prototype.doWrite.call(this);var data=data===void 0?"":this.head+JSON.stringify(data)+this.foot;this.response.writeHead(200,{"Content-Type":"text/javascript; charset=UTF-8","Content-Length":Buffer.byteLength(data),Connection:"Keep-Alive","X-XSS-Protection":"0"}),this.response.write(data),this.log.debug(this.name+" writing",data)};

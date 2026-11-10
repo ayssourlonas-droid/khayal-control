@@ -1,0 +1,77 @@
+{
+ "date": "2026-11-10T23:14:23.721957+00:00",
+ "status": "warn",
+ "source": "https://github.com/Lallassu/wizardwarz",
+ "commit": "fc5451c980c61698f59c11319e581cf8e43ee028",
+ "license": "MIT",
+ "warnings": [
+  "المستودع يحوي ملفات خادم (server) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
+  "خطوط مضمّنة (6): تأكد من ترخيصها، مثل fonts/glyphicons-halflings-regular.woff، fonts/glyphicons-halflings-regular.ttf، fonts/mario.ttf",
+  "أسماء ملفات تشبه علامات تجارية معروفة: fonts/super_mario_bros._regular.typeface.js، fonts/mario.ttf، fonts/super_mario_256_regular.typeface.js، models/Crates/potion/Zelda Models.blend، models/Crates/potion/72733_Zelda_Models_blend.zip، models/Crates/potion/Zelda Models.blend2، models/Crates/potion/72733 - Zelda Models - License.html، models/Crates/potion/Zelda Models.blend1",
+  "روابط لمواقع خارجية: 192.168.1.124, 192.168.1.137, actionsnippet.com, alteredqualia.com, aras-p.info, astrodud.isgreat.org, bateru.com, blindsignals.com",
+  "1 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:33775/game/socket.io/socket.io.js",
+  "8 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 105 صورة و33 صوتاً",
+  "بيانات داخل الملفات: Mitch Featherston؛ This work is licensed to the public under the Creative Commons Attribution Licen؛ artist=Metal Debri Falling؛ artist=Mike Koenig؛ artist=SoundBible.com؛ artist=Star Wars؛ artist=Tada Sound Effect",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:wizardwarz:) في 3 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 356 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 57 ملفاً (16315 KB)؛ من 291 إلى 234",
+  "تحسين صور: 64 ملفاً، وفّر 9597 KB",
+  "تحسين صوت: 18 ملفاً، وفّر 1861 KB",
+  "تحسين خطوط: 5 ملفاً، وفّر 178 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 36MB ← 24MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: 10 ملاحظات خفيفة في 57 ملفات (مفاتيح مكررة أو شيفرة لا تُنفَّذ)؛ لا تمنع اللعب غالباً",
+  "29 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 63 ملفاً، 1686KB ← 1072KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 1",
+  "تعديل تلقائي: http ← https × 21",
+  "تعديل تلقائي: عزل تخزين اللعبة × 3",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 57",
+  "تعديل تلقائي: تحسين وسائط صور × 64",
+  "تعديل تلقائي: تحسين وسائط صوت × 18",
+  "تعديل تلقائي: تحسين وسائط خطوط × 5",
+  "تعديل تلقائي: تنظيف الكود × 63",
+  "الغلاف: readme0.png ← README #1 (درجة 98)",
+  "الأزمنة: جلب المستودع: 3ث؛ تنظيف: 1ث؛ اختبار المتصفح: 87ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 204ث؛ فحص JavaScript: 4ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 6)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "JS: io is not defined",
+  "JS: Cannot read properties of undefined (reading 'on')",
+  "JS: Cannot read properties of undefined (reading 'on')",
+  "JS: Cannot read properties of undefined (reading 'on')",
+  "JS: Cannot read properties of undefined (reading 'on')",
+  "JS: Cannot read properties of undefined (reading 'on')",
+  "JS: Cannot read properties of undefined (reading 'on')"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:33775/game/socket.io/socket.io.js",
+  "http://127.0.0.1:33775/game/socket.io/socket.io.js",
+  "http://127.0.0.1:33775/game/sounds/waves.mp3"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "98: readme0.png (README #1)",
+  "18: 4.png ()",
+  "10: Flower Image.jpg ()"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 57,
+  "errors": 0
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 1,
+  "http ← https": 21,
+  "عزل تخزين اللعبة": 3,
+  "حذف ملفات غير لازمة": 57,
+  "تحسين وسائط صور": 64,
+  "تحسين وسائط صوت": 18,
+  "تحسين وسائط خطوط": 5,
+  "تنظيف الكود": 63
+ }
+}

@@ -1872,5 +1872,31 @@
       "type": "web",
       "category": "animation"
     }
+  },
+  {
+    "id": 93,
+    "release_year": "2015",
+    "category_tags": [
+      "game",
+      "gamedev",
+      "indiedev"
+    ],
+    "main_scene": {
+      "title_ar": "Wizardwarz",
+      "title_en": "Wizardwarz",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/wizardwarz/_cover.webp"
+    },
+    "details_scene": {
+      "description": "WebGL Multiplayer game with NodeJS backend",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/wizardwarz/",
+      "developer": "Lallassu",
+      "license": "MIT",
+      "source_url": "https://github.com/Lallassu/wizardwarz",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game"
+    }
   }
 ]

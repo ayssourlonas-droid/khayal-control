@@ -1,0 +1,5 @@
+/*!
+ * socket.io-node
+ * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
+ * MIT Licensed
+ */var crypto=require("crypto"),Store=require("../store");exports=module.exports=Memory,Memory.Client=Client;function Memory(opts){Store.call(this,opts)}Memory.prototype.__proto__=Store.prototype,Memory.prototype.publish=function(){},Memory.prototype.subscribe=function(){},Memory.prototype.unsubscribe=function(){};function Client(){Store.Client.apply(this,arguments),this.data={}}Client.prototype.__proto__=Store.Client,Client.prototype.get=function(key,fn){return fn(null,this.data[key]===void 0?null:this.data[key]),this},Client.prototype.set=function(key,value,fn){return this.data[key]=value,fn&&fn(null),this},Client.prototype.has=function(key,fn){fn(null,key in this.data)},Client.prototype.del=function(key,fn){return delete this.data[key],fn&&fn(null),this},Client.prototype.destroy=function(expiration){if(typeof expiration!="number")this.data={};else{var self=this;setTimeout(function(){self.data={}},expiration*1e3)}return this};

@@ -1,0 +1,15 @@
+Source: https://github.com/Lallassu/wizardwarz
+Commit: fc5451c980c61698f59c11319e581cf8e43ee028
+License: MIT
+Imported: 2026-11-10T23:14:23.721957+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 1, "http ← https": 21, "عزل تخزين اللعبة": 3, "حذف ملفات غير لازمة": 57, "تحسين وسائط صور": 64, "تحسين وسائط صوت": 18, "تحسين وسائط خطوط": 5, "تنظيف الكود": 63}
+
+Media provenance (automated signals, not a legal guarantee):
+- Mitch Featherston
+- This work is licensed to the public under the Creative Commons Attribution Licen
+- artist=Metal Debri Falling
+- artist=Mike Koenig
+- artist=SoundBible.com
+- artist=Star Wars
+- artist=Tada Sound Effect
+- images: 105, audio: 33, tagged audio: 8

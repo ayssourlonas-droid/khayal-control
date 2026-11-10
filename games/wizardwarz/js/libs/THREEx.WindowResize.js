@@ -1,0 +1,1 @@
+var THREEx=THREEx||{};THREEx.WindowResize=function(renderer,camera){var callback=function(){renderer.setSize(window.innerWidth,window.innerHeight),camera.aspect=window.innerWidth/window.innerHeight,camera.updateProjectionMatrix()};return window.addEventListener("resize",callback,!1),{stop:function(){window.removeEventListener("resize",callback)}}};

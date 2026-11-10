@@ -1376,5 +1376,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "wizardwarz",
+    "size": 32611,
+    "repo": "Lallassu/wizardwarz",
+    "id": 93,
+    "slug": "wizardwarz",
+    "title": "Wizardwarz",
+    "developer": "Lallassu",
+    "license": "MIT",
+    "source": "https://github.com/Lallassu/wizardwarz",
+    "commit": "fc5451c980c61698f59c11319e581cf8e43ee028",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: Mitch Featherston | This work is licensed to the public under the Creative Commons Attribution Licen"
   }
 ]
