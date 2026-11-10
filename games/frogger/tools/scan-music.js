@@ -27,7 +27,7 @@ const ROOT = new URL("..", import.meta.url).pathname;
 const MUSIC_DIR = ROOT + "music";
 const TARGET = ROOT + "js/music.js";
 
-const PLAYABLE = new Set([".m4a", ".ogg", ".ogg", ".wav", ".aac", ".opus"]);
+const PLAYABLE = new Set([".m4a", ".mp3", ".ogg", ".wav", ".aac", ".opus"]);
 const SAFARI_SHY = new Set([".ogg", ".opus"]);
 
 /* "Three Red Hearts - Box Jump.m4a" -> "Box Jump" */
@@ -36,7 +36,7 @@ function displayName(fileName) {
   const dash = n.indexOf(" - ");
   if (dash > 0 && dash < 30) n = n.slice(dash + 3);
   n = n.trim();
-  /* "boneyard.ogg" reads badly next to "Ninja Boogie", so title-case anything
+  /* "boneyard.mp3" reads badly next to "Ninja Boogie", so title-case anything
      that arrived all in lower case. Names with capitals are left alone. */
   if (n === n.toLowerCase()) {
     n = n.replace(/\b[a-z]/g, (c) => c.toUpperCase());
