@@ -1241,5 +1241,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Attribution"
+  },
+  {
+    "key": "2048",
+    "size": 625,
+    "repo": "gabrielecirulli/2048",
+    "id": 84,
+    "slug": "2048",
+    "title": "2048",
+    "developer": "gabrielecirulli",
+    "license": "MIT",
+    "source": "https://github.com/gabrielecirulli/2048",
+    "commit": "478b6ec346e3787f589e4af751378d06ded4cbbc",
+    "date": "2026-11-10",
+    "license_file": "LICENSE.txt",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
