@@ -1,0 +1,10 @@
+Source: https://github.com/ganlvtech/phaser-catch-the-cat
+Commit: 75b67f97a405dd5b0fc8a48d8f647efb72f070a3
+License: MIT
+Imported: 2026-11-10T22:27:16.244962+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: credit: 'github.com/ganlvtech'
+- README.md: credit          | `github.com/ganlvtech` | 右下角的备注信息                    |
+- images: 0, audio: 0, tagged audio: 0
