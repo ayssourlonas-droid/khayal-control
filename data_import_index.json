@@ -1286,5 +1286,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "phaserprojecttemplate",
+    "size": 1982,
+    "repo": "yandeu/phaser-project-template",
+    "id": 87,
+    "slug": "phaser-project-template",
+    "title": "Phaser Project Template",
+    "developer": "yandeu",
+    "license": "MIT",
+    "source": "https://github.com/yandeu/phaser-project-template",
+    "commit": "2664d16f8b65cdfd050968b42134eaca7ed656c0",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: <a href=\"#credits\">Credits</a> •"
   }
 ]

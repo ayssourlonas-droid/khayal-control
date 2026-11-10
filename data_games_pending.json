@@ -1717,5 +1717,31 @@
       "type": "web",
       "category": "framework"
     }
+  },
+  {
+    "id": 87,
+    "release_year": "2023",
+    "category_tags": [
+      "html5-game",
+      "phaser",
+      "project-template"
+    ],
+    "main_scene": {
+      "title_ar": "Phaser Project Template",
+      "title_en": "Phaser Project Template",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/phaser-project-template/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🕹️ Phaser 3 - Starter Template with TypeScript and webpack.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/phaser-project-template/",
+      "developer": "yandeu",
+      "license": "MIT",
+      "source_url": "https://github.com/yandeu/phaser-project-template",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "html5-game"
+    }
   }
 ]
