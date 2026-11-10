@@ -1,0 +1,13 @@
+Source: https://github.com/henshmi/Classic-Pool-Game
+Commit: f60e9b824648faabe1d931e9116b20333559da2a
+License: MIT
+Imported: 2026-11-10T23:29:01.404119+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 3, "تحسين وسائط صور": 30, "تحسين وسائط صوت": 5, "تنظيف الكود": 20}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: <h3>Credits:</h3>
+- README.md: Licensed under Creative Commons: By Attribution 3.0 License<br>
+- artist=Download Sound Effects - SoundDogs - Bjorn Lynne FX
+- artist=Kevin MacLeod
+- copyright=(c) 2010 Sounddogs.com, All Rights Reserved
+- images: 32, audio: 7, tagged audio: 3
