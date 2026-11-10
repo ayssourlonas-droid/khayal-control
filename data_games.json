@@ -233,5 +233,31 @@
       "type": "web",
       "category": "arena-shooter"
     }
+  },
+  {
+    "id": 47,
+    "release_year": "2026",
+    "category_tags": [
+      "2d-game",
+      "arcade",
+      "atari-2600"
+    ],
+    "main_scene": {
+      "title_ar": "Delta Strike",
+      "title_en": "Delta Strike",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/delta-strike/_cover.png"
+    },
+    "details_scene": {
+      "description": "Retro vertical-scrolling river shooter for browser & mobile — vanilla JS + Canvas 2D, 100% offline PWA, zero build, zero dependencies. An original tribute to the 1982 river-shooter classic.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/delta-strike/",
+      "developer": "eldermoraes",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/eldermoraes/Delta-Strike",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "2d-game"
+    }
   }
 ]
