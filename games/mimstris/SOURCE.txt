@@ -1,0 +1,8 @@
+Source: https://github.com/mimshwright/mimstris
+Commit: d626edc42b2947ca6aa5019cb36e6de52096e45f
+License: MIT
+Imported: 2026-11-10T23:52:20.672979+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 1, "إضافة meta charset": 1, "عزل تخزين اللعبة": 1, "تحسين وسائط صوت": 1, "تنظيف الكود": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 1, audio: 1, tagged audio: 1

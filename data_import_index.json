@@ -1436,5 +1436,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: "
+  },
+  {
+    "key": "mimstris",
+    "size": 2336,
+    "repo": "mimshwright/mimstris",
+    "id": 97,
+    "slug": "mimstris",
+    "title": "Mimstris",
+    "developer": "mimshwright",
+    "license": "MIT",
+    "source": "https://github.com/mimshwright/mimstris",
+    "commit": "d626edc42b2947ca6aa5019cb36e6de52096e45f",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: "
   }
 ]

@@ -1,0 +1,66 @@
+{
+ "date": "2026-11-10T23:52:20.672979+00:00",
+ "status": "warn",
+ "source": "https://github.com/mimshwright/mimstris",
+ "commit": "d626edc42b2947ca6aa5019cb36e6de52096e45f",
+ "license": "MIT",
+ "warnings": [
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: camo.githubusercontent.com, github.com, reactjs.org, redux.js.org, s3.amazonaws.com, saroon.bandcamp.com, wavecollector.bandcamp.com",
+  "1 أخطاء في الكونسول، أولها: JS: replaceState is not defined"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ yarn",
+  "مجلد الناتج المبني: dist",
+  "الوسائط: 1 صورة و1 صوتاً",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:mimstris:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 334 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "تحسين صوت: 1 ملفاً، وفّر 561 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 1MB ← 1MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "1 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 1 ملفاً، 2KB ← 1KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 1",
+  "تعديل تلقائي: إضافة meta charset × 1",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تحسين وسائط صوت × 1",
+  "تعديل تلقائي: تنظيف الكود × 1",
+  "الغلاف: screenshot.gif ← README #1، اسم شاشة (درجة 138)",
+  "الأزمنة: البحث/البناء: 7ث؛ اختبار المتصفح: 81ث؛ تحسين الوسائط: 47ث؛ تنظيف الكود: 49ث (أوامر: 5، اختبارات متصفح: 3)"
+ ],
+ "console_errors": [
+  "JS: replaceState is not defined"
+ ],
+ "failed_requests": [
+  "https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f",
+  "http://127.0.0.1:41111/game/mimstris.mp3"
+ ],
+ "external_requests": [
+  "bandcamp.com",
+  "browser.sentry-cdn.com",
+  "f4.bcbits.com",
+  "js.sentry-cdn.com",
+  "js.stripe.com",
+  "m.stripe.com",
+  "m.stripe.network",
+  "o363271.ingest.us.sentry.io",
+  "s4.bcbits.com",
+  "saroon.bandcamp.com"
+ ],
+ "cover_candidates": [
+  "138: screenshot.gif (README #1، اسم شاشة)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 1,
+  "إضافة meta charset": 1,
+  "عزل تخزين اللعبة": 1,
+  "تحسين وسائط صوت": 1,
+  "تنظيف الكود": 1
+ }
+}
