@@ -311,5 +311,31 @@
       "type": "web",
       "category": "card-game"
     }
+  },
+  {
+    "id": 12,
+    "release_year": "2026",
+    "category_tags": [
+      "browser-game",
+      "game",
+      "gamedev"
+    ],
+    "main_scene": {
+      "title_ar": "Ugh Guys",
+      "title_en": "Ugh Guys",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/ugh-guys/_cover.png"
+    },
+    "details_scene": {
+      "description": "A browser-based, StarCraft-style asymmetric RTS set in a mythic pre-flood world — Three.js + Vite, three factions, fog of war, pathfinding, and an AI opponent. 100% procedural, no external assets.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/ugh-guys/",
+      "developer": "atxgreene",
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/atxgreene/Ugh-Guys-",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-game"
+    }
   }
 ]
