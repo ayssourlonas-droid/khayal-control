@@ -1,0 +1,18 @@
+Source: https://github.com/Kaetram/Kaetram-Open
+Commit: f5b6665ef035ba79816458b92cbe77204042a318
+License: MPL-2.0
+Imported: 2026-11-10T15:37:28.969989+00:00
+Automated changes (see report): {"إزالة وسم إعلانات/تتبّع": 64, "عزل تخزين اللعبة": 36}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE_OPL: You MUST provide a direct link to Kaetram in the credits section.
+- LICENSE_OPL: You may NOT remove the credits section. It MUST remain visible on the front page of the website. It MUST be easily accessible to any user wh
+- LICENSE_OPL: You may NOT remove any credits to the artists, musicians, or any other original creators of this project.
+- README.md: All of the assets are licensed under CC-BY-SA3.0 and we aim to hold onto the original BQ assets as well as expand
+- README.md: You MUST provide a direct link to Kaetram in the credits section.
+- README.md: You may NOT remove the credits section. It MUST remain visible on the front page of the website. It MUST be easily accessible to any user wh
+- artist=Aaron Krogh
+- artist=FreakyT
+- artist=Terrel O'Brien
+- artist=Vladimir D. Razhev
+- images: 1432, audio: 44, tagged audio: 21

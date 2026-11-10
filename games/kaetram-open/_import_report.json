@@ -1,0 +1,68 @@
+{
+ "date": "2026-11-10T15:37:28.969989+00:00",
+ "status": "warn",
+ "source": "https://github.com/Kaetram/Kaetram-Open",
+ "commit": "f5b6665ef035ba79816458b92cbe77204042a318",
+ "license": "MPL-2.0",
+ "warnings": [
+  "رخصة حقوق متبادلة (MPL-2.0): أي عمل مشتق يلزمه نشر المصدر بالرخصة نفسها؛ راجعها قبل النشر العام",
+  "خطوط مضمّنة (6): تأكد من ترخيصها، مثل packages/client/public/fonts/kerriefont.ttf، packages/client/public/fonts/monogram.ttf، packages/client/public/fonts/graphicpixel.ttf",
+  "أُزيلت 64 وسوم إعلانات/تتبّع من HTML",
+  "روابط لمواقع خارجية: app.termly.io, bit.ly, blog.dayjo.org, discord.gg, ec.europa.eu, game-icons.net, github.com, kaetram.com",
+  "3 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:36237/_astro/index.c5d898ee.css",
+  "5 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)",
+  "ESLint: 16 أخطاء برمجية في 17 ملفات، أولها: _astro/hoisted.0860b87e.js:1 Parsing error: 'import' and 'export' may appear only with 'sourceType: module'"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ yarn",
+  "مجلد الناتج المبني: packages/client/dist",
+  "الوسائط: 1432 صورة و44 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE_OPL: You MUST provide a direct link to Kaetram in the credits section.",
+  "تصريح المطوّر عن الوسائط: LICENSE_OPL: You may NOT remove the credits section. It MUST remain visible on the front page of the website. It MUST be easily accessible to any user wh",
+  "تصريح المطوّر عن الوسائط: LICENSE_OPL: You may NOT remove any credits to the artists, musicians, or any other original creators of this project.",
+  "تصريح المطوّر عن الوسائط: README.md: All of the assets are licensed under CC-BY-SA3.0 and we aim to hold onto the original BQ assets as well as expand",
+  "تصريح المطوّر عن الوسائط: README.md: You MUST provide a direct link to Kaetram in the credits section.",
+  "تصريح المطوّر عن الوسائط: README.md: You may NOT remove the credits section. It MUST remain visible on the front page of the website. It MUST be easily accessible to any user wh",
+  "بيانات داخل الملفات: artist=Aaron Krogh؛ artist=FreakyT؛ artist=Terrel O'Brien؛ artist=Vladimir D. Razhev",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:kaetram-open:) في 36 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 317 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "رخصة MPL-2.0: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)",
+  "رخصة MPL-2.0: لم تُحسَّن الوسائط",
+  "9 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "رخصة MPL-2.0: لم يُنظَّف الكود (يجب إتاحة المصدر كما هو)",
+  "تعديل تلقائي: إزالة وسم إعلانات/تتبّع × 64",
+  "تعديل تلقائي: عزل تخزين اللعبة × 36",
+  "الغلاف: splitbanners.png ← اسم عنوان/بانر (درجة 70)",
+  "الأزمنة: جلب المستودع: 3ث؛ البحث/البناء: 101ث؛ اختبار المتصفح: 86ث؛ الغلاف: 1ث؛ فحص JavaScript: 2ث (أوامر: 5، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "A bad HTTP response code (404) was received when fetching the script.",
+  "TypeError: Failed to register a ServiceWorker for scope ('http://127.0.0.1:36237/~partytown/') with script ('http://127.0.0.1:36237/~partytown/partytown-sw.js'): A bad HTTP response code (404) was rec",
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:36237/_astro/index.c5d898ee.css",
+  "http://127.0.0.1:36237/_astro/index.c5d898ee.css",
+  "404 http://127.0.0.1:36237/_astro/hoisted.664cf483.js",
+  "http://127.0.0.1:36237/_astro/hoisted.664cf483.js",
+  "404 http://127.0.0.1:36237/privacy/"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "70: splitbanners.png (اسم عنوان/بانر)",
+  "58: screenshot.png (اسم شاشة)",
+  "43: readme13.png (README #14)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 17,
+  "errors": 16
+ },
+ "fixes": {
+  "إزالة وسم إعلانات/تتبّع": 64,
+  "عزل تخزين اللعبة": 36
+ }
+}

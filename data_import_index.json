@@ -1061,5 +1061,20 @@
     "date": "2026-11-09",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "kaetramopen",
+    "size": 849648,
+    "repo": "Kaetram/Kaetram-Open",
+    "id": 72,
+    "slug": "kaetram-open",
+    "title": "Kaetram Open",
+    "developer": "Kaetram",
+    "license": "MPL-2.0",
+    "source": "https://github.com/Kaetram/Kaetram-Open",
+    "commit": "f5b6665ef035ba79816458b92cbe77204042a318",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE_OPL: You MUST provide a direct link to Kaetram in the credits section. | LICENSE_OPL: You may NOT remove the credits section. It MUST remain visible on the front page of the website. It MUST be easily accessible to any user wh | artist=Aaron Krogh | artist=FreakyT"
   }
 ]

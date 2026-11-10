@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://kaetram.com/sitemap-index.xml
+Host: kaetram.com
