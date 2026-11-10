@@ -622,32 +622,6 @@
     }
   },
   {
-    "id": 46,
-    "release_year": "2026",
-    "category_tags": [
-      "arcade",
-      "browser-game",
-      "canvas"
-    ],
-    "main_scene": {
-      "title_ar": "Persia Game",
-      "title_en": "Persia Game",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/persia-game/_cover.png"
-    },
-    "details_scene": {
-      "description": "An arcade shooter for the browser: five waves of angry animals, each named in Persian as it arrives, then a giant cat",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/persia-game/",
-      "developer": "cocodedk",
-      "license": "Apache-2.0",
-      "source_url": "https://github.com/cocodedk/persia-game",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "arcade"
-    }
-  },
-  {
     "id": 49,
     "release_year": "2026",
     "category_tags": [
