@@ -1,0 +1,79 @@
+{
+ "date": "2026-11-10T12:45:14.408911+00:00",
+ "status": "warn",
+ "source": "https://github.com/mumuy/pacman",
+ "commit": "8a96194f7cf0102db2d7f0e69450166beb1d7116",
+ "license": "MIT",
+ "warnings": [
+  "خطوط مضمّنة (1): تأكد من ترخيصها، مثل static/font/PressStart2P.ttf",
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: buttons.github.io, github.com, passer-by.com",
+  "2 ملفات لم تُحمَّل (404 ونحوه): مثال: 403 https://passer-by.com/",
+  "12 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 403 ()",
+  "لا توجد صورة غلاف؛ أفضل لقطة (نهاية الاختبار) ضعيفة (درجة 4.9) — يُفضّل استبدال الغلاف يدوياً"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 1 صورة و0 صوتاً",
+  "أنماط تستحق الانتباه: إعادة توجيه لموقع خارجي (index.html)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:pacman:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 231 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 1 ملفاً (0 KB)؛ من 8 إلى 7",
+  "تحسين خطوط: 1 ملفاً، وفّر 68 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 0MB ← 0MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: لا أخطاء في 2 ملفات",
+  "تنظيف الكود (فراغات وبنية الكود): 3 ملفاً، 59KB ← 43KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 1",
+  "تعديل تلقائي: تحسين وسائط خطوط × 1",
+  "تعديل تلقائي: تنظيف الكود × 3",
+  "الأزمنة: اختبار المتصفح: 78ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 47ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 403 ()",
+  "Failed to load resource: the server responded with a status of 403 ()",
+  "Connecting to 'data:,' violates the following Content Security Policy directive: \"connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://*.alg13.",
+  "Connecting to 'data:,' violates the following Content Security Policy directive: \"connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://*.alg13.",
+  "Fetch API cannot load data:,. Refused to connect because it violates the document's Content Security Policy.",
+  "%c%d font-size:0;color:transparent NaN",
+  "%c%d font-size:0;color:transparent NaN",
+  "%c%o font-size:0;color:transparent {}"
+ ],
+ "failed_requests": [
+  "https://passer-by.com/static/script/projects.js",
+  "https://passer-by.com/static/style/common.css",
+  "https://passer-by.com/static/image/public/logo.png",
+  "https://passer-by.com/static/image/public/icon-gotop.png",
+  "https://passer-by.com/static/script/common.js",
+  "https://passer-by.com/static/script/stat.js",
+  "403 https://passer-by.com/",
+  "https://brunhild.challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/i/a5852767fa0378c8/Ck3EUR9yId6yvEWwVnoZJ4205basCfTByYwMrEjuB8rTX6dKE8D1XCjpB",
+  "401 https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/pat/a5852767fa0378c8/1794314722895/1d0bd9c01fdf89e21486a6c34231db24e2f5bc16",
+  "https://brunhild.challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/i/a5852767fa0378c8/Ck3EUR9yId6yvEWwVnoZJ4205basCfTByYwMrEjuB8rTX6dKE8D1XCjpB"
+ ],
+ "external_requests": [
+  "api.github.com",
+  "buttons.github.io",
+  "challenges.cloudflare.com",
+  "dual-valid--mwaotxkp13084sm5uoah.mldsa44.dnstest.challenges.cloudflare.com",
+  "invalid--mwaotxkp13084sm5uoah.alg13.dnstest.challenges.cloudflare.com",
+  "passer-by.com",
+  "valid--mwaotxkp13084sm5uoah.alg13.dnstest.challenges.cloudflare.com",
+  "valid--mwaotxkp13084sm5uoah.mldsa44.dnstest.challenges.cloudflare.com"
+ ],
+ "cover_candidates": [
+  "-260: favicon.png (favicon، مربعة، ملف صغير جداً)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 2,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "حذف ملفات غير لازمة": 1,
+  "تحسين وسائط خطوط": 1,
+  "تنظيف الكود": 3
+ }
+}
