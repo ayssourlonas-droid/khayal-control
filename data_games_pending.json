@@ -1950,5 +1950,31 @@
       "type": "web",
       "category": "2d-game"
     }
+  },
+  {
+    "id": 96,
+    "release_year": "2023",
+    "category_tags": [
+      "game-development",
+      "javascript",
+      "javascript-game"
+    ],
+    "main_scene": {
+      "title_ar": "Taptaptap",
+      "title_en": "Taptaptap",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/taptaptap/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🕹 Open Source Javascript Game",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/taptaptap/",
+      "developer": "MahdiF",
+      "license": "MIT",
+      "source_url": "https://github.com/MahdiF/taptaptap",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game-development"
+    }
   }
 ]

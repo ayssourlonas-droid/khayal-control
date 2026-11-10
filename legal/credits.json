@@ -1421,5 +1421,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE.txt",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: <h3>Credits:</h3> | README.md: Licensed under Creative Commons: By Attribution 3.0 License<br> | artist=Download Sound Effects - SoundDogs - Bjorn Lynne FX | artist=Kevin MacLeod"
+  },
+  {
+    "key": "taptaptap",
+    "size": 12167,
+    "repo": "MahdiF/taptaptap",
+    "id": 96,
+    "slug": "taptaptap",
+    "title": "Taptaptap",
+    "developer": "MahdiF",
+    "license": "MIT",
+    "source": "https://github.com/MahdiF/taptaptap",
+    "commit": "da4b06a051c8ad1ddeb429232e56478f02811fb7",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: "
   }
 ]
