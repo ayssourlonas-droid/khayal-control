@@ -1,0 +1,8 @@
+Source: https://github.com/samid737/phaser3-plugin-pathbuilder
+Commit: 2e7a078ddbb258e3eccbe698555dba62349e7af7
+License: MIT
+Imported: 2026-11-10T17:45:30.288615+00:00
+Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 6, "تنظيف الكود": 14}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 1, audio: 0, tagged audio: 0

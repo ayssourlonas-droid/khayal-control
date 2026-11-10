@@ -1166,5 +1166,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "phaserpluginpathbuilder",
+    "size": 12299,
+    "repo": "samid737/phaser3-plugin-pathbuilder",
+    "id": 79,
+    "slug": "phaser3-plugin-pathbuilder",
+    "title": "Phaser3 Plugin Pathbuilder",
+    "developer": "samid737",
+    "license": "MIT",
+    "source": "https://github.com/samid737/phaser3-plugin-pathbuilder",
+    "commit": "2e7a078ddbb258e3eccbe698555dba62349e7af7",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

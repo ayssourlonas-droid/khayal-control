@@ -1509,5 +1509,31 @@
       "type": "web",
       "category": "android"
     }
+  },
+  {
+    "id": 79,
+    "release_year": "2026",
+    "category_tags": [
+      "bezier-curves",
+      "draw",
+      "games"
+    ],
+    "main_scene": {
+      "title_ar": "Phaser3 Plugin Pathbuilder",
+      "title_en": "Phaser3 Plugin Pathbuilder",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/phaser3-plugin-pathbuilder/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Draw and edit Lines, Bezier Curves, Splines at runtime, explore your scene and export your paths to Phaser",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/phaser3-plugin-pathbuilder/",
+      "developer": "samid737",
+      "license": "MIT",
+      "source_url": "https://github.com/samid737/phaser3-plugin-pathbuilder",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "bezier-curves"
+    }
   }
 ]
