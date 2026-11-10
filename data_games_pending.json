@@ -544,32 +544,6 @@
     }
   },
   {
-    "id": 40,
-    "release_year": "2026",
-    "category_tags": [
-      "canvas-game",
-      "html5-game",
-      "snake-game"
-    ],
-    "main_scene": {
-      "title_ar": "Material Snake",
-      "title_en": "Material Snake",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/material-snake/_cover.png"
-    },
-    "details_scene": {
-      "description": "A TypeScript implementation of the popular game",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/material-snake/",
-      "developer": "scriptex",
-      "license": "MIT",
-      "source_url": "https://github.com/scriptex/material-snake",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "canvas-game"
-    }
-  },
-  {
     "id": 41,
     "release_year": "2026",
     "category_tags": [
