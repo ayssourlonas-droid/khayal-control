@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سياسة الخصوصية — خيال</title>
+<meta name="description" content="ما الذي يخرج من هاتفك عندما تستعمل خيال، ولمن، ولماذا.">
+<meta name="theme-color" content="#0b0f19">
+<style>
+:root{--bg:#0b0f19;--card:#151c2e;--line:#26334d;--tx:#f8fafc;--mu:#94a3b8;--a:#e11d48;--b:#9333ea;--ok:#34d399}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,'Segoe UI',Tahoma,Arial,sans-serif}
+body{background:var(--bg);color:var(--tx);line-height:1.95;font-size:17px;
+ background-image:radial-gradient(circle at 85% -5%,rgba(225,29,72,.16),transparent 45%),radial-gradient(circle at 0% 30%,rgba(147,51,234,.10),transparent 40%);background-repeat:no-repeat}
+.wrap{max-width:780px;margin:0 auto;padding:22px 18px 70px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
+.logo{font-weight:900;font-size:1.7rem;background:linear-gradient(135deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.nav a{color:var(--mu);text-decoration:none;font-size:.92rem;margin-right:16px}.nav a:hover,.nav a.on{color:var(--tx)}
+h1{font-size:2.3rem;font-weight:900;line-height:1.35;margin-bottom:6px}
+.date{color:var(--mu);font-size:.9rem;margin-bottom:26px}
+.lead{background:var(--card);border:1px solid var(--line);border-right:4px solid var(--a);border-radius:14px;padding:16px 20px;margin-bottom:34px}
+.lead b{color:#fff}
+h2{font-size:1.28rem;font-weight:800;margin:38px 0 6px;display:flex;align-items:center;gap:10px}
+h2 i{font-style:normal;font-size:.8rem;font-weight:800;color:var(--bg);background:linear-gradient(135deg,var(--a),var(--b));border-radius:8px;padding:0 9px;line-height:1.7}
+p{color:#dbe3ef;margin:6px 0}
+a{color:#f472b6}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.95rem}
+th,td{text-align:right;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--mu);font-weight:700;font-size:.85rem}
+td:first-child{font-weight:700;white-space:nowrap}
+.tbl{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 8px;overflow-x:auto}
+.no{color:var(--ok);font-weight:700}
+.ask{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:14px 18px;margin-top:10px}
+footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--mu);font-size:.88rem}
+@media(max-width:520px){h1{font-size:1.8rem}td:first-child{white-space:normal}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<a class="logo" href="../index.html">خيال</a>
+<div class="nav"><a href="privacy.html" class="on">الخصوصية</a><a href="terms.html">الشروط</a><a href="credits.html">حقوق الألعاب</a></div>
+</div>
+
+<h1>الخصوصية، بلا لفّ ودوران</h1>
+<div class="date">آخر تحديث: 10 نوفمبر 2026</div>
+
+<div class="lead">
+<b>لا حساب، ولا اسم، ولا بريد، ولا رقم هاتف.</b> لن تجد في خيال شاشة تسجيل أصلاً. ما تحتفظ به على هاتفك (نقاطك، إعجاباتك، تقييماتك، تقدّمك في الألعاب) يبقى على هاتفك، ونحن لا نستقبله ولا نراه.
+</div>
+
+<h2><i>١</i> ما الذي يغادر هاتفك فعلاً؟</h2>
+<p>الأسهل أن نعدّه لك كله. هذه كل الاتصالات التي يجريها التطبيق:</p>
+<div class="tbl"><table>
+<tr><th>الوجهة</th><th>لماذا</th><th>ما يصلها</th></tr>
+<tr><td>GitHub (ملفات نصية عامة)</td><td>جلب قائمة الألعاب وفحص وجود إصدار جديد من التطبيق</td><td>طلب قراءة عادي، دون أي معلومة عنك</td></tr>
+<tr><td>خادم الاستضافة (Cloudflare)</td><td>تحميل صور الألعاب والألعاب نفسها</td><td>طلب قراءة عادي لملف عام</td></tr>
+<tr><td>عدّاد الاستخدام</td><td>معرفة أي الألعاب تُلعب أكثر</td><td>اسم اللعبة + رقم عشوائي يُولَّد عند كل فتح (التفاصيل أدناه)</td></tr>
+<tr><td>Google AdMob</td><td>عرض الإعلانات</td><td>ما تجمعه Google للإعلانات (التفاصيل أدناه)</td></tr>
+</table></div>
+<p>أي خادم يستقبل طلباً يرى عنوان IP صاحبه بحكم طبيعة الإنترنت، وهذا ينطبق على كل تطبيق في العالم. <span class="no">لكننا لا نحفظ هذا العنوان ولا نربطه بشيء</span>، ولا نملك قاعدة بيانات مستخدمين أصلاً.</p>
+
+<h2><i>٢</i> العدّاد: ماذا نعدّ بالضبط؟</h2>
+<p>بعد ثانيتين من دخولك أي لعبة، يرسل التطبيق اسم اللعبة ورقماً عشوائياً من 16 خانة يُولَّد في تلك اللحظة فقط. الرقم لا يُحفظ على هاتفك ولا يرتبط بجهازك أو حسابك، وفائدته الوحيدة أن لا تُحتسب الفتحة نفسها مرتين. الناتج النهائي جدول بسيط: «اللعبة ← عدد المرات في هذا اليوم». لا نستعمله لتتبّعك، ولا يمكن به معرفة من أنت أو ماذا لعبت أمس.</p>
+
+<h2><i>٣</i> الإعلانات</h2>
+<p>خيال مجاني، والإعلانات هي ما يموّله. نستعمل Google AdMob: لافتة صغيرة، وإعلاناً بينياً عند الدخول إلى لعبة (بفاصل لا يقل عن 90 ثانية بين إعلانين)، وإعلاناً بمكافأة تشاهده باختيارك لتحصل على نقطة.</p>
+<p>هنا تتدخل Google وشركاؤها: قد تقرأ معرّف الإعلانات في جهازك وبيانات تقنية عن الاستخدام لاختيار الإعلان وقياس أدائه. نحن لا نرى هذه البيانات ولا نتحكم بها. وفي المناطق التي يفرض فيها القانون ذلك (كالاتحاد الأوروبي) تظهر لك نافذة موافقة عند أول تشغيل لتقبل أو ترفض. ويمكنك في أي وقت تصفير معرّف الإعلانات أو إيقاف تخصيصها من إعدادات هاتفك (Google ← الإعلانات). تفاصيل أكثر في <a href="https://policies.google.com/technologies/ads" rel="noopener">سياسة Google للإعلانات</a>.</p>
+
+<h2><i>٤</i> الألعاب داخل التطبيق</h2>
+<p>كل لعبة تعمل داخل متصفح مدمج معزول. لا تستطيع الوصول إلى ملفاتك ولا جهات اتصالك، ونفصل ما تحفظه كل لعبة عن غيرها. لكن الألعاب برامج كتبها آخرون، وقد تطلب لعبة ما موارد من الإنترنت (خط، صوت، مكتبة) لتعمل، وهذا اتصال تجريه اللعبة وليس خيال. نفحص الألعاب قبل إضافتها ونحاول رصد ذلك وإزالته، لكننا لا نستطيع ضمان أن كل لعبة نظيفة تماماً.</p>
+
+<h2><i>٥</i> ما يُحفظ على هاتفك</h2>
+<p>رصيد النقاط، وإعجاباتك وتقييماتك ومفضّلتك، وخيار الصوت، ونسخة مخبّأة من قائمة الألعاب لتفتح بسرعة، وبيانات الألعاب نفسها كتقدّمك ومستوياتك. هذا كله محلي. لن ينتقل معك إن غيّرت هاتفك، وهذا ثمن أننا لا نحتفظ بشيء عنك.</p>
+
+<h2><i>٦</i> الإبلاغ عن لعبة</h2>
+<p>زر «إبلاغ» لا يرسل شيئاً من تلقاء نفسه. يجهّز لك رسالة فيها اسم اللعبة ورابطها ورقم إصدار التطبيق وسبب الإبلاغ، وتختار أنت أن ترسلها بالبريد أو واتساب أو تتركها.</p>
+
+<h2><i>٧</i> الأطفال</h2>
+<p>خيال غير موجّه للأطفال دون 13 سنة. إن علمت أن طفلاً استعمله وتريد فتح أي نقاش بخصوص ذلك، راسلنا.</p>
+
+<h2><i>٨</i> حذف بياناتك</h2>
+<p>لا يوجد شيء عندنا لنحذفه، لأننا لا نملك حسابك أصلاً. لمحو ما على هاتفك احذف التطبيق، أو من إعدادات الأندرويد: التطبيقات ← خيال ← التخزين ← مسح البيانات. أما عدّاد الاستخدام فأرقامه مجمّعة ومجهولة ولا يمكن استخراج بيانات شخص منها.</p>
+
+<h2><i>٩</i> إن تغيّر شيء</h2>
+<p>إن أضفنا يوماً حسابات أو مدفوعات أو أي جمع جديد للبيانات فسنغيّر هذه الصفحة قبل ذلك، ونضع تاريخ التحديث في أعلاها.</p>
+
+<h2><i>١٠</i> كلّمنا</h2>
+<div class="ask"><p>أي سؤال أو اعتراض أو شك: <span class="mail">من داخل التطبيق: الإعدادات ← تواصل معنا</span></p></div>
+
+<footer>خيال · آخر تحديث لهذه الصفحة: 10 نوفمبر 2026</footer>
+</div>
+<script>
+(function(){
+  fetch('../version.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(v){
+    var m=(v.support_email||'').trim();
+    if(!m)return;
+    document.querySelectorAll('.mail').forEach(function(e){
+      var a=document.createElement('a');a.href='mailto:'+m;a.textContent=m;e.replaceWith(a);
+    });
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>
