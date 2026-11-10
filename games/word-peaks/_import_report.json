@@ -1,0 +1,59 @@
+{
+ "date": "2026-11-10T18:17:33.113236+00:00",
+ "status": "warn",
+ "source": "https://github.com/vegeta897/word-peaks",
+ "commit": "647dd052601903f2daa669a5460ebaf104945483",
+ "license": "MIT",
+ "warnings": [
+  "خطوط مضمّنة (1): تأكد من ترخيصها، مثل static/font/OpenDyslexic-Regular.woff",
+  "روابط لمواقع خارجية: api.nicelight.games, bsky.app, buymeacoffee.com, crowdin.com, example.com, github.com, plausible.io, plausible.pixelatomy.com",
+  "حذف الملفات سبّب أخطاء في الاختبار فتم التراجع عنه كاملاً (اللعبة بقيت كما هي)",
+  "تحسين صور سبّب أخطاء في الاختبار فتم التراجع عنه",
+  "تحسين خطوط سبّب أخطاء في الاختبار فتم التراجع عنه",
+  "ESLint: 4 أخطاء برمجية في 4 ملفات، أولها: _app/immutable/chunks/DLzVrG3Q.js:1 Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
+  "تنظيف الكود سبّب أخطاء في الاختبار فتم التراجع عنه (بقي الكود كما هو)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: build",
+  "الوسائط: 9 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: Attribution",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:word-peaks:) في 5 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 336 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "28 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تعديل تلقائي: عزل تخزين اللعبة × 5",
+  "الغلاف: og0.png ← og:image، اسم عنوان/بانر (درجة 178)",
+  "الأزمنة: البحث/البناء: 6ث؛ اختبار المتصفح: 87ث؛ تقليل الملفات: 46ث؛ تحسين الوسائط: 96ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 94ث (أوامر: 6، اختبارات متصفح: 6)"
+ ],
+ "console_errors": [],
+ "failed_requests": [
+  "https://video.bsky.app/watch/did%3Aplc%3Ag66ultbjx72we4fcklcu67zz/bafkreicd2uyhurblqazhtnr33jnu753hezn7b2mg34o3fs7g6s7w3fg7ey/playlist.m3u8",
+  "https://video.bsky.app/watch/did%3Aplc%3Ah36cb5didkr3bxjbszrzumjs/bafkreihilr4v43pkpk6ve2z3lwvltshvftfdxvxakr4dvgjj3eezqqccuy/playlist.m3u8"
+ ],
+ "external_requests": [
+  "app-config.workers.bsky.app",
+  "bsky.app",
+  "bsky.social",
+  "cdn.bsky.app",
+  "events.bsky.app",
+  "ip.bsky.app",
+  "live-events.workers.bsky.app",
+  "ogcard.cdn.bsky.app",
+  "public.api.bsky.app",
+  "video.bsky.app"
+ ],
+ "cover_candidates": [
+  "178: og0.png (og:image، اسم عنوان/بانر)",
+  "8: word-peaks-logo.png (شعار كبير، مربعة)",
+  "-110: open-graph-300x300.png (اسم جزء/عنصر، مربعة، ملف صغير جداً)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 4,
+  "errors": 4
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 5
+ }
+}

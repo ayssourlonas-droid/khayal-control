@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:word-peaks:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+		<title>Word Peaks</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="Outsmart the alphabet in a word game of highs and lows" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Word Peaks" />
+		<meta name="twitter:creator" content="@vegeta897" />
+		<meta property="og:title" content="Word Peaks" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="https://vegeta897.github.io/word-peaks/open-graph-1200x630.png" />
+		<meta property="og:image:type" content="image/png">
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Word Peaks logo" />
+		<meta property="og:url" content="https://vegeta897.github.io/word-peaks" />
+		<meta property="og:description" content="Outsmart the alphabet in a word game of highs and lows" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="application-name" content="Word Peaks" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="Word Peaks" />
+		<meta name="theme-color" content="#15a850" />
+		<meta name="color-scheme" content="dark only">
+		<link	rel="apple-touch-icon" sizes="180x180"	href="https://vegeta897.github.io/word-peaks/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="https://vegeta897.github.io/word-peaks/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16"	href="https://vegeta897.github.io/word-peaks/favicon-16x16.png" />
+		<link rel="manifest" href="https://vegeta897.github.io/word-peaks/manifest.json?v=1" />
+		<link	rel="mask-icon"	href="https://vegeta897.github.io/word-peaks/safari-pinned-tab.svg" color="#15a850" />
+		<link rel="shortcut icon" href="https://vegeta897.github.io/word-peaks/favicon.ico" />
+		<meta name="msapplication-TileColor" content="#2b5797" />
+		<meta	name="msapplication-config"	content="https://vegeta897.github.io/word-peaks/browserconfig.xml" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="google-site-verification" content="ooRw0oRKEYQs3lSoqmGJVm7I-MK_XVRNws9A1mOaqvU" />
+		
+		<link href="./_app/immutable/assets/0.Doil91Zu.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/index.A5VgGu6i.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/3.TsSiK0UQ.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start._a5NIyt2.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CqvqAj-I.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/m9FSMOvu.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.wuWfzhiK.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/C1FmrZbK.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DJe9lBQq.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.BE8cW-8w.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DhGOgvx8.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/Dmd_Fduv.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/3.BFSR_IaZ.js"><!-- HEAD_svelte-15u6v3h_START --><!-- HEAD_svelte-15u6v3h_END -->
+	</head>
+	<body>
+		<div>   <div id="main" style="--tile-arrow-radius: 39.92%" class="svelte-dyju3k"><ul class="_toastContainer svelte-yh90az"> </ul> <section class="svelte-1nprqny"><h1 data-svelte-h="svelte-1h8ita9">Word Peaks Debug Info</h1>  </section> </div> 
+			
+			<script>
+				{
+					__sveltekit_1anfztd = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						assets: "/word-peaks"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("./_app/immutable/entry/start._a5NIyt2.js"),
+						import("./_app/immutable/entry/app.wuWfzhiK.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 3],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,9 @@
+Source: https://github.com/vegeta897/word-peaks
+Commit: 647dd052601903f2daa669a5460ebaf104945483
+License: MIT
+Imported: 2026-11-10T18:17:33.113236+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 5}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: Attribution
+- images: 9, audio: 0, tagged audio: 0

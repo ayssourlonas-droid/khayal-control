@@ -1613,5 +1613,31 @@
       "type": "web",
       "category": "game"
     }
+  },
+  {
+    "id": 83,
+    "release_year": "2026",
+    "category_tags": [
+      "dle",
+      "game",
+      "single-page-app"
+    ],
+    "main_scene": {
+      "title_ar": "Word Peaks",
+      "title_en": "Word Peaks",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/word-peaks/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A word guessing game of highs and lows",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/word-peaks/",
+      "developer": "vegeta897",
+      "license": "MIT",
+      "source_url": "https://github.com/vegeta897/word-peaks",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "dle"
+    }
   }
 ]

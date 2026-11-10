@@ -1226,5 +1226,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "wordpeaks",
+    "size": 4641,
+    "repo": "vegeta897/word-peaks",
+    "id": 83,
+    "slug": "word-peaks",
+    "title": "Word Peaks",
+    "developer": "vegeta897",
+    "license": "MIT",
+    "source": "https://github.com/vegeta897/word-peaks",
+    "commit": "647dd052601903f2daa669a5460ebaf104945483",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Attribution"
   }
 ]
