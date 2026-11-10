@@ -808,5 +808,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42863355611"
+  },
+  {
+    "url": "https://github.com/gabtoschi/letreco",
+    "repo": "gabtoschi/letreco",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42864494098"
   }
 ]
