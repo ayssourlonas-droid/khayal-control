@@ -844,5 +844,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42865514976"
+  },
+  {
+    "url": "https://github.com/yandeu/phaser3-typescript-platformer-example",
+    "repo": "yandeu/phaser3-typescript-platformer-example",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42866656619"
   }
 ]
