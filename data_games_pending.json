@@ -1480,5 +1480,32 @@
       "category": "chess"
     },
     "review_note": "أُخفيت يدوياً من تطبيق المتحكم"
+  },
+  {
+    "id": 17,
+    "release_year": "2026",
+    "category_tags": [
+      "axonos",
+      "bci",
+      "brain-computer-interface"
+    ],
+    "main_scene": {
+      "title_ar": "Become The Brain Os",
+      "title_en": "Become The Brain Os",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/become-the-brain-os/_cover.png"
+    },
+    "details_scene": {
+      "description": "🧠 Become the Brain OS — a local-only cognitive-firewall game: allow derived intent, block raw cognition, distortions, revoked consent and artifacts across the mind↔world boundary. Scenarios, daily seed, challenge-a-friend. A game about the real AxonOS real-time OS. No sensor, no neural data.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/become-the-brain-os/",
+      "developer": "AxonOS-org",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/AxonOS-org/become-the-brain-os",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "axonos"
+    },
+    "review_note": "أُخفيت يدوياً من تطبيق المتحكم"
   }
 ]
