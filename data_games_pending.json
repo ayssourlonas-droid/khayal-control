@@ -1743,5 +1743,30 @@
       "type": "web",
       "category": "html5-game"
     }
+  },
+  {
+    "id": 88,
+    "release_year": "2023",
+    "category_tags": [
+      "pathfinding",
+      "phaser"
+    ],
+    "main_scene": {
+      "title_ar": "Navmesh",
+      "title_en": "Navmesh",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/navmesh/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A plugin for path-finding in JS using navmeshes, with wrappers for Phaser 3 and Phaser 2",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/navmesh/",
+      "developer": "mikewesthad",
+      "license": "MIT",
+      "source_url": "https://github.com/mikewesthad/navmesh",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "pathfinding"
+    }
   }
 ]

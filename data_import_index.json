@@ -1301,5 +1301,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: <a href=\"#credits\">Credits</a> •"
+  },
+  {
+    "key": "navmesh",
+    "size": 12406,
+    "repo": "mikewesthad/navmesh",
+    "id": 88,
+    "slug": "navmesh",
+    "title": "Navmesh",
+    "developer": "mikewesthad",
+    "license": "MIT",
+    "source": "https://github.com/mikewesthad/navmesh",
+    "commit": "7606d96bac0b374329a11ff9c071cf7c40cd9755",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

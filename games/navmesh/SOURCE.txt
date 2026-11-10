@@ -1,0 +1,8 @@
+Source: https://github.com/mikewesthad/navmesh
+Commit: 7606d96bac0b374329a11ff9c071cf7c40cd9755
+License: MIT
+Imported: 2026-11-10T22:47:18.730697+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 3, "تحسين وسائط صور": 2, "تنظيف الكود": 4}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 22, audio: 0, tagged audio: 0
