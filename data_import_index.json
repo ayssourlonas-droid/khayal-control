@@ -1106,5 +1106,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "yetanotheridlerpg",
+    "size": 4739,
+    "repo": "miktaew/yet-another-idle-rpg",
+    "id": 75,
+    "slug": "yet-another-idle-rpg",
+    "title": "Yet Another Idle Rpg",
+    "developer": "miktaew",
+    "license": "MIT",
+    "source": "https://github.com/miktaew/yet-another-idle-rpg",
+    "commit": "e3356432ad5112f30842cfe6a6b5c3a4ced77de9",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

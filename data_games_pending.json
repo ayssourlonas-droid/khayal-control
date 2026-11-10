@@ -1405,5 +1405,31 @@
       "type": "web",
       "category": "game-development"
     }
+  },
+  {
+    "id": 75,
+    "release_year": "2026",
+    "category_tags": [
+      "idle",
+      "idle-game",
+      "idle-rpg"
+    ],
+    "main_scene": {
+      "title_ar": "Yet Another Idle Rpg",
+      "title_en": "Yet Another Idle Rpg",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/yet-another-idle-rpg/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Nya-iRPG / YAIRPG in short. A simple idle rpg game, inspired by Proto23.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/yet-another-idle-rpg/",
+      "developer": "miktaew",
+      "license": "MIT",
+      "source_url": "https://github.com/miktaew/yet-another-idle-rpg",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "idle"
+    }
   }
 ]

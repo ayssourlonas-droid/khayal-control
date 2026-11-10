@@ -1,0 +1,8 @@
+Source: https://github.com/miktaew/yet-another-idle-rpg
+Commit: e3356432ad5112f30842cfe6a6b5c3a4ced77de9
+License: MIT
+Imported: 2026-11-10T17:05:04.734154+00:00
+Automated changes (see report): {"إضافة meta charset": 2, "عزل تخزين اللعبة": 3, "حذف ملفات غير لازمة": 2, "تحسين وسائط صور": 1, "تحسين وسائط خطوط": 1, "تنظيف الكود": 38}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 3, audio: 0, tagged audio: 0
