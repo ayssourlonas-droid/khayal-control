@@ -1,0 +1,43 @@
+{
+ "date": "2026-11-10T12:50:20.381348+00:00",
+ "status": "warn",
+ "source": "https://github.com/williamchong/candy-snake",
+ "commit": "271bda5c891f56f5768904e6565812dc5c77af8d",
+ "license": "GPL-3.0",
+ "warnings": [
+  "رخصة حقوق متبادلة (GPL-3.0): أي عمل مشتق يلزمه نشر المصدر بالرخصة نفسها؛ راجعها قبل النشر العام",
+  "شرط تقييد محتمل في الوثائق: LICENSE: alternative is allowed only occasionally and noncommercially, and",
+  "روابط لمواقع خارجية: github.com, opensource.org, phaser.io, prunegames.com, steffe.se, williamchong.github.io"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: dist",
+  "الوسائط: 1 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: author attributions in that material or in the Appropriate Legal",
+  "أنماط تستحق الانتباه: طلب كاميرا/ميكروفون (assets/index-Rmgned_d.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:candy-snake:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 179 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "رخصة GPL-3.0: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)",
+  "رخصة GPL-3.0: لم تُحسَّن الوسائط",
+  "1 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "رخصة GPL-3.0: لم يُنظَّف الكود (يجب إتاحة المصدر كما هو)",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "الغلاف: og0.png ← og:image، اسم عنوان/بانر (درجة 178)",
+  "الأزمنة: البحث/البناء: 13ث؛ اختبار المتصفح: 78ث (أوامر: 4، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "178: og0.png (og:image، اسم عنوان/بانر)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1
+ }
+}
