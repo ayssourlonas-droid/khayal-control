@@ -1768,5 +1768,31 @@
       "type": "web",
       "category": "pathfinding"
     }
+  },
+  {
+    "id": 89,
+    "release_year": "2023",
+    "category_tags": [
+      "animation",
+      "casino",
+      "gambling"
+    ],
+    "main_scene": {
+      "title_ar": "Slotjs",
+      "title_en": "Slotjs",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/slotjs/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🎰 Circular slot machine mobile-first SPA built using JavaScript, CSS variables and Emojis!",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/slotjs/",
+      "developer": "Danziger",
+      "license": "MIT",
+      "source_url": "https://github.com/Danziger/slotjs",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "animation"
+    }
   }
 ]

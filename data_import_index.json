@@ -1316,5 +1316,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "slotjs",
+    "size": 4411,
+    "repo": "Danziger/slotjs",
+    "id": 89,
+    "slug": "slotjs",
+    "title": "Slotjs",
+    "developer": "Danziger",
+    "license": "MIT",
+    "source": "https://github.com/Danziger/slotjs",
+    "commit": "77e218a7d6703593d874ee0c2c36b1ca9d2be66a",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: artist=Mike Koenig"
   }
 ]

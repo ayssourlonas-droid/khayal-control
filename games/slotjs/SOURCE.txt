@@ -1,0 +1,9 @@
+Source: https://github.com/Danziger/slotjs
+Commit: 77e218a7d6703593d874ee0c2c36b1ca9d2be66a
+License: MIT
+Imported: 2026-11-10T22:52:14.126855+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 4, "تحسين وسائط صور": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- artist=Mike Koenig
+- images: 12, audio: 10, tagged audio: 1
