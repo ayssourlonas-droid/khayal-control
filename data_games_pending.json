@@ -1898,5 +1898,31 @@
       "type": "web",
       "category": "game"
     }
+  },
+  {
+    "id": 94,
+    "release_year": "2024",
+    "category_tags": [
+      "healthbar",
+      "javascript",
+      "phaser"
+    ],
+    "main_scene": {
+      "title_ar": "Phaser Ui Tools",
+      "title_en": "Phaser Ui Tools",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/phaser-ui-tools/_cover.webp"
+    },
+    "details_scene": {
+      "description": "UI Kit for the Phaser game engine. Rows, columns, viewports, scrollbars, stuff like that.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/phaser-ui-tools/",
+      "developer": "jsfehler",
+      "license": "MIT",
+      "source_url": "https://github.com/jsfehler/phaser-ui-tools",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "healthbar"
+    }
   }
 ]

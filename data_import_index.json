@@ -1391,5 +1391,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: Mitch Featherston | This work is licensed to the public under the Creative Commons Attribution Licen"
+  },
+  {
+    "key": "phaseruitools",
+    "size": 5256,
+    "repo": "jsfehler/phaser-ui-tools",
+    "id": 94,
+    "slug": "phaser-ui-tools",
+    "title": "Phaser Ui Tools",
+    "developer": "jsfehler",
+    "license": "MIT",
+    "source": "https://github.com/jsfehler/phaser-ui-tools",
+    "commit": "f3306cf9aa5e95ea746001e8c48448d24c9c4af4",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

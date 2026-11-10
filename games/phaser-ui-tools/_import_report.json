@@ -1,0 +1,67 @@
+{
+ "date": "2026-11-10T23:22:45.767912+00:00",
+ "status": "warn",
+ "source": "https://github.com/jsfehler/phaser-ui-tools",
+ "commit": "f3306cf9aa5e95ea746001e8c48448d24c9c4af4",
+ "license": "MIT",
+ "warnings": [
+  "خطوط مضمّنة (6): تأكد من ترخيصها، مثل docs/assets/fonts/TTF/SourceCodePro-Bold.ttf، docs/assets/fonts/TTF/SourceCodePro-Regular.ttf، docs/assets/fonts/OTF/SourceCodePro-Regular.otf",
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: basscss.com, davidwalsh.name, developer.mozilla.org, documentation.js.org, github.com, phaser.io, stackoverflow.com, steffe.se",
+  "1 أخطاء في الكونسول، أولها: Error when trying to use navigator.clipboard.writeText() NotAllowedError: Failed to execute 'writeTe"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: docs",
+  "الوسائط: 31 صورة و0 صوتاً",
+  "أنماط تستحق الانتباه: طلب كاميرا/ميكروفون (examples/lib/phaser3.min.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:phaser-ui-tools:) في 17 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 343 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "تحسين صور: 1 ملفاً، وفّر 17 KB",
+  "تحسين خطوط: 8 ملفاً، وفّر 459 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 3MB ← 3MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: 3 ملاحظات خفيفة في 19 ملفات (مفاتيح مكررة أو شيفرة لا تُنفَّذ)؛ لا تمنع اللعب غالباً",
+  "3 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 24 ملفاً، 105KB ← 60KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "تعديل تلقائي: إضافة meta charset × 16",
+  "تعديل تلقائي: عزل تخزين اللعبة × 17",
+  "تعديل تلقائي: تحسين وسائط صور × 1",
+  "تعديل تلقائي: تحسين وسائط خطوط × 8",
+  "تعديل تلقائي: تنظيف الكود × 24",
+  "الغلاف: readme2.png ← README #3 (درجة 51)",
+  "الأزمنة: اختبار المتصفح: 86ث؛ تحسين الوسائط: 99ث؛ فحص JavaScript: 4ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "Error when trying to use navigator.clipboard.writeText() NotAllowedError: Failed to execute 'writeText' on 'Clipboard': Write permission denied."
+ ],
+ "failed_requests": [
+  "https://incoming.telemetry.mozilla.org/submit/mdn-fred/events/1/c5dca380-8258-481e-9b0e-3361110c2e60",
+  "https://incoming.telemetry.mozilla.org/submit/mdn-fred/events/1/3f5f2d77-6924-4d5d-8e98-30964655269a",
+  "https://incoming.telemetry.mozilla.org/submit/mdn-fred/events/1/f7922f8f-34fc-4f34-ae30-0c99fe9853a9",
+  "https://incoming.telemetry.mozilla.org/submit/mdn-fred/events/1/dd41c4cf-9757-4bd4-9719-9959ec59ede9",
+  "https://incoming.telemetry.mozilla.org/submit/mdn-fred/events/1/8c0995b3-bec8-4fcf-b2b2-44708f3a94dd"
+ ],
+ "external_requests": [
+  "bcd.developer.mozilla.org",
+  "developer.mozilla.org",
+  "incoming.telemetry.mozilla.org"
+ ],
+ "cover_candidates": [
+  "51: readme2.png (README #3)",
+  "-6: readme3.png (README #4)",
+  "-18: readme4.png (README #5)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 19,
+  "errors": 0
+ },
+ "fixes": {
+  "إضافة meta charset": 16,
+  "عزل تخزين اللعبة": 17,
+  "تحسين وسائط صور": 1,
+  "تحسين وسائط خطوط": 8,
+  "تنظيف الكود": 24
+ }
+}

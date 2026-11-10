@@ -1,0 +1,8 @@
+Source: https://github.com/jsfehler/phaser-ui-tools
+Commit: f3306cf9aa5e95ea746001e8c48448d24c9c4af4
+License: MIT
+Imported: 2026-11-10T23:22:45.767912+00:00
+Automated changes (see report): {"إضافة meta charset": 16, "عزل تخزين اللعبة": 17, "تحسين وسائط صور": 1, "تحسين وسائط خطوط": 8, "تنظيف الكود": 24}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 31, audio: 0, tagged audio: 0
