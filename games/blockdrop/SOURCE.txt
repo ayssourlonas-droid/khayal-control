@@ -1,0 +1,8 @@
+Source: https://github.com/brandonp2412/BlockDrop
+Commit: 360ab5500ae712e9287824f41e2046b7253b887d
+License: MIT
+Imported: 2026-11-10T17:32:16.690582+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 11, "تنظيف الكود": 4}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 116, audio: 22, tagged audio: 0

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:blockdrop:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>BlockDrop Privacy Policy</title>
+  <meta name="description" content="Privacy policy for the BlockDrop falling-block puzzle game.">
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light dark;
+    }
+
+    body {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 48rem;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 5rem;
+    }
+
+    h1 {
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      line-height: 1.3;
+    }
+
+    .effective-date {
+      margin-top: 0;
+      opacity: 0.7;
+    }
+
+    a {
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>BlockDrop Privacy Policy</h1>
+    <p class="effective-date"><strong>Effective date:</strong> 2 October 2026</p>
+
+    <p>BlockDrop is a free and open-source falling-block puzzle game.</p>
+
+    <h2>Data collection</h2>
+    <p>BlockDrop does not collect, transmit to the developer, sell, or use personal data for advertising or analytics. The app has no developer-operated account system, advertising SDK, analytics SDK, or in-app purchases.</p>
+
+    <h2>Data stored on your device</h2>
+    <p>BlockDrop stores game preferences, settings, and gameplay information such as high scores locally on your device. This information is used only to provide app functionality and is not sent to the developer.</p>
+
+    <h2>Local multiplayer</h2>
+    <p>BlockDrop includes optional local-network multiplayer. When you use multiplayer, the app can discover and communicate directly with another BlockDrop device on the same local network. Gameplay/session messages are exchanged directly between the participating devices and are not routed through or retained by developer-operated servers.</p>
+
+    <h2>Network access and external links</h2>
+    <p>The app uses network access for local multiplayer and may open external links, such as the BlockDrop source repository or sponsor page, in your browser. Any external site you choose to visit is governed by that site's own privacy practices.</p>
+
+    <h2>Children</h2>
+    <p>BlockDrop is a general-audience puzzle game and is not specifically directed at children under 13. The developer does not knowingly collect personal information from children.</p>
+
+    <h2>Changes</h2>
+    <p>If BlockDrop's data practices change, this policy will be updated before those changes are released where required.</p>
+
+    <h2>Contact</h2>
+    <p>For privacy questions, contact <a href="mailto:brandon@presley.nz">brandon@presley.nz</a>.</p>
+
+    <p><a href="https://github.com/brandonp2412/BlockDrop">View BlockDrop source code on GitHub</a>.</p>
+  </main>
+</body>
+</html>

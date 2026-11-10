@@ -1483,5 +1483,31 @@
       "type": "web",
       "category": "phaser"
     }
+  },
+  {
+    "id": 78,
+    "release_year": "2026",
+    "category_tags": [
+      "android",
+      "cross-platform",
+      "dart"
+    ],
+    "main_scene": {
+      "title_ar": "BlockDrop",
+      "title_en": "BlockDrop",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/blockdrop/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Cross-platform falling-block puzzle game with responsive controls, multiple themes, score tracking, hold, and piece previews. Built with Flutter.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/blockdrop/",
+      "developer": "brandonp2412",
+      "license": "MIT",
+      "source_url": "https://github.com/brandonp2412/BlockDrop",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "android"
+    }
   }
 ]
