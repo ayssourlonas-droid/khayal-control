@@ -571,32 +571,6 @@
     }
   },
   {
-    "id": 38,
-    "release_year": "2026",
-    "category_tags": [
-      "card-game",
-      "cards",
-      "game"
-    ],
-    "main_scene": {
-      "title_ar": "SolitaireLib",
-      "title_en": "SolitaireLib",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/solitairelib/_cover.png"
-    },
-    "details_scene": {
-      "description": "Various solitaire games implemented in HTML. Works with touch and mouse.",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/solitairelib/",
-      "developer": "zzymyn",
-      "license": "MIT",
-      "source_url": "https://github.com/zzymyn/SolitaireLib",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "card-game"
-    }
-  },
-  {
     "id": 39,
     "release_year": "2026",
     "category_tags": [
