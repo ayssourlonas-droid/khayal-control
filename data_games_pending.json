@@ -130,32 +130,6 @@
     }
   },
   {
-    "id": 13,
-    "release_year": "2026",
-    "category_tags": [
-      "anime-inspired",
-      "browser-game",
-      "fan-project"
-    ],
-    "main_scene": {
-      "title_ar": "Freiren The Funeral",
-      "title_en": "Freiren The Funeral",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/freiren-the-funeral/_cover.webp"
-    },
-    "details_scene": {
-      "description": "A fan-made browser RPG prototype inspired by Frieren: Beyond Journey’s End, built with HTML, CSS, and JavaScript.",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/freiren-the-funeral/",
-      "developer": "imshota1009",
-      "license": "Apache-2.0",
-      "source_url": "https://github.com/imshota1009/Freiren-the-Funeral",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "anime-inspired"
-    }
-  },
-  {
     "id": 14,
     "release_year": "2025",
     "category_tags": [
