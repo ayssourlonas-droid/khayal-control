@@ -772,5 +772,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42860077059"
+  },
+  {
+    "url": "https://github.com/phaserjs/template-vite",
+    "repo": "phaserjs/template-vite",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'ci', '--no-audit', '--no-fund'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42860343427"
   }
 ]
