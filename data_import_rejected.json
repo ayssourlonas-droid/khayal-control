@@ -781,5 +781,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42860343427"
+  },
+  {
+    "url": "https://github.com/pablogozalvez/Super-Mario-Phaser",
+    "repo": "pablogozalvez/Super-Mario-Phaser",
+    "reason": "ملفات تتجاوز 25MB (حد Cloudflare): assets/showcase/level-gameplay.gif (28MB)",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42860629113"
   }
 ]
