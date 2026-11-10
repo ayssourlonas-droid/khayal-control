@@ -925,5 +925,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42872259066"
+  },
+  {
+    "url": "https://github.com/gbrln/the-last-pawn",
+    "repo": "gbrln/the-last-pawn",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42872526745"
   }
 ]
