@@ -1,6 +1,6 @@
 {
   "latest_version": "2.1.159",
-  "update_mode": "forced",
+  "update_mode": "optional",
   "download_url": "https://github.com/ayssourlonas-droid/Khayal.flutter/releases/download/v2.1.159/khayal.apk",
   "whatsapp_url": "",
   "support_email": "khayal24ya@gmail.com",
