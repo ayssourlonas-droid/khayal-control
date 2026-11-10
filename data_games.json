@@ -157,32 +157,6 @@
     }
   },
   {
-    "id": 28,
-    "release_year": "2026",
-    "category_tags": [
-      "executable",
-      "github",
-      "html5-game"
-    ],
-    "main_scene": {
-      "title_ar": "Seltos",
-      "title_en": "Seltos",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/seltos/_cover.png"
-    },
-    "details_scene": {
-      "description": "hey!",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/seltos/",
-      "developer": "javafah",
-      "license": "Apache-2.0",
-      "source_url": "https://github.com/javafah/seltos",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "executable"
-    }
-  },
-  {
     "id": 29,
     "release_year": "2026",
     "category_tags": [
