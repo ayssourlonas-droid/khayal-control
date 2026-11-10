@@ -441,5 +441,31 @@
       "type": "web",
       "category": "ai-algorithm"
     }
+  },
+  {
+    "id": 48,
+    "release_year": "2026",
+    "category_tags": [
+      "browser-game",
+      "github-pages",
+      "html5-game"
+    ],
+    "main_scene": {
+      "title_ar": "Oinkbuns",
+      "title_en": "Oinkbuns",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/oinkbuns/_cover.png"
+    },
+    "details_scene": {
+      "description": "Oinkbuns - landing page and game, served via GitHub Pages",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/oinkbuns/",
+      "developer": "verastack-labs",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/verastack-labs/oinkbuns",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-game"
+    }
   }
 ]
