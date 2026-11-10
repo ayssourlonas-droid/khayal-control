@@ -1,0 +1,8 @@
+Source: https://github.com/gd4Ark/star-battle
+Commit: b600e9e91012886f6273d6b3c91d6ab83b5eecad
+License: MIT
+Imported: 2026-11-10T23:02:51.241089+00:00
+Automated changes (see report): {"http ← https": 1, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 3, "تحسين وسائط صور": 13, "تنظيف الكود": 21}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 33, audio: 3, tagged audio: 0

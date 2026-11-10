@@ -1346,5 +1346,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "starbattle",
+    "size": 2073,
+    "repo": "gd4Ark/star-battle",
+    "id": 91,
+    "slug": "star-battle",
+    "title": "Star Battle",
+    "developer": "gd4Ark",
+    "license": "MIT",
+    "source": "https://github.com/gd4Ark/star-battle",
+    "commit": "b600e9e91012886f6273d6b3c91d6ab83b5eecad",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

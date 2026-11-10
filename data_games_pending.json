@@ -1820,5 +1820,31 @@
       "type": "web",
       "category": "asteroids"
     }
+  },
+  {
+    "id": 91,
+    "release_year": "2024",
+    "category_tags": [
+      "canvas-game",
+      "hacktoberfest",
+      "html-game"
+    ],
+    "main_scene": {
+      "title_ar": "Star Battle",
+      "title_en": "Star Battle",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/star-battle/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🎮 A spaceship shooting game developed using JavaScript ES6, Canvas",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/star-battle/",
+      "developer": "gd4Ark",
+      "license": "MIT",
+      "source_url": "https://github.com/gd4Ark/star-battle",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas-game"
+    }
   }
 ]
