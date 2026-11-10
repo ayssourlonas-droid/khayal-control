@@ -961,5 +961,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42913266414"
+  },
+  {
+    "url": "https://github.com/odrick/free-tex-packer",
+    "repo": "odrick/free-tex-packer",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (server) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "MIT",
+    "date": "2026-11-10",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42913501875"
   }
 ]
