@@ -1587,5 +1587,31 @@
       "type": "web",
       "category": "15-puzzle"
     }
+  },
+  {
+    "id": 82,
+    "release_year": "2026",
+    "category_tags": [
+      "game",
+      "javascript-game",
+      "js13k"
+    ],
+    "main_scene": {
+      "title_ar": "Black Hole Square",
+      "title_en": "Black Hole Square",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/black-hole-square/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A puzzle game for js13k 2021",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/black-hole-square/",
+      "developer": "Quinten",
+      "license": "MIT",
+      "source_url": "https://github.com/Quinten/black-hole-square",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game"
+    }
   }
 ]

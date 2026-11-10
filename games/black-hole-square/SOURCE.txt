@@ -1,0 +1,8 @@
+Source: https://github.com/Quinten/black-hole-square
+Commit: 4a760a0f3d182c833e345937a0fe4b7704afd737
+License: MIT
+Imported: 2026-11-10T18:04:34.006208+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 2, audio: 0, tagged audio: 0

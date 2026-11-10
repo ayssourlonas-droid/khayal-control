@@ -1211,5 +1211,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "blackholesquare",
+    "size": 696,
+    "repo": "Quinten/black-hole-square",
+    "id": 82,
+    "slug": "black-hole-square",
+    "title": "Black Hole Square",
+    "developer": "Quinten",
+    "license": "MIT",
+    "source": "https://github.com/Quinten/black-hole-square",
+    "commit": "4a760a0f3d182c833e345937a0fe4b7704afd737",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
