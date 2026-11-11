@@ -333,7 +333,7 @@
       "title_ar": "Eightfront 3d",
       "title_en": "Eightfront 3d",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/eightfront-3d/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/eightfront-3d/_cover.webp"
     },
     "details_scene": {
       "description": "Offline Three.js eight-stage fan game with original GPU-skinned commandos and local co-op.",
@@ -345,7 +345,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "html5-game"
-    }
+    },
+    "reimported_at": "2026-11-11T22:34:34Z"
   },
   {
     "id": 27,

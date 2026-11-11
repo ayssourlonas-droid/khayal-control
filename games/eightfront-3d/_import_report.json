@@ -1,0 +1,45 @@
+{
+ "date": "2026-11-11T22:16:17.784709+00:00",
+ "status": "warn",
+ "source": "https://github.com/mike007jd/eightfront-3d",
+ "commit": "3a9776b1088e1c28dae3c206b0b77c5429a2218e",
+ "license": "Apache-2.0",
+ "warnings": [
+  "روابط لمواقع خارجية: area.autodesk.com, blog.tojicode.com, blogs.unity3d.com, computergraphics.stackexchange.com, developer.mozilla.org, docs.unrealengine.com, drive.google.com, en.wikipedia.org",
+  "لم يعمل الاختبار الآلي (Playwright)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: dist",
+  "الوسائط: 11 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:eightfront-3d:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 2 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "درجة الجودة التقريبية: 70/100 (لم يعمل الاختبار الآلي (-30))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "الغلاف: title.jpg ← README #1، اسم عنوان/بانر، مجلد ترويج (درجة 193)",
+  "الأزمنة: البحث/البناء: 1ث؛ تنظيف: 1ث؛ اختبار المتصفح: 1063ث (أوامر: 4، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [
+  "فشل الاختبار الآلي: Page.screenshot: Timeout 30000ms exceeded.\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n"
+ ],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "193: title.jpg (README #1، اسم عنوان/بانر، مجلد ترويج)",
+  "151: gameplay.jpg (README #2، اسم شاشة، مجلد ترويج)",
+  "68: stages.jpg (README #11، مجلد ترويج)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1
+ }
+}
