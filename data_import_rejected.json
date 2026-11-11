@@ -1402,5 +1402,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43091001754"
+  },
+  {
+    "url": "https://github.com/sensod9/gramoType",
+    "repo": "sensod9/gramoType",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43091492208"
   }
 ]
