@@ -1,0 +1,8 @@
+Source: https://github.com/philippgitpush/bunnymuralhelper
+Commit: e179fc2214c0b29e52a81d5e037b9663b7e0dba5
+License: MIT
+Imported: 2026-11-11T16:57:43.303889+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تنظيف الكود": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 7, audio: 3, tagged audio: 0

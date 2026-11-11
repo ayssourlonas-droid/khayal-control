@@ -1466,5 +1466,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "bunnymuralhelper",
+    "size": 508,
+    "repo": "philippgitpush/bunnymuralhelper",
+    "id": 99,
+    "slug": "bunnymuralhelper",
+    "title": "Bunnymuralhelper",
+    "developer": "philippgitpush",
+    "license": "MIT",
+    "source": "https://github.com/philippgitpush/bunnymuralhelper",
+    "commit": "e179fc2214c0b29e52a81d5e037b9663b7e0dba5",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

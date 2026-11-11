@@ -2028,5 +2028,32 @@
       "type": "web",
       "category": "canvas"
     }
+  },
+  {
+    "id": 99,
+    "imported_at": "2026-11-11T17:01:37Z",
+    "release_year": "2026",
+    "category_tags": [
+      "animal-well",
+      "bunny-mural",
+      "puzzle"
+    ],
+    "main_scene": {
+      "title_ar": "Bunnymuralhelper",
+      "title_en": "Bunnymuralhelper",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/bunnymuralhelper/_cover.webp"
+    },
+    "details_scene": {
+      "description": "The Bunny Mural Puzzle Helper is a little tool for solving the Bunny Mural puzzle in the game Animal Well made by Billy Basso.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/bunnymuralhelper/",
+      "developer": "philippgitpush",
+      "license": "MIT",
+      "source_url": "https://github.com/philippgitpush/bunnymuralhelper",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "animal-well"
+    }
   }
 ]
