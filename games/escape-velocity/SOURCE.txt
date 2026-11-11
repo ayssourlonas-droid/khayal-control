@@ -1,7 +1,7 @@
 Source: https://github.com/behlulakdag/escape-velocity
 Commit: d3533b54b7302a2334ec740c6aa65716f270390e
 License: GPL-3.0
-Imported: 2026-11-09T10:33:38.724407+00:00
+Imported: 2026-11-11T17:57:32.830737+00:00
 Automated changes (see report): {"عزل تخزين اللعبة": 1}
 
 Media provenance (automated signals, not a legal guarantee):

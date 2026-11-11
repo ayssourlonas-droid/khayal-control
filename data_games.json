@@ -194,7 +194,7 @@
       "title_ar": "Escape Velocity",
       "title_en": "Escape Velocity",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/escape-velocity/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/escape-velocity/_cover.webp"
     },
     "details_scene": {
       "description": "Hand-drawn one-thumb speed game: hold to grab a planet, let go to fling, outrun the supernova. Made in 48h for Slapjam #2 (theme: Speed). Phaser 3, mobile portrait.",
@@ -206,7 +206,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "game-jam"
-    }
+    },
+    "reimported_at": "2026-11-11T17:59:42Z"
   },
   {
     "id": 59,
