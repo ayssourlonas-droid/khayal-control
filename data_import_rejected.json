@@ -1339,5 +1339,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43088128947"
+  },
+  {
+    "url": "https://github.com/antonio-gaskin/pokemon-roulette-game",
+    "repo": "antonio-gaskin/pokemon-roulette-game",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'ci', '--no-audit', '--no-fund'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43088369554"
   }
 ]
