@@ -1,0 +1,14 @@
+Source: https://github.com/antebrl/undercover-word-game
+Commit: bb3a72ce0bc5667e9cab4b605aba194198296fd2
+License: MIT
+Imported: 2026-11-11T19:12:26.139360+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 3, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 6, "تحسين وسائط صوت": 12}
+
+Media provenance (automated signals, not a legal guarantee):
+- artist=Beezle
+- artist=Damien Devaux
+- artist=Silvia Nanni
+- artist=Team Masaka
+- artist=maphill
+- copyright=Copyright Alan McKinney
+- images: 3, audio: 17, tagged audio: 7

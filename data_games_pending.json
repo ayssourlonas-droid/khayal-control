@@ -2062,5 +2062,32 @@
       "type": "web",
       "category": "computing"
     }
+  },
+  {
+    "id": 108,
+    "imported_at": "2026-11-11T19:16:20Z",
+    "release_year": "2026",
+    "category_tags": [
+      "collaborate",
+      "game",
+      "peerjs"
+    ],
+    "main_scene": {
+      "title_ar": "Undercover Word Game",
+      "title_en": "Undercover Word Game",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/undercover-word-game/_cover.webp"
+    },
+    "details_scene": {
+      "description": "The Undercover Game for the Web. The Undercover word game is a party game where players try to guess secret words while one player, the \"undercover,\" attempts to blend in without being identified.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/undercover-word-game/",
+      "developer": "antebrl",
+      "license": "MIT",
+      "source_url": "https://github.com/antebrl/undercover-word-game",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "collaborate"
+    }
   }
 ]

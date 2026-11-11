@@ -1586,5 +1586,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=Eric Matyas"
+  },
+  {
+    "key": "undercoverwordgame",
+    "size": 2711,
+    "repo": "antebrl/undercover-word-game",
+    "id": 108,
+    "slug": "undercover-word-game",
+    "title": "Undercover Word Game",
+    "developer": "antebrl",
+    "license": "MIT",
+    "source": "https://github.com/antebrl/undercover-word-game",
+    "commit": "bb3a72ce0bc5667e9cab4b605aba194198296fd2",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: artist=Beezle | artist=Damien Devaux"
   }
 ]
