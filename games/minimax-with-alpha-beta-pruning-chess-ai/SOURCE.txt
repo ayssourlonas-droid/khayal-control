@@ -1,0 +1,8 @@
+Source: https://github.com/yanranxiaoxi/Minimax-with-Alpha-Beta-Pruning-Chess-AI
+Commit: 2adca01cf0c4bbc358369daca1ea06362f32e72a
+License: MIT
+Imported: 2026-11-11T17:23:42.469870+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تنظيف الكود": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 23, audio: 0, tagged audio: 0

@@ -1511,5 +1511,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE.md",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "minimaxwithalphabetapruningchessai",
+    "size": 9778,
+    "repo": "yanranxiaoxi/Minimax-with-Alpha-Beta-Pruning-Chess-AI",
+    "id": 102,
+    "slug": "minimax-with-alpha-beta-pruning-chess-ai",
+    "title": "Minimax With Alpha Beta Pruning Chess AI",
+    "developer": "yanranxiaoxi",
+    "license": "MIT",
+    "source": "https://github.com/yanranxiaoxi/Minimax-with-Alpha-Beta-Pruning-Chess-AI",
+    "commit": "2adca01cf0c4bbc358369daca1ea06362f32e72a",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
