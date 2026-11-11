@@ -1438,5 +1438,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43092497693"
+  },
+  {
+    "url": "https://github.com/Hartwich/Open-Party-Lab",
+    "repo": "Hartwich/Open-Party-Lab",
+    "reason": "هذه لعبة جماعية تحتاج خادماً لحظياً (socket.io، ws) ولا تعمل كموقع ثابت، فلا يمكن استضافتها على Cloudflare Pages ولا تشغيلها في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "Apache-2.0",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43092739138"
   }
 ]
