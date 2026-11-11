@@ -1,0 +1,8 @@
+Source: https://github.com/B4uti4github/choppy-js
+Commit: 5f538c1090fa72769600321e8debfee0756de89f
+License: MIT
+Imported: 2026-11-11T17:08:35.721675+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 3, "حذف ملفات غير لازمة": 2, "تنظيف الكود": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 1, audio: 0, tagged audio: 0

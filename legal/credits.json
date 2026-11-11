@@ -1496,5 +1496,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): "
+  },
+  {
+    "key": "choppyjs",
+    "size": 31,
+    "repo": "B4uti4github/choppy-js",
+    "id": 101,
+    "slug": "choppy-js",
+    "title": "Choppy Js",
+    "developer": "B4uti4github",
+    "license": "MIT",
+    "source": "https://github.com/B4uti4github/choppy-js",
+    "commit": "5f538c1090fa72769600321e8debfee0756de89f",
+    "date": "2026-11-11",
+    "license_file": "LICENSE.md",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

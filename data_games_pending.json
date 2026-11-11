@@ -2082,5 +2082,32 @@
       "type": "web",
       "category": "1c"
     }
+  },
+  {
+    "id": 101,
+    "imported_at": "2026-11-11T17:12:04Z",
+    "release_year": "2026",
+    "category_tags": [
+      "canvas",
+      "canvas-game",
+      "canvas2d"
+    ],
+    "main_scene": {
+      "title_ar": "Choppy Js",
+      "title_en": "Choppy Js",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/choppy-js/_cover.webp"
+    },
+    "details_scene": {
+      "description": "**The ultra-lightweight game orchestration scenes and layers managers for Graphics Frameworks.**",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/choppy-js/",
+      "developer": "B4uti4github",
+      "license": "MIT",
+      "source_url": "https://github.com/B4uti4github/choppy-js",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas"
+    }
   }
 ]
