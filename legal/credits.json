@@ -1571,5 +1571,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "thequbitfactory",
+    "size": 5306,
+    "repo": "awslabs/the-qubit-factory",
+    "id": 107,
+    "slug": "the-qubit-factory",
+    "title": "The Qubit Factory",
+    "developer": "awslabs",
+    "license": "Apache-2.0",
+    "source": "https://github.com/awslabs/the-qubit-factory",
+    "commit": "42cd5958a55efc7142e74811acf6ff44f899c010",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=Eric Matyas"
   }
 ]

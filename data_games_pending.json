@@ -2035,5 +2035,32 @@
       "category": "2048"
     },
     "review_note": "اسم مشابه للعبة مسجّلة (gabrielecirulli/2048) بحجم مختلف"
+  },
+  {
+    "id": 107,
+    "imported_at": "2026-11-11T19:06:17Z",
+    "release_year": "2024",
+    "category_tags": [
+      "computing",
+      "puzzle-game",
+      "quantum"
+    ],
+    "main_scene": {
+      "title_ar": "The Qubit Factory",
+      "title_en": "The Qubit Factory",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/the-qubit-factory/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A puzzle/construction game about quantum computing.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/the-qubit-factory/",
+      "developer": "awslabs",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/awslabs/the-qubit-factory",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "computing"
+    }
   }
 ]
