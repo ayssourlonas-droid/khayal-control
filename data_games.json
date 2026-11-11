@@ -616,7 +616,7 @@
       "title_ar": "Debuff",
       "title_en": "Debuff",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/debuff/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/debuff/_cover.webp"
     },
     "details_scene": {
       "description": "Open-source framework for 2D browser games. It handles the boring bits so you can get to the fun part sooner.",
@@ -628,7 +628,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "2d"
-    }
+    },
+    "reimported_at": "2026-11-11T23:03:52Z"
   },
   {
     "id": 105,
