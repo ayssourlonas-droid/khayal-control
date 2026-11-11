@@ -1,0 +1,8 @@
+Source: https://github.com/Iqbolshoh/javascript-xo-game
+Commit: 62555f78e3cc546059daaf7585aacd8c88bf946e
+License: MIT
+Imported: 2026-11-11T17:52:41.032973+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 3, "تنظيف الكود": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 2, audio: 0, tagged audio: 0

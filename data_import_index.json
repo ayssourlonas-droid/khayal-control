@@ -1571,5 +1571,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "javascriptxogame",
+    "size": 170,
+    "repo": "Iqbolshoh/javascript-xo-game",
+    "id": 106,
+    "slug": "javascript-xo-game",
+    "title": "Javascript Xo Game",
+    "developer": "Iqbolshoh",
+    "license": "MIT",
+    "source": "https://github.com/Iqbolshoh/javascript-xo-game",
+    "commit": "62555f78e3cc546059daaf7585aacd8c88bf946e",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
