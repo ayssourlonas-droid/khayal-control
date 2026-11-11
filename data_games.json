@@ -656,5 +656,31 @@
       "type": "web",
       "category": "3d-game"
     }
+  },
+  {
+    "id": 102,
+    "imported_at": "2026-11-11T17:27:19Z",
+    "release_year": "2026",
+    "category_tags": [
+      "chess-ai",
+      "javascript-game"
+    ],
+    "main_scene": {
+      "title_ar": "Minimax With Alpha Beta Pruning Chess AI",
+      "title_en": "Minimax With Alpha Beta Pruning Chess AI",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/minimax-with-alpha-beta-pruning-chess-ai/_cover.webp"
+    },
+    "details_scene": {
+      "description": "α-β 剪枝优化 Minimax 算法国际象棋 AI",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/minimax-with-alpha-beta-pruning-chess-ai/",
+      "developer": "yanranxiaoxi",
+      "license": "MIT",
+      "source_url": "https://github.com/yanranxiaoxi/Minimax-with-Alpha-Beta-Pruning-Chess-AI",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "chess-ai"
+    }
   }
 ]
