@@ -1,0 +1,66 @@
+{
+ "date": "2026-11-11T21:49:55.860247+00:00",
+ "status": "warn",
+ "source": "https://github.com/chaitu43/FarmSwecha",
+ "commit": "3e38f2405eac0963c32d546ded42e46d3173ccbf",
+ "license": "CC0-1.0",
+ "warnings": [
+  "لا توجد مؤشرات أن هذا الموقع لعبة (لا canvas ولا requestAnimationFrame ولا مكتبة ألعاب)؛ راجعه جيداً قبل الاعتماد",
+  "روابط لمواقع خارجية: api.groq.com, api.open-meteo.com, geocoding-api.open-meteo.com, images.unsplash.com",
+  "1 أخطاء في الكونسول، أولها: JS: Private field '#get' must be declared in an enclosing class",
+  "ESLint: 1 أخطاء برمجية في 5 ملفات، أولها: llm.js:2 Parsing error: Unexpected token #get"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 30 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: Creative Commons Legal Code",
+  "تصريح المطوّر عن الوسائط: LICENSE: CC0 1.0 Universal",
+  "تصريح المطوّر عن الوسائط: LICENSE: CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE",
+  "تصريح المطوّر عن الوسائط: LICENSE: ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS",
+  "تصريح المطوّر عن الوسائط: LICENSE: INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES",
+  "تصريح المطوّر عن الوسائط: LICENSE: associating CC0 with a Work (the \"Affirmer\"), to the extent that he or she",
+  "أنماط تستحق الانتباه: طلب الموقع الجغرافي (weather.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:farmswecha:) في 27 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 352 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 7 ملفاً (254 KB)؛ من 66 إلى 59",
+  "تحسين صور: 6 ملفاً، وفّر 1809 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 2MB ← 0MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "تنظيف الكود (فراغات وبنية الكود): 6 ملفاً، 20KB ← 15KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 70/100 (أخطاء كونسول (-15)، طلبات خارجية (-5)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: إضافة meta charset × 1",
+  "تعديل تلقائي: عزل تخزين اللعبة × 27",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 7",
+  "تعديل تلقائي: تحسين وسائط صور × 6",
+  "تعديل تلقائي: تنظيف الكود × 6",
+  "الغلاف: hero.png ← حمّلتها اللعبة، اسم غلاف (درجة 128)",
+  "الأزمنة: اختبار المتصفح: 88ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 48ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "JS: Private field '#get' must be declared in an enclosing class"
+ ],
+ "failed_requests": [],
+ "external_requests": [
+  "cdn.jsdelivr.net",
+  "cdnjs.cloudflare.com",
+  "fonts.googleapis.com",
+  "fonts.gstatic.com"
+ ],
+ "cover_candidates": [
+  "128: hero.png (حمّلتها اللعبة، اسم غلاف)",
+  "18: siddhu.jpg ()",
+  "18: kk.jpg ()"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 5,
+  "errors": 1
+ },
+ "fixes": {
+  "إضافة meta charset": 1,
+  "عزل تخزين اللعبة": 27,
+  "حذف ملفات غير لازمة": 7,
+  "تحسين وسائط صور": 6,
+  "تنظيف الكود": 6
+ }
+}

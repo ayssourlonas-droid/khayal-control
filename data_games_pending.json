@@ -172,7 +172,7 @@
       "title_ar": "FarmSwecha",
       "title_en": "FarmSwecha",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/farmswecha/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/farmswecha/_cover.webp"
     },
     "details_scene": {
       "description": "A website for Farmers to get all the things in one place",
@@ -184,7 +184,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "css"
-    }
+    },
+    "reimported_at": "2026-11-11T21:54:23Z"
   },
   {
     "id": 19,

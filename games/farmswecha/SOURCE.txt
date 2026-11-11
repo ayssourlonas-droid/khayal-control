@@ -1,8 +1,8 @@
 Source: https://github.com/chaitu43/FarmSwecha
 Commit: 3e38f2405eac0963c32d546ded42e46d3173ccbf
 License: CC0-1.0
-Imported: 2026-11-07T21:41:10.314049+00:00
-Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 27, "حذف ملفات غير لازمة": 7, "تحسين وسائط صور": 6}
+Imported: 2026-11-11T21:49:55.860247+00:00
+Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 27, "حذف ملفات غير لازمة": 7, "تحسين وسائط صور": 6, "تنظيف الكود": 6}
 
 Media provenance (automated signals, not a legal guarantee):
 - LICENSE: Creative Commons Legal Code
