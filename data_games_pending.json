@@ -2163,5 +2163,32 @@
       "category": "2048"
     },
     "review_note": "اسم مشابه للعبة مسجّلة (gabrielecirulli/2048) بحجم مختلف"
+  },
+  {
+    "id": 105,
+    "imported_at": "2026-11-11T17:48:34Z",
+    "release_year": "2026",
+    "category_tags": [
+      "3d-game",
+      "browser-game",
+      "github-pages"
+    ],
+    "main_scene": {
+      "title_ar": "MineWorld",
+      "title_en": "MineWorld",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/mineworld/_cover.webp"
+    },
+    "details_scene": {
+      "description": "基于 Three.js 的3D像素风格方块世界探索游戏。使用原生 HTML + CSS + ES Module JavaScript 构建，无需构建步骤。支持桌面端（键鼠）和移动端（触控）。",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/mineworld/",
+      "developer": "EVEDensity",
+      "license": "MIT",
+      "source_url": "https://github.com/EVEDensity/MineWorld",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "3d-game"
+    }
   }
 ]

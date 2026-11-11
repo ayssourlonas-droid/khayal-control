@@ -1556,5 +1556,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "mineworld",
+    "size": 5788,
+    "repo": "EVEDensity/MineWorld",
+    "id": 105,
+    "slug": "mineworld",
+    "title": "MineWorld",
+    "developer": "EVEDensity",
+    "license": "MIT",
+    "source": "https://github.com/EVEDensity/MineWorld",
+    "commit": "5ef2b328ea81524e12d8dbad3ced4af9ffaaeca2",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
