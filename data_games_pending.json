@@ -2057,33 +2057,6 @@
     }
   },
   {
-    "id": 100,
-    "imported_at": "2026-11-11T17:07:26Z",
-    "release_year": "2026",
-    "category_tags": [
-      "1c",
-      "1c-enterprise",
-      "8bit-sound"
-    ],
-    "main_scene": {
-      "title_ar": "Very Simple Tetris Created By Copilot",
-      "title_en": "Very Simple Tetris Created By Copilot",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/very-simple-tetris-created-by-copilot/_cover.webp"
-    },
-    "details_scene": {
-      "description": "🎮 Tetris with AI vs AI mode, 8-bit sound, theme shop, replay sharing & more — zero dependencies PWA",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/very-simple-tetris-created-by-copilot/",
-      "developer": "NickScherbakov",
-      "license": "MIT",
-      "source_url": "https://github.com/NickScherbakov/very-simple-tetris-created-by-Copilot",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "1c"
-    }
-  },
-  {
     "id": 101,
     "imported_at": "2026-11-11T17:12:04Z",
     "release_year": "2026",
