@@ -306,7 +306,7 @@
       "title_ar": "EC135 FlightDynamics",
       "title_en": "EC135 FlightDynamics",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/ec135-flightdynamics/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/ec135-flightdynamics/_cover.webp"
     },
     "details_scene": {
       "description": "Realistic helicopter flight simulator in the browser: learn to hover and fly the EC135 step by step with a tutor and a coach. Blade-element rotor physics, free, nothing to install.",
@@ -318,7 +318,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "aerodynamics"
-    }
+    },
+    "reimported_at": "2026-11-11T22:15:02Z"
   },
   {
     "id": 26,
