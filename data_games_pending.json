@@ -279,7 +279,7 @@
       "title_ar": "Pet Caring Game",
       "title_en": "Pet Caring Game",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/pet-caring-game/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/pet-caring-game/_cover.webp"
     },
     "details_scene": {
       "description": "Take care of your pet. Feed, play, and clean up after it.",
@@ -291,7 +291,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "casual-game"
-    }
+    },
+    "reimported_at": "2026-11-11T22:07:49Z"
   },
   {
     "id": 25,
