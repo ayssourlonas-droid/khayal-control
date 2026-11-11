@@ -1,0 +1,8 @@
+Source: https://github.com/rakeshid03/Monsterio
+Commit: 41fa7d8cafb96e00a345432c9adf7c22e385368b
+License: MIT
+Imported: 2026-11-11T21:10:00.375187+00:00
+Automated changes (see report): {"http ← https": 1, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 10, "تحسين وسائط صوت": 1, "تنظيف الكود": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 10, audio: 1, tagged audio: 0

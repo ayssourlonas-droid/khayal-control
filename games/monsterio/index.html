@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:monsterio:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2c2c2c">
+    <title>Monsterio</title>
+    <link rel="icon" type="image/icon" href="m.webp">
+    <link rel="stylesheet" href="Game.css" />
+    <script src="vendor.js" defer></script>
+    <script src="Game.js" defer></script>
+ 
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js"></script>
+  </head>
+  <body>
+
+<!-- before start game loading page--> 
+<div class="loading">
+  <div class="left"></div>
+  <div class="right"></div>
+  <h2 class="game-name">Monsterio</h2>   
+      <div class="loader">
+       <div class="title">Loading...</div>
+         <div class="progress-start">
+         <div id="progress-bar"></div>
+         </div>
+     </div>
+</div>
+<!-- End Loading page-->
+
+<!--game start button-->
+<div id="container">
+  <div id="play-btn">
+    <h2>Start Game</h2>
+    <button onclick="fade();musical()">OK</button>
+  </div>
+</div>
+
+<!-- game logo-->
+<div class="header">
+    <div id="logo">
+      <img src="Media/logo.webp" alt="monsterio" height="55" width="240">
+    </div>
+</div>
+<br/>
+
+<!--setting button-->
+<input type="checkbox" id="setting-Check"/>
+<label id="setting" for="setting-Check">
+ <img src="Media/settings.webp" alt="setting">
+</label>
+
+<!--play background music-->
+<audio id="myAudio" hidden>
+ <source src="Media/orbit.ogg" type="audio/mpeg">
+</audio>
+
+<!--battle field start-->
+<section id="battle-field">
+     <!--monster data-->
+     <div class="monster-data">
+     <h4>Monster Health</h4> 
+     <progress id="monster-health" max="100" value="100"></progress>
+     </div>
+     <div class="monster-dp">
+        <img src="Media/monster.webp" alt="monster.webp" width="45px" height="45px">
+     </div>
+     
+     <!--vs sign-->
+     <div class="vs">
+      <img src="Media/vs.webp" alt="vs.webp" height="90">
+     </div>
+     
+     <!--player data-->
+      <div class="player-dp">
+     <img src="Media/hero.webp" id="myhero" alt="hero.webp" width="45px" height="45px">
+      </div>
+      <div class="player-data">
+   <h4 id="hero-name">Hero Health</h4>
+      <progress id="player-health" max="100" value="100"></progress>
+      </div>
+</section>
+ 
+ <!--All Attack list-->
+<section id="controls">
+    <button id="attack-btn">ATTACK</button>
+    <button onclick="saclick()" id="strong-attack-btn">STRONG ATTACK <span id="count-sa">10</span></button>
+    <button onclick="hclick()" id="heal-btn">HEAL <span id="count-h">03</span></button>
+</section>
+  
+<!--about devloper-->
+<footer align="center" class="signature">
+  <code>Made by <a href="https://rakeshid03.github.io/about-me/" class="sign">@rakeshid03</a>
+  </code>
+</footer>
+
+<!----------------------------------------->
+<!--pop up settings-->
+<div class="setting-menu">
+
+<!--reset game button-->
+<button class="color-button" data-theme="dblu" id="reset" data-theme="dblue" onclick="re();resethistory();offmusical();resetheal();counth();countsa();resetsa();dheroname()">Reset All</button>
+  
+<!--choose heros avatar-->
+<section id="team">
+<p class="hero-heading">Choose your hero avatar</p>
+<div class="characters">
+  
+ <div class="hero-bg">
+ <div class="hero-1" onclick="hpic1()">
+    <img src="Media/swordman.webp" alt="swordman" width="50px" height="50px">
+  </div>
+  <p>Swordman</p>
+ </div>
+  
+  <div class="hero-bg">
+  <div class="hero-2" onclick="hpic2()"> 
+    <img src="Media/female warrior.webp" alt="female warrior" width="50px" height="50px">
+  </div>
+  <p>Warrioress</p>
+  </div>
+  
+  <div class="hero-bg">
+  <div class="hero-3" onclick="hpic3()"> 
+    <img src="Media/warrior.webp" alt="warrior"
+        width="50px" height="50px">
+  </div>
+  <p>Warrior</p>
+  </div>
+  
+  <div class="hero-bg">
+  <div class="hero-4" onclick="hpic4()">
+    <img src="Media/ninja.webp" alt="ninja"
+        width="50px" height="50px">
+  </div>
+  <p>Ninja</p>
+  </div>
+</div>
+</section>
+
+<!--setting music on-off btn-->
+<div id="setting-music">
+<p>Music :</p>
+<button onclick="s_on_music()">On</button>
+<button onclick="s_off_music()">Off</button>
+</div>
+
+<!--theme colour button-->
+<div class="theme-start">
+<p>Theme Colour</p>
+ <div class="theme-bg">
+  <div class="color-button" data-theme="blue"></div>
+  <div class="color-button" data-theme="tomato"></div>
+  <div class="color-button" data-theme="pink"></div>
+  <div class="color-button" data-theme="green"></div>
+  <div class="color-button" data-theme="Purple"></div>
+ </div>
+</div>
+
+<!--game history-->
+<div id="main-box">
+  <p>Game History</p>
+  <div id = "box"></div>
+</div>
+
+</div>
+</body>
+</html>

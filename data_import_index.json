@@ -1676,5 +1676,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): "
+  },
+  {
+    "key": "monsterio",
+    "size": 9780,
+    "repo": "rakeshid03/Monsterio",
+    "id": 114,
+    "slug": "monsterio",
+    "title": "Monsterio",
+    "developer": "rakeshid03",
+    "license": "MIT",
+    "source": "https://github.com/rakeshid03/Monsterio",
+    "commit": "41fa7d8cafb96e00a345432c9adf7c22e385368b",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

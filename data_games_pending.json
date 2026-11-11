@@ -2224,5 +2224,32 @@
       "type": "web",
       "category": "game"
     }
+  },
+  {
+    "id": 114,
+    "imported_at": "2026-11-11T21:15:56Z",
+    "release_year": "2025",
+    "category_tags": [
+      "fighting-game",
+      "game",
+      "game-design"
+    ],
+    "main_scene": {
+      "title_ar": "Monsterio",
+      "title_en": "Monsterio",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/monsterio/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A simple HTML, CSS, and JavaScript-enabled web game, mainly designed for mobile screen",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/monsterio/",
+      "developer": "rakeshid03",
+      "license": "MIT",
+      "source_url": "https://github.com/rakeshid03/Monsterio",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "fighting-game"
+    }
   }
 ]
