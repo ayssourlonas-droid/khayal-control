@@ -1,8 +1,8 @@
 Source: https://github.com/ZZHTool/gz-metro-simulator
 Commit: 9c79dd746e124f2d4369515df95336c2f44fd5f8
 License: MIT
-Imported: 2026-11-08T23:30:58.638835+00:00
-Automated changes (see report): {"مسار مطلق ← نسبي": 2, "عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 1, "تحسين وسائط خطوط": 1}
+Imported: 2026-11-11T22:49:07.535621+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 2, "عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 1, "تحسين وسائط خطوط": 1, "تنظيف الكود": 3}
 
 Media provenance (automated signals, not a legal guarantee):
 - images: 1, audio: 0, tagged audio: 0
