@@ -1465,5 +1465,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43093539443"
+  },
+  {
+    "url": "https://github.com/gvtulder/tessel",
+    "repo": "gvtulder/tessel",
+    "reason": "ليست لعبة: الصفحة لا تستقبل أي إدخال من اللاعب (لا لمس ولا نقر ولا مفاتيح ولا أزرار)، وكل ما فيها عرض متحرك أو صورة. اللعبة يجب أن تستجيب لما يفعله اللاعب.",
+    "license": "GPL-3.0",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43102443737"
   }
 ]
