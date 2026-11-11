@@ -91,7 +91,7 @@
       "title_ar": "Maimai Restaurant Huiyan",
       "title_en": "Maimai Restaurant Huiyan",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/maimai-restaurant-huiyan/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/maimai-restaurant-huiyan/_cover.webp"
     },
     "details_scene": {
       "description": "麦麦餐厅-慧眼识人 | 麦当劳 2026 年 1024 程序员创意开发大赛参赛项目：基于麦当劳 MCP 真实餐品数据的出餐配餐与优惠推荐练习游戏（单文件 HTML，双击即玩）",
@@ -103,7 +103,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "1024"
-    }
+    },
+    "reimported_at": "2026-11-11T21:38:51Z"
   },
   {
     "id": 11,
