@@ -1231,5 +1231,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43067253794"
+  },
+  {
+    "url": "https://github.com/Esposter/Esposter",
+    "repo": "Esposter/Esposter",
+    "reason": "فشل البناء: فشل الأمر: ['pnpm', 'run', 'build'] (رمز 1)",
+    "license": "Apache-2.0",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43068367856"
   }
 ]
