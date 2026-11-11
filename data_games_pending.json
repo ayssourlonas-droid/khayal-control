@@ -412,7 +412,7 @@
       "title_ar": "Breakout Game",
       "title_en": "Breakout Game",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/breakout-game/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/breakout-game/_cover.webp"
     },
     "details_scene": {
       "description": "A simple breakout game",
@@ -424,7 +424,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "breakout"
-    }
+    },
+    "reimported_at": "2026-11-11T22:48:11Z"
   },
   {
     "id": 34,
