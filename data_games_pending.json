@@ -64,7 +64,7 @@
       "title_ar": "Tmp3d",
       "title_en": "Tmp3d",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/tmp3d/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/tmp3d/_cover.webp"
     },
     "details_scene": {
       "description": "A 3-D software renderer written from scratch running in an HTML5 <canvas>",
@@ -76,7 +76,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "3d"
-    }
+    },
+    "reimported_at": "2026-11-11T21:35:28Z"
   },
   {
     "id": 8,
