@@ -1541,5 +1541,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: This project is licensed under the [MIT License](LICENSE). Copyright © 2026 BHARANI KUMAR S."
+  },
+  {
+    "key": "2048",
+    "size": 918,
+    "repo": "mahmudnibir/2048",
+    "id": 104,
+    "slug": "2048",
+    "title": "2048",
+    "developer": "mahmudnibir",
+    "license": "MIT",
+    "source": "https://github.com/mahmudnibir/2048",
+    "commit": "ed318c7196f91bcf791cb2cf97eb6fe414cefc07",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

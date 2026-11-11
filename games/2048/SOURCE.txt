@@ -1,8 +1,8 @@
-Source: https://github.com/gabrielecirulli/2048
-Commit: 478b6ec346e3787f589e4af751378d06ded4cbbc
+Source: https://github.com/mahmudnibir/2048
+Commit: ed318c7196f91bcf791cb2cf97eb6fe414cefc07
 License: MIT
-Imported: 2026-11-10T22:11:46.940168+00:00
-Automated changes (see report): {"http ← https": 3, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تحسين وسائط خطوط": 3, "تنظيف الكود": 10}
+Imported: 2026-11-11T17:35:08.320804+00:00
+Automated changes (see report): {"إزالة وسم إعلانات/تتبّع": 3, "عزل تخزين اللعبة": 4, "حذف ملفات غير لازمة": 6, "تحسين وسائط صور": 1, "تحسين وسائط صوت": 4, "تنظيف الكود": 4}
 
 Media provenance (automated signals, not a legal guarantee):
-- images: 3, audio: 0, tagged audio: 0
+- images: 5, audio: 4, tagged audio: 0

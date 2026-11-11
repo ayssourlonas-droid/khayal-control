@@ -2135,5 +2135,33 @@
       "type": "web",
       "category": "babylonjs"
     }
+  },
+  {
+    "id": 104,
+    "imported_at": "2026-11-11T17:40:25Z",
+    "release_year": "2026",
+    "category_tags": [
+      "2048",
+      "css",
+      "html5"
+    ],
+    "main_scene": {
+      "title_ar": "2048",
+      "title_en": "2048",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/2048/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🧩 2048 Web Game – A modern and responsive web-based version of the classic 2048 puzzle. Built with HTML, CSS, and JavaScript, featuring smooth animations, intuitive controls, and a clean UI. Merge tiles, reach 2048, and set new high scores!",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/2048/",
+      "developer": "mahmudnibir",
+      "license": "MIT",
+      "source_url": "https://github.com/mahmudnibir/2048",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "2048"
+    },
+    "review_note": "اسم مشابه للعبة مسجّلة (gabrielecirulli/2048) بحجم مختلف"
   }
 ]
