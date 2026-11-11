@@ -1643,32 +1643,6 @@
     }
   },
   {
-    "id": 85,
-    "release_year": "2022",
-    "category_tags": [
-      "game",
-      "javascript",
-      "phaser"
-    ],
-    "main_scene": {
-      "title_ar": "Phaser Catch The Cat",
-      "title_en": "Phaser Catch The Cat",
-      "app_rating": 0.0,
-      "poster_url": ""
-    },
-    "details_scene": {
-      "description": "An HTML5 game 'Catch The Cat' powered by Phaser 3",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/phaser-catch-the-cat/",
-      "developer": "ganlvtech",
-      "license": "MIT",
-      "source_url": "https://github.com/ganlvtech/phaser-catch-the-cat",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "game"
-    }
-  },
-  {
     "id": 86,
     "release_year": "2022",
     "category_tags": [

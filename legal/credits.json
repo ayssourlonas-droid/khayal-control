@@ -1258,21 +1258,6 @@
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   },
   {
-    "key": "phasercatchthecat",
-    "size": 850,
-    "repo": "ganlvtech/phaser-catch-the-cat",
-    "id": 85,
-    "slug": "phaser-catch-the-cat",
-    "title": "Phaser Catch The Cat",
-    "developer": "ganlvtech",
-    "license": "MIT",
-    "source": "https://github.com/ganlvtech/phaser-catch-the-cat",
-    "commit": "75b67f97a405dd5b0fc8a48d8f647efb72f070a3",
-    "date": "2026-11-10",
-    "license_file": "LICENSE",
-    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: credit: 'github.com/ganlvtech' | README.md: credit          | `github.com/ganlvtech` | 右下角的备注信息                    |"
-  },
-  {
     "key": "iogrid",
     "size": 10219,
     "repo": "jondubois/iogrid",
