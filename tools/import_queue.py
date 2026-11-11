@@ -38,6 +38,29 @@ def say(lines):
             f.write(txt + "\n")
 
 
+ORIENTS = {"portrait", "landscape", "both"}
+
+
+def parse_lines(raw):
+    """يقرأ القائمة: كل رابط، ويقبل بعده اتجاهاً اختيارياً (portrait/landscape/both) خاصاً به.
+    الأمثلة: «https://github.com/a/b» أو «https://github.com/a/b landscape». يتجاهل المكرر، ويحفظ الترتيب."""
+    out, seen, bad = [], set(), []
+    for tok in [x.strip() for x in re.split(r"[\s,]+", raw or "") if x.strip()]:
+        if tok.lower() in ORIENTS:
+            if out and out[-1][1] is None:
+                out[-1] = (out[-1][0], tok.lower())
+            continue
+        k = tok.lower().rstrip("/").removesuffix(".git")
+        if k in seen:
+            continue
+        seen.add(k)
+        if URL_RE.match(tok):
+            out.append((tok, None))
+        else:
+            bad.append(tok)
+    return out, bad
+
+
 def run_one(url, opts):
     before = run_ids()
     gh("workflow", "run", WF,
@@ -63,17 +86,9 @@ def run_one(url, opts):
 
 
 def main():
-    raw = [x.strip() for x in re.split(r"[\s,]+", os.environ.get("QUEUE_URLS", "")) if x.strip()]
-    urls, seen = [], set()
-    for u in raw:
-        k = u.lower().rstrip("/").removesuffix(".git")
-        if k in seen:
-            continue
-        seen.add(k)
-        urls.append(u)
-    bad = [u for u in urls if not URL_RE.match(u)]
-    urls = [u for u in urls if URL_RE.match(u)][:MAX_URLS]
-    if not urls:
+    items, bad = parse_lines(os.environ.get("QUEUE_URLS", ""))
+    items = items[:MAX_URLS]
+    if not items:
         raise SystemExit("لا توجد روابط صالحة (الشكل: https://github.com/صاحب/مستودع)")
     opts = {
         "orientation": os.environ.get("ORIENTATION", "portrait"),
@@ -82,18 +97,18 @@ def main():
         "ai_test": os.environ.get("AI_TEST", "no"),
         "ai_steps": os.environ.get("AI_STEPS", "20"),
     }
-    say([f"## طابور الاستيراد ({len(urls)} لعبة)"] + [f"- تجاهلتُ رابطاً غير صالح: {b}" for b in bad])
+    say([f"## طابور الاستيراد ({len(items)} لعبة)"] + [f"- تجاهلتُ رابطاً غير صالح: {b}" for b in bad])
     rows, ok = [], 0
-    for i, u in enumerate(urls, 1):
-        print(f"▶ [{i}/{len(urls)}] {u}", flush=True)
+    for i, (u, ori) in enumerate(items, 1):
+        print(f"▶ [{i}/{len(items)}] {u} {ori or ''}", flush=True)
         try:
-            rid, concl, link = run_one(u, opts)
+            rid, concl, link = run_one(u, {**opts, "orientation": ori or opts["orientation"]})
         except Exception as e:  # خطأ إرسال/شبكة: نكمل مع الباقي
             rid, concl, link = None, f"خطأ: {e}", ""
         ok += concl == "success"
         rows.append(f"| {i} | {u} | {concl} | {link} |")
         print(f"   النتيجة: {concl} {link}", flush=True)
-    say(["", "| # | المستودع | النتيجة | التشغيل |", "|---|---|---|---|"] + rows + ["", f"**نجح {ok} من {len(urls)}**"])
+    say(["", "| # | المستودع | النتيجة | التشغيل |", "|---|---|---|---|"] + rows + ["", f"**نجح {ok} من {len(items)}**"])
 
 
 if __name__ == "__main__":
