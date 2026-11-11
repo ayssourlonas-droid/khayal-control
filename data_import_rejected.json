@@ -1204,5 +1204,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43061461198"
+  },
+  {
+    "url": "https://github.com/Wadan3/Puzzle-Lock",
+    "repo": "Wadan3/Puzzle-Lock",
+    "reason": "لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. جرّب إدخال subdir أو build_cmd",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43065841723"
   }
 ]
