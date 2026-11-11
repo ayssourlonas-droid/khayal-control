@@ -225,7 +225,7 @@
       "title_ar": "Tetris3d",
       "title_en": "Tetris3d",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/tetris3d/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/tetris3d/_cover.webp"
     },
     "details_scene": {
       "description": "🎮 3D 俄罗斯方块 — 开源、无广告、零权限、3MB | Open-source 3D Tetris (Blockout) for Web & Android",
@@ -237,7 +237,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "3d-game"
-    }
+    },
+    "reimported_at": "2026-11-11T21:57:46Z"
   },
   {
     "id": 21,
