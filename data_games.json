@@ -221,7 +221,7 @@
       "title_ar": "Echo Protocol",
       "title_en": "Echo Protocol",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/echo-protocol/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/echo-protocol/_cover.webp"
     },
     "details_scene": {
       "description": "ECHO PROTOCOL — a fast-paced cyberpunk arena FPS that runs in your browser. React 19 + Three.js, 100% procedural audio, EN/ES UI, offline Windows build (Tauri).",
@@ -233,7 +233,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "arena-shooter"
-    }
+    },
+    "reimported_at": "2026-11-11T18:28:09Z"
   },
   {
     "id": 47,

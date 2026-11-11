@@ -1,15 +1,15 @@
 Source: https://github.com/alberto2005-coder/echo-protocol
-Commit: 125dffe99fb29bae39fd2925d8cac3788a8c04f4
+Commit: 88484ec1fa8365168ed881f9077d2915d6fb6fdd
 License: GPL-3.0
-Imported: 2026-11-09T10:15:53.525556+00:00
+Imported: 2026-11-11T18:24:28.569333+00:00
 Automated changes (see report): {"مسار مطلق ← نسبي": 6, "عزل تخزين اللعبة": 1}
 
 Media provenance (automated signals, not a legal guarantee):
+- README.md: Los componentes de código abierto de terceros permanecen bajo sus propias licencias (MIT, Apache-2.0, Zlib, ISC, CC0) — véase [`THIRD_PARTY_
 - README.md: Survive endless sectors against rogue cybernetic drone swarms, earn Cyber Credits, buy permanent upgrades in the Armory, and take down a mas
 - README.md: Economy & permanent Armory** — every kill pays out Cyber Credits instantly; upgrades bought between floors persist forever via `localStorage
 - README.md: Third-party open-source components remain under their own licenses (MIT, Apache-2.0, Zlib, ISC, CC0) — see [`THIRD_PARTY_NOTICES.md`](./THIR
 - LICENSE: author attributions in that material or in the Appropriate Legal
-- README.es.md: Los componentes de código abierto de terceros permanecen bajo sus propias licencias (MIT, Apache-2.0, Zlib, ISC, CC0) — véase [`THIRD_PARTY_
 - README.md: ECHO PROTOCOL is **proprietary software**. You may download, install and play it for personal, non-commercial use; you may not redistribute, modify, host or reu
 - LICENSE: alternative is allowed only occasionally and noncommercially, and
 - images: 49, audio: 1, tagged audio: 0
