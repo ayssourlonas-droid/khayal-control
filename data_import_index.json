@@ -1631,5 +1631,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "blackjack",
+    "size": 119,
+    "repo": "Saganaki22/Blackjack",
+    "id": 111,
+    "slug": "blackjack",
+    "title": "Blackjack",
+    "developer": "Saganaki22",
+    "license": "Apache-2.0",
+    "source": "https://github.com/Saganaki22/Blackjack",
+    "commit": "c4e8598dbea5fc5f1a141b82b4089443e2e1c139",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]

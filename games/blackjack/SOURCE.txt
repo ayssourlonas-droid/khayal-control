@@ -1,0 +1,12 @@
+Source: https://github.com/Saganaki22/Blackjack
+Commit: c4e8598dbea5fc5f1a141b82b4089443e2e1c139
+License: Apache-2.0
+Imported: 2026-11-11T19:40:50.376910+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: attribution notices from the Source form of the Work,
+- LICENSE: include a readable copy of the attribution notices contained
+- LICENSE: do not modify the License. You may add Your own attribution
+- LICENSE: that such additional attribution notices cannot be construed
+- images: 5, audio: 0, tagged audio: 0

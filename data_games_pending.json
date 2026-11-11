@@ -2143,5 +2143,32 @@
       "type": "web",
       "category": "computer-graphics"
     }
+  },
+  {
+    "id": 111,
+    "imported_at": "2026-11-11T19:45:08Z",
+    "release_year": "2025",
+    "category_tags": [
+      "blackjack",
+      "card-game",
+      "casino-game"
+    ],
+    "main_scene": {
+      "title_ar": "Blackjack",
+      "title_en": "Blackjack",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/blackjack/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A sleek, responsive BlackJack game built with pure HTML, CSS and JavaScript featuring interactive chip betting, animated card dealing, and touch-optimized controls for all devices.   ♠️♥️♣️♦️",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/blackjack/",
+      "developer": "Saganaki22",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/Saganaki22/Blackjack",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "blackjack"
+    }
   }
 ]

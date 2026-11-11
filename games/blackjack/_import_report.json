@@ -1,0 +1,53 @@
+{
+ "date": "2026-11-11T19:40:50.376910+00:00",
+ "status": "warn",
+ "source": "https://github.com/Saganaki22/Blackjack",
+ "commit": "c4e8598dbea5fc5f1a141b82b4089443e2e1c139",
+ "license": "Apache-2.0",
+ "warnings": [
+  "روابط لمواقع خارجية: i.ibb.co, saganaki22.github.io",
+  "3 أخطاء في الكونسول، أولها: Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 5 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:blackjack:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 352 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 1 ملفاً (3 KB)؛ من 10 إلى 9",
+  "تحسين صور: 2 ملفاً، وفّر 27 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 0MB ← 0MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 1",
+  "تعديل تلقائي: تحسين وسائط صور × 2",
+  "الغلاف: readme0.png ← README #1 (درجة 98)",
+  "الأزمنة: اختبار المتصفح: 84ث؛ الغلاف: 41ث؛ تقليل الملفات: 46ث؛ تحسين الوسائط: 46ث (أوامر: 2، اختبارات متصفح: 3)"
+ ],
+ "console_errors": [
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted."
+ ],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "98: readme0.png (README #1)",
+  "86: readme1.jpg (README #2)",
+  "-137: android-chrome-512x512.png (favicon، اسم جزء/عنصر، مربعة)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "حذف ملفات غير لازمة": 1,
+  "تحسين وسائط صور": 2
+ }
+}
