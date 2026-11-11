@@ -1150,5 +1150,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43050595577"
+  },
+  {
+    "url": "https://github.com/Mocas-12/no-survivor-game",
+    "repo": "Mocas-12/no-survivor-game",
+    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
+    "license": "",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43052428268"
   }
 ]
