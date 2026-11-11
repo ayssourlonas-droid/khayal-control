@@ -1393,5 +1393,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43090768869"
+  },
+  {
+    "url": "https://github.com/20essentials/project-000-751",
+    "repo": "20essentials/project-000-751",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43091001754"
   }
 ]
