@@ -1661,5 +1661,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=Shuki Yamamoto"
+  },
+  {
+    "key": "eatcat",
+    "size": 186,
+    "repo": "UlyssesZh/eatcat",
+    "id": 113,
+    "slug": "eatcat",
+    "title": "Eatcat",
+    "developer": "UlyssesZh",
+    "license": "MIT",
+    "source": "https://github.com/UlyssesZh/eatcat",
+    "commit": "0b90d100872abce74829a362dae92319b8fe72dc",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): "
   }
 ]

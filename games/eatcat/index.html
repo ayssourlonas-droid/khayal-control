@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:eatcat:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <title>吃掉小猫猫</title>
+    <meta itemprop="name" content="吃掉小猫猫！" />
+    <meta itemprop="description" content="新概念音游" />
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width,target-densitydpi=device-dpi" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="./static/index.css" rel="stylesheet" type="text/css">
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
+</head>
+
+<body onLoad="init()" oncontextmenu=self.event.returnValue=false>
+    <div id="historyLayer" class="SHADE" style="display:none;"></div>
+    <div id="rulesLayer" class="SHADE" style="display:none;"></div>
+
+    <div id="pauseOverlay" class="SHADE" style="display:none;">
+        <div class="pause-content">
+            <div class="pause-title" style="color:#fff;font-size:2em;margin-bottom:20px;">暂停</div>
+            <!-- 保护模式CD进度条 -->
+            <div class="cd-bar-container" style="display:none;">
+                <div class="cd-bar-bg"><div class="cd-bar-inner" id="cdBarInner" style="width:100%;"></div></div>
+            </div>
+            <div class="pause-buttons">
+                <button type="button" class="btn btn-secondary btn-lg" onclick="Game.continueFromPause()">继续</button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="replayBtn();UI.hideAllOverlays();hideGameScoreLayer();">重玩 (R)</button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="backBtn();UI.hideAllOverlays();">退出 (Q)</button>
+                <div class="pause-hint" style="color:#aaa;margin-top:10px;">按正确的键位以继续</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏模式显示（左下角） -->
+    <div id="gameModeDisplay" style="display:none;position:absolute;bottom:10px;left:10px;z-index:10;color:#fff;font-size:1em;font-weight:bold;pointer-events:none;background:rgba(0,0,0,0.5);padding:4px 10px;border-radius:4px;"></div>
+    
+    <!-- 暂停按钮（左上角） -->
+    <div id="pauseBtn" style="position:absolute;top:10px;left:10px;z-index:10;display:none;cursor:pointer;" onclick="Game.togglePause()">
+        <div style="width:40px;height:40px;background:rgba(0,0,0,0.5);border-radius:5px;display:flex;align-items:center;justify-content:center;">
+            <span style="color:#fff;font-size:24px;">⏸</span>
+        </div>
+    </div>
+
+    <!-- CPS 实时显示（右上角） -->
+    <div id="cpsDisplay" class="cps-container">
+        <div class="cps-bar-bg"><div class="cps-bar-inner" style="width:0%;"></div></div>
+        <span class="cps-number">0.00 CPS</span>
+        <br>
+        <span class="cps-hits">0/0</span>
+    </div>
+
+    <div id="GameScoreLayer" class="BBOX SHADE bgc1" style="display:none;">
+        <div style="padding:5%;margin-top: 200px;background-color: rgba(125, 181, 216, 0.8);">
+            <div id="GameScoreLayer-text" style="font-size:0.6em;"></div>
+            <div id="GameScoreLayer-score" style="font-size:0.6em; margin:10px 0;">得分</div>
+            <div id="GameScoreLayer-bast" style="font-size:0.6em;">最佳</div>
+            <div id="now" style="font-size:0.6em;">键型</div>
+            <div id="nosw" style="font-size:0.6em;"></div>
+            <button type="button" class="btn btn-secondary btn-lg" onclick="replayBtn()">重来 (R)</button>
+            <button type="button" class="btn btn-secondary btn-lg"
+                onclick="hideGameScoreLayer();showWelcomeLayer();gameRestart()">返回主页 (Q)</button>
+        </div>
+    </div>
+
+    <div id="GameLayerBG">
+        <div id="GameLayer1" class="GameLayer"></div>
+        <div id="GameLayer2" class="GameLayer"></div>
+    </div>
+    <div id="GameTimeLayer"><span class="timer-text">20.00s</span></div>
+
+    <div id="welcome" class="SHADE BOX-M">
+        <div class="welcome-bg FILL"></div>
+        <div class="FILL BOX-M" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;">
+            <div style="margin:0 8% 0 9%;">
+                <div style="font-size:1.2em; color:#FEF002;" id="tt">吃掉小猫猫（支持高度自定义~）</div><br />
+                <div style="font-size: 1.0em; color:rgb(45, 255, 4); line-height:1.5em;" id="tttt">
+                    更新内容：绑多key、不合规纠正、键型收纳、历史成绩、规则页面等！<br />
+                </div>
+                <div style="font-size: 1.0em; color:#fff; line-height:1.5em;" id="ttt">
+                    从最底下小猫猫开始<br />
+                    看看您能吃多少猫猫~<br />
+                    注：设置里有很多好东西哟！<br />
+                    电脑玩家在默认设置下 <br />
+                    键盘上的DFJK键<br />
+                    可分别控制四个轨道哦！<br />
+                </div>
+                <br />
+                <div id="btn_group" style="display: block;">
+                    <button type="button" id="ready-btn" class="btn btn-primary btn-lg">点击开始</button>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="show_setting()">游戏设置</button>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="UI.showRules()">规则介绍</button>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="UI.showHistory()">历史成绩</button>
+                    <br /><br />
+                    <button type="button" class="btn btn-secondary btn-lg"
+                        onclick="foreach()">若出现了bug点击此按钮后刷新界面</button>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="UI.showAbout()">关于</button>
+                    <br /><br />
+                </div>
+
+                <div id="btn_group2" style="display: block;">
+                    <h2 style="font-size:1.0em; color:#fff; line-height:1.5em;">一键设置特殊键型</h2>
+                    <div class="pattern-select-row">
+                        <select id="patternSelect" class="pattern-select" onchange="UI.onPatternSelectChange()">
+                            <option value="__custom__">自定义</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="UI.showPatternManager()">键型管理</button>
+                    </div>
+                    <br />
+                    <div class="mode-select-row">
+                        <span style="color:#fff;font-size:0.9em;">游戏模式：</span>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="setGameMode('normal')">普通</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="setGameMode('protected')">保护</button>
+                    </div>
+                </div>
+
+                <div id="setting1" style="display: none;">
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        请在此处输入您需要的键数（这边建议是2~8哦）
+                    </h3>
+                    <div class="input-group mb-3">
+                        <input align="center" type="text" id="k" class="inputtxt" maxlength=10 oninput="UI.onKeyCountInputChange()">
+                    </div>
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        请在此处输入与您需要的键数数量相等的英文字母 <br />
+                        以绑定键盘上对应的按键哦（不区分大小写）！<br />
+                        支持一轨绑多个按键，用~连接，如 dfh~jk可以同时用h或j按第三轨<br />
+                    </h3>
+                    <div class="input-group mb-3">
+                        <input type="text" id="keyboard" class="inputtxt" maxlength=99999 oninput="UI.onKeyboardInputChange()">
+                    </div>
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        请在此处输入您想要设置的时间限制哦~<br />
+                        （单位：秒，设为0或负数为正计时） <br />
+                    </h3>
+                    <div class="input-group mb-3">
+                        <input type="text" id="timeinput" class="inputtxt" maxlength=4>
+                    </div>
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        请在此处输入您想要设置的键型哦~ <br />
+                    </h3>
+                    <div class="input-group mb-3">
+                        <input type="text" id="note" class="inputtxt" maxlength=99999 oninput="UI.onNoteInputChange()">
+                    </div>
+                    <!-- 宽度显示设置 -->
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        轨道宽度缩放：<span id="widthValue">100%</span>
+                    </h3>
+                    <div class="input-group mb-3">
+                        <input type="range" id="widthSlider" min="10" max="100" value="100" class="slider"
+                            oninput="document.getElementById('widthValue').textContent=this.value+'%';Game.centerWidth=parseInt(this.value);Game.countBlockSize();Game.restart();">
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-lg"
+                        onclick="show_btn(1);saveSettings();">完成</button>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="nxtpage(1);">下一页</button>
+                </div>
+                <div id="setting2" style="display: none;">
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        关闭音效
+                    </h3>
+                    <input type="checkbox" class="rradio" id="close">
+                    <br>
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        隐藏结算后显示的评语
+                    </h3>
+                    <input type="checkbox" id="hide" class="rradio">
+                    <br>
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        主题颜色
+                    </h3>
+                    <div class="input-group mb-3">
+                        <select id="themeColor" class="pattern-select" onchange="UI.applyTheme(this.value)">
+                            <option value="light">浅色</option>
+                            <option value="dark">深色</option>
+                            <option value="pinstripe">淡色条纹</option>
+                            <option value="splitR">分离区域R</option>
+                            <option value="splitL">分离区域L</option>
+                        </select>
+                    </div>
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        自定义按键显示的图片（可以是动图哦~）
+                    </h3>
+                    <div style="color:#aaa;font-size:0.8em;" id="customImageNameDisplay">未选择图片</div>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+                        <label class="btn btn-secondary btn-sm" style="margin:0;cursor:pointer;">
+                            选择图片
+                            <input id="upload-input" type="file" accept="image/gif, image/jpg, image/png, image/webp"
+                                onchange="showImg(this)" style="display:none;" />
+                        </label>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="resetImg()">恢复默认图片</button>
+                    </div>
+                    <br>
+                    <br>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="lstpage(2);">上一页</button>
+                    <button type="button" class="btn btn-secondary btn-lg"
+                        onclick="show_btn(2);saveSettings();">完成</button>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="nxtpage(2);">下一页</button>
+                </div>
+                <div id="setting3" style="display: none;">
+                    <h3 style="font-size:1.0em; color:#fff; line-height:1.3em;">
+                        功能键位设置（留空 = 不绑定）
+                    </h3>
+                    <div style="color:#aaa;font-size:0.8em;">暂停/退出：</div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="keybindQ" class="inputtxt" maxlength=10 value="q">
+                    </div>
+                    <div style="color:#aaa;font-size:0.8em;">重玩：</div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="keybindR" class="inputtxt" maxlength=10 value="r">
+                    </div>
+                    <div style="color:#aaa;font-size:0.8em;">结算时重玩：</div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="keybindF" class="inputtxt" maxlength=10 value="f">
+                    </div>
+                    <div style="color:#aaa;font-size:0.8em;">模拟左键（游玩时该键位可代替鼠标左键判定音符）：</div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="keybindM" class="inputtxt" maxlength=10 value="">
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="lstpage(3);">上一页</button>
+                    <button type="button" class="btn btn-secondary btn-lg"
+                        onclick="show_btn(3);saveSettings();">完成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="./static/js/note-parser.js?id=fix20240730"></script>
+    <script src="./static/js/storage.js?id=fix20240730"></script>
+    <script src="./static/js/input.js?id=fix20240730"></script>
+    <script src="./static/js/game-core.js?id=fix20240730"></script>
+    <script src="./static/js/ui.js?id=fix20240730"></script>
+    <script src="./static/index.js?id=fix20240730"></script>
+</body>
+
+</html>

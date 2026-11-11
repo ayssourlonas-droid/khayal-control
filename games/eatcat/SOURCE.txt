@@ -1,0 +1,8 @@
+Source: https://github.com/UlyssesZh/eatcat
+Commit: 0b90d100872abce74829a362dae92319b8fe72dc
+License: MIT
+Imported: 2026-11-11T21:03:12.760389+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 2, "تنظيف الكود": 7}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 2, audio: 3, tagged audio: 0

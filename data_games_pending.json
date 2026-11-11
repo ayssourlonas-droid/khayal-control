@@ -2197,5 +2197,32 @@
       "type": "web",
       "category": "bartender-game"
     }
+  },
+  {
+    "id": 113,
+    "imported_at": "2026-11-11T21:08:06Z",
+    "release_year": "2026",
+    "category_tags": [
+      "game",
+      "javascript",
+      "javascript-game"
+    ],
+    "main_scene": {
+      "title_ar": "Eatcat",
+      "title_en": "Eatcat",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/eatcat/_cover.webp"
+    },
+    "details_scene": {
+      "description": "音游底力练习工具",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/eatcat/",
+      "developer": "UlyssesZh",
+      "license": "MIT",
+      "source_url": "https://github.com/UlyssesZh/eatcat",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "game"
+    }
   }
 ]
