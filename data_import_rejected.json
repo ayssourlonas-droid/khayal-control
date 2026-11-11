@@ -1267,5 +1267,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43071735331"
+  },
+  {
+    "url": "https://github.com/julienc91/caviardeul",
+    "repo": "julienc91/caviardeul",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (docker-compose.yml) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43071977814"
   }
 ]
