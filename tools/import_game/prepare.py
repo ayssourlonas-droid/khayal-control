@@ -15,6 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from browser_check import browser_test, fix_case, lint_js
+import touch_controls
 from common import ALLOWED, COPYLEFT, COUNT, FIXES, HTML_SKIPPED, MAX_FILES, MAX_TOTAL_FAIL, MAX_TOTAL_WARN, TIMINGS, api, fixed, log, parse_repo, pretty_title, run, slugify, stage, start_watchdog, stop_watchdog
 from html_sanitize import sanitize, scan_suspicious
 from provenance import provenance_lines, scan_provenance, server_side_hints
@@ -249,6 +250,9 @@ def main():
             reasons.append("index.html لا يُحمَّل (ليس 200)")
         if t["blank"]:
             reasons.append("الصفحة فارغة بعد 6 ثوانٍ")
+        elif t.get("input_events") == [] and not t.get("interactive_els") and not t["external_requests"]:
+            reasons.append("ليست لعبة: الصفحة لا تستقبل أي إدخال من اللاعب (لا لمس ولا نقر ولا مفاتيح ولا أزرار)، "
+                           "وكل ما فيها عرض متحرك أو صورة. اللعبة يجب أن تستجيب لما يفعله اللاعب.")
         local_fail = [f for f in t["failed_requests"]
                       if re.match(r"^(4|5)\d\d ", f) and "favicon" not in f.lower()]
         if local_fail:
@@ -363,6 +367,67 @@ def main():
                     fixed("تنظيف الكود", cr["files"])
             except Exception as e:
                 warnings.append(f"تعذّر تنظيف الكود: {str(e)[:120]}")
+
+    stage("أزرار اللمس")
+    # 6د) ألعاب لوحة المفاتيح فقط: نضيف طبقة أزرار لمس (آخر خطوة كي لا تظهر في لقطة الغلاف ولا يحذفها التقليل)
+    touch_info = None
+    if t["ran"] and t.get("keyboard_only"):
+        try:
+            kd = touch_controls.detect_keys(site)
+            if touch_controls.inject(site, kd["keys"]):
+                tv = browser_test(site, work, out / "_shot_touch.png", explore=False)
+                has_layer = tv["ran"] and tv["status_ok"]
+                touch_info = {"keys": kd["keys"], "found": kd["found"], "guessed": kd["guessed"], "loads": bool(has_layer)}
+                fixed("أزرار لمس مدمجة", 1)
+                warnings.append(
+                    "تحتاج لوحة مفاتيح: لا تستجيب للمس. أُضيفت أزرار لمس تولّد المفاتيح ("
+                    + " ".join(touch_controls.KEYS[k][0] for k in kd["keys"]) + ")"
+                    + ("؛ المفاتيح خُمّنت (لم يُعثر على أسمائها في الكود)" if kd["guessed"] else "")
+                    + ". جرّبها بنفسك قبل الاعتماد؛ لم يتأكد الفحص الآلي أنها تتحكم باللعبة فعلاً.")
+                if not has_layer:
+                    warnings.append("بعد إضافة أزرار اللمس لم تُحمَّل الصفحة كما يجب؛ راجع اللعبة")
+            else:
+                warnings.append("تحتاج لوحة مفاتيح ولا يمكن إضافة أزرار لمس (لا index.html في الجذر)")
+        except Exception as e:
+            warnings.append(f"تحتاج لوحة مفاتيح؛ تعذّرت إضافة أزرار اللمس: {str(e)[:100]}")
+    report["touch_layer"] = touch_info
+
+    # تلميحات الأسماء التجريبية (تحذير فقط؛ قد تظلم لعبة اسمها يحتوي الكلمة)
+    name_text = f"{repo} {report.get('description') or ''} {' '.join(report.get('topics') or [])}".lower()
+    m_name = re.search(r"\b(demo|template|boilerplate|tutorial|starter|sample|playground|learning|practice|test)\b", name_text)
+    if m_name:
+        warnings.append(f"الاسم أو الوصف يوحي بأنها تجريبية أو تعليمية («{m_name.group(1)}»)؛ راجع أنها لعبة كاملة")
+
+    # درجة الجودة (تقريبية، للمراجعة السريعة؛ أي تحذير يوجّه اللعبة إلى «للمراجعة» أصلاً)
+    q_parts = []
+    score = 100
+    if t["ran"]:
+        if t.get("keyboard_only"):
+            score -= 20
+            q_parts.append("لوحة مفاتيح فقط (-20)")
+        if t["console_errors"]:
+            score -= 15
+            q_parts.append("أخطاء كونسول (-15)")
+        if t["external_requests"]:
+            score -= 5
+            q_parts.append("طلبات خارجية (-5)")
+    else:
+        score -= 30
+        q_parts.append("لم يعمل الاختبار الآلي (-30)")
+    if not (cover_pick and cover_pick.get("path")) or (cover_pick or {}).get("fallback"):
+        score -= 15
+        q_parts.append("غلاف ضعيف أو غير موجود (-15)")
+    if m_name:
+        score -= 20
+        q_parts.append("اسم تجريبي (-20)")
+    if lint.get("errors"):
+        score -= 10
+        q_parts.append("أخطاء ESLint (-10)")
+    score = max(0, score)
+    report["quality"] = {"score": score, "parts": q_parts}
+    notes.append(f"درجة الجودة التقريبية: {score}/100" + (" (" + "، ".join(q_parts) + ")" if q_parts else ""))
+    if score < 70:
+        warnings.append(f"جودة منخفضة ({score}/100): " + "، ".join(q_parts))
 
     # سجل التعديلات التلقائية
     for k, v in FIXES.items():

@@ -10,6 +10,41 @@ from urllib.parse import unquote, urlparse
 
 from common import COUNT, EXCLUDE_DIRS, _STAGE, log, run
 
+# ───────────── هل هي لعبة؟ (تقبل إدخالاً من اللاعب) ─────────────
+# نحقن سكربتاً قبل كل صفحة وإطار يسجّل أنواع أحداث الإدخال التي تسجّلها الصفحة (لمس، نقر، مفاتيح، فأرة، يد تحكم، حسّاس حركة)
+# سواء عبر addEventListener أو خصائص on*. صفحة تعرض حركة فقط (مثل مطر Matrix) لا تسجّل شيئاً منها، فتُرفض بوصفها ليست لعبة.
+INPUT_EVENTS = ["click", "dblclick", "mousedown", "mouseup", "mousemove", "pointerdown", "pointerup", "pointermove",
+                "touchstart", "touchend", "touchmove", "keydown", "keyup", "keypress", "wheel", "contextmenu",
+                "gamepadconnected", "deviceorientation", "devicemotion", "dragstart", "input", "change", "submit"]
+INPUT_HOOK_JS = """
+(() => {
+  const EV = %s;
+  const seen = (window.__inputSeen = window.__inputSeen || {});
+  const mark = t => { if (EV.includes(t)) seen[t] = 1; };
+  try {
+    const orig = EventTarget.prototype.addEventListener;
+    EventTarget.prototype.addEventListener = function (t, ...r) { try { mark(String(t)); } catch (e) {} return orig.call(this, t, ...r); };
+  } catch (e) {}
+})();
+""" % json.dumps(INPUT_EVENTS)
+
+INPUT_COLLECT_JS = """
+() => {
+  const EV = %s;
+  const seen = Object.assign({}, window.__inputSeen || {});
+  const holders = [window, document, document.documentElement, document.body];
+  for (const h of holders) { if (!h) continue; for (const t of EV) { try { if (h['on' + t]) seen[t] = 1; } catch (e) {} } }
+  let els = 0;
+  for (const el of document.querySelectorAll('*')) {
+    for (const t of EV) { try { if (el['on' + t]) { seen[t] = 1; } } catch (e) {} }
+    const tag = el.tagName;
+    if (tag === 'BUTTON' || tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || el.getAttribute('role') === 'button') els++;
+  }
+  return {types: Object.keys(seen), els};
+}
+""" % json.dumps(INPUT_EVENTS)
+
+
 # ───────────── الغلاف ─────────────
 COVER_RE = re.compile(r"(cover|thumb|thumbnail|banner|preview|splash|og[-_]?image|icon|logo)", re.I)
 
@@ -181,7 +216,8 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45, 
     COUNT["browser_tests"] += 1
     log(f"🌐 اختبار متصفح رقم {COUNT['browser_tests']} (المرحلة: {_STAGE['name']})")
     res = {"ran": False, "console_errors": [], "failed_requests": [], "status_ok": False,
-           "blank": False, "external_requests": [], "missing": [], "used": []}
+           "blank": False, "external_requests": [], "missing": [], "used": [],
+           "input_events": [], "interactive_els": 0, "keyboard_only": False}
     try:
         from playwright.sync_api import sync_playwright
     except Exception:
@@ -212,6 +248,7 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45, 
             b = pw.chromium.launch(args=["--no-sandbox"])
             ctx = b.new_context(viewport={"width": 412, "height": 915}, device_scale_factor=2,
                                 is_mobile=True, has_touch=True)
+            ctx.add_init_script(INPUT_HOOK_JS)
             page = ctx.new_page()
             page.on("console", lambda m: res["console_errors"].append(m.text[:200]) if m.type == "error" else None)
             page.on("pageerror", lambda e: res["console_errors"].append(("JS: " + str(e))[:200]))
@@ -250,6 +287,24 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45, 
                 "() => ({n: document.querySelectorAll('canvas,svg,img,video,iframe,button').length,"
                 " t: (document.body ? document.body.innerText : '').trim().length})")
             res["blank"] = info["n"] == 0 and info["t"] < 5
+            try:
+                ev, els = set(), 0
+                for fr in page.frames:
+                    try:
+                        c = fr.evaluate(INPUT_COLLECT_JS)
+                        ev.update(c["types"])
+                        els += c["els"]
+                    except Exception:
+                        pass
+                res["input_events"] = sorted(ev)
+                res["interactive_els"] = els
+                pointer = {"click", "dblclick", "mousedown", "mouseup", "mousemove", "pointerdown", "pointerup",
+                           "pointermove", "touchstart", "touchend", "touchmove"}
+                kbd = {"keydown", "keyup", "keypress"}
+                # لوحة مفاتيح فقط: تسجّل مفاتيح ولا تسجّل لمساً ولا فأرة ولا نقراً، وليس فيها أزرار على الصفحة
+                res["keyboard_only"] = bool(ev & kbd) and not (ev & pointer) and els == 0
+            except Exception:
+                res["input_events"] = None  # تعذّر الفحص: لا نحكم
             page.screenshot(path=str(shot))
             res["used"] = sorted(used)
             b.close()
