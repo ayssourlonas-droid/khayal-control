@@ -1,0 +1,60 @@
+{
+ "date": "2026-11-11T17:02:53.793556+00:00",
+ "status": "warn",
+ "source": "https://github.com/NickScherbakov/very-simple-tetris-created-by-Copilot",
+ "commit": "01601874a7c44e91093a9fc7873a7ebeda44d3e4",
+ "license": "MIT",
+ "warnings": [
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: api.whatsapp.com, buy.stripe.com, stripe.com, t.me, twitter.com, vk.com",
+  "3 أخطاء في الكونسول، أولها: A bad HTTP response code (404) was received when fetching the script."
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 4 صورة و0 صوتاً",
+  "وجود ملف prompt (finalprompt.md): الصور أو الكود على الأرجح مولَّدة بالذكاء الاصطناعي",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:very-simple-tetris-created-by-copilot:) في 3 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 89 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 18 ملفاً (169 KB)؛ من 68 إلى 50",
+  "تحسين صور: 2 ملفاً، وفّر 102 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 0MB ← 0MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: لا أخطاء في 23 ملفات",
+  "تنظيف الكود (فراغات وبنية الكود): 32 ملفاً، 325KB ← 196KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 80/100 (أخطاء كونسول (-15)، طلبات خارجية (-5))",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 4",
+  "تعديل تلقائي: عزل تخزين اللعبة × 3",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 18",
+  "تعديل تلقائي: تحسين وسائط صور × 2",
+  "تعديل تلقائي: تنظيف الكود × 32",
+  "الغلاف: screenshot.jpg ← README #8، اسم شاشة، مربعة (درجة 63)",
+  "الأزمنة: اختبار المتصفح: 88ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 48ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 50ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "A bad HTTP response code (404) was received when fetching the script.",
+  "JS: window.achievementSystem.checkScoreAchievement is not a function",
+  "TypeError: window.achievementSystem.checkScoreAchievement is not a function\n    at spawnPiece (http://127.0.0.1:43549/game/tetris.js:512:42)\n    at hardDrop (http://127.0.0.1:43549/game/tetris.js:403:"
+ ],
+ "failed_requests": [],
+ "external_requests": [
+  "fonts.googleapis.com",
+  "fonts.gstatic.com"
+ ],
+ "cover_candidates": [
+  "63: screenshot.jpg (README #8، اسم شاشة، مربعة)",
+  "28: Tetris_logo.png (شعار كبير)",
+  "-77: icon-512x512.png (شعار كبير، اسم جزء/عنصر، مربعة، ملف صغير جداً)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 23,
+  "errors": 0
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 4,
+  "عزل تخزين اللعبة": 3,
+  "حذف ملفات غير لازمة": 18,
+  "تحسين وسائط صور": 2,
+  "تنظيف الكود": 32
+ }
+}

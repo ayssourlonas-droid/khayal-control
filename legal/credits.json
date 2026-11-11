@@ -1481,5 +1481,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "verysimpletetriscreatedbycopilot",
+    "size": 538,
+    "repo": "NickScherbakov/very-simple-tetris-created-by-Copilot",
+    "id": 100,
+    "slug": "very-simple-tetris-created-by-copilot",
+    "title": "Very Simple Tetris Created By Copilot",
+    "developer": "NickScherbakov",
+    "license": "MIT",
+    "source": "https://github.com/NickScherbakov/very-simple-tetris-created-by-Copilot",
+    "commit": "01601874a7c44e91093a9fc7873a7ebeda44d3e4",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): "
   }
 ]

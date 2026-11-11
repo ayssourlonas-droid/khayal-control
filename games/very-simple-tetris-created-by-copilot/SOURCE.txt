@@ -1,0 +1,8 @@
+Source: https://github.com/NickScherbakov/very-simple-tetris-created-by-Copilot
+Commit: 01601874a7c44e91093a9fc7873a7ebeda44d3e4
+License: MIT
+Imported: 2026-11-11T17:02:53.793556+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 4, "عزل تخزين اللعبة": 3, "حذف ملفات غير لازمة": 18, "تحسين وسائط صور": 2, "تنظيف الكود": 32}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 4, audio: 0, tagged audio: 0
