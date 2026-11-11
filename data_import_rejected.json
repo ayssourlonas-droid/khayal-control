@@ -1447,5 +1447,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43092739138"
+  },
+  {
+    "url": "https://github.com/hb20007/truly-kryptic",
+    "repo": "hb20007/truly-kryptic",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43093030611"
   }
 ]
