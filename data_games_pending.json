@@ -252,7 +252,7 @@
       "title_ar": "More On Html",
       "title_en": "More On Html",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/more-on-html/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/more-on-html/_cover.webp"
     },
     "details_scene": {
       "description": "Learn more about Html through this repository",
@@ -264,7 +264,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "adblock"
-    }
+    },
+    "reimported_at": "2026-11-11T22:01:24Z"
   },
   {
     "id": 24,

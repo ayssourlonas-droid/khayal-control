@@ -1,0 +1,63 @@
+{
+ "date": "2026-11-11T21:59:14.500752+00:00",
+ "status": "warn",
+ "source": "https://github.com/BlazeInferno64/More-On-Html",
+ "commit": "10b5899dade0576a6462233597add2af4600997e",
+ "license": "GPL-3.0",
+ "warnings": [
+  "رخصة حقوق متبادلة (GPL-3.0): أي عمل مشتق يلزمه نشر المصدر بالرخصة نفسها؛ راجعها قبل النشر العام",
+  "شرط تقييد محتمل في الوثائق: LICENSE: alternative is allowed only occasionally and noncommercially, and",
+  "لا توجد مؤشرات أن هذا الموقع لعبة (لا canvas ولا requestAnimationFrame ولا مكتبة ألعاب)؛ راجعه جيداً قبل الاعتماد",
+  "روابط لمواقع خارجية: api.github.com, avatars.githubusercontent.com, blaizinginfernodragon123.github.io, github.com, i.pravatar.cc, ipinfo.io, kit.fontawesome.com, www.github.com"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 4 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: author attributions in that material or in the Appropriate Legal",
+  "أنماط تستحق الانتباه: طلب الموقع الجغرافي (Ask For Geolocation.html)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:more-on-html:) في 29 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 281 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "رخصة GPL-3.0: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)",
+  "رخصة GPL-3.0: لم تُحسَّن الوسائط",
+  "رخصة GPL-3.0: لم يُنظَّف الكود (يجب إتاحة المصدر كما هو)",
+  "درجة الجودة التقريبية: 95/100 (طلبات خارجية (-5))",
+  "تعديل تلقائي: إضافة meta charset × 18",
+  "تعديل تلقائي: عزل تخزين اللعبة × 29",
+  "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة enter (درجة 75.1 من 6 لقطات) — مقبولة",
+  "الأزمنة: اختبار المتصفح: 83ث (أوامر: 2، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [],
+ "failed_requests": [
+  "https://camo.githubusercontent.com/30cec02603fe14c156ef2403d98b24b2b02422f2d65286ae2fdb267d78b804bf/68747470733a2f2f6769746875622d726561646d652d616374",
+  "https://camo.githubusercontent.com/3bbdf33a1bce9e62211859d7b7ed0b4996a85cb2ce622dd76cf8031658aa4ce4/68747470733a2f2f726561646d652d747970696e672d737667",
+  "https://camo.githubusercontent.com/30cec02603fe14c156ef2403d98b24b2b02422f2d65286ae2fdb267d78b804bf/68747470733a2f2f6769746875622d726561646d652d616374",
+  "https://collector.github.com/github/collect"
+ ],
+ "external_requests": [
+  "api.github.com",
+  "avatars.githubusercontent.com",
+  "camo.githubusercontent.com",
+  "collector.github.com",
+  "explore-feed.github.com",
+  "fonts.googleapis.com",
+  "fonts.gstatic.com",
+  "github.com",
+  "github.githubassets.com",
+  "ka-f.fontawesome.com"
+ ],
+ "cover_candidates": [
+  "18: img_lights.jpg ()",
+  "18: img_forest.jpg ()",
+  "18: img_snowtops.jpg ()"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "إضافة meta charset": 18,
+  "عزل تخزين اللعبة": 29
+ }
+}
