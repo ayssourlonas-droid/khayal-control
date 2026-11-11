@@ -1330,5 +1330,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43087884229"
+  },
+  {
+    "url": "https://github.com/YinkaiYu/topology-gomoku",
+    "repo": "YinkaiYu/topology-gomoku",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 127)",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43088128947"
   }
 ]
