@@ -2002,5 +2002,31 @@
       "type": "web",
       "category": "es6"
     }
+  },
+  {
+    "id": 98,
+    "release_year": "2020",
+    "category_tags": [
+      "canvas",
+      "canvas-2d-context",
+      "canvas-animation"
+    ],
+    "main_scene": {
+      "title_ar": "The Matrix Effect",
+      "title_en": "The Matrix Effect",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/the-matrix-effect/_cover.webp"
+    },
+    "details_scene": {
+      "description": "The incredible effect of rain of letters in the style of the Matrix trilogy.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/the-matrix-effect/",
+      "developer": "JefersonLucas",
+      "license": "MIT",
+      "source_url": "https://github.com/JefersonLucas/the-matrix-effect",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas"
+    }
   }
 ]

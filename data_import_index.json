@@ -1451,5 +1451,20 @@
     "date": "2026-11-10",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: "
+  },
+  {
+    "key": "thematrixeffect",
+    "size": 9881,
+    "repo": "JefersonLucas/the-matrix-effect",
+    "id": 98,
+    "slug": "the-matrix-effect",
+    "title": "The Matrix Effect",
+    "developer": "JefersonLucas",
+    "license": "MIT",
+    "source": "https://github.com/JefersonLucas/the-matrix-effect",
+    "commit": "e61f89d18a6637e1c7592cd1c9d924a537d681d9",
+    "date": "2026-11-10",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
