@@ -118,7 +118,7 @@
       "title_ar": "Flashpoint Web",
       "title_en": "Flashpoint Web",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/flashpoint-web/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/flashpoint-web/_cover.webp"
     },
     "details_scene": {
       "description": "Selfhosted flashpoint archive for playing flash and HTML5 game in browser without any additional app",
@@ -130,7 +130,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "flash-game"
-    }
+    },
+    "reimported_at": "2026-11-11T21:43:18Z"
   },
   {
     "id": 14,

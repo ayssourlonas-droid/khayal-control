@@ -1,7 +1,7 @@
 Source: https://github.com/darkraise/flashpoint-web
 Commit: c12255c3c6cf69e3c14b498d01339e241fdaee7d
 License: GPL-3.0
-Imported: 2026-11-07T21:14:07.199624+00:00
+Imported: 2026-11-11T21:40:23.885942+00:00
 Automated changes (see report): {"مسار مطلق ← نسبي": 11, "عزل تخزين اللعبة": 1}
 
 Media provenance (automated signals, not a legal guarantee):
