@@ -1483,5 +1483,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43112971266"
+  },
+  {
+    "url": "https://github.com/playpip/pip-web",
+    "repo": "playpip/pip-web",
+    "reason": "ليست لعبة: الصفحة لا تستقبل أي إدخال من اللاعب (لا لمس ولا نقر ولا مفاتيح ولا أزرار)، وكل ما فيها عرض متحرك أو صورة. اللعبة يجب أن تستجيب لما يفعله اللاعب.",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43113462025"
   }
 ]
