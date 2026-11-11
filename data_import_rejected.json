@@ -1213,5 +1213,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43065841723"
+  },
+  {
+    "url": "https://github.com/Parking-Master/FPS2",
+    "repo": "Parking-Master/FPS2",
+    "reason": "الحجم 934MB كبير جداً؛ ملفات تتجاوز 25MB (حد Cloudflare): sounds/ambience.mp3 (39MB), models/weapons/Desert_Eagle.glb (28MB), models/maps/VERTEX/scene.gltf (25MB), models/maps/GHOST/scene.gltf (37MB), models/characters/steve/Image_6.png (31MB)",
+    "license": "MIT",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43066715744"
   }
 ]
