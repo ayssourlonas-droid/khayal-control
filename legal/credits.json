@@ -1601,5 +1601,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: artist=Beezle | artist=Damien Devaux"
+  },
+  {
+    "key": "capybara",
+    "size": 19081,
+    "repo": "luizbizzio/capybara",
+    "id": 109,
+    "slug": "capybara",
+    "title": "Capybara",
+    "developer": "luizbizzio",
+    "license": "Apache-2.0",
+    "source": "https://github.com/luizbizzio/capybara",
+    "commit": "673e65795f3b099e2f040f5b382f234ef0dad23c",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]

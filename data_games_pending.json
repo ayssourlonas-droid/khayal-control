@@ -2089,5 +2089,32 @@
       "type": "web",
       "category": "collaborate"
     }
+  },
+  {
+    "id": 109,
+    "imported_at": "2026-11-11T19:23:00Z",
+    "release_year": "2026",
+    "category_tags": [
+      "animals",
+      "browser-game",
+      "capybara"
+    ],
+    "main_scene": {
+      "title_ar": "Capybara",
+      "title_en": "Capybara",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/capybara/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🕹️ Capybara Game is a small, fast-paced web game where the goal is to catch as many capybaras as possible within a time limit.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/capybara/",
+      "developer": "luizbizzio",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/luizbizzio/capybara",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "animals"
+    }
   }
 ]
