@@ -466,7 +466,7 @@
       "title_ar": "Html5 Game Editor",
       "title_en": "Html5 Game Editor",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/html5-game-editor/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/html5-game-editor/_cover.webp"
     },
     "details_scene": {
       "description": "Browser-based HTML5 game editor and runtime: PixiJS 2D, Three.js 3D, React UI, and a TypeScript engine for multiple games",
@@ -478,7 +478,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "2d"
-    }
+    },
+    "reimported_at": "2026-11-11T22:59:27Z"
   },
   {
     "id": 37,
