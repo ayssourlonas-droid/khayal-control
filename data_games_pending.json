@@ -1928,33 +1928,6 @@
     }
   },
   {
-    "id": 97,
-    "release_year": "2023",
-    "category_tags": [
-      "es6",
-      "experimental",
-      "game"
-    ],
-    "main_scene": {
-      "title_ar": "Mimstris",
-      "title_en": "Mimstris",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/mimstris/_cover.webp"
-    },
-    "details_scene": {
-      "description": "A falling block puzzle game created using React and Redux.",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/mimstris/",
-      "developer": "mimshwright",
-      "license": "MIT",
-      "source_url": "https://github.com/mimshwright/mimstris",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "es6"
-    },
-    "reimported_at": "2026-11-11T18:37:57Z"
-  },
-  {
     "id": 98,
     "release_year": "2020",
     "category_tags": [
