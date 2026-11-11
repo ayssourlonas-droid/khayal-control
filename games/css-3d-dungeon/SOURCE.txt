@@ -1,0 +1,10 @@
+Source: https://github.com/MeroVinggen/CSS-3D-Dungeon
+Commit: 53d256e2dcc33b597332548bc3ba69606b29c41a
+License: MIT
+Imported: 2026-11-11T21:17:19.299098+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 7, "تحسين وسائط صوت": 6, "تحسين وسائط خطوط": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- artist=All Sounds
+- artist=Sascha Dikiciyan And Cris Velasco
+- images: 24, audio: 24, tagged audio: 4

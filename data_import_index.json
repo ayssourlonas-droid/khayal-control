@@ -1691,5 +1691,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "cssddungeon",
+    "size": 19291,
+    "repo": "MeroVinggen/CSS-3D-Dungeon",
+    "id": 115,
+    "slug": "css-3d-dungeon",
+    "title": "CSS 3D Dungeon",
+    "developer": "MeroVinggen",
+    "license": "MIT",
+    "source": "https://github.com/MeroVinggen/CSS-3D-Dungeon",
+    "commit": "53d256e2dcc33b597332548bc3ba69606b29c41a",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: artist=All Sounds | artist=Sascha Dikiciyan And Cris Velasco"
   }
 ]

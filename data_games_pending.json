@@ -2251,5 +2251,32 @@
       "type": "web",
       "category": "fighting-game"
     }
+  },
+  {
+    "id": 115,
+    "imported_at": "2026-11-11T21:21:46Z",
+    "release_year": "2026",
+    "category_tags": [
+      "3d-game",
+      "css",
+      "css-3d"
+    ],
+    "main_scene": {
+      "title_ar": "CSS 3D Dungeon",
+      "title_en": "CSS 3D Dungeon",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/css-3d-dungeon/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A small web quest in a 3D environment of a medieval dungeon. Everything, from the walls to the lighting, is built using simple HTML with CSS transformations.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/css-3d-dungeon/",
+      "developer": "MeroVinggen",
+      "license": "MIT",
+      "source_url": "https://github.com/MeroVinggen/CSS-3D-Dungeon",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "3d-game"
+    }
   }
 ]
