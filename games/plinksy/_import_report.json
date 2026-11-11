@@ -1,0 +1,51 @@
+{
+ "date": "2026-11-11T21:44:45.495000+00:00",
+ "status": "warn",
+ "source": "https://github.com/Saganaki22/Plinksy",
+ "commit": "96edb267453f9a80d176e259118f1e4e38d9dbdd",
+ "license": "Apache-2.0",
+ "warnings": [
+  "روابط لمواقع خارجية: github.com, i.ibb.co",
+  "1 أخطاء في الكونسول، أولها: NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of t"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 5 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:plinksy:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 76 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 1 ملفاً (2 KB)؛ من 10 إلى 9",
+  "تحسين صور: 2 ملفاً، وفّر 23 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 0MB ← 0MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 1",
+  "تعديل تلقائي: تحسين وسائط صور × 2",
+  "الغلاف: og0.jpg ← og:image، اسم عنوان/بانر (درجة 178)",
+  "الأزمنة: اختبار المتصفح: 87ث؛ الغلاف: 1ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 48ث (أوامر: 2، اختبارات متصفح: 3)"
+ ],
+ "console_errors": [
+  "NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.\n    at finishBall (http://127.0.0.1:33073/game/index.html:925:16)\n    at dropBall (http://"
+ ],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "178: og0.jpg (og:image، اسم عنوان/بانر)",
+  "98: readme0.png (README #1)",
+  "-137: android-chrome-512x512.png (favicon، اسم جزء/عنصر، مربعة)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "حذف ملفات غير لازمة": 1,
+  "تحسين وسائط صور": 2
+ }
+}

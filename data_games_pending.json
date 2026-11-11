@@ -145,7 +145,7 @@
       "title_ar": "Plinksy",
       "title_en": "Plinksy",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/plinksy/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/plinksy/_cover.webp"
     },
     "details_scene": {
       "description": "A sleek, modern take on the classic Plinko game featuring realistic physics, engaging betting mechanics, and a polished dark mode UI. Built with vanilla JavaScript and advanced CSS animations.",
@@ -157,7 +157,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "animation"
-    }
+    },
+    "reimported_at": "2026-11-11T21:48:19Z"
   },
   {
     "id": 18,

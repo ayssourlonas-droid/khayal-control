@@ -1,7 +1,7 @@
 Source: https://github.com/Saganaki22/Plinksy
 Commit: 96edb267453f9a80d176e259118f1e4e38d9dbdd
 License: Apache-2.0
-Imported: 2026-11-07T21:26:00.330410+00:00
+Imported: 2026-11-11T21:44:45.495000+00:00
 Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 2}
 
 Media provenance (automated signals, not a legal guarantee):
