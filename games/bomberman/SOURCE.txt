@@ -1,0 +1,8 @@
+Source: https://github.com/DilliKel/bomberman
+Commit: 00df9e141ad135d8316a94eb38b3583c7020df79
+License: MIT
+Imported: 2026-11-11T19:24:14.205001+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 3, "حذف ملفات غير لازمة": 3, "تحسين وسائط صور": 5, "تنظيف الكود": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 19, audio: 0, tagged audio: 0

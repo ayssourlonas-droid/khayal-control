@@ -1616,5 +1616,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "bomberman",
+    "size": 22112,
+    "repo": "DilliKel/bomberman",
+    "id": 110,
+    "slug": "bomberman",
+    "title": "Bomberman",
+    "developer": "DilliKel",
+    "license": "MIT",
+    "source": "https://github.com/DilliKel/bomberman",
+    "commit": "00df9e141ad135d8316a94eb38b3583c7020df79",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
