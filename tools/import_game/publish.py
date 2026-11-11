@@ -12,6 +12,7 @@ import shutil
 import subprocess
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 GAMES, FEATURED, PENDING = "data_games.json", "data_games_featured.json", "data_games_pending.json"
@@ -269,6 +270,8 @@ def main():
         review_note = (review_note + " | " if review_note else "") + note2
     target_name = GAMES if live else PENDING
 
+    now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
     if existing:
         push_host()
         # إصلاح الروابط القديمة فقط: ألعاب استُوردت بنسخة قديمة من الأداة سُجّل لها رابط نسبي (/games/x/) لا يعمل في التطبيق.
@@ -285,12 +288,12 @@ def main():
         if poster and (not old_poster.startswith("https://") or (old_poster.startswith(play_url) and old_poster != poster)):
             msc["poster_url"] = poster
             fixed.append("رابط الغلاف")
-        if fixed:
-            save(data / existing_file, existing_list)
+        # علامة «معادة الاستيراد» لتطبيق المتحكم (حقل إضافي لا يقرؤه تطبيق اللاعبين)
+        existing["reimported_at"] = now_iso
+        save(data / existing_file, existing_list)
         if drop_rejected(data, meta["source_url"]):
             fixed.append("إزالتها من قائمة المرفوضة")
-        if same_repo or fixed:
-            commit_push(data, data_branch, f"update game {slug} ({meta['license']}) from {meta['source_url']}")
+        commit_push(data, data_branch, f"update game {slug} ({meta['license']}) from {meta['source_url']}")
         msg = f"اللعبة مسجّلة سابقاً (id={existing.get('id')}); حُدّثت ملفاتها" + (f" وأُصلح في سجلها: {'، '.join(fixed)}." if fixed else " ولم يُغيَّر سجلها.")
         summary(["## تم النشر", msg, f"الرابط: {play_url}"])
         return
@@ -303,6 +306,7 @@ def main():
     description = meta.get("description") or (ai.get("final_description_ar") or "")
     entry = {
         "id": new_id,
+        "imported_at": now_iso,
         "release_year": str(meta.get("year", "")),
         "category_tags": tags,
         "main_scene": {
