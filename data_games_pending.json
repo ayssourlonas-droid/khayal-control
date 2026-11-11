@@ -1180,7 +1180,7 @@
       "title_ar": "GameHub",
       "title_en": "GameHub",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/gamehub/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/gamehub/_cover.webp"
     },
     "details_scene": {
       "description": "A beautiful and cool HTML5 game collection homepage featuring 42 carefully categorized mini-games.",
@@ -1193,7 +1193,8 @@
       "type": "web",
       "category": "browser-games"
     },
-    "review_note": "أُخفيت يدوياً من تطبيق المتحكم"
+    "review_note": "أُخفيت يدوياً من تطبيق المتحكم",
+    "reimported_at": "2026-11-11T18:51:38Z"
   },
   {
     "id": 16,

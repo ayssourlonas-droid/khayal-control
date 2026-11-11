@@ -1,0 +1,54 @@
+{
+ "date": "2026-11-11T18:46:47.709756+00:00",
+ "status": "warn",
+ "source": "https://github.com/SinceraXY/GameHub",
+ "commit": "fb4ce626757b08aa9d2cfe41969787a2ad88633e",
+ "license": "Apache-2.0",
+ "warnings": [
+  "روابط لمواقع خارجية: api.quotable.io, github.com, raw.githubusercontent.com, s2js.com, s3-us-west-2.amazonaws.com",
+  "ESLint: 1 أخطاء برمجية في 43 ملفات، أولها: games/Typing/Typing-Speed-Challenge/app.js:319 Parsing error: Unexpected token *"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 8 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:gamehub:) في 43 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 227 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 50 ملفاً (615 KB)؛ من 193 إلى 143",
+  "تحسين صور: 8 ملفاً، وفّر 81 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 1MB ← 1MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "تنظيف الكود (فراغات وبنية الكود): 85 ملفاً، 1146KB ← 770KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 85/100 (طلبات خارجية (-5)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 43",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 50",
+  "تعديل تلقائي: تحسين وسائط صور × 8",
+  "تعديل تلقائي: تنظيف الكود × 85",
+  "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة land (درجة 80.8 من 8 لقطات) — مقبولة",
+  "الأزمنة: اختبار المتصفح: 103ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 58ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 49ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [],
+ "failed_requests": [],
+ "external_requests": [
+  "cdnjs.cloudflare.com"
+ ],
+ "cover_candidates": [
+  "-47: img-7.png (اسم جزء/عنصر، مربعة)",
+  "-47: img-5.png (اسم جزء/عنصر، مربعة)",
+  "-47: img-8.png (اسم جزء/عنصر، مربعة)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 43,
+  "errors": 1
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 43,
+  "حذف ملفات غير لازمة": 50,
+  "تحسين وسائط صور": 8,
+  "تنظيف الكود": 85
+ }
+}
