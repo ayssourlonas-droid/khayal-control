@@ -1,0 +1,70 @@
+{
+ "date": "2026-11-11T18:42:11.135621+00:00",
+ "status": "warn",
+ "source": "https://github.com/vincenzo-afk/AEROFLAP",
+ "commit": "795064ab92b15858f64852d66a10a132763298b7",
+ "license": "MIT",
+ "warnings": [
+  "المستودع يحوي ملفات خادم (اعتمادات خادم: express، mysql2؛ server) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
+  "روابط لمواقع خارجية: assets.babylonjs.com, cdn.babylonjs.com, doc.babylonjs.com, github.com, react.dev, snippet.babylonjs.com, tailwindcss.com",
+  "7 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:33753/game/%VITE_ANALYTICS_ENDPOINT%/umami",
+  "12 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)",
+  "ESLint: 20 أخطاء برمجية في 21 ملفات، أولها: assets/color.fragment-BxlAkWYg.js:1 Parsing error: 'import' and 'export' may appear only with 'sourceType: module'"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ pnpm",
+  "مجلد الناتج المبني: dist/public",
+  "الوسائط: 0 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: [Acknowledgments](#acknowledgments)           | Project credits                           |",
+  "أنماط تستحق الانتباه: إرسال بيانات خلفياً (sendBeacon) (__manus__/debug-collector.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:aeroflap:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 35 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "13 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 1 ملفاً، 24KB ← 14KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 70/100 (أخطاء كونسول (-15)، طلبات خارجية (-5)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 3",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تنظيف الكود × 1",
+  "لا توجد صورة غلاف في المستودع؛ أُخذت نهاية الاختبار (درجة 76.6 من 8 لقطات) — مقبولة",
+  "الأزمنة: البحث/البناء: 28ث؛ اختبار المتصفح: 95ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 54ث (أوامر: 7، اختبارات متصفح: 2)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Permissions policy violation: unload is not allowed in this document.",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:33753/game/%VITE_ANALYTICS_ENDPOINT%/umami",
+  "http://127.0.0.1:33753/game/%VITE_ANALYTICS_ENDPOINT%/umami",
+  "404 http://127.0.0.1:33753/manus-storage/aeroflap-wing-mark_0cd82e75.png",
+  "404 http://127.0.0.1:33753/manus-storage/aeroflap-visual-target_230884e8.png",
+  "404 http://127.0.0.1:33753/assets/default.vertex-LfKRq7Qn.js",
+  "http://127.0.0.1:33753/assets/default.vertex-LfKRq7Qn.js",
+  "404 http://127.0.0.1:33753/assets/vertexColorMixing-CdJJsIFx.js",
+  "http://127.0.0.1:33753/assets/vertexColorMixing-CdJJsIFx.js",
+  "404 http://127.0.0.1:33753/assets/helperFunctions-Juw0M588.js",
+  "http://127.0.0.1:33753/assets/helperFunctions-Juw0M588.js"
+ ],
+ "external_requests": [
+  "fonts.googleapis.com",
+  "fonts.gstatic.com"
+ ],
+ "cover_candidates": [],
+ "lint": {
+  "ran": true,
+  "checked": 21,
+  "errors": 20
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 3,
+  "عزل تخزين اللعبة": 1,
+  "تنظيف الكود": 1
+ }
+}

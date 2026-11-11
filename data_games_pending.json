@@ -1125,7 +1125,7 @@
       "title_ar": "AEROFLAP",
       "title_en": "AEROFLAP",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/aeroflap/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/aeroflap/_cover.webp"
     },
     "details_scene": {
       "description": "Endless paper-sky aviation arcade game built with React, TypeScript, and Babylon.js.",
@@ -1138,7 +1138,8 @@
       "type": "web",
       "category": "aeroflap"
     },
-    "review_note": "أُخفيت يدوياً من تطبيق المتحكم"
+    "review_note": "أُخفيت يدوياً من تطبيق المتحكم",
+    "reimported_at": "2026-11-11T18:45:40Z"
   },
   {
     "id": 6,
