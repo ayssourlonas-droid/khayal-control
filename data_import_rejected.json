@@ -1114,5 +1114,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43041327362"
+  },
+  {
+    "url": "https://github.com/vincenzo-afk/XOTrix",
+    "repo": "vincenzo-afk/XOTrix",
+    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
+    "license": "",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43043089880"
   }
 ]
