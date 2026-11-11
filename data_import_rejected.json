@@ -1168,5 +1168,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43054261586"
+  },
+  {
+    "url": "https://github.com/sshh12/llm_alchemy",
+    "repo": "sshh12/llm_alchemy",
+    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
+    "license": "",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43056078944"
   }
 ]
