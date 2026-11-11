@@ -1186,5 +1186,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43057905025"
+  },
+  {
+    "url": "https://github.com/blancmathis/Super_Bash_Folds",
+    "repo": "blancmathis/Super_Bash_Folds",
+    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
+    "license": "",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43059705367"
   }
 ]
