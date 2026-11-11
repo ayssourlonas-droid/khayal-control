@@ -1,0 +1,9 @@
+Source: https://github.com/vincenzo-afk/MARIO
+Commit: dfb5cd815ec8b2ca8b5576ee09b10fd366d59206
+License: MIT
+Imported: 2026-11-11T17:30:22.731666+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 4, "عزل تخزين اللعبة": 1, "تنظيف الكود": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: This project is licensed under the [MIT License](LICENSE). Copyright © 2026 BHARANI KUMAR S.
+- images: 0, audio: 0, tagged audio: 0

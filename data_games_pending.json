@@ -2108,5 +2108,32 @@
       "type": "web",
       "category": "chess-ai"
     }
+  },
+  {
+    "id": 103,
+    "imported_at": "2026-11-11T17:33:48Z",
+    "release_year": "2026",
+    "category_tags": [
+      "babylonjs",
+      "browser-game",
+      "game-development"
+    ],
+    "main_scene": {
+      "title_ar": "MARIO",
+      "title_en": "MARIO",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/mario/_cover.webp"
+    },
+    "details_scene": {
+      "description": "An original retro-style browser platformer built with React, TypeScript, Vite, and Babylon.js.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/mario/",
+      "developer": "vincenzo-afk",
+      "license": "MIT",
+      "source_url": "https://github.com/vincenzo-afk/MARIO",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "babylonjs"
+    }
   }
 ]

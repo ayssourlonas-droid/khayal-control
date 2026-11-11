@@ -1526,5 +1526,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "mario",
+    "size": 292,
+    "repo": "vincenzo-afk/MARIO",
+    "id": 103,
+    "slug": "mario",
+    "title": "MARIO",
+    "developer": "vincenzo-afk",
+    "license": "MIT",
+    "source": "https://github.com/vincenzo-afk/MARIO",
+    "commit": "dfb5cd815ec8b2ca8b5576ee09b10fd366d59206",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: This project is licensed under the [MIT License](LICENSE). Copyright © 2026 BHARANI KUMAR S."
   }
 ]
