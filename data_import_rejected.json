@@ -1087,5 +1087,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43034277727"
+  },
+  {
+    "url": "https://github.com/Insality/cosmic-dash-jam-2025",
+    "repo": "Insality/cosmic-dash-jam-2025",
+    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
+    "license": "",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43036012596"
   }
 ]
