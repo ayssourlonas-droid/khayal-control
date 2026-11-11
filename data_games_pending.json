@@ -2190,32 +2190,5 @@
       "type": "web",
       "category": "3d-game"
     }
-  },
-  {
-    "id": 106,
-    "imported_at": "2026-11-11T17:56:06Z",
-    "release_year": "2026",
-    "category_tags": [
-      "css",
-      "game",
-      "games"
-    ],
-    "main_scene": {
-      "title_ar": "Javascript Xo Game",
-      "title_en": "Javascript Xo Game",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/javascript-xo-game/_cover.webp"
-    },
-    "details_scene": {
-      "description": "🎮 Tic-Tac-Toe (XO) — A classic game built with HTML 🌐, CSS 🎨, and JavaScript ⚙️. ✨ Features: 🧩 Responsive board 🖱️ Interactive gameplay 🏆 Win detection 🔁 Restart option",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/javascript-xo-game/",
-      "developer": "Iqbolshoh",
-      "license": "MIT",
-      "source_url": "https://github.com/Iqbolshoh/javascript-xo-game",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "css"
-    }
   }
 ]
