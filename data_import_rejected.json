@@ -1078,5 +1078,14 @@
     "date": "2026-11-10",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42926550426"
+  },
+  {
+    "url": "https://github.com/tan-z-tan/GitHubGuessr",
+    "repo": "tan-z-tan/GitHubGuessr",
+    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
+    "license": "",
+    "date": "2026-11-11",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43034277727"
   }
 ]
