@@ -2170,5 +2170,32 @@
       "type": "web",
       "category": "blackjack"
     }
+  },
+  {
+    "id": 112,
+    "imported_at": "2026-11-11T20:14:56Z",
+    "release_year": "2026",
+    "category_tags": [
+      "bartender-game",
+      "browser-game",
+      "cocktail-simulator"
+    ],
+    "main_scene": {
+      "title_ar": "Bartender JP",
+      "title_en": "Bartender JP",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/bartender-jp/_cover.webp"
+    },
+    "details_scene": {
+      "description": "個性豊かな客たちにカクテルを作る、ブラウザで遊べるシンプルなバーテンダー・シミュレーションゲーム",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/bartender-jp/",
+      "developer": "imshota1009",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/imshota1009/Bartender-JP",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "bartender-game"
+    }
   }
 ]

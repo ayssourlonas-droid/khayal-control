@@ -1646,5 +1646,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "bartenderjp",
+    "size": 35025,
+    "repo": "imshota1009/Bartender-JP",
+    "id": 112,
+    "slug": "bartender-jp",
+    "title": "Bartender JP",
+    "developer": "imshota1009",
+    "license": "Apache-2.0",
+    "source": "https://github.com/imshota1009/Bartender-JP",
+    "commit": "f53a5ed1115119a134ecdfaed83680efd11c7039",
+    "date": "2026-11-11",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=Shuki Yamamoto"
   }
 ]

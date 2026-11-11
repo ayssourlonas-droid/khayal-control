@@ -1,0 +1,68 @@
+{
+ "date": "2026-11-11T20:09:54.932330+00:00",
+ "status": "warn",
+ "source": "https://github.com/imshota1009/Bartender-JP",
+ "commit": "f53a5ed1115119a134ecdfaed83680efd11c7039",
+ "license": "Apache-2.0",
+ "warnings": [
+  "روابط لمواقع خارجية: api.open-meteo.com, cdn.tailwindcss.com, html2canvas.hertzen.com, social-plugins.line.me, twitter.com",
+  "1 أخطاء في الكونسول، أولها: Failed to load resource: net::ERR_CONNECTION_REFUSED",
+  "ESLint: 1 أخطاء برمجية في 1 ملفات، أولها: script.js:8 Parsing error: Missing catch or finally clause"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 72 صورة و7 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "بيانات داخل الملفات: artist=Shuki Yamamoto",
+  "أنماط تستحق الانتباه: طلب الموقع الجغرافي (index.html)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:bartender-jp:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 326 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 5 ملفاً (4016 KB)؛ من 86 إلى 81",
+  "تحسين صور: 71 ملفاً، وفّر 3229 KB",
+  "تحسين صوت: 6 ملفاً، وفّر 19042 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 31MB ← 9MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "درجة الجودة التقريبية: 70/100 (أخطاء كونسول (-15)، طلبات خارجية (-5)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 5",
+  "تعديل تلقائي: تحسين وسائط صور × 71",
+  "تعديل تلقائي: تحسين وسائط صوت × 6",
+  "الغلاف: title.png ← README #1، اسم عنوان/بانر (درجة 168)",
+  "الأزمنة: جلب المستودع: 1ث؛ اختبار المتصفح: 90ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 126ث؛ فحص JavaScript: 4ث؛ تنظيف الكود: 1ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+ ],
+ "failed_requests": [
+  "http://localhost:3000/api/music"
+ ],
+ "external_requests": [
+  "127.0.0.1:38147",
+  "api.open-meteo.com",
+  "cdn.jsdelivr.net",
+  "cdn.tailwindcss.com",
+  "cdnjs.cloudflare.com",
+  "fonts.googleapis.com",
+  "fonts.gstatic.com",
+  "html2canvas.hertzen.com"
+ ],
+ "cover_candidates": [
+  "168: title.png (README #1، اسم عنوان/بانر)",
+  "38: cyberpunk_background.gif (README #9، اسم شاشة، اسم جزء/عنصر)",
+  "23: background.png (حمّلتها اللعبة، اسم شاشة، اسم جزء/عنصر)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 1,
+  "errors": 1
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "حذف ملفات غير لازمة": 5,
+  "تحسين وسائط صور": 71,
+  "تحسين وسائط صوت": 6
+ }
+}
