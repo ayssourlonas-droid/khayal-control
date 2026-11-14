@@ -1,5 +1,5 @@
 {
- "date": "2026-11-11T18:24:28.569333+00:00",
+ "date": "2026-11-14T10:32:12.623080+00:00",
  "status": "warn",
  "source": "https://github.com/alberto2005-coder/echo-protocol",
  "commit": "88484ec1fa8365168ed881f9077d2915d6fb6fdd",
@@ -9,7 +9,7 @@
   "شرط تقييد محتمل في الوثائق: README.md: ECHO PROTOCOL is **proprietary software**. You may download, install and play it for personal, non-commercial use; you may not redistribute, modify, host or reu",
   "شرط تقييد محتمل في الوثائق: LICENSE: alternative is allowed only occasionally and noncommercially, and",
   "روابط لمواقع خارجية: docs.pmnd.rs, github.com, jcgt.org, opencollective.com, react.dev",
-  "6 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:44465/assets/Game-cwz2DRMf.js",
+  "6 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:38863/assets/Game-cwz2DRMf.js",
   "6 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)"
  ],
  "notes": [
@@ -23,7 +23,7 @@
   "تصريح المطوّر عن الوسائط: README.md: Third-party open-source components remain under their own licenses (MIT, Apache-2.0, Zlib, ISC, CC0) — see [`THIRD_PARTY_NOTICES.md`](./THIR",
   "تصريح المطوّر عن الوسائط: LICENSE: author attributions in that material or in the Appropriate Legal",
   "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:echo-protocol:) في 1 صفحة",
-  "لاعب آلي عشوائي: جُرّب نحو 2 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "لاعب آلي عشوائي: جُرّب نحو 3 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
   "رخصة GPL-3.0: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)",
   "رخصة GPL-3.0: لم تُحسَّن الوسائط",
   "8 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
@@ -31,8 +31,8 @@
   "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
   "تعديل تلقائي: مسار مطلق ← نسبي × 6",
   "تعديل تلقائي: عزل تخزين اللعبة × 1",
-  "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة click1 (درجة 65.5 من 8 لقطات) — مقبولة",
-  "الأزمنة: جلب المستودع: 1ث؛ البحث/البناء: 11ث؛ اختبار المتصفح: 167ث (أوامر: 4، اختبارات متصفح: 1)"
+  "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة click1 (درجة 65.5 من 9 لقطات) — مقبولة",
+  "الأزمنة: البحث/البناء: 7ث؛ اختبار المتصفح: 178ث (أوامر: 4، اختبارات متصفح: 1)"
  ],
  "console_errors": [
   "Failed to load resource: the server responded with a status of 404 (File not found)",
@@ -43,16 +43,16 @@
   "Failed to load resource: the server responded with a status of 404 (File not found)"
  ],
  "failed_requests": [
-  "404 http://127.0.0.1:44465/assets/Game-cwz2DRMf.js",
-  "http://127.0.0.1:44465/assets/Game-cwz2DRMf.js",
-  "404 http://127.0.0.1:44465/assets/rolldown-runtime-hePW80VL.js",
-  "http://127.0.0.1:44465/assets/rolldown-runtime-hePW80VL.js",
-  "404 http://127.0.0.1:44465/assets/react-vendor-0da3L8ks.js",
-  "http://127.0.0.1:44465/assets/react-vendor-0da3L8ks.js",
-  "404 http://127.0.0.1:44465/assets/three-CVPBFD2M.js",
-  "http://127.0.0.1:44465/assets/three-CVPBFD2M.js",
-  "404 http://127.0.0.1:44465/assets/physics-DNlHxnYv.js",
-  "http://127.0.0.1:44465/assets/physics-DNlHxnYv.js"
+  "404 http://127.0.0.1:38863/assets/Game-cwz2DRMf.js",
+  "http://127.0.0.1:38863/assets/Game-cwz2DRMf.js",
+  "404 http://127.0.0.1:38863/assets/rolldown-runtime-hePW80VL.js",
+  "http://127.0.0.1:38863/assets/rolldown-runtime-hePW80VL.js",
+  "404 http://127.0.0.1:38863/assets/react-vendor-0da3L8ks.js",
+  "http://127.0.0.1:38863/assets/react-vendor-0da3L8ks.js",
+  "404 http://127.0.0.1:38863/assets/three-CVPBFD2M.js",
+  "http://127.0.0.1:38863/assets/three-CVPBFD2M.js",
+  "404 http://127.0.0.1:38863/assets/postprocessing-C-yMbgO_.js",
+  "http://127.0.0.1:38863/assets/postprocessing-C-yMbgO_.js"
  ],
  "external_requests": [],
  "cover_candidates": [

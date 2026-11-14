@@ -1,7 +1,7 @@
 Source: https://github.com/alberto2005-coder/echo-protocol
 Commit: 88484ec1fa8365168ed881f9077d2915d6fb6fdd
 License: GPL-3.0
-Imported: 2026-11-11T18:24:28.569333+00:00
+Imported: 2026-11-14T10:32:12.623080+00:00
 Automated changes (see report): {"مسار مطلق ← نسبي": 6, "عزل تخزين اللعبة": 1}
 
 Media provenance (automated signals, not a legal guarantee):
