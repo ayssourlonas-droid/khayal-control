@@ -1,24 +1,27 @@
 {
- "date": "2026-11-09T23:11:48.506538+00:00",
+ "date": "2026-11-14T10:06:03.866426+00:00",
  "status": "warn",
  "source": "https://github.com/md-abu-kayser/drive-mad",
  "commit": "5faa4dfc2301a17409439c074cfef30c2cb4bfee",
  "license": "MIT",
  "warnings": [
   "روابط لمواقع خارجية: deckard.openprocessing.org",
-  "2 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:42661/game/webapp/cover.jpg",
-  "6 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)",
-  "لا توجد صورة غلاف مناسبة؛ استُخدمت لقطة الشاشة الأولى (يُفضّل استبدالها)"
+  "3 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:34887/game/webapp/cover.jpg",
+  "7 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)",
+  "الاسم أو الوصف يوحي بأنها تجريبية أو تعليمية («demo»)؛ راجع أنها لعبة كاملة",
+  "جودة منخفضة (60/100): أخطاء كونسول (-15)، طلبات خارجية (-5)، اسم تجريبي (-20)"
  ],
  "notes": [
   "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
   "مجلد الويب الجاهز: dist",
   "الوسائط: 0 صورة و0 صوتاً",
   "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:drive-mad:) في 1 صفحة",
-  "لاعب آلي عشوائي: جُرّب نحو 4 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "لاعب آلي عشوائي: جُرّب نحو 3 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
   "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "درجة الجودة التقريبية: 60/100 (أخطاء كونسول (-15)، طلبات خارجية (-5)، اسم تجريبي (-20))",
   "تعديل تلقائي: عزل تخزين اللعبة × 1",
-  "الأزمنة: اختبار المتصفح: 81ث (أوامر: 2، اختبارات متصفح: 1)"
+  "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة land (درجة 76.9 من 5 لقطات) — مقبولة",
+  "الأزمنة: اختبار المتصفح: 132ث (أوامر: 2، اختبارات متصفح: 1)"
  ],
  "console_errors": [
   "Failed to load resource: the server responded with a status of 404 (File not found)",
@@ -26,15 +29,17 @@
   "wasm streaming compile failed: TypeError: Failed to execute 'compile' on 'WebAssembly': Incorrect response MIME type. Expected 'application/wasm'.",
   "falling back to ArrayBuffer instantiation",
   "Permissions policy violation: unload is not allowed in this document.",
-  "Permissions policy violation: unload is not allowed in this document."
+  "Permissions policy violation: unload is not allowed in this document.",
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
  ],
  "failed_requests": [
-  "404 http://127.0.0.1:42661/game/webapp/cover.jpg",
-  "404 http://127.0.0.1:42661/game/baloo2.woff",
-  "http://127.0.0.1:42661/game/baloo2.woff"
+  "404 http://127.0.0.1:34887/game/webapp/cover.jpg",
+  "404 http://127.0.0.1:34887/game/baloo2.woff",
+  "http://127.0.0.1:34887/game/baloo2.woff",
+  "404 http://127.0.0.1:34887/game/webapp/5F084A0BCE06B710_0_0.gif"
  ],
  "external_requests": [
-  "127.0.0.1:42661",
+  "127.0.0.1:34887",
   "deckard.openprocessing.org"
  ],
  "cover_candidates": [],
