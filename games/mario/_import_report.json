@@ -1,5 +1,5 @@
 {
- "date": "2026-11-11T17:30:22.731666+00:00",
+ "date": "2026-11-14T11:44:08.334190+00:00",
  "status": "warn",
  "source": "https://github.com/vincenzo-afk/MARIO",
  "commit": "dfb5cd815ec8b2ca8b5576ee09b10fd366d59206",
@@ -7,7 +7,7 @@
  "warnings": [
   "المستودع يحوي ملفات خادم (اعتمادات خادم: express؛ server) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
   "روابط لمواقع خارجية: assets.babylonjs.com, cdn.babylonjs.com, doc.babylonjs.com, react.dev, snippet.babylonjs.com, tailwindcss.com",
-  "6 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:40179/assets/default.vertex-Cfo9rXMG.js",
+  "6 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:37587/assets/default.vertex-Cfo9rXMG.js",
   "8 أخطاء في الكونسول، أولها: Permissions policy violation: unload is not allowed in this document.",
   "ESLint: 20 أخطاء برمجية في 21 ملفات، أولها: assets/color.fragment-BY0cZzRa.js:1 Parsing error: 'import' and 'export' may appear only with 'sourceType: module'"
  ],
@@ -19,7 +19,7 @@
   "تصريح المطوّر عن الوسائط: README.md: This project is licensed under the [MIT License](LICENSE). Copyright © 2026 BHARANI KUMAR S.",
   "أنماط تستحق الانتباه: إرسال بيانات خلفياً (sendBeacon) (__manus__/debug-collector.js)",
   "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:mario:) في 1 صفحة",
-  "لاعب آلي عشوائي: جُرّب نحو 44 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "لاعب آلي عشوائي: جُرّب نحو 33 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
   "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
   "13 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
   "تنظيف الكود (فراغات وبنية الكود): 2 ملفاً، 25KB ← 14KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
@@ -28,7 +28,7 @@
   "تعديل تلقائي: عزل تخزين اللعبة × 1",
   "تعديل تلقائي: تنظيف الكود × 2",
   "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة land (درجة 86.5 من 9 لقطات) — مقبولة",
-  "الأزمنة: البحث/البناء: 33ث؛ تنظيف: 1ث؛ اختبار المتصفح: 90ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 50ث (أوامر: 7، اختبارات متصفح: 2)"
+  "الأزمنة: البحث/البناء: 32ث؛ اختبار المتصفح: 92ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 51ث (أوامر: 7، اختبارات متصفح: 2)"
  ],
  "console_errors": [
   "Permissions policy violation: unload is not allowed in this document.",
@@ -41,16 +41,16 @@
   "Failed to load resource: the server responded with a status of 404 (File not found)"
  ],
  "failed_requests": [
-  "404 http://127.0.0.1:40179/assets/default.vertex-Cfo9rXMG.js",
-  "http://127.0.0.1:40179/assets/default.vertex-Cfo9rXMG.js",
-  "404 http://127.0.0.1:40179/assets/logDepthDeclaration-Yx2AiWD9.js",
-  "http://127.0.0.1:40179/assets/logDepthDeclaration-Yx2AiWD9.js",
-  "404 http://127.0.0.1:40179/assets/helperFunctions-5nLrFAYE.js",
-  "http://127.0.0.1:40179/assets/helperFunctions-5nLrFAYE.js",
-  "404 http://127.0.0.1:40179/assets/fogFragment-BBIC0mmW.js",
-  "http://127.0.0.1:40179/assets/fogFragment-BBIC0mmW.js",
-  "404 http://127.0.0.1:40179/assets/default.fragment-D99tQ35w.js",
-  "http://127.0.0.1:40179/assets/default.fragment-D99tQ35w.js"
+  "404 http://127.0.0.1:37587/assets/default.vertex-Cfo9rXMG.js",
+  "http://127.0.0.1:37587/assets/default.vertex-Cfo9rXMG.js",
+  "404 http://127.0.0.1:37587/assets/helperFunctions-5nLrFAYE.js",
+  "http://127.0.0.1:37587/assets/helperFunctions-5nLrFAYE.js",
+  "404 http://127.0.0.1:37587/assets/vertexColorMixing-cU5Q6zhB.js",
+  "http://127.0.0.1:37587/assets/vertexColorMixing-cU5Q6zhB.js",
+  "404 http://127.0.0.1:37587/assets/fogFragment-BBIC0mmW.js",
+  "http://127.0.0.1:37587/assets/fogFragment-BBIC0mmW.js",
+  "404 http://127.0.0.1:37587/assets/logDepthDeclaration-Yx2AiWD9.js",
+  "http://127.0.0.1:37587/assets/logDepthDeclaration-Yx2AiWD9.js"
  ],
  "external_requests": [
   "fonts.googleapis.com",
