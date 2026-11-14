@@ -1,0 +1,48 @@
+{
+ "date": "2026-11-14T10:09:58.920820+00:00",
+ "status": "warn",
+ "source": "https://github.com/tomo0613/offroadJS_v2_demo",
+ "commit": "e1a9ea553c885bf6b0a2b30abc7558d95315c5d0",
+ "license": "GPL-3.0",
+ "warnings": [
+  "رخصة حقوق متبادلة (GPL-3.0): أي عمل مشتق يلزمه نشر المصدر بالرخصة نفسها؛ راجعها قبل النشر العام",
+  "شرط تقييد محتمل في الوثائق: LICENSE: alternative is allowed only occasionally and noncommercially, and",
+  "روابط لمواقع خارجية: discourse.threejs.org, reactjs.org",
+  "1 أخطاء في الكونسول، أولها: JS: Failed to execute 'linearRampToValueAtTime' on 'AudioParam': Time must be a finite non-negative ",
+  "الاسم أو الوصف يوحي بأنها تجريبية أو تعليمية («test»)؛ راجع أنها لعبة كاملة",
+  "جودة منخفضة (65/100): أخطاء كونسول (-15)، اسم تجريبي (-20)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 2 صورة و1 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: author attributions in that material or in the Appropriate Legal",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:offroadjs-v2-demo:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 350 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "رخصة GPL-3.0: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)",
+  "رخصة GPL-3.0: لم تُحسَّن الوسائط",
+  "22 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "رخصة GPL-3.0: لم يُنظَّف الكود (يجب إتاحة المصدر كما هو)",
+  "درجة الجودة التقريبية: 65/100 (أخطاء كونسول (-15)، اسم تجريبي (-20))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "لا توجد صورة غلاف في المستودع؛ أُخذت نهاية الاختبار (درجة 69.5 من 8 لقطات) — مقبولة",
+  "الأزمنة: جلب المستودع: 1ث؛ اختبار المتصفح: 92ث (أوامر: 2، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [
+  "JS: Failed to execute 'linearRampToValueAtTime' on 'AudioParam': Time must be a finite non-negative number: -22.1641"
+ ],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "28: skybox.jpg (حمّلتها اللعبة)",
+  "8: Wheel_Diffuse.png (حمّلتها اللعبة، مربعة)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1
+ }
+}

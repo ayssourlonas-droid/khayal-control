@@ -93,7 +93,7 @@
       "title_ar": "offroadJS V2 Demo",
       "title_en": "offroadJS V2 Demo",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/offroadjs-v2-demo/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/offroadjs-v2-demo/_cover.webp"
     },
     "details_scene": {
       "description": "offroadJS_v2 test repo",
@@ -105,7 +105,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "cannonjs"
-    }
+    },
+    "reimported_at": "2026-11-14T10:12:02Z"
   },
   {
     "id": 22,
