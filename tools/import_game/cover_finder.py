@@ -312,12 +312,43 @@ def choose(site, src, used, work, title_shot=None, final_shot=None, blank=False,
     return out
 
 
+def _best_offset(im, axis, win):
+    """أفضل موضع للقص على المحور (0=أفقي،1=رأسي) حيث التفاصيل أكثر (حواف)، ممزوجاً بالوسط."""
+    from PIL import ImageFilter
+    w, h = im.size
+    length = w if axis == 0 else h
+    if win >= length:
+        return 0
+    g = im.convert("L")
+    g.thumbnail((200, 200))
+    e = g.filter(ImageFilter.FIND_EDGES)
+    gw, gh = e.size
+    px = e.load()
+    n = gw if axis == 0 else gh
+    prof = [0] * n
+    for i in range(gw):
+        for j in range(gh):
+            prof[i if axis == 0 else j] += px[i, j]
+    k = max(1, round(win / length * n))
+    if k >= n:
+        return 0
+    s = sum(prof[:k])
+    best_s, best_i = s, 0
+    for i in range(1, n - k + 1):
+        s += prof[i + k - 1] - prof[i - 1]
+        if s > best_s:
+            best_s, best_i = s, i
+    best = best_i / n * length
+    center = (length - win) / 2
+    return int(max(0, min(length - win, 0.5 * center + 0.5 * best)))
+
+
 def render(path, dest_stem):
-    """يجهّز الغلاف للتطبيق (بطاقة بورتريه 470×700، بدقة ضعفين) دون قصّ الصورة الأصلية.
-    - صورة قريبة من نسبة البطاقة: تُصغَّر فقط (لا تكبير).
-    - غير ذلك (عريضة مثلاً): تُوضع كاملة في الوسط فوق خلفية مموّهة من الصورة نفسها.
+    """يجهّز الغلاف للتطبيق (بطاقة بورتريه 470×700، بدقة ضعفين) ويملأ البطاقة كاملة بلا تمويه ولا حواف.
+    - تمطيط/ضغط عرضي خفيف (حتى 12%) ليقرّب النسبة، ثم قصّ الباقي حول أكثر المناطق تفصيلاً.
+    - لا تكبير فوق الأصل (تُصغَّر فقط إذا زادت عن حجم اللوحة).
     يعيد اسم الملف الناتج (WebP)."""
-    from PIL import Image, ImageFilter, ImageEnhance
+    from PIL import Image
     im = Image.open(path)
     try:
         im.seek(0)
@@ -327,28 +358,22 @@ def render(path, dest_stem):
     im = im.convert("RGBA" if has_alpha else "RGB")
     w, h = im.size
     r = w / h
-    target = POSTER_W / POSTER_H
-    if 0.8 * target <= r <= 1.2 * target:
-        k = min(1.0, OUT_H / h, OUT_W / w) if (w > OUT_W or h > OUT_H) else 1.0
-        if k < 1.0:
-            im = im.resize((max(1, round(w * k)), max(1, round(h * k))), Image.LANCZOS)
-        canvas = im
+    t = POSTER_W / POSTER_H
+    sx = max(0.88, min(1.12, t / r))            # عامل التمطيط العرضي
+    crop_w = min(float(w), h * t / sx)
+    crop_h = min(float(h), w * sx / t)
+    cw, ch = max(1, round(crop_w)), max(1, round(crop_h))
+    if cw < w:
+        left, top = _best_offset(im, 0, cw), 0
+    elif ch < h:
+        left, top = 0, _best_offset(im, 1, ch)
     else:
-        bg = im.convert("RGB")
-        # خلفية: تكبير حتى تغطي اللوحة ثم تمويه وتعتيم
-        kb = max(OUT_W / w, OUT_H / h)
-        bgr = bg.resize((max(1, round(w * kb)), max(1, round(h * kb))), Image.BILINEAR)
-        left, top = (bgr.width - OUT_W) // 2, (bgr.height - OUT_H) // 2
-        bgr = bgr.crop((left, top, left + OUT_W, top + OUT_H)).filter(ImageFilter.GaussianBlur(28))
-        bgr = ImageEnhance.Brightness(bgr).enhance(0.55)
-        # الصورة الأصلية كاملة في الوسط (بعرض اللوحة أو بحسب الارتفاع)
-        kf = min(OUT_W / w, OUT_H / h)
-        if kf > 1:
-            kf = min(kf, 1.0)  # لا تكبير فوق الأصل
-        fg = im.resize((max(1, round(w * kf)), max(1, round(h * kf))), Image.LANCZOS)
-        canvas = bgr.convert("RGB")
-        canvas.paste(fg, ((OUT_W - fg.width) // 2, (OUT_H - fg.height) // 2), fg if fg.mode == "RGBA" else None)
-        has_alpha = False
+        left, top = 0, 0
+    im = im.crop((left, top, left + cw, top + ch))
+    out_w, out_h = max(1, round(cw * sx)), ch
+    k = min(1.0, OUT_W / out_w, OUT_H / out_h)  # تصغير فقط
+    im = im.resize((max(1, round(out_w * k)), max(1, round(out_h * k))), Image.LANCZOS)
+    canvas = im
     dest = Path(dest_stem).with_suffix(".webp")
     # WebP (يدعم الشفافية وأصغر حجماً)، كما نحوّل بقية صور اللعبة
     canvas.save(dest, "WEBP", quality=88, method=6)
