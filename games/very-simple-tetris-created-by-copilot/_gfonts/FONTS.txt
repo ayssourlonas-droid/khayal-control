@@ -1,0 +1,7 @@
+خطوط مضمَّنة في هذه اللعبة (نُزّلت من Google Fonts وقت الاستيراد):
+
+- Inter: SIL Open Font License 1.1 (خطوط Google Fonts؛ راجع صفحة الخط على fonts.google.com للتأكد) — https://fonts.google.com/specimen/Inter
+- JetBrains Mono: SIL Open Font License 1.1 (خطوط Google Fonts؛ راجع صفحة الخط على fonts.google.com للتأكد) — https://fonts.google.com/specimen/JetBrains+Mono
+- Tajawal (احتياطي للعربية): SIL Open Font License 1.1 (خطوط Google Fonts؛ راجع صفحة الخط على fonts.google.com للتأكد)
+
+تنص رخصة OFL على جواز التضمين وإعادة التوزيع مع بقاء الإشعار؛ هذا الملف هو الإشعار.

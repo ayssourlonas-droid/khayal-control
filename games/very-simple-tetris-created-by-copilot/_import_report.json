@@ -1,5 +1,5 @@
 {
- "date": "2026-11-11T17:02:53.793556+00:00",
+ "date": "2026-11-14T11:32:52.457015+00:00",
  "status": "warn",
  "source": "https://github.com/NickScherbakov/very-simple-tetris-created-by-Copilot",
  "commit": "01601874a7c44e91093a9fc7873a7ebeda44d3e4",
@@ -7,7 +7,9 @@
  "warnings": [
   "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
   "روابط لمواقع خارجية: api.whatsapp.com, buy.stripe.com, stripe.com, t.me, twitter.com, vk.com",
-  "3 أخطاء في الكونسول، أولها: A bad HTTP response code (404) was received when fetching the script."
+  "2 أخطاء في الكونسول، أولها: A bad HTTP response code (404) was received when fetching the script.",
+  "تحسين صور سبّب أخطاء في الاختبار فتم التراجع عنه",
+  "تنظيف الكود سبّب أخطاء في الاختبار فتم التراجع عنه (بقي الكود كما هو)"
  ],
  "notes": [
   "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
@@ -15,31 +17,28 @@
   "الوسائط: 4 صورة و0 صوتاً",
   "وجود ملف prompt (finalprompt.md): الصور أو الكود على الأرجح مولَّدة بالذكاء الاصطناعي",
   "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:very-simple-tetris-created-by-copilot:) في 3 صفحة",
-  "لاعب آلي عشوائي: جُرّب نحو 89 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
-  "تقليل الملفات: حُذف 18 ملفاً (169 KB)؛ من 68 إلى 50",
-  "تحسين صور: 2 ملفاً، وفّر 102 KB",
-  "حجم اللعبة بعد تحسين الوسائط: 0MB ← 0MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "خطوط Google ضُمِّنت محلياً (لا اتصال بـ Google وقت اللعب): Inter (400، 700؛ cyrillic+latin) | JetBrains Mono (400، 700؛ cyrillic+latin) — 10 ملف خط، 227 KB",
+  "قُلِّصت أوزان «Inter» من 4 إلى 2 (يُرسم الباقي بأقرب وزن)",
+  "طراز الخطوط (يمكن استبدالها من fonts_map.json): Inter=عصري، JetBrains Mono=برمجي",
+  "أُضيف خط Tajawal احتياطياً للنص العربي لنفس أسماء العائلات",
+  "تراخيص الخطوط في _gfonts/FONTS.txt",
+  "لاعب آلي عشوائي: جُرّب نحو 118 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 18 ملفاً (169 KB)؛ من 80 إلى 62",
   "ESLint: لا أخطاء في 23 ملفات",
-  "تنظيف الكود (فراغات وبنية الكود): 32 ملفاً، 325KB ← 196KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
-  "درجة الجودة التقريبية: 80/100 (أخطاء كونسول (-15)، طلبات خارجية (-5))",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
   "تعديل تلقائي: مسار مطلق ← نسبي × 4",
   "تعديل تلقائي: عزل تخزين اللعبة × 3",
+  "تعديل تلقائي: تضمين خطوط محلياً × 12",
   "تعديل تلقائي: حذف ملفات غير لازمة × 18",
-  "تعديل تلقائي: تحسين وسائط صور × 2",
-  "تعديل تلقائي: تنظيف الكود × 32",
   "الغلاف: screenshot.jpg ← README #8، اسم شاشة، مربعة (درجة 63)",
-  "الأزمنة: اختبار المتصفح: 88ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 48ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 50ث (أوامر: 4، اختبارات متصفح: 4)"
+  "الأزمنة: اختبار المتصفح: 89ث؛ تقليل الملفات: 48ث؛ تحسين الوسائط: 48ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 98ث (أوامر: 4، اختبارات متصفح: 5)"
  ],
  "console_errors": [
   "A bad HTTP response code (404) was received when fetching the script.",
-  "JS: window.achievementSystem.checkScoreAchievement is not a function",
-  "TypeError: window.achievementSystem.checkScoreAchievement is not a function\n    at spawnPiece (http://127.0.0.1:43549/game/tetris.js:512:42)\n    at hardDrop (http://127.0.0.1:43549/game/tetris.js:403:"
+  "JS: window.achievementSystem.checkScoreAchievement is not a function"
  ],
  "failed_requests": [],
- "external_requests": [
-  "fonts.googleapis.com",
-  "fonts.gstatic.com"
- ],
+ "external_requests": [],
  "cover_candidates": [
   "63: screenshot.jpg (README #8، اسم شاشة، مربعة)",
   "28: Tetris_logo.png (شعار كبير)",
@@ -53,8 +52,7 @@
  "fixes": {
   "مسار مطلق ← نسبي": 4,
   "عزل تخزين اللعبة": 3,
-  "حذف ملفات غير لازمة": 18,
-  "تحسين وسائط صور": 2,
-  "تنظيف الكود": 32
+  "تضمين خطوط محلياً": 12,
+  "حذف ملفات غير لازمة": 18
  }
 }
