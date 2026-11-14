@@ -1,0 +1,65 @@
+{
+ "date": "2026-11-14T10:24:52.625314+00:00",
+ "status": "warn",
+ "source": "https://github.com/girishlade111/3D-runner-game",
+ "commit": "fed09a4c258dbea3dc734825fcb6c979e13a99de",
+ "license": "CC0-1.0",
+ "warnings": [
+  "روابط لمواقع خارجية: actions.google.com, raw.githubusercontent.com, threejs.org, upload.wikimedia.org, www.soundhelix.com",
+  "2 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 https://upload.wikimedia.org/wikipedia/commons/2/25/AsphaltRoad.jpg",
+  "5 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 ()",
+  "جودة منخفضة (65/100): أخطاء كونسول (-15)، طلبات خارجية (-5)، غلاف ضعيف أو غير موجود (-15)",
+  "لا توجد صورة غلاف؛ أفضل لقطة (لقطة canvas) ضعيفة (درجة 48.7) — يُفضّل استبدال الغلاف يدوياً"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 0 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: Creative Commons Legal Code",
+  "تصريح المطوّر عن الوسائط: LICENSE: CC0 1.0 Universal",
+  "تصريح المطوّر عن الوسائط: LICENSE: CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE",
+  "تصريح المطوّر عن الوسائط: LICENSE: ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS",
+  "تصريح المطوّر عن الوسائط: LICENSE: INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES",
+  "تصريح المطوّر عن الوسائط: LICENSE: associating CC0 with a Work (the \"Affirmer\"), to the extent that he or she",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:3d-runner-game:) في 2 صفحة",
+  "اللعبة لا تعرّف خطوطاً (خطوط النظام فقط): حُقن لها خط «Inter» (الطراز: عصري) مع 1 اسم نظام مُشار إليه به؛ 2 ملف، 94 KB",
+  "لاعب آلي عشوائي: جُرّب نحو 11 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 1 ملفاً (1 KB)؛ من 8 إلى 7",
+  "درجة الجودة التقريبية: 65/100 (أخطاء كونسول (-15)، طلبات خارجية (-5)، غلاف ضعيف أو غير موجود (-15))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 2",
+  "تعديل تلقائي: تضمين خطوط محلياً × 4",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 1",
+  "الأزمنة: اختبار المتصفح: 89ث؛ تقليل الملفات: 52ث (أوامر: 2، اختبارات متصفح: 2)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 ()",
+  "Failed to load resource: the server responded with a status of 404 ()",
+  "Access to fetch at 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' from origin 'http://127.0.0.1:34961' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is pres",
+  "Failed to load resource: net::ERR_FAILED",
+  "JS: Failed to execute 'linearRampToValueAtTime' on 'AudioParam': Time must be a finite non-negative number: -17.8272"
+ ],
+ "failed_requests": [
+  "404 https://upload.wikimedia.org/wikipedia/commons/2/25/AsphaltRoad.jpg",
+  "404 https://threejs.org/examples/textures/grasslight-big.jpg",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+ ],
+ "external_requests": [
+  "127.0.0.1:34961",
+  "actions.google.com",
+  "cdn.jsdelivr.net",
+  "raw.githubusercontent.com",
+  "threejs.org",
+  "upload.wikimedia.org"
+ ],
+ "cover_candidates": [],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 2,
+  "تضمين خطوط محلياً": 4,
+  "حذف ملفات غير لازمة": 1
+ }
+}

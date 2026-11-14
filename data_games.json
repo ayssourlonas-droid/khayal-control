@@ -174,7 +174,7 @@
       "title_ar": "3D Runner Game",
       "title_en": "3D Runner Game",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/3d-runner-game/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/3d-runner-game/_cover.webp"
     },
     "details_scene": {
       "description": "Browser-based 3D endless runner game built with Three.js — dodge obstacles, chase high scores",
@@ -186,7 +186,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "3d-runner"
-    }
+    },
+    "reimported_at": "2026-11-14T10:27:46Z"
   },
   {
     "id": 63,
