@@ -1,8 +1,8 @@
 Source: https://github.com/xiandew/BubbleSpinner
 Commit: e963bac0e89bcf03c211b7d3631092acfe6c97e1
 License: Apache-2.0
-Imported: 2026-11-09T00:11:23.539054+00:00
-Automated changes (see report): {"عزل تخزين اللعبة": 2, "حذف ملفات غير لازمة": 5, "تحسين وسائط صور": 11, "تحسين وسائط صوت": 26}
+Imported: 2026-11-14T11:07:06.329392+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2, "تضمين خطوط محلياً": 4, "حذف ملفات غير لازمة": 5, "تحسين وسائط صور": 11, "تحسين وسائط صوت": 26, "تنظيف الكود": 55}
 
 Media provenance (automated signals, not a legal guarantee):
 - LICENSE: attribution notices from the Source form of the Work,

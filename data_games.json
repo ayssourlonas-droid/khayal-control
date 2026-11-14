@@ -416,7 +416,7 @@
       "title_ar": "BubbleSpinner",
       "title_en": "BubbleSpinner",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/bubblespinner/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/bubblespinner/_cover.webp"
     },
     "details_scene": {
       "description": "Bubble Spinner on WeChat. Simple yet entertaining!",
@@ -428,7 +428,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "bubble-spinner"
-    }
+    },
+    "reimported_at": "2026-11-14T11:12:21Z"
   },
   {
     "id": 43,
