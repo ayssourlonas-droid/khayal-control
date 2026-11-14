@@ -1,0 +1,70 @@
+name: Make background
+
+# يولّد خلفية ضبابية (1080×1920) من صورة الغلاف ويحفظها في bg/<id>.webp.
+# يُشغَّل من تطبيق Game Control (زر «ولّد خلفية ضبابية») أو يدوياً: Actions ← Make background ← Run workflow.
+# لا يحتاج Cloudinary. بعد الدفع ينشر Cloudflare Pages الملف خلال دقيقة تقريباً.
+on:
+  workflow_dispatch:
+    inputs:
+      game_id:
+        description: "رقم اللعبة (id) — أرقام فقط"
+        required: true
+      cover_url:
+        description: "رابط صورة الغلاف (https)"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-write
+  cancel-in-progress: false
+
+jobs:
+  bg:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate
+        env:
+          GAME_ID: ${{ inputs.game_id }}
+          COVER_URL: ${{ inputs.cover_url }}
+        run: |
+          pip install pillow
+          python3 - <<'PY'
+          import io, os, re, sys, urllib.request
+          from PIL import Image, ImageFilter, ImageOps
+          gid = os.environ["GAME_ID"].strip()
+          url = os.environ["COVER_URL"].strip()
+          if not re.fullmatch(r"\d{1,9}", gid):
+              sys.exit("رقم اللعبة غير صالح")
+          if not url.startswith("https://"):
+              sys.exit("رابط الغلاف يجب أن يبدأ بـ https://")
+          req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+          data = urllib.request.urlopen(req, timeout=60).read(30_000_000)
+          im = Image.open(io.BytesIO(data)).convert("RGB")
+          # ملء 270×480 (قص من الوسط) ثم تمويه قوي ثم تكبير إلى 1080×1920 = نعومة تامة وسرعة
+          small = ImageOps.fit(im, (270, 480), Image.LANCZOS, centering=(0.5, 0.5))
+          small = small.filter(ImageFilter.GaussianBlur(14))
+          out = small.resize((1080, 1920), Image.BICUBIC)
+          os.makedirs("bg", exist_ok=True)
+          out.save(f"bg/{gid}.webp", "WEBP", quality=78)
+          print("saved", f"bg/{gid}.webp")
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "game-importer"
+          git config user.email "game-importer@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "لا تغييرات"; exit 0; fi
+          git commit -m "background for game ${{ inputs.game_id }}"
+          for i in 1 2 3 4; do
+            git push && exit 0
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            sleep $((i * 3))
+          done
+          echo "تعذّر الدفع" && exit 1
