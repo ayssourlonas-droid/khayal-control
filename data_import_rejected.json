@@ -1492,5 +1492,14 @@
     "date": "2026-11-11",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43113462025"
+  },
+  {
+    "url": "https://github.com/scriptex/material-snake",
+    "repo": "scriptex/material-snake",
+    "reason": "ليست لعبة: الصفحة لا تستقبل أي إدخال من اللاعب (لا لمس ولا نقر ولا مفاتيح ولا أزرار)، وكل ما فيها عرض متحرك أو صورة. اللعبة يجب أن تستجيب لما يفعله اللاعب.",
+    "license": "MIT",
+    "date": "2026-11-14",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43588145435"
   }
 ]
