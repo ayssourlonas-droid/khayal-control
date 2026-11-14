@@ -496,7 +496,7 @@
       "title_ar": "FruitShot",
       "title_en": "FruitShot",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/fruitshot/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/fruitshot/_cover.webp"
     },
     "details_scene": {
       "description": "HTML5 Fruit shooting game",
@@ -509,7 +509,8 @@
       "type": "web",
       "category": "html5"
     },
-    "review_note": "أُخفيت يدوياً من تطبيق المتحكم"
+    "review_note": "أُخفيت يدوياً من تطبيق المتحكم",
+    "reimported_at": "2026-11-14T11:26:11Z"
   },
   {
     "id": 46,

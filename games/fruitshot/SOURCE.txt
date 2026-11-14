@@ -1,8 +1,8 @@
 Source: https://github.com/Yonle/FruitShot
 Commit: 8f3fdb18cc97fdd605535e9147339e965ffbdbb6
 License: BSD-3-Clause
-Imported: 2026-11-07T22:57:45.716282+00:00
-Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صوت": 6}
+Imported: 2026-11-14T11:21:56.999794+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 4, "حذف ملفات غير لازمة": 1, "تحسين وسائط صوت": 6, "تنظيف الكود": 3}
 
 Media provenance (automated signals, not a legal guarantee):
 - README.md: Gun for Lui.wav by martian -- https://freesound.org/s/182271/ -- License: Creative Commons 0
