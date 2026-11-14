@@ -1,7 +1,7 @@
 Source: https://github.com/tjlstar/Chinese-Chess
 Commit: 35b3a8a5e41476a6976800fd2c37761258b210c6
 License: Apache-2.0
-Imported: 2026-11-09T00:16:44.566170+00:00
+Imported: 2026-11-14T11:13:25.161188+00:00
 Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط صوت": 5}
 
 Media provenance (automated signals, not a legal guarantee):

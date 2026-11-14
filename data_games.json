@@ -443,7 +443,7 @@
       "title_ar": "Chinese Chess",
       "title_en": "Chinese Chess",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/chinese-chess/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/chinese-chess/_cover.webp"
     },
     "details_scene": {
       "description": "中国象棋",
@@ -455,7 +455,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "ai-algorithm"
-    }
+    },
+    "reimported_at": "2026-11-14T11:17:11Z"
   },
   {
     "id": 48,
