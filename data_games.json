@@ -336,7 +336,7 @@
       "title_ar": "Ugh Guys",
       "title_en": "Ugh Guys",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/ugh-guys/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/ugh-guys/_cover.webp"
     },
     "details_scene": {
       "description": "A browser-based, StarCraft-style asymmetric RTS set in a mythic pre-flood world — Three.js + Vite, three factions, fog of war, pathfinding, and an AI opponent. 100% procedural, no external assets.",
@@ -348,7 +348,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "browser-game"
-    }
+    },
+    "reimported_at": "2026-11-14T10:55:53Z"
   },
   {
     "id": 13,

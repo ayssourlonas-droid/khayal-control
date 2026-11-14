@@ -1,0 +1,58 @@
+{
+ "date": "2026-11-14T10:50:45.544496+00:00",
+ "status": "warn",
+ "source": "https://github.com/atxgreene/Ugh-Guys-",
+ "commit": "3641c8beeeb258bf20a9df556441f6d5f297ba2e",
+ "license": "CC0-1.0",
+ "warnings": [
+  "المستودع يحوي ملفات خادم (server) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
+  "روابط لمواقع خارجية: assets-global.website-files.com, canary.discord.com, canary.discordapp.com, discord.com, discordapp.com, github.com, pax.discord.com, ptb.discord.com"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: dist",
+  "الوسائط: 24 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: ![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)",
+  "تصريح المطوّر عن الوسائط: README.md: Released under the [CC0-1.0](LICENSE) license — public domain. Do anything you like with it.",
+  "تصريح المطوّر عن الوسائط: LICENSE: Creative Commons Legal Code",
+  "تصريح المطوّر عن الوسائط: LICENSE: CC0 1.0 Universal",
+  "تصريح المطوّر عن الوسائط: LICENSE: CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE",
+  "تصريح المطوّر عن الوسائط: LICENSE: ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:ugh-guys:) في 1 صفحة",
+  "اللعبة لا تعرّف خطوطاً (خطوط النظام فقط): حُقن لها خط «Pixelify Sans» (الطراز: بكسلي) مع 0 اسم نظام مُشار إليه به؛ 2 ملف، 23 KB",
+  "لاعب آلي عشوائي: جُرّب نحو 4 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "تحسين صور: 6 ملفاً، وفّر 33 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 1MB ← 1MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: لا أخطاء في 1 ملفات",
+  "3 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 2 ملفاً، 2KB ← 1KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 100/100",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تضمين خطوط محلياً × 4",
+  "تعديل تلقائي: تحسين وسائط صور × 6",
+  "تعديل تلقائي: تنظيف الكود × 2",
+  "الغلاف: hero-bg.jpg ← اسم غلاف (درجة 118)",
+  "الأزمنة: البحث/البناء: 3ث؛ اختبار المتصفح: 112ث؛ تحسين الوسائط: 76ث؛ فحص JavaScript: 1ث؛ تنظيف الكود: 76ث (أوامر: 6، اختبارات متصفح: 3)"
+ ],
+ "console_errors": [],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "118: hero-bg.jpg (اسم غلاف)",
+  "118: keyart.jpg (اسم غلاف)",
+  "88: card-greene.png (اسم عنوان/بانر)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 1,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "تضمين خطوط محلياً": 4,
+  "تحسين وسائط صور": 6,
+  "تنظيف الكود": 2
+ }
+}
