@@ -1,8 +1,0 @@
-Source: https://github.com/playpip/pip-web
-Commit: 461610ff7b9d35b64b81828c4af905ce16f77b03
-License: MIT
-Imported: 2026-11-07T22:50:32.460726+00:00
-Automated changes (see report): {"مسار مطلق ← نسبي": 5992, "عزل تخزين اللعبة": 167, "حذف ملفات غير لازمة": 2, "تحسين وسائط صور": 44}
-
-Media provenance (automated signals, not a legal guarantee):
-- images: 78, audio: 0, tagged audio: 0

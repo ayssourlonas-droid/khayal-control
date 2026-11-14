@@ -418,21 +418,6 @@
     "media_note": "مصدر الوسائط مذكور من المطوّر: README_SithuNyein_Swiposaur.md: 11. Asset credit summary | README_SithuNyein_Swiposaur.md: (Google Fonts, SIL OFL 1.1), plus Aka 08 for the Burmese UI (credited to"
   },
   {
-    "key": "pipweb",
-    "size": 75717,
-    "repo": "playpip/pip-web",
-    "id": 30,
-    "slug": "pip-web",
-    "title": "Pip Web",
-    "developer": "playpip",
-    "license": "MIT",
-    "source": "https://github.com/playpip/pip-web",
-    "commit": "461610ff7b9d35b64b81828c4af905ce16f77b03",
-    "date": "2026-11-07",
-    "license_file": "LICENSE",
-    "media_note": "المطوّر يصرّح بأصل جزئي للوسائط (غير مفصّل): "
-  },
-  {
     "key": "drunnergame",
     "size": 12,
     "repo": "girishlade111/3D-runner-game",
