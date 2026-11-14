@@ -1,7 +1,7 @@
 Source: https://github.com/zzymyn/SolitaireLib
 Commit: 6342e1bd60581d5e0a81f9d89c8b834beb753173
 License: MIT
-Imported: 2026-11-08T23:54:01.286015+00:00
+Imported: 2026-11-14T10:47:35.039086+00:00
 Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 1}
 
 Media provenance (automated signals, not a legal guarantee):

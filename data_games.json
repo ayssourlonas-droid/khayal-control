@@ -309,7 +309,7 @@
       "title_ar": "SolitaireLib",
       "title_en": "SolitaireLib",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/solitairelib/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/solitairelib/_cover.webp"
     },
     "details_scene": {
       "description": "Various solitaire games implemented in HTML. Works with touch and mouse.",
@@ -321,7 +321,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "card-game"
-    }
+    },
+    "reimported_at": "2026-11-14T10:49:41Z"
   },
   {
     "id": 12,

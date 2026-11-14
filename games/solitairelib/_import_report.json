@@ -1,0 +1,52 @@
+{
+ "date": "2026-11-14T10:47:35.039086+00:00",
+ "status": "warn",
+ "source": "https://github.com/zzymyn/SolitaireLib",
+ "commit": "6342e1bd60581d5e0a81f9d89c8b834beb753173",
+ "license": "MIT",
+ "warnings": [
+  "8 أخطاء في الكونسول، أولها: Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "لا توجد نسخة ويب في الفرع الرئيسي، فاستُعملت النسخة المنشورة من المطوّر في فرع gh-pages (ليست مبنية من الكود هنا، وقد تكون أقدم أو أحدث منه)",
+  "الوسائط: 2 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: Attributions",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:solitairelib:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 353 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "1 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
+  "تعديل تلقائي: إضافة meta charset × 1",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "لا توجد صورة غلاف في المستودع؛ أُخذت نهاية الاختبار (درجة 73.3 من 8 لقطات) — مقبولة",
+  "الأزمنة: البحث/البناء: 6ث؛ اختبار المتصفح: 89ث (أوامر: 6، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+  "Ignored attempt to cancel a touchstart event with cancelable=false, for example because scrolling is in progress and cannot be interrupted."
+ ],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "8: Icon-Solid.8492613d.png (شعار كبير، مربعة)",
+  "8: Icon.a10b59ef.png (شعار كبير، مربعة)",
+  "8: Icon.png (شعار كبير، مربعة)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "إضافة meta charset": 1,
+  "عزل تخزين اللعبة": 1
+ }
+}
