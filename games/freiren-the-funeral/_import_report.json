@@ -1,0 +1,65 @@
+{
+ "date": "2026-11-14T10:57:10.960433+00:00",
+ "status": "warn",
+ "source": "https://github.com/imshota1009/Freiren-the-Funeral",
+ "commit": "913787f3d1c205026161e86822cd81f62a769186",
+ "license": "Apache-2.0",
+ "warnings": [
+  "1 أخطاء في الكونسول، أولها: Audio play failed: AbortError: The play() request was interrupted by a call to pause(). https://goo."
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 6 صورة و5 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "بيانات داخل الملفات: artist=エルム凪/EigHt؛ composer=EigHt",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:freiren-the-funeral:) في 1 صفحة",
+  "خطوط Google ضُمِّنت محلياً (لا اتصال بـ Google وقت اللعب): Noto Serif JP (400، 700؛ all+latin) — 242 ملف خط، 14517 KB",
+  "تراخيص الخطوط في _gfonts/FONTS.txt",
+  "لاعب آلي عشوائي: جُرّب نحو 356 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 3 ملفاً (3272 KB)؛ من 262 إلى 259",
+  "تحسين صور: 6 ملفاً، وفّر 657 KB",
+  "تحسين صوت: 4 ملفاً، وفّر 10848 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 35MB ← 24MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: لا أخطاء في 2 ملفات",
+  "تنظيف الكود (فراغات وبنية الكود): 3 ملفاً، 81KB ← 54KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تضمين خطوط محلياً × 244",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 3",
+  "تعديل تلقائي: تحسين وسائط صور × 6",
+  "تعديل تلقائي: تحسين وسائط صوت × 4",
+  "تعديل تلقائي: تنظيف الكود × 3",
+  "الغلاف: splash_background.png ← حمّلتها اللعبة، اسم عنوان/بانر، اسم جزء/عنصر (درجة 53)",
+  "الأزمنة: جلب المستودع: 2ث؛ الخطوط: 5ث؛ اختبار المتصفح: 88ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 107ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 5)"
+ ],
+ "console_errors": [
+  "Audio play failed: AbortError: The play() request was interrupted by a call to pause(). https://goo.gl/LdLk22"
+ ],
+ "failed_requests": [
+  "http://127.0.0.1:42737/game/battle_bgm.mp3",
+  "http://127.0.0.1:42737/game/boss_battle_bgm.mp3"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "53: splash_background.png (حمّلتها اللعبة، اسم عنوان/بانر، اسم جزء/عنصر)",
+  "28: frieren_battle.png (حمّلتها اللعبة)",
+  "23: menu_background.png (حمّلتها اللعبة، اسم شاشة، اسم جزء/عنصر)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 2,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "تضمين خطوط محلياً": 244,
+  "حذف ملفات غير لازمة": 3,
+  "تحسين وسائط صور": 6,
+  "تحسين وسائط صوت": 4,
+  "تنظيف الكود": 3
+ }
+}
