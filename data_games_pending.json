@@ -27,32 +27,6 @@
     "reimported_at": "2026-11-11T21:31:05Z"
   },
   {
-    "id": 5,
-    "release_year": "2026",
-    "category_tags": [
-      "game",
-      "html5-game",
-      "puzzle-game"
-    ],
-    "main_scene": {
-      "title_ar": "Tessel",
-      "title_en": "Tessel",
-      "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/tessel/_cover.webp"
-    },
-    "details_scene": {
-      "description": "A colorful open source tile game. Place tiles with matching colors to make shapes and fill the board. Play online or install the app!",
-      "background_url": "",
-      "play_url": "https://khayal-control.pages.dev/games/tessel/",
-      "developer": "gvtulder",
-      "license": "GPL-3.0",
-      "source_url": "https://github.com/gvtulder/tessel",
-      "orientation": "portrait",
-      "type": "web",
-      "category": "game"
-    }
-  },
-  {
     "id": 7,
     "release_year": "2025",
     "category_tags": [

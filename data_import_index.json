@@ -58,21 +58,6 @@
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: [Acknowledgments](#acknowledgments)           | Project credits                           |"
   },
   {
-    "key": "tessel",
-    "size": 27466,
-    "repo": "gvtulder/tessel",
-    "id": 5,
-    "slug": "tessel",
-    "title": "Tessel",
-    "developer": "gvtulder",
-    "license": "GPL-3.0",
-    "source": "https://github.com/gvtulder/tessel",
-    "commit": "624985774bc0cd6661ab1ff64282e060bc4cdcb6",
-    "date": "2026-11-07",
-    "license_file": "LICENSE.md",
-    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE.md: author attributions in that material or in the Appropriate Legal"
-  },
-  {
     "key": "bindingofisaacwebgame",
     "size": 12552,
     "repo": "liyupi/binding-of-isaac-webgame",
