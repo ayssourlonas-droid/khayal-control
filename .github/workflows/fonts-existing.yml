@@ -1,0 +1,55 @@
+name: Localize fonts (existing games)
+
+# مرة واحدة: تضمين خطوط Google Fonts محلياً في الألعاب الموجودة.
+# Actions ← Localize fonts ← Run workflow. اترك slug فارغاً لكل الألعاب. dry_run=true للمعاينة بلا تعديل.
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "مجلد لعبة واحدة داخل games (فارغ = كل الألعاب)"
+        required: false
+        default: ""
+      dry_run:
+        description: "معاينة فقط دون تعديل"
+        required: false
+        default: "true"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-write
+  cancel-in-progress: false
+
+jobs:
+  fonts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run
+        env:
+          SLUG: ${{ inputs.slug }}
+          DRY: ${{ inputs.dry_run }}
+        run: |
+          cd tools/import_game
+          if [ -n "$SLUG" ]; then DIRS="../../games/$SLUG"; else DIRS=$(ls -d ../../games/*/); fi
+          FLAG=""; [ "$DRY" = "true" ] && FLAG="--dry-run"
+          python3 fonts_local.py $FLAG $DIRS | tee "$GITHUB_STEP_SUMMARY"
+      - name: Commit and push
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "game-importer"
+          git config user.email "game-importer@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "لا تغييرات"; exit 0; fi
+          git commit -m "localize Google Fonts in existing games"
+          for i in 1 2 3 4; do
+            git push && exit 0
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            sleep $((i * 3))
+          done
+          echo "تعذّر الدفع" && exit 1
