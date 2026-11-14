@@ -1,0 +1,51 @@
+{
+  "_help": "إعدادات الخطوط. احذف أي مفتاح لتعود قيمته الافتراضية. المفاتيح التي تبدأ بشرطة سفلية تُتجاهل.",
+  "_keep_weights": "الأوزان التي تبقى عند كثرة الأوزان؛ الباقي يُرسم بأقرب وزن منها.",
+  "keep_weights": [
+    400,
+    700
+  ],
+  "_max_weights": "إن طلبت اللعبة هذا العدد من الأوزان أو أقل فلا تقليص.",
+  "max_weights": 2,
+  "_drop_italic": "إسقاط المائل (يرسمه المتصفح مائلاً صناعياً).",
+  "drop_italic": true,
+  "max_families": 3,
+  "max_total_kb": 450,
+  "_subsets": "auto: اللاتيني + ما تستعمله اللعبة فعلاً | latin | all",
+  "subsets": "auto",
+  "_replace": "استبدال خط بآخر مع بقاء اسمه في كود اللعبة. مثال: {\"Fredoka One\": \"Baloo 2\"}",
+  "replace": {},
+  "_style_defaults": "بديل لكل طراز، يعمل فقط للطرز المذكورة في auto_replace_styles. الطرز: cartoon modern pixel fantasy tech mono hand serif",
+  "style_defaults": {
+    "cartoon": "Baloo 2",
+    "modern": "Inter",
+    "pixel": "Pixelify Sans",
+    "fantasy": "Cinzel",
+    "tech": "Orbitron",
+    "mono": "JetBrains Mono",
+    "hand": "Caveat",
+    "serif": "Lora"
+  },
+  "auto_replace_styles": [
+    "cartoon",
+    "modern",
+    "pixel",
+    "fantasy",
+    "tech",
+    "mono",
+    "hand",
+    "serif"
+  ],
+  "_full_weights": "عائلات لا تُقلَّص أوزانها، مثل [\"Poppins\"]",
+  "full_weights": [],
+  "_skip": "عائلات تبقى على روابط Google الخارجية.",
+  "skip": [],
+  "_arabic_fallback": "auto | always | never",
+  "arabic_fallback": "auto",
+  "arabic_family": "Tajawal",
+  "_auto_replace_styles": "الطرز المفتوحة للاستبدال التلقائي. تُضبط من تطبيق متحكم (شاشة الخطوط).",
+  "inject_default": true,
+  "_inject_default": "ألعاب لا تعرّف أي خط (خطوط النظام فقط): يُحقن لها خط افتراضي بقواعد بسيطة بلا ذكاء اصطناعي.",
+  "default_style": "modern",
+  "_default_style": "الطراز الافتراضي لهذه الألعاب؛ يتحول تلقائياً إلى بكسلي أو برمجي إن دلّت الشيفرة."
+}

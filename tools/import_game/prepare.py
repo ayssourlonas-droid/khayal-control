@@ -222,6 +222,18 @@ def main():
     except Exception as e:
         warnings.append(f"تعذّر عزل التخزين: {str(e)[:100]}")
 
+    stage("الخطوط")
+    # 4ج) تضمين خطوط Google Fonts محلياً (لا اتصال بـ Google وقت اللعب) + خط افتراضي للألعاب بلا خطوط
+    try:
+        import fonts_local
+        fr = fonts_local.localize(site, notes, warnings)
+        if fr.get("files"):
+            fixed("تضمين خطوط محلياً", fr["files"])
+            report["fonts"] = {"families": [f["name"] for f in fr["families"]], "files": fr["files"],
+                               "kb": fr["kb"], "dropped": fr["dropped"], "failed": fr["failed"]}
+    except Exception as e:
+        warnings.append(f"تعذّر تضمين الخطوط: {str(e)[:120]}")
+
     stage("ترخيص ومصدر")
     # 5) ترخيص + مصدر داخل مجلد اللعبة
     for fn in os.listdir(src):

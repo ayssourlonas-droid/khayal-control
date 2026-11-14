@@ -17,6 +17,58 @@ from pathlib import Path
 
 GAMES, FEATURED, PENDING = "data_games.json", "data_games_featured.json", "data_games_pending.json"
 
+# ───────────── حارس عدد ملفات الاستضافة ─────────────
+# Cloudflare Pages يرفض النشر كاملاً إن تجاوز عدد الملفات حدّه (20,000 في الخطة المجانية)، فيتعطل الموقع كله لا اللعبة الأخيرة فقط.
+# كل مجلدات games/ تُنشر (بما فيها ألعاب «بانتظار المراجعة»)، فتُعدّ كلها. يمكن تغيير الحد من متغير Actions: PAGES_MAX_FILES.
+BUDGET = {}
+
+
+def count_files(root: Path):
+    """يرجع (عدد كل الملفات عدا .git، وقاموساً: لعبة ← عدد ملفاتها)."""
+    total, per = 0, {}
+    for dp, dns, fns in os.walk(root):
+        dns[:] = [d for d in dns if d != ".git"]
+        n = len(fns)
+        total += n
+        parts = Path(dp).relative_to(root).parts
+        if n and len(parts) >= 2 and parts[0] == "games":
+            per[parts[1]] = per.get(parts[1], 0) + n
+    return total, per
+
+
+def file_budget(host_dir: Path, slug: str):
+    """يُستدعى بعد نسخ اللعبة وقبل أي دفع: يسجّل العدد، وينبّه عند 75%، ويرفض النشر عند 95% من الحد."""
+    try:
+        limit = int(os.environ.get("PAGES_MAX_FILES") or 20000)
+    except ValueError:
+        limit = 20000
+    warn_at, fail_at = int(limit * 0.75), int(limit * 0.95)
+    total, per = count_files(host_dir)
+    mine = per.get(slug, 0)
+    top = "، ".join(f"{k} ({v})" for k, v in sorted(per.items(), key=lambda kv: -kv[1])[:5])
+    BUDGET.update(total=total, limit=limit, mine=mine, top=top, warn=total > warn_at)
+    log(f"عدد ملفات الاستضافة بعد إضافة {slug}: {total} من {limit} (اللعبة نفسها {mine} ملفاً)")
+    if total > fail_at:
+        raise RuntimeError(
+            f"رُفض النشر كي لا يتعطل الموقع كله: عدد ملفات الاستضافة سيصبح {total} والحد في Cloudflare Pages {limit} "
+            f"(نرفض عند {fail_at}). أكثر الألعاب ملفات: {top}. احذف ألعاباً (خصوصاً الثقيلة أو التي بانتظار المراجعة) "
+            f"من Actions ← Delete game ثم أعد الاستيراد، أو ارفع PAGES_MAX_FILES إن ترقّيت الخطة.")
+    if total > warn_at:
+        print(f"::warning::عدد ملفات الاستضافة {total} من {limit} (فوق 75%). أكثر الألعاب ملفات: {top}", flush=True)
+
+
+def budget_lines():
+    if not BUDGET:
+        return []
+    b = BUDGET
+    pct = round(100 * b["total"] / b["limit"])
+    line = f"- ملفات الاستضافة: {b['total']} من {b['limit']} ({pct}%)، هذه اللعبة {b['mine']} ملفاً"
+    if b.get("warn"):
+        line += f" — ⚠ اقتربت من الحد؛ الأثقل: {b['top']}"
+    return [line]
+
+
+
 
 def name_key(name):
     """يطابق nameKey في تطبيق Game Control: أحرف صغيرة، بلا . _ - ومسافات، بلا أرقام (وإن لم يبقَ شيء نقارن بالأرقام)."""
@@ -206,6 +258,7 @@ def main():
             shutil.rmtree(dest)
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(site, dest)
+        file_budget(host, slug)  # يرفض قبل أي دفع إن اقتربنا من حد Cloudflare
         if extra_index is not None:
             try:
                 write_credits(host, extra_index)
@@ -295,7 +348,7 @@ def main():
             fixed.append("إزالتها من قائمة المرفوضة")
         commit_push(data, data_branch, f"update game {slug} ({meta['license']}) from {meta['source_url']}")
         msg = f"اللعبة مسجّلة سابقاً (id={existing.get('id')}); حُدّثت ملفاتها" + (f" وأُصلح في سجلها: {'، '.join(fixed)}." if fixed else " ولم يُغيَّر سجلها.")
-        summary(["## تم النشر", msg, f"الرابط: {play_url}"])
+        summary(["## تم النشر", msg, f"الرابط: {play_url}"] + budget_lines())
         return
 
     ids = [int(g.get("id", 0)) for lst in (games, featured, pending) for g in lst if str(g.get("id", "")).lstrip("-").isdigit()]
@@ -355,7 +408,7 @@ def main():
         f"- الرابط (يعمل بعد انتهاء نشر الاستضافة): {play_url}",
         f"- أُضيفت إلى: **{target_name}**" + ("" if live else " (قيد المراجعة؛ لن تظهر للاعبين حتى تعتمدها من تطبيق المتحكم)"),
         f"- حالة الاختبار: {report.get('status')}",
-    ] + ([f"- ⚠ {review_note}"] if review_note else [])
+    ] + budget_lines() + ([f"- ⚠ {review_note}"] if review_note else [])
       + ([f"- تقييم الذكاء الاصطناعي: قابلة للعب={ai.get('final_playable')} — {ai.get('final_summary_ar','')}"] if ai else []))
 
 
