@@ -1,8 +1,8 @@
 Source: https://github.com/EVEDensity/MineWorld
 Commit: 5ef2b328ea81524e12d8dbad3ced4af9ffaaeca2
 License: MIT
-Imported: 2026-11-11T17:45:04.558249+00:00
-Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 2, "تنظيف الكود": 5}
+Imported: 2026-11-14T11:53:39.061351+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 4, "حذف ملفات غير لازمة": 2, "تنظيف الكود": 6}
 
 Media provenance (automated signals, not a legal guarantee):
 - images: 5, audio: 0, tagged audio: 0
