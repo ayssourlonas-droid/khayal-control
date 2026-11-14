@@ -1,8 +1,8 @@
 Source: https://github.com/eldermoraes/Delta-Strike
 Commit: f1905c650eeab7b1f376689a9c61d66d031a7cac
 License: Apache-2.0
-Imported: 2026-11-09T00:34:21.862960+00:00
-Automated changes (see report): {"مسار مطلق ← نسبي": 1, "عزل تخزين اللعبة": 6, "حذف ملفات غير لازمة": 32, "تحسين وسائط صور": 10}
+Imported: 2026-11-14T10:37:01.409259+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 1, "عزل تخزين اللعبة": 6, "حذف ملفات غير لازمة": 32, "تحسين وسائط صور": 10, "تنظيف الكود": 20}
 
 Media provenance (automated signals, not a legal guarantee):
 - LICENSE: attribution notices from the Source form of the Work,

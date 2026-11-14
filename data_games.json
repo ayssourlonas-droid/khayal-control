@@ -255,7 +255,7 @@
       "title_ar": "Delta Strike",
       "title_en": "Delta Strike",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/delta-strike/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/delta-strike/_cover.webp"
     },
     "details_scene": {
       "description": "Retro vertical-scrolling river shooter for browser & mobile — vanilla JS + Canvas 2D, 100% offline PWA, zero build, zero dependencies. An original tribute to the 1982 river-shooter classic.",
@@ -267,7 +267,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "2d-game"
-    }
+    },
+    "reimported_at": "2026-11-14T10:41:24Z"
   },
   {
     "id": 54,
