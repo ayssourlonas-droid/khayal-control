@@ -1,0 +1,54 @@
+{
+ "date": "2026-11-14T11:27:15.912167+00:00",
+ "status": "warn",
+ "source": "https://github.com/cocodedk/persia-game",
+ "commit": "c47fcabac95bf6e25db70909bb2fb359e08026c5",
+ "license": "Apache-2.0",
+ "warnings": [
+  "خطوط مضمّنة (1): تأكد من ترخيصها، مثل public/fonts/Vazirmatn-Bold.woff2",
+  "روابط لمواقع خارجية: cocode.dk, docs.github.com, github.com, linkedin.com, persia.cocode.dk, schema.org, x.dk"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد أمر build: نسخ index.html كما هو",
+  "الوسائط: 2 صورة و68 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: For the voice clips, the manifest records the voice model as MIT-licensed and its dataset as CC0.",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:persia-game:) في 2 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 112 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 106 ملفاً (524 KB)؛ من 366 إلى 260",
+  "تحسين صور: 2 ملفاً، وفّر 669 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 1MB ← 1MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: لا أخطاء في 160 ملفات",
+  "5 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 169 ملفاً، 585KB ← 308KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 100/100",
+  "تعديل تلقائي: عزل تخزين اللعبة × 2",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 106",
+  "تعديل تلقائي: تحسين وسائط صور × 2",
+  "تعديل تلقائي: تنظيف الكود × 169",
+  "الغلاف: og0.png ← og:image، اسم عنوان/بانر (درجة 178)",
+  "الأزمنة: جلب المستودع: 2ث؛ اختبار المتصفح: 84ث؛ تقليل الملفات: 48ث؛ تحسين الوسائط: 50ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 49ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "178: og0.png (og:image، اسم عنوان/بانر)",
+  "143: hero.jpg (اسم غلاف، مجلد ترويج)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 160,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 2,
+  "حذف ملفات غير لازمة": 106,
+  "تحسين وسائط صور": 2,
+  "تنظيف الكود": 169
+ }
+}

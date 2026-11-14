@@ -524,7 +524,7 @@
       "title_ar": "Persia Game",
       "title_en": "Persia Game",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/persia-game/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/persia-game/_cover.webp"
     },
     "details_scene": {
       "description": "An arcade shooter for the browser: five waves of angry animals, each named in Persian as it arrives, then a giant cat",
@@ -536,7 +536,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "arcade"
-    }
+    },
+    "reimported_at": "2026-11-14T11:31:46Z"
   },
   {
     "id": 100,
