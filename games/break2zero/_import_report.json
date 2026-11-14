@@ -1,0 +1,53 @@
+{
+ "date": "2026-11-14T10:42:40.533757+00:00",
+ "status": "warn",
+ "source": "https://github.com/sarev/break2zero",
+ "commit": "16ddf41fe3b967b7a4bcc2ad2cc4e072307642f7",
+ "license": "Apache-2.0",
+ "warnings": [
+  "خطوط مضمّنة (4): تأكد من ترخيصها، مثل web/fonts/exo2-700-italic.woff2، web/fonts/exo2-400-normal.woff2، web/fonts/exo2-400-italic.woff2",
+  "روابط لمواقع خارجية: break2zero.7thsoftware.co.uk, deography.com, fonts.google.com, github.com, juhanijunkala.com, opengameart.org, schema.org, sfxr.me"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: web",
+  "الوسائط: 87 صورة و37 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: Two-finger tap**                 | Pauses and opens the Options page: music, fullscreen, help, and quit to the menu. On the intro it offers ",
+  "تصريح المطوّر عن الوسائط: README.md: O**                              | On the intro, the Options page, as does the Options link at the foot of the intro: music, fullscreen, cap",
+  "تصريح المطوّر عن الوسائط: README.md: H / C**                          | On the intro, the Help and Credits pages, which are also on the Options page |",
+  "تصريح المطوّر عن الوسائط: README.md: Browsers won't let a page fetch audio from a `file://` URL, so it has to be served over HTTP. Any static server will do; Python has one buil",
+  "تصريح المطوّر عن الوسائط: README.md: `break2zero.py` is the desktop game the browser version was ported from, in Python and Pygame. It has the first six levels and the first nin",
+  "تصريح المطوّر عن الوسائط: README.md: 7th software Ltd.'s own work in Break2Zero is © 2025-26 7th software Ltd., and free software under the [Apache License 2.0](LICENSE): the co",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:break2zero:) في 2 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 129 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "تحسين صوت: 28 ملفاً، وفّر 466 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 30MB ← 30MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: لا أخطاء في 15 ملفات",
+  "تنظيف الكود (فراغات وبنية الكود): 16 ملفاً، 246KB ← 106KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 100/100",
+  "تعديل تلقائي: عزل تخزين اللعبة × 2",
+  "تعديل تلقائي: تحسين وسائط صوت × 28",
+  "تعديل تلقائي: تنظيف الكود × 16",
+  "الغلاف: og0.jpg ← og:image، اسم عنوان/بانر (درجة 178)",
+  "الأزمنة: جلب المستودع: 5ث؛ اختبار المتصفح: 78ث؛ تحسين الوسائط: 49ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 3)"
+ ],
+ "console_errors": [],
+ "failed_requests": [],
+ "external_requests": [],
+ "cover_candidates": [
+  "178: og0.jpg (og:image، اسم عنوان/بانر)",
+  "138: intro.png (README #1، اسم شاشة)",
+  "28: intro.webp (حمّلتها اللعبة، اسم شاشة، مجلد أجزاء)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 15,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 2,
+  "تحسين وسائط صوت": 28,
+  "تنظيف الكود": 16
+ }
+}

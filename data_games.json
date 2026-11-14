@@ -282,7 +282,7 @@
       "title_ar": "Break2zero",
       "title_en": "Break2zero",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/break2zero/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/break2zero/_cover.webp"
     },
     "details_scene": {
       "description": "A retro brick-breaker you can play in your browser, on desktop or phone (plus the original Python version)",
@@ -294,7 +294,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "apache2-license"
-    }
+    },
+    "reimported_at": "2026-11-14T10:46:15Z"
   },
   {
     "id": 38,
