@@ -147,7 +147,7 @@
       "title_ar": "Swiposaur",
       "title_en": "Swiposaur",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/swiposaur/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/swiposaur/_cover.webp"
     },
     "details_scene": {
       "description": "3D voxel dinosaur arcade runner in the browser. Swipe between three lanes, tail-whip critters to refill stamina, and chain the Primal Roar up to 16x. Built with React 19 and Three.js, procedural meshes and synthesized audio, for Digit7 Jam 2026.",
@@ -159,7 +159,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "arcade-game"
-    }
+    },
+    "reimported_at": "2026-11-14T10:23:44Z"
   },
   {
     "id": 31,
