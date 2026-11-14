@@ -1,0 +1,65 @@
+{
+ "date": "2026-11-14T10:13:21.179777+00:00",
+ "status": "warn",
+ "source": "https://github.com/AndreaBonn/core-dump-game",
+ "commit": "7a4cc3ad24645278727751538e8d759c478bd54f",
+ "license": "Apache-2.0",
+ "warnings": [
+  "المستودع يحوي ملفات خادم (.env.example) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
+  "خطوط مضمّنة (3): تأكد من ترخيصها، مثل public/fonts/JetBrainsMono-Medium.woff2، public/fonts/JetBrainsMono-Bold.woff2، public/fonts/JetBrainsMono-Regular.woff2",
+  "تعتمد على خدمات خارجية (خدمة سحابية (Firebase/Convex/Heroku)): على الأرجح لن تعمل كاملة داخل التطبيق (قد تعلق على شاشة التحميل لأن إعدادات الخادم لم تُضبط وقت البناء). جرّبها قبل الاعتماد",
+  "روابط لمواقع خارجية: apis.google.com, bit.ly, firebase.google.com, react.i18next.com, reactjs.org, securetoken.google.com, stackoverflow.com, tailwindcss.com",
+  "3 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:43785/api/save",
+  "4 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: dist",
+  "الوسائط: 10 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "أنماط تستحق الانتباه: إرسال بيانات خلفياً (sendBeacon) (assets/firebase-CyOCGZRL.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:core-dump-game:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 296 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 1 ملفاً (0 KB)؛ من 17 إلى 16",
+  "5 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 4",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 1",
+  "الغلاف: gameplay.gif ← README #7، اسم شاشة، مجلد ترويج (درجة 108)",
+  "الأزمنة: البحث/البناء: 14ث؛ اختبار المتصفح: 89ث؛ تقليل الملفات: 47ث؛ تنظيف الكود: 1ث (أوامر: 5، اختبارات متصفح: 2)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "A bad HTTP response code (404) was received when fetching the script.",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:43785/api/save",
+  "404 http://127.0.0.1:43785/fonts/JetBrainsMono-Bold.woff2",
+  "http://127.0.0.1:43785/fonts/JetBrainsMono-Bold.woff2",
+  "404 http://127.0.0.1:43785/fonts/JetBrainsMono-Regular.woff2",
+  "http://127.0.0.1:43785/fonts/JetBrainsMono-Regular.woff2"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "108: gameplay.gif (README #7، اسم شاشة، مجلد ترويج)",
+  "83: gameplay-mobile.png (اسم شاشة، مجلد ترويج)",
+  "83: main-menu.png (اسم شاشة، مجلد ترويج)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 4,
+  "عزل تخزين اللعبة": 1,
+  "حذف ملفات غير لازمة": 1
+ }
+}

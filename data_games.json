@@ -120,7 +120,7 @@
       "title_ar": "Core Dump Game",
       "title_en": "Core Dump Game",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/core-dump-game/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/core-dump-game/_cover.webp"
     },
     "details_scene": {
       "description": "Hacker-themed marble shooter puzzle game: rotate a CPU cursor and clear chains of data packets before they reach /dev/null. Installable offline PWA built with React, TypeScript and Canvas 2D, with an optional online leaderboard.",
@@ -132,7 +132,8 @@
       "orientation": "portrait",
       "type": "web",
       "category": "accessibility"
-    }
+    },
+    "reimported_at": "2026-11-14T10:16:26Z"
   },
   {
     "id": 29,
