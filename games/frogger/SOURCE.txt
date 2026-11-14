@@ -1,8 +1,8 @@
 Source: https://github.com/wstackable/frogger
 Commit: 6edbcb546298916115ab6a856263c959b0c96ca2
 License: CC0-1.0
-Imported: 2026-11-10T01:02:01.635932+00:00
-Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 10, "تنظيف الكود": 8}
+Imported: 2026-11-14T09:59:43.914471+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 4, "حذف ملفات غير لازمة": 11, "تحسين وسائط صوت": 3, "تنظيف الكود": 9}
 
 Media provenance (automated signals, not a legal guarantee):
 - README.md: Credit and licence
