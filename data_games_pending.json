@@ -1117,7 +1117,7 @@
       "title_ar": "Static Chess",
       "title_en": "Static Chess",
       "app_rating": 0.0,
-      "poster_url": "https://khayal-control.pages.dev/games/static-chess/_cover.png"
+      "poster_url": "https://khayal-control.pages.dev/games/static-chess/_cover.webp"
     },
     "details_scene": {
       "description": "A lightweight chess game implemented with pure vanilla HTML, CSS, and JavaScript. Features standard chess rules, special moves (castling, en passant, pawn promotion), move validation, check/checkmate detection, and game state persistence using localStorage. No frameworks, no libraries – just clean, efficient code designed for static web hosting.",
@@ -1130,7 +1130,8 @@
       "type": "web",
       "category": "chess"
     },
-    "review_note": "أُخفيت يدوياً من تطبيق المتحكم"
+    "review_note": "أُخفيت يدوياً من تطبيق المتحكم",
+    "reimported_at": "2026-11-20T19:49:01Z"
   },
   {
     "id": 17,

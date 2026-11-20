@@ -1,0 +1,83 @@
+# Release Process
+
+This project is a static site; no build. Releases are automated via GitHub Actions when tags are pushed.
+
+## Automated Release Workflow
+
+When you push a tag starting with `v` (e.g., `v0.1.0`, `v1.2.3`), the `.github/workflows/release.yml` workflow automatically:
+
+1. Detects the pushed tag
+2. Runs lint and tests; the release is not created if they fail
+3. Reads release notes from `releases/RELEASE_NOTES_vX.Y.Z.md` if it exists
+4. Creates and publishes a GitHub Release with the tag name and release notes
+
+## Release Steps
+
+1. **Prepare Release**:
+   - Update `CHANGELOG.md` with the new version and date
+   - Create `releases/RELEASE_NOTES_vX.Y.Z.md` with release summary (optional but recommended)
+   - Set `"version"` in `package.json` to the new version and run `npm install --package-lock-only` so the lockfile matches
+   - Ensure all changes are committed and pushed to `main`
+
+2. **Verify CI Passes**:
+   - Check that GitHub Actions CI is green: https://github.com/TMHSDigital/Static_Chess/actions
+   - Run locally: `npm run lint && npm run format && npm run coverage`
+
+3. **Create and Push Tag**:
+
+   ```bash
+   git tag -a vX.Y.Z -m "Release vX.Y.Z - Description"
+   git push origin vX.Y.Z
+   ```
+
+4. **Monitor Release**:
+   - Watch the workflow at: https://github.com/TMHSDigital/Static_Chess/actions
+   - Verify release appears at: https://github.com/TMHSDigital/Static_Chess/releases
+
+The release will be created automatically within minutes of pushing the tag.
+
+## Offline copy
+
+The service worker (`sw.js`) saves the files listed in its `APP_FILES` so the game works without a connection. It always tries the network first, and asks the server even while the browser's own cache still counts a file as fresh (GitHub Pages lets files be cached for ten minutes), so a release needs no cache version bump and a returning visitor gets one consistent set of files. A first visit, before the service worker is in place, is not covered by this. (On a connection that does not answer within three seconds it uses the saved copy for that visit and picks the new files up in the background.) When a file is added, renamed or removed, update `APP_FILES`; `tests/unit/offline.test.js` fails if the list and the files disagree.
+
+## Versioning
+
+Semantic Versioning (MAJOR.MINOR.PATCH):
+
+- **MAJOR** (X.0.0): Breaking changes
+- **MINOR** (0.X.0): New features, backwards compatible
+- **PATCH** (0.0.X): Bug fixes
+
+## Release Notes
+
+For each release, create a `RELEASE_NOTES_vX.Y.Z.md` file in the `releases/` directory. The workflow will automatically use this file for the GitHub Release description. If the file doesn't exist, a default release note will be generated referencing the CHANGELOG.
+
+Release-related files are organized in the `releases/` directory:
+
+- `README.md` - Documentation for the releases directory structure
+- `RELEASE_NOTES_vX.Y.Z.md` - Release notes used by GitHub Actions workflow
+- `RELEASE_GUIDE_vX.Y.Z.md` - Step-by-step release guide (optional, for reference)
+
+See `releases/README.md` for more details on the organization.
+
+Example structure:
+
+```markdown
+# Release vX.Y.Z - Title
+
+**Release Date:** YYYY-MM-DD
+
+## What's New
+
+- Feature 1
+- Feature 2
+
+## Links
+
+- Play Now: https://tmhsdigital.github.io/Static_Chess/
+- Full Changelog: https://github.com/TMHSDigital/Static_Chess/blob/main/CHANGELOG.md
+```
+
+## Labels and Triage
+
+Use labels: `bug`, `enhancement`, `documentation`, `dependencies`, `testing`, `performance`, `tech-debt`, `good first issue`, `help wanted`, plus one `severity: high`, `severity: medium` or `severity: low` label.
