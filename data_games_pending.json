@@ -2295,5 +2295,32 @@
       "type": "web",
       "category": "api"
     }
+  },
+  {
+    "id": 119,
+    "imported_at": "2026-11-20T19:06:13Z",
+    "release_year": "2025",
+    "category_tags": [
+      "css",
+      "game",
+      "game-2d"
+    ],
+    "main_scene": {
+      "title_ar": "Drop7 Clone",
+      "title_en": "Drop7 Clone",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/drop7-clone/_cover.webp"
+    },
+    "details_scene": {
+      "description": "HTML5/Javascript clone of the game Drop7",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/drop7-clone/",
+      "developer": "oddlord",
+      "license": "MIT",
+      "source_url": "https://github.com/oddlord/Drop7-Clone",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "css"
+    }
   }
 ]

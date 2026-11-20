@@ -1,0 +1,9 @@
+Source: https://github.com/oddlord/Drop7-Clone
+Commit: 49187fdc431218c8a687641369cb04509b2fa192
+License: MIT
+Imported: 2026-11-20T19:02:39.349156+00:00
+Automated changes (see report): {"إضافة meta charset": 1, "عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 4, "حذف ملفات غير لازمة": 16, "تنظيف الكود": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: The ding sound is a modification of the [Ding Ding Small Bell](https://freesound.org/people/JohnsonBrandEditing/sounds/173932/) audio by [Jo
+- images: 15, audio: 2, tagged audio: 0

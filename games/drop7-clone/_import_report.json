@@ -1,0 +1,53 @@
+{
+ "date": "2026-11-20T19:02:39.349156+00:00",
+ "status": "warn",
+ "source": "https://github.com/oddlord/Drop7-Clone",
+ "commit": "49187fdc431218c8a687641369cb04509b2fa192",
+ "license": "MIT",
+ "warnings": [
+  "1 أخطاء في الكونسول، أولها: JS: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 15 صورة و2 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: The ding sound is a modification of the [Ding Ding Small Bell](https://freesound.org/people/JohnsonBrandEditing/sounds/173932/) audio by [Jo",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:drop7-clone:) في 1 صفحة",
+  "اللعبة لا تعرّف خطوطاً (خطوط النظام فقط): حُقن لها خط «Inter» (الطراز: عصري) مع 0 اسم نظام مُشار إليه به؛ 2 ملف، 94 KB",
+  "لاعب آلي عشوائي: جُرّب نحو 343 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 16 ملفاً (6008 KB)؛ من 51 إلى 35",
+  "تنظيف الكود (فراغات وبنية الكود): 2 ملفاً، 1KB ← 0KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
+  "تعديل تلقائي: إضافة meta charset × 1",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تضمين خطوط محلياً × 4",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 16",
+  "تعديل تلقائي: تنظيف الكود × 2",
+  "الغلاف: loading.png ← حمّلتها اللعبة، اسم شاشة (درجة 58)",
+  "الأزمنة: جلب المستودع: 1ث؛ اختبار المتصفح: 78ث؛ تقليل الملفات: 47ث؛ تنظيف الكود: 49ث (أوامر: 3، اختبارات متصفح: 3)"
+ ],
+ "console_errors": [
+  "JS: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD"
+ ],
+ "failed_requests": [
+  "http://127.0.0.1:45547/game/audio/retroland-recital.mp3"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "58: loading.png (حمّلتها اللعبة، اسم شاشة)",
+  "18: drop7-grey.png (حمّلتها اللعبة)",
+  "18: drop7-blue.png (حمّلتها اللعبة)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "إضافة meta charset": 1,
+  "عزل تخزين اللعبة": 1,
+  "تضمين خطوط محلياً": 4,
+  "حذف ملفات غير لازمة": 16,
+  "تنظيف الكود": 2
+ }
+}
