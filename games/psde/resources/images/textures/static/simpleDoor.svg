@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="simpleDoor.svg"
+   id="svg4115"
+   version="1.1"
+   viewBox="0 0 1024 1024"
+   height="1024"
+   width="1024"
+   inkscape:export-filename="/home/www/psde.equus.et/html/resources/images/textures/static/simpleDoor_512.webp"
+   inkscape:export-xdpi="48"
+   inkscape:export-ydpi="48">
+  <metadata
+     id="metadata4121">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4119" />
+  <sodipodi:namedview
+     inkscape:current-layer="svg4115"
+     inkscape:window-maximized="1"
+     inkscape:window-y="24"
+     inkscape:window-x="0"
+     inkscape:cy="663.43853"
+     inkscape:cx="402.98172"
+     inkscape:zoom="0.5640152"
+     showgrid="false"
+     id="namedview4117"
+     inkscape:window-height="1056"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <desc
+     id="desc3717">craftsmanWalls.blend, (Blender 2.82 (sub 1))</desc>
+  <rect
+     style="opacity:1;vector-effect:none;fill:#28170b;fill-opacity:1;stroke:none;stroke-width:16.60024261;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect5091"
+     width="1024"
+     height="1024"
+     x="0"
+     y="1.4210855e-14"
+     inkscape:label="background" />
+  <path
+     style="fill:#28170b;fill-opacity:1;stroke:none;stroke-width:1"
+     d="M 740 120 L 740 172 L 740 412 L 740 512 L 740 752 L 740 804 L 764 804 L 764 752 L 764 512 L 764 412 L 764 172 L 764 120 L 740 120 z "
+     id="polygon3723"
+     inkscape:label="doorSideTop" />
+  <path
+     style="fill:#28170b;fill-opacity:1;stroke:none;stroke-width:1"
+     d="M 700 4 L 700 56 L 700 412 L 700 512 L 700 920 L 700 1020 L 724 1020 L 724 920 L 724 512 L 724 412 L 724 56 L 724 4 L 700 4 z "
+     id="polygon3719"
+     inkscape:label="doorSideLeft" />
+  <path
+     style="fill:#908e87;fill-opacity:1;stroke:none;stroke-width:1.04999995"
+     d="m 777.49995,-0.8 v 33.6 33.6 33.6 33.6 33.6 33.6 H 882.502 V 167.2 133.6 100 66.4 32.8 -0.8 Z"
+     id="polygon4027"
+     inkscape:connector-curvature="0"
+     inkscape:label="knobShaft" />
+  <path
+     style="fill:#908e87;fill-opacity:1;stroke:none;stroke-width:1.04999995"
+     d="M 919.34736,103.30527 893.54238,148 l 25.80498,44.69473 h 51.60997 L 996.76231,148 970.95733,103.30527 Z"
+     id="polygon4041"
+     inkscape:connector-curvature="0"
+     inkscape:label="backKnob" />
+  <path
+     style="fill:#908e87;fill-opacity:1;stroke:none;stroke-width:1.04999995"
+     d="m 919.34736,7.3345215 -25.80498,44.6947265 25.80498,44.696777 h 51.60997 L 996.76231,52.029248 970.95733,7.3345215 Z"
+     id="polygon4035"
+     inkscape:connector-curvature="0"
+     inkscape:label="frontKnob" />
+  <rect
+     style="opacity:1;vector-effect:none;fill:#371f0f;fill-opacity:1;stroke:none;stroke-width:19.36321449;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect1342"
+     width="680"
+     height="1016"
+     x="4"
+     y="4"
+     inkscape:label="doorBackground" />
+  <path
+     inkscape:connector-curvature="0"
+     d="M 780,468.08008 V 729.91992 H 904.7207 V 468.08008 Z"
+     id="polygon400"
+     style="fill:#908e87;fill-opacity:1"
+     inkscape:label="frontKnobPlate" />
+  <path
+     inkscape:connector-curvature="0"
+     d="M 780,206.24023 V 468.08008 H 904.7207 V 206.24023 Z"
+     id="polygon404"
+     style="fill:#908e87;fill-opacity:1"
+     inkscape:label="backKnobPlate" />
+</svg>

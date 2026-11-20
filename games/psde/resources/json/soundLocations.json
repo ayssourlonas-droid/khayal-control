@@ -1,0 +1,5 @@
+{
+    "openDoor": "resources/sounds/Open Door.ogg",
+    "hit": "resources/sounds/Hit.ogg",
+    "slice": "resources/sounds/Slice.ogg"
+}

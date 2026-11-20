@@ -1,0 +1,68 @@
+{
+ "date": "2026-11-20T19:50:17.012448+00:00",
+ "status": "warn",
+ "source": "https://github.com/Armasyll/psde",
+ "commit": "7181e5d2103f6d2aeef91d1f63c1344f50872eb1",
+ "license": "Apache-2.0",
+ "warnings": [
+  "خطوط مضمّنة (1): تأكد من ترخيصها، مثل resources/fonts/Theban.ttf",
+  "تعتمد على خدمات خارجية (WebSocket إلى خادم خارجي): على الأرجح لن تعمل كاملة داخل التطبيق (قد تعلق على شاشة التحميل لأن إعدادات الخادم لم تُضبط وقت البناء). جرّبها قبل الاعتماد",
+  "الحجم كبير قبل تحسين الوسائط: 113MB",
+  "روابط لمواقع خارجية: assets.babylonjs.com, bullet.googlecode.com, bulletphysics.com, bulletphysics.org, cdn.babylonjs.com, code.google.com, controllers.babylonjs.com, doc.babylonjs.com",
+  "1 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:38785/resources/images/blank.png",
+  "1 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)",
+  "ESLint: 1 أخطاء برمجية في 117 ملفات، أولها: resources/js/classes/Game.js:2081 Use the isNaN function to compare with NaN."
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 323 صورة و7 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "أنماط تستحق الانتباه: طلب كاميرا/ميكروفون (vendors/babylonjs/babylon.js)؛ اتصال WebSocket بخادم خارجي (vendors/babylonjs/babylon.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:psde:) في 2 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 8 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 92 ملفاً (26320 KB)؛ من 714 إلى 622",
+  "تحسين صور: 216 ملفاً، وفّر 9009 KB",
+  "تحسين صوت: 4 ملفاً، وفّر 26 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 87MB ← 78MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "19 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 132 ملفاً، 2213KB ← 1338KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 75/100 (أخطاء كونسول (-15)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 13",
+  "تعديل تلقائي: عزل تخزين اللعبة × 2",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 92",
+  "تعديل تلقائي: تحسين وسائط صور × 216",
+  "تعديل تلقائي: تحسين وسائط صوت × 4",
+  "تعديل تلقائي: تنظيف الكود × 132",
+  "الغلاف: flatScreenMonitor01Black.png ← اسم شاشة (درجة 58)",
+  "الأزمنة: جلب المستودع: 11ث؛ تنظيف: 3ث؛ اختبار المتصفح: 97ث؛ تقليل الملفات: 64ث؛ تحسين الوسائط: 223ث؛ فحص JavaScript: 5ث؛ تنظيف الكود: 50ث؛ إخراج الغلاف: 2ث (أوامر: 4، اختبارات متصفح: 5)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:38785/resources/images/blank.png"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "58: flatScreenMonitor01Black.png (اسم شاشة)",
+  "18: spider.png ()",
+  "8: foxMfoxRed.png ()"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 117,
+  "errors": 1
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 13,
+  "عزل تخزين اللعبة": 2,
+  "حذف ملفات غير لازمة": 92,
+  "تحسين وسائط صور": 216,
+  "تحسين وسائط صوت": 4,
+  "تنظيف الكود": 132
+ }
+}

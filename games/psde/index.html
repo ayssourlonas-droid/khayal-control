@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:psde:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+        <meta charset="utf-8"/>
+        <link rel="manifest" href="manifest.json"/>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+        <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png"/>
+        <link rel="icon" type="image/png" sizes="256x256" href="favicon-256x256.png"/>
+        <link rel="icon" type="image/png" sizes="128x128" href="favicon-128x128.png"/>
+        <link rel="icon" type="image/png" sizes="64x64" href="favicon-64x64.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
+        <meta property="og:site_name" content="PSDE"/>
+        <meta property="og:title" content="Pack Street Development Edition"/>
+        <meta property="og:description" content="A development environment for a Pack Street game."/>
+        <meta property="og:locale" content="en_US"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:image" content="https://ztg.zapto.org/favicon.png"/>
+        <meta property="og:image:type" content="image/png"/>
+        <meta property="og:image:height" content="512"/>
+        <meta property="og:image:width" content="512"/>
+        <meta property="og:url" content="https://ztg.zapto.org/"/>
+        <meta http-equiv="Content-Security-Policy" content="worker-src data: blob: 'self';"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="Description" content="A development environment for a Pack Street game."/>
+        <meta name="theme-color" content="#120818"/>
+        <title>Pack Street Development Edition</title>
+        <style>
+            html, body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #canvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" oncontextmenu="return false;" tabindex="-1"></canvas>
+        <p tabindex="0">JavaScript is required for this page to load.</p>
+        <!--<script src="vendors/jquery/jquery-3.2.1.min.js"></script>-->
+        <!--<script src="vendors/cannonjs/cannon.min.js"></script>-->
+        <!--<script src="vendors/mapbox/earcut.min.js"></script>-->
+        <!--<script src="vendors/babylonjs/Oimo.js"></script>-->
+        <script src="vendors/babylonjs/cannon.js"></script>
+        <script src="vendors/babylonjs/babylon.js"></script>
+        <script src="vendors/babylonjs/loaders/babylonjs.loaders.min.js"></script>
+        <script src="vendors/babylonjs/loaders/babylon.glTF2FileLoader.min.js"></script>
+        <script src="vendors/babylonjs/materialsLibrary/babylon.fireMaterial.min.js"></script>
+        <script src="vendors/babylonjs/materialsLibrary/babylon.furMaterial.min.js"></script>
+        <script src="vendors/babylonjs/materialsLibrary/babylon.skyMaterial.min.js"></script>
+        <script src="vendors/babylonjs/materialsLibrary/babylon.waterMaterial.min.js"></script>
+        <script src="vendors/babylonjs/gui/babylon.gui.min.js"></script>
+        <script src="vendors/babylonjs/gui/babylon.gui.triangle.js"></script>
+        <script src="resources/js/BabylonOverrides.js"></script>
+        <script src="resources/js/Overrides.js"></script>
+        <!--<script src="resources/js/classes/BoundedNumber.js"></script>-->
+        <script src="resources/js/classes/BidirectionalMap.js"></script>
+        <script src="resources/js/classes/Tools.js"></script>
+        <script src="resources/js/classes/DND.js"></script>
+        <script src="resources/js/classes/DND5E.js"></script>
+
+        <script src="resources/js/classes/Controls/AbstractControls.js"></script>
+        <script src="resources/js/classes/Controls/MenuControls.js"></script>
+        <script src="resources/js/classes/Controls/CharacterControls.js"></script>
+        <script src="resources/js/classes/Controls/DialogueControls.js"></script>
+        <script src="resources/js/classes/Controls/EditControls.js"></script>
+        <script src="resources/js/classes/Controls/RadialControls.js"></script>
+        <script src="resources/js/classes/Controls/WritingControls.js"></script>
+        <script src="resources/js/classes/Enum.js"></script><!-- Not really an Enum class, just contains Enums :v -->
+        <script src="resources/js/classes/Callback.js"></script>
+        <script src="resources/js/classes/Game.js"></script>
+
+        <script src="resources/js/classes/GameGUI/GameGUI.js"></script>
+        <script src="resources/js/classes/GameGUI/MainMenu.js"></script>
+        <script src="resources/js/classes/GameGUI/HUD.js"></script>
+        <script src="resources/js/classes/GameGUI/RadialMenu.js"></script>
+        <script src="resources/js/classes/GameGUI/ActionTooltip.js"></script>
+        <script src="resources/js/classes/GameGUI/Cursor.js"></script>
+        <script src="resources/js/classes/GameGUI/Debug.js"></script>
+        <script src="resources/js/classes/GameGUI/Chat.js"></script>
+        <script src="resources/js/classes/GameGUI/Dialogue.js"></script>
+        <script src="resources/js/classes/GameGUI/Inventory.js"></script>
+        <script src="resources/js/classes/GameGUI/InventoryEquipment.js"></script>
+        <script src="resources/js/classes/GameGUI/PlayerPortrait.js"></script>
+        <script src="resources/js/classes/GameGUI/TargetPortrait.js"></script>
+        <script src="resources/js/classes/GameGUI/CharacterStats.js"></script>
+        <script src="resources/js/classes/GameGUI/Book.js"></script>
+
+        <script src="resources/js/classes/NullGUI/NullGUI.js"></script>
+
+        <script src="resources/js/classes/ControllerMovementKey.js"></script>
+
+        <script src="resources/js/classes/Node/AbstractNode.js"></script>
+        <script src="resources/js/classes/Node/PathingNode.js"></script>
+        <script src="resources/js/classes/Node/AreaNode.js"></script>
+
+        <script src="resources/js/classes/Controller/AbstractController.js"></script>
+        <script src="resources/js/classes/Controller/EntityController.js"></script>
+        <script src="resources/js/classes/Controller/FurnitureController.js"></script>
+        <script src="resources/js/classes/Controller/LightingController.js"></script>
+        <script src="resources/js/classes/Controller/DisplayController.js"></script>
+        <script src="resources/js/classes/Controller/DoorController.js"></script>
+        <script src="resources/js/classes/Controller/CreatureController.js"></script>
+        <script src="resources/js/classes/Controller/CharacterController.js"></script>
+        <script src="resources/js/classes/Controller/ItemController.js"></script>
+        <script src="resources/js/classes/Controller/PlantController.js"></script>
+        <script src="resources/js/classes/Controller/ProjectileController.js"></script>
+        <script src="resources/js/classes/Controller/SpellController.js"></script>
+        <script src="resources/js/classes/CompoundController/CompoundController.js"></script>
+        <script src="resources/js/classes/CompoundController/Instance/CompoundController.js"></script>
+
+        <script src="resources/js/classes/Network/NetworkController.js"></script>
+        <script src="resources/js/classes/Network/Client.js"></script>
+
+        <script src="resources/js/start.js"></script>
+    </body>
+</html>

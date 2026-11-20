@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:psde:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="utf-8" />
+  <title>CharacterController Demo</title>
+  <style>
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    #renderCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+
+    #overlay {
+      visibility: hidden;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    #overlay div {
+      width: 600px;
+      margin: 100px auto;
+      opacity: 0.9;
+      text-align: center;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="vendors/ssatguru/w3.css" media="screen" />
+  <script src="vendors/babylonjs/babylon.js"></script>
+  <script src="vendors/babylonjs/loaders/babylonjs.loaders.min.js"></script>
+  <script src="vendors/babylonjs/inspector/babylon.inspector.bundle.js"></script>
+
+  <script src="vendors/ssatguru/CharacterController.js"></script>
+  <script src="vendors/ssatguru/testCommandControl.js"></script>
+
+</head>
+
+<body>
+  <canvas id="renderCanvas" tabindex="-1"></canvas>
+
+  <div id="controls" style="opacity: 0.9;" class="w3-round w3-card-4 w3-grey">
+    <ui class="w3-ul w3-left">
+      <li><button id="pl">pointer lock</button></li>
+      <li><button id="w">walk</button><button id="r">run</button></li>
+      <li><button id="wb">walkBack</button><button id="wbf">walkBackFast</button></li>
+      <li><button id="j">jump</button></li>
+      <li><button id="tl">turnLeft</button><button id="tlf">turnLeftFast</button></li>
+      <li><button id="tr">turnRight</button><button id="trf">turnRightFast</button></li>
+      <li><button id="sl">strafeLeft</button><button id="slf">strafeLeftFast</button></li>
+      <li><button id="sr">strafeRight</button><button id="srf">strafeRightFast</button></li>
+      <li>
+        <input type="radio" name="mode" class="w3-radio" id="td" /> top down
+        <br />
+        <input type="radio" checked name="mode" class="w3-radio w3-orange" id="tp" /> third person
+        <input type="checkbox" id="toff" class="w3-check" />turning off
+      </li>
+      </li>
+      <li><input type="checkbox" id="kb" checked class="w3-check" />enable keyboard</li>
+      <li><button id="help">help</button></li>
+    </ui>
+  </div>
+
+  <div id="overlay">
+    <div class="w3-card-4 w3-round w3-grey w3-padding">
+      <h3>Demo of CharacterController for Babylonjs</h3>
+      <p>
+        For more information and source code, head on over to <br />
+        <a href="https://ssatguru.github.io/BabylonJS-CharacterController/" target="link"> https://ssatguru.github.io/BabylonJS-CharacterController/</a>
+      </p>
+      <button id="closehelp">close</button>
+    </div>
+  </div>
+</body>
+
+</html>

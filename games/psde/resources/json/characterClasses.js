@@ -1,0 +1,2 @@
+new ClasslessClass();
+new SorcererClass();

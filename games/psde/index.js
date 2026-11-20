@@ -1,0 +1,1 @@
+let gameOptions={useNative:!0,debugMode:!0,debugVerbosity:7,rootDirectory:"/home/www/psde.equus.et/html/"};_native.whenGraphicsReady().then(function(){typeof Worker=="function"?BABYLON.Tools.Log("WebWorkers implemented."):BABYLON.Tools.Warn("WebWorkers not implemented."),Game.initialize(gameOptions)});

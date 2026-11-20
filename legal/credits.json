@@ -1781,5 +1781,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Music by Pascal Belisle | README.md: UI pack by [Kenney Vleugels](https://www.kenney.nl/)"
+  },
+  {
+    "key": "psde",
+    "size": 146251,
+    "repo": "Armasyll/psde",
+    "id": 124,
+    "slug": "psde",
+    "title": "Psde",
+    "developer": "Armasyll",
+    "license": "Apache-2.0",
+    "source": "https://github.com/Armasyll/psde",
+    "commit": "7181e5d2103f6d2aeef91d1f63c1344f50872eb1",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
   }
 ]
