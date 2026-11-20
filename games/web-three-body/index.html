@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:web-three-body:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#000000">
+    <title>三体文明模拟器</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <!-- 初始加载动画 -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <img src="./3body.webp" alt="三体文明模拟器" class="loading-logo">
+            <div class="loading-progress-container">
+                <div id="loading-progress-bar"></div>
+            </div>
+            <div class="loading-text">
+                <p><strong>给岁月以文明，而不是给文明以岁月</strong></p>
+                <p>Brought to you by Evanstellun, wait a second</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="container">
+        <!-- 引用文字显示区域 -->
+        <div id="quotes-container">
+            <div id="quote"></div>
+        </div>
+
+        <!-- 模拟画布容器 -->
+        <div id="simulation-container">
+            <canvas id="simulationCanvas"></canvas>
+        </div>
+
+        <!-- 设置按钮 - 完全独立于操作说明面板 -->
+        <button id="toggle-controls" 
+            style="left: 10px; top: 10px; position: fixed; z-index: 1000; background: rgba(0, 0, 0, 0.8); border: 1px solid rgba(0, 204, 255, 0.3); border-radius: 50%; color: #00ccff; font-size: 18px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(0, 204, 255, 0.2); backdrop-filter: blur(10px);"
+            title="控制面板">⚙️</button>
+
+        <!-- 操作说明按钮 - 与设置按钮对称 -->
+        <button id="toggle-info" 
+            style="right: 10px; top: 10px; position: fixed; z-index: 1000; background: rgba(0, 0, 0, 0.8); border: 1px solid rgba(0, 204, 255, 0.3); border-radius: 50%; color: #00ccff; font-size: 18px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(0, 204, 255, 0.2); backdrop-filter: blur(10px);"
+            title="操作说明">📋</button>
+
+        <!-- 操作说明与基础信息面板 -->
+        <div id="info" class="info-panel" style="display:block !important;">
+            <div id="info-header">
+            </div>
+            <div id="info-content" class="info-content">
+                <h4>操作说明</h4>
+                <p>单指拖拽: 旋转视角</p>
+                <p>双指缩放: 缩放</p>
+                <p>双击天体: 聚焦到该天体</p>
+                <p>单击天体: 查看天体信息</p>
+                <div id="body-count">天体数量: 4</div>
+                <div id="time-info">时间: 0.00</div>
+                <div id="temperature-info">行星P表面温度: -- °C</div>
+            </div>
+        </div>
+
+        <!-- 天体详情信息面板 -->
+        <div id="body-info">
+            <h3>天体信息 <button id="toggle-body-info">−</button></h3>
+            <div id="body-info-content">
+                <p>名称: <span id="body-name"></span></p>
+                <p>质量: <span id="body-mass"></span></p>
+                <p>速度: <span id="body-velocity"></span></p>
+                <button id="focus-body">聚焦</button>
+            </div>
+        </div>
+
+        <!-- 碰撞与温度提示消息 -->
+        <div id="collision-message"></div>
+        <div id="temperature-message"></div>
+
+        <!-- 控制面板 -->
+        <div id="controls-container">
+            <div id="controls-header">
+                <h3>控制面板</h3>
+            </div>
+
+            <div id="controls-content">
+                <div class="main-buttons">
+                    <button id="randomizeBtn">重开一局</button>
+                    <button id="updateBtn">重新模拟</button>
+                    <button id="first-person-btn">第一视角</button>
+                    <button id="show-history-btn">文明历程</button>
+                    <button id="exportBtn">导出</button>
+                    <button id="importBtn">导入</button>
+                    <input type="file" id="fileInput" accept=".json">
+                </div>
+            </div>
+
+            <!-- 模拟速度控制滑块 -->
+            <div id="speed-container">
+                <label>模拟速度:</label>
+                <div class="speed-control-wrapper">
+                    <div class="speed-scale">
+                        <span class="speed-scale-min">0.1x</span>
+                        <span class="speed-scale-mid">100x</span>
+                        <span class="speed-scale-max">300x</span>
+                    </div>
+                    <input type="range" id="speed-control" min="0" max="100" value="30">
+                </div>
+                <span id="speed-value">30.0x</span>
+            </div>
+
+            <!-- 版权信息 -->
+            <div id="copyright-info">
+                Designed & built by <a href="https://github.com/evanstellun" target="_blank" rel="noopener noreferrer">Evanstellun</a>，All Rights Reserved.<br/>Open Source under <a href="https://github.com/evanstellun/web-three-body/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Apache-2.0 License</a> (v1.12.2+)
+            </div>
+        </div>
+
+        <!-- 文明历史记录弹窗 -->
+        <div id="civilization-history-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>三体文明历程</h2>
+                <div class="modal-body">
+                    <table id="civilization-history-table">
+                        <thead>
+                            <tr>
+                                <th>文明编号</th>
+                                <th>文明结局</th>
+                                <th>存在时间</th>
+                                <th>文明发展状态</th>
+                            </tr>
+                        </thead>
+                        <tbody id="civilization-history-body">
+                            <!-- 数据将通过JavaScript填充 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="clear-history-btn">清除文明历史记录</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/4.2.0/babylon.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

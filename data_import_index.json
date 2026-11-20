@@ -1751,5 +1751,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=Shuki Yamamoto"
+  },
+  {
+    "key": "webthreebody",
+    "size": 1052,
+    "repo": "evanstellun/web-three-body",
+    "id": 122,
+    "slug": "web-three-body",
+    "title": "Web Three Body",
+    "developer": "evanstellun",
+    "license": "Apache-2.0",
+    "source": "https://github.com/evanstellun/web-three-body",
+    "commit": "b0b0f5a50201b295b965e707b3ce3ca0b4138f07",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README_EN.md: Due to instances of misuse, versions 1.12.2 and later of this project will transition from the MIT License to the Apache-2.0 License. Usage  | LICENSE: attribution notices from the Source form of the Work,"
   }
 ]

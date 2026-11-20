@@ -2376,5 +2376,32 @@
       "type": "web",
       "category": "bartender-game"
     }
+  },
+  {
+    "id": 122,
+    "imported_at": "2026-11-20T19:32:16Z",
+    "release_year": "2026",
+    "category_tags": [
+      "css3",
+      "html-css-javascript",
+      "html5"
+    ],
+    "main_scene": {
+      "title_ar": "Web Three Body",
+      "title_en": "Web Three Body",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/web-three-body/_cover.webp"
+    },
+    "details_scene": {
+      "description": "基于web的在线三体文明模拟器",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/web-three-body/",
+      "developer": "evanstellun",
+      "license": "Apache-2.0",
+      "source_url": "https://github.com/evanstellun/web-three-body",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "css3"
+    }
   }
 ]

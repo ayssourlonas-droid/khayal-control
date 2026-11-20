@@ -1,0 +1,13 @@
+Source: https://github.com/evanstellun/web-three-body
+Commit: b0b0f5a50201b295b965e707b3ce3ca0b4138f07
+License: Apache-2.0
+Imported: 2026-11-20T19:27:41.823036+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 4, "تحسين وسائط صور": 1, "تنظيف الكود": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- README_EN.md: Due to instances of misuse, versions 1.12.2 and later of this project will transition from the MIT License to the Apache-2.0 License. Usage 
+- LICENSE: attribution notices from the Source form of the Work,
+- LICENSE: include a readable copy of the attribution notices contained
+- LICENSE: do not modify the License. You may add Your own attribution
+- LICENSE: that such additional attribution notices cannot be construed
+- images: 1, audio: 0, tagged audio: 0
