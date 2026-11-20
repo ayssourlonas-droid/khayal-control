@@ -1600,5 +1600,14 @@
     "date": "2026-11-20",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44814031039"
+  },
+  {
+    "url": "https://github.com/Ido-Barnea/Chess-But-Better",
+    "repo": "Ido-Barnea/Chess-But-Better",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (اعتمادات خادم: express؛ server.js) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "Apache-2.0",
+    "date": "2026-11-20",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44814931128"
   }
 ]
