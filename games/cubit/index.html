@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:cubit:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cubit · A puzzle cube of arrows for Android</title>
+<meta name="description" content="Tap an arrow and it slides off the cube, unless another arrow is in its way. Dig out the pink one. A free Android puzzle game with no ads.">
+<meta property="og:title" content="Cubit · Free the pink arrow">
+<meta property="og:description" content="A puzzle cube covered in winding arrows. Dig out the pink one. Free on Android, with no ads.">
+<meta property="og:image" content="https://taynotfound.github.io/cubit/img/social.png">
+<meta property="og:url" content="https://taynotfound.github.io/cubit/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0E1B3D">
+<link rel="icon" href="img/favicon.png">
+<link rel="canonical" href="https://taynotfound.github.io/cubit/">
+
+
+<link rel="stylesheet" href="_gfonts/fonts.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["VideoGame", "MobileApplication"],
+  "name": "Cubit",
+  "description": "A puzzle cube covered in winding arrows. Tap one and it slides off, unless another arrow is in its way. Free the pink one.",
+  "url": "https://taynotfound.github.io/cubit/",
+  "image": "https://taynotfound.github.io/cubit/img/social.png",
+  "screenshot": "https://taynotfound.github.io/cubit/img/game.webp",
+  "applicationCategory": "GameApplication",
+  "genre": "Puzzle",
+  "operatingSystem": "Android 7.0 or newer",
+  "gamePlatform": "Android",
+  "softwareVersion": "1.4.1",
+  "downloadUrl": "https://github.com/taynotfound/cubit/releases/latest/download/Cubit.apk",
+  "license": "https://github.com/taynotfound/cubit/blob/main/LICENSE",
+  "author": { "@type": "Person", "name": "Tay März", "url": "https://taymaerz.de" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is Cubit really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every level, mode and powerup is in the free download. There are no ads and nothing to buy." } },
+    { "@type": "Question", "name": "Why isn't it on the Play Store?", "acceptedAnswer": { "@type": "Answer", "text": "It's a one-person project, published on GitHub instead. You download the APK and install it like any other app; updates install over the top and keep your progress." } },
+    { "@type": "Question", "name": "Can I play Cubit on an iPhone or a computer?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Today's cube plays in the browser on any phone, tablet or computer at https://taynotfound.github.io/cubit/play.html, and so do shared daily, weekly and name cubes. The full game is the Android app." } },
+    { "@type": "Question", "name": "Is the APK safe to install?", "acceptedAnswer": { "@type": "Answer", "text": "The full source is on GitHub under the MIT licence, every release is signed with the same key, and each release lists the file's SHA-256 checksum so you can check the download." } },
+    { "@type": "Question", "name": "Does it need the internet?", "acceptedAnswer": { "@type": "Answer", "text": "Only for the optional global rankings. Everything else works offline." } }
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #0E1B3D; --panel: #172A57; --tile: #0A1330; --face: #1F4FBF;
+    --text: #F4F6FB; --muted: #AEB8D0; --hair: #2B3D69; --accent: #FFC72C; --on-accent: #0E1B3D; --pink: #FF3D7F; --bad: #FF6B5E;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 400 17px/1.55 Barlow, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .label { font: 600 13px/1 "Barlow Condensed", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  h1, h2, h3 { font-family: "Barlow Condensed", sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .01em; margin: 0; line-height: 1; }
+  h2 { font-size: clamp(34px, 5vw, 52px); }
+  h3 { font-size: 22px; letter-spacing: .03em; }
+  p { margin: 0; }
+  .pink { color: var(--pink); }
+
+  nav { display: flex; align-items: center; gap: 12px; padding: 18px 0; }
+  nav .mark { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 26px/1 "Barlow Condensed"; text-transform: uppercase; }
+  nav .mark img { width: 34px; height: 34px; }
+  nav .links { margin-left: auto; display: flex; gap: 22px; align-items: center; }
+  nav .links a { text-decoration: none; font: 600 15px/1 "Barlow Condensed"; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  nav .links a:hover { color: var(--text); }
+  nav .links a.get { color: var(--on-accent); background: var(--accent); padding: 10px 14px; border-radius: 6px; }
+  nav .links a.playlink { color: var(--text); border: 1px solid var(--pink); padding: 9px 13px; border-radius: 6px; }
+  .btn.play { background: transparent; color: var(--text); border: 2px solid var(--pink); font-size: 18px; letter-spacing: .05em; }
+  .btn.play svg { color: var(--pink); width: 20px; height: 20px; }
+  .btn.play.lead { background: var(--pink); color: #fff; border-color: var(--pink); font-size: inherit; }
+  .btn.play.lead svg { color: #fff; }
+  /* Today's cube: a drawing of the day's cube that turns into the real game (an iframe of play.html) on a click. */
+  .trybox { position: relative; width: 100%; max-width: 520px; margin: 0 auto; aspect-ratio: 1; border-radius: 12px; overflow: hidden;
+            background: radial-gradient(circle at 50% 55%, rgba(31, 79, 191, .35), transparent 65%); }
+  .trybox canvas { display: block; width: 100%; height: 100%; }
+  .trybox .go { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); white-space: nowrap; box-shadow: 0 8px 30px rgba(0, 0, 0, .35); }
+  .trybox iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .trybox.playing { aspect-ratio: auto; height: min(720px, 86vh); max-width: none; background: var(--bg); border: 1px solid var(--hair); }
+  .todaystats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+  .todaystats span { background: var(--tile); border: 1px solid var(--hair); border-radius: 6px; padding: 10px 14px; font: 600 15px/1 "Barlow Condensed"; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .todaystats b { color: var(--text); font-size: 22px; margin-right: 6px; }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 28px 0 72px; }
+  .board { display: flex; gap: 6px; margin-bottom: 26px; }
+  .cell { width: clamp(46px, 6.4vw, 70px); height: clamp(62px, 8.8vw, 94px); background: var(--tile); border-radius: 6px; position: relative;
+          display: grid; place-items: center; font: 700 clamp(40px, 6vw, 68px)/1 "Barlow Condensed"; overflow: hidden; }
+  .cell::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--bg); opacity: .7; }
+  .cell.flip { animation: flip .09s linear; }
+  @keyframes flip { 50% { transform: scaleY(.15); } }
+  .headline { font: 700 clamp(30px, 4vw, 44px)/1.05 "Barlow Condensed"; text-transform: uppercase; }
+  .sub { font-size: clamp(18px, 2vw, 21px); color: var(--muted); margin-top: 16px; max-width: 34ch; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .btn { display: inline-flex; align-items: center; gap: 14px; min-height: 60px; padding: 0 22px; border-radius: 6px; text-decoration: none; cursor: pointer; border: 0;
+         font: 700 22px/1 "Barlow Condensed"; text-transform: uppercase; letter-spacing: .02em; transition: transform .12s; }
+  .btn:active { transform: scale(.97); }
+  .btn.primary { background: var(--accent); color: var(--on-accent); }
+  .btn.secondary { background: var(--panel); color: var(--text); border: 1px solid var(--hair); font-size: 18px; letter-spacing: .05em; }
+  .btn svg { width: 24px; height: 24px; }
+  .fine { margin-top: 14px; font-size: 14px; color: var(--muted); }
+  .ver { color: var(--text); text-decoration: none; background: var(--panel); border: 1px solid var(--hair); border-radius: 4px; padding: 2px 7px; white-space: nowrap; }
+
+  .phones { position: relative; height: 560px; }
+  .phones .phone { position: absolute; width: 250px; }
+  .phones .a { left: 4%; top: 0; transform: rotate(-4deg); }
+  .phones .b { right: 4%; top: 50px; transform: rotate(5deg); }
+
+  section { padding: 80px 0; border-top: 1px solid var(--hair); }
+  .lede { color: var(--muted); font-size: 19px; max-width: 60ch; margin-top: 16px; }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .phone { width: 260px; border-radius: 28px; border: 6px solid #050b1d; box-shadow: 0 30px 60px rgba(0,0,0,.45); background: #050b1d; overflow: hidden; }
+  .phone img { display: block; width: 100%; }
+  .reels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+  .reels figure { margin: 0; }
+  .reels .phone { width: 100%; max-width: 250px; margin: 0 auto; }
+  .reels video { display: block; width: 100%; aspect-ratio: 9 / 16; background: #0E1B3D; }
+  .reels figcaption { margin-top: 12px; font: 600 15px/1.2 "Barlow Condensed", sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  @media (max-width: 860px) {
+    /* A row you swipe through on a phone, one reel at a time. */
+    .reels { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; margin: 0 -20px; padding: 0 20px 8px; scrollbar-width: none; }
+    .reels figure { flex: 0 0 70%; scroll-snap-align: center; }
+  }
+  .pair { display: flex; justify-content: center; gap: 22px; }
+  .pair .phone:first-child { transform: rotate(-3deg) translateY(16px); }
+  .pair .phone:last-child { transform: rotate(3deg); }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .step { background: var(--panel); border-radius: 6px; padding: 22px; }
+  .step .num { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 6px; background: var(--tile); font: 700 24px/1 "Barlow Condensed"; margin-bottom: 18px; }
+  .step p { color: var(--muted); margin-top: 10px; }
+
+  .departures { margin-top: 40px; background: var(--panel); border-radius: 10px; padding: 8px 22px; }
+  .dep { display: grid; grid-template-columns: 1.2fr 1fr 1fr .8fr; gap: 12px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--hair); }
+  .dep:last-child { border-bottom: 0; }
+  .dep.head { padding: 14px 0 10px; }
+  .dep .name { font: 700 24px/1 "Barlow Condensed"; text-transform: uppercase; }
+  .dep .name small { display: block; font: 400 14px/1.3 Barlow; text-transform: none; color: var(--muted); margin-top: 4px; }
+  .dep .tiles { font: 700 20px/1 "Barlow Condensed"; display: flex; gap: 3px; }
+  .dep .tiles span { background: var(--tile); border-radius: 4px; padding: 6px 7px; min-width: 24px; text-align: center; }
+  .dep.clean .name { color: var(--accent); }
+
+  .ticks { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 12px; }
+  .ticks li { display: flex; gap: 12px; color: var(--muted); }
+  .ticks li::before { content: ""; flex: none; width: 12px; height: 12px; margin-top: 7px; border-radius: 3px; background: var(--accent); }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 32px; margin-top: 44px; }
+  .feat svg { width: 28px; height: 28px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .feat h3 { margin-top: 12px; }
+  .feat p { color: var(--muted); margin-top: 8px; font-size: 16px; }
+
+  .gallery { display: flex; gap: 18px; overflow-x: auto; padding: 36px 0 10px; scroll-snap-type: x mandatory; }
+  .gallery figure { margin: 0; flex: none; width: 210px; scroll-snap-align: start; }
+  .gallery img { width: 100%; border-radius: 18px; border: 5px solid #050b1d; display: block; }
+  .gallery figcaption { margin-top: 10px; font: 600 14px/1.2 "Barlow Condensed"; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+  .install { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; counter-reset: s; }
+  .install li { list-style: none; background: var(--panel); border-radius: 6px; padding: 20px; color: var(--muted); }
+  .install li::before { counter-increment: s; content: counter(s); display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 6px; background: var(--accent); color: var(--on-accent);
+                        font: 700 20px/1 "Barlow Condensed"; margin-bottom: 14px; }
+  .install b { color: var(--text); font-weight: 500; }
+  .trust { margin-top: 18px; color: var(--muted); font-size: 15px; }
+  .trust code { background: var(--tile); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
+  .faq { margin-top: 32px; display: grid; gap: 10px; max-width: 780px; }
+  .faq details { background: var(--panel); border-radius: 6px; padding: 0 20px; }
+  .faq summary { cursor: pointer; list-style: none; padding: 18px 0; font: 700 20px/1.2 "Barlow Condensed"; text-transform: uppercase; letter-spacing: .02em; display: flex; justify-content: space-between; gap: 12px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--accent); }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { color: var(--muted); padding-bottom: 18px; }
+
+  .newpill { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 6px 12px 6px 6px; border-radius: 6px; background: var(--panel);
+             border: 1px solid var(--hair); text-decoration: none; font: 600 15px/1.2 "Barlow Condensed"; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+  .newpill b { background: var(--pink); color: #fff; border-radius: 4px; padding: 4px 7px; font-weight: 700; }
+  .newpill span { color: var(--text); }
+  .news { margin-top: 30px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 32px; list-style: none; padding: 0; }
+  .news li { display: flex; gap: 12px; color: var(--muted); }
+  .news li::before { content: ""; flex: none; width: 12px; height: 12px; margin-top: 7px; border-radius: 3px; background: var(--pink); }
+  .news li b { color: var(--text); font-weight: 500; }
+  .meter { height: 12px; border-radius: 6px; background: var(--tile); overflow: hidden; margin-top: 28px; }
+  .meter span { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 6px; transition: width .6s; }
+  .wstats { margin-top: 12px; color: var(--muted); }
+  .wstats b { color: var(--text); font: 700 22px/1 "Barlow Condensed"; }
+  .worldcube { display: block; width: 100%; max-width: 440px; aspect-ratio: 1; margin: 0 auto; }
+  .final { text-align: center; }
+  .final .cta { justify-content: center; }
+  .support { max-width: 620px; margin: 40px auto 18px; padding: 26px 22px; border: 1px solid var(--hair); border-radius: 10px; background: var(--panel); }
+  .support h3 { margin: 0; font: 700 28px/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+  .support p { color: var(--muted); margin: 10px auto 0; max-width: 52ch; }
+  .support .cta { margin-top: 20px; }
+  .btn.kofi { background: #FF5E5B; color: #fff; font-size: 18px; letter-spacing: .04em; }
+  .btn.sponsor { background: transparent; color: var(--text); border: 1px solid #DB61A2; font-size: 18px; letter-spacing: .04em; }
+  .btn.sponsor svg { color: #DB61A2; }
+  .final .lede { margin: 16px auto 0; }
+  footer { border-top: 1px solid var(--hair); padding: 30px 0 40px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 860px) {
+    nav .links a.opt { display: none; }
+    .hero, .split { grid-template-columns: 1fr; }
+    .hero { padding-top: 6px; gap: 34px; }
+    .steps, .grid, .install, .news { grid-template-columns: 1fr; }
+    .dep { grid-template-columns: 1fr 1fr 1fr; row-gap: 8px; }
+    .dep.head { display: none; }
+    .dep .name { grid-column: 1 / -1; }
+    .pair .phone { width: 46%; }
+    .phones { height: 470px; max-width: 420px; margin: 0 auto; width: 100%; }
+    .phones .phone { width: 210px; }
+    section { padding: 60px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cell.flip { animation: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="mark" href="#"><img src="img/icon.svg" alt="">Cubit</a>
+    <div class="links">
+      <a class="opt" href="#modes">Modes</a>
+      <a class="opt" href="#faq">FAQ</a>
+      <a class="opt" href="https://github.com/taynotfound/cubit">GitHub</a>
+      <a class="playlink" href="play.html">Play</a>
+      <a class="opt" href="#support">Support</a>
+      <a class="get" href="#get">Get it</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <a class="newpill" href="#new"><b>New</b><span data-newline>Friends</span> · <span data-newver>1.6.0</span></a>
+      <h1 class="board" id="board" aria-label="Cubit"></h1>
+      <p class="headline">Free the <span class="pink">pink</span> arrow.</p>
+      <p class="sub">Cubit is a cube covered in winding arrows. Tap one and it slides off the cube, unless another arrow is in its way. Dig the pink one out before your lives run out.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/taynotfound/cubit/releases/latest/download/Cubit.apk">Get Cubit for Android
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg></a>
+        <a class="btn secondary" href="https://f-droid.org/en/packages/de.taymaerz.cubit/">Get it on F-Droid
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></a>
+        <a class="btn play" href="play.html" data-playlead>Play now in your browser
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg></a>
+      </div>
+      <p class="fine" style="margin-top:12px"><a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fapp%2F%257B%2522id%2522%253A%2522de.taymaerz.cubit%2522%252C%2522url%2522%253A%2522https%253A%252F%252Fgithub.com%252Ftaynotfound%252Fcubit%2522%252C%2522author%2522%253A%2522taynotfound%2522%252C%2522name%2522%253A%2522Cubit%2522%252C%2522additionalSettings%2522%253A%2522%257B%255C%2522apkFilterRegEx%255C%2522%253A%2520%255C%2522%255ECubit%255C%255C%255C%255C.apk%2524%255C%2522%257D%2522%257D">Get it on Obtainium</a>, or get it from <a href="https://f-droid.org/en/packages/de.taymaerz.cubit/">F-Droid</a>: both keep it updated for you</p>
+      <p class="fine"><a class="ver" href="https://github.com/taynotfound/cubit/releases/latest">Version <span data-ver>1.6.0</span><span data-date></span></a> · free with no ads · under 1 MB · Android 7.0 or newer · <a href="#install">how to install</a><span data-players hidden></span></p>
+      <p class="fine" data-world hidden></p>
+    </div>
+
+    <div class="phones">
+      <div class="phone a"><img src="img/home.webp" alt="Cubit home screen showing level 1, a blue cube covered in white arrows"></div>
+      <div class="phone b"><img src="img/game-clean.webp" alt="Clean mode: a see-through glass cube of arrows with a single X to leave"></div>
+    </div>
+  </header>
+</div>
+
+<section id="today">
+  <div class="wrap split">
+    <div>
+      <span class="label">No download, no sign-up</span>
+      <h2 style="margin-top:10px">Play today's cube <span class="pink">right here</span></h2>
+      <p class="lede">Every day there's one new cube, the same for everyone. Free the pink arrow in as few taps as you can, then share your result and see who beats it.</p>
+      <div class="todaystats" aria-label="Today's cube">
+        <span><b data-t-num>#</b>daily cube</span><span><b data-t-par>–</b>par</span><span><b data-t-arrows>–</b>arrows</span>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="play.html" data-t-play>Play today's cube
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg></a>
+      </div>
+      <p class="fine" style="margin-top:14px">Works on any phone, tablet or computer, iPhone included. The Android app adds levels that grow to 18×18, the weekly challenge, Endless, rankings and the World Cube.</p>
+    </div>
+    <div class="trybox" data-try>
+      <canvas data-t-cube role="img" aria-label="Today's cube: a blue cube covered in white arrows, with the pink one on the front face"></canvas>
+      <a class="btn primary go" href="play.html" data-t-go>Play it here
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section id="new">
+  <div class="wrap">
+    <span class="label">What's new · version <span data-newver>1.6.0</span><span data-newdate></span></span>
+    <h2 style="margin-top:10px">New in Cubit <span data-newver>1.6.0</span></h2>
+    <!-- Filled from the latest GitHub release's notes when the page loads, so it always shows the newest version. This list is the fallback. -->
+    <ul class="news" id="news">
+      <li><span><b>Friends:</b> swap 8-character friend codes and see each other's level, XP and best run side by side.</span></li>
+      <li><span><b>Challenge a friend:</b> share a run as a link. Your friend gets the same cube with your run as a ghost to race.</span></li>
+      <li><span><b>My pack:</b> save cubes you've won and share them as a pack. Shared packs land in More → Puzzle packs.</span></li>
+      <li><span><b>Race your best:</b> replay a cube you've won and your best run comes along as a ghost.</span></li>
+      <li><span><b>Replay controls:</b> pause, 2× speed and a scrub bar.</span></li>
+      <li><span><b>Stats:</b> wins, losses and times per mode, and a calendar of daily solves.</span></li>
+      <li><span><b>Streak freezes:</b> finish a weekly challenge to earn one. It covers a missed daily cube.</span></li>
+      <li><span><b>High contrast:</b> a black-and-white colourway with line colours that stay distinct for colour-blind players.</span></li>
+    </ul>
+    <p class="fine" style="margin-top:22px"><a data-newlink href="https://github.com/taynotfound/cubit/releases/tag/v1.6.0">All changes in this version</a> · <a href="https://github.com/taynotfound/cubit/blob/main/CHANGELOG.md">full changelog</a></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="text-align:center">
+    <span class="label">Real gameplay, no edits to the cube</span>
+    <h2 style="margin:10px 0 28px">See it move</h2>
+    <div class="reels">
+      <figure><div class="phone"><video data-reel src="img/reel-hook.mp4" poster="img/reel-hook.webp" muted loop playsinline preload="none"
+        aria-label="A 14 by 14 cube: arrows slide off, combos count up, and the pink arrow is freed"></video></div><figcaption>Free the pink arrow</figcaption></figure>
+      <figure><div class="phone"><video data-reel src="img/reel-bombs.mp4" poster="img/reel-bombs.webp" muted loop playsinline preload="none"
+        aria-label="Bomb arrows clearing every arrow touching them, setting off chain reactions"></video></div><figcaption>Bombs and chain reactions</figcaption></figure>
+      <figure><div class="phone"><video data-reel src="img/reel-clean.mp4" poster="img/reel-clean.webp" muted loop playsinline preload="none"
+        aria-label="Clean mode: a see-through cube with no timer and no lives"></video></div><figcaption>Clean mode</figcaption></figure>
+      <figure><div class="phone"><video data-reel src="img/reel-endless.mp4" poster="img/reel-endless.webp" muted loop playsinline preload="none"
+        aria-label="Endless: cube after cube, each a little bigger, lives carrying over"></video></div><figcaption>Endless</figcaption></figure>
+    </div>
+    <p class="lede" style="margin:28px auto 0"><a href="play.html">Or skip the videos: play today's cube in your browser →</a></p>
+  </div>
+</section>
+
+<!-- Shown only once the leaderboard server answers; the features list below still covers the World Cube without it. -->
+<section id="world" hidden>
+  <div class="wrap split">
+    <div>
+      <span class="label">Live, right now</span>
+      <h2 style="margin-top:10px">World Cube <span class="pink" data-w-id></span></h2>
+      <p class="lede">One giant cube every Cubit player clears together. Each arrow anyone clears is gone for everyone, and whoever frees the pink one wins it and starts the next.</p>
+      <div class="meter" role="progressbar" aria-label="World Cube cleared" aria-valuemin="0" aria-valuemax="100" data-w-meter><span data-w-bar></span></div>
+      <p class="wstats"><b data-w-pct></b> cleared · <span data-w-left></span> · <span data-w-players></span></p>
+      <p class="fine" data-w-last hidden></p>
+      <div class="cta"><a class="btn primary" href="open.html?world">Help clear it</a></div>
+    </div>
+    <canvas class="worldcube" data-w-cube role="img" aria-label="The World Cube as it stands: the arrows still on it, with the pink one somewhere inside"></canvas>
+  </div>
+</section>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <span class="label">On your phone</span>
+      <h2 style="margin-top:10px">Six faces, and they wrap</h2>
+      <p class="lede">On the cube, an arrow can run over the edge onto the next face, so the arrow blocking you might start round the back. Drag to turn the cube, pinch to zoom, and plan a few moves ahead.</p>
+      <ul class="ticks">
+        <li>Levels start at 10×10 per face with about a hundred arrows and grow to 18×18.</li>
+        <li>Each level buries the pink arrow a little deeper.</li>
+        <li>Leave mid-level and it's saved. Pick it up from the home screen.</li>
+      </ul>
+    </div>
+    <div class="pair">
+      <div class="phone"><img src="img/game.webp" alt="A level in progress with lives, a timer and 104 arrows left"></div>
+      <div class="phone"><img src="img/more.webp" alt="The More sheet with the daily cube, free roam and level replays"></div>
+    </div>
+  </div>
+</section>
+
+<section id="modes">
+  <div class="wrap">
+    <span class="label">Departures</span>
+    <h2 style="margin-top:10px">Pick how hard</h2>
+    <p class="lede">Bumping into an arrow costs a life, and the timer gives you a few seconds per arrow. Switch modes any time. Harder modes earn more XP.</p>
+    <div class="departures" role="table" aria-label="Game modes">
+      <div class="dep head label" role="row"><span>Mode</span><span>Lives</span><span>Timer</span><span>XP</span></div>
+      <div class="dep" role="row"><span class="name">Zen<small>Take back moves, take your time</small></span><span class="tiles"><span>∞</span></span><span class="tiles"><span>O</span><span>F</span><span>F</span></span><span class="tiles"><span>×</span><span>.5</span></span></div>
+      <div class="dep" role="row"><span class="name">Easy</span><span class="tiles"><span>0</span><span>5</span></span><span class="tiles"><span>O</span><span>F</span><span>F</span></span><span class="tiles"><span>×</span><span>1</span></span></div>
+      <div class="dep" role="row"><span class="name">Normal</span><span class="tiles"><span>0</span><span>3</span></span><span class="tiles"><span>4</span><span>S</span></span><span class="tiles"><span>×</span><span>1.3</span></span></div>
+      <div class="dep" role="row"><span class="name">Hard</span><span class="tiles"><span>0</span><span>3</span></span><span class="tiles"><span>2</span><span>S</span></span><span class="tiles"><span>×</span><span>1.7</span></span></div>
+      <div class="dep" role="row"><span class="name">Expert<small>One bump and it's over</small></span><span class="tiles"><span>0</span><span>1</span></span><span class="tiles"><span>1</span><span>.</span><span>2</span><span>S</span></span><span class="tiles"><span>×</span><span>2.4</span></span></div>
+      <div class="dep" role="row"><span class="name">Nightmare<small>Arrows lap the whole cube before they leave</small></span><span class="tiles"><span>0</span><span>1</span></span><span class="tiles"><span>2</span><span>.</span><span>5</span><span>S</span></span><span class="tiles"><span>×</span><span>3.5</span></span></div>
+      <div class="dep clean" role="row"><span class="name">Clean<small>Just the cube</small></span><span class="tiles"><span>∞</span></span><span class="tiles"><span>O</span><span>F</span><span>F</span></span><span class="tiles"><span>×</span><span>.5</span></span></div>
+    </div>
+    <p class="fine">Timer seconds are per arrow, plus ten. Want more? Turn on Full clear: every arrow has to go, and the pink one leaves last.</p>
+  </div>
+</section>
+
+<section id="clean">
+  <div class="wrap split">
+    <div>
+      <span class="label">One tap from the home screen</span>
+      <h2 style="margin-top:10px">Clean mode</h2>
+      <p class="lede">The whole screen is the cube. It turns to glass in your colours, so you can see the back faces through the front, with the far arrows fading.</p>
+      <ul class="ticks">
+        <li>Unlimited lives and all the time you want. An X in the corner is the only button.</li>
+        <li>Tap with two fingers to take back a move.</li>
+        <li>Clean runs get their own mark on the global board.</li>
+      </ul>
+    </div>
+    <div class="pair">
+      <div class="phone"><img src="img/home-clean.webp" alt="Home screen with Clean switched on, showing the glass cube"></div>
+      <div class="phone"><img src="img/game-clean.webp" alt="Clean mode in play: a see-through cube and a single X"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="label">Everything else</span>
+    <h2 style="margin-top:10px">Out of the way until you want it</h2>
+    <div class="grid">
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M12 2.5l8.5 4.8v9.4L12 21.5l-8.5-4.8V7.3z"/><path d="M3.5 7.3L12 12l8.5-4.7M12 12v9.5"/></svg><h3>The World Cube</h3><p>One giant cube every player clears together, live. Each arrow you clear is gone for everyone, and whoever frees the pink one wins it and starts the next.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M15 6l2.5-3M18 4.5l2 .5"/></svg><h3>Bombs and wormholes</h3><p>Bombs clear every arrow touching them and set off chain reactions. Two-way arrows leave either end, and wormholes send an arrow straight through the cube.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4"/></svg><h3>Endless and Twist</h3><p>Endless runs cube after cube, each a little bigger, with your lives carrying over. Twist mode lets you turn every arrowhead on a face to open a new way out.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M3 21v-7h6M9 21V8h6v13M15 12h6v9M2 21h20"/></svg><h3>Scores you can trust</h3><p>Rankings are optional. When they're on, the server replays your taps on the same cube and works out the score itself. You can watch any run on the board play back.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.2"/><circle cx="15" cy="15" r="1.2"/><circle cx="12" cy="12" r="1.2"/></svg><h3>Daily and weekly</h3><p>A 12×12 cube every day and a 16×16 challenge every week, the same for everyone, each with its own board. Share a link and a friend gets the same cube.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M13 2.5L5 13.5h6.5l-1 8L19 10h-6.5z"/></svg><h3>Five powerups</h3><p>Scan lights up every free arrow. Shield, Freeze, Spare life and Undo save a bad moment. One of each per level, and you can switch any of them off.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.5L7 21l5-2.5 5 2.5-1.5-7.5"/></svg><h3>Badges that pay off</h3><p>Twenty-two badges, from your first win to a win on Nightmare. Six colourways open as you earn them, and a daily streak keeps you coming back, with streak freezes from the weekly challenge.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M2.5 12Q12 3 21.5 12Q12 21 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><h3>Your colours</h3><p>Thirteen colourways, including a high-contrast one that works for colour-blind players, your own arrow colour and thickness, and a stripe on the pink arrow.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="7"/><path d="M5 21c1-2 2-3 3.5-3S10 21 12 21s2-3 3.5-3 2.5 1 3.5 3"/></svg><h3>Race a ghost</h3><p>On the daily and weekly cubes you race the leader's run. Share a challenge link and a friend races yours, and any cube you've won brings back your own best.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="13" rx="2"/><path d="M8 4h11a2 2 0 0 1 2 2v11"/></svg><h3>Packs and par</h3><p>Forty picked cubes in four packs, from tiny 5×5 puzzles to 18×18 monsters, plus your own pack to share. Every cube has a par: the fewest taps that can win it.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.8"/><path d="M2 20c.5-3.5 3-5.5 6-5.5s5.5 2 6 5.5M14.5 14.6c.8-.4 1.6-.6 2.5-.6 2.5 0 4.4 1.7 5 4.5"/></svg><h3>Friends</h3><p>Swap friend codes and keep a board of just your friends: their level, XP and best run next to yours.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h3>Your stats</h3><p>Wins, losses, best and average times for every mode, a calendar of your daily solves, and replays you can pause, speed up and scrub.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><h3>Sound and touch</h3><p>Real split-flap clacks, a soft swoosh for every arrow, a quiet soundtrack, and a vibration you can feel when you bump.</p></div>
+    </div>
+    <div class="gallery">
+      <figure><img src="img/home.webp" alt="" loading="lazy"><figcaption>Home</figcaption></figure>
+      <figure><img src="img/game.webp" alt="" loading="lazy"><figcaption>A level</figcaption></figure>
+      <figure><img src="img/game-clean.webp" alt="" loading="lazy"><figcaption>Clean mode</figcaption></figure>
+      <figure><img src="img/mode.webp" alt="" loading="lazy"><figcaption>Modes</figcaption></figure>
+      <figure><img src="img/more.webp" alt="" loading="lazy"><figcaption>Daily and free roam</figcaption></figure>
+      <figure><img src="img/setup.webp" alt="" loading="lazy"><figcaption>First launch</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <span class="label">Install</span>
+    <h2 style="margin-top:10px">On your phone in a minute</h2>
+    <p class="lede">Cubit isn't on the Play Store, so you install the file yourself. Android asks once whether your browser may install apps.</p>
+    <ol class="install">
+      <li><b>Download Cubit.apk</b> on your phone with the button on this page.</li>
+      <li><b>Open it</b> from your downloads. If Android asks, allow your browser to install apps.</li>
+      <li><b>Tap Install</b>, then open Cubit. A short how-to-play cube is waiting.</li>
+    </ol>
+    <p class="trust"><b>Use F-Droid?</b> Cubit is there: <a href="https://f-droid.org/en/packages/de.taymaerz.cubit/">open its F-Droid page</a> or search for Cubit in the F-Droid app, and updates arrive with the rest of your apps.</p>
+    <p class="trust"><b>Automatic updates:</b> add Cubit to <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fapp%2F%257B%2522id%2522%253A%2522de.taymaerz.cubit%2522%252C%2522url%2522%253A%2522https%253A%252F%252Fgithub.com%252Ftaynotfound%252Fcubit%2522%252C%2522author%2522%253A%2522taynotfound%2522%252C%2522name%2522%253A%2522Cubit%2522%252C%2522additionalSettings%2522%253A%2522%257B%255C%2522apkFilterRegEx%255C%2522%253A%2520%255C%2522%255ECubit%255C%255C%255C%255C.apk%2524%255C%2522%257D%2522%257D">Obtainium</a> and it installs each new version from GitHub for you. Or install it from <a href="https://f-droid.org/en/packages/de.taymaerz.cubit/">F-Droid</a>.</p>
+    <p class="trust">The source is on <a href="https://github.com/taynotfound/cubit">GitHub</a> under the MIT licence. Every release is signed with the same key and lists the file's SHA-256 checksum, so updates install over the top and keep your progress.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <span class="label">Questions</span>
+    <h2 style="margin-top:10px">Before you download</h2>
+    <div class="faq">
+      <details><summary>Is it really free?</summary><p>Yes. Every level, mode and powerup is in the free download. There are no ads and nothing to buy.</p></details>
+      <details><summary>Why isn't it on the Play Store?</summary><p>It's a one-person project, published on GitHub and <a href="https://f-droid.org/en/packages/de.taymaerz.cubit/">F-Droid</a> instead. You install the APK like any other app, and updates install over the top.</p></details>
+      <details><summary>Can I play on an iPhone or a computer?</summary><p>Yes: <a href="play.html">today's cube plays in your browser</a> on any phone, tablet or computer, and so does any daily, weekly or name cube a friend shares with you. The full game, with levels, Endless, rankings and the World Cube, is the Android app.</p></details>
+      <details><summary>Is the APK safe?</summary><p>You can read every line of the source on GitHub, each release is signed with the same key, and the release page lists the file's SHA-256 checksum so you can check what you downloaded.</p></details>
+      <details><summary>Does it need the internet?</summary><p>Only for the optional global rankings. You choose on first launch, and everything else works offline. On GrapheneOS, allow Cubit's Network permission if you want rankings.</p></details>
+      <details><summary>What does the leaderboard know about me?</summary><p>The name you pick, your XP, and your ranked runs, including the taps, so the server can check them. It stores no email or account, and the app runs no analytics.</p></details>
+      <details><summary>Do I need an account?</summary><p>No. There's nothing to sign up for. Rankings use a random code the app makes for itself, and the optional public profile hangs off your friend code: switch it on in Settings to get a page you can share, switch it off and it's gone. No email, no password.</p></details>
+      <details><summary>How hard does it get?</summary><p>The first levels ease you in. After that the cubes grow and the pink arrow sits deeper each time. On Expert, one bump ends the level.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="get">
+  <div class="wrap">
+    <h2>Level 1 is waiting</h2>
+    <p class="lede">106 arrows, three lives, and one pink arrow at the bottom of it all.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/taynotfound/cubit/releases/latest/download/Cubit.apk">Get Cubit for Android
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg></a>
+      <a class="btn secondary" href="https://f-droid.org/en/packages/de.taymaerz.cubit/">Get it on F-Droid</a>
+      <a class="btn play" href="play.html">Play in your browser
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg></a>
+    </div>
+    <div class="support" id="support">
+      <h3>Keep Cubit free</h3>
+      <p>Cubit is made by one person, with no ads and nothing to buy. If you enjoy it, a coffee or a sponsorship keeps the board and the World Cube running.</p>
+      <div class="cta">
+        <a class="btn kofi" href="https://ko-fi.com/taygotkofi">Buy a coffee on Ko-fi
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13v5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6z"/><path d="M17 9h1.5a2.5 2.5 0 0 1 0 5H17M8 3v2M12 3v2"/></svg></a>
+        <a class="btn sponsor" href="https://github.com/sponsors/taynotfound">Sponsor on GitHub
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.3-9.2C1.5 8.5 3.6 5 7 5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.5 3.5 4.3 6.8C19.5 16.4 12 21 12 21z"/></svg></a>
+      </div>
+    </div>
+    <p class="fine">Version <span data-ver>1.6.0</span> · free with no ads · Android 7.0 or newer<span data-players hidden></span> · <a href="https://github.com/taynotfound/cubit/releases/latest">what's new</a></p>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>Cubit by <a href="https://taymaerz.de">Tay März</a></span>
+    <a href="https://github.com/taynotfound/cubit">Source on GitHub</a>
+    <a rel="me" href="https://mastodon.social/@cubitgame">Mastodon</a>
+    <a href="https://github.com/taynotfound/cubit/blob/main/LICENSE">MIT licensed</a>
+    <a href="https://ko-fi.com/taygotkofi">Ko-fi</a>
+    <a href="https://github.com/sponsors/taynotfound">GitHub Sponsors</a>
+    <span>Fonts: Barlow (OFL) · Sounds: Kenney (CC0)</span>
+  </footer>
+</div>
+
+<script src="cubit-core.js"></script>
+<script>
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Split-flap text: each tile clatters through a few letters before landing.
+function flapWord(el, word, delay = 200) {
+  const abc = " ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  el.innerHTML = "";
+  [...word].forEach((ch, i) => {
+    const c = document.createElement("span"); c.className = "cell"; c.textContent = still ? ch : " "; el.appendChild(c);
+    if (still) return;
+    const target = abc.indexOf(ch); let k = Math.max(0, target - 6 - i);
+    setTimeout(function tick() {
+      c.textContent = abc[k]; c.classList.remove("flip"); void c.offsetWidth; c.classList.add("flip");
+      if (k++ < target) setTimeout(tick, 70);
+    }, delay + i * 110);
+  });
+}
+flapWord(document.getElementById("board"), "CUBIT");
+
+// The version shown on the page follows the latest GitHub release; the number in the HTML is the fallback.
+fetch("https://api.github.com/repos/taynotfound/cubit/releases/latest").then(r => r.ok ? r.json() : null).then(rel => {
+  if (!rel || !rel.tag_name) return;
+  const v = rel.tag_name.replace(/^v/, "");
+  document.querySelectorAll("[data-ver]").forEach(el => el.textContent = v);
+  const d = new Date(rel.published_at);
+  if (!isNaN(d)) document.querySelectorAll("[data-date]").forEach(el => el.textContent = " · " + d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }));
+}).catch(() => {});
+
+// The reels play only while on screen (and not at all with reduced motion, where they get controls instead).
+(() => {
+  const vids = document.querySelectorAll("video[data-reel]");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) { vids.forEach(v => v.controls = true); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold: 0.6 });
+  vids.forEach(v => io.observe(v));
+})();
+
+// The World Cube, live: the hero line, and the #world section with a drawing of the cube as it stands. Without the
+// server both stay hidden.
+// Built with cubit-core.js, the browser port of the generator that play.html uses too (tools/webcore-test.mjs keeps
+// it identical to the app and server). Geometry only: special arrows don't move arrows.
+function worldPaths(n, maxLen, seed) {
+  const p = CubitCore.generate({ n, maxLen, seed: BigInt(seed), special: false }), c = p.cube;
+  return { paths: p.paths, dirs: p.dirs, px: c.px, py: c.py, pz: c.pz, fc: c.face };
+}
+
+// Today's cube: drawn from cubit-core, with its number and par; "Play it here" swaps the drawing for the real game on
+// big screens with a mouse, and opens play.html on phones (where a game inside the page would fight with scrolling).
+(() => {
+  const C = CubitCore, day = C.utcDay(), p = C.generate(C.dailySpec(day)), num = day - C.FIRST_DAILY + 1;
+  const set = (sel, t) => document.querySelectorAll(sel).forEach(el => el.textContent = t);
+  set("[data-t-num]", "#" + num); set("[data-t-par]", C.parOf(p)); set("[data-t-arrows]", p.paths.length);
+  const cube = { paths: p.paths, dirs: p.dirs, px: p.cube.px, py: p.cube.py, pz: p.cube.pz, fc: p.cube.face };
+  const cv = document.querySelector("[data-t-cube]"), draw = () => { if (cv.isConnected) try { drawIso(cv, cube, new Set(), p.cube.n); } catch (e) {} };
+  draw(); addEventListener("resize", draw);
+  const box = document.querySelector("[data-try]");
+  document.querySelector("[data-t-go]").addEventListener("click", e => {
+    if (!matchMedia("(min-width: 900px) and (pointer: fine)").matches) return; // phones: just follow the link
+    e.preventDefault();
+    const f = document.createElement("iframe");
+    f.src = "play.html?embed&daily=" + day; f.title = "Cubit: today's cube"; f.allow = "clipboard-write; web-share";
+    box.classList.add("playing"); box.replaceChildren(f); f.focus();
+  });
+  // Off Android the app can't be installed, so playing in the browser is the main way in.
+  if (!/Android/i.test(navigator.userAgent)) {
+    document.querySelectorAll("[data-playlead]").forEach(b => { b.classList.add("lead"); b.parentNode.prepend(b); });
+    document.querySelectorAll(".hero .cta .btn.primary:not(.play)").forEach(b => { b.classList.remove("primary"); b.classList.add("secondary"); });
+  }
+})();
+
+let lastWorld = null, worldCube = null; // { id, paths, ... } for the cube drawn last, so a new one is only built when the id changes
+function drawWorld(w) {
+  if (!worldCube || worldCube.id !== w.id) worldCube = { id: w.id, ...worldPaths(w.n, w.maxLen, w.seed) };
+  drawIso(document.querySelector("[data-w-cube]"), worldCube, new Set(w.removed), w.n);
+}
+/** A cube's three top faces, isometric, with the arrows still on it ([gone] left out). The World Cube and today's cube. */
+function drawIso(cv, cube, gone, n) {
+  const css = getComputedStyle(document.documentElement), v = k => css.getPropertyValue(k).trim();
+  const { paths, dirs, px, py, pz, fc } = cube;
+  const W = cv.clientWidth * (devicePixelRatio || 1); cv.width = cv.height = W;
+  const g = cv.getContext("2d"), k = W / (4 * n) * 0.96, c = W / 2;
+  // Isometric, looking down on the +x, +y and +z faces.
+  const P = (x, y, z) => [c + (x - z) * 0.866 * k, c + ((x + z) * 0.5 - y) * k];
+  const faces = [[[n, n, n], [n, -n, n], [n, -n, -n], [n, n, -n], 0.28], [[n, n, n], [-n, n, n], [-n, n, -n], [n, n, -n], 0], [[n, n, n], [n, -n, n], [-n, -n, n], [-n, n, n], 0.45]];
+  for (const [a, b, d, e, shade] of faces) {
+    g.beginPath(); [a, b, d, e].forEach((q, i) => g[i ? "lineTo" : "moveTo"](...P(...q))); g.closePath();
+    g.fillStyle = v("--face"); g.fill(); g.fillStyle = `rgba(5,11,29,${shade})`; g.fill();
+  }
+  const seen = q => fc[q] % 2 === 0; // the three faces in view
+  const dx = [1, -1, 0, 0, 0, 0], dy = [0, 0, 1, -1, 0, 0], dz = [0, 0, 0, 0, 1, -1];
+  g.lineCap = g.lineJoin = "round"; g.lineWidth = k * 0.55;
+  // The pink one last, so nothing is drawn over it.
+  for (const a of [...paths.keys()].slice(1).concat(0)) {
+    if (gone.has(a)) continue;
+    const path = paths[a], col = a ? v("--text") : v("--pink");
+    g.strokeStyle = g.fillStyle = col; g.beginPath();
+    for (let i = 1; i < path.length; i++) {
+      if (!seen(path[i - 1]) || !seen(path[i])) continue;
+      g.moveTo(...P(px[path[i - 1]], py[path[i - 1]], pz[path[i - 1]])); g.lineTo(...P(px[path[i]], py[path[i]], pz[path[i]]));
+    }
+    g.stroke();
+    const h = path[path.length - 1], d = dirs[a];
+    if (!seen(h)) continue;
+    const [hx, hy] = P(px[h], py[h], pz[h]), [ux, uy] = [(dx[d] - dz[d]) * 0.866, (dx[d] + dz[d]) * 0.5 - dy[d]], m = Math.hypot(ux, uy) || 1;
+    const fx = ux / m * k, fy = uy / m * k;
+    g.beginPath(); g.moveTo(hx + fx * 0.9, hy + fy * 0.9); g.lineTo(hx - fy * 0.6, hy + fx * 0.6); g.lineTo(hx + fy * 0.6, hy - fx * 0.6); g.fill();
+  }
+}
+function showWorld(w) {
+  lastWorld = w;
+  const num = x => x.toLocaleString("en-GB"), cleared = w.arrows ? (w.arrows - w.left) / w.arrows : 0;
+  const players = w.players ? num(w.players) + " player" + (w.players === 1 ? "" : "s") + " on it" : "nobody on it yet";
+  const hero = document.querySelector("[data-world]"), a = document.createElement("a");
+  a.href = "open.html?world"; a.textContent = "World Cube #" + w.id;
+  hero.replaceChildren(a, " · " + num(w.left) + " of " + num(w.arrows) + " arrows left · " +
+    (w.players ? players.replace("on it", "clearing it together right now") : "one cube for every player: be the first to clear an arrow"));
+  hero.hidden = false;
+  const set = (sel, t) => document.querySelector(sel).textContent = t;
+  set("[data-w-id]", "#" + w.id); set("[data-w-pct]", Math.floor(cleared * 100) + "%");
+  set("[data-w-left]", num(w.left) + " of " + num(w.arrows) + " arrows left"); set("[data-w-players]", players);
+  document.querySelector("[data-w-bar]").style.width = cleared * 100 + "%";
+  document.querySelector("[data-w-meter]").setAttribute("aria-valuenow", Math.floor(cleared * 100));
+  const last = document.querySelector("[data-w-last]");
+  if (w.last && w.last.winner) {
+    const t = w.last.seconds, took = t >= 3600 ? Math.floor(t / 3600) + " h " + Math.floor(t % 3600 / 60) + " min" : Math.max(1, Math.round(t / 60)) + " min";
+    const who = document.createElement(w.last.code ? "a" : "b"); who.textContent = w.last.winner;
+    if (w.last.code) who.href = "u.html?c=" + encodeURIComponent(w.last.code);
+    last.replaceChildren("Cube #" + w.last.id + " went to ", who, " after " + took + ", with " + num(w.last.players) + " player" + (w.last.players === 1 ? "" : "s") + " on it.");
+    last.hidden = false;
+  }
+  document.getElementById("world").hidden = false;
+  try { drawWorld(w); } catch (e) { document.querySelector("[data-w-cube]").hidden = true; }
+}
+function loadWorld() {
+  return fetch("https://cubit-lb-api.taymaerz.de/v1/world").then(r => r.ok ? r.json() : null).then(w => { if (w && w.id) showWorld(w); }).catch(() => {});
+}
+// Refreshes every half minute while the tab is open, and redraws when the page is resized.
+loadWorld().then(() => setInterval(() => { if (!document.hidden) loadWorld(); }, 30000));
+addEventListener("resize", () => { if (lastWorld) try { drawWorld(lastWorld); } catch (e) {} });
+
+// How many people are on the board, from the leaderboard server; the page reads fine without it.
+fetch("https://cubit-lb-api.taymaerz.de/v1/stats").then(r => r.ok ? r.json() : null).then(st => {
+  if (!st || !(st.players > 0)) return;
+  document.querySelectorAll("[data-players]").forEach(el => { el.textContent = " · " + st.players.toLocaleString("en-GB") + " players on the board"; el.hidden = false; });
+}).catch(() => {});
+
+// "What's new" advertises the newest release that has headline features, so a bug-fix release doesn't hide them.
+fetch("https://api.github.com/repos/taynotfound/cubit/releases?per_page=10").then(r => r.ok ? r.json() : null).then(list => {
+  for (const rel of list || []) if (!rel.draft && !rel.prerelease && showNews(rel)) return;
+}).catch(() => {});
+
+// Fills "What's new" from one release's notes: its "- **Feature**" lines, bold kept, built with text nodes only, so
+// it needs no editing here when a new version ships.
+function showNews(rel) {
+  const lines = (rel.body || "").split(/\r?\n/).map(l => l.trim());
+  const end = lines.findIndex(l => /^SHA-256/i.test(l));
+  // Headline features are the lines that lead with **bold**; returns false when this release has none.
+  const items = (end < 0 ? lines : lines.slice(0, end)).filter(l => /^[-*] \*\*/.test(l)).map(l => l.slice(2)).slice(0, 10);
+  if (!items.length) return false;
+  const v = rel.tag_name.replace(/^v/, ""), d = new Date(rel.published_at);
+  document.querySelectorAll("[data-newver]").forEach(el => el.textContent = v);
+  document.querySelectorAll("[data-newdate]").forEach(el => el.textContent = isNaN(d) ? "" : " · " + d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }));
+  document.querySelectorAll("[data-newlink]").forEach(el => el.href = rel.html_url);
+  const ul = document.getElementById("news");
+  ul.textContent = "";
+  for (const text of items) {
+    const li = document.createElement("li"), span = document.createElement("span");
+    text.split(/\*\*(.+?)\*\*/).forEach((part, i) => {
+      if (!part) return;
+      if (i % 2) { const b = document.createElement("b"); b.textContent = part; span.appendChild(b); }
+      else span.appendChild(document.createTextNode(part.replace(/`/g, "")));
+    });
+    li.appendChild(span); ul.appendChild(li);
+  }
+  // The hero badge names the release's first headline feature.
+  const first = items.map(t => (t.match(/^\*\*(.+?)\*\*/) || [])[1]).find(Boolean);
+  if (first) document.querySelectorAll("[data-newline]").forEach(el => el.textContent = first);
+  return true;
+}
+
+</script>
+</body>
+</html>

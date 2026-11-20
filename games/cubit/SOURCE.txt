@@ -1,0 +1,12 @@
+Source: https://github.com/taynotfound/cubit
+Commit: 34eaab3eb13efdfd06cd05601baa043a5686cc07
+License: MIT
+Imported: 2026-11-20T18:47:26.666369+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 4, "تضمين خطوط محلياً": 6, "حذف ملفات غير لازمة": 3, "تحسين وسائط صور": 11, "تحسين وسائط فيديو": 2, "تنظيف الكود": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- NOTICE.md: Barlow and Barlow Condensed fonts by Jeremy Tribby | `app/src/main/assets/fonts/` | SIL Open Font License 1.1 ([`OFL.txt`](app/src/main/asse
+- NOTICE.md: Sound effects from Kenney's Interface Sounds and related packs (kenney.nl) | `app/src/main/res/raw/sfx_*` | CC0 1.0 ([`kenney-sounds-CC0.txt
+- README.md: The code, art and synthesized audio are under the [MIT License](LICENSE). The fonts (SIL OFL) and Kenney's sound effects (CC0) keep their ow
+- README.md: Sound effects: [Kenney](https://kenney.nl) packs, CC0. The split-flap clacks were cut from a real display recording, and the swoosh and the 
+- images: 34, audio: 22, tagged audio: 0

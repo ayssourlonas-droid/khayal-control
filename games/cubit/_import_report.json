@@ -1,0 +1,69 @@
+{
+ "date": "2026-11-20T18:47:26.666369+00:00",
+ "status": "warn",
+ "source": "https://github.com/taynotfound/cubit",
+ "commit": "34eaab3eb13efdfd06cd05601baa043a5686cc07",
+ "license": "MIT",
+ "warnings": [
+  "المستودع يحوي ملفات خادم (server) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
+  "خطوط مضمّنة (4): تأكد من ترخيصها، مثل app/src/main/assets/fonts/BarlowCondensed-SemiBold.ttf، app/src/main/assets/fonts/Barlow-Medium.ttf، app/src/main/assets/fonts/BarlowCondensed-Bold.ttf",
+  "روابط لمواقع خارجية: api.github.com, apps.obtainium.imranr.dev, cubit-lb-api.taymaerz.de, f-droid.org, github.com, ko-fi.com, mastodon.social, schema.org"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: docs",
+  "الوسائط: 34 صورة و22 صوتاً",
+  "تصريح المطوّر عن الوسائط: NOTICE.md: Barlow and Barlow Condensed fonts by Jeremy Tribby | `app/src/main/assets/fonts/` | SIL Open Font License 1.1 ([`OFL.txt`](app/src/main/asse",
+  "تصريح المطوّر عن الوسائط: NOTICE.md: Sound effects from Kenney's Interface Sounds and related packs (kenney.nl) | `app/src/main/res/raw/sfx_*` | CC0 1.0 ([`kenney-sounds-CC0.txt",
+  "تصريح المطوّر عن الوسائط: README.md: The code, art and synthesized audio are under the [MIT License](LICENSE). The fonts (SIL OFL) and Kenney's sound effects (CC0) keep their ow",
+  "تصريح المطوّر عن الوسائط: README.md: Sound effects: [Kenney](https://kenney.nl) packs, CC0. The split-flap clacks were cut from a real display recording, and the swoosh and the ",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:cubit:) في 4 صفحة",
+  "خطوط Google ضُمِّنت محلياً (لا اتصال بـ Google وقت اللعب): Barlow Condensed (600، 700؛ latin) | Barlow ← Inter (400، 500؛ latin) — 4 ملف خط، 123 KB",
+  "تراخيص الخطوط في _gfonts/FONTS.txt",
+  "لاعب آلي عشوائي: جُرّب نحو 324 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 3 ملفاً (6698 KB)؛ من 34 إلى 31",
+  "تحسين صور: 11 ملفاً، وفّر 486 KB",
+  "تحسين فيديو: 2 ملفاً، وفّر 239 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 5MB ← 5MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: لا أخطاء في 1 ملفات",
+  "تنظيف الكود (فراغات وبنية الكود): 1 ملفاً، 12KB ← 7KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 95/100 (طلبات خارجية (-5))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 4",
+  "تعديل تلقائي: تضمين خطوط محلياً × 6",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 3",
+  "تعديل تلقائي: تحسين وسائط صور × 11",
+  "تعديل تلقائي: تحسين وسائط فيديو × 2",
+  "تعديل تلقائي: تنظيف الكود × 1",
+  "الغلاف: og0.png ← og:image، اسم عنوان/بانر (درجة 178)",
+  "الأزمنة: جلب المستودع: 2ث؛ اختبار المتصفح: 87ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 100ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 5)"
+ ],
+ "console_errors": [],
+ "failed_requests": [
+  "https://release-assets.githubusercontent.com/github-production-release-asset/1443500467/fc71a203-250e-40a3-90b3-340ee10b2fc0?sp=r&sv=2018-11-09&sr=b&s",
+  "https://release-assets.githubusercontent.com/github-production-release-asset/1443500467/fc71a203-250e-40a3-90b3-340ee10b2fc0?sp=r&sv=2018-11-09&sr=b&s"
+ ],
+ "external_requests": [
+  "api.github.com",
+  "cubit-lb-api.taymaerz.de",
+  "github.com",
+  "release-assets.githubusercontent.com"
+ ],
+ "cover_candidates": [
+  "178: og0.png (og:image، اسم عنوان/بانر)",
+  "118: featureGraphic.png (اسم غلاف)",
+  "67: trailer.gif (README #5، مجلد ترويج)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 1,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 4,
+  "تضمين خطوط محلياً": 6,
+  "حذف ملفات غير لازمة": 3,
+  "تحسين وسائط صور": 11,
+  "تحسين وسائط فيديو": 2,
+  "تنظيف الكود": 1
+ }
+}

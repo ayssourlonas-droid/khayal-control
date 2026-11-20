@@ -1676,5 +1676,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "cubit",
+    "size": 19645,
+    "repo": "taynotfound/cubit",
+    "id": 117,
+    "slug": "cubit",
+    "title": "Cubit",
+    "developer": "taynotfound",
+    "license": "MIT",
+    "source": "https://github.com/taynotfound/cubit",
+    "commit": "34eaab3eb13efdfd06cd05601baa043a5686cc07",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: NOTICE.md: Barlow and Barlow Condensed fonts by Jeremy Tribby | `app/src/main/assets/fonts/` | SIL Open Font License 1.1 ([`OFL.txt`](app/src/main/asse | NOTICE.md: Sound effects from Kenney's Interface Sounds and related packs (kenney.nl) | `app/src/main/res/raw/sfx_*` | CC0 1.0 ([`kenney-sounds-CC0.txt"
   }
 ]

@@ -2241,5 +2241,32 @@
       "type": "web",
       "category": "babel"
     }
+  },
+  {
+    "id": 117,
+    "imported_at": "2026-11-20T18:52:53Z",
+    "release_year": "2026",
+    "category_tags": [
+      "android",
+      "game",
+      "go"
+    ],
+    "main_scene": {
+      "title_ar": "Cubit",
+      "title_en": "Cubit",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/cubit/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A hard little cube of arrows. Free the pink one. Native Android puzzle, no ads, with a verified Go leaderboard.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/cubit/",
+      "developer": "taynotfound",
+      "license": "MIT",
+      "source_url": "https://github.com/taynotfound/cubit",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "android"
+    }
   }
 ]

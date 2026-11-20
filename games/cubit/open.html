@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:cubit:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open in Cubit</title>
+<meta name="description" content="Someone shared a Cubit cube with you. Open it in the app, or get Cubit free for Android.">
+<meta property="og:title" content="Can you beat this Cubit run?">
+<meta property="og:description" content="Same cube for everyone. Open it in Cubit, or get the game free for Android.">
+<meta property="og:image" content="https://taynotfound.github.io/cubit/img/social.png">
+<meta name="theme-color" content="#0E1B3D">
+<link rel="icon" href="img/favicon.png">
+
+
+<link rel="stylesheet" href="_gfonts/fonts.css">
+<style>
+  :root { --bg: #0E1B3D; --panel: #172A57; --text: #F4F6FB; --muted: #AEB8D0; --hair: #2B3D69; --accent: #FFC72C; --on-accent: #0E1B3D; --pink: #FF3D7F; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg); color: var(--text); font: 400 17px/1.5 Barlow, system-ui, sans-serif; padding: 24px 16px; }
+  main { width: 100%; max-width: 440px; text-align: center; }
+  img.icon { width: 88px; height: 88px; }
+  h1 { font: 700 40px/1 "Barlow Condensed", sans-serif; text-transform: uppercase; margin: 18px 0 10px; }
+  p { color: var(--muted); margin: 0 0 22px; }
+  .btn { display: flex; align-items: center; justify-content: center; min-height: 60px; border-radius: 6px; text-decoration: none; margin-top: 12px;
+         font: 700 22px/1 "Barlow Condensed"; text-transform: uppercase; letter-spacing: .02em; }
+  .primary { background: var(--accent); color: var(--on-accent); }
+  .secondary { background: var(--panel); border: 1px solid var(--hair); color: var(--text); font-size: 18px; }
+  small { display: block; margin-top: 18px; color: var(--muted); font-size: 14px; }
+  small a { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <img class="icon" src="img/icon.svg" alt="">
+  <h1 id="title">A cube for you</h1>
+  <p id="what">Someone shared a Cubit cube. Everyone gets the same one, so you can compare runs.</p>
+  <a class="btn primary" id="open" href="https://taynotfound.github.io/cubit/">Open in Cubit</a>
+  <a class="btn secondary" id="web" href="play.html" hidden>Play it in your browser</a>
+  <a class="btn secondary" href="https://github.com/taynotfound/cubit/releases/latest/download/Cubit.apk">Get Cubit for Android</a>
+  <small>Don't have it yet? It's free with no ads, also on <a href="https://f-droid.org/en/packages/de.taymaerz.cubit/">F-Droid</a>. <a href="https://taynotfound.github.io/cubit/">About Cubit</a></small>
+</main>
+<script>
+  const q = new URLSearchParams(location.search);
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  function go(link, title, what) {
+    document.getElementById("title").textContent = title;
+    document.getElementById("what").textContent = what;
+    document.getElementById("open").href = link;
+    // Try the app straight away; if it isn't installed, the page simply stays.
+    if (isAndroid) setTimeout(() => { location.href = link; }, 300);
+  }
+  // ?c=<run>, ?pack=<pack>, ?f=<code>: passed through re-encoded; the app checks them. Codes are 8 hex digits.
+  const c = q.get("c"), pack = q.get("pack"), f = q.get("f"), nm = (q.get("n") || "").trim().slice(0, 32);
+  if (c && c.length < 8000) {
+    go("cubit://challenge/" + encodeURIComponent(c), "A challenge for you", "Someone shared their run. Play the same cube and race their ghost.");
+  } else if (pack && pack.length < 4000) {
+    go("cubit://pack/" + encodeURIComponent(pack), "A puzzle pack for you", "Someone shared a set of Cubit cubes. Open it and the pack lands in More → Puzzle packs.");
+  } else if (f && /^[0-9A-Fa-f]{8}$/.test(f)) {
+    go("cubit://friend/" + f.toUpperCase(), "Add a friend", "Someone wants to compare runs with you. Open Cubit to add them to Rankings → Friends.");
+  } else if (nm) {
+    go("cubit://name/" + encodeURIComponent(nm), "The cube of “" + nm + "”", "Every name makes its own Cubit cube, the same for everyone who types it. Someone dares you to clear this one.");
+  } else if (q.has("world")) {
+    go("cubit://world/now", "The World Cube", "One giant cube every Cubit player clears together, live. Open Cubit and help free the pink arrow.");
+  }
+  // Cubes the browser can play (play.html) get a button for it; off Android, where the app can't open, it leads.
+  function web(params) {
+    const b = document.getElementById("web"); b.href = "play.html?" + params; b.hidden = false;
+    if (!isAndroid) { b.className = "btn primary"; b.textContent = "Play it now in your browser"; const o = document.getElementById("open"); o.className = "btn secondary"; o.parentNode.insertBefore(b, o); }
+  }
+  if (c && c.length < 8000) web("c=" + encodeURIComponent(c));
+  else if (!pack && !f && nm) web("n=" + encodeURIComponent(nm));
+  // ?daily=<day> or ?week=<week> → cubit://daily/<day> or cubit://week/<week>. Only whole numbers get through.
+  const kind = q.has("week") ? "week" : "daily";
+  const n = parseInt(q.get(kind), 10);
+  if (!c && !pack && !f && !nm && !q.has("world") && Number.isInteger(n) && n > 0 && n < 1e6) {
+    const link = `cubit://${kind}/${n}`;
+    const first = kind === "week" ? (n * 7 - 3) : n;
+    const date = new Date(first * 86400000).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
+    document.getElementById("title").textContent = kind === "week" ? `Week of ${date}` : `Daily cube ${date}`;
+    document.getElementById("what").textContent = kind === "week"
+      ? "Someone shared this week's challenge: one big cube, the same for everyone. Can you beat their run?"
+      : "Someone shared a daily cube: the same one for everyone. Can you beat their run?";
+    const open = document.getElementById("open");
+    open.href = link;
+    web(kind + "=" + n);
+    // Try the app straight away; if it isn't installed, the page simply stays.
+    if (/Android/i.test(navigator.userAgent)) setTimeout(() => { location.href = link; }, 300);
+  }
+</script>
+</body>
+</html>
