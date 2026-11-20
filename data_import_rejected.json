@@ -1609,5 +1609,14 @@
     "date": "2026-11-20",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44814931128"
+  },
+  {
+    "url": "https://github.com/praghus/chwat",
+    "repo": "praghus/chwat",
+    "reason": "فشل البناء: فشل الأمر: ['yarn', 'install'] (رمز 1)",
+    "license": "MIT",
+    "date": "2026-11-20",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44815204482"
   }
 ]
