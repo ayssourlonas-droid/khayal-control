@@ -1,0 +1,8 @@
+Source: https://github.com/TonyStark-19/HTML-CSS-JS-Projects
+Commit: 05fed598fb5d3be0e895eb8573b400e0bf2b9579
+License: MIT
+Imported: 2026-11-20T18:54:23.827491+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 56, "عزل تخزين اللعبة": 21, "تضمين خطوط محلياً": 5, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 27, "تنظيف الكود": 44}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 33, audio: 0, tagged audio: 0

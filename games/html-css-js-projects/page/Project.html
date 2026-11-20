@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:html-css-js-projects:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML CSS JS Mini Projects</title>
+    <!-- font awesome link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- favicon link -->
+    <link rel="icon" type="image/png" href="../images/Favicon/favicon.png">
+    <!-- style link -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+</head>
+
+<body>
+    <!-- Mesh Background -->
+    <div class="mesh-bg"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">
+                HTML CSS JS <span>Mini Projects</span>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <a href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects" target="_blank" class="star-btn">
+                <span>Star on GitHub</span> ⭐
+            </a>
+        </div>
+    </nav>
+
+    <!-- Projects Section -->
+    <div class="container" id="projects">
+        <header class="section-header reveal">
+            <div class="mini-badge">JS Logic Laboratory</div>
+            <h2>The <span class="gradient-text">JS Trinity</span> Collection</h2>
+            <p>20+ interactive applications exploring DOM manipulation, Web APIs, and logic.</p>
+        </header>
+
+        <div class="project-grid">
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Calculator.webp" alt="Calculator">
+                </div>
+
+                <div class="card-content">
+                    <h3>Calculator</h3>
+
+                    <div class="button-group">
+                        <a target="_blank" href="https://github.com/TonyStark-19/Calculator" class="icon-btn"
+                            title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="https://tonystark-19.github.io/Calculator/" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Currency-convertor.webp" alt="Currency Convertor">
+                </div>
+
+                <div class="card-content">
+                    <h3>Currency Convertor</h3>
+
+                    <div class="button-group">
+                        <a target="_blank" href="https://github.com/TonyStark-19/Currency-convertor" class="icon-btn"
+                            title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="https://tonystark-19.github.io/Currency-convertor/" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Rock-Paper-Scissors.webp" alt="Rock-Paper-Scissors">
+                </div>
+
+                <div class="card-content">
+                    <h3>Rock-Paper-Scissors Game</h3>
+
+                    <div class="button-group">
+                        <a target="_blank" href="https://github.com/TonyStark-19/Rock-paper-scissors" class="icon-btn"
+                            title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="https://tonystark-19.github.io/Rock-paper-scissors/" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Tic-Tac-Toe.webp" alt="Tic-Tac-Toe">
+                </div>
+
+                <div class="card-content">
+                    <h3>Tic-Tac-Toe Game</h3>
+
+                    <div class="button-group">
+                        <a target="_blank" href="https://github.com/TonyStark-19/Tic-Tac-Toe" class="icon-btn"
+                            title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="https://tonystark-19.github.io/Tic-Tac-Toe/" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Calender.webp" alt="Calendar">
+                </div>
+
+                <div class="card-content">
+                    <h3>Calendar</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Calender"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Calender/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Hide-Show-Password.webp" alt="Hide or Show Password">
+                </div>
+
+                <div class="card-content">
+                    <h3>Hide Or Show Password</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Hide%20password"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Hide password/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Coming-soon-page.webp" alt="Coming Soon Page">
+                </div>
+
+                <div class="card-content">
+                    <h3>Coming Soon Page</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Coming%20soon"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Coming soon/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Digital-clock.webp" alt="Digital Clock">
+                </div>
+
+                <div class="card-content">
+                    <h3>Digital Clock</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Digital%20Clock"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Digital Clock/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Random-password.webp" alt="Random Password">
+                </div>
+
+                <div class="card-content">
+                    <h3>Random Password Generator</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Random%20Password"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Random Password/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Password-strength.webp" alt="Password Strength">
+                </div>
+
+                <div class="card-content">
+                    <h3>Password Strength Indicator</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Password%20strength"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Password strength/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Quote-generator.webp" alt="Quote Generator">
+                </div>
+
+                <div class="card-content">
+                    <h3>Random Quote Generator</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Quote%20Generator"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Quote Generator/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Drag-Drop.webp" alt="Drag & Drop">
+                </div>
+
+                <div class="card-content">
+                    <h3>Drag & Drop</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Drag%20and%20Drop"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Drag and Drop/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/QR-Code.webp" alt="QR Code">
+                </div>
+
+                <div class="card-content">
+                    <h3>QR Code Generator</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/QR%20Code%20Generator"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/QR Code Generator/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Select-menu.webp" alt="Select Menu">
+                </div>
+
+                <div class="card-content">
+                    <h3>Select Menu Design</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Select%20Menu%20Design"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Select Menu Design/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Text-to-speech.webp" alt="Text to Speech">
+                </div>
+
+                <div class="card-content">
+                    <h3>Text To Speech Convertor</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Text%20to%20speech"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Text to speech/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Age-calculator.webp" alt="Age Calculator">
+                </div>
+
+                <div class="card-content">
+                    <h3>Age Calculator</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Age%20calculator"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Age calculator/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Toast-notification.webp" alt="Toast Notification">
+                </div>
+
+                <div class="card-content">
+                    <h3>Toast Notification</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Toast%20notification"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Toast notification/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Stopwatch.webp" alt="Stopwatch">
+                </div>
+
+                <div class="card-content">
+                    <h3>Stopwatch</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Stopwatch"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Stopwatch/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/To-do.webp" alt="To-Do List">
+                </div>
+
+                <div class="card-content">
+                    <h3>To-Do List</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/To-do-list"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/To-do-list/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/weather-app.webp" alt="Weather App">
+                </div>
+
+                <div class="card-content">
+                    <h3>Weather-app</h3>
+
+                    <div class="button-group">
+                        <a target="_blank" href="https://github.com/TonyStark-19/Weather-app" class="icon-btn"
+                            title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="https://weather-app-orcin-seven-66.vercel.app/" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/image-search-engine.webp" alt="Image Search Engine">
+                </div>
+
+                <div class="card-content">
+                    <h3>Image Search Engine</h3>
+
+                    <div class="button-group">
+                        <a target="_blank" href="https://github.com/TonyStark-19/Image-Search-Engine" class="icon-btn"
+                            title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="https://image-search-engine-sooty.vercel.app/" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/form-validation.webp" alt="Form Validation">
+                </div>
+
+                <div class="card-content">
+                    <h3>Form Validation</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Form%20validation"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Form validation/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Notes-app.webp" alt="Notes App">
+                </div>
+
+                <div class="card-content">
+                    <h3>Notes App</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Notes%20app"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Notes app/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/Etch-a-sketch.webp" alt="Etch-a-Sketch">
+                </div>
+
+                <div class="card-content">
+                    <h3>Etch-a-Sketch</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/tree/main/Projects/Etch-a-Sketch"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Etch-a-Sketch/index.html" class="icon-btn" title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="card-image">
+                    <img src="../images/Projects/word-counter.webp" alt="Word Counter">
+                </div>
+
+                <div class="card-content">
+                    <h3>Word Counter</h3>
+
+                    <div class="button-group">
+                        <a target="_blank"
+                            href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/blob/main/Projects/Word%20Counter"
+                            class="icon-btn" title="View Code">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+
+                        <a target="_blank" href="../Projects/Word%20Counter/index.html" class="icon-btn"
+                            title="Live Demo">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- footer -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col about">
+                <h3>About This Project</h3>
+
+                <p class="muted">
+                    This collection is part of my <strong>#100DaysOfCode</strong> challenge.
+                    I built <strong>23+</strong> interactive apps to master <strong>JavaScript logic</strong>,
+                    DOM manipulation, and API integration through hands-on practice.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Learning Resources</h3>
+                <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">MDN JS Docs</a>
+                <a target="_blank" href="https://javascript.info/">JavaScript.info</a>
+                <a target="_blank"
+                    href="https://www.youtube.com/playlist?list=PLjwm_8O3suyOgDS_Z8AWbbq3zpCmR-WE9">GreatStack JS</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>Explore</h3>
+                <a href="#">Home</a>
+                <a href="https://aditya-devfolio-one.vercel.app/" target="_blank">My Portfolio</a>
+                <a href="https://html-css-projects-phi.vercel.app/" target="_blank">HTML CSS Projects</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>Built with ❤️ by <strong>Aditya Chandel</strong></p>
+            <p class="muted">© 2026 All rights reserved</p>
+
+            <p class="muted">
+                <a href="https://www.freepik.com/icon/puzzles_11908618" target="_blank">
+                    Icon by manshagraphics
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ScrollReveal Library -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <!-- custom js -->
+    <script src="../js/project.js"></script>
+    <!-- vercel analytics -->
+    <script defer src="../_vercel/insights/script.js"></script>
+</body>
+
+</html>

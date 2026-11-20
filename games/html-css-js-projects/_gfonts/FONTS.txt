@@ -1,0 +1,6 @@
+خطوط مضمَّنة في هذه اللعبة (نُزّلت من Google Fonts وقت الاستيراد):
+
+- Inter: SIL Open Font License 1.1 (خطوط Google Fonts؛ راجع صفحة الخط على fonts.google.com للتأكد) — https://fonts.google.com/specimen/Inter (تُستعمل باسم «Plus Jakarta Sans» في كود اللعبة)
+- Inter: SIL Open Font License 1.1 (خطوط Google Fonts؛ راجع صفحة الخط على fonts.google.com للتأكد) — https://fonts.google.com/specimen/Inter (تُستعمل باسم «Poppins» في كود اللعبة)
+
+تنص رخصة OFL على جواز التضمين وإعادة التوزيع مع بقاء الإشعار؛ هذا الملف هو الإشعار.

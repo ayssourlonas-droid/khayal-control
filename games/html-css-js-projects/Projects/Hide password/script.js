@@ -1,0 +1,1 @@
+let eyeicon=document.getElementById("eyeicon"),password=document.getElementById("password");eyeicon.onclick=function(){password.type==="password"?(password.type="text",eyeicon.classList.remove("fa-eye-slash"),eyeicon.classList.add("fa-eye")):(password.type="password",eyeicon.classList.remove("fa-eye"),eyeicon.classList.add("fa-eye-slash"))};

@@ -1,0 +1,68 @@
+{
+ "date": "2026-11-20T18:54:23.827491+00:00",
+ "status": "warn",
+ "source": "https://github.com/TonyStark-19/HTML-CSS-JS-Projects",
+ "commit": "05fed598fb5d3be0e895eb8573b400e0bf2b9579",
+ "license": "MIT",
+ "warnings": [
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: aditya-devfolio-one.vercel.app, api.qrserver.com, developer.mozilla.org, example.com, github.com, html-css-projects-phi.vercel.app, image-search-engine-sooty.vercel.app, javascript.info",
+  "2 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:37185/game/_vercel/insights/script.js",
+  "2 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 33 صورة و0 صوتاً",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:html-css-js-projects:) في 21 صفحة",
+  "خطوط Google ضُمِّنت محلياً (لا اتصال بـ Google وقت اللعب): Plus Jakarta Sans ← Inter (400؛ latin) | Poppins ← Inter (200، 400؛ latin) — 3 ملف خط، 117 KB",
+  "تراخيص الخطوط في _gfonts/FONTS.txt",
+  "لاعب آلي عشوائي: جُرّب نحو 348 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 1 ملفاً (5 KB)؛ من 106 إلى 105",
+  "تحسين صور: 27 ملفاً، وفّر 6511 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 9MB ← 2MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "ESLint: لا أخطاء في 21 ملفات",
+  "تنظيف الكود (فراغات وبنية الكود): 44 ملفاً، 82KB ← 53KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 80/100 (أخطاء كونسول (-15)، طلبات خارجية (-5))",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 56",
+  "تعديل تلقائي: عزل تخزين اللعبة × 21",
+  "تعديل تلقائي: تضمين خطوط محلياً × 5",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 1",
+  "تعديل تلقائي: تحسين وسائط صور × 27",
+  "تعديل تلقائي: تنظيف الكود × 44",
+  "الغلاف: home.png ← README #10، مجلد ترويج (درجة 68)",
+  "الأزمنة: اختبار المتصفح: 87ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 51ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:37185/game/_vercel/insights/script.js",
+  "http://127.0.0.1:37185/game/_vercel/insights/script.js",
+  "404 http://127.0.0.1:37185/game/_vercel/insights/script.js",
+  "http://127.0.0.1:37185/game/_vercel/insights/script.js"
+ ],
+ "external_requests": [
+  "cdnjs.cloudflare.com",
+  "unpkg.com"
+ ],
+ "cover_candidates": [
+  "68: home.png (README #10، مجلد ترويج)",
+  "68: Project.png (README #11، مجلد ترويج)",
+  "68: Select-menu.png (حمّلتها اللعبة، اسم شاشة)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 21,
+  "errors": 0
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 56,
+  "عزل تخزين اللعبة": 21,
+  "تضمين خطوط محلياً": 5,
+  "حذف ملفات غير لازمة": 1,
+  "تحسين وسائط صور": 27,
+  "تنظيف الكود": 44
+ }
+}

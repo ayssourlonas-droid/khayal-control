@@ -1691,5 +1691,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: NOTICE.md: Barlow and Barlow Condensed fonts by Jeremy Tribby | `app/src/main/assets/fonts/` | SIL Open Font License 1.1 ([`OFL.txt`](app/src/main/asse | NOTICE.md: Sound effects from Kenney's Interface Sounds and related packs (kenney.nl) | `app/src/main/res/raw/sfx_*` | CC0 1.0 ([`kenney-sounds-CC0.txt"
+  },
+  {
+    "key": "htmlcssjsprojects",
+    "size": 11376,
+    "repo": "TonyStark-19/HTML-CSS-JS-Projects",
+    "id": 118,
+    "slug": "html-css-js-projects",
+    "title": "HTML CSS JS Projects",
+    "developer": "TonyStark-19",
+    "license": "MIT",
+    "source": "https://github.com/TonyStark-19/HTML-CSS-JS-Projects",
+    "commit": "05fed598fb5d3be0e895eb8573b400e0bf2b9579",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

@@ -1,0 +1,1 @@
+const sr=ScrollReveal({distance:"60px",duration:1200,delay:200,reset:!1,easing:"cubic-bezier(0.5, 0, 0, 1)"});sr.reveal(".reveal-left",{origin:"left"}),sr.reveal(".reveal-right",{origin:"right",delay:400}),sr.reveal(".footer-col",{interval:150,origin:"bottom"});

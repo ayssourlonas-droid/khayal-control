@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:html-css-js-projects:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML CSS JS Mini Projects</title>
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="images/Favicon/favicon.png">
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navbar.css">
+</head>
+
+<body>
+    <!-- Mesh Background -->
+    <div class="mesh-bg"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">
+                HTML CSS JS <span>Mini Projects</span>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <a href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects" target="_blank" class="star-btn">
+                <span>Star on GitHub</span> ⭐
+            </a>
+        </div>
+    </nav>
+
+    <!-- hero content -->
+    <main class="hero-grid">
+        <section class="content-side reveal-left">
+            <div class="badge">#100DaysOfCode Journey</div>
+            <h1>Mastering the <br> <span class="gradient-text">Frontend Trinity.</span></h1>
+
+            <p>
+                A personal archive of <strong>23+</strong> interactive tools, games, and UI components
+                developed by <strong>Aditya Chandel</strong>. Focused on DOM manipulation, API integration, and
+                responsive design.
+            </p>
+
+            <div class="cta-btns">
+                <a href="page/Project.html" class="btn-fill">Explore Projects</a>
+                <a href="https://github.com/TonyStark-19/HTML-CSS-JS-Projects/blob/main/CONTRIBUTING.md" target="_blank"
+                    class="btn-outline">
+                    Contribute Your Projects
+                </a>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat"><strong class="html-txt">20+</strong> <span>Live Apps</span></div>
+                <div class="stat"><strong class="css-txt">100%</strong> <span>Responsive</span></div>
+                <div class="stat"><strong class="js-txt">JS</strong> <span>Logic Driven</span></div>
+            </div>
+        </section>
+
+        <!-- floating preview of projects -->
+        <section class="visual-side reveal-right">
+            <div class="preview-stack">
+                <div class="glass-preview-card">
+                    <div class="card-header">
+                        <div class="dots"><span></span><span></span><span></span></div>
+                        <span class="card-title">Quote Generator</span>
+                    </div>
+
+                    <div class="card-img-box">
+                        <img src="images/Projects/Quote-generator.webp" alt="Project Preview">
+                    </div>
+
+                    <div class="card-info">
+                        <div class="tags">
+                            <span class="tag-html">HTML</span>
+                            <span class="tag-css">CSS</span>
+                            <span class="tag-js">JS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-preview-card secondary-card">
+                    <div class="card-img-box">
+                        <img src="images/Projects/Digital-clock.webp" alt="UI Preview">
+                    </div>
+
+                    <div class="card-info">
+                        <h4>Modern UI Components</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ScrollReveal Library -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <!-- Custom JS -->
+    <script src="js/home.js"></script>
+    <!-- vercel analytics -->
+    <script defer src="_vercel/insights/script.js"></script>
+</body>
+
+</html>
