@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:pixelrpgrun:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino RPG Runner</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    
+    <link rel="stylesheet" href="_gfonts/fonts.css">
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            transition: background-color 0.5s ease;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        .nes-btn {
+            position: relative; display: inline-block; padding: 12px 24px;
+            margin: 8px;
+            text-align: center; text-decoration: none; user-select: none;
+        }
+        .nes-btn:hover { transform: translateY(-2px); }
+        .nes-btn:active { transform: translateY(2px); }
+        .nes-container {
+            border: 4px solid;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        #notification, #boss-warning { transition: all 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100 text-gray-800">
+
+    <div id="game-container" class="relative w-full max-w-4xl p-4">
+        <!-- Game Header -->
+        <div class="flex justify-between items-center mb-2 text-lg">
+            <div><span id="score">Score: 0</span></div>
+            <div><span id="coins">Coins: 0</span></div>
+            <div class="flex items-center">
+                 <span id="boost-timer" class="text-orange-600 mr-4 text-sm"></span>
+                 <button id="mute-toggle" class="text-2xl">🔊</button>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" class="border-4 rounded-lg w-full transition-colors duration-500"></canvas>
+
+        <!-- Overlays -->
+        <div id="start-screen" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70">
+            <div class="nes-container border-gray-800 text-center">
+                <h1 class="text-4xl mb-4">Dino RPG Runner</h1>
+                <p class="mb-6">Press SPACE or the button to start!</p>
+                <button id="start-button" class="nes-btn bg-blue-200 border-blue-400">Start Game</button>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 hidden">
+            <div class="nes-container border-gray-800 text-center">
+                <h2 class="text-3xl mb-4">Game Over</h2>
+                <p id="final-score" class="mb-6 text-xl">Final Score: 0</p>
+                <button id="restart-button" class="nes-btn bg-green-200 border-green-400">Restart</button>
+            </div>
+        </div>
+
+        <!-- NEW: Stage Clear Screen -->
+        <div id="stage-clear-screen" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 hidden">
+            <div class="nes-container border-gray-800 text-center">
+                <h2 id="stage-clear-title" class="text-3xl mb-4">Stage 1 Clear!</h2>
+                <p class="mb-6 text-xl">Great job!</p>
+                <button id="next-stage-button" class="nes-btn bg-yellow-200 border-yellow-400">Next Stage</button>
+            </div>
+        </div>
+        
+        <!-- Boss UI -->
+        <div id="boss-ui" class="hidden absolute top-4 left-1/2 -translate-x-1/2 w-11/12 max-w-lg text-center">
+            <h3 class="text-2xl font-bold text-red-500 uppercase tracking-widest animate-pulse">!! BOSS BATTLE !!</h3>
+            <div class="mt-2 text-xl font-semibold text-gray-800 bg-white bg-opacity-60 rounded-lg px-4 py-2">
+                <span id="boss-objective-text">Minions Defeated: 0 / 10</span>
+            </div>
+        </div>
+
+        <div id="boss-warning" class="hidden opacity-0 -translate-y-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+             <h2 class="text-6xl font-extrabold text-red-600" style="text-shadow: 3px 3px 0 #ccc;">WARNING!</h2>
+        </div>
+        <div id="notification" class="absolute top-5 left-1/2 -translate-x-1/2 bg-blue-500 text-white py-2 px-6 rounded-lg shadow-lg text-center opacity-0 -translate-y-20"></div>
+    </div>
+    
+    <audio id="bgm" src="background_music.ogg" loop></audio>
+    <audio id="boss-bgm" src="boss_music.ogg" loop></audio>
+
+    <script src="game.js"></script>
+    <!-- ... PWA script ... -->
+</body>
+</html>
+
+
+
+
+

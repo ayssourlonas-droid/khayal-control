@@ -1826,5 +1826,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE.md",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "pixelrpgrun",
+    "size": 7044,
+    "repo": "imshota1009/PixelRPGRun",
+    "id": 127,
+    "slug": "pixelrpgrun",
+    "title": "PixelRPGRun",
+    "developer": "imshota1009",
+    "license": "Apache-2.0",
+    "source": "https://github.com/imshota1009/PixelRPGRun",
+    "commit": "d0ac7301912f55dc61951a9dcd0b5fa671fdab69",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=SparrowTune"
   }
 ]

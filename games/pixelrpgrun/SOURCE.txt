@@ -1,0 +1,13 @@
+Source: https://github.com/imshota1009/PixelRPGRun
+Commit: d0ac7301912f55dc61951a9dcd0b5fa671fdab69
+License: Apache-2.0
+Imported: 2026-11-20T20:39:10.359858+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 3, "حذف ملفات غير لازمة": 3, "تحسين وسائط صوت": 2, "تنظيف الكود": 4}
+
+Media provenance (automated signals, not a legal guarantee):
+- LICENSE: attribution notices from the Source form of the Work,
+- LICENSE: include a readable copy of the attribution notices contained
+- LICENSE: do not modify the License. You may add Your own attribution
+- LICENSE: that such additional attribution notices cannot be construed
+- artist=SparrowTune
+- images: 6, audio: 2, tagged audio: 1

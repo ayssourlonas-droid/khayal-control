@@ -1,0 +1,5 @@
+خطوط مضمَّنة في هذه اللعبة (نُزّلت من Google Fonts وقت الاستيراد):
+
+- Pixelify Sans: SIL Open Font License 1.1 (خطوط Google Fonts؛ راجع صفحة الخط على fonts.google.com للتأكد) — https://fonts.google.com/specimen/Pixelify+Sans (تُستعمل باسم «Press Start 2P» في كود اللعبة)
+
+تنص رخصة OFL على جواز التضمين وإعادة التوزيع مع بقاء الإشعار؛ هذا الملف هو الإشعار.
