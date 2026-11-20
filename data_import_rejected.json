@@ -1528,5 +1528,14 @@
     "date": "2026-11-20",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44795604548"
+  },
+  {
+    "url": "https://github.com/Parking-Master/FPS3",
+    "repo": "Parking-Master/FPS3",
+    "reason": "الحجم 663MB كبير جداً؛ ملفات تتجاوز 25MB (حد Cloudflare): Desktop/FPS3 Desktop.zip (89MB), sounds/ambience.mp3 (39MB)",
+    "license": "MIT",
+    "date": "2026-11-20",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44797881748"
   }
 ]
