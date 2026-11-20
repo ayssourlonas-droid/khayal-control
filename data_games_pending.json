@@ -2566,5 +2566,32 @@
       "type": "web",
       "category": "canvas-game"
     }
+  },
+  {
+    "id": 129,
+    "imported_at": "2026-11-20T20:57:28Z",
+    "release_year": "2026",
+    "category_tags": [
+      "2d-game",
+      "canvas",
+      "canvas-2d"
+    ],
+    "main_scene": {
+      "title_ar": "Vector Storm",
+      "title_en": "Vector Storm",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/vector-storm/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Arcade-style 2D space shooter, developed with JavaScript and Canvas. Architectural and creative experiment. Fully working game with enemies and scoring!",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/vector-storm/",
+      "developer": "ChristianOellers",
+      "license": "MIT",
+      "source_url": "https://github.com/ChristianOellers/Vector-Storm",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "2d-game"
+    }
   }
 ]

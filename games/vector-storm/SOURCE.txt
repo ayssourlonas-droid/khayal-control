@@ -1,0 +1,8 @@
+Source: https://github.com/ChristianOellers/Vector-Storm
+Commit: a1a55e7a7d9e3f5cb6802810256241b39d9a43af
+License: MIT
+Imported: 2026-11-20T20:54:38.297993+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 4, "تنظيف الكود": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 1, audio: 0, tagged audio: 0

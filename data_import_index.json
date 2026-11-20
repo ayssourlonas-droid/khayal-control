@@ -1856,5 +1856,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: readme.md: Asset Credits | readme.md: [Kenney.nl](https://www.kenney.nl/)** - UI packs and Space Shooter sprites (CC0)"
+  },
+  {
+    "key": "vectorstorm",
+    "size": 731,
+    "repo": "ChristianOellers/Vector-Storm",
+    "id": 129,
+    "slug": "vector-storm",
+    "title": "Vector Storm",
+    "developer": "ChristianOellers",
+    "license": "MIT",
+    "source": "https://github.com/ChristianOellers/Vector-Storm",
+    "commit": "a1a55e7a7d9e3f5cb6802810256241b39d9a43af",
+    "date": "2026-11-20",
+    "license_file": "LICENSE.md",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

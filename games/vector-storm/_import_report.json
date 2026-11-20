@@ -1,0 +1,52 @@
+{
+ "date": "2026-11-20T20:54:38.297993+00:00",
+ "status": "warn",
+ "source": "https://github.com/ChristianOellers/Vector-Storm",
+ "commit": "a1a55e7a7d9e3f5cb6802810256241b39d9a43af",
+ "license": "MIT",
+ "warnings": [
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "2 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:40339/game/css/index.css",
+  "2 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: public",
+  "الوسائط: 1 صورة و0 صوتاً",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:vector-storm:) في 1 صفحة",
+  "اللعبة لا تعرّف خطوطاً (خطوط النظام فقط): حُقن لها خط «Inter» (الطراز: عصري) مع 0 اسم نظام مُشار إليه به؛ 2 ملف، 94 KB",
+  "لاعب آلي عشوائي: جُرّب نحو 354 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "تنظيف الكود (فراغات وبنية الكود): 1 ملفاً، 0KB ← 0KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تضمين خطوط محلياً × 4",
+  "تعديل تلقائي: تنظيف الكود × 1",
+  "الغلاف: teaser.png ← README #1 (درجة 98)",
+  "الأزمنة: اختبار المتصفح: 77ث؛ تنظيف الكود: 48ث (أوامر: 3، اختبارات متصفح: 2)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:40339/game/css/index.css",
+  "http://127.0.0.1:40339/game/css/index.css",
+  "404 http://127.0.0.1:40339/game/app.bundle.js",
+  "http://127.0.0.1:40339/game/app.bundle.js"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "98: teaser.png (README #1)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "تضمين خطوط محلياً": 4,
+  "تنظيف الكود": 1
+ }
+}
