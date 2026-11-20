@@ -1,0 +1,1 @@
+core.stringHelpers={getSpriteFrameNameWithSuffix:function(namePattern,suffixValue){let parsedSuffix=core.stringHelpers.numberToString(parseInt(suffixValue),4);return namePattern.replace("${suffix}",parsedSuffix)},numberToString:function(number,minStringLength){let str=number.toString();for(;str.length<minStringLength;)str="0"+str;return str}};

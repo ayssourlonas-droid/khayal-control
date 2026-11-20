@@ -2322,5 +2322,32 @@
       "type": "web",
       "category": "css"
     }
+  },
+  {
+    "id": 120,
+    "imported_at": "2026-11-20T19:16:59Z",
+    "release_year": "2026",
+    "category_tags": [
+      "2d-game",
+      "browswer-game",
+      "canvas-game"
+    ],
+    "main_scene": {
+      "title_ar": "Fill The Square",
+      "title_en": "Fill The Square",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/fill-the-square/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🧩 A fully responsive canvas game built with Cocos2D-JS.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/fill-the-square/",
+      "developer": "ryanbalieiro",
+      "license": "MIT",
+      "source_url": "https://github.com/ryanbalieiro/fill-the-square",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "2d-game"
+    }
   }
 ]

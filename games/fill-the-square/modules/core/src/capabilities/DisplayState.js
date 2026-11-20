@@ -1,0 +1,1 @@
+core.DisplayState=cc.Class.extend({position:null,scale:1,opacity:255,visible:!1,applyTo:function(node){this.position!==null&&node.setPosition(this.position),node.setScale(this.scale),node.setOpacity(this.opacity),node.setVisible(this.visible)}});

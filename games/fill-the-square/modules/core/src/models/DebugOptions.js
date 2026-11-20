@@ -1,0 +1,1 @@
+core.DebugOptions=cc.Class.extend({_isProdMode:!0,ctor:function(){this._isProdMode=cc.game.config.debugMode===0},getDebugFlag:function(flag){return cc.game.config.debugFlags[flag]&&!this._isProdMode}}),core.DebugOptions.Flags={IGNORE_PERSISTENCE:"ignorePersistence",SKIP_INTRO:"skipIntro"};

@@ -1,0 +1,10 @@
+Source: https://github.com/ryanbalieiro/fill-the-square
+Commit: 7a4a9c1e44aee6337639e1e0ebd01224ccddda61
+License: MIT
+Imported: 2026-11-20T19:11:09.316917+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 3, "حذف ملفات غير لازمة": 6, "تحسين وسائط صور": 68, "تحسين وسائط صوت": 23, "تنظيف الكود": 82}
+
+Media provenance (automated signals, not a legal guarantee):
+- artist=Soundrangers.com
+- copyright=(C) Soundrangers.com
+- images: 133, audio: 28, tagged audio: 2

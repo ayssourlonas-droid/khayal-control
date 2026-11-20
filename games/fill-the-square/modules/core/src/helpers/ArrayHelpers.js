@@ -1,0 +1,1 @@
+core.arrayHelpers={shuffle:function(array){for(let j,x,i=array.length;i;j=Math.floor(Math.random()*i),x=array[--i],array[i]=array[j],array[j]=x);return array},clone:function(array){const cloned=[];for(let i in array)cloned[i]=array[i];return cloned},fromObject:function(object){const array=[];for(let i in object)array.push(object[i]);return array}};

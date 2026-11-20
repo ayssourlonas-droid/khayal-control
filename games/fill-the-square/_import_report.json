@@ -1,0 +1,66 @@
+{
+ "date": "2026-11-20T19:11:09.316917+00:00",
+ "status": "warn",
+ "source": "https://github.com/ryanbalieiro/fill-the-square",
+ "commit": "7a4a9c1e44aee6337639e1e0ebd01224ccddda61",
+ "license": "MIT",
+ "warnings": [
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: admin.ryanbalieiro.com, github.com, ryanbalieiro.com, ryanbalieiro.github.io, x.com",
+  "3 أخطاء في الكونسول، أولها: Access to fetch at 'https://admin.ryanbalieiro.com/api/analytics/mock' from origin 'http://127.0.0.1"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 133 صورة و28 صوتاً",
+  "بيانات داخل الملفات: artist=Soundrangers.com؛ copyright=(C) Soundrangers.com",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:fill-the-square:) في 1 صفحة",
+  "خطوط Google ضُمِّنت محلياً (لا اتصال بـ Google وقت اللعب): Patua One (400؛ latin) — 1 ملف خط، 12 KB",
+  "قُلِّصت أوزان «Patua One» من 2 إلى 1 (يُرسم الباقي بأقرب وزن)",
+  "تراخيص الخطوط في _gfonts/FONTS.txt",
+  "لاعب آلي عشوائي: جُرّب نحو 342 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 6 ملفاً (282 KB)؛ من 255 إلى 249",
+  "تحسين صور: 68 ملفاً، وفّر 479 KB",
+  "تحسين صوت: 23 ملفاً، وفّر 47 KB",
+  "ESLint: لا أخطاء في 76 ملفات",
+  "1 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 82 ملفاً، 3829KB ← 2641KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 85/100 (أخطاء كونسول (-15))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تضمين خطوط محلياً × 3",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 6",
+  "تعديل تلقائي: تحسين وسائط صور × 68",
+  "تعديل تلقائي: تحسين وسائط صوت × 23",
+  "تعديل تلقائي: تنظيف الكود × 82",
+  "الغلاف: promo.png ← README #2، اسم غلاف (درجة 186)",
+  "الأزمنة: جلب المستودع: 2ث؛ تنظيف: 1ث؛ اختبار المتصفح: 78ث؛ تقليل الملفات: 47ث؛ تحسين الوسائط: 117ث؛ فحص JavaScript: 4ث؛ تنظيف الكود: 48ث (أوامر: 4، اختبارات متصفح: 5)"
+ ],
+ "console_errors": [
+  "Access to fetch at 'https://admin.ryanbalieiro.com/api/analytics/mock' from origin 'http://127.0.0.1:43193' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the r",
+  "Failed to load resource: net::ERR_FAILED",
+  "JS: Failed to fetch"
+ ],
+ "failed_requests": [
+  "https://admin.ryanbalieiro.com/api/analytics/mock",
+  "http://127.0.0.1:43193/game/modules/fillthesquare/res/snd/bgmGameOver.mp3"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "186: promo.png (README #2، اسم غلاف)",
+  "58: gameplay.png (اسم شاشة)",
+  "38: screenshot-2.png (README #6، اسم شاشة، اسم جزء/عنصر)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 76,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "تضمين خطوط محلياً": 3,
+  "حذف ملفات غير لازمة": 6,
+  "تحسين وسائط صور": 68,
+  "تحسين وسائط صوت": 23,
+  "تنظيف الكود": 82
+ }
+}
