@@ -1,0 +1,3 @@
+خط مضمَّن افتراضياً (اللعبة لا تعرّف خطوطاً):
+- Inter: SIL Open Font License 1.1 (خطوط Google Fonts؛ راجع صفحة الخط على fonts.google.com للتأكد) — https://fonts.google.com/specimen/Inter
+- Tajawal (احتياطي للعربية): SIL Open Font License 1.1 (خطوط Google Fonts؛ راجع صفحة الخط على fonts.google.com للتأكد)

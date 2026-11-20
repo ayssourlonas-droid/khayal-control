@@ -1,0 +1,76 @@
+{
+ "date": "2026-11-20T20:46:37.371457+00:00",
+ "status": "warn",
+ "source": "https://github.com/ineffably/moxijs",
+ "commit": "f15b8186f4b34e33c2f1bd4d2d9e2a24a44c7d17",
+ "license": "MIT",
+ "warnings": [
+  "خطوط مضمّنة (6): تأكد من ترخيصها، مثل packages/moxijs-examples/assets/custom-fonts/dogicapixelbold.ttf، packages/moxijs-examples/assets/custom-fonts/rainyhearts.ttf، packages/moxijs-examples/assets/custom-fonts/kenvector_future_thin.ttf",
+  "أسماء ملفات تشبه علامات تجارية معروفة: packages/moxijs-examples/assets/custom-fonts/minecraft.ttf",
+  "روابط لمواقع خارجية: github.com, img.shields.io, pixijs.com, stackoverflow.com, www.npmjs.com",
+  "9 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:42819/game/index.css",
+  "12 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: packages/moxijs-examples/dist",
+  "الوسائط: 1935 صورة و6 صوتاً",
+  "تصريح المطوّر عن الوسائط: readme.md: Asset Credits",
+  "تصريح المطوّر عن الوسائط: readme.md: [Kenney.nl](https://www.kenney.nl/)** - UI packs and Space Shooter sprites (CC0)",
+  "تصريح المطوّر عن الوسائط: readme.md: [Cup Nooble](https://cupnooble.itch.io/)** - Sprout Lands asset packs",
+  "تصريح المطوّر عن الوسائط: readme.md: Fonts** - PixelOperator (CC0), Dogica Pixel (SIL OFL), VHS Gothic (CC BY-SA 3.0)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:moxijs:) في 1 صفحة",
+  "اللعبة لا تعرّف خطوطاً (خطوط النظام فقط): حُقن لها خط «Inter» (الطراز: عصري) مع 1 اسم نظام مُشار إليه به؛ 8 ملف، 315 KB، وخط Tajawal للعربية",
+  "لاعب آلي عشوائي: جُرّب نحو 241 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "1 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "درجة الجودة التقريبية: 80/100 (أخطاء كونسول (-15)، طلبات خارجية (-5))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تضمين خطوط محلياً × 10",
+  "الغلاف: Preview.png ← اسم عنوان/بانر (درجة 88)",
+  "الأزمنة: جلب المستودع: 3ث؛ البحث/البناء: 60ث؛ الخطوط: 1ث؛ اختبار المتصفح: 94ث (أوامر: 4، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load asset: /game/assets/space-sprite-sheets/space-shooter.json Error: [Loader.load] Failed to load http://127.0.0.1:42819/game/assets/space-sprite-sheets/space-shooter.json.\nSyntaxError: Un",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "❌ Failed to load bundle from dist/bundle.js Event",
+  "Failed to load asset: /game/assets/space-sprite-sheets/spaceShooter2_spritesheet.json Error: [Loader.load] Failed to load http://127.0.0.1:42819/game/assets/space-sprite-sheets/spaceShooter2_spriteshe",
+  "Error loading example: TypeError: Cannot read properties of undefined (reading 'textures')\n    at Object.init (http://127.0.0.1:42819/game/bundle.js:2:1128547)\n    at async $P (http://127.0.0.1:42819/"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:42819/game/index.css",
+  "http://127.0.0.1:42819/game/index.css",
+  "404 http://127.0.0.1:42819/game/assets/space-sprite-sheets/space-shooter.json",
+  "404 http://127.0.0.1:42819/game/dist/bundle.js",
+  "http://127.0.0.1:42819/game/dist/bundle.js",
+  "404 http://127.0.0.1:42819/game/assets/space-sprite-sheets/spaceShooter2_spritesheet.json",
+  "404 http://127.0.0.1:42819/game/assets/space-sprite-sheets/space-shooter.json",
+  "404 http://127.0.0.1:42819/game/assets/space-sprite-sheets/spaceShooter2_spritesheet.json",
+  "404 http://127.0.0.1:42819/game/assets/sprout-lands-basic/Tilesets/Grass.png",
+  "404 http://127.0.0.1:42819/game/assets/sprout-lands-basic/Characters/Basic%20Charakter%20Spritesheet.png"
+ ],
+ "external_requests": [
+  "127.0.0.1:42819",
+  "cdn.jsdelivr.net",
+  "img.shields.io",
+  "pixijs.com"
+ ],
+ "cover_candidates": [
+  "88: Preview.png (اسم عنوان/بانر)",
+  "88: Preview.png (اسم عنوان/بانر)",
+  "18: Golden-Tree.png ()"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "تضمين خطوط محلياً": 10
+ }
+}

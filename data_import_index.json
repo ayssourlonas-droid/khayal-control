@@ -1841,5 +1841,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=SparrowTune"
+  },
+  {
+    "key": "moxijs",
+    "size": 216690,
+    "repo": "ineffably/moxijs",
+    "id": 128,
+    "slug": "moxijs",
+    "title": "Moxijs",
+    "developer": "ineffably",
+    "license": "MIT",
+    "source": "https://github.com/ineffably/moxijs",
+    "commit": "f15b8186f4b34e33c2f1bd4d2d9e2a24a44c7d17",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: readme.md: Asset Credits | readme.md: [Kenney.nl](https://www.kenney.nl/)** - UI packs and Space Shooter sprites (CC0)"
   }
 ]

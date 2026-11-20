@@ -1,0 +1,12 @@
+Source: https://github.com/ineffably/moxijs
+Commit: f15b8186f4b34e33c2f1bd4d2d9e2a24a44c7d17
+License: MIT
+Imported: 2026-11-20T20:46:37.371457+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 10}
+
+Media provenance (automated signals, not a legal guarantee):
+- readme.md: Asset Credits
+- readme.md: [Kenney.nl](https://www.kenney.nl/)** - UI packs and Space Shooter sprites (CC0)
+- readme.md: [Cup Nooble](https://cupnooble.itch.io/)** - Sprout Lands asset packs
+- readme.md: Fonts** - PixelOperator (CC0), Dogica Pixel (SIL OFL), VHS Gothic (CC BY-SA 3.0)
+- images: 1935, audio: 6, tagged audio: 0

@@ -2539,5 +2539,32 @@
       "type": "web",
       "category": "endless-runner"
     }
+  },
+  {
+    "id": 128,
+    "imported_at": "2026-11-20T20:49:54Z",
+    "release_year": "2025",
+    "category_tags": [
+      "canvas-game",
+      "game-development",
+      "game-examples"
+    ],
+    "main_scene": {
+      "title_ar": "Moxijs",
+      "title_en": "Moxijs",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/moxijs/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Make 2D WebGL Games with MoxiJS",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/moxijs/",
+      "developer": "ineffably",
+      "license": "MIT",
+      "source_url": "https://github.com/ineffably/moxijs",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas-game"
+    }
   }
 ]
