@@ -1766,5 +1766,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README_EN.md: Due to instances of misuse, versions 1.12.2 and later of this project will transition from the MIT License to the Apache-2.0 License. Usage  | LICENSE: attribution notices from the Source form of the Work,"
+  },
+  {
+    "key": "jscapstoneendlessrunner",
+    "size": 18939,
+    "repo": "vichuge/js-capstone-endless-runner",
+    "id": 123,
+    "slug": "js-capstone-endless-runner",
+    "title": "Js Capstone Endless Runner",
+    "developer": "vichuge",
+    "license": "MIT",
+    "source": "https://github.com/vichuge/js-capstone-endless-runner",
+    "commit": "97eaa162a79092fb5b99acdfa2ad1c7648c41bba",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Music by Pascal Belisle | README.md: UI pack by [Kenney Vleugels](https://www.kenney.nl/)"
   }
 ]

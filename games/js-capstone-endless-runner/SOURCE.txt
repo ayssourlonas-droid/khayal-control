@@ -1,0 +1,11 @@
+Source: https://github.com/vichuge/js-capstone-endless-runner
+Commit: 97eaa162a79092fb5b99acdfa2ad1c7648c41bba
+License: MIT
+Imported: 2026-11-20T19:34:41.922922+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 12, "تحسين وسائط صور": 24, "تحسين وسائط صوت": 4, "تحسين وسائط خطوط": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: Music by Pascal Belisle
+- README.md: UI pack by [Kenney Vleugels](https://www.kenney.nl/)
+- README.md: sound effects by [opengameart.org](https://opengameart.org/)
+- images: 2, audio: 0, tagged audio: 0
