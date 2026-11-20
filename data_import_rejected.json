@@ -1591,5 +1591,14 @@
     "date": "2026-11-20",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44812886186"
+  },
+  {
+    "url": "https://github.com/LuisAraujo/Livro-Canvas-HTML5-do-Alpha-ao-Z-index",
+    "repo": "LuisAraujo/Livro-Canvas-HTML5-do-Alpha-ao-Z-index",
+    "reason": "لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. جرّب إدخال subdir أو build_cmd",
+    "license": "MIT",
+    "date": "2026-11-20",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44814031039"
   }
 ]
