@@ -2458,5 +2458,32 @@
       "type": "web",
       "category": "babylonjs"
     }
+  },
+  {
+    "id": 125,
+    "imported_at": "2026-11-20T20:04:13Z",
+    "release_year": "2026",
+    "category_tags": [
+      "achtung",
+      "achtung-die-kurve",
+      "achtung-die-kurve-classic"
+    ],
+    "main_scene": {
+      "title_ar": "Achtung Die Kurve",
+      "title_en": "Achtung Die Kurve",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/achtung-die-kurve/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Javascript remake of the Flash game \"Achtung, die Kurve!\"",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/achtung-die-kurve/",
+      "developer": "eigilnikolajsen",
+      "license": "MIT",
+      "source_url": "https://github.com/eigilnikolajsen/achtung-die-kurve",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "achtung"
+    }
   }
 ]

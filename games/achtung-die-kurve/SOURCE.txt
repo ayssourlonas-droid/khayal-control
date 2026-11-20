@@ -1,0 +1,8 @@
+Source: https://github.com/eigilnikolajsen/achtung-die-kurve
+Commit: a54f7d953b9f8f4d172796d7b7f4082cfcb808ad
+License: MIT
+Imported: 2026-11-20T19:59:52.565321+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 3, "حذف ملفات غير لازمة": 1, "تحسين وسائط صور": 2, "تنظيف الكود": 6}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 5, audio: 0, tagged audio: 0

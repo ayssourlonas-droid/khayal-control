@@ -1796,5 +1796,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained"
+  },
+  {
+    "key": "achtungdiekurve",
+    "size": 82,
+    "repo": "eigilnikolajsen/achtung-die-kurve",
+    "id": 125,
+    "slug": "achtung-die-kurve",
+    "title": "Achtung Die Kurve",
+    "developer": "eigilnikolajsen",
+    "license": "MIT",
+    "source": "https://github.com/eigilnikolajsen/achtung-die-kurve",
+    "commit": "a54f7d953b9f8f4d172796d7b7f4082cfcb808ad",
+    "date": "2026-11-20",
+    "license_file": "LICENCE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
