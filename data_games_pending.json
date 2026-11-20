@@ -2485,5 +2485,32 @@
       "type": "web",
       "category": "achtung"
     }
+  },
+  {
+    "id": 126,
+    "imported_at": "2026-11-20T20:34:36Z",
+    "release_year": "2026",
+    "category_tags": [
+      "canvas",
+      "canvas-game",
+      "html5-canvas"
+    ],
+    "main_scene": {
+      "title_ar": "Littlejsworld",
+      "title_en": "Littlejsworld",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/littlejsworld/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🎮 Simple game made in pure JavaScript",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/littlejsworld/",
+      "developer": "diguifi",
+      "license": "MIT",
+      "source_url": "https://github.com/diguifi/littlejsworld",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "canvas"
+    }
   }
 ]

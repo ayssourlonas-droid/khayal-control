@@ -1811,5 +1811,20 @@
     "date": "2026-11-20",
     "license_file": "LICENCE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "littlejsworld",
+    "size": 77,
+    "repo": "diguifi/littlejsworld",
+    "id": 126,
+    "slug": "littlejsworld",
+    "title": "Littlejsworld",
+    "developer": "diguifi",
+    "license": "MIT",
+    "source": "https://github.com/diguifi/littlejsworld",
+    "commit": "90d8749a1c3003ea1b22b460b3c92065dc0f9238",
+    "date": "2026-11-20",
+    "license_file": "LICENSE.md",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

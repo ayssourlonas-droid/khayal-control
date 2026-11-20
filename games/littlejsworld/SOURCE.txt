@@ -1,0 +1,8 @@
+Source: https://github.com/diguifi/littlejsworld
+Commit: 90d8749a1c3003ea1b22b460b3c92065dc0f9238
+License: MIT
+Imported: 2026-11-20T20:30:16.975873+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 1, "تحسين وسائط خطوط": 1, "تنظيف الكود": 5}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 0, audio: 0, tagged audio: 0
