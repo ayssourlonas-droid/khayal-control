@@ -2213,5 +2213,32 @@
       "type": "web",
       "category": "3d-game"
     }
+  },
+  {
+    "id": 116,
+    "imported_at": "2026-11-20T18:37:23Z",
+    "release_year": "2026",
+    "category_tags": [
+      "babel",
+      "browser-game",
+      "dragon-ball"
+    ],
+    "main_scene": {
+      "title_ar": "7balls",
+      "title_en": "7balls",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/7balls/_cover.webp"
+    },
+    "details_scene": {
+      "description": "🎮 Gra webowa w pixel arcie oparta na \"Dragon Ball\": 10 rund od smoczych kul po Turniej Mocy, 10 wojowników, przemiany Super Saiyan i Kaioken (Phaser 2)",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/7balls/",
+      "developer": "piecioshka",
+      "license": "MIT",
+      "source_url": "https://github.com/piecioshka/7balls",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "babel"
+    }
   }
 ]

@@ -1661,5 +1661,20 @@
     "date": "2026-11-11",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: artist=All Sounds | artist=Sascha Dikiciyan And Cris Velasco"
+  },
+  {
+    "key": "balls",
+    "size": 44944,
+    "repo": "piecioshka/7balls",
+    "id": 116,
+    "slug": "7balls",
+    "title": "7balls",
+    "developer": "piecioshka",
+    "license": "MIT",
+    "source": "https://github.com/piecioshka/7balls",
+    "commit": "fd4cb8f895c9c6a9809c8cc12437af7a83090d6e",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

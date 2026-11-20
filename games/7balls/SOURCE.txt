@@ -1,0 +1,8 @@
+Source: https://github.com/piecioshka/7balls
+Commit: fd4cb8f895c9c6a9809c8cc12437af7a83090d6e
+License: MIT
+Imported: 2026-11-20T18:31:58.551496+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تحسين وسائط خطوط": 1}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 198, audio: 0, tagged audio: 0
