@@ -1871,5 +1871,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE.md",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "glidiebirdie",
+    "size": 845,
+    "repo": "0thernes/glidiebirdie",
+    "id": 130,
+    "slug": "glidiebirdie",
+    "title": "Glidiebirdie",
+    "developer": "0thernes",
+    "license": "MIT",
+    "source": "https://github.com/0thernes/glidiebirdie",
+    "commit": "8986d07a7c9b8d68045b9c71b62475e5c3b80006",
+    "date": "2026-11-20",
+    "license_file": "LICENSE.txt",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Use it, fork it, remix it, ship it — a short attribution notice is all that's asked."
   }
 ]

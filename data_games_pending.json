@@ -2593,5 +2593,32 @@
       "type": "web",
       "category": "2d-game"
     }
+  },
+  {
+    "id": 130,
+    "imported_at": "2026-11-20T21:02:40Z",
+    "release_year": "2026",
+    "category_tags": [
+      "0thernes",
+      "accessible-game",
+      "arcade-game"
+    ],
+    "main_scene": {
+      "title_ar": "Glidiebirdie",
+      "title_en": "Glidiebirdie",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/glidiebirdie/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A polished, accessible, zero-dependency Flappy Bird with calm physics, themes, procedural audio, stats, achievements, and a live browser demo.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/glidiebirdie/",
+      "developer": "0thernes",
+      "license": "MIT",
+      "source_url": "https://github.com/0thernes/glidiebirdie",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "0thernes"
+    }
   }
 ]

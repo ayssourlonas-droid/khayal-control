@@ -1,0 +1,1 @@
+{"compilerOptions":{"checkJs":true,"allowJs":true,"noEmit":true,"target":"ES2022","module":"ES2022","moduleResolution":"bundler","lib":["ES2022","DOM","DOM.Iterable"]},"include":["game.js","src/**/*.js"],"exclude":["node_modules","tests","service-worker.js"]}

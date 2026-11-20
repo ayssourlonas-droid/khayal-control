@@ -1,0 +1,9 @@
+Source: https://github.com/0thernes/glidiebirdie
+Commit: 8986d07a7c9b8d68045b9c71b62475e5c3b80006
+License: MIT
+Imported: 2026-11-20T20:58:43.932497+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 33, "تنظيف الكود": 27}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: Use it, fork it, remix it, ship it — a short attribution notice is all that's asked.
+- images: 6, audio: 0, tagged audio: 0

@@ -1,0 +1,1 @@
+import{state}from"./state.js";export function hapticTap(){if(!state.reducedMotion)try{navigator.vibrate?.(10)}catch{}}export function hapticPulse(ms){if(!state.reducedMotion)try{navigator.vibrate?.(ms)}catch{}}
