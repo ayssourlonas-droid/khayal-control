@@ -1555,5 +1555,14 @@
     "date": "2026-11-20",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44800743140"
+  },
+  {
+    "url": "https://github.com/Ombosoft/paint-match",
+    "repo": "Ombosoft/paint-match",
+    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "license": "Apache-2.0",
+    "date": "2026-11-20",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44804393723"
   }
 ]
