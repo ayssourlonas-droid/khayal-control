@@ -1618,5 +1618,14 @@
     "date": "2026-11-20",
     "attempts": 1,
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44815204482"
+  },
+  {
+    "url": "https://github.com/chenzhiyong1994/unverified-survivors",
+    "repo": "chenzhiyong1994/unverified-survivors",
+    "reason": "هذا مشروع يحتاج خادماً أو قاعدة بيانات (.env.example؛ server) ولا يعمل كموقع ثابت، فلا يمكن استضافته على Cloudflare Pages ولا تشغيله في التطبيق. هذه ليست مشكلة في الاستيراد.",
+    "license": "MIT",
+    "date": "2026-11-20",
+    "attempts": 1,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44816824854"
   }
 ]
