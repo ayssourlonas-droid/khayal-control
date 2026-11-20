@@ -1736,5 +1736,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: artist=Soundrangers.com | copyright=(C) Soundrangers.com"
+  },
+  {
+    "key": "bartenderen",
+    "size": 35469,
+    "repo": "imshota1009/Bartender-EN",
+    "id": 121,
+    "slug": "bartender-en",
+    "title": "Bartender EN",
+    "developer": "imshota1009",
+    "license": "Apache-2.0",
+    "source": "https://github.com/imshota1009/Bartender-EN",
+    "commit": "d33aedb4fb1ce4df35c8f2ba89d7128162791ddd",
+    "date": "2026-11-20",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: LICENSE: attribution notices from the Source form of the Work, | LICENSE: include a readable copy of the attribution notices contained | artist=Shuki Yamamoto"
   }
 ]

@@ -1,0 +1,76 @@
+{
+ "date": "2026-11-20T19:20:17.841604+00:00",
+ "status": "warn",
+ "source": "https://github.com/imshota1009/Bartender-EN",
+ "commit": "d33aedb4fb1ce4df35c8f2ba89d7128162791ddd",
+ "license": "Apache-2.0",
+ "warnings": [
+  "روابط لمواقع خارجية: api.open-meteo.com, cdn.tailwindcss.com, html2canvas.hertzen.com, social-plugins.line.me, twitter.com",
+  "خط «Playfair Display» غير مضمَّن (تجاوز سقف 3 عائلات؛ الأقل استعمالاً في الكود)؛ يُرسم النص بالخط الاحتياطي",
+  "خط «Cinzel» غير مضمَّن (تجاوز سقف 3 عائلات؛ الأقل استعمالاً في الكود)؛ يُرسم النص بالخط الاحتياطي",
+  "حُذف خط «M PLUS Rounded 1c» لأن حجم الخطوط تجاوز 450 KB؛ يُرسم بالخط الاحتياطي",
+  "حُذف خط «Noto Serif JP» لأن حجم الخطوط تجاوز 450 KB؛ يُرسم بالخط الاحتياطي",
+  "1 أخطاء في الكونسول، أولها: Failed to load resource: net::ERR_CONNECTION_REFUSED",
+  "ESLint: 1 أخطاء برمجية في 1 ملفات، أولها: script.js:8 Parsing error: Missing catch or finally clause"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 72 صورة و7 صوتاً",
+  "تصريح المطوّر عن الوسائط: LICENSE: attribution notices from the Source form of the Work,",
+  "تصريح المطوّر عن الوسائط: LICENSE: include a readable copy of the attribution notices contained",
+  "تصريح المطوّر عن الوسائط: LICENSE: do not modify the License. You may add Your own attribution",
+  "تصريح المطوّر عن الوسائط: LICENSE: that such additional attribution notices cannot be construed",
+  "بيانات داخل الملفات: artist=Shuki Yamamoto",
+  "أنماط تستحق الانتباه: طلب الموقع الجغرافي (script.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:bartender-en:) في 1 صفحة",
+  "خطوط Google ضُمِّنت محلياً (لا اتصال بـ Google وقت اللعب): Inter (400، 700؛ latin) — 4 ملف خط، 112 KB",
+  "طراز الخطوط (يمكن استبدالها من fonts_map.json): Inter=عصري",
+  "أُضيف خط Tajawal احتياطياً للنص العربي لنفس أسماء العائلات",
+  "تراخيص الخطوط في _gfonts/FONTS.txt",
+  "لاعب آلي عشوائي: جُرّب نحو 324 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 5 ملفاً (4372 KB)؛ من 92 إلى 87",
+  "تحسين صور: 71 ملفاً، وفّر 3229 KB",
+  "تحسين صوت: 6 ملفاً، وفّر 19042 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 31MB ← 9MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "درجة الجودة التقريبية: 70/100 (أخطاء كونسول (-15)، طلبات خارجية (-5)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تضمين خطوط محلياً × 6",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 5",
+  "تعديل تلقائي: تحسين وسائط صور × 71",
+  "تعديل تلقائي: تحسين وسائط صوت × 6",
+  "الغلاف: title.png ← README #1، اسم عنوان/بانر (درجة 168)",
+  "الأزمنة: جلب المستودع: 1ث؛ الخطوط: 27ث؛ اختبار المتصفح: 89ث؛ تقليل الملفات: 48ث؛ تحسين الوسائط: 147ث؛ فحص JavaScript: 3ث؛ تنظيف الكود: 1ث (أوامر: 4، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+ ],
+ "failed_requests": [
+  "http://localhost:3000/api/music"
+ ],
+ "external_requests": [
+  "127.0.0.1:35535",
+  "api.open-meteo.com",
+  "cdn.jsdelivr.net",
+  "cdn.tailwindcss.com",
+  "cdnjs.cloudflare.com",
+  "html2canvas.hertzen.com"
+ ],
+ "cover_candidates": [
+  "168: title.png (README #1، اسم عنوان/بانر)",
+  "38: cyberpunk_background.gif (README #9، اسم شاشة، اسم جزء/عنصر)",
+  "23: background.png (حمّلتها اللعبة، اسم شاشة، اسم جزء/عنصر)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 1,
+  "errors": 1
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 1,
+  "تضمين خطوط محلياً": 6,
+  "حذف ملفات غير لازمة": 5,
+  "تحسين وسائط صور": 71,
+  "تحسين وسائط صوت": 6
+ }
+}
