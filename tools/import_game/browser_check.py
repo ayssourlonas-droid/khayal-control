@@ -8,7 +8,7 @@ import threading
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
-from common import COUNT, EXCLUDE_DIRS, _STAGE, log, run
+from common import CHROMIUM_ARGS, COUNT, EXCLUDE_DIRS, _STAGE, log, run
 
 # ───────────── هل هي لعبة؟ (تقبل إدخالاً من اللاعب) ─────────────
 # نحقن سكربتاً قبل كل صفحة وإطار يسجّل أنواع أحداث الإدخال التي تسجّلها الصفحة (لمس، نقر، مفاتيح، فأرة، يد تحكم، حسّاس حركة)
@@ -16,6 +16,61 @@ from common import COUNT, EXCLUDE_DIRS, _STAGE, log, run
 INPUT_EVENTS = ["click", "dblclick", "mousedown", "mouseup", "mousemove", "pointerdown", "pointerup", "pointermove",
                 "touchstart", "touchend", "touchmove", "keydown", "keyup", "keypress", "wheel", "contextmenu",
                 "gamepadconnected", "deviceorientation", "devicemotion", "dragstart", "input", "change", "submit"]
+# التقاط كل نص يراه اللاعب فعلاً (رسم canvas + نصوص DOM + سماتها) أثناء الاختبار، لبناء ملف الترجمة _i18n.json.
+# الأرقام تُستبدل بـ {#} هنا (القاعدة نفسها في i18n_build.norm_key وفي سكربت الحقن بالتطبيق: يجب أن تبقى متطابقة).
+I18N_HARVEST_JS = """
+(() => {
+  try {
+    if (window.__i18nSeen) return;
+    const seen = new Set();
+    window.__i18nSeen = seen;
+    const NUM = /\\d+(?:[.,]\\d+)*/g;
+    const add = (s) => {
+      try {
+        if (typeof s !== 'string') s = String(s);
+        s = s.replace(/\\s+/g, ' ').trim();
+        if (s.length < 2 || s.length > 200 || seen.size >= 2000) return;
+        if ((s.match(/\\p{L}/gu) || []).length < 2) return;
+        seen.add(s.replace(NUM, '{#}'));
+      } catch (e) {}
+    };
+    for (const C of [window.CanvasRenderingContext2D, window.OffscreenCanvasRenderingContext2D]) {
+      if (!C) continue;
+      for (const k of ['fillText', 'strokeText']) {
+        const o = C.prototype[k];
+        if (typeof o === 'function') C.prototype[k] = function (t) { add(t); return o.apply(this, arguments); };
+      }
+    }
+    const SKIP = {SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, TEXTAREA: 1, CODE: 1, PRE: 1};
+    const ATTRS = ['title', 'alt', 'placeholder', 'aria-label'];
+    const walk = (n) => {
+      if (!n) return;
+      if (n.nodeType === 3) { if (!(n.parentNode && SKIP[n.parentNode.nodeName])) add(n.nodeValue); return; }
+      if (n.nodeType !== 1 || SKIP[n.nodeName]) return;
+      for (const a of ATTRS) { const v = n.getAttribute && n.getAttribute(a); if (v) add(v); }
+      if (n.nodeName === 'INPUT' && /^(button|submit|reset)$/i.test((n.getAttribute && n.getAttribute('type')) || '')) {
+        const v = n.getAttribute('value'); if (v) add(v);
+      }
+      for (let c = n.firstChild; c; c = c.nextSibling) walk(c);
+    };
+    const start = () => {
+      walk(document.documentElement);
+      if (document.title) add(document.title);
+      new MutationObserver((ms) => {
+        for (const m of ms) {
+          if (m.type === 'characterData') walk(m.target);
+          else if (m.type === 'attributes') walk(m.target);
+          else m.addedNodes.forEach(walk);
+        }
+      }).observe(document.documentElement, {childList: true, characterData: true, subtree: true,
+                                            attributes: true, attributeFilter: ATTRS});
+    };
+    if (document.documentElement) start(); else document.addEventListener('DOMContentLoaded', start);
+  } catch (e) {}
+})();
+"""
+I18N_COLLECT_JS = "() => (window.__i18nSeen ? Array.from(window.__i18nSeen) : [])"
+
 INPUT_HOOK_JS = """
 (() => {
   const EV = %s;
@@ -195,7 +250,7 @@ def _landscape_shot(port, shots_dir: Path):
         shots_dir.mkdir(parents=True, exist_ok=True)
         p = shots_dir / "_s_land.png"
         with sync_playwright() as pw:
-            b = pw.chromium.launch(args=["--no-sandbox"])
+            b = pw.chromium.launch(args=CHROMIUM_ARGS)
             ctx = b.new_context(viewport={"width": 915, "height": 412}, device_scale_factor=2,
                                 is_mobile=True, has_touch=True)
             pg = ctx.new_page()
@@ -217,7 +272,7 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45, 
     log(f"🌐 اختبار متصفح رقم {COUNT['browser_tests']} (المرحلة: {_STAGE['name']})")
     res = {"ran": False, "console_errors": [], "failed_requests": [], "status_ok": False,
            "blank": False, "external_requests": [], "missing": [], "used": [],
-           "input_events": [], "interactive_els": 0, "keyboard_only": False}
+           "input_events": [], "interactive_els": 0, "keyboard_only": False, "i18n_strings": []}
     try:
         from playwright.sync_api import sync_playwright
     except Exception:
@@ -245,10 +300,11 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45, 
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     try:
         with sync_playwright() as pw:
-            b = pw.chromium.launch(args=["--no-sandbox"])
+            b = pw.chromium.launch(args=CHROMIUM_ARGS)
             ctx = b.new_context(viewport={"width": 412, "height": 915}, device_scale_factor=2,
                                 is_mobile=True, has_touch=True)
             ctx.add_init_script(INPUT_HOOK_JS)
+            ctx.add_init_script(I18N_HARVEST_JS)
             page = ctx.new_page()
             page.on("console", lambda m: res["console_errors"].append(m.text[:200]) if m.type == "error" else None)
             page.on("pageerror", lambda e: res["console_errors"].append(("JS: " + str(e))[:200]))
@@ -305,6 +361,16 @@ def browser_test(site: Path, work: Path, shot: Path, explore=False, seconds=45, 
                 res["keyboard_only"] = bool(ev & kbd) and not (ev & pointer) and els == 0
             except Exception:
                 res["input_events"] = None  # تعذّر الفحص: لا نحكم
+            try:
+                seen_txt = set()
+                for fr in page.frames:
+                    try:
+                        seen_txt.update(fr.evaluate(I18N_COLLECT_JS))
+                    except Exception:
+                        pass
+                res["i18n_strings"] = sorted(seen_txt)[:1500]
+            except Exception:
+                pass
             page.screenshot(path=str(shot))
             res["used"] = sorted(used)
             b.close()

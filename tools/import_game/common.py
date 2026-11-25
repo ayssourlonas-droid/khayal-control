@@ -17,6 +17,10 @@ ALLOWED = PERMISSIVE + COPYLEFT  # OWNED/PARTNER لا تُقبل تلقائيا�
 
 PREBUILT_DIRS = ["docs", "dist", "build", "www", "release", "web", "html", "public"]
 EXCLUDE_DIRS = {".git", "node_modules", ".github", "__MACOSX"}
+# ملفات حساسة (مفاتيح وشهادات وأسرار بيئة) لا تُنسخ إلى الموقع أبداً
+SENSITIVE_FILE_RE = re.compile(
+    r"(\.(pem|key|p12|pfx|jks|keystore|crt|cer|der)$|^\.env(\..*)?$|\.env$|^id_(rsa|dsa|ecdsa|ed25519)(\.pub)?$|^\.npmrc$|^\.netrc$)",
+    re.I)
 MAX_FILE = 25 * 1024 * 1024          # حد Cloudflare Pages للملف الواحد
 MAX_FILES = 18000                    # حد Cloudflare 20,000
 MAX_TOTAL_FAIL = 150 * 1024 * 1024
@@ -119,6 +123,27 @@ def _heartbeat(cmd_text, t0, stop):
         log(f"⏳ ما زال يعمل منذ {int(time.time() - t0)}ث: {cmd_text[:80]}  (المرحلة: {_STAGE['name']})")
 
 
+# إعدادات Chromium للاختبار الآلي: WebGL برمجي (SwiftShader) لأن خادم GitHub بلا بطاقة رسوم.
+# بدونها قد تفشل ألعاب WebGL/Phaser/Three وتظهر «فارغة» رغم سلامتها.
+CHROMIUM_ARGS = ["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader",
+                 "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"]
+
+
+class CommandError(RuntimeError):
+    """فشل أمر خارجي. يحمل ذيل المخرجات كي يظهر السبب الحقيقي في سبب الرفض لا رمز الخروج فقط."""
+
+    def __init__(self, msg, returncode=None, output=""):
+        super().__init__(msg)
+        self.returncode = returncode
+        self.output = output
+
+
+def _error_tail(out, max_chars=300):
+    """آخر سطور مفيدة من مخرجات الأمر (بلا أسطر فارغة) في سطر واحد."""
+    lines = [l.strip() for l in (out or "").splitlines() if l.strip()]
+    return " | ".join(lines[-3:])[-max_chars:]
+
+
 def run(cmd, cwd=None, timeout=900, check=True, env=None):
     cmd_text = " ".join(cmd) if isinstance(cmd, list) else cmd
     log("$", cmd_text)
@@ -140,7 +165,9 @@ def run(cmd, cwd=None, timeout=900, check=True, env=None):
     if tail:
         log(tail)
     if check and r.returncode != 0:
-        raise RuntimeError(f"فشل الأمر: {cmd} (رمز {r.returncode})")
+        tail1 = _error_tail(r.stdout)
+        raise CommandError(f"فشل الأمر: {cmd} (رمز {r.returncode})" + (f" — {tail1}" if tail1 else ""),
+                           returncode=r.returncode, output=tail)
     return r
 
 

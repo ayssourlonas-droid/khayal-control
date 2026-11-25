@@ -14,9 +14,11 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import i18n_build
+import translate_ar
 from browser_check import browser_test, fix_case, lint_js
 import touch_controls
-from common import ALLOWED, COPYLEFT, COUNT, FIXES, HTML_SKIPPED, MAX_FILES, MAX_TOTAL_FAIL, MAX_TOTAL_WARN, TIMINGS, api, fixed, log, parse_repo, pretty_title, run, slugify, stage, start_watchdog, stop_watchdog
+from common import _STAGE, ALLOWED, COPYLEFT, COUNT, FIXES, HTML_SKIPPED, MAX_FILE, MAX_FILES, MAX_TOTAL_FAIL, MAX_TOTAL_WARN, TIMINGS, api, fixed, log, parse_repo, pretty_title, run, slugify, stage, start_watchdog, stop_watchdog
 from html_sanitize import sanitize, scan_suspicious
 from provenance import provenance_lines, scan_provenance, server_side_hints
 from prune import prune_site
@@ -37,6 +39,12 @@ def main():
     if prune_mode not in ("smart", "junk", "off"):
         prune_mode = "smart"
     media_mode = os.environ.get("INPUT_MEDIA", "safe").strip().lower()
+    # الترجمة: off | meta (الاسم والوصف والتصنيفات) | full (+ نصوص واجهة اللعبة). المحرّك: google | offline (مكتبات، بلا ذكاء اصطناعي)
+    translate_mode = (os.environ.get("INPUT_TRANSLATE", "meta").strip().lower() or "meta")
+    if translate_mode not in ("off", "meta", "full"):
+        translate_mode = "meta"
+    translate_engine = (os.environ.get("INPUT_TRANSLATE_ENGINE", "google").strip().lower() or "google")
+    _tr = {"obj": None, "tried": False}
     if media_mode not in ("safe", "off"):
         media_mode = "safe"
     work = Path(os.environ.get("WORK_DIR", "work")).resolve()
@@ -192,7 +200,10 @@ def main():
         big_warn = f"الحجم كبير قبل تحسين الوسائط: {s['total'] // 1048576}MB"
         warnings.append(big_warn)
     if s["big_files"]:
-        reasons.append("ملفات تتجاوز 25MB (حد Cloudflare): " + ", ".join(s["big_files"][:5]))
+        # لا نرفض الآن: التقليل وتحسين الوسائط قد يُصغّران الملف أو يحذفانه. القرار في «فحص الحجم النهائي».
+        report["big_files_initial"] = s["big_files"][:20]
+        notes.append(f"{len(s['big_files'])} ملفات تتجاوز 25MB قبل المعالجة؛ يُعاد فحصها بعد التقليل وتحسين الوسائط: "
+                     + ", ".join(s["big_files"][:3]))
     if s["removed"]:
         warnings.append(f"أُزيلت {len(s['removed'])} وسوم إعلانات/تتبّع من HTML")
     report["removed_tags"] = s["removed"][:20]
@@ -260,11 +271,26 @@ def main():
     else:
         if not t["status_ok"]:
             reasons.append("index.html لا يُحمَّل (ليس 200)")
+        errs = t["console_errors"]
+        load_fail = [f for f in t["failed_requests"] if re.match(r"^(4|5)\d\d ", f) and "favicon" not in f.lower()]
+        gl_err = next((e for e in errs if re.search(r"webgl|swiftshader|\bgpu\b|graphics (card|context)", e, re.I)), None)
         if t["blank"]:
-            reasons.append("الصفحة فارغة بعد 6 ثوانٍ")
+            if gl_err:
+                # على الأرجح لعبة WebGL لم تعمل لأن خادم الاختبار بلا بطاقة رسوم: لا نرفضها، بل للمراجعة على هاتف
+                warnings.append("الصفحة فارغة في الاختبار الآلي وفيها خطأ WebGL («" + gl_err[:90] + "»): قد تكون لعبة سليمة "
+                                "لم تعمل بلا بطاقة رسوم؛ جرّبها على هاتف قبل الاعتماد")
+            else:
+                reasons.append("الصفحة فارغة (لا عناصر مرئية ولا نص) بعد التشغيل التجريبي"
+                               + (f"؛ أول خطأ: {errs[0][:90]}" if errs else ""))
         elif t.get("input_events") == [] and not t.get("interactive_els") and not t["external_requests"]:
-            reasons.append("ليست لعبة: الصفحة لا تستقبل أي إدخال من اللاعب (لا لمس ولا نقر ولا مفاتيح ولا أزرار)، "
-                           "وكل ما فيها عرض متحرك أو صورة. اللعبة يجب أن تستجيب لما يفعله اللاعب.")
+            if errs or load_fail:
+                # لا إدخال + أخطاء تحميل = على الأرجح لعبة معطّلة لا «ليست لعبة»: تذهب للمراجعة
+                first = (errs[0] if errs else load_fail[0])[:100]
+                warnings.append("لم تسجّل الصفحة أي إدخال من اللاعب وظهرت أخطاء تحميل (" + first + ")؛ على الأرجح "
+                                "اللعبة معطّلة وليست «ليست لعبة». راجعها يدوياً")
+            else:
+                reasons.append("ليست لعبة: الصفحة لا تستقبل أي إدخال من اللاعب (لا لمس ولا نقر ولا مفاتيح ولا أزرار)، "
+                               "وكل ما فيها عرض متحرك أو صورة. اللعبة يجب أن تستجيب لما يفعله اللاعب.")
         local_fail = [f for f in t["failed_requests"]
                       if re.match(r"^(4|5)\d\d ", f) and "favicon" not in f.lower()]
         if local_fail:
@@ -341,6 +367,25 @@ def main():
             except Exception as e:
                 warnings.append(f"تعذّر تحسين الوسائط: {str(e)[:120]}")
 
+    stage("فحص الحجم النهائي")
+    # 6أ-3) القرار في الملفات التي تتجاوز حد Cloudflare (25MB) بعد التقليل وتحسين الوسائط (الفيديو يُضغط في مرحلة الوسائط)
+    still_big = sorted(((p.stat().st_size, str(p.relative_to(site)).replace(os.sep, "/"))
+                        for p in site.rglob("*") if p.is_file() and not p.is_symlink() and p.stat().st_size > MAX_FILE),
+                       reverse=True)
+    if report.get("big_files_initial") is not None and not still_big:
+        notes.append("زالت الملفات الكبيرة (>25MB) بعد التقليل وتحسين الوسائط")
+    if still_big:
+        vid_ext = {".mp4", ".webm", ".mov", ".avi", ".mkv", ".m4v"}
+        vids = [(sz, r) for sz, r in still_big if Path(r).suffix.lower() in vid_ext]
+        others = [(sz, r) for sz, r in still_big if Path(r).suffix.lower() not in vid_ext]
+        fmt = lambda xs: ", ".join(f"{r} ({sz // 1048576}MB)" for sz, r in xs[:5])
+        report["big_files_final"] = [r for _, r in still_big[:20]]
+        if vids:
+            reasons.append("فيديو يتجاوز 25MB (حد Cloudflare) حتى بعد الضغط وتحسين الصيغة: " + fmt(vids))
+        if others:
+            reasons.append("ملفات تتجاوز 25MB (حد Cloudflare) حتى بعد التقليل وتحسين الوسائط: " + fmt(others))
+        finish("fail")
+
     stage("فحص JavaScript")
     # 6ب) فحص JavaScript (تقرير فقط)
     lint = lint_js(site, work)
@@ -356,6 +401,54 @@ def main():
             notes.append(f"ESLint: لا أخطاء في {lint['checked']} ملفات")
     if lint["skipped"]:
         notes.append(f"{lint['skipped']} ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص")
+
+    def get_tr():
+        if not _tr["tried"]:
+            _tr["tried"] = True
+            obj, tnote = translate_ar.make_translator(translate_engine)
+            _tr["obj"] = obj
+            if tnote:
+                notes.append(("⚠ " if obj is None else "") + tnote)
+        return _tr["obj"]
+
+    stage("ترجمة نصوص اللعبة")
+    # 6ج-0) ملف الترجمة _i18n.json: نصوص اللعبة بكل اللغات الشهيرة. لا نعدّل ملفات اللعبة (فيصلح لكل الرخص):
+    # تطبيق اللاعبين يجلب الملف ويحقن سكربتاً يستبدل النصوص وقت اللعب. النصوص تُلتقط من الاختبار الفعلي للعبة.
+    if translate_mode == "full":
+        harvested = t.get("i18n_strings") or []
+        try:
+            static_strs = i18n_build.extract_static(site)  # كل نصوص ملفات اللعبة، حتى ما لم يظهر في الاختبار
+        except Exception as e:
+            static_strs = []
+            notes.append(f"ملف اللغات: تعذّر الاستخراج الثابت ({type(e).__name__})")
+        keys = i18n_build.prepare_strings(harvested, static_strs)
+        if not keys:
+            notes.append("ملف اللغات: لم تُلتقط نصوص ظاهرة للاعب أثناء الاختبار (اللعبة قد ترسم نصها كصور)")
+        else:
+            tr_obj = get_tr()
+            if tr_obj is not None:
+                try:
+                    tr_obj.extend_budget(1500, 4000)
+                    i18n = i18n_build.build(keys, tr_obj, i18n_build.parse_langs(os.environ.get("INPUT_I18N_LANGS", "")),
+                                            title=pretty_title(repo), description=report.get("description") or "")
+                    if i18n["strings"]:
+                        (site / "_i18n.json").write_text(i18n_build.dumps(i18n), encoding="utf-8")
+                        size_kb = (site / "_i18n.json").stat().st_size // 1024
+                        report["i18n"] = {"strings": len(i18n["strings"]), "langs": len(i18n["langs"]), "kb": size_kb}
+                        notes.append(f"ملف اللغات _i18n.json ({tr_obj.name}): {len(i18n['strings'])} نصاً بـ{len(i18n['langs'])} لغة "
+                                     f"({size_kb}KB). منها {len(harvested)} ملتقطة من التشغيل والباقي مستخرج من ملفات اللعبة. النص المركّب بالدمج أو المرسوم كصورة أو بخطوط البكسل لا يُترجم")
+                        fixed("ملف لغات اللعبة", len(i18n["strings"]))
+                        # كلمات مفردة بلا سياق: ترجمتها الآلية قد تخطئ في المعنى (plant: نبات/مصنع). نعرضها للمراجعة.
+                        rev = [k for k in i18n["strings"] if " " not in k and "{" not in k][:40]
+                        if rev:
+                            report["i18n_review"] = rev
+                            notes.append("راجع ترجمة الكلمات المفردة (قد تخطئ بلا سياق): " + "، ".join(rev[:15]) +
+                                         (" …" if len(rev) > 15 else "") +
+                                         ". للتصحيح ضع ملف games/<اللعبة>/_i18n_overrides.json بالشكل {\"strings\":{\"Plant\":{\"ar\":\"مصنع\"}}} فيغلب الترجمة الآلية ويبقى عند إعادة الاستيراد")
+                    else:
+                        notes.append("ملف اللغات: لم يُرجع المحرّك ترجمات صالحة (حُجب الاتصال؟)؛ جرّب المحرّك offline")
+                except Exception as e:
+                    warnings.append(f"تعذّر بناء ملف اللغات: {str(e)[:120]}")
 
     stage("تنظيف الكود")
     # 6ج) تنظيف الكود: تصغير JS/CSS بلا تغيير الأسماء (esbuild) مع تراجع تلقائي إن ساء الاختبار
@@ -482,10 +575,50 @@ def main():
         "year": report["year"], "repo_size_kb": report.get("repo_size_kb", 0), "cover_name": cover_name, "auto_publish": auto_publish,
         "suspicious_high": report.get("suspicious", {}).get("high", []),
     }
+    if translate_mode in ("meta", "full"):
+        stage("ترجمة البيانات")
+        tr_obj = get_tr()
+        if tr_obj is not None:
+            try:
+                done = translate_ar.translate_meta(meta, tr_obj)
+                notes.append(("ترجمة آلية (" + tr_obj.name + "): " + "، ".join(done) + "؛ راجع الاسم خصوصاً فأسماء الألعاب علامات") if done
+                             else "الترجمة: لا حقول تحتاج ترجمة أو لم يُرجع المحرّك نتيجة صالحة")
+            except Exception as e:
+                notes.append(f"⚠ تعذّرت ترجمة البيانات: {str(e)[:120]}")
     (out / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     report["slug"] = slug
     finish("warn" if warnings else "ok")
 
 
+def _crash_report(e):
+    """أي استثناء غير متوقع: نكتب السبب في report.json بدل ضياعه في سجل طويل،
+    فيظهر في قائمة المرفوضات وفي تعليق GitHub بدل «تعطّل قبل إنتاج تقرير»."""
+    import traceback
+    traceback.print_exc()
+    try:
+        stop_watchdog()
+        out = Path(os.environ.get("WORK_DIR", "work")).resolve() / "out"
+        out.mkdir(parents=True, exist_ok=True)
+        reason = f"خطأ غير متوقع في المرحلة «{_STAGE['name'] or '؟'}»: {type(e).__name__}: {str(e)[:300]}"
+        rp = out / "report.json"
+        try:
+            rep = json.loads(rp.read_text(encoding="utf-8")) if rp.is_file() else {}
+        except Exception:
+            rep = {}
+        rep.update(status="fail", reasons=(rep.get("reasons") or []) + [reason],
+                   repo_url=rep.get("repo_url") or os.environ.get("INPUT_REPO_URL", ""),
+                   traceback=traceback.format_exc()[-1500:])
+        rp.write_text(json.dumps(rep, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"::error title=أسباب الفشل::• {reason}", flush=True)
+    except Exception as e2:
+        log("تعذّر كتابة تقرير العطل:", e2)
+    sys.exit(1)
+
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except BaseException as e:  # noqa: BLE001
+        _crash_report(e)

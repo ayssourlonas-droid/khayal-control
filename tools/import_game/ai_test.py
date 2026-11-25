@@ -164,7 +164,7 @@ def run_agent(site: Path, endpoint, key, model, steps):
     report = {"steps": 0, "notes": [], "issues": [], "console_errors": [], "virtual_ms": 0}
     try:
         with sync_playwright() as pw:
-            b = pw.chromium.launch(args=["--no-sandbox"])
+            b = pw.chromium.launch(args=["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"])
             ctx = b.new_context(viewport={"width": W, "height": H}, device_scale_factor=1, is_mobile=True, has_touch=True)
             page = ctx.new_page()
             page.on("console", lambda m: report["console_errors"].append(m.text[:160]) if m.type == "error" else None)

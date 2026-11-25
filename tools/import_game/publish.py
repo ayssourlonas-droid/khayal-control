@@ -254,10 +254,16 @@ def main():
     def push_host(extra_index=None):
         """دفعة واحدة إلى مستودع الاستضافة (كل دفعة = بناء واحد في Cloudflare، وحدّه المجاني نحو 500 شهرياً)."""
         dest = host / "games" / slug
+        keep = None  # تصحيحات المالك اليدوية للترجمة تبقى عند إعادة الاستيراد
         if dest.exists():
+            ov = dest / "_i18n_overrides.json"
+            if ov.is_file():
+                keep = ov.read_bytes()
             shutil.rmtree(dest)
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(site, dest)
+        if keep is not None and not (dest / "_i18n_overrides.json").exists():
+            (dest / "_i18n_overrides.json").write_bytes(keep)
         file_budget(host, slug)  # يرفض قبل أي دفع إن اقتربنا من حد Cloudflare
         if extra_index is not None:
             try:
@@ -328,7 +334,7 @@ def main():
     if existing:
         push_host()
         # إصلاح الروابط القديمة فقط: ألعاب استُوردت بنسخة قديمة من الأداة سُجّل لها رابط نسبي (/games/x/) لا يعمل في التطبيق.
-        # لا نمسّ أي حقل آخر (الاسم، الوصف، التصنيفات، التقييم) ولا رابط https موجود.
+        # لا نمسّ حقولاً حرّرها المالك (الاسم، الوصف، التصنيفات، التقييم) ولا رابط https موجود؛ الترجمة أدناه تملأ الفارغ فقط.
         fixed = []
         dsc = existing.setdefault("details_scene", {})
         msc = existing.setdefault("main_scene", {})
@@ -341,6 +347,22 @@ def main():
         if poster and (not old_poster.startswith("https://") or (old_poster.startswith(play_url) and old_poster != poster)):
             msc["poster_url"] = poster
             fixed.append("رابط الغلاف")
+        # الترجمة الآلية: نملأ فقط ما لم يُترجم ولم يحرّره المالك (الاسم الفارغ أو المنسوخ من الإنجليزي، والوصف بلا حروف عربية).
+        has_ar = lambda x: bool(re.search(r"[\u0600-\u06FF]", str(x or "")))
+        if meta.get("title_ar") and has_ar(meta["title_ar"]) and (
+                not str(msc.get("title_ar") or "").strip() or msc.get("title_ar") == msc.get("title_en")):
+            msc["title_ar"] = meta["title_ar"]
+            fixed.append("اسم اللعبة بالعربية")
+        if meta.get("description_ar") and not has_ar(dsc.get("description")):
+            if dsc.get("description") and not dsc.get("description_en"):
+                dsc["description_en"] = dsc["description"]
+            dsc["description"] = meta["description_ar"]
+            fixed.append("الوصف بالعربية")
+        if meta.get("tags_ar") and not existing.get("tags_ar"):
+            existing["tags_ar"] = meta["tags_ar"]
+            fixed.append("التصنيفات بالعربية")
+        if meta.get("translation") and any(x in fixed for x in ("اسم اللعبة بالعربية", "الوصف بالعربية", "التصنيفات بالعربية")):
+            existing["translation"] = meta["translation"]
         # علامة «معادة الاستيراد» لتطبيق المتحكم (حقل إضافي لا يقرؤه تطبيق اللاعبين)
         existing["reimported_at"] = now_iso
         save(data / existing_file, existing_list)
@@ -356,7 +378,7 @@ def main():
     tags = meta.get("tags") or ((ai.get("final_tags") or []) if ai else [])
     if isinstance(tags, str):
         tags = [t.strip() for t in tags.split(",") if t.strip()]
-    description = meta.get("description") or (ai.get("final_description_ar") or "")
+    description = meta.get("description_ar") or meta.get("description") or (ai.get("final_description_ar") or "")
     entry = {
         "id": new_id,
         "imported_at": now_iso,
@@ -370,6 +392,7 @@ def main():
         },
         "details_scene": {
             "description": description,
+            **({"description_en": meta["description"]} if meta.get("description_ar") and meta.get("description") else {}),
             "background_url": "",
             "play_url": play_url,
             "developer": meta["developer"],
@@ -380,6 +403,10 @@ def main():
             "category": tags[0] if tags else "",
         },
     }
+    if meta.get("tags_ar"):
+        entry["tags_ar"] = meta["tags_ar"]  # {تصنيف إنجليزي: تسمية عربية}؛ المفتاح الإنجليزي يبقى للتصفية
+    if meta.get("translation"):
+        entry["translation"] = meta["translation"]
     if review_note:
         entry["review_note"] = review_note
     target = games if live else pending

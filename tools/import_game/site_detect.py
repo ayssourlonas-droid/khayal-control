@@ -6,7 +6,7 @@ import shutil
 import time
 from pathlib import Path
 
-from common import EXCLUDE_DIRS, PREBUILT_DIRS, run
+from common import EXCLUDE_DIRS, PREBUILT_DIRS, SENSITIVE_FILE_RE, run, log
 
 # ───────────── اكتشاف مجلد الويب والبناء ─────────────
 def has_index(d: Path):
@@ -145,6 +145,53 @@ def try_pages_branch(owner, repo, work: Path, notes):
     return dest
 
 
+_NPM_FLAGS = ["--no-audit", "--no-fund"]
+
+
+def _npm_install(src: Path, notes):
+    """تثبيت اعتماديات npm بسلسلة بدائل بدل محاولة واحدة:
+    npm ci (إن وُجد القفل) ← npm install ← npm install --legacy-peer-deps ← مع --force.
+    أغلب فشل `npm ci` في المستودعات الجاهزة سببه قفل غير متزامن أو تعارض peer deps."""
+    steps = []
+    if (src / "package-lock.json").is_file():
+        steps.append(("npm ci", ["npm", "ci"] + _NPM_FLAGS))
+    steps += [("npm install", ["npm", "install"] + _NPM_FLAGS),
+              ("npm install --legacy-peer-deps", ["npm", "install", "--legacy-peer-deps"] + _NPM_FLAGS),
+              ("npm install --force", ["npm", "install", "--force", "--legacy-peer-deps"] + _NPM_FLAGS)]
+    last = None
+    for i, (label, cmd) in enumerate(steps):
+        try:
+            run(cmd, cwd=src, timeout=900)
+            if i:
+                notes.append(f"فشلت محاولات تثبيت سابقة ونجح: {label}")
+            return
+        except RuntimeError as e:
+            last = e
+            if i < len(steps) - 1:
+                log(f"⚠ فشل {label}؛ أجرّب بديلاً")
+    raise last
+
+
+def _ensure_build_tool(src: Path, build_script: str, notes):
+    """إن كان أمر build يبدأ بأداة (vite/tsc/webpack…) غير موجودة في node_modules/.bin
+    (سبب شائع لرمز 127) نعيد التثبيت مرة واحدة مع اعتماديات التطوير."""
+    first = (build_script or "").strip().split()
+    while first and ("=" in first[0] or first[0] in ("cross-env", "npx", "run-s", "run-p")):
+        first = first[1:]
+    tool = first[0] if first else ""
+    if not tool or tool in ("node", "npm", "pnpm", "yarn", "cd", "echo", "rm", "cp", "mkdir", "sh", "bash") or "/" in tool or "&" in tool:
+        return
+    if (src / "node_modules" / ".bin" / tool).exists():
+        return
+    log(f"⚠ أداة البناء «{tool}» غير موجودة في node_modules/.bin؛ إعادة التثبيت مع اعتماديات التطوير")
+    try:
+        run(["npm", "install", "--include=dev", "--legacy-peer-deps"] + _NPM_FLAGS, cwd=src, timeout=900,
+            env={"NODE_ENV": "development"})
+        notes.append(f"أداة البناء «{tool}» لم تُثبَّت من أول مرة؛ أُعيد التثبيت مع اعتماديات التطوير")
+    except RuntimeError as e:
+        notes.append(f"تعذّرت إعادة تثبيت أداة البناء «{tool}»: {str(e)[:150]}")
+
+
 def _build_if_needed_raw(src: Path, override, build_cmd, notes):
     root = find_webroot(src, override)
     if root:
@@ -184,14 +231,13 @@ def _build_if_needed_raw(src: Path, override, build_cmd, notes):
             run(["yarn", "install"], cwd=src, timeout=900)
         build_default = ["yarn", "run", "build"]
     else:
-        if (src / "package-lock.json").is_file():
-            run(["npm", "ci", "--no-audit", "--no-fund"], cwd=src, timeout=900)
-        else:
-            run(["npm", "install", "--no-audit", "--no-fund"], cwd=src, timeout=900)
+        _npm_install(src, notes)
         build_default = ["npm", "run", "build"]
     if build_cmd:
         run(build_cmd, cwd=src, timeout=900)  # نص أمر واحد؛ يُنفَّذ عبر الصدفة
     else:
+        if pm == "npm":
+            _ensure_build_tool(src, scripts.get("build", ""), notes)
         run(build_default, cwd=src, timeout=900)
     root = find_webroot(src, override) or newest_index(src) or find_built_output(src, t_build)
     if root and root != src:
@@ -472,7 +518,7 @@ def copy_site(webroot: Path, dest: Path):
         rel = Path(dp).relative_to(webroot)
         (dest / rel).mkdir(parents=True, exist_ok=True)
         for fn in fns:
-            if fn.endswith(".map") or fn == ".DS_Store":
+            if fn.endswith(".map") or fn == ".DS_Store" or SENSITIVE_FILE_RE.search(fn):
                 continue
             sp = Path(dp) / fn
             if sp.is_symlink():
