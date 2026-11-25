@@ -28,6 +28,20 @@ on:
         type: choice
         default: safe
         options: [safe, "off"]
+      translate:
+        description: "الترجمة إلى العربية بمكتبة (بلا ذكاء اصطناعي): meta = الاسم والوصف والتصنيفات / full = + ملف _i18n.json لنصوص اللعبة بعدة لغات (تُحقن وقت اللعب، ولا تُعدَّل ملفات اللعبة) / off"
+        type: choice
+        default: meta
+        options: [meta, full, "off"]
+      i18n_langs:
+        description: "لغات ملف نصوص اللعبة مفصولة بفواصل (مثل ar,en,fr,es). فارغ = كل اللغات المدعومة (23). يُستعمل مع translate=full"
+        type: string
+        default: ""
+      translate_engine:
+        description: "محرّك الترجمة: google (مكتبة deep-translator، يحتاج اتصالاً) / offline (مكتبة argostranslate، نموذج محلي)"
+        type: choice
+        default: google
+        options: [google, offline]
       ai_test:
         description: "اختبار بالذكاء الاصطناعي (يلزم وضع المفتاح في أسرار GitHub من تطبيق المتحكم)"
         type: choice
@@ -75,6 +89,12 @@ jobs:
           pip install playwright pillow fonttools brotli
           python -m playwright install --with-deps chromium
           sudo apt-get install -y ffmpeg || true
+      - name: Install translation library
+        if: ${{ inputs.translate != 'off' }}
+        env:
+          T_ENGINE: ${{ inputs.translate_engine }}
+        run: |
+          if [ "$T_ENGINE" = "offline" ]; then pip install argostranslate; else pip install deep-translator; fi || echo "تعذّر تثبيت مكتبة الترجمة؛ سيُكمل الاستيراد بلا ترجمة"
       - name: Fetch, build, sanitize, test
         env:
           INPUT_REPO_URL: ${{ inputs.repo_url }}
@@ -82,6 +102,9 @@ jobs:
           INPUT_AUTO_PUBLISH: ${{ inputs.auto_publish }}
           INPUT_PRUNE: ${{ inputs.prune }}
           INPUT_MEDIA: ${{ inputs.media }}
+          INPUT_TRANSLATE: ${{ inputs.translate }}
+          INPUT_TRANSLATE_ENGINE: ${{ inputs.translate_engine }}
+          INPUT_I18N_LANGS: ${{ inputs.i18n_langs }}
           INPUT_TAGS: ${{ inputs.tags }}
           INPUT_TITLE_AR: ${{ inputs.title_ar }}
           INPUT_SUBDIR: ${{ inputs.subdir }}

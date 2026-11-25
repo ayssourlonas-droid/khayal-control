@@ -24,6 +24,16 @@ on:
         type: choice
         default: safe
         options: [safe, "off"]
+      translate:
+        description: "الترجمة إلى العربية بمكتبة (بلا ذكاء اصطناعي): meta = الاسم والوصف والتصنيفات / full = + نصوص واجهة اللعبة (مع اختبار وتراجع) / off"
+        type: choice
+        default: meta
+        options: [meta, full, "off"]
+      translate_engine:
+        description: "محرّك الترجمة: google (مكتبة deep-translator، يحتاج اتصالاً) / offline (مكتبة argostranslate، نموذج محلي)"
+        type: choice
+        default: google
+        options: [google, offline]
       ai_test:
         description: "اختبار بالذكاء الاصطناعي"
         type: choice
@@ -60,6 +70,8 @@ jobs:
           ORIENTATION: ${{ inputs.orientation }}
           PRUNE: ${{ inputs.prune }}
           MEDIA: ${{ inputs.media }}
+          TRANSLATE: ${{ inputs.translate }}
+          TRANSLATE_ENGINE: ${{ inputs.translate_engine }}
           AI_TEST: ${{ inputs.ai_test }}
           AI_STEPS: ${{ inputs.ai_steps }}
         run: python3 tools/import_queue.py
