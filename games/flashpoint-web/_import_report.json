@@ -1,5 +1,5 @@
 {
- "date": "2026-11-11T21:40:23.885942+00:00",
+ "date": "2026-11-25T14:25:02.969401+00:00",
  "status": "warn",
  "source": "https://github.com/darkraise/flashpoint-web",
  "commit": "c12255c3c6cf69e3c14b498d01339e241fdaee7d",
@@ -9,7 +9,7 @@
   "المستودع يحوي ملفات خادم (Dockerfile؛ docker-compose.yml؛ .env.example) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
   "شرط تقييد محتمل في الوثائق: LICENSE: alternative is allowed only occasionally and noncommercially, and",
   "روابط لمواقع خارجية: bit.ly, example.com, fpfss.flashpointarchive.org, github.com, json-schema.org, radix-ui.com, reactjs.org, redux-toolkit.js.org",
-  "11 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:34615/api/settings/public",
+  "10 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:35297/api/settings/public",
   "12 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)",
   "ESLint: 6 أخطاء برمجية في 6 ملفات، أولها: assets/ViewOptions-BemJhDGg.js:1 Parsing error: 'import' and 'export' may appear only with 'sourceType: module'"
  ],
@@ -20,7 +20,7 @@
   "الوسائط: 3 صورة و0 صوتاً",
   "تصريح المطوّر عن الوسائط: LICENSE: author attributions in that material or in the Appropriate Legal",
   "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:flashpoint-web:) في 1 صفحة",
-  "لاعب آلي عشوائي: جُرّب نحو 342 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "لاعب آلي عشوائي: جُرّب نحو 332 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
   "رخصة GPL-3.0: لم تُحذف أي ملفات (يجب إتاحة المصدر كاملاً)",
   "رخصة GPL-3.0: لم تُحسَّن الوسائط",
   "67 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
@@ -29,7 +29,8 @@
   "تعديل تلقائي: مسار مطلق ← نسبي × 11",
   "تعديل تلقائي: عزل تخزين اللعبة × 1",
   "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة click3 (درجة 70.1 من 8 لقطات) — مقبولة",
-  "الأزمنة: جلب المستودع: 1ث؛ البحث/البناء: 50ث؛ تنظيف: 1ث؛ اختبار المتصفح: 88ث؛ فحص JavaScript: 2ث (أوامر: 5، اختبارات متصفح: 1)"
+  "الترجمة: لا حقول تحتاج ترجمة أو لم يُرجع المحرّك نتيجة صالحة",
+  "الأزمنة: جلب المستودع: 1ث؛ البحث/البناء: 60ث؛ تنظيف: 1ث؛ اختبار المتصفح: 96ث؛ فحص JavaScript: 2ث؛ ترجمة البيانات: 11ث (أوامر: 5، اختبارات متصفح: 1)"
  ],
  "console_errors": [
   "Failed to load resource: the server responded with a status of 404 (File not found)",
@@ -42,16 +43,16 @@
   "Failed to load resource: the server responded with a status of 501 (Unsupported method ('POST'))"
  ],
  "failed_requests": [
-  "404 http://127.0.0.1:34615/api/settings/public",
-  "404 http://127.0.0.1:34615/api/settings/public",
-  "404 http://127.0.0.1:34615/api/auth/setup-status",
-  "404 http://127.0.0.1:34615/api/settings/auth",
-  "404 http://127.0.0.1:34615/api/auth/setup-status",
-  "404 http://127.0.0.1:34615/api/settings/auth",
-  "501 http://127.0.0.1:34615/api/errors/report",
-  "404 http://127.0.0.1:34615/images/logo.png",
-  "404 http://127.0.0.1:34615/images/Flash.png",
-  "404 http://127.0.0.1:34615/images/HTML5.png"
+  "404 http://127.0.0.1:35297/api/settings/public",
+  "404 http://127.0.0.1:35297/api/settings/public",
+  "404 http://127.0.0.1:35297/api/auth/setup-status",
+  "404 http://127.0.0.1:35297/api/settings/auth",
+  "404 http://127.0.0.1:35297/api/auth/setup-status",
+  "404 http://127.0.0.1:35297/api/settings/auth",
+  "501 http://127.0.0.1:35297/api/errors/report",
+  "404 http://127.0.0.1:35297/assets/HomeView-DKBoXMT8.js",
+  "http://127.0.0.1:35297/assets/HomeView-DKBoXMT8.js",
+  "404 http://127.0.0.1:35297/assets/react-vendor-DZ9stobB.js"
  ],
  "external_requests": [],
  "cover_candidates": [
