@@ -66,6 +66,7 @@ def run_one(url, opts):
     gh("workflow", "run", WF,
        "-f", f"repo_url={url}", "-f", f"orientation={opts['orientation']}", "-f", "auto_publish=no",
        "-f", f"prune={opts['prune']}", "-f", f"media={opts['media']}",
+       "-f", f"translate={opts['translate']}", "-f", f"translate_engine={opts['translate_engine']}",
        "-f", f"ai_test={opts['ai_test']}", "-f", f"ai_steps={opts['ai_steps']}")
     rid, t0 = None, time.time()
     while rid is None and time.time() - t0 < APPEAR_SEC:
@@ -94,6 +95,8 @@ def main():
         "orientation": os.environ.get("ORIENTATION", "portrait"),
         "prune": os.environ.get("PRUNE", "smart"),
         "media": os.environ.get("MEDIA", "safe"),
+        "translate": os.environ.get("TRANSLATE", "meta"),
+        "translate_engine": os.environ.get("TRANSLATE_ENGINE", "google"),
         "ai_test": os.environ.get("AI_TEST", "no"),
         "ai_steps": os.environ.get("AI_STEPS", "20"),
     }

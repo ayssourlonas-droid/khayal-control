@@ -55,7 +55,7 @@ def main():
         print("::error::Playwright غير مثبّت")
         sys.exit(1)
     with sync_playwright() as pw:
-        browser = pw.chromium.launch()
+        browser = pw.chromium.launch(args=["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"])
         for gid, title, url in games:
             res = {"id": gid, "title": title, "url": url, "ok": False, "problem": ""}
             ctx = browser.new_context(viewport={"width": 412, "height": 915}, is_mobile=True, has_touch=True)
