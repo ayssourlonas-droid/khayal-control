@@ -13,6 +13,8 @@ sys.path.insert(0, str(HERE / "import_game"))
 import publish as pub  # noqa: E402  (load/save/write_credits والثوابت)
 
 ROOT = Path(os.environ.get("REPO_DIR", ".")).resolve()
+# مستودع البيانات: إن كان منفصلاً يضبطه الـworkflow في DATA_DIR؛ وإلا فهو نفسه مستودع الاستضافة
+DATA = Path(os.environ.get("DATA_DIR") or ROOT).resolve()
 INDEX = "data_import_index.json"
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,80}$")
 
@@ -35,9 +37,9 @@ def main():
     gid = os.environ.get("GAME_ID", "").strip()
     if not re.fullmatch(r"\d+", gid):
         raise SystemExit("GAME_ID غير صالح")
-    files = {n: ROOT / n for n in (pub.GAMES, pub.FEATURED, pub.PENDING)}
+    files = {n: DATA / n for n in (pub.GAMES, pub.FEATURED, pub.PENDING)}
     lists = {n: pub.load(p) for n, p in files.items()}
-    index = pub.load(ROOT / INDEX)
+    index = pub.load(DATA / INDEX)
 
     slug = slug_of(os.environ.get("PLAY_URL", ""))
     found = [e for lst in lists.values() for e in lst if str(e.get("id")) == gid]
@@ -70,7 +72,7 @@ def main():
     n_idx = len(index)
     index = [e for e in index if str(e.get("id")) != gid and not (slug and e.get("slug") == slug)]
     if len(index) != n_idx:
-        pub.save(ROOT / INDEX, index)
+        pub.save(DATA / INDEX, index)
         removed.append(f"{INDEX}: {n_idx - len(index)}")
     if gdir and gdir.is_dir():
         if gdir.resolve().parent != (ROOT / "games").resolve():

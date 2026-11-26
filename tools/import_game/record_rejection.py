@@ -10,6 +10,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 FILE = "data_import_rejected.json"
+# فرع مستودع البيانات (DATA_BRANCH) وإلا فرع هذا التشغيل
+BRANCH = os.environ.get("DATA_BRANCH") or os.environ.get("GITHUB_REF_NAME") or "main"
 
 
 def norm(u):
@@ -70,12 +72,12 @@ def main():
     # العلامتان تمنعان بناء Cloudflare وتشغيل Actions لهذا الـcommit (ملف بيانات للتطبيق فقط)
     sh(["git", "commit", "-m", f"rejected: {entry['repo']} [skip ci] [CF-Pages-Skip]"])
     for i in range(5):
-        r = sh(["git", "push", "origin", "HEAD:" + (os.environ.get("GITHUB_REF_NAME") or "main")], check=False)
+        r = sh(["git", "push", "origin", "HEAD:" + BRANCH], check=False)
         if r.returncode == 0:
             print("سُجّل في", FILE, ":", entry["repo"])
             return
         print(r.stdout[-400:])
-        sh(["git", "pull", "--rebase", "origin", os.environ.get("GITHUB_REF_NAME") or "main"], check=False)
+        sh(["git", "pull", "--rebase", "origin", BRANCH], check=False)
         time.sleep(3 * (i + 1))
     print("تعذّر الدفع بعد عدة محاولات")
 
