@@ -1091,11 +1091,11 @@
   {
     "url": "https://github.com/Insality/cosmic-dash-jam-2025",
     "repo": "Insality/cosmic-dash-jam-2025",
-    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
-    "license": "",
-    "date": "2026-11-11",
-    "attempts": 1,
-    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43036012596"
+    "reason": "لم أجد نسخة ويب (index.html) ولا أمر بناء. قد يكون مشروع Unity/Godot مصدرياً. جرّب إدخال subdir أو build_cmd",
+    "license": "MIT",
+    "date": "2026-11-26",
+    "attempts": 2,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/45836505365"
   },
   {
     "url": "https://github.com/Mocas-12/no-survivor-game",
