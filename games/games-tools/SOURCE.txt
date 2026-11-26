@@ -1,0 +1,8 @@
+Source: https://github.com/TranHuuDat2004/games_tools
+Commit: c6b7328aa82147841ec44ea1895027a9ec0b299c
+License: MIT
+Imported: 2026-11-26T13:45:18.775442+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 20, "تضمين خطوط محلياً": 12, "حذف ملفات غير لازمة": 5}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 56, audio: 0, tagged audio: 0

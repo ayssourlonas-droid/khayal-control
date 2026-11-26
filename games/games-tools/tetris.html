@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:games-tools:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <title data-translate="docTitle">Game Xếp Gạch - Tetris</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.png" type="image/png">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+    <!-- Google Fonts -->
+    
+    
+    <link rel="stylesheet" href="_gfonts/fonts.css">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Global Styles from index.html -->
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-card: rgba(28, 28, 31, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --gradient-purple: #c084fc;
+            --gradient-pink: #f472b6;
+        }
+        body.light-mode {
+            --bg-dark: #f5f5f5;
+            --bg-card: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --text-primary: #212121;
+            --text-secondary: #5f5f5f;
+        }
+        body { background-color: var(--bg-dark); color: var(--text-primary); font-family: 'Sora', sans-serif; line-height: 1.6; overflow-x: hidden; }
+        a { color: var(--text-primary); text-decoration: none; transition: color 0.3s ease; }
+        a:hover { color: var(--gradient-purple); }
+        .main-header {
+            position: fixed; top: 1.5rem; left: 50%; z-index: 999; max-width: 1000px; width: calc(100% - 3rem); 
+            background: rgba(24, 24, 27, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.75rem 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            opacity: 0; transform: translate(-50%, -100px); transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .main-header.visible { opacity: 1; transform: translateX(-50%); }
+        .logo { font-weight: bold; font-size: 1.25rem; background: linear-gradient(to right, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 0.5rem; }
+        .logo img { max-height: 28px; }
+        .header-navigation { display: flex; align-items: center; gap: 1rem; }
+        .main-nav { display: flex; gap: 0.5rem; }
+        .main-nav a { padding: 0.5rem 0.75rem; color: var(--text-secondary); font-size: 0.875rem; }
+        .main-nav a:hover, .main-nav a.is-active { color: var(--text-primary); }
+        .lang-switcher { display: flex; align-items: center; }
+        .lang-switcher button { background: none; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.4rem 0.8rem; cursor: pointer; font-family: 'Sora', sans-serif; font-size: 0.8rem; }
+        .lang-switcher button:first-child { border-top-left-radius: 999px; border-bottom-left-radius: 999px; border-right: none; }
+        .lang-switcher button:last-child { border-top-right-radius: 999px; border-bottom-right-radius: 999px; }
+        .lang-switcher button:hover, .lang-switcher button.active { background-color: var(--gradient-purple); color: var(--text-primary); border-color: var(--gradient-purple); }
+/* ====================================================== */
+        /* --- FOOTER --- */
+        /* ====================================================== */
+        .main-footer {
+            background-color: #0c0c0c;
+            color: var(--text-secondary);
+            padding-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .footer-logo img {
+            max-height: 40px;
+        }
+        .footer-logo span {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-about p {
+            max-width: 300px;
+            line-height: 1.7;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column ul a {
+            color: var(--text-secondary);
+            transition: color 0.3s, padding-left 0.3s;
+        }
+
+        .footer-column ul a:hover {
+            color: var(--text-primary);
+            padding-left: 5px;
+        }
+
+        .footer-copyright {
+            padding: 1.5rem 0;
+            text-align: center;
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+        }
+/* ====================================================== */
+        /* --- BỔ SUNG: LIGHT/DARK MODE & NÚT CHUYỂN THEME --- */
+        /* ====================================================== */
+        .theme-toggle-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: background-color 0.3s, border-color 0.3s;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .theme-toggle-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle-btn .fa-sun,
+        .theme-toggle-btn .fa-moon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .theme-toggle-btn .fa-moon {
+            transform: translate(-50%, -50%); opacity: 1;
+        }
+        .theme-toggle-btn .fa-sun {
+            transform: translate(-50%, -150%); opacity: 0;
+        }
+        body.light-mode .theme-toggle-btn .fa-moon {
+            transform: translate(-50%, 150%); opacity: 0;
+        }
+        body.light-mode .theme-toggle-btn .fa-sun {
+            transform: translate(-50%, -50%); opacity: 1;
+        }
+        body.light-mode .main-header {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        body.light-mode .btn-secondary {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        body.light-mode .section-badge {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        
+        /* --- ANIMATION --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (max-width: 992px) {
+            .main-nav { display: none; }
+            .footer-container { grid-template-columns: 1fr 1fr; }
+            .footer-about { grid-column: 1 / -1; }
+        }
+        @media (max-width: 768px) {
+            .footer-container { grid-template-columns: 1fr; text-align: center; }
+            .footer-logo { justify-content: center; }
+        }
+        /* Override for this page */
+        .info-panel { background-color: var(--bg-card) !important; color: var(--text-primary) !important; border-color: var(--border-color) !important; }
+        .tetris-game-wrapper h1, .tetris-game-wrapper h6, .tetris-game-wrapper h5, .tetris-game-wrapper p { color: var(--text-primary); }
+        body.light-mode .info-panel { color: var(--text-primary) !important; }
+        body.light-mode .tetris-game-wrapper h1, body.light-mode .tetris-game-wrapper h6, body.light-mode .tetris-game-wrapper h5, body.light-mode .tetris-game-wrapper p { color: var(--text-primary); }
+
+    </style>
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="css/tetris.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Logo">
+        </a>
+        <nav class="header-navigation">
+            <div class="main-nav">
+                <a href="index.html" data-translate="navHome">Trang chủ</a>
+                <a href="game.html" class="is-active" data-translate="navPlayGame">Chơi Game</a>
+                <a href="about.html" data-translate="navAbout">Về chúng tôi</a>
+                <a href="contact.html" data-translate="navContact">Liên hệ</a>
+                <a href="split.html" data-translate="navImageTools">Công cụ ảnh</a>
+                <a href="pdf-to-image.html">PDF to Image</a>
+            </div>
+            <div class="lang-switcher">
+                <button class="lang-btn" data-lang="vi">VI</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            <button class="theme-toggle-btn" aria-label="Toggle light/dark theme">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main class="container" style="padding-top: 8rem;">
+        <div class="game-title-area text-center">
+            <h1 data-translate="tetrisTitle">Game Xếp Hình (Tetris)</h1>
+            <h6 data-translate="tetrisSubtitle">Sử dụng các phím mũi tên để di chuyển và xoay các khối. Lấp đầy các hàng để ghi điểm!</h6>
+        </div>
+
+        <div class="tetris-game-wrapper mt-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-5 order-md-2">
+                    <div class="info-panel text-center p-3 border rounded">
+                        <div class="game-stats">
+                            <h5 data-translate="scoreLabel">Điểm</h5>
+                            <p id="score">0</p>
+                            <h5 data-translate="highScoreLabel">Điểm Cao</h5>
+                            <p id="high-score">0</p>
+                            <h5 data-translate="linesLabel">Hàng</h5>
+                            <p id="lines">0</p>
+                            <h5 data-translate="levelLabel">Cấp độ</h5>
+                            <p id="level">1</p>
+                        </div>
+                        <div class="next-piece-area mt-3">
+                            <h5 data-translate="nextPieceLabel">Tiếp theo</h5>
+                            <canvas id="next-piece-canvas" width="120" height="120"></canvas>
+                        </div>
+                        <div class="main-controls mt-3">
+                            <button id="start-pause-btn" class="btn btn-success btn-lg" data-translate-start="Bắt Đầu" data-translate-pause="Tạm Dừng">Bắt Đầu</button>
+                            <button id="restart-btn" class="btn btn-danger btn-lg" data-translate="restartBtn">Chơi Lại</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-7 order-md-1">
+                    <div class="board-container">
+                        <canvas id="tetris-board"></canvas>
+                        <div id="game-over-message" class="game-over-overlay" style="display: none;">
+                            <h2 data-translate="gameOverTitle">GAME OVER</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-controls d-lg-none">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="move-controls">
+                        <button id="move-left-btn" class="btn btn-control"><i class="fas fa-arrow-left"></i></button>
+                        <button id="move-right-btn" class="btn btn-control"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="action-controls">
+                        <button id="rotate-btn" class="btn btn-control btn-action"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                    <div class="drop-controls">
+                        <button id="move-down-btn" class="btn btn-control"><i class="fas fa-arrow-down"></i></button>
+                    </div>
+                </div>
+                <button id="hard-drop-btn" class="btn btn-control btn-block mt-2" data-translate="hardDrop">Thả Nhanh</button>
+            </div>
+        </div>
+    </main>
+
+<!-- Footer mới -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-column footer-about">
+                 <a href="index.html" class="footer-logo">
+                    <img src="logo.png" alt="Logo">
+                    <span>Game & Image Pro</span>
+                 </a>
+                <p data-translate="footerUnlimited">Nền tảng cung cấp các trò chơi giải trí và công cụ xử lý ảnh miễn phí, không giới hạn.</p>
+            </div>
+            <div class="footer-column">
+                <h4 data-translate="footerExplore">Khám Phá</h4>
+                <ul>
+                    <li><a href="index.html" data-translate="footerHome">Trang chủ</a></li>
+                    <li><a href="game.html" data-translate="footerJigsaw">Game Xếp Hình</a></li>
+                    <li><a href="caro.html" data-translate="caroPlayButton">Game Cờ Caro</a></li>
+                    <li><a href="tetris.html" data-translate="tetrisPlayButton">Game Xếp Gạch</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-translate="footerTools">Công Cụ</h4>
+                <ul>
+                    <li><a href="split.html" data-translate="footerGridSplit">Chia ảnh lưới</a></li>
+                    <li><a href="scale.html" data-translate="footerSquareCrop">Cắt ảnh vuông</a></li>
+                    <li><a href="resize.html" data-translate="footerResize">Thay đổi kích thước</a></li>
+                </ul>
+            </div>
+             <div class="footer-column">
+                <h4 data-translate="footerInfo">Thông Tin</h4>
+                <ul>
+                    <li><a href="about.html" data-translate="footerAbout">Về chúng tôi</a></li>
+                    <li><a href="contact.html" data-translate="footerContact">Liên hệ</a></li>
+                    <li><a href="terms.html" data-translate="footerTerms">Điều khoản</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p data-translate="footerCopyright">© <span id="currentYear"></span> Game & Image Pro. Phát triển bởi Trần Hữu Đạt. Bảo lưu mọi quyền.</p>
+             <p style="font-size: 0.8rem;" data-translate="footerBuiltWith">Xây dựng với <i class="fas fa-heart" style="color: #e25555;"></i> và tình yêu dành cho mã nguồn mở.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="js/lang-tetris.js"></script>
+    <script src="js/tetris-game.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('.main-header');
+            if(header) { setTimeout(() => header.classList.add('visible'), 100); }
+            const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light') { document.body.classList.add('light-mode'); }
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    document.body.classList.toggle('light-mode');
+                    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+                });
+            }
+            const currentYearSpan = document.getElementById('currentYear');
+            if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
+        });
+    </script>
+</body>
+
+</html>

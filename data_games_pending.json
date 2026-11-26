@@ -2701,5 +2701,32 @@
       "type": "web",
       "category": "game"
     }
+  },
+  {
+    "id": 136,
+    "imported_at": "2026-11-26T13:51:31Z",
+    "release_year": "2026",
+    "category_tags": [
+      "bootstrap",
+      "canvas",
+      "css3"
+    ],
+    "main_scene": {
+      "title_ar": "Games Tools",
+      "title_en": "Games Tools",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/games-tools/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A web application featuring an engaging jigsaw puzzle and caro game and versatile image processing tools (square crop, grid splitter, resizer). Built with HTML, CSS, JavaScript, jQuery, and Bootstrap.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/games-tools/",
+      "developer": "TranHuuDat2004",
+      "license": "MIT",
+      "source_url": "https://github.com/TranHuuDat2004/games_tools",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "bootstrap"
+    }
   }
 ]

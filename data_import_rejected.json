@@ -1125,15 +1125,6 @@
     "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43043089880"
   },
   {
-    "url": "https://github.com/TranHuuDat2004/games_tools",
-    "repo": "TranHuuDat2004/games_tools",
-    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
-    "license": "",
-    "date": "2026-11-11",
-    "attempts": 1,
-    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43044936590"
-  },
-  {
     "url": "https://github.com/Mocas-12/no-survivor-game",
     "repo": "Mocas-12/no-survivor-game",
     "reason": "ملفات تتجاوز 25MB (حد Cloudflare) حتى بعد التقليل وتحسين الوسائط: game-cf07a85.pck (73MB), game-cf07a85.wasm (37MB)",

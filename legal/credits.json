@@ -1961,5 +1961,20 @@
     "date": "2026-11-26",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: "
+  },
+  {
+    "key": "gamestools",
+    "size": 17324,
+    "repo": "TranHuuDat2004/games_tools",
+    "id": 136,
+    "slug": "games-tools",
+    "title": "Games Tools",
+    "developer": "TranHuuDat2004",
+    "license": "MIT",
+    "source": "https://github.com/TranHuuDat2004/games_tools",
+    "commit": "c6b7328aa82147841ec44ea1895027a9ec0b299c",
+    "date": "2026-11-26",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
