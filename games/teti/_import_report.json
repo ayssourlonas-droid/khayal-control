@@ -1,0 +1,57 @@
+{
+ "date": "2026-11-26T13:40:42.720909+00:00",
+ "status": "warn",
+ "source": "https://github.com/TitanPlayz100/teti",
+ "commit": "1de7944ecee0a9e0420349f3da190a385f52a227",
+ "license": "MIT",
+ "warnings": [
+  "خطوط مضمّنة (1): تأكد من ترخيصها، مثل styles/MajorMonoDisplay.ttf",
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "روابط لمواقع خارجية: api.github.com, jenil.github.io, www.michaelbromley.co.uk, zerodevx.github.io",
+  "لم يعمل الاختبار الآلي (Playwright)",
+  "ESLint: 1 أخطاء برمجية في 39 ملفات، أولها: src/display/renderer.js:109 'bg' is constant.",
+  "جودة منخفضة (45/100): لم يعمل الاختبار الآلي (-30)، غلاف ضعيف أو غير موجود (-15)، أخطاء ESLint (-10)",
+  "لا توجد صورة غلاف؛ أفضل لقطة (لقطة space) ضعيفة (درجة 31.1) — يُفضّل استبدال الغلاف يدوياً"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "مجلد الويب الجاهز: .",
+  "الوسائط: 21 صورة و65 صوتاً",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:teti:) في 2 صفحة",
+  "خطوط Google ضُمِّنت محلياً (لا اتصال بـ Google وقت اللعب): Montserrat ← Inter (400؛ latin) — 1 ملف خط، 23 KB",
+  "تراخيص الخطوط في _gfonts/FONTS.txt",
+  "لاعب آلي عشوائي: جُرّب نحو 5 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "1 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "درجة الجودة التقريبية: 45/100 (لم يعمل الاختبار الآلي (-30)، غلاف ضعيف أو غير موجود (-15)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: عزل تخزين اللعبة × 2",
+  "تعديل تلقائي: تضمين خطوط محلياً × 3",
+  "الترجمة: لا حقول تحتاج ترجمة أو لم يُرجع المحرّك نتيجة صالحة",
+  "الأزمنة: جلب المستودع: 2ث؛ اختبار المتصفح: 127ث؛ فحص JavaScript: 2ث؛ ترجمة البيانات: 11ث (أوامر: 3، اختبارات متصفح: 1)"
+ ],
+ "console_errors": [
+  "فشل الاختبار الآلي: Page.screenshot: Timeout 30000ms exceeded.\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n"
+ ],
+ "failed_requests": [
+  "http://127.0.0.1:38765/game/assets/songs/Cafe%20de%20Touhou%203%20-%20The%20Girl's%20Secret%20Room.mp3",
+  "http://127.0.0.1:38765/game/assets/songs/ShibayanRecords%20-%20Acoustic%20Image.mp3",
+  "http://127.0.0.1:38765/game/assets/songs/ShibayanRecords%20-%20Close%20to%20your%20Mind.mp3"
+ ],
+ "external_requests": [
+  "127.0.0.1:38765",
+  "cdn.jsdelivr.net"
+ ],
+ "cover_candidates": [
+  "18: peakpx.jpg ()",
+  "8: icon.png (شعار كبير، مربعة)",
+  "-60: Square310x310Logo.png (شعار كبير، اسم جزء/عنصر، مربعة)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 39,
+  "errors": 1
+ },
+ "fixes": {
+  "عزل تخزين اللعبة": 2,
+  "تضمين خطوط محلياً": 3
+ }
+}

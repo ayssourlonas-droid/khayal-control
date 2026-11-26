@@ -1,0 +1,8 @@
+Source: https://github.com/TitanPlayz100/teti
+Commit: 1de7944ecee0a9e0420349f3da190a385f52a227
+License: MIT
+Imported: 2026-11-26T13:40:42.720909+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 2, "تضمين خطوط محلياً": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 21, audio: 65, tagged audio: 22

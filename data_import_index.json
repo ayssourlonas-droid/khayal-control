@@ -1946,5 +1946,20 @@
     "date": "2026-11-26",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "teti",
+    "size": 28464,
+    "repo": "TitanPlayz100/teti",
+    "id": 135,
+    "slug": "teti",
+    "title": "Teti",
+    "developer": "TitanPlayz100",
+    "license": "MIT",
+    "source": "https://github.com/TitanPlayz100/teti",
+    "commit": "1de7944ecee0a9e0420349f3da190a385f52a227",
+    "date": "2026-11-26",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: "
   }
 ]

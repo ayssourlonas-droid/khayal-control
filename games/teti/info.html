@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:teti:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <title>Teti - Info</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./assets/titanicon.ico">
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
+</head>
+
+<style>
+    body {
+        --bg-color: #000;
+        --font-color: #f5f5f5;
+        --color-primary: #17c16f;
+        max-width: 720px;
+        margin: 5rem auto;
+        padding-bottom: 10vh;
+    }
+
+    #background {
+        background-image: url("./assets/peakpx.jpg");
+        background-size: cover;
+        background-position: 0 -70vh;
+        width: 100vw;
+        height: 200vh;
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        filter: blur(6px) brightness(0.3);
+    }
+
+    #title {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 70vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<body>
+    <div id="background"></div>
+    <nav id="title">
+        <h1 style="font-size: 8em; margin-bottom: 0;">TETI</h1>
+        <p>Modern Stacker By TitanPlayz100</p>
+    </nav>
+    <hr style="margin-top: 70vh;">
+    <a class="button outline primary pull-right" href="index.html">Back to teti</a>
+
+    <!-- markdown renderer -->
+    <zero-md src="info.md" id="info">
+        <template>
+            <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+            <style>
+                h2 {
+                    margin-top: 4vh;
+                    font-weight: bold;
+                }
+            </style>
+        </template>
+    </zero-md>
+
+    <hr>
+    <p class="text-right">css using <a href="https://jenil.github.io/chota/">chota</a></p>
+    <p class="text-right">md renderer with <a href="https://zerodevx.github.io/zero-md/">zero-md</a></p>
+    <a class="button outline secondary pull-right" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Top of Page</a>
+</body>
+
+<script defer>
+    window.addEventListener("scroll", () => {
+        const totalHeight = document.body.scrollHeight
+        const clientHeight = window.innerHeight
+        const totalScroll = -(window.scrollY * 100 / totalHeight)
+        const clientScroll = 70 - (window.scrollY * 100 / clientHeight)
+        document.getElementById("background").style.top = `${totalScroll}vh`
+        document.getElementById("title").style.height = `${clientScroll < 0 ? 0 : clientScroll}vh`
+    })
+</script>
+
+</html>
