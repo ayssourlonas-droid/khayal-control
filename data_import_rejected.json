@@ -1613,11 +1613,11 @@
   {
     "url": "https://github.com/praghus/chwat",
     "repo": "praghus/chwat",
-    "reason": "فشل البناء: فشل الأمر: ['yarn', 'install'] (رمز 1)",
+    "reason": "فشل البناء: فشل الأمر: ['yarn', 'install'] (رمز 1) — error chwat@1.0.1: The engine \"node\" is incompatible with this module. Expected version \"12.x\". Got \"22.23.5\" | error Found incompatible module. | info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.",
     "license": "MIT",
-    "date": "2026-11-20",
-    "attempts": 1,
-    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44815204482"
+    "date": "2026-11-26",
+    "attempts": 2,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/45819802174"
   },
   {
     "url": "https://github.com/chenzhiyong1994/unverified-survivors",
