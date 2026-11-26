@@ -1,0 +1,14 @@
+Source: https://github.com/tmptrash/gra
+Commit: 19fb81157a7f9b97bc2a11e89194aaf2efc8898c
+License: MIT
+Imported: 2026-11-26T13:59:52.435992+00:00
+Automated changes (see report): {"إزالة وسم إعلانات/تتبّع": 2, "عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 4, "تحسين وسائط صور": 23, "تحسين وسائط صوت": 32, "تنظيف الكود": 2}
+
+Media provenance (automated signals, not a legal guarantee):
+- artist=InspectorJ
+- artist=Jonathan Shaw (www.jshaw.co.uk)
+- artist=Noctaro
+- artist=lebcraftlp
+- artist=patrick
+- artist=qubodup
+- images: 76, audio: 32, tagged audio: 10
