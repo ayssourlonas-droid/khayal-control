@@ -205,4 +205,13 @@ jobs:
         env:
           INPUT_REPO_URL: ${{ inputs.repo_url }}
           PKG_DIR: ${{ github.workspace }}/pkg
-        run: python3 tools/import_game/record_rejection.py
+          DATA_REPO: ${{ vars.DATA_REPO || github.repository }}
+          DATA_BRANCH: ${{ vars.DATA_BRANCH }}
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        run: |
+          if [ "$DATA_REPO" != "$GITHUB_REPOSITORY" ]; then
+            [ -n "$PUBLISH_TOKEN" ] || { echo "PUBLISH_TOKEN مطلوب لتسجيل الرفض في مستودع البيانات"; exit 0; }
+            git clone --depth 1 --branch "${DATA_BRANCH:-main}" "https://x-access-token:${PUBLISH_TOKEN}@github.com/${DATA_REPO}.git" "$RUNNER_TEMP/data"
+            cd "$RUNNER_TEMP/data"
+          fi
+          python3 "$GITHUB_WORKSPACE/tools/import_game/record_rejection.py"

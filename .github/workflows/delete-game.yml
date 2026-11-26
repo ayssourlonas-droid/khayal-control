@@ -30,11 +30,39 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Clone data repo (إن كان منفصلاً)
+        env:
+          DATA_REPO: ${{ vars.DATA_REPO || github.repository }}
+          DATA_BRANCH: ${{ vars.DATA_BRANCH || 'main' }}
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        run: |
+          if [ "$DATA_REPO" != "$GITHUB_REPOSITORY" ]; then
+            [ -n "$PUBLISH_TOKEN" ] || { echo "PUBLISH_TOKEN مطلوب للكتابة في مستودع البيانات"; exit 1; }
+            git clone --depth 1 --branch "$DATA_BRANCH" "https://x-access-token:${PUBLISH_TOKEN}@github.com/${DATA_REPO}.git" "$RUNNER_TEMP/data"
+            echo "DATA_DIR=$RUNNER_TEMP/data" >> "$GITHUB_ENV"
+          fi
       - name: Delete game
         env:
           GAME_ID: ${{ inputs.game_id }}
           PLAY_URL: ${{ inputs.play_url }}
         run: python3 "$(ls tools/delete_game.py tools/import_game/delete_game.py 2>/dev/null | head -1)"
+      - name: Push data repo (قبل الاستضافة كي لا يبقى سجل بلا ملفات)
+        if: ${{ env.DATA_DIR != '' }}
+        env:
+          DATA_BRANCH: ${{ vars.DATA_BRANCH || 'main' }}
+        run: |
+          cd "$DATA_DIR"
+          git config user.name "game-importer"
+          git config user.email "game-importer@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "لا تغييرات في البيانات"; exit 0; fi
+          git commit -m "delete game ${{ inputs.game_id }} (data)"
+          for i in 1 2 3 4; do
+            git push origin "HEAD:$DATA_BRANCH" && exit 0
+            git pull --rebase origin "$DATA_BRANCH" || true
+            sleep $((i * 3))
+          done
+          echo "تعذّر الدفع" && exit 1
       - name: Commit and push
         run: |
           git config user.name "game-importer"
