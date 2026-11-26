@@ -1,0 +1,10 @@
+Source: https://github.com/sshh12/llm_alchemy
+Commit: e9d6937d8b2fc999976e45bd49fdc6d32fc54d99
+License: MIT
+Imported: 2026-11-26T13:17:53.312669+00:00
+Automated changes (see report): {"إزالة وسم إعلانات/تتبّع": 7, "مسار مطلق ← نسبي": 140, "عزل تخزين اللعبة": 7}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: No more credits or payments. It's free.
+- README.md: no duplicates, legacy first discovery still credited, legacy history rows in the challenges sheet,
+- images: 5, audio: 0, tagged audio: 0

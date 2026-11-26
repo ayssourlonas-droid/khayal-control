@@ -2620,5 +2620,32 @@
       "type": "web",
       "category": "browser-game"
     }
+  },
+  {
+    "id": 133,
+    "imported_at": "2026-11-26T13:23:23Z",
+    "release_year": "2026",
+    "category_tags": [
+      "ai-game",
+      "alchemy-game",
+      "browser-game"
+    ],
+    "main_scene": {
+      "title_ar": "Llm Alchemy",
+      "title_en": "Llm Alchemy",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/llm-alchemy/_cover.webp"
+    },
+    "details_scene": {
+      "description": "The original infinite AI alchemy game. Combine elements to discover anything: an LLM invents every new element and an image model paints it. Free in your browser, no account. Inspired by Little Alchemy.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/llm-alchemy/",
+      "developer": "sshh12",
+      "license": "MIT",
+      "source_url": "https://github.com/sshh12/llm_alchemy",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "ai-game"
+    }
   }
 ]

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:llm-alchemy:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Infinite Alchemy privacy: what the game collects</title>
+    <meta name="description" content="What Infinite Alchemy collects and why: an anonymous player id, gameplay data, a hashed network address for abuse limits, and Google Analytics. No accounts." />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#F6F1E7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#16120E" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://alchemy.sshh.io/privacy" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Infinite Alchemy" />
+    <meta property="og:url" content="https://alchemy.sshh.io/privacy" />
+    <meta property="og:title" content="Infinite Alchemy privacy: what the game collects" />
+    <meta property="og:description" content="What Infinite Alchemy collects and why: an anonymous player id, gameplay data, a hashed network address for abuse limits, and Google Analytics. No accounts." />
+    <meta property="og:image" content="https://alchemy.sshh.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ShrivuShankar" />
+    <meta name="twitter:title" content="Infinite Alchemy privacy: what the game collects" />
+    <meta name="twitter:description" content="What Infinite Alchemy collects and why: an anonymous player id, gameplay data, a hashed network address for abuse limits, and Google Analytics. No accounts." />
+    <meta name="twitter:image" content="https://alchemy.sshh.io/og-image.png" />
+    <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","@id":"https://alchemy.sshh.io/privacy#webpage","url":"https://alchemy.sshh.io/privacy","name":"Infinite Alchemy privacy: what the game collects","description":"What Infinite Alchemy collects and why: an anonymous player id, gameplay data, a hashed network address for abuse limits, and Google Analytics. No accounts.","inLanguage":"en","isPartOf":{"@id":"https://alchemy.sshh.io/#website"},"about":{"@id":"https://alchemy.sshh.io/#game"}}]</script>
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="pages.css" />
+    
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Infinite Alchemy: play">
+        <img src="icon-192.png" alt="" width="36" height="36" />
+        <span class="brand-text"><span class="brand-eyebrow">The original</span><span class="brand-name">Infinite Alchemy</span></span>
+      </a>
+      <a class="btn" href="#">Play free</a>
+    </header>
+    <main class="page">
+      <h1>Privacy</h1>
+      <p class="lede">Infinite Alchemy has no accounts and never asks for your name, email or age. This is what it does collect, and why.</p>
+      <p class="muted small">Last updated November 22, 2026.</p>
+
+      <h2>Your anonymous player</h2>
+      <p>The first time you play, the game creates an anonymous player for you and keeps it in a cookie (<code>ia_session</code>) that only this site can read. The cookie is signed so it can't be forged, lasts up to 400 days, and is how the game finds your library when you come back. Your player also has a separate random id, used for analytics and for trying out changes to the game with some players.</p>
+
+      <h2>What the game stores</h2>
+      <ul>
+        <li><strong>Gameplay:</strong> the elements you discover and when, the new recipes and first discoveries you make, your daily challenge completions, how you play each day (how many times you open the game and how many combinations you make, roughly when you start and stop playing, how many separate sessions and about how long you're active), and any element reports you send.</li>
+        <li><strong>How you found the game</strong>, saved once when your player is created: the website that sent you (its domain only, like google.com), the first page you opened, and any <code>utm_</code> tags in that link, such as a teacher's classroom link. Each day the game also notes what kind of visit you first opened it from that day: a search engine, a direct visit, the installed app or another site (the kind only, never the page or link).</li>
+        <li><strong>Your kind of device:</strong> a coarse platform from your browser (like Chrome OS, iOS, Android, Windows or Mac), never the full browser details, plus a few coarse hints such as whether it has a touch screen, whether the game was opened as an installed app, which layout it showed, and whether this browser already had saved game data when your player was created.</li>
+        <li><strong>A scrambled network address, against abuse.</strong> The game never stores your IP address. To stop bots and runaway costs, the server counts requests against a keyed hash of your network address, which can't be turned back into the address without our secret key; those counters expire on their own. The hash from when your player was created stays with your player, and we use it to count, in aggregate, players who start on the same network, like a school.</li>
+      </ul>
+      <p>The server also keeps anonymous daily counts with nothing that says who they came from, such as how many page loads ended before the game was ready to play (by loading step, rough time and coarse platform) and how many anti-bot checks were started and finished.</p>
+      <p>New elements you create join the shared world and can show up in other players' list of recent discoveries, with nothing that says who made them. Game data is stored in a CockroachDB database, and the site runs on Netlify.</p>
+
+      <h2>Google Analytics</h2>
+      <p>On alchemy.sshh.io the game uses Google Analytics 4 to understand how it's played: page views and game events such as a combination, a discovery or a completed challenge, tied to your player's random analytics id. Events never include element names or anything you type. Google also receives the usual details a browser sends, like the browser and device type, and works out an approximate location. Blocking Google Analytics, for example with an ad blocker, doesn't affect the game.</p>
+
+      <h2>AI</h2>
+      <ul>
+        <li>New elements are named by an AI model (OpenAI's gpt-6-luna) and drawn by an image model (OpenAI's gpt-image-2.5-flare) with its moderation on. OpenAI receives the names of the elements being combined or drawn and a scrambled id for your player, which helps it spot abuse; never your IP address or anything else about you.</li>
+        <li>If you use "Sort by anything" in your library, the sort you type and the names of your elements are sent to an AI scoring service (TypeSafe Jev), which answers with numbers only. The text you type isn't saved on our server.</li>
+      </ul>
+
+      <h2>In your browser</h2>
+      <p>The game keeps your settings, pinned elements, workbench layout, recent sorts, a cache of recipes and a few small notes (tips you've finished, the day the "Today in your lab" card last showed, which of the game's trial changes your player gets) in this browser's storage so it loads fast. They stay on your device. The one thing the server learns about them is whether any game data was already there, and it keeps that only when it creates a new player. If you played the original version of the game in this browser, the game reads what that version saved to bring your progress over.</p>
+
+      <h2>Your choices</h2>
+      <ul>
+        <li><strong>Start over:</strong> in the game, open Settings and choose Reset progress. Your library goes back to the five starters; your first discoveries and challenge history stay.</li>
+        <li><strong>Disconnect this browser:</strong> clearing this site's cookies and storage unlinks the browser from your player. Save a transfer code in Settings first if you want to keep playing as that player.</li>
+        <li><strong>Questions or requests:</strong> contact the developer by opening an issue on <a href="https://github.com/sshh12/llm_alchemy/issues">GitHub</a>. Issues are public, so don't include personal information.</li>
+      </ul>
+      <p>There are no ads in the game. For teachers, the <a href="teachers">teachers page</a> covers classroom use and school networks.</p>
+      <div class="cta"><a class="btn" href="#">Play Infinite Alchemy</a><a class="btn btn-quiet" href="about">About</a></div>
+    </main>
+    <footer class="site-footer">
+      <nav aria-label="Site"><a href="#">Play</a><a href="how-to-play">How to play</a><a href="daily">Today's challenge</a><a href="recipes">Recipes</a><a href="about">About</a><a href="teachers">For teachers</a><a href="privacy" aria-current="page">Privacy</a></nav>
+      <p>Free in your browser, no account needed. Made by <a href="https://sshh.io/">Shrivu Shankar</a> · <a href="https://github.com/sshh12/llm_alchemy">Open source</a></p>
+    </footer>
+  </body>
+</html>

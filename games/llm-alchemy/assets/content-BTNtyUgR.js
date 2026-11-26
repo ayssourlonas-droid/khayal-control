@@ -1,0 +1,2 @@
+var e=`Original infinite AI alchemy`,t=`One of the first games to invent brand-new elements with AI, on demand. Inspired by Little Alchemy.`,n=`https://blog.sshh.io/p/infinite-alchemy`,r=`https://github.com/sshh12/llm_alchemy`,i=`https://littlealchemy.com/`,a=`https://alchemy.sshh.io`,o=`alchemy.sshh.io`;export{o as a,t as i,i as n,a as o,e as r,r as s,n as t};
+//# sourceMappingURL=content-BTNtyUgR.js.map

@@ -1,0 +1,77 @@
+{
+ "date": "2026-11-26T13:17:53.312669+00:00",
+ "status": "warn",
+ "source": "https://github.com/sshh12/llm_alchemy",
+ "commit": "e9d6937d8b2fc999976e45bd49fdc6d32fc54d99",
+ "license": "MIT",
+ "warnings": [
+  "المستودع يحوي ملفات خادم (اعتمادات خادم: pg؛ server) لكن الواجهة بُنيت كموقع ثابت. قد تعمل اللعبة وحدها وقد تحتاج الخادم لميزات اختيارية؛ جرّبها بـ«تجربة اللعبة» قبل الاعتماد",
+  "خطوط مضمّنة (2): تأكد من ترخيصها، مثل public/fonts/fraunces.woff2، public/fonts/instrument-sans.woff2",
+  "أُزيلت 7 وسوم إعلانات/تتبّع من HTML",
+  "إشارات لمواقع إعلانات/تتبّع داخل الكود لم تُزَل (راجعها): google-analytics.com في teachers.html؛ googletagmanager.com في teachers.html",
+  "روابط لمواقع خارجية: alchemy.sshh.io, blog.sshh.io, classroom.google.com, github.com, littlealchemy.com, opensource.org, react.dev, schema.org",
+  "لم تسجّل الصفحة أي إدخال من اللاعب وظهرت أخطاء تحميل (Failed to load resource: the server responded with a status of 404 (File not found))؛ على الأرجح اللعبة معطّلة وليست «ليست لعبة». راجعها يدوياً",
+  "7 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:40263/assets/instrument-sans-latin-wdth-normal-BVScPF0l.woff2",
+  "7 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)",
+  "تحسين صور سبّب أخطاء في الاختبار فتم التراجع عنه",
+  "ESLint: 1 أخطاء برمجية في 2 ملفات، أولها: assets/starters-BkF7O4fL.js:1 Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
+  "تنظيف الكود سبّب أخطاء في الاختبار فتم التراجع عنه (بقي الكود كما هو)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: dist",
+  "الوسائط: 5 صورة و0 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: No more credits or payments. It's free.",
+  "تصريح المطوّر عن الوسائط: README.md: no duplicates, legacy first discovery still credited, legacy history rows in the challenges sheet,",
+  "أنماط تستحق الانتباه: إرسال بيانات خلفياً (sendBeacon) (assets/ui-BwPjusIj.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:llm-alchemy:) في 7 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 353 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "21 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "درجة الجودة التقريبية: 75/100 (أخطاء كونسول (-15)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: إزالة وسم إعلانات/تتبّع × 7",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 140",
+  "تعديل تلقائي: عزل تخزين اللعبة × 7",
+  "الغلاف: og0.png ← og:image، اسم عنوان/بانر (درجة 178)",
+  "الترجمة: لا حقول تحتاج ترجمة أو لم يُرجع المحرّك نتيجة صالحة",
+  "الأزمنة: البحث/البناء: 7ث؛ اختبار المتصفح: 89ث؛ تحسين الوسائط: 60ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 120ث؛ ترجمة البيانات: 12ث (أوامر: 6، اختبارات متصفح: 4)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 501 (Unsupported method ('POST'))",
+  "Failed to load resource: the server responded with a status of 501 (Unsupported method ('POST'))",
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:40263/assets/instrument-sans-latin-wdth-normal-BVScPF0l.woff2",
+  "http://127.0.0.1:40263/assets/instrument-sans-latin-wdth-normal-BVScPF0l.woff2",
+  "404 http://127.0.0.1:40263/assets/fraunces-latin-soft-normal-C-lS_vzd.woff2",
+  "http://127.0.0.1:40263/assets/fraunces-latin-soft-normal-C-lS_vzd.woff2",
+  "404 http://127.0.0.1:40263/assets/motionFeatures-DzHlMmQN.js",
+  "http://127.0.0.1:40263/assets/motionFeatures-DzHlMmQN.js",
+  "404 http://127.0.0.1:40263/assets/jsx-runtime-DyZJNswf.js",
+  "http://127.0.0.1:40263/assets/jsx-runtime-DyZJNswf.js",
+  "501 http://127.0.0.1:40263/api/bootstrap",
+  "501 http://127.0.0.1:40263/api/bootstrap"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "178: og0.png (og:image، اسم عنوان/بانر)",
+  "-37: icon-512.png (شعار كبير، اسم جزء/عنصر، مربعة)",
+  "-47: maskable-512.png (اسم جزء/عنصر، مربعة)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 2,
+  "errors": 1
+ },
+ "fixes": {
+  "إزالة وسم إعلانات/تتبّع": 7,
+  "مسار مطلق ← نسبي": 140,
+  "عزل تخزين اللعبة": 7
+ }
+}

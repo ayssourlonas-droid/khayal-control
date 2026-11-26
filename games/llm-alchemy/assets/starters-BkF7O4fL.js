@@ -1,0 +1,2 @@
+var e=[`Water`,`Fire`,`Earth`,`Air`,`Time`],t={a:e[0],b:e[1],result:`Steam`},n=new Map(e.map((e,t)=>[e.toLowerCase(),t]));function r(t){return n.get(t.toLowerCase())??e.length}export{r as n,t};
+//# sourceMappingURL=starters-BkF7O4fL.js.map
