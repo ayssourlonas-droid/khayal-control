@@ -1154,11 +1154,11 @@
   {
     "url": "https://github.com/Mocas-12/no-survivor-game",
     "repo": "Mocas-12/no-survivor-game",
-    "reason": "تعطّل الاستيراد قبل إنتاج تقرير (انظر سجل التشغيل)",
-    "license": "",
-    "date": "2026-11-11",
-    "attempts": 1,
-    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43052428268"
+    "reason": "ملفات تتجاوز 25MB (حد Cloudflare) حتى بعد التقليل وتحسين الوسائط: game-cf07a85.pck (73MB), game-cf07a85.wasm (37MB)",
+    "license": "MIT",
+    "date": "2026-11-26",
+    "attempts": 2,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/45829006442"
   },
   {
     "url": "https://github.com/sharkwouter/oceanpop",
