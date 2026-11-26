@@ -1,0 +1,115 @@
+// 初始化
+import { setVK } from './vk.js';
+import { primeRuntimeApiBaseFromSharePath } from './plugins/signboard_lab/config.js';
+import { createSceneModelBootGate } from './plugins/scene_model_loader/scene_boot_gate.js';
+const fpsUrl = new URL('./assest/fps.js', import.meta.url).href;
+
+// 确保传统全局版 Cannon 先于 openworld 加载，兼容源码直开和 Vite 生产包。
+async function ensureCannon() {
+    if (globalThis.CANNON) return;
+
+    await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = '../cannon/cannon29kb.js';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
+await ensureCannon();
+const { default: k } = await import('../src/openworld.js');
+globalThis.k = k;
+
+/**
+ * 如果当前是 `/w/:slug` 分享入口，这里先向 SaaS 后端解析真正的世界 API。
+ * 这样后面的 scene-config / signs 请求都会自动落到对应私服。
+ */
+try {
+    await primeRuntimeApiBaseFromSharePath();
+} catch (error) {
+    console.error('[world-share] 分享世界解析失败：', error);
+    if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+        window.alert(`World share unavailable: ${String(error?.message || error)}`);
+    }
+    throw error;
+}
+
+k.initWorld('openworldCanv', true);
+const mode = new URLSearchParams(location.search).get('mode');
+k.mode = mode === null ? 1 : +mode;  // 为空，就是 1
+
+// 导入公共插件模块
+import xmap from '@plugins/xmap.js';
+xmap(k, 1);         // 小地图
+import cookieSavePos from '@plugins/cookieSavePos.js';
+cookieSavePos(k);   // 保存当前位置
+import xdashpanel from '@plugins/xdashpanel.js';
+xdashpanel(k);      // 仪表盘
+import sound from '@plugins/sound.js';
+sound(k);      // 仪表盘
+import centerDot from '@plugins/centerDot_clean.js';
+centerDot(k);       // 开启中心点取物
+import testSampleAni from '@plugins/testSampleAni.js';
+testSampleAni(k);   // 简单的人物动画实现
+import build from '@plugins/build/build.js';
+if (k.mode === 0) { build(k) } // 建造器
+
+// 导入私有的插件模块
+import dataProc from './plugins/dataProc/dataProc.js';  // 数据处理，万数块 系统
+dataProc(k);
+import mvp from './plugins/mvp/mvp.js';  // 主角
+mvp(k);
+import symoffset from './plugins/symoffset/symoffset.js';  // 对称阵列工具
+symoffset(k);
+import signBoard_lab from './plugins/signboard_lab/signTest.js';  // 纹理研究测试工具
+signBoard_lab(k);
+import somecube from './plugins/somecube/somecube.js';  // 几个实验块儿
+somecube(k);
+import normalevent from './plugins/normalevent/normalevent.js';  // 常用的事件
+normalevent(k);
+import tab from './plugins/tab/tab.js';  // tab 侧边框里的内容
+tab(k);
+import mario from './plugins/mario/mario.js';  // 马里奥模型
+mario(k);
+
+// import signboard from './plugins/signboard/signboard.js';  // 指示牌测试
+// signboard(k);
+
+/**
+ * 首屏静态场景渲染。
+ * 地面和主角都集中在这里，避免首屏门控逻辑散在 main.js 各处。
+ */
+function renderInitialScene() {
+    const gX = 0, gY = -2.5, gZ = 0;
+    const gW = 2500, gD = 2500, gH = 6;
+    k.addPhy({ name:'ground-phy', X:gX, Y:gY, Z:gZ, width:gW, depth:gD, height:gH });  // 物理体
+    k.W.cube({ n:'ground', x:gX, y:gY, z:gZ, w:gW, d:gD, h:gH, t:marble, b: '#ceffa8', mix: 0.6, tile:[50, 50] });  // 渲染体
+
+    const lastPos = k?.lastPos || {x:118.48, y:2.93, z:13.25, rX:0, rY:0, rZ:0};
+    k.keys.turnRight = lastPos.rY;
+    k.mainVPlayer = k.addPhy({ name:'mainPlayer',t:marble,mix:0.3, X:lastPos.x, Y:lastPos.y + 1, Z:lastPos.z, size:1, mass:50, colliGroup:1 });
+    k.W.cube({ n:'mainPlayer', b:'#FDF9EE' });  // 注意，主角的 n 一定要与物理体的 name 一致
+}
+
+// a
+const sceneBootGate = await createSceneModelBootGate(k, { timeoutMs: 1000 });
+console.info(`[scene_model_loader] boot gate mode: ${sceneBootGate.mode}`);
+renderInitialScene();
+
+// 左上角的 FPS 面板调试
+if (true) {
+    (function(){var script=document.createElement('script');
+    script.onload=function(){var stats=new Stats();
+    document.body.appendChild(stats.dom);
+    requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};
+    script.src=fpsUrl;document.head.appendChild(script);})()
+}
+
+// 其他
+k.centerDot.setCamView(2);  // 设置摄像机视角位置为第 2 类型
+setVK();  // 开启 VK
+
+void sceneBootGate.backgroundTask.catch(error => {
+    console.error('[scene_model_loader] background boot load failed:', error);
+});

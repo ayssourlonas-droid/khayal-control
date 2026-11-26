@@ -1,0 +1,3827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:openworld-js:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代码统计报告 - 2026年03月05日 15:06:27</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .header .time {
+            color: #a0aec0;
+            font-size: 14px;
+        }
+        .summary {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 30px;
+            background: #f7fafc;
+            flex-wrap: wrap;
+        }
+        .summary-card {
+            background: white;
+            padding: 24px 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 180px;
+        }
+        .summary-card .number {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .summary-card .label {
+            color: #718096;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        .tree {
+            padding: 30px;
+        }
+        .tree-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        .tree-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .tree-item:hover {
+            background: #f7fafc;
+        }
+        .tree-item.folder {
+            font-weight: 600;
+        }
+        .tree-item .arrow {
+            width: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: #a0aec0;
+            user-select: none;
+        }
+        .tree-item .arrow:hover {
+            color: #4a5568;
+        }
+        .tree-item .icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        .tree-item .name {
+            flex: 1;
+            color: #2d3748;
+        }
+        .tree-item .stats {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+        }
+        .tree-item .line-count {
+            color: #667eea;
+            font-weight: 500;
+            min-width: 100px;
+            text-align: right;
+        }
+        .tree-item .size {
+            color: #764ba2;
+            font-weight: 500;
+            min-width: 100px;
+            text-align: right;
+        }
+        .tree-item .file-count {
+            color: #ed8936;
+            font-weight: 500;
+            min-width: 100px;
+            text-align: right;
+        }
+        .tree-item .line-count-highlight {
+            background: #fef08a;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .folder-content {
+            margin-left: 0;
+        }
+        .toggle-all-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .toggle-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .footer {
+            padding: 20px;
+            text-align: center;
+            color: #a0aec0;
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 代码统计报告</h1>
+            <div class="time">生成时间：2026年03月05日 15:06:27</div>
+        </div>
+
+        <div class="summary">
+            <div class="summary-card">
+                <div class="number">30,233</div>
+                <div class="label">总行数</div>
+            </div>
+            <div class="summary-card">
+                <div class="number">4.29 MB</div>
+                <div class="label">总大小</div>
+            </div>
+            <div class="summary-card">
+                <div class="number">230</div>
+                <div class="label">总文件数</div>
+            </div>
+        </div>
+
+        <div class="tree">
+            <button class="toggle-all-btn" onclick="toggleAllFolders()">🔄 全部展开/折叠</button>
+            <div class="tree-title">📂 项目结构</div>
+
+        <div class="tree-item folder" style="padding-left: 0px;">
+            <span class="arrow" onclick="toggleFolder(this)">▼</span>
+            <span class="icon">📁</span>
+            <span class="name">openworld-js/</span>
+            <span class="stats">
+                <span class="line-count">30,233 行</span>
+                <span class="size">4.29 MB</span>
+                <span class="file-count">230 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:block;">
+        <div class="tree-item folder" style="padding-left: 24px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">demo/</span>
+            <span class="stats">
+                <span class="line-count">22,896 行</span>
+                <span class="size">3.72 MB</span>
+                <span class="file-count">137 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">dev003/</span>
+            <span class="stats">
+                <span class="line-count">4,852 行</span>
+                <span class="size">979.27 KB</span>
+                <span class="file-count">29 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">opz/</span>
+            <span class="stats">
+                <span class="line-count">4,670 行</span>
+                <span class="size">971.16 KB</span>
+                <span class="file-count">28 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">assets/</span>
+            <span class="stats">
+                <span class="line-count">1 行</span>
+                <span class="size">536.96 KB</span>
+                <span class="file-count">6 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">cubemap.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">230.44 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">myhouse.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">212.10 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">skytestimg.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">48.24 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cannon29kb.js</span>
+            <span class="stats">
+                <span class="line-count">1 行</span>
+                <span class="size">28.86 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">sky.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">9.78 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">texture.jpeg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">script/</span>
+            <span class="stats">
+                <span class="line-count">4,541 行</span>
+                <span class="size">311.46 KB</span>
+                <span class="file-count">19 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">other/</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.04 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dog.js</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">1,002 行</span>
+                <span class="size">33.64 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">newmvp.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">484 行</span>
+                <span class="size">17.11 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">newmvp-原版.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">518 行</span>
+                <span class="size">16.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">book_func/</span>
+            <span class="stats">
+                <span class="line-count">669 行</span>
+                <span class="size">28.51 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystemtool.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">381 行</span>
+                <span class="size">16.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystem.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">288 行</span>
+                <span class="size">12.34 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">separated/</span>
+            <span class="stats">
+                <span class="line-count">1,093 行</span>
+                <span class="size">17.59 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubedata.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">994 行</span>
+                <span class="size">14.09 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">logicbuild.js</span>
+            <span class="stats">
+                <span class="line-count">81 行</span>
+                <span class="size">2.72 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">startbuild.js</span>
+            <span class="stats">
+                <span class="line-count">18 行</span>
+                <span class="size">799 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">board/</span>
+            <span class="stats">
+                <span class="line-count">423 行</span>
+                <span class="size">14.32 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">signboard.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">423 行</span>
+                <span class="size">14.32 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">init/</span>
+            <span class="stats">
+                <span class="line-count">345 行</span>
+                <span class="size">11.90 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">makegroundmvp.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">218 行</span>
+                <span class="size">7.96 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.js</span>
+            <span class="stats">
+                <span class="line-count">127 行</span>
+                <span class="size">3.94 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">event/</span>
+            <span class="stats">
+                <span class="line-count">323 行</span>
+                <span class="size">9.46 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">indexevent.js</span>
+            <span class="stats">
+                <span class="line-count">197 行</span>
+                <span class="size">5.08 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">bookhot.js</span>
+            <span class="stats">
+                <span class="line-count">93 行</span>
+                <span class="size">3.25 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">event.js</span>
+            <span class="stats">
+                <span class="line-count">33 行</span>
+                <span class="size">1.13 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">vk/</span>
+            <span class="stats">
+                <span class="line-count">259 行</span>
+                <span class="size">9.12 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vk.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">227 行</span>
+                <span class="size">8.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vktool.js</span>
+            <span class="stats">
+                <span class="line-count">32 行</span>
+                <span class="size">978 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">build_house/</span>
+            <span class="stats">
+                <span class="line-count">219 行</span>
+                <span class="size">8.53 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dataprocess.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">219 行</span>
+                <span class="size">8.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">booktext/</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">textinshelf.js</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">kit/</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">csvread.js</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">data.csv</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">css/</span>
+            <span class="stats">
+                <span class="line-count">123 行</span>
+                <span class="size">2.64 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">style.css</span>
+            <span class="stats">
+                <span class="line-count">123 行</span>
+                <span class="size">2.64 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">fps/</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">fps.js</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">182 行</span>
+                <span class="size">8.10 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">dev002/</span>
+            <span class="stats">
+                <span class="line-count">4,824 行</span>
+                <span class="size">977.36 KB</span>
+                <span class="file-count">29 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">opz/</span>
+            <span class="stats">
+                <span class="line-count">4,640 行</span>
+                <span class="size">969.21 KB</span>
+                <span class="file-count">28 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">assets/</span>
+            <span class="stats">
+                <span class="line-count">1 行</span>
+                <span class="size">536.96 KB</span>
+                <span class="file-count">6 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">cubemap.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">230.44 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">myhouse.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">212.10 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">skytestimg.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">48.24 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cannon29kb.js</span>
+            <span class="stats">
+                <span class="line-count">1 行</span>
+                <span class="size">28.86 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">sky.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">9.78 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">texture.jpeg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">script/</span>
+            <span class="stats">
+                <span class="line-count">4,511 行</span>
+                <span class="size">309.51 KB</span>
+                <span class="file-count">19 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">other/</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.04 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dog.js</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">1,021 行</span>
+                <span class="size">33.60 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">newmvp.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">503 行</span>
+                <span class="size">17.07 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">newmvp-原版.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">518 行</span>
+                <span class="size">16.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">book_func/</span>
+            <span class="stats">
+                <span class="line-count">669 行</span>
+                <span class="size">28.51 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystemtool.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">381 行</span>
+                <span class="size">16.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystem.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">288 行</span>
+                <span class="size">12.34 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">separated/</span>
+            <span class="stats">
+                <span class="line-count">1,093 行</span>
+                <span class="size">17.59 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubedata.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">994 行</span>
+                <span class="size">14.09 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">logicbuild.js</span>
+            <span class="stats">
+                <span class="line-count">81 行</span>
+                <span class="size">2.72 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">startbuild.js</span>
+            <span class="stats">
+                <span class="line-count">18 行</span>
+                <span class="size">799 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">board/</span>
+            <span class="stats">
+                <span class="line-count">423 行</span>
+                <span class="size">14.32 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">signboard.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">423 行</span>
+                <span class="size">14.32 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">init/</span>
+            <span class="stats">
+                <span class="line-count">345 行</span>
+                <span class="size">11.93 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">makegroundmvp.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">218 行</span>
+                <span class="size">7.99 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.js</span>
+            <span class="stats">
+                <span class="line-count">127 行</span>
+                <span class="size">3.94 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">event/</span>
+            <span class="stats">
+                <span class="line-count">323 行</span>
+                <span class="size">9.46 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">indexevent.js</span>
+            <span class="stats">
+                <span class="line-count">197 行</span>
+                <span class="size">5.08 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">bookhot.js</span>
+            <span class="stats">
+                <span class="line-count">93 行</span>
+                <span class="size">3.25 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">event.js</span>
+            <span class="stats">
+                <span class="line-count">33 行</span>
+                <span class="size">1.13 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">vk/</span>
+            <span class="stats">
+                <span class="line-count">259 行</span>
+                <span class="size">9.12 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vk.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">227 行</span>
+                <span class="size">8.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vktool.js</span>
+            <span class="stats">
+                <span class="line-count">32 行</span>
+                <span class="size">978 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">build_house/</span>
+            <span class="stats">
+                <span class="line-count">170 行</span>
+                <span class="size">6.59 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dataprocess.js</span>
+            <span class="stats">
+                <span class="line-count">170 行</span>
+                <span class="size">6.59 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">booktext/</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">textinshelf.js</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">kit/</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">csvread.js</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">data.csv</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">css/</span>
+            <span class="stats">
+                <span class="line-count">123 行</span>
+                <span class="size">2.64 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">style.css</span>
+            <span class="stats">
+                <span class="line-count">123 行</span>
+                <span class="size">2.64 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">fps/</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">fps.js</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">184 行</span>
+                <span class="size">8.15 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">dev001/</span>
+            <span class="stats">
+                <span class="line-count">4,166 行</span>
+                <span class="size">955.29 KB</span>
+                <span class="file-count">28 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">opz/</span>
+            <span class="stats">
+                <span class="line-count">3,985 行</span>
+                <span class="size">947.03 KB</span>
+                <span class="file-count">27 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">assets/</span>
+            <span class="stats">
+                <span class="line-count">1 行</span>
+                <span class="size">536.96 KB</span>
+                <span class="file-count">6 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">cubemap.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">230.44 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">myhouse.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">212.10 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">skytestimg.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">48.24 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cannon29kb.js</span>
+            <span class="stats">
+                <span class="line-count">1 行</span>
+                <span class="size">28.86 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">sky.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">9.78 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">texture.jpeg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">script/</span>
+            <span class="stats">
+                <span class="line-count">3,856 行</span>
+                <span class="size">287.33 KB</span>
+                <span class="file-count">18 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">other/</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.04 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dog.js</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">book_func/</span>
+            <span class="stats">
+                <span class="line-count">669 行</span>
+                <span class="size">28.51 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystemtool.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">381 行</span>
+                <span class="size">16.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystem.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">288 行</span>
+                <span class="size">12.34 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">separated/</span>
+            <span class="stats">
+                <span class="line-count">1,093 行</span>
+                <span class="size">17.59 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubedata.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">994 行</span>
+                <span class="size">14.09 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">logicbuild.js</span>
+            <span class="stats">
+                <span class="line-count">81 行</span>
+                <span class="size">2.72 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">startbuild.js</span>
+            <span class="stats">
+                <span class="line-count">18 行</span>
+                <span class="size">799 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">board/</span>
+            <span class="stats">
+                <span class="line-count">423 行</span>
+                <span class="size">14.32 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">signboard.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">423 行</span>
+                <span class="size">14.32 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">init/</span>
+            <span class="stats">
+                <span class="line-count">345 行</span>
+                <span class="size">11.89 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">makegroundmvp.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">218 行</span>
+                <span class="size">7.96 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.js</span>
+            <span class="stats">
+                <span class="line-count">127 行</span>
+                <span class="size">3.94 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">353 行</span>
+                <span class="size">11.30 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">newmvp.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">353 行</span>
+                <span class="size">11.30 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">event/</span>
+            <span class="stats">
+                <span class="line-count">337 行</span>
+                <span class="size">9.72 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">indexevent.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">211 行</span>
+                <span class="size">5.34 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">bookhot.js</span>
+            <span class="stats">
+                <span class="line-count">93 行</span>
+                <span class="size">3.25 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">event.js</span>
+            <span class="stats">
+                <span class="line-count">33 行</span>
+                <span class="size">1.13 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">vk/</span>
+            <span class="stats">
+                <span class="line-count">259 行</span>
+                <span class="size">9.12 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vk.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">227 行</span>
+                <span class="size">8.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vktool.js</span>
+            <span class="stats">
+                <span class="line-count">32 行</span>
+                <span class="size">978 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">build_house/</span>
+            <span class="stats">
+                <span class="line-count">169 行</span>
+                <span class="size">6.47 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dataprocess.js</span>
+            <span class="stats">
+                <span class="line-count">169 行</span>
+                <span class="size">6.47 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">booktext/</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">textinshelf.js</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">kit/</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">csvread.js</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">data.csv</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">css/</span>
+            <span class="stats">
+                <span class="line-count">123 行</span>
+                <span class="size">2.64 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">style.css</span>
+            <span class="stats">
+                <span class="line-count">123 行</span>
+                <span class="size">2.64 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">fps/</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">fps.js</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">181 行</span>
+                <span class="size">8.26 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">dev/</span>
+            <span class="stats">
+                <span class="line-count">5,001 行</span>
+                <span class="size">454.65 KB</span>
+                <span class="file-count">24 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">opz/</span>
+            <span class="stats">
+                <span class="line-count">4,818 行</span>
+                <span class="size">446.54 KB</span>
+                <span class="file-count">23 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">script/</span>
+            <span class="stats">
+                <span class="line-count">4,690 行</span>
+                <span class="size">316.27 KB</span>
+                <span class="file-count">19 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">other/</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.04 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dog.js</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">1,151 行</span>
+                <span class="size">38.45 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">newmvp.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">633 行</span>
+                <span class="size">21.92 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">newmvp-原版.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">518 行</span>
+                <span class="size">16.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">book_func/</span>
+            <span class="stats">
+                <span class="line-count">669 行</span>
+                <span class="size">28.51 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystemtool.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">381 行</span>
+                <span class="size">16.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystem.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">288 行</span>
+                <span class="size">12.34 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">separated/</span>
+            <span class="stats">
+                <span class="line-count">1,093 行</span>
+                <span class="size">17.59 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubedata.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">994 行</span>
+                <span class="size">14.09 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">logicbuild.js</span>
+            <span class="stats">
+                <span class="line-count">81 行</span>
+                <span class="size">2.72 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">startbuild.js</span>
+            <span class="stats">
+                <span class="line-count">18 行</span>
+                <span class="size">799 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">board/</span>
+            <span class="stats">
+                <span class="line-count">423 行</span>
+                <span class="size">14.32 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">signboard.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">423 行</span>
+                <span class="size">14.32 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">init/</span>
+            <span class="stats">
+                <span class="line-count">345 行</span>
+                <span class="size">11.90 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">makegroundmvp.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">218 行</span>
+                <span class="size">7.96 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.js</span>
+            <span class="stats">
+                <span class="line-count">127 行</span>
+                <span class="size">3.94 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">event/</span>
+            <span class="stats">
+                <span class="line-count">323 行</span>
+                <span class="size">9.46 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">indexevent.js</span>
+            <span class="stats">
+                <span class="line-count">197 行</span>
+                <span class="size">5.08 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">bookhot.js</span>
+            <span class="stats">
+                <span class="line-count">93 行</span>
+                <span class="size">3.25 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">event.js</span>
+            <span class="stats">
+                <span class="line-count">33 行</span>
+                <span class="size">1.13 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">vk/</span>
+            <span class="stats">
+                <span class="line-count">259 行</span>
+                <span class="size">9.12 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vk.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">227 行</span>
+                <span class="size">8.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vktool.js</span>
+            <span class="stats">
+                <span class="line-count">32 行</span>
+                <span class="size">978 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">build_house/</span>
+            <span class="stats">
+                <span class="line-count">219 行</span>
+                <span class="size">8.53 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dataprocess.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">219 行</span>
+                <span class="size">8.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">booktext/</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">textinshelf.js</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">kit/</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">csvread.js</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">data.csv</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">assets/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">texture.jpeg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">css/</span>
+            <span class="stats">
+                <span class="line-count">123 行</span>
+                <span class="size">2.64 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">style.css</span>
+            <span class="stats">
+                <span class="line-count">123 行</span>
+                <span class="size">2.64 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">fps/</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">fps.js</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">183 行</span>
+                <span class="size">8.10 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">house/</span>
+            <span class="stats">
+                <span class="line-count">3,784 行</span>
+                <span class="size">418.71 KB</span>
+                <span class="file-count">24 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">script/</span>
+            <span class="stats">
+                <span class="line-count">3,657 行</span>
+                <span class="size">278.85 KB</span>
+                <span class="file-count">20 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dog.js</span>
+            <span class="stats">
+                <span class="line-count">64 行</span>
+                <span class="size">173.01 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystemtool.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">381 行</span>
+                <span class="size">16.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">signboard.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">423 行</span>
+                <span class="size">14.32 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubedata.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">960 行</span>
+                <span class="size">12.59 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">booksystem.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">294 行</span>
+                <span class="size">12.49 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vk.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">228 行</span>
+                <span class="size">8.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">xbox.js</span>
+            <span class="stats">
+                <span class="line-count">174 行</span>
+                <span class="size">6.87 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">makegroundmvp.js</span>
+            <span class="stats">
+                <span class="line-count">158 行</span>
+                <span class="size">5.82 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">textinshelf.js</span>
+            <span class="stats">
+                <span class="line-count">132 行</span>
+                <span class="size">5.05 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">indexevent.js</span>
+            <span class="stats">
+                <span class="line-count">196 行</span>
+                <span class="size">4.99 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.js</span>
+            <span class="stats">
+                <span class="line-count">119 行</span>
+                <span class="size">3.67 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">bookhot.js</span>
+            <span class="stats">
+                <span class="line-count">92 行</span>
+                <span class="size">3.17 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">dataprocess.js</span>
+            <span class="stats">
+                <span class="line-count">90 行</span>
+                <span class="size">2.91 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">logicbuild.js</span>
+            <span class="stats">
+                <span class="line-count">81 行</span>
+                <span class="size">2.72 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">newmvp.js</span>
+            <span class="stats">
+                <span class="line-count">134 行</span>
+                <span class="size">2.45 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">event.js</span>
+            <span class="stats">
+                <span class="line-count">33 行</span>
+                <span class="size">1.13 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">startbuild.js</span>
+            <span class="stats">
+                <span class="line-count">26 行</span>
+                <span class="size">1.12 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">vktool.js</span>
+            <span class="stats">
+                <span class="line-count">32 行</span>
+                <span class="size">978 B</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">loader.js</span>
+            <span class="stats">
+                <span class="line-count">28 行</span>
+                <span class="size">976 B</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">csvread.js</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">325 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">data/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">data.csv</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">118.18 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">file.svg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">17.14 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">css/</span>
+            <span class="stats">
+                <span class="line-count">122 行</span>
+                <span class="size">2.62 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">style.css</span>
+            <span class="stats">
+                <span class="line-count">122 行</span>
+                <span class="size">2.62 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">fps/</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">fps.js</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">house.html</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">269 行</span>
+                <span class="size">11.69 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">texture.jpeg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">README.md</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">214 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 24px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">cannon/</span>
+            <span class="stats">
+                <span class="line-count">29 行</span>
+                <span class="size">157.96 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cannon.min.js</span>
+            <span class="stats">
+                <span class="line-count">28 行</span>
+                <span class="size">129.10 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cannon29kb.js</span>
+            <span class="stats">
+                <span class="line-count">1 行</span>
+                <span class="size">28.86 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 24px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">example/</span>
+            <span class="stats">
+                <span class="line-count">1,910 行</span>
+                <span class="size">137.24 KB</span>
+                <span class="file-count">31 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">p006-build-tool/</span>
+            <span class="stats">
+                <span class="line-count">1,545 行</span>
+                <span class="size">69.08 KB</span>
+                <span class="file-count">19 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">plugins/</span>
+            <span class="stats">
+                <span class="line-count">1,471 行</span>
+                <span class="size">57.08 KB</span>
+                <span class="file-count">15 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">centerDot/</span>
+            <span class="stats">
+                <span class="line-count">1,343 行</span>
+                <span class="size">53.58 KB</span>
+                <span class="file-count">12 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 120px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">build/</span>
+            <span class="stats">
+                <span class="line-count">1,330 行</span>
+                <span class="size">53.27 KB</span>
+                <span class="file-count">11 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 144px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">panel/</span>
+            <span class="stats">
+                <span class="line-count">358 行</span>
+                <span class="size">13.96 KB</span>
+                <span class="file-count">4 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 168px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">pCommEvent.js</span>
+            <span class="stats">
+                <span class="line-count">87 行</span>
+                <span class="size">3.94 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 168px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">inputPanel.js</span>
+            <span class="stats">
+                <span class="line-count">97 行</span>
+                <span class="size">3.75 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 168px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">pEvent.js</span>
+            <span class="stats">
+                <span class="line-count">102 行</span>
+                <span class="size">3.16 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 168px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">pBassSet.js</span>
+            <span class="stats">
+                <span class="line-count">72 行</span>
+                <span class="size">3.11 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">kit.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">295 行</span>
+                <span class="size">10.37 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubemodel.js</span>
+            <span class="stats">
+                <span class="line-count">158 行</span>
+                <span class="size">7.57 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">event.js</span>
+            <span class="stats">
+                <span class="line-count">153 行</span>
+                <span class="size">7.27 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">init.js</span>
+            <span class="stats">
+                <span class="line-count">149 行</span>
+                <span class="size">5.65 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">data.js</span>
+            <span class="stats">
+                <span class="line-count">96 行</span>
+                <span class="size">3.75 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubeReferPos.js</span>
+            <span class="stats">
+                <span class="line-count">68 行</span>
+                <span class="size">2.66 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 144px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">showHotInfo.js</span>
+            <span class="stats">
+                <span class="line-count">53 行</span>
+                <span class="size">2.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">build.js</span>
+            <span class="stats">
+                <span class="line-count">13 行</span>
+                <span class="size">321 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">mvp/</span>
+            <span class="stats">
+                <span class="line-count">67 行</span>
+                <span class="size">2.04 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">mvp.js</span>
+            <span class="stats">
+                <span class="line-count">67 行</span>
+                <span class="size">2.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">somecube/</span>
+            <span class="stats">
+                <span class="line-count">53 行</span>
+                <span class="size">1.32 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">somecube.js</span>
+            <span class="stats">
+                <span class="line-count">53 行</span>
+                <span class="size">1.32 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">demo.js</span>
+            <span class="stats">
+                <span class="line-count">8 行</span>
+                <span class="size">136 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">assest/</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">9.45 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">texture.jpeg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">fps.js</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">main.js</span>
+            <span class="stats">
+                <span class="line-count">46 行</span>
+                <span class="size">1.77 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">23 行</span>
+                <span class="size">796 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">assest/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">30.86 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">GoldenLion.webp</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">23.33 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">texture.jpeg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">p004-adv-w/</span>
+            <span class="stats">
+                <span class="line-count">65 行</span>
+                <span class="size">27.67 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">main.js</span>
+            <span class="stats">
+                <span class="line-count">52 行</span>
+                <span class="size">27.13 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">13 行</span>
+                <span class="size">555 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">p005-adddpz/</span>
+            <span class="stats">
+                <span class="line-count">125 行</span>
+                <span class="size">3.42 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">main.js</span>
+            <span class="stats">
+                <span class="line-count">109 行</span>
+                <span class="size">2.79 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">16 行</span>
+                <span class="size">648 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">p003-basic-w/</span>
+            <span class="stats">
+                <span class="line-count">98 行</span>
+                <span class="size">3.38 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">main.js</span>
+            <span class="stats">
+                <span class="line-count">48 行</span>
+                <span class="size">2.01 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">50 行</span>
+                <span class="size">1.37 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">p002-commConfig/</span>
+            <span class="stats">
+                <span class="line-count">48 行</span>
+                <span class="size">1.67 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">main.js</span>
+            <span class="stats">
+                <span class="line-count">32 行</span>
+                <span class="size">1.03 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">16 行</span>
+                <span class="size">648 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">p001-start/</span>
+            <span class="stats">
+                <span class="line-count">29 行</span>
+                <span class="size">1.16 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">15 行</span>
+                <span class="size">595 B</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">main.js</span>
+            <span class="stats">
+                <span class="line-count">14 行</span>
+                <span class="size">595 B</span>
+            </span>
+        </div>
+        </div></div>
+        <div class="tree-item folder" style="padding-left: 24px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">plugins/</span>
+            <span class="stats">
+                <span class="line-count">2,601 行</span>
+                <span class="size">112.80 KB</span>
+                <span class="file-count">25 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">centerDot/</span>
+            <span class="stats">
+                <span class="line-count">1,339 行</span>
+                <span class="size">68.60 KB</span>
+                <span class="file-count">15 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">build/</span>
+            <span class="stats">
+                <span class="line-count">1,327 行</span>
+                <span class="size">55.16 KB</span>
+                <span class="file-count">12 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 96px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">panel/</span>
+            <span class="stats">
+                <span class="line-count">355 行</span>
+                <span class="size">13.79 KB</span>
+                <span class="file-count">4 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">pCommEvent.js</span>
+            <span class="stats">
+                <span class="line-count">84 行</span>
+                <span class="size">3.78 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">inputPanel.js</span>
+            <span class="stats">
+                <span class="line-count">97 行</span>
+                <span class="size">3.75 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">pEvent.js</span>
+            <span class="stats">
+                <span class="line-count">102 行</span>
+                <span class="size">3.16 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 120px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">pBassSet.js</span>
+            <span class="stats">
+                <span class="line-count">72 行</span>
+                <span class="size">3.11 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">kit.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">295 行</span>
+                <span class="size">10.37 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubemodel.js</span>
+            <span class="stats">
+                <span class="line-count">158 行</span>
+                <span class="size">7.57 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">event.js</span>
+            <span class="stats">
+                <span class="line-count">153 行</span>
+                <span class="size">7.27 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">init.js</span>
+            <span class="stats">
+                <span class="line-count">149 行</span>
+                <span class="size">5.65 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">data.js</span>
+            <span class="stats">
+                <span class="line-count">96 行</span>
+                <span class="size">3.75 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cubeReferPos.js</span>
+            <span class="stats">
+                <span class="line-count">68 行</span>
+                <span class="size">2.66 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">README.md</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">2.06 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">showHotInfo.js</span>
+            <span class="stats">
+                <span class="line-count">53 行</span>
+                <span class="size">2.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">README.md</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">10.56 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">函数列表.md</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">2.60 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">build.js</span>
+            <span class="stats">
+                <span class="line-count">12 行</span>
+                <span class="size">285 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">centerDot_clean.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">228 行</span>
+                <span class="size">10.44 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">owz/</span>
+            <span class="stats">
+                <span class="line-count">221 行</span>
+                <span class="size">8.98 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">deleteModBlock.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">221 行</span>
+                <span class="size">8.98 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">webgl/</span>
+            <span class="stats">
+                <span class="line-count">294 行</span>
+                <span class="size">6.80 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">commModel.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">250 行</span>
+                <span class="size">5.05 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">wjsDynamicIns.js</span>
+            <span class="stats">
+                <span class="line-count">44 行</span>
+                <span class="size">1.75 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">testSampleAni.js</span>
+            <span class="stats">
+                <span class="line-count">140 行</span>
+                <span class="size">5.01 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">svgTextureLib.js</span>
+            <span class="stats">
+                <span class="line-count">101 行</span>
+                <span class="size">3.36 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">xdashpanel.js</span>
+            <span class="stats">
+                <span class="line-count">90 行</span>
+                <span class="size">3.23 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">xmap.js</span>
+            <span class="stats">
+                <span class="line-count">83 行</span>
+                <span class="size">3.07 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">sound.js</span>
+            <span class="stats">
+                <span class="line-count">63 行</span>
+                <span class="size">1.89 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">cookieSavePos.js</span>
+            <span class="stats">
+                <span class="line-count">42 行</span>
+                <span class="size">1.42 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 24px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">src/</span>
+            <span class="stats">
+                <span class="line-count">2,310 行</span>
+                <span class="size">100.33 KB</span>
+                <span class="file-count">16 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">wjs/</span>
+            <span class="stats">
+                <span class="line-count">1,232 行</span>
+                <span class="size">53.34 KB</span>
+                <span class="file-count">7 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">w.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">601 行</span>
+                <span class="size">26.26 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">w-render.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">210 行</span>
+                <span class="size">9.78 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">w-core.js</span>
+            <span class="stats">
+                <span class="line-count">134 行</span>
+                <span class="size">5.16 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">w-state.js</span>
+            <span class="stats">
+                <span class="line-count">97 行</span>
+                <span class="size">4.70 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">w-models.js</span>
+            <span class="stats">
+                <span class="line-count">102 行</span>
+                <span class="size">4.00 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">w-utils.js</span>
+            <span class="stats">
+                <span class="line-count">66 行</span>
+                <span class="size">2.80 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">w_m.js</span>
+            <span class="stats">
+                <span class="line-count">22 行</span>
+                <span class="size">659 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">obj/</span>
+            <span class="stats">
+                <span class="line-count">478 行</span>
+                <span class="size">22.13 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">addobj.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">246 行</span>
+                <span class="size">11.62 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">texture.js</span>
+            <span class="stats">
+                <span class="line-count">145 行</span>
+                <span class="size">6.18 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">chunkManager.js</span>
+            <span class="stats">
+                <span class="line-count">87 行</span>
+                <span class="size">4.34 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">player/</span>
+            <span class="stats">
+                <span class="line-count">254 行</span>
+                <span class="size">10.21 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">control.js</span>
+            <span class="stats">
+                <span class="line-count line-count-highlight">254 行</span>
+                <span class="size">10.21 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">core/</span>
+            <span class="stats">
+                <span class="line-count">165 行</span>
+                <span class="size">7.79 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">animate.js</span>
+            <span class="stats">
+                <span class="line-count">105 行</span>
+                <span class="size">5.32 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">main.js</span>
+            <span class="stats">
+                <span class="line-count">60 行</span>
+                <span class="size">2.47 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">utils/</span>
+            <span class="stats">
+                <span class="line-count">86 行</span>
+                <span class="size">3.33 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">tool.js</span>
+            <span class="stats">
+                <span class="line-count">86 行</span>
+                <span class="size">3.33 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">common/</span>
+            <span class="stats">
+                <span class="line-count">58 行</span>
+                <span class="size">2.49 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">hooks.js</span>
+            <span class="stats">
+                <span class="line-count">58 行</span>
+                <span class="size">2.49 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">openworld.js</span>
+            <span class="stats">
+                <span class="line-count">37 行</span>
+                <span class="size">1.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 24px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">doc/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">17.67 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">目录结构与centerDot深度分析.md</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">17.67 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">favicon.ico</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">16.56 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item folder" style="padding-left: 24px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">open-world-zone/</span>
+            <span class="stats">
+                <span class="line-count">202 行</span>
+                <span class="size">15.54 KB</span>
+                <span class="file-count">7 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">assest/</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">9.45 KB</span>
+                <span class="file-count">2 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">texture.jpeg</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">7.53 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">fps.js</span>
+            <span class="stats">
+                <span class="line-count">5 行</span>
+                <span class="size">1.92 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 48px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">plugins/</span>
+            <span class="stats">
+                <span class="line-count">128 行</span>
+                <span class="size">3.50 KB</span>
+                <span class="file-count">3 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">mvp/</span>
+            <span class="stats">
+                <span class="line-count">67 行</span>
+                <span class="size">2.04 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">mvp.js</span>
+            <span class="stats">
+                <span class="line-count">67 行</span>
+                <span class="size">2.04 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item folder" style="padding-left: 72px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">somecube/</span>
+            <span class="stats">
+                <span class="line-count">53 行</span>
+                <span class="size">1.33 KB</span>
+                <span class="file-count">1 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;">
+        <div class="tree-item file" style="padding-left: 96px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">somecube.js</span>
+            <span class="stats">
+                <span class="line-count">53 行</span>
+                <span class="size">1.33 KB</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 72px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">demo.js</span>
+            <span class="stats">
+                <span class="line-count">8 行</span>
+                <span class="size">136 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">main.js</span>
+            <span class="stats">
+                <span class="line-count">46 行</span>
+                <span class="size">1.81 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 48px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">23 行</span>
+                <span class="size">796 B</span>
+            </span>
+        </div>
+        </div>
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">owzlogo.png</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">13.61 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">index.html</span>
+            <span class="stats">
+                <span class="line-count">153 行</span>
+                <span class="size">8.28 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">webpack.config.js</span>
+            <span class="stats">
+                <span class="line-count">92 行</span>
+                <span class="size">2.08 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">README.md</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">1.46 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">LICENSE</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">1.04 KB</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">faviconold.ico</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">766 B</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">package.json</span>
+            <span class="stats">
+                <span class="line-count">25 行</span>
+                <span class="size">554 B</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">eslint.config.mjs</span>
+            <span class="stats">
+                <span class="line-count">14 行</span>
+                <span class="size">313 B</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📦</span>
+            <span class="name">ads.txt</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">58 B</span>
+            </span>
+        </div>
+        
+        <div class="tree-item file" style="padding-left: 24px;">
+            <span class="arrow"></span>
+            <span class="icon">📄</span>
+            <span class="name">googleb97d52795b84e953.html</span>
+            <span class="stats">
+                <span class="line-count">1 行</span>
+                <span class="size">53 B</span>
+            </span>
+        </div>
+        
+        <div class="tree-item folder" style="padding-left: 24px;">
+            <span class="arrow" onclick="toggleFolder(this)">▶</span>
+            <span class="icon">📁</span>
+            <span class="name">dist/</span>
+            <span class="stats">
+                <span class="line-count">0 行</span>
+                <span class="size">0 B</span>
+                <span class="file-count">0 个文件</span>
+            </span>
+        </div>
+        <div class="folder-content" style="display:none;"></div></div>
+        </div>
+
+        <div class="footer">
+            💡 提示：点击 ▶ 可以展开/折叠文件夹，按大小降序排列
+        </div>
+    </div>
+
+    <script>
+        function toggleFolder(arrow) {
+            const folderContent = arrow.parentElement.nextElementSibling;
+            if (folderContent.style.display === 'none' || !folderContent.style.display) {
+                folderContent.style.display = 'block';
+                arrow.textContent = '▼';
+            } else {
+                folderContent.style.display = 'none';
+                arrow.textContent = '▶';
+            }
+        }
+        function toggleAllFolders() {
+            const arrows = document.querySelectorAll('.tree-item.folder .arrow');
+            let anyHidden = false;
+            arrows.forEach(arrow => {
+                const folderContent = arrow.parentElement.nextElementSibling;
+                if (folderContent && (folderContent.style.display === 'none' || !folderContent.style.display)) {
+                    anyHidden = true;
+                }
+            });
+            arrows.forEach(arrow => {
+                const folderContent = arrow.parentElement.nextElementSibling;
+                if (folderContent) {
+                    if (anyHidden) {
+                        folderContent.style.display = 'block';
+                        arrow.textContent = '▼';
+                    } else {
+                        if (arrow.closest('.tree-item').style.paddingLeft !== '0px') {
+                            folderContent.style.display = 'none';
+                            arrow.textContent = '▶';
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+Source: https://github.com/kohunglee/openworld-js
+Commit: ae3f10e5ba061707d5e47e42cc5105615aa7adbf
+License: MIT
+Imported: 2026-11-26T13:31:03.162089+00:00
+Automated changes (see report): {"إزالة وسم إعلانات/تتبّع": 4, "عزل تخزين اللعبة": 28, "حذف ملفات غير لازمة": 19, "تحسين وسائط صور": 24, "تنظيف الكود": 292}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 40, audio: 0, tagged audio: 0

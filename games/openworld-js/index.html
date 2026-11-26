@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:openworld-js:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OpenWorld.Js - Ultra-lightweight modular WebGL framework. KB-size, 60 FPS everywhere.">
+    <title>OpenWorld.Js — Ultra-lightweight WebGL Framework</title>
+    <script src="./vendor/tailwindcss.min.js"></script>
+    <style type="text/tailwindcss">
+    </style>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700 antialiased selection:bg-emerald-100 selection:text-emerald-700">
+
+    <div class="max-w-3xl mx-auto px-6 py-12 md:py-16">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <!-- Logo -->
+            <div class="mb-6">
+                <img src="owzlogo.png" 
+                     alt="OpenWorld.js Logo" 
+                     style="-webkit-user-drag: none; user-drag: none; user-select: none;"
+                     class="h-24 w-auto mx-auto object-contain hover:scale-105 transition-transform duration-300">
+            </div>
+
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-3">
+                OpenWorld.Js
+            </h1>
+            
+            <p class="text-lg text-slate-500 font-medium">
+                Ultra-lightweight • Modular • Instant
+            </p>
+            
+            <div class="mt-4">
+                <span class="inline-flex items-center rounded-full bg-slate-200/50 px-3 py-1 text-xs font-medium text-slate-600 ring-1 ring-inset ring-slate-500/10">
+                    ~40 KB gzipped • Blazing-fast
+                </span>
+            </div>
+
+            <!-- Github Icon -->
+            <div class="mt-6 flex justify-center">
+                <a href="https://github.com/kohunglee/OpenWorld-js" target="_blank"
+                   class="group p-3 rounded-full bg-white border border-slate-200 hover:border-emerald-400 hover:shadow-sm transition-all duration-300">
+                    <svg class="w-6 h-6 text-slate-400 group-hover:text-emerald-500 transition-colors" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- Intro -->
+        <section class="mb-16 text-center max-w-xl mx-auto">
+            <p class="text-slate-600 leading-relaxed text-lg">
+                An <span class="text-slate-900 font-semibold">extremely lightweight</span> WebGL framework built with fully detachable plugins. 
+                Designed for <span class="text-slate-900 font-semibold">instant-loading</span> 3D websites.
+            </p>
+            <div class="mt-8 flex gap-4 justify-center">
+                <a href="https://github.com/kohunglee/OpenWorld-js" target="_blank" 
+                   class="bg-slate-900 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-slate-700 transition-colors">
+                    GitHub Repository
+                </a>
+                <a href="#demos" 
+                   class="bg-white border border-slate-200 text-slate-700 px-5 py-2 rounded-md text-sm font-medium hover:bg-slate-50 transition-colors">
+                    View Demos
+                </a>
+            </div>
+        </section>
+
+        <!-- Demos Grid -->
+        <section id="demos" class="mb-16 scroll-mt-10">
+            <div class="flex items-center mb-6">
+                <h2 class="text-xl font-bold text-slate-900">Showcase</h2>
+                <div class="h-px bg-slate-200 flex-grow ml-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div class="group bg-white rounded-xl border border-slate-200 p-6 hover:border-emerald-300 transition-colors duration-300">
+                    <h3 class="font-bold text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">Infinite Library</h3>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">
+                        Procedurally generated library capable of holding 300,000 books. Fully interactive, silky smooth even on mobile.
+                    </p>
+                    <div class="flex items-center justify-between text-xs">
+                        <a href="./demo/house.html?logicadd=1" target="_blank" class="font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
+                            Launch Demo <span>→</span>
+                        </a>
+                        <a href="https://www.zhihu.com/question/389957213/answer/1962681678376984942" target="_blank" class="text-slate-400 hover:text-slate-600 hover:underline">
+                            Original Zhihu Post
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group bg-white rounded-xl border border-slate-200 p-6 hover:border-emerald-300 transition-colors duration-300">
+                    <h3 class="font-bold text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">Cyberpunk City</h3>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">
+                        Randomly generated neon city where you can write glowing text on any wall in real-time — no server required.
+                    </p>
+                    <div class="flex items-center justify-between text-xs">
+                        <a href="//git.ccgxk.com/myWorkSpace/webgl_show/cyber_city/cbcity.html" target="_blank" class="font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
+                            Launch Demo <span>→</span>
+                        </a>
+                        <a href="//www.ccgxk.com/webgl/cyber_city.html" target="_blank" class="text-slate-400 hover:text-slate-600 hover:underline">
+                            Usage Guide
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documentation & Footer -->
+        <footer class="text-center border-t border-slate-200 pt-8">
+            <div class="mb-8">
+                <p class="text-slate-500 text-sm mb-1">API documentation is being polished...</p>
+                <a href="./doc" target="_blank" class="text-emerald-600 font-semibold text-sm hover:underline">Coming very soon →</a>
+            </div>
+            
+            <div class="text-xs text-slate-400 flex flex-col md:flex-row justify-center gap-2 md:gap-6">
+                <span>© 2017 – <script>document.write(new Date().getFullYear())</script> OpenWorld.Js</span>
+                <span>😊 Made by <a href="https://www.ccgxk.com" target="_blank" class="hover:text-slate-600 transition-colors">ccGxk</a></span>
+                <span><a href="https://OpenWorld.zone" target="_blank" class="hover:text-slate-600 transition-colors">Open World Zone</a></span>
+            </div>
+        </footer>
+
+        <script>
+            // Ultra-light floating particles (<1.5KB)
+            const p = document.getElementById('particles');
+            for(let i = 0; i < 40; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'particle';
+                dot.style.left = Math.random() * 100 + 'vw';
+                dot.style.animationDelay = Math.random() * 18 + 's';
+                dot.style.animationDuration = (Math.random() * 15 + 15) + 's';
+                p.appendChild(dot);
+            }
+        </script>
+
+        <!-- Original Baidu Analytics -->
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?7f32626143786db9efbf3749f9a87aed";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+
+    </div>
+</body>
+</html>

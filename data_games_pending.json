@@ -2647,5 +2647,32 @@
       "type": "web",
       "category": "ai-game"
     }
+  },
+  {
+    "id": 134,
+    "imported_at": "2026-11-26T13:39:27Z",
+    "release_year": "2026",
+    "category_tags": [
+      "3d",
+      "3d-engine",
+      "creative-coding"
+    ],
+    "main_scene": {
+      "title_ar": "Openworld Js",
+      "title_en": "Openworld Js",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/openworld-js/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A 40kb+ webgl library, with concise code and extensive world sandbox! World engine prioritizes first-person view!The world is your viewpoint.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/openworld-js/",
+      "developer": "kohunglee",
+      "license": "MIT",
+      "source_url": "https://github.com/kohunglee/openworld-js",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "3d"
+    }
   }
 ]

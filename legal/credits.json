@@ -1931,5 +1931,20 @@
     "date": "2026-11-26",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: No more credits or payments. It's free. | README.md: no duplicates, legacy first discovery still credited, legacy history rows in the challenges sheet,"
+  },
+  {
+    "key": "openworldjs",
+    "size": 20827,
+    "repo": "kohunglee/openworld-js",
+    "id": 134,
+    "slug": "openworld-js",
+    "title": "Openworld Js",
+    "developer": "kohunglee",
+    "license": "MIT",
+    "source": "https://github.com/kohunglee/openworld-js",
+    "commit": "ae3f10e5ba061707d5e47e42cc5105615aa7adbf",
+    "date": "2026-11-26",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]

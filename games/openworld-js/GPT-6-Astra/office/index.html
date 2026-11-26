@@ -1,0 +1,32 @@
+<!doctype html><html lang="zh-CN"><head><script>/*khayal-iso*/(function(){try{
+var P='khayal:openworld-js:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PALMETTO · Office District</title><link rel="stylesheet" href="style.css"></head><body><canvas id="game" tabindex="0"></canvas><div id="hud"><header><span class="brand">PALMETTO<span class="pink"> ®</span></span><span class="district">OFFICE DISTRICT / 1986</span><button id="menu">暂停 / 帮助</button></header><div class="coordinates"><span id="floor">EXTERIOR</span><small id="room">棕榈大道 · 南入口</small></div><div id="cross">+</div><aside><canvas id="map" width="180" height="160"></canvas><span id="location">南入口</span></aside><footer><span><i></i> FREE ROAM <b id="fps">60 FPS</b></span><span id="stats">正在搭建办公楼…</span></footer><div id="hint">沿南入口进入 · 楼梯位于建筑东侧</div></div><section id="overlay"><div class="card"><div class="eyebrow">BABYLON.JS / FIRST PERSON EXPLORATION</div><h1>PALMETTO</h1><div class="subtitle">落日之后，办公室依然亮着。</div><p>一栋可以走进去的五层办公楼。穿过大厅、工位与会议室，沿东侧楼梯一路走到顶层。</p><div class="spec"><span>100,000<small>实体方体</small></span><span>05<small>可探索楼层</small></span><span>18:42<small>海滨黄昏</small></span></div><button id="play" disabled>正在生成场景…</button><div class="keys">W A S D 移动　鼠标 环顾　Shift 疾跑<br>空格 跳跃　F 手电　R 回到入口　Esc 释放鼠标</div><div class="note">建议使用电脑键鼠 · 点击画面捕获鼠标</div><div id="error"></div></div></section><div id="touch"><div><button data-key="KeyW">↑</button><div><button data-key="KeyA">←</button><button data-key="KeyS">↓</button><button data-key="KeyD">→</button></div></div><span>拖动右侧环顾</span><button id="flash">手电</button></div><script src="babylon.js"></script><script src="scene.js"></script></body></html>

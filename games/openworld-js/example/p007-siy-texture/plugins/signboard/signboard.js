@@ -1,0 +1,1 @@
+import kit from"./kit.js";import demodata from"./demodata.js";import hookon from"./hookon.js";export default function(ccgxkObj){const signFunc=kit(ccgxkObj).signFunc;hookon(ccgxkObj,signFunc),demodata(ccgxkObj);const data=[{x:11.902,y:10,z:11.769,w:10,h:10,dz:1,st:1,t:"eastSign"}];ccgxkObj.dataProc.process({data,name:"texture-test",type:1,invisible:!1,noIns:!0})}

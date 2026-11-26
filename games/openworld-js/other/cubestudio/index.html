@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:openworld-js:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cube Studio</title>
+    <link rel="stylesheet" href="./src/style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "./vendor/three/three.module.js",
+                "three/addons/": "./vendor/three/addons/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <main class="app-shell">
+        <aside class="panel panel-left">
+            <section class="panel-section">
+                <div class="section-title">项目</div>
+                <div class="button-row">
+                    <button id="load-build-lab" type="button">build_lab 示例</button>
+                    <button id="load-xhall" type="button">xhall 示例</button>
+                </div>
+                <label class="field-label" for="import-text">导入 JSON 数组</label>
+                <textarea id="import-text" spellcheck="false" placeholder='[{"x":0,"y":1,"z":0,"w":1,"h":1,"d":1}]'></textarea>
+                <div class="button-row">
+                    <button id="import-json" type="button">导入</button>
+                    <button id="clear-scene" type="button">清空</button>
+                </div>
+            </section>
+
+            <section class="panel-section">
+                <div class="section-title">工具</div>
+                <div class="tool-grid" aria-label="编辑工具">
+                    <button id="mode-translate" class="is-active" type="button">移动 W</button>
+                    <button id="mode-rotate" type="button">旋转 E</button>
+                    <button id="mode-scale" type="button">缩放 R</button>
+                    <button id="add-cube" type="button">新增方块</button>
+                    <button id="duplicate-cube" type="button">复制</button>
+                    <button id="delete-cube" type="button">删除</button>
+                    <button id="first-person" type="button">第一视角</button>
+                    <button id="undo" type="button">撤销</button>
+                    <button id="redo" type="button">重做</button>
+                </div>
+                <div class="snap-row">
+                    <label for="snap-position">吸附</label>
+                    <select id="snap-position">
+                        <option value="0.1">0.1</option>
+                        <option value="0.5">0.5</option>
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                    </select>
+                    <label for="snap-rotation">旋转</label>
+                    <select id="snap-rotation">
+                        <option value="15">15°</option>
+                        <option value="5">5°</option>
+                        <option value="45">45°</option>
+                        <option value="90">90°</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="panel-section">
+                <div class="section-title">选择</div>
+                <div id="status-line" class="status-line">未选择方块</div>
+                <p class="hint">单击选择，Shift 单击多选。拖动 gizmo 后会自动记录撤销点。</p>
+            </section>
+        </aside>
+
+        <section class="viewport-shell">
+            <canvas id="scene"></canvas>
+            <div id="crosshair" class="crosshair" hidden></div>
+            <div class="viewport-hud">
+                <span id="hud-primary">左键选择</span>
+                <span>右键/滚轮视角</span>
+                <span>Cmd/Ctrl+Z 撤销</span>
+            </div>
+        </section>
+
+        <aside class="panel panel-right">
+            <section class="panel-section">
+                <div class="section-title">方块属性</div>
+                <div class="form-grid">
+                    <label>x<input id="prop-x" data-prop="x" type="number" step="0.001"></label>
+                    <label>y<input id="prop-y" data-prop="y" type="number" step="0.001"></label>
+                    <label>z<input id="prop-z" data-prop="z" type="number" step="0.001"></label>
+                    <label>w<input id="prop-w" data-prop="w" type="number" step="0.001"></label>
+                    <label>h<input id="prop-h" data-prop="h" type="number" step="0.001"></label>
+                    <label>d<input id="prop-d" data-prop="d" type="number" step="0.001"></label>
+                    <label>rx<input id="prop-rx" data-prop="rx" type="number" step="0.001"></label>
+                    <label>ry<input id="prop-ry" data-prop="ry" type="number" step="0.001"></label>
+                    <label>rz<input id="prop-rz" data-prop="rz" type="number" step="0.001"></label>
+                </div>
+                <label class="field-label" for="prop-b">颜色 b</label>
+                <div class="color-row">
+                    <input id="prop-b" data-prop="b" type="color" value="#888888">
+                    <button id="clear-color" type="button">省略颜色</button>
+                </div>
+            </section>
+
+            <section class="panel-section">
+                <div class="section-title">高级字段</div>
+                <div class="form-grid form-grid-small">
+                    <label>dz<input id="prop-dz" data-prop="dz" type="number" step="1"></label>
+                    <label>st<input id="prop-st" data-prop="st" type="number" step="1"></label>
+                    <label>del<input id="prop-del" data-prop="del" type="number" step="1"></label>
+                </div>
+                <label class="field-label" for="prop-t">t</label>
+                <input id="prop-t" data-prop="t" class="text-input" type="text">
+            </section>
+
+            <section class="panel-section export-section">
+                <div class="section-title">JSON</div>
+                <label class="field-label" for="export-name">导出文件名</label>
+                <input id="export-name" class="text-input" type="text" value="cubes.json">
+                <div class="button-row">
+                    <button id="refresh-json" type="button">刷新预览</button>
+                    <button id="download-json" type="button">下载</button>
+                </div>
+                <textarea id="json-preview" spellcheck="false" readonly></textarea>
+            </section>
+        </aside>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>
