@@ -938,11 +938,11 @@
   {
     "url": "https://github.com/rootasjey/backwards",
     "repo": "rootasjey/backwards",
-    "reason": "الصفحة فارغة بعد 6 ثوانٍ",
+    "reason": "الصفحة فارغة (لا عناصر مرئية ولا نص) بعد التشغيل التجريبي؛ أول خطأ: Failed to load resource: the server responded with a status of 404 (File not found)",
     "license": "MIT",
-    "date": "2026-11-10",
-    "attempts": 1,
-    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/42873032257"
+    "date": "2026-11-26",
+    "attempts": 2,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/45837423864"
   },
   {
     "url": "https://github.com/channingbreeze/games",
