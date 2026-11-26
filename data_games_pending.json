@@ -2782,5 +2782,32 @@
       "type": "web",
       "category": "browser"
     }
+  },
+  {
+    "id": 139,
+    "imported_at": "2026-11-26T14:11:21Z",
+    "release_year": "2025",
+    "category_tags": [
+      "japanese",
+      "typingtest",
+      "web-game"
+    ],
+    "main_scene": {
+      "title_ar": "Taipingu",
+      "title_en": "Taipingu",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/taipingu/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Japanese Typing Game for everyone",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/taipingu/",
+      "developer": "entibo",
+      "license": "MIT",
+      "source_url": "https://github.com/entibo/taipingu",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "japanese"
+    }
   }
 ]

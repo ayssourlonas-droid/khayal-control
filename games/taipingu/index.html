@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head><script>/*khayal-iso*/(function(){try{
+var P='khayal:taipingu:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Taipingu - Japanese Typing Game</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <!-- Info & images for search engines & social media -->
+    <meta
+      name="description"
+      content="Type Japanese sentences for fun and proficiency!"
+    />
+    <meta name="author" content="entibo" />
+    <meta
+      name="keywords"
+      content="taipingu, typing, japanese, typing test, typing game"
+    />
+    <meta property="og:url" content="https://taipingu.link" />
+    <meta property="og:type" content="website" />
+    <!-- Discord uses this -->
+    <meta property="og:title" content="Taipingu - Japanese Typing Game" />
+    <meta name="twitter:title" content="Taipingu - Japanese Typing Game" />
+    <meta
+      property="og:image"
+      content="https://github.com/user-attachments/assets/fc1b44ea-119b-4194-9c0e-190ec209a5f3"
+    />
+    <meta
+      name="twitter:image"
+      content="https://github.com/user-attachments/assets/fc1b44ea-119b-4194-9c0e-190ec209a5f3"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta id="metaThemeColor" name="theme-color" content="#ff9ba4" />
+    <meta
+      property="og:description"
+      content="Type Japanese sentences in your browser for fun and proficiency!"
+    />
+    <!-- End - Info & images for search engines & social media -->
+
+    <link
+      rel="preload"
+      href="./fonts/SourceHanSansJP-Regular.subset.woff2"
+      type="font/woff2"
+      as="font"
+      crossorigin
+    />
+
+    <script defer src="./icons.js"></script>
+    <script type="module" src="index.js"></script>
+    <link rel="stylesheet" href="index.css" />
+
+    <script
+      data-goatcounter="https://taipingu.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
+  </head>
+
+  <body class="loading" style="background: url('./waves.webp')">
+    <div id="sentenceCountElement" style="display: none"></div>
+
+    <main>
+      <div class="description">
+        <em>Taipingu</em> is a simple web-based
+        <em>Japanese typing game</em> featuring thousands of sentences from
+        Tatoeba, including furigana, translation in many languages and
+        recordings from native speakers.
+        <br />
+        <br />
+        If you're on mobile, switch to a computer to get started!
+        <br />
+        <br />
+        You can also check out the code on GitHub ↓
+        <br />
+      </div>
+      <nav class="links">
+        <a href="https://taipingu.link" id="logo"
+          >Taipingu<span class="domain">.link</span></a
+        >
+        <a
+          class="button"
+          target="_blank"
+          href="https://github.com/entibo/taipingu"
+        >
+          <custom-icon name="github"></custom-icon>
+          <!-- <span><span class="bold">GitHub</span>で見る</span> -->
+          <span>GitHub</span>
+        </a>
+        <a class="button" target="_blank" href="https://discord.gg/pbaFq2RebV">
+          <custom-icon name="discord"></custom-icon>
+          <!-- <span><span class="bold">Discord</span>に参加</span> -->
+          <span>Discord</span>
+        </a>
+        <a
+          id="sentenceOriginLink"
+          class="button hidden"
+          target="_blank"
+          href="https://tatoeba.org/en/sentences/search?from=jpn&sort=modified&sort_reverse"
+        >
+          <div class="legend">
+            Sentence <span id="sentenceIdElement">0</span>
+          </div>
+          <span>この文を<span class="bold">Tatoeba</span>で見る</span>
+        </a>
+      </nav>
+
+      <div id="sentenceContainer">
+        <div id="highlightElement"></div>
+
+        <div id="sentenceElement">
+          <!-- For reference only -->
+          <template>
+            <span data-target="お" class="text complete">お</span>
+            <ruby>
+              <span class="text">前</span>
+              <rt>
+                <span data-target="ま" class="active">ま</span>
+                <span data-target="え">え</span>
+              </rt>
+            </ruby>
+            <span data-target="は" class="text">は</span>
+          </template>
+        </div>
+
+        <div id="hintElement">
+          <custom-icon name="return"></custom-icon>
+        </div>
+
+        <div id="translationElement" dir="auto"></div>
+      </div>
+
+      <div class="settings">
+        <label for="furiganaCheckbox" class="button custom-checkbox">
+          <div class="legend">Pronunciation</div>
+          <input type="checkbox" id="furiganaCheckbox" />
+          <custom-icon name="unchecked"></custom-icon>
+          <custom-icon name="checked"></custom-icon>
+          ふりがな
+          <kbd class="key">tab</kbd>
+        </label>
+
+        <label for="translationCheckbox" class="button custom-checkbox">
+          <div class="legend">Translation</div>
+          <input type="checkbox" id="translationCheckbox" />
+          <custom-icon name="unchecked"></custom-icon>
+          <custom-icon name="checked"></custom-icon>
+          <select id="languageSelect">
+            <option value="">翻訳オフ</option>
+          </select>
+        </label>
+
+        <label for="fontCheckbox" class="button custom-checkbox">
+          <div class="legend">Font</div>
+          <input type="checkbox" id="fontCheckbox" />
+          <custom-icon name="unchecked"></custom-icon>
+          <custom-icon name="checked"></custom-icon>
+          明朝体
+        </label>
+
+        <label for="audioCheckbox" class="button custom-checkbox">
+          <div class="legend">Voice</div>
+          <div id="sentenceVoiceContainer" class="icon-text hidden">
+            <custom-icon name="user-voice"></custom-icon>
+            <span id="sentenceVoiceElement">Voice Actor</span>
+          </div>
+          <input type="checkbox" id="audioCheckbox" />
+          <custom-icon name="unchecked"></custom-icon>
+          <custom-icon name="checked"></custom-icon>
+          音声
+          <kbd class="key">space</kbd>
+        </label>
+
+        <div class="readings">
+          <div
+            class="legend hover-info"
+            title='Number of new kanji to be included in sentences; a kanji is marked as "known" when you type it while furigana is disabled'
+          >
+            New kanji
+          </div>
+          <label class="button"
+            ><input type="radio" name="unknownReadings" value="0" />０</label
+          >
+          <label class="button"
+            ><input type="radio" name="unknownReadings" value="1" />１</label
+          >
+          <label class="button"
+            ><input type="radio" name="unknownReadings" value="null" />＊</label
+          >
+        </div>
+
+        <button id="restartButton" class="button hidden">
+          <div class="legend">Typing speed</div>
+          <div id="speedElement">
+            <!-- number rendered using ::before -->
+            <span class="wpm">wpm</span>
+          </div>
+          <kbd class="key">escape</kbd>
+        </button>
+
+        <button id="nextSentenceButton" class="button">
+          <div class="legend">Next</div>
+          <span>次<span class="no">の</span>文</span>
+          <kbd class="key">enter</kbd>
+        </button>
+      </div>
+    </main>
+  </body>
+</html>
