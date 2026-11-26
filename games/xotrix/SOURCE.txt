@@ -1,0 +1,8 @@
+Source: https://github.com/vincenzo-afk/XOTrix
+Commit: 71624d6e7f14ccd7c6daff104cb21ed9d3c71e22
+License: MIT
+Imported: 2026-11-26T13:53:10.174113+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 1, "تضمين خطوط محلياً": 4, "حذف ملفات غير لازمة": 4, "تنظيف الكود": 3}
+
+Media provenance (automated signals, not a legal guarantee):
+- images: 0, audio: 0, tagged audio: 0

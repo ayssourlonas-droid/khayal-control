@@ -2728,5 +2728,32 @@
       "type": "web",
       "category": "bootstrap"
     }
+  },
+  {
+    "id": 137,
+    "imported_at": "2026-11-26T13:58:13Z",
+    "release_year": "2026",
+    "category_tags": [
+      "alpha-beta-pruning",
+      "artificial-intelligence",
+      "browser-game"
+    ],
+    "main_scene": {
+      "title_ar": "XOTrix",
+      "title_en": "XOTrix",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/xotrix/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A browser-native Tic-Tac-Toe game with configurable minimax AI, local statistics, replay sharing, themes, and responsive UI.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/xotrix/",
+      "developer": "vincenzo-afk",
+      "license": "MIT",
+      "source_url": "https://github.com/vincenzo-afk/XOTrix",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "alpha-beta-pruning"
+    }
   }
 ]

@@ -1976,5 +1976,20 @@
     "date": "2026-11-26",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "xotrix",
+    "size": 28,
+    "repo": "vincenzo-afk/XOTrix",
+    "id": 137,
+    "slug": "xotrix",
+    "title": "XOTrix",
+    "developer": "vincenzo-afk",
+    "license": "MIT",
+    "source": "https://github.com/vincenzo-afk/XOTrix",
+    "commit": "71624d6e7f14ccd7c6daff104cb21ed9d3c71e22",
+    "date": "2026-11-26",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
