@@ -95,7 +95,7 @@ footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:v
 </div>
 <script>
 (function(){
-  fetch('../version.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(v){
+  fetch('https://raw.githubusercontent.com/ayssourlonas-droid/khayal.data/main/version.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(v){
     var m=(v.support_email||'').trim();
     if(!m)return;
     document.querySelectorAll('.mail').forEach(function(e){
