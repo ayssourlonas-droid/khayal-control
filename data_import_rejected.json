@@ -1334,11 +1334,11 @@
   {
     "url": "https://github.com/YinkaiYu/topology-gomoku",
     "repo": "YinkaiYu/topology-gomoku",
-    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 127)",
+    "reason": "فشل البناء: فشل الأمر: ['npm', 'run', 'build'] (رمز 127) — > topology-gomoku@1.44.1 build:xiaohongshu | > powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/build.ps1 | sh: 1: powershell: not found",
     "license": "MIT",
-    "date": "2026-11-11",
-    "attempts": 1,
-    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43088128947"
+    "date": "2026-11-26",
+    "attempts": 2,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/45824929751"
   },
   {
     "url": "https://github.com/attogram/EightQueens",
