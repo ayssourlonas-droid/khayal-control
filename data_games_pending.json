@@ -2593,5 +2593,32 @@
       "type": "web",
       "category": "angular"
     }
+  },
+  {
+    "id": 132,
+    "imported_at": "2026-11-26T13:14:54Z",
+    "release_year": "2026",
+    "category_tags": [
+      "browser-game",
+      "game-engine",
+      "gamepad"
+    ],
+    "main_scene": {
+      "title_ar": "Super Bash Folds",
+      "title_en": "Super Bash Folds",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/super-bash-folds/_cover.webp"
+    },
+    "details_scene": {
+      "description": "A fast, moddable open-source platform fighter for the browser. Add fighters and stages as self-contained packs.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/super-bash-folds/",
+      "developer": "blancmathis",
+      "license": "MIT",
+      "source_url": "https://github.com/blancmathis/Super_Bash_Folds",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "browser-game"
+    }
   }
 ]

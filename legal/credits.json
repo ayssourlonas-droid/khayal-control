@@ -1901,5 +1901,20 @@
     "date": "2026-11-26",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "superbashfolds",
+    "size": 30259,
+    "repo": "blancmathis/Super_Bash_Folds",
+    "id": 132,
+    "slug": "super-bash-folds",
+    "title": "Super Bash Folds",
+    "developer": "blancmathis",
+    "license": "MIT",
+    "source": "https://github.com/blancmathis/Super_Bash_Folds",
+    "commit": "1028a3b739ef54efdcbe5a2ef0ad1714fe569c47",
+    "date": "2026-11-26",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: one CC0 stage; | README.md: open foundation: new community work is credited through Git history and asset"
   }
 ]

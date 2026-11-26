@@ -1,0 +1,79 @@
+{
+ "date": "2026-11-26T13:10:35.241512+00:00",
+ "status": "warn",
+ "source": "https://github.com/blancmathis/Super_Bash_Folds",
+ "commit": "1028a3b739ef54efdcbe5a2ef0ad1714fe569c47",
+ "license": "MIT",
+ "warnings": [
+  "الحجم كبير قبل تحسين الوسائط: 60MB",
+  "روابط لمواقع خارجية: hormelz.itch.io, jcgt.org, kaylousberg.itch.io, kenney.nl, opengameart.org, quaternius.com, rgsdev.itch.io",
+  "11 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:33391/assets/audio/open/music/menu-loop.ogg",
+  "12 أخطاء في الكونسول، أولها: Failed to load resource: the server responded with a status of 404 (File not found)",
+  "ESLint: 1 أخطاء برمجية في 1 ملفات، أولها: assets/testLab-BnNaiK4f.js:1 Parsing error: 'import' and 'export' may appear only with 'sourceType: module'"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "مجلد الناتج المبني: dist",
+  "الوسائط: 744 صورة و24 صوتاً",
+  "تصريح المطوّر عن الوسائط: README.md: one CC0 stage;",
+  "تصريح المطوّر عن الوسائط: README.md: open foundation: new community work is credited through Git history and asset",
+  "تصريح المطوّر عن الوسائط: README.md: Original project assets under `public/assets/open/`: CC0-1.0.",
+  "تصريح المطوّر عن الوسائط: README.md: Third-party assets: [credits, licenses, and source links](THIRD_PARTY_ASSETS.md).",
+  "تصريح المطوّر عن الوسائط: README.md: `visual`: orientation, attribution, source page, and license;",
+  "تصريح المطوّر عن الوسائط: README.md: This directory contains the public landing page, credits, and hosted game",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:super-bash-folds:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 324 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: حُذف 14 ملفاً (88 KB)؛ من 834 إلى 820",
+  "تحسين الوسائط: لعبة بمحرك (Unity/Godot/WASM) وسائطها داخل ملفات مجمّعة؛ لم تُحسَّن",
+  "9 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "تنظيف الكود (فراغات وبنية الكود): 15 ملفاً، 201KB ← 142KB (الأسماء لم تتغير؛ الاختبار الآلي لا يغطي كل المراحل)",
+  "درجة الجودة التقريبية: 75/100 (أخطاء كونسول (-15)، أخطاء ESLint (-10))",
+  "تعديل تلقائي: مسار مطلق ← نسبي × 3",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: حذف ملفات غير لازمة × 14",
+  "تعديل تلقائي: تنظيف الكود × 15",
+  "الغلاف: gameplay-poster.webp ← اسم غلاف، مجلد ترويج (درجة 143)",
+  "الترجمة: لا حقول تحتاج ترجمة أو لم يُرجع المحرّك نتيجة صالحة",
+  "الأزمنة: جلب المستودع: 2ث؛ البحث/البناء: 4ث؛ اختبار المتصفح: 95ث؛ تقليل الملفات: 48ث؛ فحص JavaScript: 2ث؛ تنظيف الكود: 49ث؛ ترجمة البيانات: 11ث (أوامر: 6، اختبارات متصفح: 3)"
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "Failed to load resource: the server responded with a status of 404 (File not found)"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:33391/assets/audio/open/music/menu-loop.ogg",
+  "http://127.0.0.1:33391/assets/audio/open/music/menu-loop.ogg",
+  "404 http://127.0.0.1:33391/assets/audio/open/sfx/menu-confirm.ogg",
+  "404 http://127.0.0.1:33391/assets/ui/fighters/george/select/00.thumb.webp",
+  "404 http://127.0.0.1:33391/assets/ui/fighters/kaykit-knight/select/00.thumb.webp",
+  "404 http://127.0.0.1:33391/assets/ui/fighters/platformer/select/00.thumb.webp",
+  "404 http://127.0.0.1:33391/assets/ui/fighters/wolf/select/00.thumb.webp",
+  "404 http://127.0.0.1:33391/assets/ui/fighters/cactus/select/00.thumb.webp",
+  "404 http://127.0.0.1:33391/assets/ui/fighters/yeti/select/00.thumb.webp",
+  "404 http://127.0.0.1:33391/assets/ui/fighters/quaternius-hero/select/00.thumb.webp"
+ ],
+ "external_requests": [],
+ "cover_candidates": [
+  "143: gameplay-poster.webp (اسم غلاف، مجلد ترويج)",
+  "115: gameplay.webp (README #5، اسم شاشة، مجلد ترويج)",
+  "88: preview-D9bC6rwK.png (اسم عنوان/بانر)"
+ ],
+ "lint": {
+  "ran": true,
+  "checked": 1,
+  "errors": 1
+ },
+ "fixes": {
+  "مسار مطلق ← نسبي": 3,
+  "عزل تخزين اللعبة": 1,
+  "حذف ملفات غير لازمة": 14,
+  "تنظيف الكود": 15
+ }
+}

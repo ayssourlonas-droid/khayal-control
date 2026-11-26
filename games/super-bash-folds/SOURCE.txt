@@ -1,0 +1,14 @@
+Source: https://github.com/blancmathis/Super_Bash_Folds
+Commit: 1028a3b739ef54efdcbe5a2ef0ad1714fe569c47
+License: MIT
+Imported: 2026-11-26T13:10:35.241512+00:00
+Automated changes (see report): {"مسار مطلق ← نسبي": 3, "عزل تخزين اللعبة": 1, "حذف ملفات غير لازمة": 14, "تنظيف الكود": 15}
+
+Media provenance (automated signals, not a legal guarantee):
+- README.md: one CC0 stage;
+- README.md: open foundation: new community work is credited through Git history and asset
+- README.md: Original project assets under `public/assets/open/`: CC0-1.0.
+- README.md: Third-party assets: [credits, licenses, and source links](THIRD_PARTY_ASSETS.md).
+- README.md: `visual`: orientation, attribution, source page, and license;
+- README.md: This directory contains the public landing page, credits, and hosted game
+- images: 744, audio: 24, tagged audio: 0
