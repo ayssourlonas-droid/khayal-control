@@ -1532,11 +1532,11 @@
   {
     "url": "https://github.com/Parking-Master/FPS3",
     "repo": "Parking-Master/FPS3",
-    "reason": "الحجم 663MB كبير جداً؛ ملفات تتجاوز 25MB (حد Cloudflare): Desktop/FPS3 Desktop.zip (89MB), sounds/ambience.mp3 (39MB)",
+    "reason": "الحجم 663MB كبير جداً",
     "license": "MIT",
-    "date": "2026-11-20",
-    "attempts": 1,
-    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/44797881748"
+    "date": "2026-11-26",
+    "attempts": 2,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/45821000990"
   },
   {
     "url": "https://github.com/c1t1zen1/Michi-Neko-The-Cat-Philosophers-Path",
