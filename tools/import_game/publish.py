@@ -23,6 +23,25 @@ GAMES, FEATURED, PENDING = "data_games.json", "data_games_featured.json", "data_
 BUDGET = {}
 
 
+import fnmatch
+
+# ملفات لا تنتمي لموقع لعبة ويب ولا يجوز نشرها أبداً: مفاتيح وشهادات وملفات بيئة وأسرار ومخلفات بايثون
+_NEVER_PUBLISH = ("*.pem", "*.key", "*.crt", "*.cer", "*.p12", "*.pfx", "*.jks", "*.keystore", "*.ppk",
+                  "id_rsa*", "id_dsa*", "id_ecdsa*", "id_ed25519*", ".env", ".env.*", "*.env", "compose.env",
+                  ".npmrc", ".netrc", ".pypirc", "credentials*.json", "service-account*.json", "*.pyc", "*.pyo",
+                  "__pycache__", ".DS_Store", "Thumbs.db")
+DROPPED = []
+
+
+def _never_publish(dirpath, names):
+    out = []
+    for n in names:
+        if any(fnmatch.fnmatch(n.lower(), pat.lower()) for pat in _NEVER_PUBLISH):
+            out.append(n)
+            DROPPED.append(os.path.join(dirpath, n))
+    return out
+
+
 def count_files(root: Path):
     """يرجع (عدد كل الملفات عدا .git، وقاموساً: لعبة ← عدد ملفاتها)."""
     total, per = 0, {}
@@ -261,7 +280,9 @@ def main():
                 keep = ov.read_bytes()
             shutil.rmtree(dest)
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copytree(site, dest)
+        shutil.copytree(site, dest, ignore=_never_publish)
+        if DROPPED:
+            log(f"تُركت {len(DROPPED)} ملفات حسّاسة/غير لازمة خارج النشر (مفاتيح، شهادات، .env، pycache)")
         if keep is not None and not (dest / "_i18n_overrides.json").exists():
             (dest / "_i18n_overrides.json").write_bytes(keep)
         file_budget(host, slug)  # يرفض قبل أي دفع إن اقتربنا من حد Cloudflare
