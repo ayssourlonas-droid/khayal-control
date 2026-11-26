@@ -1235,11 +1235,11 @@
   {
     "url": "https://github.com/Esposter/Esposter",
     "repo": "Esposter/Esposter",
-    "reason": "فشل البناء: فشل الأمر: ['pnpm', 'run', 'build'] (رمز 1)",
+    "reason": "فشل البناء: فشل الأمر: ['pnpm', 'install', '--no-frozen-lockfile'] (رمز 1) — Error: ERR_PNPM_EXECUTOR_LIFECYCLE_SCRIPT_FAILED | × installing dependencies | ╰─▶ /home/runner/work/khayal-control/khayal-control/work/src/apps/web postinstall: `nuxt prepare` exited with exit status: 1",
     "license": "Apache-2.0",
-    "date": "2026-11-11",
-    "attempts": 1,
-    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/43068367856"
+    "date": "2026-11-26",
+    "attempts": 2,
+    "run_url": "https://github.com/ayssourlonas-droid/khayal-control/actions/runs/45825185407"
   },
   {
     "url": "https://github.com/3ddelano/slide-puzzle-godot",
