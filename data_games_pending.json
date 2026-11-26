@@ -2566,5 +2566,32 @@
       "type": "web",
       "category": "0thernes"
     }
+  },
+  {
+    "id": 131,
+    "imported_at": "2026-11-26T13:00:05Z",
+    "release_year": "2026",
+    "category_tags": [
+      "angular",
+      "browser-game",
+      "pokemon"
+    ],
+    "main_scene": {
+      "title_ar": "Pokemon Roulette Game",
+      "title_en": "Pokemon Roulette Game",
+      "app_rating": 0.0,
+      "poster_url": "https://khayal-control.pages.dev/games/pokemon-roulette-game/_cover.webp"
+    },
+    "details_scene": {
+      "description": "Interactive Pokémon roulette game built with Angular — test your luck in a fun, fast, and engaging web experience.",
+      "background_url": "",
+      "play_url": "https://khayal-control.pages.dev/games/pokemon-roulette-game/",
+      "developer": "antonio-gaskin",
+      "license": "MIT",
+      "source_url": "https://github.com/antonio-gaskin/pokemon-roulette-game",
+      "orientation": "portrait",
+      "type": "web",
+      "category": "angular"
+    }
   }
 ]

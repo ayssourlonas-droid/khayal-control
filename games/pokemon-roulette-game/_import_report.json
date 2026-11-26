@@ -1,0 +1,67 @@
+{
+ "date": "2026-11-26T12:54:16.573977+00:00",
+ "status": "warn",
+ "source": "https://github.com/antonio-gaskin/pokemon-roulette-game",
+ "commit": "5125d5dce765fd385a2e1ca2e2ed53f6cdebeb4c",
+ "license": "MIT",
+ "warnings": [
+  "أسماء ملفات تشبه علامات تجارية معروفة: src/app/interfaces/pokemon-item.ts، src/app/main-game/roulette-container/roulettes/pokemon-from-aux-list-roulette/pokemon-from-aux-list-roulette.component.spec.ts، src/app/main-game/roulette-container/roulettes/pokemon-from-aux-list-roulette/pokemon-from-aux-list-roulette.component.html، src/app/main-game/roulette-container/roulettes/pokemon-from-aux-list-roulette/pokemon-from-aux-list-roulette.component.ts، src/app/main-game/roulette-container/roulettes/pokemon-from-aux-list-roulette/pokemon-from-aux-list-roulette.component.css، src/app/main-game/roulette-container/roulettes/trade-pokemon-roulette/trade-pokemon-roulette.component.css، src/app/main-game/roulette-container/roulettes/trade-pokemon-roulette/trade-pokemon-roulette.component.spec.ts، src/app/main-game/roulette-container/roulettes/trade-pokemon-roulette/trade-pokemon-roulette.component.html",
+  "مصدر الأصوات (العدد: 5) غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "مصدر الصور غير موثّق في اللعبة؛ ستُنشر وتُعالَج بلاغات أصحاب الحقوق",
+  "أُزيلت 2 وسوم إعلانات/تتبّع من HTML",
+  "روابط لمواقع خارجية: angular.dev, archives.bulbagarden.net, bsky.app, bulbapedia.bulbagarden.net, github.com, ko-fi.com, pokeapi.co, raw.githubusercontent.com",
+  "1 ملفات لم تُحمَّل (404 ونحوه): مثال: 404 http://127.0.0.1:45601/i18n/en.json",
+  "4 أخطاء في الكونسول، أولها: ERROR ReferenceError: gtag is not defined\n    at n.trackEvent (http://127.0.0.1:45601/game/main-JIIO",
+  "تحسين صور سبّب أخطاء في الاختبار فتم التراجع عنه",
+  "تنظيف الكود سبّب أخطاء في الاختبار فتم التراجع عنه (بقي الكود كما هو)",
+  "الاسم أو الوصف يوحي بأنها تجريبية أو تعليمية («test»)؛ راجع أنها لعبة كاملة",
+  "جودة منخفضة (60/100): أخطاء كونسول (-15)، طلبات خارجية (-5)، اسم تجريبي (-20)"
+ ],
+ "notes": [
+  "رخصة المستودع تخص الكود؛ أصل الصور والأصوات يُفحص بإشارات آلية أدناه",
+  "لا يوجد مجلد جاهز، جارٍ بناء المشروع بـ npm",
+  "فشلت محاولات تثبيت سابقة ونجح: npm install",
+  "مجلد الناتج المبني: dist/pokemon-roulette/browser",
+  "الوسائط: 2 صورة و5 صوتاً",
+  "أنماط تستحق الانتباه: طلب الموقع الجغرافي (polyfills-OYTHSGNX.js)",
+  "عُزل تخزين اللعبة عن باقي الألعاب (بادئة khayal:pokemon-roulette-game:) في 1 صفحة",
+  "لاعب آلي عشوائي: جُرّب نحو 348 ثانية لعب افتراضية خلال 60 ثانية حقيقية",
+  "تقليل الملفات: لا ملفات يمكن حذفها بأمان",
+  "تحسين صوت: 4 ملفاً، وفّر 39 KB",
+  "حجم اللعبة بعد تحسين الوسائط: 1MB ← 1MB (الاختبار الآلي لا يغطي كل المراحل؛ جرّب اللعبة بنفسك)",
+  "2 ملفات JS مصغّرة أو من مكتبات معروفة لم تُفحص",
+  "درجة الجودة التقريبية: 60/100 (أخطاء كونسول (-15)، طلبات خارجية (-5)، اسم تجريبي (-20))",
+  "تعديل تلقائي: إزالة وسم إعلانات/تتبّع × 2",
+  "تعديل تلقائي: عزل تخزين اللعبة × 1",
+  "تعديل تلقائي: تحسين وسائط صوت × 4",
+  "لا توجد صورة غلاف في المستودع؛ أُخذت لقطة click3 (درجة 84.9 من 8 لقطات) — مقبولة",
+  "الترجمة: لا حقول تحتاج ترجمة أو لم يُرجع المحرّك نتيجة صالحة",
+  "الأزمنة: البحث/البناء: 17ث؛ اختبار المتصفح: 91ث؛ تحسين الوسائط: 95ث؛ تنظيف الكود: 95ث؛ ترجمة البيانات: 11ث (أوامر: 6، اختبارات متصفح: 5)"
+ ],
+ "console_errors": [
+  "ERROR ReferenceError: gtag is not defined\n    at n.trackEvent (http://127.0.0.1:45601/game/main-JIIOFDRG.js:17:105)\n    at n.ngOnInit (http://127.0.0.1:45601/game/main-JIIOFDRG.js:17:551)\n    at Yd (h",
+  "Failed to load resource: the server responded with a status of 404 (File not found)",
+  "ERROR ui",
+  "ERROR ui"
+ ],
+ "failed_requests": [
+  "404 http://127.0.0.1:45601/i18n/en.json"
+ ],
+ "external_requests": [
+  "raw.githubusercontent.com"
+ ],
+ "cover_candidates": [
+  "-2: qr_code.jpeg (مربعة)",
+  "-160: place-holder-pixel.png (حمّلتها اللعبة، مربعة، ملف صغير جداً)"
+ ],
+ "lint": {
+  "ran": false,
+  "checked": 0,
+  "errors": 0
+ },
+ "fixes": {
+  "إزالة وسم إعلانات/تتبّع": 2,
+  "عزل تخزين اللعبة": 1,
+  "تحسين وسائط صوت": 4
+ }
+}

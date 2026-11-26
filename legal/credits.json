@@ -1886,5 +1886,20 @@
     "date": "2026-11-20",
     "license_file": "LICENSE.txt",
     "media_note": "مصدر الوسائط مذكور من المطوّر: README.md: Use it, fork it, remix it, ship it — a short attribution notice is all that's asked."
+  },
+  {
+    "key": "pokemonroulettegame",
+    "size": 1444,
+    "repo": "antonio-gaskin/pokemon-roulette-game",
+    "id": 131,
+    "slug": "pokemon-roulette-game",
+    "title": "Pokemon Roulette Game",
+    "developer": "antonio-gaskin",
+    "license": "MIT",
+    "source": "https://github.com/antonio-gaskin/pokemon-roulette-game",
+    "commit": "5125d5dce765fd385a2e1ca2e2ed53f6cdebeb4c",
+    "date": "2026-11-26",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
   }
 ]
