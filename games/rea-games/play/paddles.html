@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:rea-games:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Paddles · rea-games</title>
+<style>
+  :root { --bg:#14161c; --panel:#20242e; --cell:#1a1d26; --text:#e8eaf0; --muted:#8b93a7; --accent:#ff7a45; --cool:#4fd1e8; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--text);
+         font:16px/1.4 system-ui,sans-serif; touch-action:manipulation; user-select:none; -webkit-user-select:none; }
+  main { width:min(100% - 24px, 700px); padding:14px 0; }
+  header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; gap:12px; }
+  h1 { margin:0; font-size:34px; letter-spacing:-1px; }
+  header span { color:var(--muted); font-size:13px; text-align:right; }
+  #court { position:relative; background:var(--panel); border-radius:12px; padding:8px; touch-action:none; }
+  canvas { display:block; width:100%; height:auto; border-radius:6px; background:var(--cell); }
+  #msg { position:absolute; inset:8px; border-radius:6px; background:rgba(20,22,28,.72); display:grid; place-content:center;
+         text-align:center; gap:12px; padding:12px; }
+  #msg.off { display:none; }
+  #msg h2 { margin:0; font-size:26px; }
+  #msg p { margin:0; color:var(--muted); font-size:14px; }
+  #modes { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  #modes button { background:var(--accent); color:#fff; border:0; border-radius:10px; padding:10px 14px; font:inherit; font-weight:700; cursor:pointer; }
+  #modes button.alt { background:var(--panel); color:var(--text); }
+  p.keys { margin:12px 2px 0; color:var(--muted); font-size:14px; }
+  kbd { background:var(--panel); border-radius:5px; padding:1px 7px; font:inherit; font-weight:600; color:var(--text); }
+  .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+</style>
+<link rel="preload" href="../_gfonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../_gfonts/fonts.css"></head>
+<body>
+<main>
+  <header><h1>Paddles</h1><span>own art &middot; rules rebuilt from the recording</span></header>
+  <div id="court">
+    <canvas id="c" width="640" height="480" role="img" aria-label="Paddles game"></canvas>
+    <p id="live" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+    <div id="msg">
+      <h2 id="msgtitle">Paddles</h2>
+      <p id="msgsub">First to 9 points wins.</p>
+      <div id="modes">
+        <button type="button" data-mode="1">1 player</button>
+        <button type="button" data-mode="2" class="alt">2 players</button>
+        <button type="button" data-mode="0" class="alt">Watch</button>
+      </div>
+    </div>
+  </div>
+  <p class="keys"><kbd>1</kbd> <kbd>2</kbd> <kbd>0</kbd> start with one player, two, or none &middot; left paddle <kbd>Q</kbd> <kbd>A</kbd> (or <kbd>&uarr;</kbd> <kbd>&darr;</kbd>) &middot; right paddle <kbd>P</kbd> <kbd>L</kbd> &middot; <kbd>Esc</kbd> give up. Hold a paddle on the left half of the court to move it by touch. A paddle moving as it meets the ball adds spin; the ball speeds up the longer a rally lasts.</p>
+</main>
+<script>
+// A browser will not load ./paddles.mjs for a page opened straight from disk (file://), so the buttons would do nothing.
+// The game marks the page ready; if it never did, say what to open instead. The bundled page inlines the rules and is
+// always ready by now.
+addEventListener("load", () => {
+  if (document.documentElement.dataset.ready) return;
+  document.getElementById("msgtitle").textContent = "Open docs/play/paddles.html";
+  document.getElementById("msgsub").textContent = "This page loads paddles.mjs, which browsers block for a file opened from disk. docs/play/paddles.html is the same game in one file, or serve this folder over http.";
+  document.getElementById("modes").style.display = "none";
+});
+</script>
+<script>
+(() => {
+const __mod0 = (() => {
+// Paddles: the rules of the two-paddle ball game, as pure logic. No DOM, no real clock, no Math.random:
+// the caller hands in `rng` (a function returning [0,1)) and calls step(input) once per input. The game keeps
+// its own clock and timer queue, because the original's frame loop is a 60 Hz interval that the "abandon?"
+// question stops and restarts.
+// Written from games/paddles/GAME.md (what the original does, observed and read), not copied.
+
+const T0 = 1000000; // the recording's clock starts here (ms)
+const KEY = { 0: 48, 1: 49, 2: 50, esc: 27, q: 81, a: 65, p: 80, l: 76 };
+const W = 640;
+const H = 480;
+const WALL = 12;
+const PADDLE_W = 12;
+const PADDLE_H = 60;
+const RADIUS = 5;
+const WIN = 9;
+const FRAME_MS = 1000 / 60;
+const PADDLE_CROSS_S = 2, BALL_CROSS_S = 4, ACCEL = 8;
+// the computer's skill, from 0 (behind by 8 points: quick and accurate) to 16 (ahead by 8: slow and sloppy)
+const LEVELS = [
+  [0.2, 40], [0.3, 50], [0.4, 60], [0.5, 70], [0.6, 80], [0.7, 90], [0.8, 100], [0.9, 110], [1.0, 120],
+  [1.1, 130], [1.2, 140], [1.3, 150], [1.4, 160], [1.5, 170], [1.6, 180], [1.7, 190], [1.8, 200],
+].map(([reaction, error]) => ({ reaction, error }));
+
+// where the segment (x1,y1)-(x2,y2) crosses the segment (x3,y3)-(x4,y4), or null
+function cross(x1, y1, x2, y2, x3, y3, x4, y4, side) {
+  const den = ((y4 - y3) * (x2 - x1)) - ((x4 - x3) * (y2 - y1));
+  if (den === 0) return null;
+  const ua = (((x4 - x3) * (y1 - y3)) - ((y4 - y3) * (x1 - x3))) / den;
+  if (ua < 0 || ua > 1) return null;
+  const ub = (((x2 - x1) * (y1 - y3)) - ((y2 - y1) * (x1 - x3))) / den;
+  if (ub < 0 || ub > 1) return null;
+  return { x: x1 + (ua * (x2 - x1)), y: y1 + (ua * (y2 - y1)), side };
+}
+
+// the first face of `box` (grown by the ball's radius) that the path (nx, ny) from the ball crosses: the side
+// face that faces the motion first, and only when it misses, the top or bottom face
+function hitFace(ball, box, nx, ny) {
+  const r = RADIUS, x2 = ball.x + nx, y2 = ball.y + ny;
+  let p = null;
+  if (nx < 0) p = cross(ball.x, ball.y, x2, y2, box.right + r, box.top - r, box.right + r, box.bottom + r, "right");
+  else if (nx > 0) p = cross(ball.x, ball.y, x2, y2, box.left - r, box.top - r, box.left - r, box.bottom + r, "left");
+  if (!p) {
+    if (ny < 0) p = cross(ball.x, ball.y, x2, y2, box.left - r, box.bottom + r, box.right + r, box.bottom + r, "bottom");
+    else if (ny > 0) p = cross(ball.x, ball.y, x2, y2, box.left - r, box.top - r, box.right + r, box.top - r, "top");
+  }
+  return p;
+}
+
+class Paddle {
+  constructor(right) {
+    this.minY = WALL;
+    this.maxY = H - WALL - PADDLE_H;
+    this.speed = (this.maxY - this.minY) / PADDLE_CROSS_S;
+    this.left = right ? W - PADDLE_W : 0;
+    this.right = this.left + PADDLE_W;
+    this.place(this.minY + (this.maxY - this.minY) / 2);
+    this.up = 0; this.down = 0;
+    this.auto = false;
+    this.level = null;      // index into LEVELS, kept when the computer lets go of the paddle
+    this.guess = null;      // the computer's prediction: {x, y, dx, dy, since, exactY}
+  }
+  place(y) { this.y = y; this.top = y; this.bottom = y + PADDLE_H; }
+  setAuto(on, level) {
+    if (on && !this.auto) { this.auto = true; this.setLevel(level); }
+    else if (!on && this.auto) { this.auto = false; this.up = 0; this.down = 0; }
+  }
+  setLevel(level) { if (this.auto) this.level = level; }
+}
+
+class Paddles {
+  constructor({ rng, clock0 = T0 }) {
+    this.rng = rng;
+    this.t = clock0;
+    this.timers = [];
+    this.seq = 0;
+    this.answer = true;     // what "abandon the game?" gets answered
+    this.playing = false;
+    this.scores = [0, 0];
+    this.winner = null;
+    this.paddles = [new Paddle(false), new Paddle(true)];
+    this.ball = { x: null, y: null, dx: null, dy: null };
+    this.startLoop();
+  }
+
+  // ---- timers (the original's frame loop is an interval)
+  schedule(ms, fn, every = null) { const tm = { due: this.t + ms, seq: this.seq++, every, fn }; this.timers.push(tm); return tm; }
+  cancel(tm) { const i = this.timers.indexOf(tm); if (i >= 0) this.timers.splice(i, 1); }
+  advance(ms, late) {
+    const target = this.t + ms;
+    if (late) this.t = target;
+    for (;;) {
+      let next = null;
+      for (const tm of this.timers) if (tm.due <= target && (!next || tm.due < next.due || (tm.due === next.due && tm.seq < next.seq))) next = tm;
+      if (!next) break;
+      if (next.due > this.t) this.t = next.due;
+      if (next.every === null) this.cancel(next); else { next.due = this.t + next.every; next.seq = this.seq++; }
+      next.fn();
+    }
+    this.t = target;
+  }
+  now() { return Math.floor(this.t); }
+  startLoop() { this.last = this.now(); this.loop = this.schedule(FRAME_MS, () => this.frame(), FRAME_MS); }
+  frame() {
+    const now = this.now();
+    this.update((now - this.last) / 1000);
+    this.last = now;
+  }
+
+  // ---- one frame
+  update(dt) {
+    for (const p of this.paddles) this.movePaddle(p, dt);
+    if (!this.playing) return;
+    this.moveBall(dt);
+    const b = this.ball;
+    if (b.x - RADIUS > W) this.goal(0);
+    else if (b.x + RADIUS < 0) this.goal(1);
+  }
+
+  movePaddle(p, dt) {
+    if (p.auto) this.think(p, dt);
+    const amount = p.down - p.up;
+    if (amount !== 0) {
+      let y = p.y + (amount * dt * p.speed);
+      if (y < p.minY) y = p.minY;
+      else if (y > p.maxY) y = p.maxY;
+      p.place(y);
+    }
+  }
+
+  // the computer: once the ball has passed it, stand still; otherwise steer towards its (noisy) prediction
+  think(p, dt) {
+    const b = this.ball;
+    if ((b.x < p.left && b.dx < 0) || (b.x > p.right && b.dx > 0)) { p.up = 0; p.down = 0; return; }
+    this.predict(p, dt);
+    if (!p.guess) return; // no prediction: the keys stay as they were
+    if (p.guess.y < (p.top + PADDLE_H / 2 - 5)) { p.down = 0; p.up = 1; }
+    else if (p.guess.y > (p.bottom - PADDLE_H / 2 + 5)) { p.up = 0; p.down = 1; }
+    else { p.up = 0; p.down = 0; }
+  }
+
+  predict(p, dt) {
+    const b = this.ball, g = p.guess;
+    if (g && (g.dx * b.dx) > 0 && (g.dy * b.dy) > 0 && g.since < LEVELS[p.level].reaction) { g.since += dt; return; }
+    const pt = hitFace(b, { left: p.left, right: p.right, top: -10000, bottom: 10000 }, b.dx * 10, b.dy * 10);
+    if (!pt) { p.guess = null; return; }
+    const top = p.minY + RADIUS, bottom = p.maxY + PADDLE_H - RADIUS;
+    let y = pt.y;
+    while ((y < top) || (y > bottom)) { // fold the line back into the court, wall by wall
+      if (y < top) y = top + (top - y);
+      else if (y > bottom) y = top + (bottom - top) - (y - bottom);
+    }
+    const closeness = (b.dx < 0 ? b.x - p.right : p.left - b.x) / W;
+    const error = LEVELS[p.level].error * closeness;
+    p.guess = { x: pt.x, y: y + (-error + (this.rng() * (error - -error))), dx: b.dx, dy: b.dy, since: 0, exactY: y };
+  }
+
+  moveBall(dt) {
+    const b = this.ball;
+    // speed grows by ACCEL every second, in the direction of travel; the position takes half a step of it, and
+    // vertically always downwards
+    const half = ACCEL * dt * dt * 0.5;
+    const nx = (b.x + (dt * b.dx) + half) - b.x, ny = (b.y + (dt * b.dy) + half) - b.y;
+    let x = b.x + (dt * b.dx) + half, y = b.y + (dt * b.dy) + half;
+    let dx = b.dx + (ACCEL * dt) * (b.dx > 0 ? 1 : -1), dy = b.dy + (ACCEL * dt) * (b.dy > 0 ? 1 : -1);
+    const lo = WALL + RADIUS, hi = H - WALL - RADIUS;
+    if (dy > 0 && y > hi) { y = hi; dy = -dy; }
+    else if (dy < 0 && y < lo) { y = lo; dy = -dy; }
+    const p = dx < 0 ? this.paddles[0] : this.paddles[1];
+    const hit = hitFace(b, p, nx, ny);
+    if (hit) {
+      if (hit.side === "left" || hit.side === "right") { x = hit.x; dx = -dx; }
+      else { y = hit.y; dy = -dy; }
+      // a moving paddle adds or takes away spin
+      if (p.up) dy = dy * (dy < 0 ? 0.5 : 1.5);
+      else if (p.down) dy = dy * (dy > 0 ? 0.5 : 1.5);
+    }
+    b.x = x; b.y = y; b.dx = dx; b.dy = dy;
+  }
+
+  serve(from) {
+    const b = this.ball, minX = RADIUS, maxX = W - RADIUS, lo = WALL + RADIUS, hi = H - WALL - RADIUS;
+    const speed = (maxX - minX) / BALL_CROSS_S;
+    b.x = from === 1 ? maxX : minX;
+    b.y = lo + (this.rng() * (hi - lo));
+    b.dx = from === 1 ? -speed : speed;
+    b.dy = speed;
+  }
+
+  level(n) { return 8 + (this.scores[n] - this.scores[n ? 0 : 1]); }
+
+  goal(n) {
+    this.scores[n] += 1;
+    if (this.scores[n] === WIN) { this.winner = n; this.stop(false); return; }
+    this.serve(n);
+    this.paddles[0].setLevel(this.level(0));
+    this.paddles[1].setLevel(this.level(1));
+  }
+
+  start(players) {
+    if (this.playing) return;
+    this.scores = [0, 0];
+    this.playing = true;
+    this.paddles[0].setAuto(players < 1, this.level(0));
+    this.paddles[1].setAuto(players < 2, this.level(1));
+    this.serve(null);
+  }
+
+  stop(ask) {
+    if (!this.playing) return;
+    if (ask) {
+      // the original stops its frame loop around the question and starts it again, whatever the answer
+      this.cancel(this.loop);
+      const yes = this.answer;
+      this.startLoop();
+      if (!yes) return;
+    }
+    this.playing = false;
+    this.paddles[0].setAuto(false);
+    this.paddles[1].setAuto(false);
+  }
+
+  // ---- keys: 0, 1, 2 start a game with that many players; Esc asks to abandon; Q/A and P/L move a paddle
+  // that a person holds (held while the key is down)
+  keyDown(code) {
+    const [l, r] = this.paddles;
+    if (code === KEY[0]) this.start(0);
+    else if (code === KEY[1]) this.start(1);
+    else if (code === KEY[2]) this.start(2);
+    else if (code === KEY.esc) this.stop(true);
+    else if (code === KEY.q) { if (!l.auto) l.up = 1; }
+    else if (code === KEY.a) { if (!l.auto) l.down = 1; }
+    else if (code === KEY.p) { if (!r.auto) r.up = 1; }
+    else if (code === KEY.l) { if (!r.auto) r.down = 1; }
+  }
+  keyUp(code) {
+    const [l, r] = this.paddles;
+    if (code === KEY.q) { if (!l.auto) l.up = 0; }
+    else if (code === KEY.a) { if (!l.auto) l.down = 0; }
+    else if (code === KEY.p) { if (!r.auto) r.up = 0; }
+    else if (code === KEY.l) { if (!r.auto) r.down = 0; }
+  }
+
+  // one input: key events in order ("+q" down, "-q" up), then the clock moves by dt ms
+  step({ dt, keys = [], late = false, answer = true }) {
+    this.answer = answer;
+    for (const k of keys) (k[0] === "+" ? this.keyDown(KEY[k.slice(1)]) : this.keyUp(KEY[k.slice(1)]));
+    this.advance(dt, late);
+  }
+
+  snapshot() {
+    const paddle = (p) => ({
+      y: p.y, up: p.up, down: p.down, auto: p.auto, level: p.level,
+      prediction: p.guess ? { x: p.guess.x, y: p.guess.y, dx: p.guess.dx, dy: p.guess.dy, since: p.guess.since, exactY: p.guess.exactY } : null,
+    });
+    const b = this.ball;
+    return {
+      playing: this.playing, scores: this.scores.slice(), winner: this.winner,
+      left: paddle(this.paddles[0]), right: paddle(this.paddles[1]),
+      ball: { x: b.x, y: b.y, dx: b.dx, dy: b.dy },
+      last: this.last,
+    };
+  }
+}
+
+return { T0, KEY, W, H, WALL, PADDLE_W, PADDLE_H, RADIUS, WIN, FRAME_MS, LEVELS, Paddles };
+})();
+
+const { Paddles, KEY, W, H, WALL, PADDLE_W, PADDLE_H, RADIUS, WIN } = __mod0;
+(function main() {
+  const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+  const DPR = Math.min(2, window.devicePixelRatio || 1); // drawn sharp on dense screens
+  cv.width = W * DPR; cv.height = H * DPR;
+  const $ = (id) => document.getElementById(id);
+  const set = (id, v) => { const el = $(id), s = String(v); if (el.textContent !== s) el.textContent = s; };
+  const game = new Paddles({ rng: Math.random, clock0: Math.floor(performance.now()) });
+  let gaveUp = false; // the last game was given up with Esc
+
+  // ---- drawing: flat shapes, a dotted centre line, big soft score digits
+  function draw() {
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#2b303d";
+    ctx.fillRect(0, 0, W, WALL); ctx.fillRect(0, H - WALL, W, WALL);
+    for (let y = WALL + 10; y < H - WALL; y += 22) { ctx.beginPath(); ctx.arc(W / 2, y, 3, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = "rgba(232,234,240,.16)"; ctx.font = "800 96px system-ui,sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "top";
+    ctx.fillText(String(game.scores[0]), W / 2 - 80, 40); ctx.fillText(String(game.scores[1]), W / 2 + 80, 40);
+    const colors = ["#ff7a45", "#4fd1e8"];
+    game.paddles.forEach((p, i) => {
+      ctx.fillStyle = colors[i];
+      ctx.beginPath(); ctx.roundRect(p.left, p.y, PADDLE_W, PADDLE_H, 5); ctx.fill();
+    });
+    const b = game.ball;
+    if (game.playing && b.x !== null) {
+      ctx.fillStyle = "#e8eaf0";
+      ctx.beginPath(); ctx.arc(b.x, b.y, RADIUS, 0, Math.PI * 2); ctx.fill();
+    }
+    $("msg").classList.toggle("off", game.playing);
+    // the winner stays on record after a new game starts, so name it only while the scores show a finished game
+    const won = !game.playing && game.winner !== null && Math.max(...game.scores) >= WIN
+      ? (game.winner === 0 ? "Left" : "Right") + " wins " + Math.max(...game.scores) + " to " + Math.min(...game.scores)
+      : null;
+    if (game.playing) gaveUp = false;
+    if (!game.playing) set("msgtitle", won ?? (gaveUp ? "Game ended" : "Paddles"));
+    set("live", won ?? (gaveUp ? "Game ended, " : "") + "Left " + game.scores[0] + ", Right " + game.scores[1]);
+  }
+
+  // ---- input: keys go straight to the rules, at the moment they happen
+  const CODES = { "0": KEY[0], "1": KEY[1], "2": KEY[2], Escape: KEY.esc, q: KEY.q, Q: KEY.q, a: KEY.a, A: KEY.a, p: KEY.p, P: KEY.p, l: KEY.l, L: KEY.l, ArrowUp: KEY.q, ArrowDown: KEY.a };
+  document.addEventListener("keydown", (e) => {
+    const k = CODES[e.key];
+    if (k === undefined) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    const was = game.playing;
+    if (k === KEY.esc && was) game.answer = window.confirm("Give up this game?");
+    game.keyDown(k);
+    if (k === KEY.esc && was && !game.playing) gaveUp = true;
+  });
+  document.addEventListener("keyup", (e) => { const k = CODES[e.key]; if (k !== undefined) { e.preventDefault(); game.keyUp(k); } });
+  for (const b of document.querySelectorAll("#modes button")) b.addEventListener("click", () => { const k = KEY[b.dataset.mode]; game.keyDown(k); game.keyUp(k); b.blur(); });
+  // touch: hold above or below the left paddle to move it; the first finger down owns the paddle until it lifts
+  let held = null, owner = null;
+  const release = (e) => { if (held !== null && (!e || e.pointerId === owner)) { game.keyUp(held); held = null; owner = null; } };
+  cv.addEventListener("pointerdown", (e) => {
+    if (held !== null) return;
+    const r = cv.getBoundingClientRect();
+    if ((e.clientX - r.left) / r.width > 0.5) return;
+    const y = ((e.clientY - r.top) / r.height) * H;
+    held = y < game.paddles[0].y + PADDLE_H / 2 ? KEY.q : KEY.a;
+    owner = e.pointerId;
+    game.keyDown(held);
+  });
+  for (const ev of ["pointerup", "pointercancel", "pointerleave"]) cv.addEventListener(ev, release);
+  // a key let go while the page is in the background never arrives: let go of every paddle key
+  const letGo = () => { release(); for (const k of [KEY.q, KEY.a, KEY.p, KEY.l]) game.keyUp(k); };
+  window.addEventListener("blur", letGo);
+
+  // ---- clock: the rules keep their own timer; the screen only moves the clock on
+  let last = null;
+  function frame(ts) {
+    if (last !== null) game.step({ dt: Math.min(ts - last, 250) });
+    last = ts;
+    draw();
+    requestAnimationFrame(frame);
+  }
+  document.addEventListener("visibilitychange", () => { last = null; if (document.hidden) letGo(); });
+  requestAnimationFrame(frame);
+  document.documentElement.dataset.ready = "1";
+})();
+
+})();
+</script>
+</body>
+</html>

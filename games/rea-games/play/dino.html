@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:rea-games:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Dino · rea-games</title>
+<style>
+  :root { --bg:#eef0f3; --card:#fff; --text:#22262e; --muted:#6b7385; --accent:#ff7a45; --sky:#f7f7f7; --ink:#535353; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#14161c; --card:#20242e; --text:#e8eaf0; --muted:#8b93a7; } }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--text);
+         font:16px/1.4 system-ui,sans-serif; touch-action:manipulation; user-select:none; -webkit-user-select:none; }
+  main { width:min(100% - 24px, 760px); padding:16px 0; }
+  header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; gap:12px; }
+  h1 { margin:0; font-size:30px; letter-spacing:-.5px; }
+  header span { color:var(--muted); font-size:13px; text-align:right; }
+  #stage { position:relative; background:var(--card); border-radius:14px; padding:10px; box-shadow:0 6px 24px rgba(0,0,0,.14); }
+  #wrap { position:relative; border-radius:8px; overflow:hidden; cursor:pointer; touch-action:none; }
+  canvas { display:block; width:100%; height:auto; aspect-ratio:600/150; }
+  #duck { margin-top:10px; width:100%; padding:14px; border:0; border-radius:10px; background:var(--accent); color:#fff;
+          font:inherit; font-weight:700; letter-spacing:.04em; display:none; touch-action:none; }
+  @media (pointer: coarse) { #duck { display:block; } }
+  #duck:active { filter:brightness(.88); }
+  p.keys { margin:12px 2px 0; color:var(--muted); font-size:14px; }
+  kbd { background:var(--bg); border-radius:5px; padding:1px 7px; font:inherit; font-weight:600; color:var(--text); }
+</style>
+<link rel="preload" href="../_gfonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../_gfonts/fonts.css"></head>
+<body>
+<main>
+  <header><h1>Dino</h1><span>own art · rules rebuilt from the recording</span></header>
+  <div id="stage">
+    <div id="wrap"><canvas id="c" width="600" height="150" role="img" aria-label="Dino game"></canvas></div>
+    <button id="duck" type="button">HOLD TO DUCK</button>
+  </div>
+  <p class="keys"><kbd>Space</kbd> / <kbd>&uarr;</kbd> or tap: jump (hold for a higher jump) &middot; <kbd>&darr;</kbd>: duck, or drop faster in the air &middot; after a crash: <kbd>Space</kbd> / tap / <kbd>Enter</kbd> to run again.</p>
+</main>
+<script>
+(() => {
+const __mod0 = (() => {
+// Chrome Dino gameplay, rebuilt from games/dino/GAME.md. Pure logic: no DOM, no clock, no Math.random.
+//   rng()  returns the next gameplay random number in [0, 1) (the recorded tape, or Math.random)
+//   step({dt, jump, duck, jumpUp, duckUp, enter, animEnd})  one browser frame:
+//          the clock moves by dt ms, the key events of the frame run, then the pending
+//          requestAnimationFrame callbacks run (there can be two, see GAME.md "update chains").
+// Numbers are computed with the same operations in the same order as the original, so the trace
+// matches bit for bit.
+
+const WIDTH = 600;
+const HEIGHT = 150;
+const FPS = 60;
+
+const CFG = {
+  ACCELERATION: 0.001, BOTTOM_PAD: 10, CLEAR_TIME: 3000, GAMEOVER_CLEAR_TIME: 750, GAP_COEFFICIENT: 0.6,
+  MAX_OBSTACLE_DUPLICATION: 2, MAX_SPEED: 13, SPEED: 6,
+};
+const TREX = {
+  DROP_VELOCITY: -5, GRAVITY: 0.6, HEIGHT: 47, INIITAL_JUMP_VELOCITY: -10, INTRO_DURATION: 1500,
+  MAX_JUMP_HEIGHT: 30, MIN_JUMP_HEIGHT: 30, SPEED_DROP_COEFFICIENT: 3, START_X_POS: 50, WIDTH: 44,
+};
+// ms per animation frame of each status; the jump physics divides the frame time by it
+const MS_PER_FRAME = { WAITING: 1000 / 3, RUNNING: 1000 / 12, CRASHED: 1000 / 60, JUMPING: 1000 / 60, DUCKING: 1000 / 8 };
+
+const box = (x, y, width, height) => ({ x, y, width, height });
+const TREX_BOXES = {
+  DUCKING: [box(1, 18, 55, 25)],
+  RUNNING: [box(22, 0, 17, 16), box(1, 18, 30, 9), box(10, 35, 14, 8), box(1, 24, 29, 5), box(5, 30, 21, 4), box(9, 34, 15, 4)],
+};
+const OBSTACLE_TYPES = [
+  { type: "CACTUS_SMALL", width: 17, height: 35, yPos: 105, multipleSpeed: 4, minGap: 120, minSpeed: 0,
+    boxes: [box(0, 7, 5, 27), box(4, 0, 6, 34), box(10, 4, 7, 14)] },
+  { type: "CACTUS_LARGE", width: 25, height: 50, yPos: 90, multipleSpeed: 7, minGap: 120, minSpeed: 0,
+    boxes: [box(0, 12, 7, 38), box(8, 0, 7, 49), box(13, 10, 10, 38)] },
+  { type: "PTERODACTYL", width: 46, height: 40, yPos: [100, 75, 50], multipleSpeed: 999, minSpeed: 8.5, minGap: 150,
+    speedOffset: 0.8,
+    boxes: [box(15, 15, 16, 5), box(18, 21, 24, 6), box(2, 14, 4, 3), box(6, 10, 4, 7), box(10, 8, 6, 9)] },
+];
+const MAX_GAP_COEFFICIENT = 1.5;
+const MAX_OBSTACLE_LENGTH = 3;
+
+const boxCompare = (a, b) => a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.height + a.y > b.y;
+const adjusted = (b, by) => box(b.x + by.x, b.y + by.y, b.width, b.height);
+
+class Obstacle {
+  constructor(rng, type, speed, xOffset) {
+    this.typeConfig = type;
+    this.size = getRandomNum(rng, 1, MAX_OBSTACLE_LENGTH);
+    this.remove = false;
+    this.xPos = WIDTH + (xOffset || 0);
+    this.yPos = 0;
+    this.width = 0;
+    this.gap = 0;
+    this.speedOffset = 0;
+    this.followingObstacleCreated = false;
+    this.boxes = type.boxes.map((b) => box(b.x, b.y, b.width, b.height));
+    // only allow groups when the speed is high enough
+    if (this.size > 1 && type.multipleSpeed > speed) this.size = 1;
+    this.width = type.width * this.size;
+    if (Array.isArray(type.yPos)) this.yPos = type.yPos[getRandomNum(rng, 0, type.yPos.length - 1)];
+    else this.yPos = type.yPos;
+    // the middle box grows with the group, the last one moves to the end
+    if (this.size > 1) {
+      this.boxes[1].width = this.width - this.boxes[0].width - this.boxes[2].width;
+      this.boxes[2].x = this.width - this.boxes[2].width;
+    }
+    if (type.speedOffset) this.speedOffset = rng() > 0.5 ? type.speedOffset : -type.speedOffset;
+    const minGap = Math.round(this.width * speed + type.minGap * CFG.GAP_COEFFICIENT);
+    const maxGap = Math.round(minGap * MAX_GAP_COEFFICIENT);
+    this.gap = getRandomNum(rng, minGap, maxGap);
+  }
+
+  update(deltaTime, speed) {
+    if (!this.remove) {
+      if (this.typeConfig.speedOffset) speed += this.speedOffset;
+      this.xPos -= Math.floor((speed * FPS / 1000) * deltaTime);
+      if (!this.isVisible()) this.remove = true;
+    }
+  }
+
+  isVisible() { return this.xPos + this.width > 0; }
+}
+
+function getRandomNum(rng, min, max) { return Math.floor(rng() * (max - min + 1)) + min; }
+
+class Trex {
+  constructor() {
+    this.xPos = 0;
+    this.groundYPos = HEIGHT - TREX.HEIGHT - CFG.BOTTOM_PAD;
+    this.yPos = this.groundYPos;
+    this.minJumpHeight = this.groundYPos - TREX.MIN_JUMP_HEIGHT;
+    this.status = "WAITING";
+    this.jumping = false;
+    this.ducking = false;
+    this.jumpVelocity = 0;
+    this.reachedMinHeight = false;
+    this.speedDrop = false;
+    this.jumpCount = 0;
+    this.playingIntro = false;
+  }
+
+  update(deltaTime, status) {
+    if (status) this.status = status;
+    // the intro slides the dino in from the left
+    if (this.playingIntro && this.xPos < TREX.START_X_POS) this.xPos += Math.round((TREX.START_X_POS / TREX.INTRO_DURATION) * deltaTime);
+    // the original's draw() shifts a crashed, ducking dino one pixel (it draws the standing sprite)
+    if (this.status === "CRASHED" && this.ducking) this.xPos++;
+    // a speed drop turns into a duck once the dino is on the ground
+    if (this.speedDrop && this.yPos == this.groundYPos) {
+      this.speedDrop = false;
+      this.setDuck(true);
+    }
+  }
+
+  startJump(speed) {
+    if (!this.jumping) {
+      this.update(0, "JUMPING");
+      this.jumpVelocity = TREX.INIITAL_JUMP_VELOCITY - speed / 10;
+      this.jumping = true;
+      this.reachedMinHeight = false;
+      this.speedDrop = false;
+    }
+  }
+
+  endJump() {
+    if (this.reachedMinHeight && this.jumpVelocity < TREX.DROP_VELOCITY) this.jumpVelocity = TREX.DROP_VELOCITY;
+  }
+
+  updateJump(deltaTime) {
+    const msPerFrame = MS_PER_FRAME[this.status];
+    const framesElapsed = deltaTime / msPerFrame;
+    if (this.speedDrop) this.yPos += Math.round(this.jumpVelocity * TREX.SPEED_DROP_COEFFICIENT * framesElapsed);
+    else this.yPos += Math.round(this.jumpVelocity * framesElapsed);
+    this.jumpVelocity += TREX.GRAVITY * framesElapsed;
+    if (this.yPos < this.minJumpHeight || this.speedDrop) this.reachedMinHeight = true;
+    if (this.yPos < TREX.MAX_JUMP_HEIGHT || this.speedDrop) this.endJump();
+    if (this.yPos > this.groundYPos) {
+      this.reset();
+      this.jumpCount++;
+    }
+    this.update(deltaTime);
+  }
+
+  setSpeedDrop() {
+    this.speedDrop = true;
+    this.jumpVelocity = 1;
+  }
+
+  setDuck(isDucking) {
+    if (isDucking && this.status != "DUCKING") {
+      this.update(0, "DUCKING");
+      this.ducking = true;
+    } else if (this.status == "DUCKING") {
+      this.update(0, "RUNNING");
+      this.ducking = false;
+    }
+  }
+
+  reset() {
+    this.yPos = this.groundYPos;
+    this.jumpVelocity = 0;
+    this.jumping = false;
+    this.ducking = false;
+    this.update(0, "RUNNING");
+    this.speedDrop = false;
+    this.jumpCount = 0;
+  }
+}
+
+function checkForCollision(obstacle, tRex) {
+  const tRexBox = box(tRex.xPos + 1, tRex.yPos + 1, TREX.WIDTH - 2, TREX.HEIGHT - 2);
+  const obstacleBox = box(obstacle.xPos + 1, obstacle.yPos + 1, obstacle.typeConfig.width * obstacle.size - 2, obstacle.typeConfig.height - 2);
+  if (boxCompare(tRexBox, obstacleBox)) {
+    const tBoxes = tRex.ducking ? TREX_BOXES.DUCKING : TREX_BOXES.RUNNING;
+    for (let t = 0; t < tBoxes.length; t++) {
+      for (let i = 0; i < obstacle.boxes.length; i++) {
+        if (boxCompare(adjusted(tBoxes[t], tRexBox), adjusted(obstacle.boxes[i], obstacleBox))) return true;
+      }
+    }
+  }
+  return false;
+}
+
+class Dino {
+  constructor({ rng, clock0 = 1000 }) {
+    this.rng = rng;
+    this.now = clock0;
+    this.tRex = new Trex();
+    this.obstacles = [];
+    this.obstacleHistory = [];
+    this.distanceRan = 0;
+    this.highestScore = 0;
+    this.time = 0;
+    this.runningTime = 0;
+    this.msPerFrame = 1000 / FPS;
+    this.currentSpeed = CFG.SPEED;
+    this.activated = false;
+    this.playing = false;
+    this.crashed = false;
+    this.paused = false;
+    this.playingIntro = false;
+    this.playCount = 0;
+    this.introListener = false;
+    // requestAnimationFrame bookkeeping: pending callbacks, the frame being run, last id handed out
+    this.queue = [];
+    this.running = null;
+    this.nextId = 1;
+    this.raqId = 0;
+    this.updatePending = false;
+    // Runner.init ends with one update(): it starts the waiting-for-input loop
+    this.update();
+  }
+
+  // ---- requestAnimationFrame ------------------------------------------------------------
+  requestFrame() {
+    const id = this.nextId++;
+    this.queue.push({ id });
+    return id;
+  }
+  cancelFrame(id) {
+    this.queue = this.queue.filter((q) => q.id !== id);
+    if (this.running) for (const q of this.running) if (q.id === id) q.cancelled = true;
+  }
+  scheduleNextUpdate() {
+    if (!this.updatePending) {
+      this.updatePending = true;
+      this.raqId = this.requestFrame();
+    }
+  }
+
+  // ---- one frame ------------------------------------------------------------------------
+  step(input) {
+    this.now = this.now + input.dt;
+    if (input.jump) this.keyDown("jump");
+    if (input.duck) this.keyDown("duck");
+    if (input.jumpUp) this.keyUp("jump");
+    if (input.duckUp) this.keyUp("duck");
+    if (input.enter) this.keyUp("enter");
+    if (input.animEnd && this.introListener) this.startGame();
+    this.running = this.queue;
+    this.queue = [];
+    for (const q of this.running) if (!q.cancelled) this.update();
+    this.running = null;
+  }
+
+  // ---- Runner ---------------------------------------------------------------------------
+  update() {
+    this.updatePending = false;
+    const now = this.now;
+    let deltaTime = now - (this.time || now);
+    this.time = now;
+
+    if (this.playing) {
+      if (this.tRex.jumping) this.tRex.updateJump(deltaTime);
+      this.runningTime += deltaTime;
+      const hasObstacles = this.runningTime > CFG.CLEAR_TIME;
+
+      // the first landing starts the intro
+      if (this.tRex.jumpCount == 1 && !this.playingIntro) this.playIntro();
+
+      // the horizon does not move until the intro is over
+      if (this.playingIntro) {
+        this.updateHorizon(0, this.currentSpeed, hasObstacles);
+      } else {
+        deltaTime = !this.activated ? 0 : deltaTime;
+        this.updateHorizon(deltaTime, this.currentSpeed, hasObstacles);
+      }
+
+      const collision = hasObstacles && checkForCollision(this.obstacles[0], this.tRex);
+      if (!collision) {
+        this.distanceRan += this.currentSpeed * deltaTime / this.msPerFrame;
+        if (this.currentSpeed < CFG.MAX_SPEED) this.currentSpeed += CFG.ACCELERATION;
+      } else {
+        this.gameOver();
+      }
+    }
+
+    // (the original also keeps this loop alive while !activated && blinkCount < 3; the port
+    // assumes fewer than 3 blinks happen before the first key, which the recording checks)
+    if (this.playing || !this.activated) {
+      this.tRex.update(deltaTime);
+      this.scheduleNextUpdate();
+    }
+  }
+
+  playIntro() {
+    if (!this.activated && !this.crashed) {
+      this.playingIntro = true;
+      this.tRex.playingIntro = true;
+      this.introListener = true;
+      this.playing = true;
+      this.activated = true;
+    } else if (this.crashed) {
+      this.restart();
+    }
+  }
+
+  startGame() {
+    this.runningTime = 0;
+    this.playingIntro = false;
+    this.tRex.playingIntro = false;
+    this.playCount++;
+  }
+
+  gameOver() {
+    this.stop();
+    this.crashed = true;
+    this.tRex.update(100, "CRASHED");
+    if (this.distanceRan > this.highestScore) this.highestScore = Math.ceil(this.distanceRan);
+    this.time = this.now;
+  }
+
+  stop() {
+    this.playing = false;
+    this.paused = true;
+    this.cancelFrame(this.raqId);
+    this.raqId = 0;
+  }
+
+  play() {
+    if (!this.crashed) {
+      this.playing = true;
+      this.paused = false;
+      this.tRex.update(0, "RUNNING");
+      this.time = this.now;
+      this.update();
+    }
+  }
+
+  restart() {
+    if (!this.raqId) {
+      this.playCount++;
+      this.runningTime = 0;
+      this.playing = true;
+      this.crashed = false;
+      this.distanceRan = 0;
+      this.currentSpeed = CFG.SPEED; // setSpeed(SPEED) at width 600
+      this.time = this.now;
+      this.obstacles = []; // Horizon.reset (obstacleHistory is kept)
+      this.tRex.reset();
+      this.update();
+    }
+  }
+
+  isRunning() { return !!this.raqId; }
+
+  // ---- keys -----------------------------------------------------------------------------
+  keyDown(which) {
+    if (which === "jump" && !this.crashed) {
+      if (!this.playing) {
+        this.playing = true;
+        this.update();
+      }
+      if (!this.tRex.jumping && !this.tRex.ducking) this.tRex.startJump(this.currentSpeed);
+    }
+    if (which === "duck" && this.playing && !this.crashed) {
+      if (this.tRex.jumping) this.tRex.setSpeedDrop();
+      else if (!this.tRex.jumping && !this.tRex.ducking) this.tRex.setDuck(true);
+    }
+  }
+
+  keyUp(which) {
+    const isJumpKey = which === "jump";
+    if (this.isRunning() && isJumpKey) {
+      this.tRex.endJump();
+    } else if (which === "duck") {
+      this.tRex.speedDrop = false;
+      this.tRex.setDuck(false);
+    } else if (this.crashed) {
+      const deltaTime = this.now - this.time;
+      if (which === "enter" || (deltaTime >= CFG.GAMEOVER_CLEAR_TIME && isJumpKey)) this.restart();
+    } else if (this.paused && isJumpKey) {
+      this.tRex.reset();
+      this.play();
+    }
+  }
+
+  // ---- Horizon --------------------------------------------------------------------------
+  updateHorizon(deltaTime, currentSpeed, updateObstacles) {
+    if (updateObstacles) this.updateObstacles(deltaTime, currentSpeed);
+  }
+
+  updateObstacles(deltaTime, currentSpeed) {
+    const updated = this.obstacles.slice(0);
+    for (let i = 0; i < this.obstacles.length; i++) {
+      const obstacle = this.obstacles[i];
+      obstacle.update(deltaTime, currentSpeed);
+      if (obstacle.remove) updated.shift();
+    }
+    this.obstacles = updated;
+    if (this.obstacles.length > 0) {
+      const last = this.obstacles[this.obstacles.length - 1];
+      if (last && !last.followingObstacleCreated && last.isVisible() && (last.xPos + last.width + last.gap) < WIDTH) {
+        this.addNewObstacle(currentSpeed);
+        last.followingObstacleCreated = true;
+      }
+    } else {
+      this.addNewObstacle(currentSpeed);
+    }
+  }
+
+  addNewObstacle(currentSpeed) {
+    const type = OBSTACLE_TYPES[getRandomNum(this.rng, 0, OBSTACLE_TYPES.length - 1)];
+    if (this.duplicateObstacleCheck(type.type) || currentSpeed < type.minSpeed) {
+      this.addNewObstacle(currentSpeed);
+    } else {
+      this.obstacles.push(new Obstacle(this.rng, type, currentSpeed, type.width));
+      this.obstacleHistory.unshift(type.type);
+      if (this.obstacleHistory.length > 1) this.obstacleHistory.splice(CFG.MAX_OBSTACLE_DUPLICATION);
+    }
+  }
+
+  duplicateObstacleCheck(next) {
+    let count = 0;
+    for (let i = 0; i < this.obstacleHistory.length; i++) count = this.obstacleHistory[i] == next ? count + 1 : 0;
+    return count >= CFG.MAX_OBSTACLE_DUPLICATION;
+  }
+
+  // ---- what the recording compares ------------------------------------------------------
+  snapshot() {
+    const x = this.tRex;
+    const d = Math.ceil(this.distanceRan);
+    return {
+      playing: this.playing,
+      crashed: this.crashed,
+      activated: this.activated,
+      playingIntro: !!this.playingIntro,
+      paused: this.paused,
+      currentSpeed: this.currentSpeed,
+      distanceRan: this.distanceRan,
+      score: d ? Math.round(d * 0.025) : 0,
+      highestScore: this.highestScore,
+      runningTime: this.runningTime,
+      playCount: this.playCount,
+      time: this.time,
+      running: !!this.raqId,
+      rafPending: this.queue.length,
+      tRex: {
+        xPos: x.xPos, yPos: x.yPos, jumping: x.jumping, ducking: x.ducking, speedDrop: x.speedDrop,
+        jumpVelocity: x.jumpVelocity, jumpCount: x.jumpCount, status: x.status, reachedMinHeight: x.reachedMinHeight,
+      },
+      obstacleHistory: this.obstacleHistory.slice(),
+      obstacles: this.obstacles.map((o) => ({
+        type: o.typeConfig.type, xPos: o.xPos, yPos: o.yPos, size: o.size, width: o.width, gap: o.gap,
+        speedOffset: o.speedOffset, followed: o.followingObstacleCreated,
+      })),
+    };
+  }
+}
+
+return { WIDTH, HEIGHT, Dino };
+})();
+
+const { Dino } = __mod0;
+(function main() {
+  const STEP = 1000 / 60;      // the rules are stepped at 60 Hz whatever the screen does
+  const INTRO_MS = 400;        // length of the intro animation, as in the recording
+  const W = 600, H = 150, GROUND = 127;
+  const cv = document.getElementById("c");
+  const ctx = cv.getContext("2d");
+  const rootStyle = getComputedStyle(document.documentElement);
+
+  // ---- canvas size: crisp on high density screens
+  function fit() {
+    const dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+    const cssW = cv.getBoundingClientRect().width || W;
+    cv.width = Math.round(cssW * dpr);
+    cv.height = Math.round(cssW * dpr * H / W);
+    ctx.setTransform(cv.width / W, 0, 0, cv.width / W, 0, 0);
+  }
+  window.addEventListener("resize", fit);
+  fit();
+
+  // ---- game
+  let best = 0;
+  try { best = Number(localStorage.getItem("rea-dino-best")) || 0; } catch (e) { /* private mode */ }
+  // DEMO HOOK (scripts/demo-dino.mjs): when window.__tape is set, the game draws its random numbers from that
+  // recorded tape, the driver steps it with the case's dt, and window.__rea exposes snapshot(). Without it
+  // nothing below changes.
+  const TAPE = Array.isArray(window.__tape) ? window.__tape : null;
+  let tapeUsed = 0;
+  const rng = TAPE ? () => { if (tapeUsed >= TAPE.length) throw new Error("tape used up"); return TAPE[tapeUsed++]; } : Math.random;
+  const game = new Dino({ rng, clock0: TAPE ? 1000 : performance.now() });
+  let introT = 0, queue = [], acc = 0, last = null, ticks = 0, crashTicks = 0;
+  const clouds = [{ x: 380, y: 40 }, { x: 120, y: 62 }];
+  let scoreOf = () => { const d = Math.ceil(game.distanceRan); return d ? Math.round(d * 0.025) : 0; };
+
+  // ---- input
+  const push = (k) => queue.push(k);
+  addEventListener("keydown", (e) => {
+    if (e.code === "Space" || e.code === "ArrowUp") { e.preventDefault(); push({ jump: true }); }
+    else if (e.code === "ArrowDown") { e.preventDefault(); push({ duck: true }); }
+  });
+  addEventListener("keyup", (e) => {
+    if (e.code === "Space" || e.code === "ArrowUp") { e.preventDefault(); push({ jumpUp: true }); }
+    else if (e.code === "ArrowDown") { e.preventDefault(); push({ duckUp: true }); }
+    else if (e.code === "Enter") push({ enter: true });
+  });
+  const wrap = document.getElementById("wrap");
+  wrap.addEventListener("pointerdown", (e) => { e.preventDefault(); push({ jump: true }); });
+  const lift = () => push({ jumpUp: true });
+  wrap.addEventListener("pointerup", lift);
+  wrap.addEventListener("pointercancel", lift);
+  const duckBtn = document.getElementById("duck");
+  duckBtn.addEventListener("pointerdown", (e) => { e.preventDefault(); push({ duck: true }); });
+  for (const t of ["pointerup", "pointercancel", "pointerleave"]) duckBtn.addEventListener(t, () => push({ duckUp: true }));
+  addEventListener("blur", () => { push({ jumpUp: true }); push({ duckUp: true }); });
+
+  // ---- simulation
+  function tick(dt = STEP) {
+    const inp = queue.length ? queue.shift() : {};
+    inp.dt = dt;
+    if (game.playingIntro) { introT += dt; if (introT >= INTRO_MS) { inp.animEnd = true; introT = 0; } } else introT = 0;
+    const wasCrashed = game.crashed;
+    game.step(inp);
+    ticks++;
+    crashTicks = game.crashed ? crashTicks + 1 : 0;
+    if (!wasCrashed && game.crashed) {
+      const s = scoreOf();
+      if (s > best) { best = s; try { localStorage.setItem("rea-dino-best", String(best)); } catch (e) { /* ignore */ } }
+    }
+    // drifting clouds (looks only)
+    const v = game.activated && !game.crashed ? game.currentSpeed * 0.2 : 0;
+    for (const c of clouds) { c.x -= v * 0.6; if (c.x < -50) { c.x = W + Math.random() * 200; c.y = 25 + Math.random() * 45; } }
+  }
+
+  // ---- drawing (all shapes are rectangles drawn here, nothing is loaded)
+  const pal = (night) => night
+    ? { sky: "#202124", ink: "#e8e8e8", dim: "#6b6e75", eye: "#202124" }
+    : { sky: "#f7f7f7", ink: "#535353", dim: "#c8c8c8", eye: "#f7f7f7" };
+  function rects(list, ox, oy, color) { ctx.fillStyle = color; for (const [x, y, w, h] of list) ctx.fillRect(ox + x, oy + y, w, h); }
+
+  function drawDino(g, p) {
+    const t = g.tRex, ox = t.xPos, oy = t.yPos;
+    const dead = g.crashed;
+    const leg = !t.jumping && g.activated && !dead && Math.floor(ticks / 5) % 2 === 0;
+    if (t.ducking && !dead) {
+      rects([[1, 28, 40, 15], [34, 20, 22, 14], [48, 22, 9, 4], [0, 30, 6, 6], [8, 41, 5, 4], [26, 41, 5, 4]], ox, oy, p.ink);
+      rects([[48, 23, 3, 3]], ox, oy, p.eye);
+      if (!leg) rects([[8, 43, 5, 2]], ox, oy, p.ink);
+      return;
+    }
+    rects([
+      [22, 0, 17, 15], [30, 13, 9, 4],        // head and jaw
+      [10, 14, 20, 20],                       // chest
+      [4, 22, 8, 10], [0, 26, 6, 6],          // tail
+      [26, 24, 8, 3],                         // little arm
+      [12, 33, 12, 3],
+    ], ox, oy, p.ink);
+    // legs: one forward, one back, swap while running
+    const a = leg ? 36 : 42, b = leg ? 42 : 36;
+    rects([[12, 34, 5, a - 34 + 5], [20, 34, 5, b - 34 + 5]], ox, oy, p.ink);
+    rects([[12, 40 + (a === 42 ? 3 : 0), 8, 3]], ox, oy, p.ink);
+    if (dead) { rects([[31, 3, 2, 2], [35, 3, 2, 2], [33, 5, 2, 2], [31, 7, 2, 2], [35, 7, 2, 2]], ox, oy, p.eye); }
+    else rects([[32, 3, 4, 4]], ox, oy, p.eye);
+    rects([[34, 14, 4, 2]], ox, oy, p.eye); // mouth
+  }
+
+  function drawCactus(o, p) {
+    const small = o.typeConfig.type === "CACTUS_SMALL";
+    const uw = o.typeConfig.width, h = o.typeConfig.height;
+    for (let i = 0; i < o.size; i++) {
+      const x = o.xPos + i * uw, y = o.yPos;
+      const stem = small ? 6 : 8, sx = x + Math.round((uw - stem) / 2);
+      const arm = small ? [[x, y + 12, 4, 10, 3], [x + uw - 4, y + 6, 4, 12, 3]] : [[x + 1, y + 20, 5, 14, 5], [x + uw - 6, y + 12, 5, 16, 5]];
+      ctx.fillStyle = p.ink;
+      ctx.fillRect(sx, y, stem, h);
+      ctx.fillRect(sx + 1, y - 1, stem - 2, 1);
+      for (const [ax, ay, aw, ah, reach] of arm) {
+        ctx.fillRect(ax, ay + ah - 4, aw + reach, 4);                       // elbow joined to the stem
+        ctx.fillRect(ax, ay, aw, ah);                                       // arm going up
+      }
+      ctx.fillStyle = p.dim;
+      ctx.fillRect(sx + 2, y + 4, 1, h - 10);
+    }
+  }
+
+  function drawPtero(o, p) {
+    const x = o.xPos, y = o.yPos, up = Math.floor(ticks / 9) % 2 === 0;
+    rects([[0, 16, 14, 4], [4, 14, 6, 3], [12, 14, 26, 12], [36, 17, 10, 5]], x, y, p.ink);
+    if (up) rects([[16, 3, 6, 11], [20, 0, 10, 6]], x, y, p.ink);
+    else rects([[16, 26, 6, 10], [20, 33, 10, 6]], x, y, p.ink);
+    rects([[8, 15, 2, 2]], x, y, p.eye);
+  }
+
+  function drawGround(g, p) {
+    ctx.fillStyle = p.ink; ctx.fillRect(0, GROUND, W, 1);
+    const scroll = Math.floor(g.distanceRan * 0.9) % 4096;
+    ctx.fillStyle = p.dim;
+    for (let i = -2; i < W / 9 + 2; i++) {
+      const k = Math.floor((i * 9 + scroll) / 9);
+      const h = (k * 2654435761 >>> 0) % 7;
+      const x = i * 9 - (scroll % 9);
+      if (h === 0) ctx.fillRect(x, GROUND + 5, 6, 1);
+      else if (h === 1) ctx.fillRect(x, GROUND + 9, 3, 1);
+      else if (h === 2) ctx.fillRect(x, GROUND + 3, 2, 2);
+    }
+  }
+
+  function digits(n, len) { return String(n).padStart(len, "0"); }
+
+  function draw() {
+    const night = Math.floor(scoreOf() / 700) % 2 === 1;
+    const p = pal(night);
+    cv.style.background = p.sky;
+    ctx.fillStyle = p.sky; ctx.fillRect(0, 0, W, H);
+    // moon and clouds
+    if (night) { ctx.fillStyle = p.ink; ctx.beginPath(); ctx.arc(520, 38, 11, 0, 7); ctx.fill(); ctx.fillStyle = p.sky; ctx.beginPath(); ctx.arc(526, 35, 10, 0, 7); ctx.fill(); }
+    ctx.fillStyle = p.dim;
+    for (const c of clouds) { ctx.fillRect(c.x + 6, c.y, 30, 4); ctx.fillRect(c.x, c.y + 4, 46, 5); ctx.fillRect(c.x + 12, c.y - 4, 14, 4); }
+    drawGround(game, p);
+    for (const o of game.obstacles) { if (o.typeConfig.type === "PTERODACTYL") drawPtero(o, p); else drawCactus(o, p); }
+    drawDino(game, p);
+    // score
+    ctx.font = "bold 13px ui-monospace, Menlo, Consolas, monospace";
+    ctx.textAlign = "right"; ctx.textBaseline = "top";
+    ctx.fillStyle = p.ink; ctx.fillText(digits(scoreOf(), 5), W - 10, 8);
+    ctx.fillStyle = p.dim; ctx.fillText("HI " + digits(best, 5), W - 70, 8);
+    ctx.textAlign = "center";
+    if (!game.activated && !game.playing) { ctx.fillStyle = p.ink; ctx.font = "bold 14px system-ui, sans-serif"; ctx.fillText("PRESS SPACE OR TAP TO START", W / 2, 58); }
+    if (game.crashed) {
+      ctx.fillStyle = p.ink; ctx.font = "bold 17px ui-monospace, Menlo, Consolas, monospace";
+      ctx.fillText("G A M E   O V E R", W / 2, 38);
+      // restart arrow
+      ctx.strokeStyle = p.ink; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(W / 2, 80, 11, 0.5, 5.5); ctx.stroke();
+      ctx.fillStyle = p.ink; ctx.beginPath(); ctx.moveTo(W / 2 + 14, 70); ctx.lineTo(W / 2 + 4, 69); ctx.lineTo(W / 2 + 12, 80); ctx.fill();
+      if (crashTicks * STEP >= 750) { ctx.fillStyle = p.dim; ctx.font = "12px system-ui, sans-serif"; ctx.fillText("space / tap / enter", W / 2, 104); }
+    }
+  }
+
+  // ---- frame loop
+  function frame(ts) {
+    if (last === null) last = ts;
+    acc += Math.min(ts - last, 100);
+    last = ts;
+    if (!TAPE) while (acc >= STEP) { tick(); acc -= STEP; }
+    draw();
+    requestAnimationFrame(frame);
+  }
+  if (TAPE) window.__rea = {
+    // one frame of the recorded case: the key events dispatched since the last call are merged into one input
+    step(dt) { const inp = Object.assign({}, ...queue); queue = []; queue.push(inp); tick(dt); draw(); return game.snapshot(); },
+    snapshot: () => game.snapshot(),
+    tapeUsed: () => tapeUsed,
+  };
+  document.addEventListener("visibilitychange", () => { last = null; });
+  requestAnimationFrame(frame);
+})();
+
+})();
+</script>
+</body>
+</html>

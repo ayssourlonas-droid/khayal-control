@@ -1,0 +1,10 @@
+Source: https://github.com/erkamyaman/rea-games
+Commit: 903bdde30f4e1eb1a4ae16aa98ee868ced8ef7f7
+License: MIT
+Imported: 2026-11-26T23:06:02.339240+00:00
+Automated changes (see report): {"عزل تخزين اللعبة": 8, "تضمين خطوط محلياً": 6, "حذف ملفات غير لازمة": 5, "تحسين وسائط صور": 7}
+
+Media provenance (automated signals, not a legal guarantee):
+- NOTICE: and six sound effects from The Freesound Project under CC BY-ND 2.0; their authors are
+- NOTICE: credited in originals/bricks/LICENSE. The rebuild plays no sound.
+- images: 31, audio: 12, tagged audio: 6

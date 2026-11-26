@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:rea-games:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Bricks · rea-games</title>
+<style>
+  :root { --bg:#14161c; --panel:#20242e; --cell:#1a1d26; --text:#e8eaf0; --muted:#8b93a7; --accent:#ff7a45; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--text);
+         font:16px/1.4 system-ui,sans-serif; touch-action:manipulation; user-select:none; -webkit-user-select:none; }
+  main { width:min(100% - 24px, 560px); padding:14px 0; }
+  header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; gap:12px; }
+  h1 { margin:0; font-size:34px; letter-spacing:-1px; }
+  header span { color:var(--muted); font-size:13px; text-align:right; }
+  #bar { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:10px; }
+  .box { background:var(--panel); border-radius:10px; padding:6px 10px; text-align:center; }
+  .box small { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+  .box b { font-size:20px; font-variant-numeric:tabular-nums; }
+  #court { position:relative; touch-action:none; background:var(--panel); border-radius:12px; padding:8px; }
+  canvas { display:block; width:100%; height:auto; border-radius:6px; background:var(--cell); }
+  #msg { position:absolute; inset:8px; border-radius:6px; background:rgba(20,22,28,.72); display:grid; place-content:center;
+         text-align:center; gap:10px; cursor:pointer; padding:12px; }
+  #msg.off { display:none; }
+  #msg h2 { margin:0; font-size:26px; }
+  #msg p { margin:0; color:var(--muted); font-size:14px; }
+  #levels { display:flex; gap:8px; justify-content:center; }
+  #levels button { background:var(--panel); color:var(--text); border:0; border-radius:8px; padding:6px 14px; font:inherit; font-weight:700; cursor:pointer; }
+  p.keys { margin:12px 2px 0; color:var(--muted); font-size:14px; }
+  kbd { background:var(--panel); border-radius:5px; padding:1px 7px; font:inherit; font-weight:600; color:var(--text); }
+  .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+</style>
+<link rel="preload" href="../_gfonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../_gfonts/fonts.css"></head>
+<body>
+<main>
+  <header><h1>Bricks</h1><span>own art and levels &middot; rules rebuilt from the recording</span></header>
+  <div id="bar">
+    <div class="box"><small>score</small><b id="score">0</b></div>
+    <div class="box"><small>best</small><b id="best">0</b></div>
+    <div class="box"><small>balls</small><b id="lives">3</b></div>
+    <div class="box"><small>level</small><b id="level">1</b></div>
+  </div>
+  <div id="court">
+    <canvas id="c" width="448" height="378" role="img" aria-label="Bricks game"></canvas>
+    <div id="msg">
+      <h2 id="msgtitle">Bricks</h2>
+      <p id="msgsub">Press Space or tap to play</p>
+      <div id="levels"><button type="button" id="prev" aria-label="previous level">&darr;</button><button type="button" id="next" aria-label="next level">&uarr;</button></div>
+    </div>
+  </div>
+  <p id="live" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+  <p class="keys"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> (or <kbd>A</kbd> <kbd>D</kbd>) move &middot; <kbd>Space</kbd> play, or launch before the count ends &middot; <kbd>&uarr;</kbd> <kbd>&darr;</kbd> pick a level &middot; <kbd>Esc</kbd> give up. Where the ball meets the paddle sets its angle; it speeds up with every brick. Clear a level for an extra ball.</p>
+</main>
+<script>
+// A browser will not load ./bricks.mjs for a page opened straight from disk (file://), so nothing would start.
+// The game marks the page ready; if it never did, say what to open instead. The bundled page inlines the rules and is
+// always ready by now.
+addEventListener("load", () => {
+  if (document.documentElement.dataset.ready) return;
+  document.getElementById("msgtitle").textContent = "Open docs/play/bricks.html";
+  document.getElementById("msgsub").textContent = "This page loads bricks.mjs, which browsers block for a file opened from disk. docs/play/bricks.html is the same game in one file, or serve this folder over http.";
+  document.getElementById("levels").style.display = "none";
+});
+</script>
+<script>
+(() => {
+const __mod0 = (() => {
+// Bricks: the rules of the brick-breaking game, as pure logic. No DOM, no real clock, no Math.random:
+// the caller hands in `rng` (a function returning [0,1)) and the brick layouts, and calls step(input) once
+// per input. The game keeps its own clock and timer queue, because the original's frame loop and its launch
+// countdown are timers (an interval and one-second timeouts), and their order decides what happens.
+// Written from games/bricks/GAME.md (what the original does, observed and read), not copied.
+
+const T0 = 1000000; // the recording's clock starts here (ms)
+const KEY = { left: 37, right: 39, a: 65, d: 68, space: 32, enter: 13, esc: 27, up: 38, down: 40 };
+const COLS = 30, ROWS = 25;           // the court, in chunks
+const MAX_LIVES = 5, START_LIVES = 3;
+const FRAME_MS = 1000 / 60;           // the frame loop's interval
+const BALL_RADIUS = 0.3, BALL_SPEED = 15, PADDLE_W = 6, PADDLE_H = 1, PADDLE_SPEED = 20; // in chunks (per second)
+const LABELS = { 3: "ready...", 2: "set..", 1: "go!" };
+
+// a box with its edges, the way every collision test reads it
+function edges(b) { b.left = b.x; b.right = b.x + b.w; b.top = b.y; b.bottom = b.y + b.h; return b; }
+
+// where the segment (x1,y1)-(x2,y2) crosses the segment (x3,y3)-(x4,y4), or null
+function cross(x1, y1, x2, y2, x3, y3, x4, y4, side) {
+  const den = ((y4 - y3) * (x2 - x1)) - ((x4 - x3) * (y2 - y1));
+  if (den === 0) return null;
+  const ua = (((x4 - x3) * (y1 - y3)) - ((y4 - y3) * (x1 - x3))) / den;
+  if (ua < 0 || ua > 1) return null;
+  const ub = (((x2 - x1) * (y1 - y3)) - ((y2 - y1) * (x1 - x3))) / den;
+  if (ub < 0 || ub > 1) return null;
+  return { x: x1 + (ua * (x2 - x1)), y: y1 + (ua * (y2 - y1)), side };
+}
+
+// the first face of `box` (grown by the ball's radius) that the ball's path (nx, ny) crosses: a side face
+// first (the one facing the motion), and only when none, the top or bottom face
+function hitFace(ball, box, nx, ny) {
+  const r = ball.r, x2 = ball.x + nx, y2 = ball.y + ny;
+  let p = null;
+  if (nx < 0) p = cross(ball.x, ball.y, x2, y2, box.right + r, box.top - r, box.right + r, box.bottom + r, "right");
+  else if (nx > 0) p = cross(ball.x, ball.y, x2, y2, box.left - r, box.top - r, box.left - r, box.bottom + r, "left");
+  if (!p) {
+    if (ny < 0) p = cross(ball.x, ball.y, x2, y2, box.left - r, box.bottom + r, box.right + r, box.bottom + r, "bottom");
+    else if (ny > 0) p = cross(ball.x, ball.y, x2, y2, box.left - r, box.top - r, box.right + r, box.top - r, "top");
+  }
+  return p;
+}
+
+class Bricks {
+  // levels: per level, its bricks as [firstColumn, lastColumn, row, points]
+  constructor({ rng, levels, clock0 = T0, width = 640, height = 480, highscore = 1000 }) {
+    this.rng = rng;
+    this.levels = levels;
+    this.width = width;
+    this.height = height;
+    this.t = clock0;
+    this.timers = [];       // {due, seq, every, fn}
+    this.seq = 0;
+    this.answer = true;     // what "Abandon game?" gets answered
+    this.highscore = highscore;
+    this.level = 0;
+    this.score = 0;
+    this.vscore = 0;
+    this.lives = START_LIVES;
+    this.layout();
+    this.state = "menu";
+    this.enterMenu();
+    this.startLoop();
+  }
+
+  // ---- sizes: everything is measured in chunks of the canvas
+  layout() {
+    const c = Math.floor(Math.min(this.width, this.height) / (Math.max(COLS, ROWS) + 4));
+    this.chunk = c;
+    const w = COLS * c, h = ROWS * c;
+    this.court = { left: Math.floor((this.width - w) / 2), top: Math.floor((this.height - h) / 2) };
+    this.court.right = this.court.left + w;
+    this.court.bottom = this.court.top + h;
+    this.court.width = w;
+    const { left, top, right } = this.court;
+    this.walls = [
+      edges({ x: left - c, y: top - c * 2, w: w + c * 2, h: c * 2 }),       // top
+      edges({ x: left - c, y: top - c * 2, w: c, h: c * 2 + h }),           // left
+      edges({ x: right, y: top - c * 2, w: c, h: c * 2 + h }),              // right
+    ];
+    this.paddle = { w: PADDLE_W * c, h: PADDLE_H * c, speed: PADDLE_SPEED * c, minX: left, maxX: right - PADDLE_W * c, x: 0, y: 0, dl: 0, dr: 0 };
+  }
+
+  // ---- timers (the original's frame loop is an interval, its countdown a chain of timeouts)
+  schedule(ms, fn, every = null) { const tm = { due: this.t + ms, seq: this.seq++, every, fn }; this.timers.push(tm); return tm; }
+  cancel(tm) { const i = this.timers.indexOf(tm); if (i >= 0) this.timers.splice(i, 1); }
+  advance(ms, late) {
+    const target = this.t + ms;
+    if (late) this.t = target;
+    for (;;) {
+      let next = null;
+      for (const tm of this.timers) if (tm.due <= target && (!next || tm.due < next.due || (tm.due === next.due && tm.seq < next.seq))) next = tm;
+      if (!next) break;
+      if (next.due > this.t) this.t = next.due;
+      if (next.every === null) this.cancel(next); else { next.due = this.t + next.every; next.seq = this.seq++; }
+      next.fn();
+    }
+    this.t = target;
+  }
+  now() { return Math.floor(this.t); }
+  startLoop() { this.last = this.now(); this.loop = this.schedule(FRAME_MS, () => this.frame(), FRAME_MS); }
+  stopLoop() { this.cancel(this.loop); }
+
+  frame() {
+    const now = this.now();
+    this.update((now - this.last) / 1000);
+    this.last = now;
+  }
+
+  // ---- one frame: paddle, ball, shown score
+  update(dt) {
+    const p = this.paddle;
+    const amount = p.dr - p.dl;
+    if (amount !== 0) this.placePaddle(p.x + (amount * dt * p.speed));
+    this.moveBall(dt);
+    if (this.vscore < this.score) this.vscore = Math.min(this.score, this.vscore + 10);
+  }
+
+  placePaddle(x) {
+    const p = this.paddle;
+    p.x = Math.min(p.maxX, Math.max(p.minX, x));
+    edges(p);
+  }
+
+  // ---- the brick layout of a level
+  setLevel(n) {
+    n = n < this.levels.length ? n : 0;
+    const c = this.chunk, { left, top } = this.court;
+    this.bricks = this.levels[n].map(([x1, x2, y, points]) => edges({ x: left + x1 * c, y: top + y * c, w: (x2 - x1 + 1) * c, h: c, points, hit: false }));
+    this.hits = 0;
+    this.level = n;
+  }
+
+  // ---- the ball
+  setBall(x, y) { const b = this.ball; b.x = x; b.y = y; }
+  aimBall(dx, dy) {
+    const b = this.ball;
+    const m = Math.sqrt(dx * dx + dy * dy);
+    if (m === 0) { b.dx = 0; b.dy = 0; b.moving = false; return; }
+    b.dx = dx / m; b.dy = dy / m; b.moving = true;
+  }
+  onPaddle() { const p = this.paddle; this.setBall(p.x + p.w / 2, this.court.bottom - p.h - this.ball.r); }
+  resetBall(launch) {
+    const c = this.chunk;
+    const speed = BALL_SPEED * c;
+    this.ball = { r: BALL_RADIUS * c, speed, max: speed * 1.5, x: 0, y: 0, dx: 0, dy: 0, moving: false, countdown: this.ball ? this.ball.countdown : null, label: this.ball ? this.ball.label : null, timer: this.ball ? this.ball.timer : null };
+    this.onPaddle();
+    this.aimBall(0, 0);
+    this.stopCountdown();
+    this.targets = [this.paddle, ...this.walls, ...this.bricks];
+    if (launch) this.countdownTick();
+  }
+  stopCountdown() {
+    const b = this.ball;
+    if (b.timer) { this.cancel(b.timer); b.timer = null; b.label = null; b.countdown = null; }
+  }
+  // 3 "ready...", 2 "set..", 1 "go!" (the ball starts moving), then the label goes; one second apart
+  countdownTick() {
+    const b = this.ball;
+    if (b.moving && !b.countdown) return;
+    b.countdown = b.countdown === null ? 3 : b.countdown - 1;
+    if (b.countdown > 0) {
+      b.label = LABELS[b.countdown];
+      b.timer = this.schedule(1000, () => this.countdownTick());
+      if (b.countdown === 1) this.aimBall(1, -1);
+    } else this.stopCountdown();
+  }
+  launchNow() { if (!this.ball.moving) { this.stopCountdown(); this.aimBall(1, -1); } }
+
+  moveBall(dt) {
+    for (;;) {
+      const b = this.ball;
+      if (!b.moving) { this.onPaddle(); return; }
+      const vx = b.dx * b.speed, vy = b.dy * b.speed;
+      const nx = vx * dt, ny = vy * dt;
+      let best = null, bestDist = Infinity;
+      for (const box of this.targets) {
+        if (box.hit) continue;
+        const p = hitFace(b, box, nx, ny);
+        if (!p) continue;
+        const ex = p.x - b.x, ey = p.y - b.y;
+        const d = Math.sqrt(ex * ex + ey * ey);
+        if (d < bestDist) { bestDist = d; best = { box, p }; }
+      }
+      if (!best) {
+        const x = b.x + nx, y = b.y + ny;
+        if (x < 0 || y < 0 || x > this.width || y > this.height) this.loseBall();
+        else { this.setBall(x, y); this.aimBall(vx, vy); }
+        return;
+      }
+      let outX = vx;
+      if (best.box.points !== undefined) {
+        this.hitBrick(best.box);
+        if (!this.ball.moving) return; // the last brick: a new level, the ball back on the paddle
+      }
+      const p = this.paddle;
+      if (best.box === p && best.p.side === "top") outX = b.speed * (best.p.x - (p.left + p.w / 2)) / (p.w / 2);
+      this.setBall(best.p.x, best.p.y);
+      if (best.p.side === "left" || best.p.side === "right") this.aimBall(-outX, vy); else this.aimBall(outX, -vy);
+      dt = dt - dt * (bestDist / Math.sqrt(nx * nx + ny * ny));
+    }
+  }
+
+  hitBrick(brick) {
+    brick.hit = true;
+    this.hits++;
+    this.score = this.score + brick.points;
+    const b = this.ball;
+    b.speed += 10 * (1 - (b.speed / b.max));
+    if (this.hits === this.bricks.length) {
+      this.lives = Math.min(MAX_LIVES, this.lives + 1);
+      this.setLevel(this.level + 1);
+      this.resetBall(true);
+    }
+  }
+
+  loseBall() {
+    this.lives = this.lives - 1;
+    if (this.lives === 0) this.toMenu();
+    else this.resetBall(true);
+  }
+
+  // ---- game and menu
+  enterMenu() {
+    this.setLevel(this.level);
+    const p = this.paddle;
+    p.x = p.minX + (this.rng() * (p.maxX - p.minX));
+    p.y = this.court.bottom - p.h;
+    edges(p);
+    p.dl = 0; p.dr = 0;
+    this.resetBall(false);
+  }
+  toMenu() {
+    if (this.score > this.highscore) this.highscore = this.score;
+    this.lives = START_LIVES;
+    this.state = "menu";
+    this.enterMenu();
+  }
+  play() {
+    this.state = "game";
+    this.score = 0; this.vscore = 0;
+    this.lives = START_LIVES;
+    this.resetBall(true);
+  }
+  abandon() {
+    // the original asks "Abandon game?" and restarts its frame loop around the question, whatever the answer
+    this.stopLoop();
+    const yes = this.answer;
+    this.startLoop();
+    if (yes) this.toMenu();
+  }
+
+  // ---- keys: arrows (or A and D) held move the paddle; the rest act when the key comes up
+  keyDown(code) {
+    if (code === KEY.left || code === KEY.a) this.paddle.dl = 1;
+    if (code === KEY.right || code === KEY.d) this.paddle.dr = 1;
+  }
+  keyUp(code) {
+    const s = this.state; // a key acts in the state it was pressed in, even if an earlier action changed it
+    if (code === KEY.left || code === KEY.a) this.paddle.dl = 0;
+    if (code === KEY.right || code === KEY.d) this.paddle.dr = 0;
+    if ((code === KEY.space || code === KEY.enter) && s === "menu") this.play();
+    if ((code === KEY.space || code === KEY.enter) && s === "game") this.launchNow();
+    if (code === KEY.esc && s === "game") this.abandon();
+    if (code === KEY.up && s === "menu" && this.state === "menu" && this.level < this.levels.length - 1) this.setLevel(this.level + 1);
+    if (code === KEY.down && s === "menu" && this.state === "menu" && this.level > 0) this.setLevel(this.level - 1);
+  }
+
+  // one input: key events in order ("+left" down, "-left" up), then the clock moves by dt ms
+  step({ dt, keys = [], late = false, answer = true }) {
+    this.answer = answer;
+    for (const k of keys) (k[0] === "+" ? this.keyDown(KEY[k.slice(1)]) : this.keyUp(KEY[k.slice(1)]));
+    this.advance(dt, late);
+  }
+
+  snapshot() {
+    const b = this.ball, p = this.paddle;
+    return {
+      state: this.state, level: this.level,
+      score: this.score, vscore: this.vscore, highscore: this.highscore, lives: this.lives,
+      paddle: { x: p.x, left: p.dl, right: p.dr },
+      ball: { x: b.x, y: b.y, dx: b.dx, dy: b.dy, speed: b.speed, moving: b.moving, countdown: b.countdown, label: b.label },
+      bricks: this.bricks.map((k) => (k.hit ? "x" : "o")).join(""),
+      last: this.last,
+    };
+  }
+}
+
+return { T0, KEY, COLS, ROWS, MAX_LIVES, START_LIVES, FRAME_MS, Bricks };
+})();
+
+const { Bricks, KEY, COLS } = __mod0;
+(function main() {
+  // ---- levels of our own, in the layout the rules take: [firstColumn, lastColumn, row, points]
+  const points = (row) => (25 - row) * 5;
+  function rowOf(row, from, to, width, gap = 0) {
+    const out = [];
+    for (let x = from; x + width - 1 <= to; x += width + gap) out.push([x, x + width - 1, row, points(row)]);
+    return out;
+  }
+  const LEVELS = [
+    [4, 5, 6, 7, 8].flatMap((y) => rowOf(y, 0, COLS - 1, 3)),                                        // bands
+    Array.from({ length: 8 }, (_, i) => rowOf(3 + i, 1 + i * 2 - (i % 2), COLS - 2 - i * 2 + (i % 2), 2)).flat(), // a wedge
+    Array.from({ length: 8 }, (_, i) => rowOf(3 + i, (i % 2) * 2, COLS - 1, 2, 2)).flat(),             // checks
+    Array.from({ length: 10 }, (_, i) => rowOf(3 + i, 1, COLS - 2, 2, 3)).flat(),                       // pillars
+    Array.from({ length: 9 }, (_, i) => { const h = 4 - Math.abs(i - 4); return rowOf(3 + i, 13 - 3 * h, 16 + 3 * h, 2); }).flat(), // a gem
+    [...rowOf(2, 0, COLS - 1, 5), ...rowOf(3, 0, COLS - 1, 5), ...[6, 7, 8, 9, 10, 11].flatMap((y) => rowOf(y, 3, COLS - 4, 1, 2))], // lid and teeth
+  ];
+  const HUES = [8, 28, 45, 140, 190, 215, 265, 320];
+
+  const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+  const CW = cv.width, CH = cv.height, DPR = Math.min(2, window.devicePixelRatio || 1); // drawn sharp on dense screens
+  cv.width = CW * DPR; cv.height = CH * DPR;
+  const $ = (id) => document.getElementById(id);
+  const set = (id, v) => { const el = $(id), s = String(v); if (el.textContent !== s) el.textContent = s; };
+  let best = 1000, ended = null; // how the last game ended: "lost" or "left"
+  try { best = +localStorage.getItem("bricks-best") || 1000; } catch {}
+  const game = new Bricks({ rng: Math.random, levels: LEVELS, clock0: Math.floor(performance.now()), highscore: best });
+  const OX = game.court.left - game.chunk, OY = game.court.top - 2 * game.chunk; // the canvas ends at the court floor; a missed ball drops out of sight
+
+  function remember() {
+    if (game.highscore > best) { best = game.highscore; try { localStorage.setItem("bricks-best", String(best)); } catch {} }
+  }
+
+  // ---- drawing: flat shapes, a soft top edge, no textures
+  function draw() {
+    const c = game.chunk;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.save();
+    ctx.setTransform(DPR, 0, 0, DPR, -OX * DPR, -OY * DPR);
+    // walls
+    ctx.fillStyle = "#2b303d";
+    for (const w of game.walls) ctx.fillRect(w.x, w.y, w.w, w.h);
+    // bricks
+    for (const b of game.bricks) {
+      if (b.hit) continue;
+      const hue = HUES[(b.y - game.court.top) / c % HUES.length];
+      ctx.fillStyle = `hsl(${hue} 70% 58%)`;
+      ctx.beginPath(); ctx.roundRect(b.x + 1, b.y + 1, b.w - 2, b.h - 2, 3); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,.25)"; ctx.fillRect(b.x + 3, b.y + 2, b.w - 6, 2);
+    }
+    // paddle
+    const p = game.paddle;
+    ctx.fillStyle = "#ff7a45";
+    ctx.beginPath(); ctx.roundRect(p.x, p.y, p.w, p.h, p.h / 2); ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,.3)"; ctx.fillRect(p.x + 6, p.y + 2, p.w - 12, 2);
+    // ball
+    const b = game.ball;
+    ctx.fillStyle = "#e8eaf0";
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+    if (b.label && game.state === "game") {
+      ctx.fillStyle = "#e8eaf0"; ctx.font = "700 26px system-ui,sans-serif"; ctx.textAlign = "center";
+      ctx.fillText({ "ready...": "3", "set..": "2", "go!": "go" }[b.label] ?? "", game.court.left + game.court.width / 2, p.y - 60);
+    }
+    ctx.restore();
+    set("score", game.vscore);
+    set("best", Math.max(best, game.score));
+    set("lives", game.lives);
+    set("level", game.level + 1);
+    const menu = game.state === "menu";
+    $("msg").classList.toggle("off", !menu);
+    if (menu) {
+      set("msgtitle", ended === "lost" ? "Game over" : ended === "left" ? "Game ended" : "Bricks");
+      set("msgsub", (ended ? game.score + " points. " : "") + "Level " + (game.level + 1) + " of " + LEVELS.length + ". Press Space or tap to play");
+    }
+    set("live", menu ? $("msgtitle").textContent + ". " + $("msgsub").textContent : "Score " + game.score + ", " + game.lives + " balls, level " + (game.level + 1));
+  }
+
+  // ---- input: keys go straight to the rules, at the moment they happen
+  const CODES = { ArrowLeft: KEY.left, ArrowRight: KEY.right, a: KEY.a, A: KEY.a, d: KEY.d, D: KEY.d, " ": KEY.space, Enter: KEY.enter, Escape: KEY.esc, ArrowUp: KEY.up, ArrowDown: KEY.down };
+  // Enter and Space on a focused level button belong to the button (it changes the level), not to the game; so does
+  // their keyup, which arrives after the click has moved focus away
+  const buttonKeys = new Set();
+  document.addEventListener("keydown", (e) => {
+    const k = CODES[e.key];
+    if (k === undefined) return;
+    if (e.target.tagName === "BUTTON" && (e.key === " " || e.key === "Enter")) { buttonKeys.add(e.key); return; }
+    e.preventDefault();
+    if (!e.repeat) game.keyDown(k);
+  });
+  document.addEventListener("keyup", (e) => {
+    const k = CODES[e.key];
+    if (k === undefined || buttonKeys.delete(e.key)) return;
+    e.preventDefault();
+    const wasGame = game.state === "game";
+    if (k === KEY.esc && wasGame) game.answer = window.confirm("Give up this game?");
+    game.keyUp(k);
+    if (wasGame && game.state === "menu") ended = "left";
+    remember();
+  });
+  const tap = (code) => { game.keyDown(code); game.keyUp(code); };
+  $("msg").addEventListener("pointerdown", (e) => { if (e.target.tagName === "BUTTON") return; e.preventDefault(); tap(KEY.space); });
+  // let go of focus after a click, so the next Space plays instead of pressing the button again
+  $("prev").addEventListener("click", (e) => { tap(KEY.down); e.currentTarget.blur(); });
+  $("next").addEventListener("click", (e) => { tap(KEY.up); e.currentTarget.blur(); });
+  // drag on the court to move the paddle (its centre follows the finger)
+  cv.addEventListener("pointermove", (e) => {
+    if (e.pointerType === "mouse" && e.buttons === 0) return;
+    const r = cv.getBoundingClientRect();
+    game.placePaddle(OX + ((e.clientX - r.left) / r.width) * CW - game.paddle.w / 2);
+  });
+  cv.addEventListener("pointerdown", () => { if (game.state === "game") tap(KEY.space); });
+
+  // ---- clock: the rules keep their own timers; the screen only moves the clock on
+  let last = null;
+  function frame(ts) {
+    if (last !== null) {
+      const wasGame = game.state === "game";
+      game.step({ dt: Math.min(ts - last, 250) });
+      if (wasGame && game.state === "menu") ended = "lost";
+    }
+    last = ts;
+    remember();
+    draw();
+    requestAnimationFrame(frame);
+  }
+  // a key let go while the page is in the background never arrives: stop the paddle instead of leaving it running
+  const letGo = () => { game.keyUp(KEY.left); game.keyUp(KEY.right); };
+  document.addEventListener("visibilitychange", () => { last = null; if (document.hidden) letGo(); });
+  window.addEventListener("blur", letGo);
+  requestAnimationFrame(frame);
+  document.documentElement.dataset.ready = "1";
+})();
+
+})();
+</script>
+</body>
+</html>

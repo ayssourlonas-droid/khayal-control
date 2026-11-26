@@ -1,0 +1,33 @@
+rea-games itself is MIT licensed (see LICENSE).
+
+The folder originals/ holds unmodified copies of the open-source games that the recordings are made from.
+They stay under their own licences, and each folder keeps its licence file:
+
+  originals/2048          2048, (c) 2014 Gabriele Cirulli, MIT        https://github.com/gabrielecirulli/2048
+  originals/dino          t-rex-runner (a copy of Chromium's offline
+                          dinosaur game), BSD-3-Clause                https://github.com/wayou/t-rex-runner
+  originals/canvas-bird   Canvas Bird, (c) 2016 Yiotis Kaltsikis, MIT https://github.com/giotiskl/Canvas-Bird
+  originals/blocks        javascript-tetris, (c) 2011-2016 Jake Gordon
+                          and contributors, MIT                       https://github.com/jakesgordon/javascript-tetris
+  originals/bricks        javascript-breakout, (c) 2011-2016 Jake Gordon
+                          and contributors, MIT                       https://github.com/jakesgordon/javascript-breakout
+                          Its sound/ folder holds SoundManager 2, (c) 2007 Scott Schiller, BSD (sound/license.txt),
+                          and six sound effects from The Freesound Project under CC BY-ND 2.0; their authors are
+                          credited in originals/bricks/LICENSE. The rebuild plays no sound.
+  originals/paddles       javascript-pong, (c) 2011-2016 Jake Gordon
+                          and contributors, MIT                       https://github.com/jakesgordon/javascript-pong
+  originals/mines         HTML5-Minesweeper, (c) 2013 Joey van Ommen,
+                          MIT                                         https://github.com/Joeynoh/HTML5-Minesweeper
+  games/mines/vendor      jQuery 1.8.3, (c) 2012 jQuery Foundation, MIT https://jquery.com
+
+The rebuilds in games/*/ports are written from the behavior specs in games/*/GAME.md. They use none of the originals'
+code, art or sound. The names 2048 and "Dino" describe the games being studied; this project is not affiliated with
+their authors or with Google. The falling-blocks game is called "blocks" here: Tetris is a registered
+trademark of its owner, this project is not affiliated with it, and the rebuild uses no Tetris name or art.
+The brick-breaking game is called "bricks" here for the same reason: Breakout is a trademark of its owner. Its rebuild
+draws its own art and ships its own levels; the recordings carry the original's brick layouts as measurements.
+The two-paddle ball game is called "paddles" for the same reason: Pong is a trademark of its owner.
+The mine-finding game is called "mines" for the same reason: Minesweeper is a trademark of its owner.
+
+The recordings (games/*/cases) are measurements of how the originals behave: input lists, random numbers and
+resulting game states.

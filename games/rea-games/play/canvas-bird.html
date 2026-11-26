@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:rea-games:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Canvas Bird (rebuild)</title>
+<style>
+  :root { color-scheme: dark; --bg: #0f1c2b; --fg: #eaf4ff; --muted: #8fa8c4; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; touch-action: manipulation; user-select: none; }
+  #wrap { width: min(100%, 720px); aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.08); }
+  canvas { width: 100%; height: 100%; display: block; touch-action: none; cursor: pointer; }
+  p { margin: 0; color: var(--muted); font-size: 14px; text-align: center; }
+  b { color: var(--fg); font-weight: 600; }
+</style>
+<link rel="preload" href="../_gfonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../_gfonts/fonts.css"></head>
+<body>
+<div id="wrap"><canvas id="c" width="1280" height="960" role="img" aria-label="Canvas Bird game"></canvas></div>
+<p><b>Tap</b>, click or press <b>Space</b> to flap. Pass the pipes. <span aria-live="polite" aria-atomic="true">Best: <b id="best">0</b></span></p>
+<script>
+(() => {
+const __mod0 = (() => {
+// Canvas Bird, rebuilt from games/canvas-bird/GAME.md. Pure logic: no DOM, no clock, no Math.random.
+// createBird({ rng }) takes a random source and returns a game that advances one rendered frame per
+// step({ dt, click }) and returns that frame's draw list (the strings described in driver.mjs).
+// The clock is a number the game advances itself by dt, so a replay is exact.
+const T0 = 1000000;
+
+const W = 640, H = 480;
+const PIPES = 5, SPACING = 300, GAP = 120, MIN_OFF = -150, MAX_OFF = 50, PIPE_SPEED = 3;
+const PIPE_W = 64, PIPE_H = 316;
+const BIRD = { x: 70, w: 64, h: 64, startY: 20, startV: 2, force: 0.15, jump: -6, maxV: 8 };
+const FRAME_MS = 1000 / 30;
+
+function createBird({ rng, start = T0 }) {
+  let t = start;
+  const now = () => Math.floor(t);
+  const randInt = (lo, hi) => Math.floor(rng() * (hi - lo + 1) + lo);
+
+  let playing = false; // a round is on screen (splash text is hidden)
+  let controls = false; // taps flap and pipes score; false once the bird has hit something
+  let score = 0;
+  let alpha = 1, rising = false;
+  let strokeStyle = "#000000", fillStyle = "#000000";
+  const bg = [{ x: 0 }, { x: W }];
+  const bird = { y: BIRD.startY, v: BIRD.startV, sprite: 0 };
+  let spriteClock = now(); // when the sprite frame last changed
+  const fallClock = now(); // set once and never moved: this is why the 30 fps gate stops mattering
+  let pipes = [];
+  let next = 0, last = PIPES - 1;
+  let out = [];
+
+  const addPipe = (i, off) => ({
+    id: i,
+    up: { x: W + i * SPACING, y: H / 2 + GAP + off },
+    down: { x: W + i * SPACING, y: 0 - GAP + off },
+    off,
+  });
+  function setupPipes() {
+    next = 0; last = PIPES - 1; pipes = [];
+    for (let i = 0; i < PIPES; i++) pipes.push(addPipe(i, randInt(MIN_OFF, MAX_OFF)));
+  }
+
+  function scoreCheck(p, x) {
+    if (p.id === next && x + PIPE_W < BIRD.x + BIRD.w) {
+      next = next === PIPES - 1 ? 0 : next + 1;
+      if (controls) { score++; out.push("a:point"); }
+    }
+  }
+  function moveUp(p) {
+    p.up.x -= PIPE_SPEED;
+    if (p.up.x <= -PIPE_W) {
+      p.up.x = p.down.x = pipes[last].up.x + SPACING;
+      p.off = randInt(MIN_OFF, MAX_OFF); // drawn y is NOT recomputed from it (see GAME.md)
+      last = last === PIPES - 1 ? 0 : last + 1;
+    }
+    scoreCheck(p, p.up.x);
+  }
+  function moveDown(p) {
+    p.down.x -= PIPE_SPEED;
+    scoreCheck(p, p.down.x);
+  }
+
+  function collided() {
+    const right = BIRD.x + BIRD.w, top = bird.y, bottom = bird.y + BIRD.h;
+    const p = pipes[next];
+    const px = p.down.x + 40, gapTop = p.down.y + PIPE_H, gapBottom = p.up.y;
+    let hit = false;
+    if (right > px && right < px + PIPE_W - 40) {
+      if (top < gapTop || bottom > gapBottom) hit = true;
+    }
+    if (bottom < 0 || top > H) hit = true;
+    if (hit && controls) out.push("a:lose");
+    return hit;
+  }
+
+  function spriteFrame() {
+    const n = now();
+    if (n - spriteClock > FRAME_MS) {
+      spriteClock = n;
+      bird.sprite++;
+      if (bird.sprite > 2) bird.sprite = 0;
+    }
+    return bird.sprite;
+  }
+
+  function draw() {
+    out = [];
+    out.push(`c:0:0:${W}:${H}`);
+    for (const b of bg) out.push(`i:background:${b.x}:0`);
+    for (const b of bg) { b.x -= 1; if (b.x <= -W) b.x = W; }
+    if (!playing) {
+      strokeStyle = `rgba(0,0,0,${alpha})`;
+      out.push(`t:stroke:Click to start game:${W / 2 - 230}:80:${strokeStyle}`);
+      fillStyle = `rgba(255,255,255,${alpha})`;
+      out.push(`t:fill:Click to start game:${W / 2 - 230}:80:${fillStyle}`);
+      if (alpha < 0) rising = true;
+      if (alpha > 1) rising = false;
+      alpha += rising ? 0.02 : -0.02;
+    } else {
+      for (const p of pipes) {
+        out.push(`i:enemy_up:${p.up.x}:${p.up.y}`);
+        out.push(`i:enemy_down:${p.down.x}:${p.down.y}`);
+        moveUp(p);
+        moveDown(p);
+      }
+      const sx = spriteFrame() * BIRD.w;
+      out.push(`s:player:${sx}:0:${BIRD.w}:${BIRD.h}:${BIRD.x}:${bird.y}:${BIRD.w}:${BIRD.h}`);
+      if (now() - fallClock > FRAME_MS) {
+        if (bird.v < BIRD.maxV) bird.v += BIRD.force;
+        bird.y += bird.v;
+      }
+      if (collided()) {
+        controls = false;
+        if (bird.y - BIRD.h > H) playing = false;
+      }
+      fillStyle = "black";
+      out.push(`t:stroke:${score}:${W / 2 - 11}:51:${strokeStyle}`);
+      fillStyle = "white";
+      out.push(`t:fill:${score}:${W / 2 - 10}:50:${fillStyle}`);
+    }
+    return out;
+  }
+
+  function click() {
+    if (controls) bird.v = BIRD.jump;
+    if (!playing) {
+      score = 0; bird.v = BIRD.startV; bird.y = BIRD.startY;
+      setupPipes();
+      playing = true;
+      controls = true;
+    }
+  }
+
+  return {
+    // the frame the page draws when it loads, before any step
+    load: () => draw(),
+    step({ dt, click: clicked = false }) {
+      if (clicked) click();
+      t += dt;
+      return draw();
+    },
+    // what a renderer with its own art needs
+    view: () => ({ playing, controls, score, alpha, bird: { x: BIRD.x, y: bird.y, v: bird.v, sprite: bird.sprite }, pipes, next, bg }),
+  };
+}
+
+return { T0, createBird };
+})();
+
+const { createBird } = __mod0;
+const W = 640, H = 480;
+const cv = document.getElementById("c");
+const ctx = cv.getContext("2d");
+const bestEl = document.getElementById("best");
+let best = 0;
+try { best = +localStorage.getItem("canvas-bird-best") || 0; } catch {}
+bestEl.textContent = best;
+
+// DEMO HOOK (scripts/demo-canvas-bird.mjs): when window.__tape is set, the game draws its random numbers from
+// that recorded tape and window.__rea.step(dt) advances one recorded frame (the page's own loop then idles).
+// Without it nothing here changes.
+const TAPE = Array.isArray(window.__tape) ? window.__tape : null;
+let tapeUsed = 0;
+const rng = TAPE ? () => { if (tapeUsed >= TAPE.length) throw new Error("tape used up"); return TAPE[tapeUsed++]; } : Math.random;
+const game = createBird({ rng, ...(TAPE ? { start: 1000000 } : {}) });
+let clickPending = false;
+let lastScore = 0, wasPlaying = false, over = false;
+
+// ---- sound: tiny beeps, only after the first tap (browsers need a gesture)
+let ac = null;
+function beep(freq, len, type = "square", gain = 0.05) {
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = type; o.frequency.value = freq; g.gain.value = gain;
+    o.connect(g); g.connect(ac.destination);
+    g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + len);
+    o.start(); o.stop(ac.currentTime + len);
+  } catch {}
+}
+
+// ---- input
+function tap(e) { if (e) e.preventDefault(); clickPending = true; }
+cv.addEventListener("pointerdown", tap);
+addEventListener("keydown", (e) => { if (e.code === "Space" || e.code === "ArrowUp" || e.code === "Enter") { if (!e.repeat) tap(e); } });
+
+// ---- own art, all drawn here
+const sky = ctx.createLinearGradient(0, 0, 0, H);
+sky.addColorStop(0, "#4fb3ff"); sky.addColorStop(0.7, "#bfe7ff"); sky.addColorStop(1, "#ffe9b8");
+const clouds = [[60, 90, 1], [260, 150, 0.8], [470, 70, 1.2], [610, 190, 0.7], [140, 260, 0.6]];
+function cloud(x, y, s) {
+  for (const [dx, dy, rx, ry] of [[0, 0, 36, 16], [26, -10, 26, 18], [-24, -6, 22, 14]]) {
+    ctx.beginPath(); ctx.ellipse(x + dx * s, y + dy * s, rx * s, ry * s, 0, 0, 7); ctx.fill();
+  }
+}
+function drawBackground(v) {
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  const off = v.bg[0].x; // scrolls 1 px a frame, like the original
+  ctx.fillStyle = "rgba(255,255,255,.85)";
+  for (const k of [0, 1]) for (const [x, y, s] of clouds) cloud(((x + off * (0.4 + 0.5 * s) + k * W + W * 2) % (W * 1.2)) - 60, y, s);
+  ctx.fillStyle = "#7ccf79";
+  ctx.beginPath(); ctx.moveTo(0, H);
+  for (let x = 0; x <= W; x += 20) ctx.lineTo(x, H - 26 - 10 * Math.sin((x - off * 2) / 55));
+  ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = "#5bb461"; ctx.fillRect(0, H - 14, W, 14);
+}
+function pipeBody(x, y, h, capAtBottom) {
+  const g = ctx.createLinearGradient(x, 0, x + 64, 0);
+  g.addColorStop(0, "#2f9e44"); g.addColorStop(0.35, "#69db7c"); g.addColorStop(1, "#2b8a3e");
+  ctx.fillStyle = g;
+  ctx.fillRect(x + 5, y, 54, h);
+  const cy = capAtBottom ? y + h - 26 : y;
+  ctx.fillRect(x, cy, 64, 26);
+  ctx.strokeStyle = "#1b5e2b"; ctx.lineWidth = 2;
+  ctx.strokeRect(x + 5, y, 54, h); ctx.strokeRect(x, cy, 64, 26);
+}
+function drawPipes(v) {
+  for (const p of v.pipes) { pipeBody(p.down.x, p.down.y, 316, true); pipeBody(p.up.x, p.up.y, 316, false); }
+}
+function drawBird(v) {
+  const b = v.bird;
+  ctx.save();
+  ctx.translate(b.x + 32, b.y + 32);
+  ctx.rotate(Math.max(-0.5, Math.min(1.1, b.v / 9)));
+  ctx.fillStyle = "#ffd43b"; ctx.strokeStyle = "#e67700"; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.ellipse(0, 0, 28, 24, 0, 0, 7); ctx.fill(); ctx.stroke();
+  const wing = [-6, 0, 8][b.sprite];
+  ctx.fillStyle = "#fcc419";
+  ctx.beginPath(); ctx.ellipse(-8, 4 + wing * 0.5, 14, 8, -0.3 + wing * 0.04, 0, 7); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(14, -8, 8, 0, 7); ctx.fill();
+  ctx.fillStyle = "#212529"; ctx.beginPath(); ctx.arc(16, -8, 3.5, 0, 7); ctx.fill();
+  ctx.fillStyle = "#ff6b35"; ctx.beginPath(); ctx.moveTo(22, -1); ctx.lineTo(38, 4); ctx.lineTo(22, 10); ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+function label(text, x, y, size, alpha = 1) {
+  ctx.font = `800 ${size}px system-ui, sans-serif`;
+  ctx.textAlign = "center";
+  ctx.lineWidth = size / 6; ctx.lineJoin = "round";
+  ctx.strokeStyle = `rgba(20,30,50,${alpha})`; ctx.strokeText(text, x, y);
+  ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.fillText(text, x, y);
+}
+function render() {
+  const v = game.view();
+  ctx.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0);
+  drawBackground(v);
+  if (!v.playing) {
+    if (over) { label("Game over", W / 2, 150, 54); label(`Score ${lastScore}   Best ${best}`, W / 2, 205, 26); }
+    label("Tap to " + (over ? "play again" : "start"), W / 2, over ? 290 : 120, 38, Math.max(0.25, Math.min(1, v.alpha)));
+    drawBird({ bird: { x: 70, y: 200 + Math.sin(performance.now() / 280) * 8, v: 0, sprite: (performance.now() / 120 | 0) % 3 } });
+  } else {
+    drawPipes(v); drawBird(v);
+    label(String(v.score), W / 2, 62, 52);
+  }
+}
+
+// ---- loop: the original's physics is per rendered frame (tuned at 60 fps), so run it on a fixed 60 Hz step
+const STEP = 1000 / 60;
+let acc = 0, prev = performance.now();
+function advance(dt) {
+  const out = game.step({ dt, click: clickPending });
+  if (clickPending && ac === null) beep(1, 0.01, "sine", 0.0001);
+  if (clickPending) beep(520, 0.06);
+  clickPending = false;
+  if (out.includes("a:point")) beep(880, 0.12, "triangle", 0.08);
+  if (out.includes("a:lose")) beep(160, 0.35, "sawtooth", 0.08);
+  const v = game.view();
+  if (v.playing) { lastScore = v.score; wasPlaying = true; }
+  else if (wasPlaying) {
+    wasPlaying = false; over = true;
+    if (lastScore > best) { best = lastScore; bestEl.textContent = best; try { localStorage.setItem("canvas-bird-best", best); } catch {} }
+  }
+  return out;
+}
+function frame(now) {
+  acc += Math.min(100, now - prev); prev = now;
+  if (!TAPE) while (acc >= STEP) { acc -= STEP; advance(STEP); }
+  render();
+  requestAnimationFrame(frame);
+}
+if (TAPE) game.load(); // the original draws one frame when it loads, before any step
+if (TAPE) window.__rea = { step(dt) { const out = advance(dt); render(); return out; }, tapeUsed: () => tapeUsed };
+requestAnimationFrame(frame);
+
+})();
+</script>
+</body>
+</html>

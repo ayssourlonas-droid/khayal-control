@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:rea-games:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Blocks · rea-games</title>
+<style>
+  :root { --bg:#14161c; --panel:#20242e; --cell:#1a1d26; --text:#e8eaf0; --muted:#8b93a7; --accent:#ff7a45; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--text);
+         font:16px/1.4 system-ui,sans-serif; touch-action:manipulation; user-select:none; -webkit-user-select:none; }
+  main { width:min(100% - 24px, 460px); padding:14px 0; }
+  header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; gap:12px; }
+  h1 { margin:0; font-size:34px; letter-spacing:-1px; }
+  header span { color:var(--muted); font-size:13px; text-align:right; }
+  #stage { display:grid; grid-template-columns:minmax(0,1fr) 120px; gap:12px; align-items:start; }
+  #court { position:relative; background:var(--panel); border-radius:12px; padding:8px; }
+  canvas { display:block; width:100%; height:auto; border-radius:6px; background:var(--cell); }
+  #msg { position:absolute; inset:8px; border-radius:6px; background:rgba(20,22,28,.78); display:grid; place-content:center;
+         text-align:center; gap:10px; cursor:pointer; padding:12px; }
+  #msg.off { display:none; }
+  #msg h2 { margin:0; font-size:26px; }
+  #msg p { margin:0; color:var(--muted); font-size:14px; }
+  aside { display:grid; gap:10px; }
+  aside > [aria-live] { display:grid; gap:inherit; }
+  .box { background:var(--panel); border-radius:10px; padding:8px 10px; text-align:center; }
+  .box small { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+  .box b { font-size:22px; font-variant-numeric:tabular-nums; }
+  #nextc { width:100%; background:transparent; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:10px; padding:10px 14px; font:inherit; font-weight:700; cursor:pointer; }
+  button:active { filter:brightness(.85); }
+  #pad { display:none; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
+  #pad button { padding:16px 0; font-size:22px; background:var(--panel); color:var(--text); touch-action:none; }
+  @media (pointer: coarse) { #pad { display:grid; } }
+  p.keys { margin:12px 2px 0; color:var(--muted); font-size:14px; }
+  kbd { background:var(--panel); border-radius:5px; padding:1px 7px; font:inherit; font-weight:600; color:var(--text); }
+</style>
+<link rel="preload" href="../_gfonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../_gfonts/fonts.css"></head>
+<body>
+<main>
+  <header><h1>Blocks</h1><span>own art &middot; rules rebuilt from the recording</span></header>
+  <div id="stage">
+    <div id="court">
+      <canvas id="c" width="300" height="600" role="img" aria-label="Blocks game"></canvas>
+      <div id="msg"><h2 id="msgtitle">Blocks</h2><p id="msgsub">Press Space or tap to play</p></div>
+    </div>
+    <aside>
+      <div class="box"><small>next</small><canvas id="nextc" width="100" height="100" role="img" aria-label="Next piece"></canvas></div>
+      <div aria-live="polite" aria-atomic="true">
+        <div class="box"><small>score</small><b id="score">0</b></div>
+        <div class="box"><small>rows</small><b id="rows">0</b></div>
+        <div class="box"><small>best</small><b id="best">0</b></div>
+      </div>
+      <button id="restart" type="button">New game</button>
+    </aside>
+  </div>
+  <div id="pad">
+    <button type="button" data-k="left" aria-label="left">&larr;</button>
+    <button type="button" data-k="up" aria-label="rotate">&#8635;</button>
+    <button type="button" data-k="down" aria-label="down">&darr;</button>
+    <button type="button" data-k="right" aria-label="right">&rarr;</button>
+  </div>
+  <p class="keys"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> move &middot; <kbd>&uarr;</kbd> rotate &middot; <kbd>&darr;</kbd> drop a row &middot; <kbd>Esc</kbd> give up &middot; <kbd>Space</kbd> play. Fill whole rows to clear them; the pieces fall faster as your rows grow.</p>
+</main>
+<script>
+(() => {
+const __mod0 = (() => {
+// Blocks: the rules of the falling-blocks puzzle, as pure logic. No DOM, no clock, no Math.random:
+// the caller hands in `rng` (a function returning [0,1)) and calls step({dt, keys}) once per frame.
+// Written from games/blocks/GAME.md (what the original does, observed and read), not copied.
+
+const W = 10, H = 20;
+const KINDS = "ijlostz";
+// four rotations of a 4x4 mask each, bit 0x8000 is the top-left cell, rows run left to right
+const SHAPES = {
+  i: { size: 4, masks: [0x0f00, 0x2222, 0x00f0, 0x4444] },
+  j: { size: 3, masks: [0x44c0, 0x8e00, 0x6440, 0x0e20] },
+  l: { size: 3, masks: [0x4460, 0x0e80, 0xc440, 0x2e00] },
+  o: { size: 2, masks: [0xcc00, 0xcc00, 0xcc00, 0xcc00] },
+  s: { size: 3, masks: [0x06c0, 0x8c40, 0x6c00, 0x4620] },
+  t: { size: 3, masks: [0x0e40, 0x4c40, 0x4e00, 0x4640] },
+  z: { size: 3, masks: [0x0c60, 0x4c80, 0xc600, 0x2640] },
+};
+const START_STEP = 0.6, STEP_DECREMENT = 0.005, MIN_STEP = 0.1; // seconds per row of gravity
+const T0 = 1000000; // the recording's clock starts here (ms)
+
+// the cells (column, row) a piece covers
+function cellsOf(kind, x, y, dir) {
+  const out = [];
+  const mask = SHAPES[kind].masks[dir];
+  for (let i = 0; i < 16; i++) if (mask & (0x8000 >> i)) out.push([x + (i & 3), y + (i >> 2)]);
+  return out;
+}
+
+class Blocks {
+  constructor({ rng, clock0 = T0 }) {
+    this.rng = rng;
+    this.t = clock0;              // the page's clock, ms; frames add dt to it and read the whole milliseconds
+    this.last = Math.floor(clock0);
+    this.bag = [];                // piece letters still in the bag, in splice order
+    this.cur = null;
+    this.nxt = null;
+    this.reset();                 // the page resets once while it loads
+  }
+
+  // ---- pieces
+  newPiece() {
+    if (this.bag.length === 0) for (const k of KINDS) for (let n = 0; n < 4; n++) this.bag.push(k);
+    // the original asks for a float in [0, len-1) and splice truncates it: the bag's last piece is never
+    // the one taken until it is the only one left
+    const kind = this.bag.splice(Math.floor(this.rng() * (this.bag.length - 1)), 1)[0];
+    const x = Math.round(this.rng() * (W - SHAPES[kind].size));
+    return { type: kind, x, y: 0, dir: 0 };
+  }
+
+  blocked(kind, x, y, dir) {
+    for (const [cx, cy] of cellsOf(kind, x, y, dir)) {
+      if (cx < 0 || cx >= W || cy < 0 || cy >= H || this.grid[cy][cx]) return true;
+    }
+    return false;
+  }
+
+  // ---- game state changes
+  reset() {
+    this.dtAcc = 0;
+    this.actions = [];
+    this.grid = Array.from({ length: H }, () => Array(W).fill(null));
+    this.setRows(0);
+    this.score = 0;
+    this.vscore = 0;
+    this.cur = this.nxt || this.newPiece();
+    this.nxt = this.newPiece();
+  }
+  setRows(n) {
+    this.rows = n;
+    this.stepSec = Math.max(MIN_STEP, START_STEP - STEP_DECREMENT * n);
+  }
+  play() { this.reset(); this.playing = true; }
+  lose() { this.vscore = this.score; this.playing = false; }
+
+  move(dx, dy) {
+    const c = this.cur;
+    if (this.blocked(c.type, c.x + dx, c.y + dy, c.dir)) return false;
+    c.x += dx; c.y += dy;
+    return true;
+  }
+  rotate() {
+    const c = this.cur;
+    const d = (c.dir + 1) & 3;
+    if (!this.blocked(c.type, c.x, c.y, d)) c.dir = d; // no kicks: a blocked turn is dropped
+  }
+
+  // gravity step and the soft-drop key: one row down, or lock the piece
+  drop() {
+    if (this.move(0, 1)) return;
+    const c = this.cur;
+    this.score += 10;
+    for (const [cx, cy] of cellsOf(c.type, c.x, c.y, c.dir)) this.grid[cy][cx] = c.type;
+    this.removeLines();
+    this.cur = this.nxt;
+    this.nxt = this.newPiece();
+    this.actions = [];
+    if (this.blocked(this.cur.type, this.cur.x, this.cur.y, this.cur.dir)) this.lose();
+  }
+
+  removeLines() {
+    let n = 0;
+    // rows 19..1 are checked; row 0 is never looked at (a full top row would stay)
+    for (let y = H - 1; y > 0; y--) {
+      if (this.grid[y].every((c) => c)) {
+        for (let r = y; r > 0; r--) this.grid[r] = this.grid[r - 1].slice();
+        this.grid[0] = Array(W).fill(null);
+        y++; // look at the same row again
+        n++;
+      }
+    }
+    if (n > 0) {
+      this.setRows(this.rows + n);
+      this.score += 100 * 2 ** (n - 1);
+    }
+  }
+
+  // ---- one rendered frame
+  key(name) {
+    if (this.playing) {
+      if (name === "left") this.actions.push("left");
+      else if (name === "right") this.actions.push("right");
+      else if (name === "up") this.actions.push("up");
+      else if (name === "down") this.actions.push("down");
+      else if (name === "esc") this.lose();
+      // "play" is the start link; it works in any state (the page hides it while playing)
+      else if (name === "play") this.play();
+    } else if (name === "space" || name === "play") this.play();
+  }
+
+  step({ dt, keys = [] }) {
+    for (const k of keys) this.key(k);
+    this.t += dt;
+    const now = Math.floor(this.t);
+    const idt = Math.min(1, (now - this.last) / 1000);
+    this.last = now;
+    if (!this.playing) return;
+    if (this.vscore < this.score) this.vscore += 1;
+    const a = this.actions.shift();
+    if (a === "left") this.move(-1, 0);
+    else if (a === "right") this.move(1, 0);
+    else if (a === "up") this.rotate();
+    else if (a === "down") this.drop();
+    this.dtAcc += idt;
+    // the piece may have been replaced (or the game lost) by the action above; gravity still runs
+    if (this.dtAcc > this.stepSec) {
+      this.dtAcc -= this.stepSec;
+      this.drop();
+    }
+  }
+
+  snapshot() {
+    const DIRS = { up: 0, right: 1, down: 2, left: 3 };
+    const p = (c) => ({ type: c.type, x: c.x, y: c.y, dir: c.dir });
+    return {
+      grid: this.grid.map((r) => r.map((c) => c || ".").join("")),
+      current: p(this.cur),
+      next: p(this.nxt),
+      bag: this.bag.join(""),
+      score: this.score, vscore: this.vscore, rows: this.rows, step: this.stepSec, dt: this.dtAcc,
+      playing: !!this.playing,
+      actions: this.actions.map((a) => DIRS[a]),
+    };
+  }
+}
+
+return { W, H, KINDS, SHAPES, START_STEP, STEP_DECREMENT, MIN_STEP, T0, cellsOf, Blocks };
+})();
+
+const { Blocks, W, H, cellsOf } = __mod0;
+(function main() {
+  const STEP = 1000 / 60;      // the rules are stepped at 60 Hz whatever the screen does
+  const COLORS = { i: "#4fd1e8", j: "#5b7cfa", l: "#ff9f43", o: "#f7d046", s: "#5fd068", t: "#b565e8", z: "#f0544f" };
+  const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+  const nv = document.getElementById("nextc"), nctx = nv.getContext("2d");
+  const CELL = cv.width / W; // 30
+  const $ = (id) => document.getElementById(id);
+
+  // ---- game (a recorded tape replaces Math.random when a driver sets window.__tape)
+  const TAPE = Array.isArray(window.__tape) ? window.__tape : null;
+  let used = 0;
+  const rng = TAPE ? () => { if (used >= TAPE.length) throw new Error("tape used up"); return TAPE[used++]; } : Math.random;
+  const game = new Blocks({ rng, clock0: TAPE ? 1000000 : Math.floor(performance.now()) });
+  let best = 0;
+  try { best = +localStorage.getItem("blocks-best") || 0; } catch {}
+  let keys = [];
+  let started = false, over = false;
+
+  function press(k) { keys.push(k); }
+  function tick(dt = STEP) {
+    const wasPlaying = game.playing;
+    game.step({ dt, keys });
+    keys = [];
+    if (wasPlaying && !game.playing) { over = true; remember(); }
+    if (game.playing) { started = true; over = false; }
+  }
+  function remember() {
+    if (game.score > best) { best = game.score; try { localStorage.setItem("blocks-best", String(best)); } catch {} }
+  }
+
+  // ---- drawing: flat squares with a light top edge, no textures
+  function square(c, x, y, size, color, alpha = 1) {
+    c.globalAlpha = alpha;
+    c.fillStyle = color; c.beginPath(); c.roundRect(x + 1, y + 1, size - 2, size - 2, 5); c.fill();
+    c.fillStyle = "rgba(255,255,255,.22)"; c.fillRect(x + 4, y + 3, size - 8, 3);
+    c.globalAlpha = 1;
+  }
+  function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.strokeStyle = "rgba(255,255,255,.05)"; ctx.lineWidth = 1;
+    for (let x = 1; x < W; x++) { ctx.beginPath(); ctx.moveTo(x * CELL + .5, 0); ctx.lineTo(x * CELL + .5, cv.height); ctx.stroke(); }
+    for (let y = 1; y < H; y++) { ctx.beginPath(); ctx.moveTo(0, y * CELL + .5); ctx.lineTo(cv.width, y * CELL + .5); ctx.stroke(); }
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const k = game.grid[y][x]; if (k) square(ctx, x * CELL, y * CELL, CELL, COLORS[k]); }
+    const c = game.cur;
+    if (game.playing) {
+      let gy = c.y; while (!game.blocked(c.type, c.x, gy + 1, c.dir)) gy++; // where it would land
+      if (gy !== c.y) for (const [x, y] of cellsOf(c.type, c.x, gy, c.dir)) square(ctx, x * CELL, y * CELL, CELL, COLORS[c.type], .22);
+      for (const [x, y] of cellsOf(c.type, c.x, c.y, c.dir)) square(ctx, x * CELL, y * CELL, CELL, COLORS[c.type]);
+    }
+    // next piece, centred in a 5x5 preview
+    nctx.clearRect(0, 0, nv.width, nv.height);
+    const n = game.nxt, u = nv.width / 5, pad = (5 - 4) / 2;
+    const cs = cellsOf(n.type, 0, 0, 0);
+    const minx = Math.min(...cs.map((q) => q[0])), maxx = Math.max(...cs.map((q) => q[0])), miny = Math.min(...cs.map((q) => q[1])), maxy = Math.max(...cs.map((q) => q[1]));
+    const ox = (5 - (maxx - minx + 1)) / 2 - minx, oy = (5 - (maxy - miny + 1)) / 2 - miny;
+    for (const [x, y] of cs) square(nctx, (x + ox) * u, (y + oy) * u, u, COLORS[n.type]);
+    void pad;
+    $("score").textContent = String(Math.floor(game.vscore));
+    $("rows").textContent = String(game.rows);
+    $("best").textContent = String(Math.max(best, game.score));
+    const msg = $("msg");
+    msg.classList.toggle("off", !!game.playing);
+    if (!game.playing) {
+      $("msgtitle").textContent = over ? "Game over" : "Blocks";
+      $("msgsub").textContent = (over ? game.score + " points, " + game.rows + " rows. " : "") + "Press Space or tap to play";
+    }
+  }
+
+  // ---- input
+  const MAP = { ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down", Escape: "esc", " ": "space" };
+  document.addEventListener("keydown", (e) => {
+    const k = MAP[e.key];
+    if (!k) return;
+    e.preventDefault();
+    press(k);
+  });
+  $("msg").addEventListener("pointerdown", (e) => { e.preventDefault(); press("space"); });
+  $("restart").addEventListener("click", () => { press("play"); $("restart").blur(); });
+  for (const b of document.querySelectorAll("#pad button")) {
+    let timer = null;
+    const stop = () => { clearInterval(timer); timer = null; };
+    b.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      press(b.dataset.k);
+      if (b.dataset.k !== "up") timer = setInterval(() => press(b.dataset.k), 90); // hold to repeat
+    });
+    for (const ev of ["pointerup", "pointercancel", "pointerleave"]) b.addEventListener(ev, stop);
+  }
+
+  // ---- frame loop
+  let last = null, acc = 0;
+  function frame(ts) {
+    if (last === null) last = ts;
+    acc += Math.min(ts - last, 250);
+    last = ts;
+    if (!TAPE) while (acc >= STEP) { tick(); acc -= STEP; }
+    draw();
+    requestAnimationFrame(frame);
+  }
+  if (TAPE) window.__rea = {
+    // one frame of a recorded case: step(dt, keys)
+    step(dt, k = []) { keys = k.slice(); tick(dt); draw(); return game.snapshot(); },
+    snapshot: () => game.snapshot(),
+    tapeUsed: () => used,
+  };
+  document.addEventListener("visibilitychange", () => { last = null; });
+  requestAnimationFrame(frame);
+})();
+
+})();
+</script>
+</body>
+</html>

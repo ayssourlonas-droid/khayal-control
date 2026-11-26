@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:rea-games:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>2048 · rea-games</title>
+<style>
+  :root { --bg:#14161c; --panel:#20242e; --cell:#2b303c; --text:#e8eaf0; --muted:#8b93a7; --accent:#ff7a45; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--text);
+         font:16px/1.4 system-ui,sans-serif; touch-action:none; }
+  main { width:min(92vw,440px); }
+  header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  h1 { margin:0; font-size:40px; letter-spacing:-1px; }
+  .scores { display:flex; gap:8px; }
+  .box { background:var(--panel); border-radius:8px; padding:6px 14px; text-align:center; min-width:70px; }
+  .box small { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+  .box b { font-size:20px; }
+  #board { position:relative; background:var(--panel); border-radius:12px; padding:10px; aspect-ratio:1; display:flex; }
+  #grid { flex:1; min-width:0; min-height:0; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:10px; }
+  .cell { min-width:0; min-height:0; background:var(--cell); border-radius:8px; display:grid; place-items:center; font-weight:800;
+          font-size:clamp(20px,7vw,34px); transition:background .08s; }
+  .v2{background:#3b4252}.v4{background:#434c5e}.v8{background:#d08770;color:#fff}.v16{background:#d9774f;color:#fff}
+  .v32{background:#e0613b;color:#fff}.v64{background:#e84a2c;color:#fff}.v128{background:#ebcb8b;color:#222}
+  .v256{background:#e8c26a;color:#222}.v512{background:#e6b84a;color:#222}.v1024{background:#a3be8c;color:#222;font-size:clamp(16px,5.5vw,28px)}
+  .v2048{background:#88c0d0;color:#111;font-size:clamp(16px,5.5vw,28px)}.vbig{background:#b48ead;color:#fff;font-size:clamp(14px,4.5vw,24px)}
+  #msg { position:absolute; inset:0; border-radius:12px; background:rgba(20,22,28,.82); display:none; place-content:center;
+         text-align:center; gap:12px; }
+  .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  #msg.on { display:grid; } #msg h2 { margin:0; font-size:34px; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 18px; font:inherit; font-weight:700; cursor:pointer; }
+  p { color:var(--muted); font-size:14px; }
+</style>
+<link rel="preload" href="../_gfonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../_gfonts/fonts.css"></head>
+<body>
+<main>
+  <header>
+    <h1>2048</h1>
+    <div class="scores" aria-live="polite" aria-atomic="true"><div class="box"><small>score</small><b id="score">0</b></div><div class="box"><small>best</small><b id="best">0</b></div></div>
+  </header>
+  <div id="board"><div id="grid" role="img" aria-label="2048 board" aria-describedby="board-desc" tabindex="0"></div><div id="msg"><h2 id="msgtitle" tabindex="-1"></h2><div><button id="keep">Keep playing</button> <button id="again">New game</button></div></div></div>
+  <p id="board-desc" class="sr-only"></p>
+  <p>Arrow keys, WASD or swipe. A rebuild checked against recordings of the original: <code>rea-games verify 2048</code>.</p>
+  <button id="restart">New game</button>
+</main>
+<script>
+(() => {
+const __mod0 = (() => {
+// 2048, written from games/2048/GAME.md. Cells are stored as cells[x][y] (column first),
+// the same layout the recording uses, so snapshots compare directly.
+const SIZE = 4;
+const DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]]; // up, right, down, left as (dx, dy)
+
+class Game2048 {
+  constructor({ rng = Math.random, initial = null } = {}) {
+    this.rng = rng;
+    this.best = 0;
+    this.load(initial);
+  }
+
+  load(saved) {
+    if (saved) {
+      this.cells = saved.grid.cells.map((col) => col.map((t) => (t ? t.value : 0)));
+      ({ score: this.score, over: this.over, won: this.won, keepPlaying: this.kept } = saved);
+    } else {
+      this.cells = Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
+      this.score = 0;
+      this.over = this.won = this.kept = false;
+      this.addTile();
+      this.addTile();
+    }
+    this.best = Math.max(this.best, this.score);
+  }
+
+  get terminated() { return this.over || (this.won && !this.kept); }
+
+  restart() { this.load(null); }
+  keepPlaying() { this.kept = true; }
+
+  empty() {
+    const out = [];
+    for (let x = 0; x < SIZE; x++) for (let y = 0; y < SIZE; y++) if (!this.cells[x][y]) out.push([x, y]);
+    return out;
+  }
+
+  addTile() {
+    const free = this.empty();
+    if (!free.length) return;
+    const value = this.rng() < 0.9 ? 2 : 4; // the value is drawn before the place
+    const [x, y] = free[Math.floor(this.rng() * free.length)];
+    this.cells[x][y] = value;
+  }
+
+  // Slide one line toward its start. A tile merges at most once per move, and the pair
+  // nearest the wall merges first.
+  slide(line) {
+    const tiles = line.filter(Boolean);
+    const out = [];
+    let gained = 0;
+    for (let i = 0; i < tiles.length; i++) {
+      if (tiles[i] === tiles[i + 1]) {
+        out.push(tiles[i] * 2);
+        gained += tiles[i] * 2;
+        if (tiles[i] * 2 === 2048) this.won = true;
+        i++;
+      } else out.push(tiles[i]);
+    }
+    while (out.length < SIZE) out.push(0);
+    return { out, gained };
+  }
+
+  move(dir) {
+    if (this.terminated) return false;
+    const [dx, dy] = DIRS[dir];
+    let moved = false;
+    for (let k = 0; k < SIZE; k++) {
+      // the k-th line, listed from the wall the tiles move toward
+      const coords = [];
+      for (let i = 0; i < SIZE; i++) {
+        const j = dx + dy > 0 ? SIZE - 1 - i : i; // moving right or down: the wall is at the end
+        coords.push(dx !== 0 ? [j, k] : [k, j]);
+      }
+      const { out, gained } = this.slide(coords.map(([x, y]) => this.cells[x][y]));
+      coords.forEach(([x, y], i) => {
+        if (this.cells[x][y] !== out[i]) moved = true;
+        this.cells[x][y] = out[i];
+      });
+      this.score += gained;
+    }
+    if (!moved) return false;
+    this.addTile();
+    if (!this.hasMoves()) this.over = true;
+    this.best = Math.max(this.best, this.score);
+    return true;
+  }
+
+  hasMoves() {
+    if (this.empty().length) return true;
+    for (let x = 0; x < SIZE; x++) for (let y = 0; y < SIZE; y++) {
+      const v = this.cells[x][y];
+      if ((x + 1 < SIZE && this.cells[x + 1][y] === v) || (y + 1 < SIZE && this.cells[x][y + 1] === v)) return true;
+    }
+    return false;
+  }
+
+  snapshot() {
+    return {
+      grid: this.cells.map((c) => c.slice()),
+      score: this.score, over: this.over, won: this.won, terminated: this.terminated, best: this.best,
+    };
+  }
+}
+
+return { SIZE, Game2048 };
+})();
+
+const { Game2048, SIZE } = __mod0;
+const game = new Game2048();
+const grid = document.getElementById("grid");
+const cells = [];
+for (let y = 0; y < SIZE; y++) for (let x = 0; x < SIZE; x++) { const c = document.createElement("div"); c.className = "cell"; grid.append(c); cells.push([x, y, c]); }
+let wasTerminated = false;
+function draw() {
+  const s = game.snapshot();
+  for (const [x, y, c] of cells) { const v = s.grid[x][y]; c.textContent = v || ""; c.className = "cell" + (v ? " " + (v <= 2048 ? "v" + v : "vbig") : ""); }
+  score.textContent = s.score; best.textContent = s.best;
+  const rows = [];
+  for (let y = 0; y < SIZE; y++) {
+    const row = [];
+    for (let x = 0; x < SIZE; x++) row.push(s.grid[x][y] || "empty");
+    rows.push(`Row ${y + 1}: ${row.join(", ")}.`);
+  }
+  document.getElementById("board-desc").textContent = rows.join(" ");
+  const msg = document.getElementById("msg");
+  msg.classList.toggle("on", s.terminated);
+  msgtitle.textContent = s.over ? "Game over" : "You made 2048";
+  keep.style.display = s.over ? "none" : "";
+  if (s.terminated !== wasTerminated) {
+    if (s.terminated) msgtitle.focus(); else grid.focus();
+    wasTerminated = s.terminated;
+  }
+}
+const key = { ArrowUp:0, w:0, ArrowRight:1, d:1, ArrowDown:2, s:2, ArrowLeft:3, a:3 };
+addEventListener("keydown", (e) => { if (e.key in key) { e.preventDefault(); game.move(key[e.key]); draw(); } });
+let t0 = null;
+addEventListener("touchstart", (e) => { t0 = e.touches[0]; }, { passive: true });
+addEventListener("touchend", (e) => {
+  if (!t0) return; const t = e.changedTouches[0]; const dx = t.clientX - t0.clientX, dy = t.clientY - t0.clientY; t0 = null;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
+  game.move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0)); draw();
+});
+restart.onclick = again.onclick = () => { game.restart(); draw(); };
+keep.onclick = () => { game.keepPlaying(); draw(); };
+window.__game = game; window.__draw = draw;
+draw();
+
+})();
+</script>
+</body>
+</html>

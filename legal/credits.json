@@ -2021,5 +2021,20 @@
     "date": "2026-11-26",
     "license_file": "LICENSE",
     "media_note": "مصدر الوسائط غير موثّق من المطوّر"
+  },
+  {
+    "key": "reagames",
+    "size": 30366,
+    "repo": "erkamyaman/rea-games",
+    "id": 140,
+    "slug": "rea-games",
+    "title": "Rea Games",
+    "developer": "erkamyaman",
+    "license": "MIT",
+    "source": "https://github.com/erkamyaman/rea-games",
+    "commit": "903bdde30f4e1eb1a4ae16aa98ee868ced8ef7f7",
+    "date": "2026-11-26",
+    "license_file": "LICENSE",
+    "media_note": "مصدر الوسائط مذكور من المطوّر: NOTICE: and six sound effects from The Freesound Project under CC BY-ND 2.0; their authors are | NOTICE: credited in originals/bricks/LICENSE. The rebuild plays no sound."
   }
 ]

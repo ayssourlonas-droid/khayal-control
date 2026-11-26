@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:rea-games:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mines</title>
+  <style>
+    :root {
+      --bg: #12151c;
+      --panel: #1b202b;
+      --border: #2c3446;
+      --text: #e6ebf5;
+      --muted: #8f9bb3;
+      --accent: #4f8cff;
+      --accent-hover: #6aa0ff;
+      --danger: #ef5350;
+      --win: #4caf50;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 20px;
+      user-select: none;
+    }
+    .shell {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      max-width: 100%;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .hud {
+      display: flex;
+      gap: 16px;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .hud strong { color: var(--text); }
+    .controls {
+      display: flex;
+      gap: 8px;
+    }
+    button {
+      background: #262e3f;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #313b52; }
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    button.primary:hover { background: var(--accent-hover); }
+    .start-screen {
+      width: 780px;
+      max-width: 100%;
+      height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: #151923;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+      padding: 24px;
+    }
+    .start-screen p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.5;
+    }
+    .diff-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .diff-row button {
+      min-width: 110px;
+      padding: 10px 18px;
+    }
+    canvas {
+      display: block;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #0f131a;
+      max-width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+    .hidden { display: none; }
+    .status-bar {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .status-text {
+      font-weight: 700;
+      color: var(--text);
+    }
+    .status-text.won { color: var(--win); }
+    .status-text.lost { color: var(--danger); }
+  </style>
+<link rel="preload" href="../_gfonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../_gfonts/fonts.css"></head>
+<body>
+  <div class="shell">
+    <div class="header">
+      <h1>Mines</h1>
+      <div class="hud">
+        <span>Mines: <strong id="hud-mines">0</strong></span>
+        <span>Flags: <strong id="hud-flags">0</strong></span>
+        <span>Time: <strong id="hud-time">0s</strong></span>
+      </div>
+      <div class="controls">
+        <button id="btn-reset" class="hidden">Reset</button>
+        <button id="btn-menu" class="hidden">Difficulty</button>
+      </div>
+    </div>
+
+    <div id="start-screen" class="start-screen">
+      <h2>Choose Difficulty</h2>
+      <p>Left-click to reveal a tile. Right-click a hidden tile to place or remove a flag. Right-click a revealed number to chord its neighbors. Flag every mine to win.</p>
+      <div class="diff-row">
+        <button class="primary" data-diff="easy">Easy</button>
+        <button class="primary" data-diff="medium">Medium</button>
+        <button class="primary" data-diff="insane">Insane</button>
+      </div>
+    </div>
+
+    <canvas id="board" width="780" height="520" class="hidden"></canvas>
+
+    <div class="status-bar">
+      <span id="status-text" class="status-text">Game on :)</span>
+      <span>30 &times; 20 Grid</span>
+    </div>
+  </div>
+
+  <script>
+(() => {
+const __mod0 = (() => {
+const COLS = 30;
+const ROWS = 20;
+
+const DIFFICULTY = {
+  none: 0,
+  easy: 9,
+  medium: 6,
+  insane: 3,
+};
+
+function makeGrid(fillValue = undefined) {
+  return Array.from({ length: COLS }, () => Array(ROWS).fill(fillValue));
+}
+
+function createState(difficulty = DIFFICULTY.none) {
+  return {
+    difficulty,
+    firstClick: true,
+    gameover: false,
+    status: "Game on :)",
+    totalMines: 0,
+    totalFlags: 0,
+    elapsedTime: 0,
+    timerMs: 0,
+    field: makeGrid(undefined),
+    revealed: makeGrid(undefined),
+    flags: makeGrid(undefined),
+  };
+}
+
+function resetBoard(state, difficulty = state.difficulty) {
+  Object.assign(state, createState(difficulty));
+}
+
+function generateField(state, rng) {
+  const field = makeGrid(0);
+  for (let x = 0; x < COLS; x++) {
+    for (let y = 0; y < ROWS; y++) {
+      let val = Math.floor(rng() * state.difficulty - 1);
+      if (val > 0) val = 0;
+      field[x][y] = val;
+    }
+  }
+
+  let totalMines = 0;
+  for (let x = 0; x < COLS; x++) {
+    for (let y = 0; y < ROWS; y++) {
+      if (field[x][y] !== -1) continue;
+      totalMines++;
+      const xs = [x, x + 1, x - 1];
+      const ys = [y, y + 1, y - 1];
+      for (let a = 0; a < 3; a++) {
+        for (let b = 0; b < 3; b++) {
+          const nx = xs[a];
+          const ny = ys[b];
+          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS && field[nx][ny] > -1) {
+            field[nx][ny]++;
+          }
+        }
+      }
+    }
+  }
+
+  state.field = field;
+  state.totalMines = totalMines;
+}
+
+function isRevealed(state, x, y) {
+  return state.revealed[x] !== undefined && state.revealed[x][y] !== undefined && state.revealed[x][y] > -1;
+}
+
+function countsAsFlagForChord(state, x, y) {
+  return state.flags[x] !== undefined && state.flags[x][y] !== undefined && state.flags[x][y] > -1;
+}
+
+function revealCell(state, x, y) {
+  if (x < 0 || y < 0 || x >= COLS || y >= ROWS || isRevealed(state, x, y)) return;
+
+  state.revealed[x][y] = 1;
+
+  if (state.field[x][y] === -1) {
+    state.gameover = true;
+    state.status = "Game over :(";
+    return;
+  }
+
+  if (state.field[x][y] === 0) {
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        const nx = x + dx;
+        const ny = y + dy;
+        if (nx >= 0 && ny >= 0 && nx < COLS && ny < ROWS) {
+          revealCell(state, nx, ny);
+        }
+      }
+    }
+  }
+}
+
+function checkWin(state) {
+  let flaggedMines = 0;
+  for (let x = 0; x < COLS; x++) {
+    for (let y = 0; y < ROWS; y++) {
+      if (state.flags[x][y] === 1 && state.field[x][y] === -1) {
+        flaggedMines++;
+      }
+    }
+  }
+  if (flaggedMines === state.totalMines) {
+    state.gameover = true;
+    state.status = "You won! :D";
+  }
+}
+
+function handleClick(state, { button, x, y }, rng) {
+  if (state.gameover || state.difficulty === DIFFICULTY.none) return;
+  if (x < 0 || y < 0 || x >= COLS || y >= ROWS) return;
+
+  if (button === "left") {
+    if (state.flags[x][y] === 1) return;
+    if (state.firstClick) {
+      do {
+        generateField(state, rng);
+      } while (state.field[x][y] === -1);
+      state.firstClick = false;
+      state.timerMs = 0;
+    }
+    revealCell(state, x, y);
+    return;
+  }
+
+  if (button === "right") {
+    if (isRevealed(state, x, y)) {
+      let nearbyFlags = 0;
+      const toReveal = [];
+      const xs = [x, x + 1, x - 1];
+      const ys = [y, y + 1, y - 1];
+      for (let a = 0; a < 3; a++) {
+        for (let b = 0; b < 3; b++) {
+          const nx = xs[a];
+          const ny = ys[b];
+          if (countsAsFlagForChord(state, nx, ny)) {
+            nearbyFlags++;
+          } else {
+            toReveal.push([nx, ny]);
+          }
+        }
+      }
+      if (nearbyFlags === state.field[x][y]) {
+        for (const [nx, ny] of toReveal) {
+          revealCell(state, nx, ny);
+        }
+      }
+      return;
+    }
+
+    if (state.firstClick) return;
+
+    if (state.flags[x][y] !== 1) {
+      state.flags[x][y] = 1;
+      state.totalFlags++;
+    } else {
+      state.flags[x][y] = 0;
+      state.totalFlags--;
+    }
+    checkWin(state);
+  }
+}
+
+function step(state, { dt = 0, action = null }, rng) {
+  if (action) {
+    if (action.type === "difficulty") {
+      resetBoard(state, DIFFICULTY[action.value]);
+    } else if (action.type === "reset") {
+      resetBoard(state, state.difficulty);
+    } else if (action.type === "switch") {
+      resetBoard(state, DIFFICULTY.none);
+    } else if (action.type === "click") {
+      handleClick(state, action, rng);
+    }
+  }
+
+  if (dt > 0 && !state.firstClick && !state.gameover) {
+    state.timerMs += dt;
+    const ticks = Math.floor(state.timerMs / 1000);
+    if (ticks > 0) {
+      state.elapsedTime += ticks;
+      state.timerMs -= ticks * 1000;
+    }
+  }
+}
+
+function snapshot(state) {
+  const mines = [];
+  const revealed = [];
+  const flags = [];
+  for (let y = 0; y < ROWS; y++) {
+    let mRow = "";
+    let rRow = "";
+    let fRow = "";
+    for (let x = 0; x < COLS; x++) {
+      const mv = state.field[x][y];
+      mRow += mv === undefined ? "." : mv === -1 ? "*" : String(mv);
+      rRow += state.revealed[x][y] === 1 ? "1" : ".";
+      const fv = state.flags[x][y];
+      fRow += fv === 1 ? "F" : fv === 0 ? "u" : ".";
+    }
+    mines.push(mRow);
+    revealed.push(rRow);
+    flags.push(fRow);
+  }
+
+  return {
+    screen: state.difficulty === 0 ? "start" : "game",
+    difficulty: state.difficulty,
+    firstClick: state.firstClick,
+    gameover: state.gameover,
+    status: state.status,
+    totalMines: state.totalMines,
+    totalFlags: state.totalFlags,
+    elapsedTime: state.elapsedTime,
+    mines,
+    revealed,
+    flags,
+  };
+}
+return { COLS, ROWS, DIFFICULTY, createState, step, snapshot };
+})();
+
+const { COLS, ROWS, createState, step, snapshot } = __mod0;
+    const CELL = 26;
+    const NUM_COLORS = {
+      1: "#64b5f6",
+      2: "#81c784",
+      3: "#e57373",
+      4: "#9575cd",
+      5: "#ffb74d",
+      6: "#4dd0e1",
+      7: "#f06292",
+      8: "#cfd8dc",
+    };
+
+    const canvas = document.getElementById("board");
+    const ctx = canvas.getContext("2d");
+    const startScreen = document.getElementById("start-screen");
+    const btnReset = document.getElementById("btn-reset");
+    const btnMenu = document.getElementById("btn-menu");
+    const hudMines = document.getElementById("hud-mines");
+    const hudFlags = document.getElementById("hud-flags");
+    const hudTime = document.getElementById("hud-time");
+    const statusText = document.getElementById("status-text");
+
+    canvas.width = COLS * CELL;
+    canvas.height = ROWS * CELL;
+
+    const state = createState();
+
+    function drawFlag(px, py) {
+      ctx.strokeStyle = "#e6ebf5";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(px + 9, py + 20);
+      ctx.lineTo(px + 9, py + 6);
+      ctx.stroke();
+
+      ctx.fillStyle = "#ff5252";
+      ctx.beginPath();
+      ctx.moveTo(px + 10, py + 6);
+      ctx.lineTo(px + 20, py + 10);
+      ctx.lineTo(px + 10, py + 14);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawMine(px, py) {
+      const cx = px + CELL / 2;
+      const cy = py + CELL / 2;
+      ctx.strokeStyle = "#12151c";
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 4; i++) {
+        const a = (i * Math.PI) / 4;
+        ctx.beginPath();
+        ctx.moveTo(cx - Math.cos(a) * 8, cy - Math.sin(a) * 8);
+        ctx.lineTo(cx + Math.cos(a) * 8, cy + Math.sin(a) * 8);
+        ctx.stroke();
+      }
+      ctx.fillStyle = "#12151c";
+      ctx.beginPath();
+      ctx.arc(cx, cy, 5.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.arc(cx - 2, cy - 2, 1.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function render() {
+      const snap = snapshot(state);
+      const onStart = snap.screen === "start";
+
+      startScreen.classList.toggle("hidden", !onStart);
+      canvas.classList.toggle("hidden", onStart);
+      btnReset.classList.toggle("hidden", onStart);
+      btnMenu.classList.toggle("hidden", onStart);
+
+      hudMines.textContent = String(snap.totalMines);
+      hudFlags.textContent = String(snap.totalFlags);
+      hudTime.textContent = `${snap.elapsedTime}s`;
+      statusText.textContent = snap.status;
+      statusText.classList.toggle("won", snap.status === "You won! :D");
+      statusText.classList.toggle("lost", snap.status === "Game over :(");
+
+      if (onStart) return;
+
+      const lost = snap.gameover && snap.status === "Game over :(";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "bold 15px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      for (let y = 0; y < ROWS; y++) {
+        for (let x = 0; x < COLS; x++) {
+          const px = x * CELL;
+          const py = y * CELL;
+          const isRev = snap.revealed[y][x] === "1";
+          const isFlag = snap.flags[y][x] === "F";
+          const mineVal = snap.mines[y][x];
+
+          if (isRev) {
+            ctx.fillStyle = mineVal === "*" ? "#ef5350" : "#181d27";
+            ctx.fillRect(px + 1, py + 1, CELL - 2, CELL - 2);
+            if (mineVal === "*") {
+              drawMine(px, py);
+            } else if (mineVal !== "0" && mineVal !== ".") {
+              ctx.fillStyle = NUM_COLORS[mineVal] || "#e6ebf5";
+              ctx.fillText(mineVal, px + CELL / 2, py + CELL / 2 + 1);
+            }
+          } else {
+            ctx.fillStyle = "#2b3447";
+            ctx.fillRect(px + 1, py + 1, CELL - 2, CELL - 2);
+            ctx.fillStyle = "#364159";
+            ctx.fillRect(px + 1, py + 1, CELL - 2, 2);
+            if (lost && mineVal === "*") {
+              ctx.fillStyle = "#4b2c32";
+              ctx.fillRect(px + 1, py + 1, CELL - 2, CELL - 2);
+              drawMine(px, py);
+            } else if (isFlag) {
+              drawFlag(px, py);
+            }
+          }
+        }
+      }
+    }
+
+    document.querySelectorAll("[data-diff]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        step(state, { dt: 0, action: { type: "difficulty", value: btn.dataset.diff } }, Math.random);
+        render();
+      });
+    });
+
+    btnReset.addEventListener("click", () => {
+      step(state, { dt: 0, action: { type: "reset" } }, Math.random);
+      render();
+    });
+
+    btnMenu.addEventListener("click", () => {
+      step(state, { dt: 0, action: { type: "switch" } }, Math.random);
+      render();
+    });
+
+    canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    canvas.addEventListener("mouseup", (e) => {
+      if (e.button !== 0 && e.button !== 2) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor(((e.clientX - rect.left) * canvas.width) / rect.width / CELL);
+      const y = Math.floor(((e.clientY - rect.top) * canvas.height) / rect.height / CELL);
+      const button = e.button === 2 ? "right" : "left";
+      step(state, { dt: 0, action: { type: "click", button, x, y } }, Math.random);
+      render();
+    });
+
+    setInterval(() => {
+      if (state.difficulty !== 0 && !state.firstClick && !state.gameover) {
+        step(state, { dt: 100, action: null }, Math.random);
+        render();
+      }
+    }, 100);
+
+    render();
+  
+})();
+</script>
+</body>
+</html>

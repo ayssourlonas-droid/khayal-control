@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head><script>/*khayal-iso*/(function(){try{
+var P='khayal:rea-games:';
+if(window.__khayalIso)return;window.__khayalIso=1;
+var real=window.localStorage;
+var proxy=new Proxy({},{
+ get:function(_,k){
+  if(k==='getItem')return function(x){var v=real.getItem(P+String(x));return v;};
+  if(k==='setItem')return function(x,v){real.setItem(P+String(x),String(v));};
+  if(k==='removeItem')return function(x){real.removeItem(P+String(x));};
+  if(k==='clear')return function(){var d=[];for(var i=0;i<real.length;i++){var n=real.key(i);if(n.indexOf(P)===0)d.push(n);}d.forEach(function(n){real.removeItem(n);});};
+  if(k==='key')return function(i){var c=-1;for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0){c++;if(c===i)return n.slice(P.length);}}return null;};
+  if(k==='length'){var c=0;for(var j=0;j<real.length;j++){if(real.key(j).indexOf(P)===0)c++;}return c;}
+  if(typeof k==='symbol')return undefined;
+  var v=real.getItem(P+k);return v===null?undefined:v;},
+ set:function(_,k,v){real.setItem(P+String(k),String(v));return true;},
+ deleteProperty:function(_,k){real.removeItem(P+String(k));return true;},
+ has:function(_,k){return real.getItem(P+String(k))!==null;},
+ ownKeys:function(){var o=[];for(var j=0;j<real.length;j++){var n=real.key(j);if(n.indexOf(P)===0)o.push(n.slice(P.length));}return o;},
+ getOwnPropertyDescriptor:function(_,k){var v=real.getItem(P+String(k));return v===null?undefined:{value:v,writable:true,enumerable:true,configurable:true};}
+});
+Object.defineProperty(window,'localStorage',{get:function(){return proxy;},configurable:true});
+if(window.indexedDB){
+ var idb=window.indexedDB,oo=idb.open.bind(idb),od=idb.deleteDatabase.bind(idb);
+ idb.open=function(n,v){return v===undefined?oo(P+n):oo(P+n,v);};
+ idb.deleteDatabase=function(n){return od(P+n);};
+ if(idb.databases){var odb=idb.databases.bind(idb);idb.databases=function(){return odb().then(function(l){return l.filter(function(d){return d.name.indexOf(P)===0;}).map(function(d){return {name:d.name.slice(P.length),version:d.version};});});};}
+}
+if(window.caches){
+ var C=window.caches,co=C.open.bind(C),ch=C.has.bind(C),cd=C.delete.bind(C);
+ C.open=function(n){return co(P+n);};C.has=function(n){return ch(P+n);};C.delete=function(n){return cd(P+n);};
+}
+}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>rea-games: play the verified rebuilds</title>
+<meta name="description" content="Reverse-engineer any game, rebuild it in any engine, and prove it plays the same, frame by frame. Play the verified rebuilds in your browser.">
+<meta property="og:title" content="rea-games">
+<meta property="og:description" content="Reverse-engineer any game, rebuild it in any engine, and prove it plays the same, frame by frame.">
+<meta property="og:image" content="https://erkamyaman.github.io/rea-games/assets/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/logo.webp">
+<style>
+  :root { --bg:#14161c; --panel:#1b1f27; --line:#2a303b; --text:#f6ebdd; --muted:#9aa3b2; --brand:#e2560f; --good:#63c3a7; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  a { color:inherit; }
+  .wrap { max-width:1040px; margin:0 auto; padding:48px 20px 64px; }
+  header { text-align:center; }
+  header img { width:min(420px,88vw); height:auto; }
+  .tag { margin:18px auto 0; max-width:38rem; font-size:19px; color:var(--text); }
+  .sub { margin:8px auto 0; max-width:38rem; color:var(--muted); font-size:15px; }
+  .games { display:grid; gap:18px; margin-top:44px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+  .game { display:flex; flex-direction:column; background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; text-decoration:none; transition:border-color .15s ease; }
+  .game:hover, .game:focus-visible { border-color:var(--brand); }
+  .game:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
+  .game .shot { aspect-ratio:16/10; background:#0e1014; display:grid; place-items:center; overflow:hidden; }
+  .game .shot img { width:100%; height:100%; object-fit:contain; }
+  .game .body { padding:16px 18px 18px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .game h2 { margin:0; font-size:20px; }
+  .game .proof { font:13px/1.4 ui-monospace,Menlo,monospace; color:var(--good); }
+  .game .orig { font-size:13px; color:var(--muted); }
+  .game .play { margin-top:auto; padding-top:10px; font-weight:600; color:var(--brand); }
+  .how { margin-top:56px; border-top:1px solid var(--line); padding-top:28px; color:var(--muted); font-size:15px; max-width:44rem; }
+  .how strong { color:var(--text); }
+  footer { margin-top:40px; color:var(--muted); font-size:14px; text-align:center; }
+  @media (prefers-reduced-motion: reduce) { .game { transition:none; } }
+</style>
+<link rel="preload" href="_gfonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="_gfonts/fonts.css"></head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="brand/logo-dark.svg" alt="rea-games">
+    <p class="tag">Reverse-engineer any game, rebuild it in any engine, and prove it plays the same, frame by frame.</p>
+    <p class="sub">Each game below is a rebuild written from a behavior spec. It draws its own art and matches the original's recording on every recorded step.</p>
+  </header>
+
+  <main class="games">
+    <a class="game" href="play/2048.html">
+      <div class="shot"><img src="assets/2048.webp" alt="The original 2048 and the rebuild side by side, boards identical on every move" loading="lazy"></div>
+      <div class="body">
+        <h2>2048</h2>
+        <span class="proof">19/19 cases identical · 24,044 inputs</span>
+        <span class="orig">Original: gabrielecirulli/2048 (MIT)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+    <a class="game" href="play/dino.html">
+      <div class="shot"><img src="assets/dino.webp" alt="The original Dino and the rebuild side by side, identical state every frame" loading="lazy"></div>
+      <div class="body">
+        <h2>Dino</h2>
+        <span class="proof">29/29 cases identical · 63,000 frames</span>
+        <span class="orig">Original: Chrome's offline dinosaur (BSD-3)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+    <a class="game" href="play/canvas-bird.html">
+      <div class="shot"><img src="assets/canvas-bird.webp" alt="The original Canvas Bird and the rebuild, every draw call identical" loading="lazy"></div>
+      <div class="body">
+        <h2>Canvas Bird</h2>
+        <span class="proof">30/30 cases identical · 68,409 frames</span>
+        <span class="orig">Original: giotiskl/Canvas-Bird (MIT)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+    <a class="game" href="play/blocks.html">
+      <div class="shot"><img src="assets/blocks.webp" alt="The original Blocks and the rebuild side by side, identical state every frame" loading="lazy"></div>
+      <div class="body">
+        <h2>Blocks</h2>
+        <span class="proof">36/36 cases identical · 104,208 frames</span>
+        <span class="orig">Original: jakesgordon/javascript-tetris (MIT)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+    <a class="game" href="play/bricks.html">
+      <div class="shot"><img src="assets/bricks.webp" alt="The Bricks rebuild: a wall of bricks and the start menu" loading="lazy"></div>
+      <div class="body">
+        <h2>Bricks</h2>
+        <span class="proof">37/37 cases identical · 209,600 steps</span>
+        <span class="orig">Original: jakesgordon/javascript-breakout (MIT)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+    <a class="game" href="play/paddles.html">
+      <div class="shot"><img src="assets/paddles.webp" alt="The Paddles rebuild: two paddles and the start menu" loading="lazy"></div>
+      <div class="body">
+        <h2>Paddles</h2>
+        <span class="proof">19/19 cases identical · 198,300 steps</span>
+        <span class="orig">Original: jakesgordon/javascript-pong (MIT)</span>
+        <span class="play">Play the rebuild</span>
+      </div>
+    </a>
+  </main>
+
+  <section class="how">
+    <p><strong>How it works.</strong> rea-games runs the original with its clock and random numbers controlled from outside, records the inputs, every random number and the state after each step, and checks a rebuild in any engine against that recording. The first difference is printed with its path.</p>
+    <p><strong>Rebuild your own.</strong> Install the Claude Code plugin and ask: "rea this game: &lt;link&gt;, rebuild it in Godot."</p>
+  </section>
+
+  <footer>
+    <a href="https://github.com/erkamyaman/rea-games">github.com/erkamyaman/rea-games</a> · MIT · Made in Türkiye by <a href="https://github.com/erkamyaman">erKam Yaman</a>
+  </footer>
+</div>
+</body>
+</html>
