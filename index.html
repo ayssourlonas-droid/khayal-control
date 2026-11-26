@@ -226,7 +226,7 @@
 <script>
     // رقم الإصدار ورابط التحميل يُقرآن من version.json (يعدّلهما زر «اعتماد» في تطبيق المتحكم)
     var APK_RE = /^https:\/\/github\.com\/ayssourlonas-droid\/Khayal\.flutter\/releases\/(?:download\/[^\/]+|latest\/download)\/[\w.\-]+\.apk$/;
-    fetch('version.json', { cache: 'no-store' })
+    fetch('https://raw.githubusercontent.com/ayssourlonas-droid/khayal.data/main/version.json', { cache: 'no-store' })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (j) {
             if (!j) return;
