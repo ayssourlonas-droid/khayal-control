@@ -1,0 +1,139 @@
+name: Translate subtitles
+
+# ترجمة ترجمات فيلم/مسلسل بمكتبة قوية (NLLB-200 + Whisper للتفريغ) على GitHub Actions، ولو استغرقت ساعات.
+# المصدر: رابط ملف ترجمة (srt/vtt) فيُترجم مباشرة، أو رابط صوت/فيديو فيُفرَّغ نصاً بـ Whisper ثم يُترجم.
+# يُشغَّل من تطبيق المتحكم (نموذج الفيلم ← ترجمة آلية) أو يدوياً: Actions ← Translate subtitles ← Run workflow.
+# بوابة الرخصة: لا تُضاف الترجمة إلى سجل الفيلم إلا إن كانت رخصته تسمح بالتعديل.
+on:
+  workflow_dispatch:
+    inputs:
+      film_id:
+        description: "رقم الفيلم (id) — محفوظاً في data_films.json"
+        required: true
+      source_url:
+        description: "رابط المصدر https: ملف ترجمة .srt/.vtt أو صوت/فيديو (يُفرَّغ بـ Whisper)"
+        required: true
+      source_lang:
+        description: "لغة المصدر (auto = كشف تلقائي)"
+        default: auto
+      targets:
+        description: "اللغات الهدف مفصولة بفواصل (مثل ar,fr,es)"
+        default: ar
+      engine:
+        description: "محرك الترجمة: nllb (محلي وقوي) / google (احتياط عبر deep-translator)"
+        type: choice
+        default: nllb
+        options: [nllb, google]
+      nllb_model:
+        description: "حجم نموذج NLLB: 1.3B أدق، 600M أسرع"
+        type: choice
+        default: 1.3B
+        options: [1.3B, 600M]
+      whisper_model:
+        description: "نموذج Whisper للتفريغ (عند مصدر صوتي): small متوازن، medium أدق وأبطأ ~3 مرات"
+        type: choice
+        default: small
+        options: [tiny, base, small, medium]
+      episode:
+        description: "رقم الحلقة إن كان مسلسلاً (اختياري: الملفات فقط ولا يُعدَّل السجل)"
+        required: false
+      update_record:
+        description: "إضافة المسارات إلى سجل الفيلم؟"
+        type: choice
+        default: "yes"
+        options: ["yes", "no"]
+
+concurrency:
+  group: translate-subs
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  translate:
+    # الجزء الطويل: لا يكتب شيئاً في المستودع، ويسلّم الناتج كملف مرفق
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache NLLB (CTranslate2)
+        if: inputs.engine == 'nllb'
+        uses: actions/cache@v4
+        with:
+          path: ~/ct2
+          key: ct2-nllb-${{ inputs.nllb_model }}-v1
+      - name: Install
+        run: |
+          sudo apt-get update -y && sudo apt-get install -y ffmpeg
+          pip install --upgrade pip
+          pip install faster-whisper ctranslate2 transformers sentencepiece langdetect deep-translator
+      - name: Convert NLLB model (once, then cached)
+        if: inputs.engine == 'nllb'
+        run: |
+          if [ ! -d "$HOME/ct2/nllb-${{ inputs.nllb_model }}" ]; then
+            pip install torch --index-url https://download.pytorch.org/whl/cpu
+            ct2-transformers-converter --model "facebook/nllb-200-distilled-${{ inputs.nllb_model }}" \
+              --output_dir "$HOME/ct2/nllb-${{ inputs.nllb_model }}" --quantization int8 --force
+          fi
+      - name: Translate
+        env:
+          FILM_ID: ${{ inputs.film_id }}
+          SOURCE_URL: ${{ inputs.source_url }}
+          SOURCE_LANG: ${{ inputs.source_lang }}
+          TARGETS: ${{ inputs.targets }}
+          ENGINE: ${{ inputs.engine }}
+          NLLB_MODEL: ${{ inputs.nllb_model }}
+          WHISPER_MODEL: ${{ inputs.whisper_model }}
+          EPISODE: ${{ inputs.episode }}
+        run: python3 tools/film_subs/translate_subs.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: subs-out
+          path: out
+          retention-days: 3
+
+  publish:
+    needs: translate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    concurrency:
+      group: repo-write
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: subs-out
+          path: out
+      - name: Commit subtitle files
+        run: |
+          mkdir -p films && cp -r out/films/. films/
+          git config user.name "film-subs"
+          git config user.email "film-subs@users.noreply.github.com"
+          git add films
+          if git diff --cached --quiet; then echo "لا تغييرات"; exit 0; fi
+          git commit -m "subtitles for film ${{ inputs.film_id }}"
+          for i in 1 2 3 4; do
+            git push && exit 0
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            sleep $((i * 3))
+          done
+          echo "تعذّر الدفع" && exit 1
+      - name: Update film record
+        if: inputs.update_record == 'yes'
+        env:
+          FILM_ID: ${{ inputs.film_id }}
+          EPISODE: ${{ inputs.episode }}
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN || github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          HOST_REPO: ${{ vars.HOST_REPO || github.repository }}
+          HOST_BASE_URL: ${{ vars.HOST_BASE_URL }}
+          DATA_REPO: ${{ vars.DATA_REPO || github.repository }}
+          DATA_BRANCH: ${{ vars.DATA_BRANCH }}
+        run: python3 tools/film_subs/update_record.py
