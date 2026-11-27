@@ -2008,21 +2008,6 @@
     "media_note": "مصدر الوسائط مذكور من المطوّر: artist=InspectorJ | artist=Jonathan Shaw (www.jshaw.co.uk)"
   },
   {
-    "key": "taipingu",
-    "size": 19762,
-    "repo": "entibo/taipingu",
-    "id": 139,
-    "slug": "taipingu",
-    "title": "Taipingu",
-    "developer": "entibo",
-    "license": "MIT",
-    "source": "https://github.com/entibo/taipingu",
-    "commit": "c39c5004bf26b0452abf344ee79ceb48023adb44",
-    "date": "2026-11-26",
-    "license_file": "LICENSE",
-    "media_note": "مصدر الوسائط غير موثّق من المطوّر"
-  },
-  {
     "key": "reagames",
     "size": 30366,
     "repo": "erkamyaman/rea-games",
